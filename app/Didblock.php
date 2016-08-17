@@ -15,7 +15,8 @@ class Didblock extends Model
     //
     use SoftDeletes;
     protected $table = 'did_block';
-    protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end'];
+    protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end', 'comment'];
+
 
     // This overrides the parent boot function and adds
     // a complex custom validation handler for on-saving events

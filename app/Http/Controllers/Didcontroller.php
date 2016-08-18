@@ -92,7 +92,10 @@ class Didcontroller extends Controller
 		*/
 		
 		// Model Method using count(). If the number of rows that overlaps with the range return true. 
-		if(Didblock::where([['country_code','=', $country_code],['start','>=',$start],['end','<=',$end]])->count()){
+		if(Didblock::where([['country_code','=', $country_code],['start','<=',$start],['end','>=',$start]])->count()){
+			return true;
+		}
+		if(Didblock::where([['country_code','=', $country_code],['start','<=',$end],['end','>=',$end]])->count()){
 			return true;
 		}
 	}
@@ -206,10 +209,10 @@ class Didcontroller extends Controller
 		// Did Block Validation
 		$request = $this->didblock_validation($request);
 
-		$ranges = [];							// Build array to pass into overlap checker
-		$ranges['country_code'] = $request['country_code'];	// Append the Start Range Number
-		$ranges['start'] = $request['start'];			// Append the Start Range Number
-		$ranges['end'] = $request['end'];			// Append the End Range Number
+		$ranges = [];													// Build array to pass into overlap checker
+		$ranges['country_code'] = $request['country_code'];				// Append the Start Range Number
+		$ranges['start'] = $request['start'];							// Append the Start Range Number
+		$ranges['end'] = $request['end'];								// Append the End Range Number
 
 		// Check if overlap comes back false then Add the Block. 
 		$count = $this->overlap_db_check($ranges);

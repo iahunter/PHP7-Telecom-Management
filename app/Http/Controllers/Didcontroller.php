@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Didblock;
@@ -73,13 +75,35 @@ class Didcontroller extends Controller
 		return ($val >= $min && $val <= $max);
 	}
 	
-	
 	public function overlap_db_check($ranges)
 	{
 		/* 
 		* This function checks if the block that is being added overlaps with an existing block that exists in the DB. 
-		* Feed in the start and end as an array called $ranges.
+		* Feed in the country_code, start, and end as an associative array called $ranges.
+		*/ 
+		$country_code = $ranges['country_code'];
+		$start = $ranges['start'];
+		$end = $ranges['end'];
+		
+		/* Alternative Method - DB Method using count().
+		if(DB::table('did_block')->where([['country_code','=', $country_code],['start','>=',$start],['end','<=',$end]])->count()){
+			return true;
+		}
 		*/
+		
+		// Model Method using count(). If the number of rows that overlaps with the range return true. 
+		if(Didblock::where([['country_code','=', $country_code],['start','>=',$start],['end','<=',$end]])->count()){
+			return true;
+		}
+	}
+		
+
+	public function overlap_db_check_old($ranges)
+	{
+		/* 
+		* Deprecated Function - This function is way to cpu and memory intensive. Being abandonded. 
+		*/
+		
 		$didblocks = Didblock::all();
 		foreach($ranges as $val){
 			foreach($didblocks as $didblock){
@@ -183,11 +207,14 @@ class Didcontroller extends Controller
 		$request = $this->didblock_validation($request);
 
 		$ranges = [];							// Build array to pass into overlap checker
-		$ranges[] = $request['start'];			// Append the Start Range Number
-		$ranges[] = $request['end'];			// Append the End Range Number
+		$ranges['country_code'] = $request['country_code'];	// Append the Start Range Number
+		$ranges['start'] = $request['start'];			// Append the Start Range Number
+		$ranges['end'] = $request['end'];			// Append the End Range Number
 
 		// Check if overlap comes back false then Add the Block. 
-		if (!$this->overlap_db_check($ranges)){
+		$count = $this->overlap_db_check($ranges);
+		
+		if (!$count){
 			
 			$didblock = Didblock::create($request->all());
 		   
@@ -203,6 +230,7 @@ class Didcontroller extends Controller
 			throw new \Exception('Block overlapping with existing ranges');
 		}
     }
+
 	
 	
 	/**

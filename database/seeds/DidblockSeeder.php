@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+//use App\Didblock;
 
 class DidblockSeeder extends Seeder
 {
@@ -11,54 +12,43 @@ class DidblockSeeder extends Seeder
      */
     public function run()
     {
+		$count = 0;
+		$start = 4025550000;
+		$end = 4025550999;
+		
+		// Create DIDs until the count is excedded. 
+		while($count < 100000){
+			$count++;
+			$start = $start + 100;
+			$end = $end + 100;
+			
+			// Insert into DB. 
+			DB::table('did_block')->insert(array(
+			array('country_code' => 1,'name' => "TEST DID Block ".str_random(10),'carrier' => str_random(10),'start' => $start,'end' => $end,'comment' => str_random(10),)
+			));
+		}
+		
+		
+		
+		
 		// Create Seed Data for DID Block table
-        /*DB::table('did_block')->insert([
-            'country_code' => 1,
-			'name' => str_random(10),
-			'carrier' => str_random(10),
-			'start' => str_random(10),
-			'end' => str_random(10),
-			'comment' => str_random(10),
-
-        ]);*/
-		DB::table('did_block')->insert([
-            'country_code' => 1,
-			'name' => "TEST1",
-			'carrier' => str_random(10),
-			'start' => 4025551000,
-			'end' => 4025551999,
-			'comment' => str_random(10),
-
-        ]);
-		DB::table('did_block')->insert([
-            'country_code' => 1,
-			'name' => str_random(10),
-			'carrier' => str_random(10),
-			'start' => 4025552000,
-			'end' => 4025552999,
-			'comment' => str_random(10),
-
-        ]);
-		DB::table('did_block')->insert([
-            'country_code' => 1,
-			'name' => str_random(10),
-			'carrier' => str_random(10),
-			'start' => 4025553000,
-			'end' => 4025553999,
-			'comment' => str_random(10),
-
-        ]);
+		/*
+		DB::table('did_block')->insert(array(
+		array('country_code' => 1,'name' => "TEST1",'carrier' => str_random(10),'start' => 4025541000,'end' => 4025541999,'comment' => str_random(10),),
+		array('country_code' => 1,'name' => "TEST2",'carrier' => str_random(10),'start' => 4025542000,'end' => 4025545999,'comment' => str_random(10),),
+		array('country_code' => 1,'name' => "TEST3",'carrier' => str_random(10),'start' => 4025543000,'end' => 4025545999,'comment' => str_random(10),),
+		array('country_code' => 1,'name' => "TEST4",'carrier' => str_random(10),'start' => 4025544000,'end' => 4025545999,'comment' => str_random(10),),
+		array('country_code' => 1,'name' => "TEST5",'carrier' => str_random(10),'start' => 4025545000,'end' => 4025545999,'comment' => str_random(10),),
+		));
+		
+		$didblock = factory(App\Didblock::class)->make([
+            'country_code' => 1,'name' => "TESTING",'carrier' => str_random(10),'start' => 4025531000,'end' => 4025531999,'comment' => str_random(10),
+        ]);   
+		
+		factory(App\Didblock::class, 50)->create()->each(function($didblock) {
+        $didblock->posts()->save(factory(App\Didblock::class)->make());
+		});
+		*/
     }
 }
 
-/*
-            $table->increments('id');
-            $table->integer('block_id')->unsigned();	// Parent Block ID
-            $table->string('name');           			// Name
-			$table->bigInteger('number');        		// Phone Number
-			$table->string('status');            		// Status - Active/Reserved/Available
-			$table->string('system_id');            	// Future - System ID - CUCM/Lync ID
-			$table->json('assignements');           	// JSON Custom Field Data
-            $table->timestamps();						// Time Stamps
-            $table->softDeletes();            			// keep deactivated certificates in the table
-*/

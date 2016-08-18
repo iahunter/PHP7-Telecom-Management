@@ -32,6 +32,10 @@ class Didblock extends Model
         if($this->country_code == 1) {
             echo 'Validation succeeded'.PHP_EOL;
             return true;
+		}
+		if($this->country_code == 2) {
+            echo 'Validation succeeded'.PHP_EOL;
+            return true;
         } else {
             echo 'Validation failed'.PHP_EOL;
             return false;

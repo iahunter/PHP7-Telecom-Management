@@ -9,7 +9,7 @@
  * enterprise directory integrated single-sign-on
  *
  * @category  default
- * @author    metaclassing <metaclassing@SecureObscure.com>
+ * @author    Metaclassing <Metaclassing@SecureObscure.com>
  * @copyright 2015-2016 @authors
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
@@ -93,7 +93,7 @@ class AuthController extends Controller
         // NGINX screws up the cert by putting a bunch of tab characters into it so we need to clean those out
         $asciicert = str_replace("\t", '', $_SERVER['SSL_CLIENT_CERT']);
         $cert = $x509->loadX509($asciicert);
-        $cnarray = \metaclassing\Utility::recursiveArrayTypeValueSearch($x509->getDN(), 'id-at-commonName');
+        $cnarray = \Metaclassing\Utility::recursiveArrayTypeValueSearch($x509->getDN(), 'id-at-commonName');
         $cn = reset($cnarray);
         if (! $cn) {
             throw new \Exception('Authentication failure, could not extract CN from TLS client certificate');
@@ -227,20 +227,20 @@ class AuthController extends Controller
         if (isset($ldapuser['usercertificate']) && is_array($ldapuser['usercertificate'])) {
             //			unset($ldapuser["usercertificate"]);/**/
             foreach ($ldapuser['usercertificate'] as $key => $value) {
-                if (\metaclassing\Utility::isBinary($value)) {
+                if (\Metaclassing\Utility::isBinary($value)) {
                     $asciicert = "-----BEGIN CERTIFICATE-----\n".
                                  chunk_split(base64_encode($value), 64).
                                  "-----END CERTIFICATE-----\n";
                     $x509 = new \phpseclib\File\X509();
                     $cert = $x509->loadX509($asciicert);
-                    $cn = \metaclassing\Utility::recursiveArrayFindKeyValue(
-                                \metaclassing\Utility::recursiveArrayTypeValueSearch(
+                    $cn = \Metaclassing\Utility::recursiveArrayFindKeyValue(
+                                \Metaclassing\Utility::recursiveArrayTypeValueSearch(
                                     $x509->getDN(),
                                     'id-at-commonName'
                                 ), 'printableString'
                             );
-                    $issuer = \metaclassing\Utility::recursiveArrayFindKeyValue(
-                                    \metaclassing\Utility::recursiveArrayTypeValueSearch(
+                    $issuer = \Metaclassing\Utility::recursiveArrayFindKeyValue(
+                                    \Metaclassing\Utility::recursiveArrayTypeValueSearch(
                                         $x509->getIssuerDN(),
                                         'id-at-commonName'
                                     ), 'printableString'
@@ -256,9 +256,9 @@ class AuthController extends Controller
             }/**/
         }
         // Handle any other crappy binary encoding in the response
-        $ldapuser = \metaclassing\Utility::recursiveArrayBinaryValuesToBase64($ldapuser);
+        $ldapuser = \Metaclassing\Utility::recursiveArrayBinaryValuesToBase64($ldapuser);
         // Handle any remaining UTF8 encoded garbage before returning the user, this causes silent json_encode failures
-        //$ldapuser = \metaclassing\Utility::encodeArrayUTF8($ldapuser);
+        //$ldapuser = \Metaclassing\Utility::encodeArrayUTF8($ldapuser);
         return $ldapuser;
     }
 

@@ -1,3 +1,10 @@
+#Telephone Numbers Database
+
+This is an app running on Laravel 5.2 + Dingo + JWT + Bouncer
+
+REST API to create, update, and delete phone number blocks for number tracking. 
+
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)

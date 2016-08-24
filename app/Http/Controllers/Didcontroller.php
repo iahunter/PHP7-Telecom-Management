@@ -65,6 +65,12 @@ class Didcontroller extends Controller
 		if ($request['start'] > $request['end']){
 			throw new \Exception('Error: Range start must not be greater than range end');
 		}
+		
+		// Check to make sure that block is not greater than or equal to 10000 DIDs. 0000 - 9999 - This will help keep all in same NPANXX
+		$diff = $request['end'] - $request['start'];
+		if ($diff >= 10000){
+			throw new \Exception('Error: Block must not be greater than 10000 DIDs');
+		}
 		return $request;
 	}
 	

@@ -53,6 +53,7 @@ class DidblockTest extends TestCase
         echo ' - found '.count($response->original['didblocks']).' didblocks';
 		dd($this->didblocks);
     }
+	
 	/*
     protected function getAccountCertificates()
     {

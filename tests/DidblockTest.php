@@ -31,7 +31,7 @@ class DidblockTest extends TestCase
         echo PHP_EOL.__METHOD__.' Starting CA Account API tests';
         // Seed our test data, this entire test is wrapped in a transaction so will be auto-removed
 		// *** Need to change this to .env TEST_USER_DN. ***
-        $this->getJWT('CN=Travis.Riesenberg,OU=Employees,OU=Users,OU=Kiewit,DC=KIEWITPLAZA,DC=com');
+		$this->getJWT(env('TEST_USER_DN'));
 		$this->getDidblocks();
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }

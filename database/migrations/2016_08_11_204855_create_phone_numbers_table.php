@@ -27,17 +27,17 @@ class CreatePhoneNumbersTable extends Migration
 
         Schema::create('did', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('block_id')->unsigned();	// Parent Block ID
+            $table->integer('didblock_id')->unsigned();	// Parent Block ID
             $table->string('name');           			// Name
 			$table->bigInteger('number');        		// Phone Number
 			$table->string('status');            		// Status - Active/Reserved/Available
 			$table->string('system_id');            	// Future - System ID - CUCM/Lync ID
-			$table->json('assignements');           	// JSON Custom Field Data
+			$table->json('assignments');           		// JSON Custom Field Data
             $table->timestamps();						// Time Stamps
             $table->softDeletes();            			// keep deactivated certificates in the table
 
             // 1:many account->certificates relationship
-            $table->foreign('block_id')->references('id')->on('did_block');
+            $table->foreign('didblock_id')->references('id')->on('did_block');
         });
         //DB::update('ALTER TABLE acme_certificates AUTO_INCREMENT = 10;');
     }

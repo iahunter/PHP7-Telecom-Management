@@ -18,7 +18,8 @@
 		"adldap/adldap": "4.0.4.x-dev",
         "phpseclib/phpseclib": "^2.0",
         "tymon/jwt-auth": "^1.0",
-        "silber/bouncer": "^0.1.7"
+        "silber/bouncer": "^0.1.7",
+        "metaclassing/Utility": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

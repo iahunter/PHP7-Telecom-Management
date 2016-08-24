@@ -92,9 +92,11 @@ class Didcontroller extends Controller
 		*/
 		
 		// Model Method using count(). If the number of rows that overlaps with the range return true. 
+		// Check if block start is between any existing blocks. 
 		if(Didblock::where([['country_code','=', $country_code],['start','<=',$start],['end','>=',$start]])->count()){
 			return true;
 		}
+		// Check if block end is between any existing blocks. 
 		if(Didblock::where([['country_code','=', $country_code],['start','<=',$end],['end','>=',$end]])->count()){
 			return true;
 		}
@@ -191,6 +193,24 @@ class Didcontroller extends Controller
      * @return Response
      */
 	// Create DID Block
+	/*
+	public function createDid($request)
+    {
+		// Did Block Validation
+		$did = Did::create([$request]);
+		
+		$response = [
+					'success' => true,
+					'message' => '',
+					'request' => $request,
+					'didblock' => $did,
+					];
+						
+		return response()->json($response);
+    }
+	*/
+	
+	
     public function createDidblock(Request $request)
     {
 		// Get and parse the user token and authenticate the user by token. 
@@ -220,7 +240,9 @@ class Didcontroller extends Controller
 		if (!$count){
 			
 			$didblock = Didblock::create($request->all());
-		   
+			//$didblock_id = $didblock->id;
+			//$didblock_id = $didblock->didblock->id;
+			//$didblock_id = $didblock['didblock']['id'];
 			$response = [
 						'success' => true,
 						'message' => '',

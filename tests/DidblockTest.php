@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DID Database Unit Tests
+ * DID Database Unit Tests.
  *
  * PHP version 7
  *
@@ -24,15 +24,15 @@ class DidblockTest extends TestCase
     use DatabaseTransactions;
 
     protected $token;
-	protected $didblocks;
+    protected $didblocks;
 
     public function testDidblockAPI()
     {
         echo PHP_EOL.__METHOD__.' Starting CA Account API tests';
         // Seed our test data, this entire test is wrapped in a transaction so will be auto-removed
-		// *** Need to change this to .env TEST_USER_DN. ***
-		$this->getJWT(env('TEST_USER_DN'));
-		$this->getDidblocks();
+        // *** Need to change this to .env TEST_USER_DN. ***
+        $this->getJWT(env('TEST_USER_DN'));
+        $this->getDidblocks();
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
 
@@ -41,7 +41,7 @@ class DidblockTest extends TestCase
         echo PHP_EOL.__METHOD__.' Generating JWT for user '.$userdn;
         $credentials = ['dn' => $userdn, 'password' => ''];
         $this->token = JWTAuth::attempt($credentials);
-		echo ' got token '.$this->token;
+        echo ' got token '.$this->token;
     }
 
     protected function getDidblocks()
@@ -51,10 +51,10 @@ class DidblockTest extends TestCase
         $this->didblocks = $response->original['didblocks'];
         $this->assertEquals(true, $response->original['success']);
         echo ' - found '.count($response->original['didblocks']).' didblocks';
-		dd($this->didblocks);
+        dd($this->didblocks);
     }
-	
-	/*
+
+    /*
     protected function getAccountCertificates()
     {
         echo PHP_EOL.__METHOD__.' Loading certificates for accounts';

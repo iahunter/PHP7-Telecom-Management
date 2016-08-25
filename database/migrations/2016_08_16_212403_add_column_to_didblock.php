@@ -12,12 +12,12 @@ class AddColumnToDidblock extends Migration
      */
     public function up()
     {
-		/*
+        /*
         Schema::table('did_block', function (Blueprint $table) {
             // Add new the column to table
-			$table->text('comment');
+            $table->text('comment');
         });
-		*/
+        */
     }
 
     /**
@@ -27,11 +27,11 @@ class AddColumnToDidblock extends Migration
      */
     public function down()
     {
-		/*
+        /*
         Schema::table('did_block', function (Blueprint $table) {
-            // Drop the column 
-			$table->dropColumn('comment');
+            // Drop the column
+            $table->dropColumn('comment');
         });
-		*/
+        */
     }
 }

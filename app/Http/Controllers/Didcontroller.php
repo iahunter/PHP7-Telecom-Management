@@ -61,9 +61,9 @@ class Didcontroller extends Controller
         if ($request['start'] > $request['end']) {
             throw new \Exception('Error: Range start must not be greater than range end');
         }
-		
-		// Check if start and end are in same NPA NXX if they have country Code of 1. 
-        if (($request['country_code'] == 1) && (!$this->is_in_same_npanxx($request['start'], $request['end']))) {
+
+        // Check if start and end are in same NPA NXX if they have country Code of 1.
+        if (($request['country_code'] == 1) && (! $this->is_in_same_npanxx($request['start'], $request['end']))) {
             throw new \Exception('Range Start and End must be in same NPA NXX');
         }
 
@@ -75,19 +75,19 @@ class Didcontroller extends Controller
 
         return $request;
     }
-	
-	public function is_in_same_npanxx($start, $end)
-	{
-		$startarray = str_split($start, 6);
-		$endarray = str_split($end, 6);
-		$npanxx_start = $startarray[0];
-		$npanxx_end = $endarray[0];
-		
-		if ($npanxx_start == $npanxx_end){
-			//print "Equal \n";
-			return true;
-		}
-	}
+
+    public function is_in_same_npanxx($start, $end)
+    {
+        $startarray = str_split($start, 6);
+        $endarray = str_split($end, 6);
+        $npanxx_start = $startarray[0];
+        $npanxx_end = $endarray[0];
+
+        if ($npanxx_start == $npanxx_end) {
+            //print "Equal \n";
+            return true;
+        }
+    }
 
     public function is_in_range($val, $min, $max)
     {

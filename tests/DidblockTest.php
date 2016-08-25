@@ -21,18 +21,25 @@ use App\Did;
 
 class DidblockTest extends TestCase
 {
+	// 
     use DatabaseTransactions;
 
     protected $token;
     protected $didblocks;
+	protected $didblock_id;
 
     public function testDidblockAPI()
     {
-        echo PHP_EOL.__METHOD__.' Starting CA Account API tests';
-        // Seed our test data, this entire test is wrapped in a transaction so will be auto-removed
-        // *** Need to change this to .env TEST_USER_DN. ***
+		// This is the main TEST Function. PHP Unit must be started with 'test'
+        echo PHP_EOL.__METHOD__.' Starting Telephone Number API tests';
+		
         $this->getJWT(env('TEST_USER_DN'));
+		
+		// Call all the test functions here. 
+		$this->createDidblocks();
         $this->getDidblocks();
+		$this->updateDidblocks();
+		$this->getDidblocks();
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
 
@@ -46,13 +53,58 @@ class DidblockTest extends TestCase
 
     protected function getDidblocks()
     {
-        echo PHP_EOL.__METHOD__.' Loading latest accounts visible to current role';
+        echo PHP_EOL.__METHOD__.' Getting DID Blocks';
         $response = $this->call('GET', '/api/didblock?token='.$this->token);
         $this->didblocks = $response->original['didblocks'];
         $this->assertEquals(true, $response->original['success']);
         echo ' - found '.count($response->original['didblocks']).' didblocks';
-        dd($this->didblocks);
+        //dd($this->didblocks);
     }
+	
+	protected function getDids()
+    {
+        echo PHP_EOL.__METHOD__.' Getting DID Blocks';
+        $response = $this->call('GET', '/api/didblock?token='.$this->token);
+        $this->didblocks = $response->original['didblocks'];
+        $this->assertEquals(true, $response->original['success']);
+        echo ' - found '.count($response->original['didblocks']).' didblocks';
+        //dd($this->didblocks);
+    }
+	
+	protected function createDidblocks()
+    {
+        echo PHP_EOL.__METHOD__.' Creating test Did block';
+        $post = [
+                'country_code'      => 1,
+				'name'           	=> 'TEST DID BLOCK',
+                'carrier'        	=> 'TEST CARRIER',
+                'start'          	=> 1000000000,
+                'end'      			=> 1000009999,
+                ];
+        $response = $this->call('POST',
+                        '/api/didblock?token='.$this->token,
+                        $post);
+		//dd($response);
+		$this->didblock_id = $response->original['didblock']['id'];
+        $this->assertEquals(true, $response->original['success']);
+    }
+	
+	protected function updateDidblocks()
+    {
+        echo PHP_EOL.__METHOD__.' Updating '.$this->didblock_id.' test Did block';
+        $put = [
+                'country_code'      => 1,
+				'name'           	=> 'TEST DID BLOCK CHANGED',
+                'carrier'        	=> 'TEST CARRIER CHANGED',
+                'start'          	=> 1000000000,
+                'end'      			=> 1000009999,
+                ];
+        $response = $this->call('PUT',
+                        '/api/didblock/'.$this->didblock_id.'?token='.$this->token,
+                        $put);
+        $this->assertEquals(true, $response->original['success']);
+    }
+	
 
     /*
     protected function getAccountCertificates()

@@ -69,15 +69,17 @@ class Didblock extends Model
         // Loop thru the range and create the individual DIDs in the block.
         $range = range($this->start, $this->end);
         foreach ($range as $number) {
-            $request = [
+            // Build the request for each number. 
+			$request = [
                         'name'   => '',
                         'number' => $number,
                         'status' => 'available',
                         ];
-            // Create the dids inside
-//			$this->log($request);
-            $response = $this->dids()->create($request);
-//			$this->log($response);
+            
+			// Create the dids inside block
+			//$this->log($request);
+            $response = $this->dids()->create($request); // This goes out and builds the new did transaction. The parent ID is joined automatically. 
+			//$this->log($response);
         }
     }
 }

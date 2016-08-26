@@ -26,7 +26,7 @@ class DidblockTest extends TestCase
 
     protected $token;
     protected $didblocks;
-	protected $didblock;
+    protected $didblock;
     protected $didblock_id;
 
     public function testDidblockAPI()
@@ -41,15 +41,15 @@ class DidblockTest extends TestCase
         $this->getDidblocks();
         $this->updateDidblocks();
         $this->getDidblocks();
-		$this->getDidblock();
-		$this->deleteDidblocks();
-		
-		/* Call Stuff that should fail
-		
-		$this->createDidblocks_fail_11digits();
-		
-		/**/
-		
+        $this->getDidblock();
+        $this->deleteDidblocks();
+
+        /* Call Stuff that should fail
+
+        $this->createDidblocks_fail_11digits();
+
+        /**/
+
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
 
@@ -114,34 +114,32 @@ class DidblockTest extends TestCase
                         $put);
         $this->assertEquals(true, $response->original['success']);
     }
-	
-	protected function getDidblock()
+
+    protected function getDidblock()
     {
         echo PHP_EOL.__METHOD__.'  Getting '.$this->didblock_id.' test Did block';
-        $response = $this->call('GET', 
-							'/api/didblock/'.$this->didblock_id.'?token='.$this->token);
+        $response = $this->call('GET',
+                            '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
         $this->didblock = $response->original['didblock'];
         $this->assertEquals(true, $response->original['success']);
         //dd($this->didblock);
     }
-	
-	protected function deleteDidblocks()
+
+    protected function deleteDidblocks()
     {
         echo PHP_EOL.__METHOD__.' Deleting '.$this->didblock_id.' test Did block';
         $response = $this->call('DELETE',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
         $this->assertEquals(true, $response->original['success']);
     }
-	
-	
-	
-	/*
-		Create Bad Data that should fail here. 
-	*/
-	
-	// NEED TO FIGURE OUT HOW TO MAKE A FAILURE A SUCCESS??? 
-	
-	protected function createDidblocks_fail_11digits()
+
+    /*
+        Create Bad Data that should fail here.
+    */
+
+    // NEED TO FIGURE OUT HOW TO MAKE A FAILURE A SUCCESS???
+
+    protected function createDidblocks_fail_11digits()
     {
         echo PHP_EOL.__METHOD__.' Creating test Did block';
         $post = [

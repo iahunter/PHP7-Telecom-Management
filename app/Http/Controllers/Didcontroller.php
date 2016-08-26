@@ -20,7 +20,7 @@ class Didcontroller extends Controller
 
     public function didblock_validation($request)
     {
-		
+
         // Check if Country Code is set.
         if (empty($request['country_code']) || $request['country_code'] == '') {
             throw new \Exception('No Country Code Set');
@@ -29,8 +29,8 @@ class Didcontroller extends Controller
         if (! preg_match('/^[0-9]+$/', $request['country_code'])) {
             throw new \Exception('Country Code must be numeric');
         }
-		
-		/*
+
+        /*
         // Check if Name is set
         if (empty($request['name']) || $request['name'] == '') {
             throw new \Exception('No Name Set');
@@ -273,8 +273,8 @@ class Didcontroller extends Controller
             throw new \Exception('Block overlapping with existing ranges');
         }
     }
-	
-	    public function createDidblockold(Request $request)
+
+    public function createDidblockold(Request $request)
     {
         // Get and parse the user token and authenticate the user by token.
         $user = JWTAuth::parseToken()->authenticate();

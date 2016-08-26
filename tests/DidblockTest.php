@@ -49,7 +49,7 @@ class DidblockTest extends TestCase
         $this->createDidblocks_fail_11digits();
 
         // This one needs error checking put in for update to block start and end editing.
-        //$this->updateDidblocks_fail_change_range();
+        $this->updateDidblocks_fail_change_range();
 
         /**/
 
@@ -202,7 +202,7 @@ class DidblockTest extends TestCase
 
         // If the status_code is 500, then test is successfull.
         if (! $response->original['status_code'] == 500) {
-            \metaclassing\Utility::dumper($response);
+            \Metaclassing\Utility::dumper($response);
         } else {
             echo ' | Message: '.$response->original['message'];
             echo ' | Status Code: '.$response->original['status_code'];
@@ -228,7 +228,7 @@ class DidblockTest extends TestCase
 
         // If the status_code is 500, then test is successfull.
         if (! $response->original['status_code'] == 500) {
-            \metaclassing\Utility::dumper($response);
+            \Metaclassing\Utility::dumper($response);
         } else {
             echo ' | Message: '.$response->original['message'];
             echo ' | Status Code: '.$response->original['status_code'];

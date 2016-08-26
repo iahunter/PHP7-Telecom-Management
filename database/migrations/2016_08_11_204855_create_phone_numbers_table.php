@@ -19,7 +19,7 @@ class CreatePhoneNumbersTable extends Migration
             $table->string('carrier');                  // Carrier Name
             $table->bigInteger('start');                // Start of Block
             $table->bigInteger('end');                  // End of Block
-			$table->string('type');                    	// Public or Private Number
+            $table->string('type');                        // Public or Private Number
             $table->text('comment');                    // Comment
             $table->timestamps();                       // Time Stamps
             $table->softDeletes();                      // Soft Deletes

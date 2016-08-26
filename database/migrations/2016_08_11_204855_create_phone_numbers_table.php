@@ -28,7 +28,7 @@ class CreatePhoneNumbersTable extends Migration
 
         Schema::create('did', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('didblock_id')->unsigned();    // Parent Block ID
+            $table->integer('didblock_id')->unsigned()->index();    // Parent Block ID
             $table->string('name');                       // Name
             $table->bigInteger('number');                // Phone Number
             $table->string('status');                    // Status - Active/Reserved/Available

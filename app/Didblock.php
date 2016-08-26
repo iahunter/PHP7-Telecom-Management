@@ -66,18 +66,71 @@ class Didblock extends Model
             throw new \Exception('Validation error, start range can not be altered once created');
         }
         if (isset($this->original['end']) && $this->original['end'] !== $this->end) {
-            throw new \Exception('Validation error, start range can not be altered once created');
+            throw new \Exception('Validation error, end range can not be altered once created');
         }
-        // ADD VALIDATION THAT IS SPECIFIC TO THE
-        // for updating use an if isset on start and end
-        if ($this->country_code == 1) {
-            return true;
+
+		if(!preg_match('/^[0-9]+$/', $this->country_code)) {
+				throw new \Exception('Country Code must be numeric');
+			}
+		
+		if(!$this->name){
+			throw new \Exception('No Name Set');
+		}
+		
+		/*
+        // Check if Name is set
+		if(!$this->country_code){
+			if (empty($this->original['name']) || $this->original['name'] == '') {
+				throw new \Exception('No Name Set');
+			}
+		}
+		
+		/*
+        // Check if start is set
+        if (empty($this->original['start']) || $this->original['start'] == '') {
+            throw new \Exception('No Range Start Set');
         }
-        if ($this->country_code == 2) {
-            return true;
-        } else {
-            throw new \Exception('Invalid Country Code');
+        // Check if end is set
+        if (empty($this->original['end']) || $this->original['end'] == '') {
+
+            // If there is no range end then create a single entry. - This is good for POTS lines/single number ranges.
+            $this->original['end'] = $this->original['start'];
+            //throw new \Exception('No Range End Set');
         }
+
+        // Check if start are numbers.
+        if (! preg_match('/^[0-9]+$/', $this->original['start'])) {
+            throw new \Exception('Range start must be numeric');
+        }
+        // Check if end are numbers.
+        if (! preg_match('/^[0-9]+$/', $this->original['end'])) {
+            throw new \Exception('Range start must be numeric');
+        }
+
+        // Check to make sure start is not greater than end.
+        if ($this->original['start'] > $this->original['end']) {
+            throw new \Exception('Error: Range start must not be greater than range end');
+        }
+
+        // Check if start and end are in same NPA NXX if they have country Code of 1.
+        if (($this->original['country_code'] == 1) && (! $this->is_in_same_npanxx($this->original['start'], $this->original['end']))) {
+            throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
+        }
+
+        // Check to make sure that block is not greater than or equal to 10000 DIDs. 0000 - 9999 - This will help keep all in same NPANXX
+        $diff = $this->original['end'] - $this->original['start'];
+        if ($diff >= 10000) {
+            throw new \Exception('Error: Block must not be greater than 10000 DIDs');
+        }
+
+        // Check if country code is 1 and number cannot be more than 10 digits.
+        if ($this->original['country_code'] == 1) {
+            if ((! $this->less_10digits($this->original['start']) || (! $this->less_10digits($this->original['end'])))) {
+                throw new \Exception('NANP Start or End Range must not be more than 10 digits long');
+            }
+        }
+		*/
+		
     }
 
     protected function populate()

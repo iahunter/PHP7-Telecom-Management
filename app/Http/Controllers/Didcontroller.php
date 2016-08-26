@@ -20,6 +20,7 @@ class Didcontroller extends Controller
 
     public function didblock_validation($request)
     {
+		
         // Check if Country Code is set.
         if (empty($request['country_code']) || $request['country_code'] == '') {
             throw new \Exception('No Country Code Set');
@@ -28,6 +29,8 @@ class Didcontroller extends Controller
         if (! preg_match('/^[0-9]+$/', $request['country_code'])) {
             throw new \Exception('Country Code must be numeric');
         }
+		
+		/*
         // Check if Name is set
         if (empty($request['name']) || $request['name'] == '') {
             throw new \Exception('No Name Set');
@@ -43,10 +46,6 @@ class Didcontroller extends Controller
             $request['end'] = $request['start'];
             //throw new \Exception('No Range End Set');
         }
-        /* Check if start and end are numeric numbers. This wasn't working with + digits.
-        if (!is_numeric($request['start']) || (!is_numeric($request['end']))){
-            throw new \Exception('Start and End must be numeric numbers');
-        }*/
 
         // Check if start are numbers.
         if (! preg_match('/^[0-9]+$/', $request['start'])) {
@@ -78,7 +77,7 @@ class Didcontroller extends Controller
             if ((! $this->less_10digits($request['start']) || (! $this->less_10digits($request['end'])))) {
                 throw new \Exception('NANP Start or End Range must not be more than 10 digits long');
             }
-        }
+        }*/
 
         return $request;
     }
@@ -231,6 +230,51 @@ class Didcontroller extends Controller
      * @return Response
      */
     public function createDidblock(Request $request)
+    {
+        // Get and parse the user token and authenticate the user by token.
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user - Must have create privledges
+        if (! $user->can('create', Didblock::class)) {
+            abort(401, 'You are not authorized to create new did blocks');
+        }
+        /****************************************************
+            * Do all error checking here
+            * Valid name, overlapping,
+            * Create Role
+        *****************************************************/
+
+        // Did Block Validation
+        $request = $this->didblock_validation($request);
+
+        $ranges = [];                                                    // Build array to pass into overlap checker
+        $ranges['country_code'] = $request['country_code'];                // Append the Start Range Number
+        $ranges['start'] = $request['start'];                            // Append the Start Range Number
+        $ranges['end'] = $request['end'];                                // Append the End Range Number
+
+        // Check if overlap comes back false then Add the Block.
+        $count = $this->overlap_db_check($ranges);
+
+        if (! $count) {
+            $didblock = Didblock::create($request->all());
+            //$didblock_id = $didblock->id;
+            //$didblock_id = $didblock->didblock->id;
+            //$didblock_id = $didblock['didblock']['id'];
+            $response = [
+                        'status_code'    => 200,
+                        'success'        => true,
+                        'message'        => '',
+                        'request'        => $request->all(),
+                        'didblock'       => $didblock,
+                        ];
+
+            return response()->json($response);
+        } else {
+            throw new \Exception('Block overlapping with existing ranges');
+        }
+    }
+	
+	    public function createDidblockold(Request $request)
     {
         // Get and parse the user token and authenticate the user by token.
         $user = JWTAuth::parseToken()->authenticate();

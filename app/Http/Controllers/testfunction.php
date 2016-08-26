@@ -18,17 +18,17 @@ if ($test) {
 /*
 function is_in_same_npanxx($start, $end)
 {
-	$startarray = str_split($start, 6);
-	$endarray = str_split($end, 6);
+    $startarray = str_split($start, 6);
+    $endarray = str_split($end, 6);
     $npanxx_start = $startarray[0];
-	$npanxx_end = $endarray[0];
-	//print "Start: ".$npanxx_start."\n";
-	//print "End: ".$npanxx_end."\n";
-	
-	if ($npanxx_start == $npanxx_end){
-		//print "equal \n";
-		return true;
-	}
+    $npanxx_end = $endarray[0];
+    //print "Start: ".$npanxx_start."\n";
+    //print "End: ".$npanxx_end."\n";
+
+    if ($npanxx_start == $npanxx_end){
+        //print "equal \n";
+        return true;
+    }
 }
 
 
@@ -38,11 +38,11 @@ print_r(is_in_same_npanxx(1001230000, 1001239999));
 
 function less_10digits($num)
 {
-	$num_length = strlen((string)$num);
-	if($num_length <= 10) {
-		return true;
-	}
+    $num_length = strlen((string) $num);
+    if ($num_length <= 10) {
+        return true;
+    }
 }
 
 $test = less_10digits(123);
-print $test;
+echo $test;

@@ -44,8 +44,11 @@ class DidblockTest extends TestCase
 		$this->getDidblock();
 		$this->deleteDidblocks();
 		
-		// Call Stuff that should fail
+		/* Call Stuff that should fail
+		
 		$this->createDidblocks_fail_11digits();
+		
+		/**/
 		
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }

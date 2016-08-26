@@ -135,6 +135,9 @@ class Didcontroller extends Controller
         // Check if block end is between any existing blocks.
         if (Didblock::where([['country_code', '=', $country_code], ['start', '<=', $end], ['end', '>=', $end]])->count()) {
             return true;
+			
+			// *** FUTURE ***
+			// Need to return an array with ID numbers of overlapping ranges to put in the exception. 
         }
     }
 

@@ -69,23 +69,23 @@ class Didblock extends Model
             throw new \Exception('Validation error, end range can not be altered once created');
         }
 
-		if(!preg_match('/^[0-9]+$/', $this->country_code)) {
-				throw new \Exception('Country Code must be numeric');
-			}
-		
-		if(!$this->name){
-			throw new \Exception('No Name Set');
-		}
-		
-		/*
+        if (! preg_match('/^[0-9]+$/', $this->country_code)) {
+            throw new \Exception('Country Code must be numeric');
+        }
+
+        if (! $this->name) {
+            throw new \Exception('No Name Set');
+        }
+
+        /*
         // Check if Name is set
-		if(!$this->country_code){
-			if (empty($this->original['name']) || $this->original['name'] == '') {
-				throw new \Exception('No Name Set');
-			}
-		}
-		
-		/*
+        if(!$this->country_code){
+            if (empty($this->original['name']) || $this->original['name'] == '') {
+                throw new \Exception('No Name Set');
+            }
+        }
+
+        /*
         // Check if start is set
         if (empty($this->original['start']) || $this->original['start'] == '') {
             throw new \Exception('No Range Start Set');
@@ -129,8 +129,7 @@ class Didblock extends Model
                 throw new \Exception('NANP Start or End Range must not be more than 10 digits long');
             }
         }
-		*/
-		
+        */
     }
 
     protected function populate()

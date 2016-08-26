@@ -45,14 +45,14 @@ class DidblockTest extends TestCase
 
 
         // Call Stuff that should fail
-		
-		$this->createDidblocks_fail_no_country_code();
-		$this->createDidblocks_fail_blank_country_code();
-		$this->createDidblocks_nonnumeric_country_code();
-		
+
+        $this->createDidblocks_fail_no_country_code();
+        $this->createDidblocks_fail_blank_country_code();
+        $this->createDidblocks_nonnumeric_country_code();
+
         $this->createDidblocks_fail_11digits();
-		$this->createDidblocks_fail_blank_country_code();
-		
+        $this->createDidblocks_fail_blank_country_code();
+
         // This one needs error checking put in for update to block start and end editing.
         $this->updateDidblocks_fail_change_range();
 
@@ -81,10 +81,10 @@ class DidblockTest extends TestCase
 
         if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
-			echo ' | Message: '.$response->original['message'];
+            echo ' | Message: '.$response->original['message'];
         } else {
             echo ' | Found '.count($response->original['didblocks']).' didblocks';
-			echo ' | Message: '.$response->original['message'];
+            echo ' | Message: '.$response->original['message'];
             echo ' | Status Code: '.$response->original['status_code'];
             $this->assertEquals(200, $response->original['status_code']);
         }
@@ -122,13 +122,13 @@ class DidblockTest extends TestCase
                         $post);
         //dd($response);
         if (! $response->original['status_code'] == 200) {
-			echo ' | Message: '.$response->original['message'];
+            echo ' | Message: '.$response->original['message'];
             \metaclassing\Utility::dumper($response);
         } else {
             if (isset($response->original['didblock']['id'])) {
                 $this->didblock_id = $response->original['didblock']['id'];
             }
-			echo ' | Message: '.$response->original['message'];
+            echo ' | Message: '.$response->original['message'];
             echo ' | Status Code: '.$response->original['status_code'];
             $this->assertEquals(200, $response->original['status_code']);
         }
@@ -192,23 +192,23 @@ class DidblockTest extends TestCase
     /*
         Create Bad Data that should fail here.
     */
-	
-	
-	
-	/********************************************************************
-		Country Code Validation
-	********************************************************************/
-	
-	protected function createDidblocks_nonnumeric_country_code()
+
+
+
+    /********************************************************************
+        Country Code Validation
+    ********************************************************************/
+
+    protected function createDidblocks_nonnumeric_country_code()
     {
         // This test should fail because it has 11 digits on a NANP country code.
         echo PHP_EOL.__METHOD__.' | Creating test Did block with non integer';
         $post = [
-				'country_code'			=> '+1',
-                'name'                 => 'TEST DID BLOCK',
-                'carrier'              => 'TEST CARRIER',
-                'start'                => 10000000000,
-                'end'                  => 10000009999,
+                'country_code'            => '+1',
+                'name'                    => 'TEST DID BLOCK',
+                'carrier'                 => 'TEST CARRIER',
+                'start'                   => 10000000000,
+                'end'                     => 10000009999,
                 ];
         $response = $this->call('POST',
                         '/api/didblock?token='.$this->token,
@@ -224,8 +224,8 @@ class DidblockTest extends TestCase
             $this->assertEquals(500, $response->original['status_code']);
         }
     }
-	
-	protected function createDidblocks_fail_no_country_code()
+
+    protected function createDidblocks_fail_no_country_code()
     {
         // This test should fail because it has 11 digits on a NANP country code.
         echo PHP_EOL.__METHOD__.' | Creating test Did block with no country code set';
@@ -249,14 +249,14 @@ class DidblockTest extends TestCase
             $this->assertEquals(500, $response->original['status_code']);
         }
     }
-	
-	protected function createDidblocks_fail_blank_country_code()
+
+    protected function createDidblocks_fail_blank_country_code()
     {
         // This test should fail because it has 11 digits on a NANP country code.
         echo PHP_EOL.__METHOD__.' | Creating test Did block with blank country code';
         $post = [
-                'country_code'		=> '',
-				'name'                 => 'TEST DID BLOCK',
+                'country_code'         => '',
+                'name'                 => 'TEST DID BLOCK',
                 'carrier'              => 'TEST CARRIER',
                 'start'                => 10000000000,
                 'end'                  => 10000009999,

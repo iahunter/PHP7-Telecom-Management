@@ -47,13 +47,11 @@ function less_10digits($num)
 $test = less_10digits(123);
 echo $test;
 
-function check_countrycode($num){
-	if (isset($num) && (!preg_match('/^[0-9]+$/', $num))) {
-			echo 'error';
-	}
+function check_countrycode($num)
+{
+    if (isset($num) && (! preg_match('/^[0-9]+$/', $num))) {
+        echo 'error';
+    }
 }
 
 echo check_countrycode(+1);
-	
-
-

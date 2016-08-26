@@ -26,7 +26,7 @@ class DidblockTest extends TestCase
 
     protected $token;
     protected $didblocks;
-	protected $didblock;
+    protected $didblock;
     protected $didblock_id;
 
     public function testDidblockAPI()
@@ -41,20 +41,20 @@ class DidblockTest extends TestCase
         $this->getDidblocks();
         $this->updateDidblocks();
         $this->getDidblocks();
-		$this->getDidblock();
-		
-		
-		// Call Stuff that should fail
-		
-		$this->createDidblocks_fail_11digits();
-		
-		// This one needs error checking put in for update to block start and end editing. 
-		//$this->updateDidblocks_fail_change_range();
-		
-		/**/
-		
-		$this->deleteDidblocks();
-		
+        $this->getDidblock();
+
+
+        // Call Stuff that should fail
+
+        $this->createDidblocks_fail_11digits();
+
+        // This one needs error checking put in for update to block start and end editing.
+        //$this->updateDidblocks_fail_change_range();
+
+        /**/
+
+        $this->deleteDidblocks();
+
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
 
@@ -72,15 +72,15 @@ class DidblockTest extends TestCase
         $response = $this->call('GET', '/api/didblock?token='.$this->token);
         $this->didblocks = $response->original['didblocks'];
         //$this->assertEquals(true, $response->original['success']);
-		//dd($this->didblocks);
-		
-		if (!$response->original['status_code'] == 200) {
+        //dd($this->didblocks);
+
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			echo ' | Found '.count($response->original['didblocks']).' didblocks';
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(200, $response->original['status_code']);
-		}
+        } else {
+            echo ' | Found '.count($response->original['didblocks']).' didblocks';
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(200, $response->original['status_code']);
+        }
     }
 
     protected function getDids()
@@ -89,41 +89,40 @@ class DidblockTest extends TestCase
         $response = $this->call('GET', '/api/didblock?token='.$this->token);
         $this->didblocks = $response->original['didblocks'];
         //dd($this->didblocks);
-		if (!$response->original['status_code'] == 200) {
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			echo ' | Found '.count($response->original['didblocks']).' didblocks';
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(200, $response->original['status_code']);
-		}
+        } else {
+            echo ' | Found '.count($response->original['didblocks']).' didblocks';
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(200, $response->original['status_code']);
+        }
     }
 
     protected function createDidblocks()
     {
         echo PHP_EOL.__METHOD__.' | Creating test Did block';
         $post = [
-                'country_code'         => 1,
-                'name'                 => 'TEST DID BLOCK',
-                'carrier'              => 'TEST CARRIER',
-                'start'                => 1000000000,
-                'end'                  => 1000009999,
-				'type'				   => 'private',
-				'comment'			=> 'Test Comment'
+                'country_code'           => 1,
+                'name'                   => 'TEST DID BLOCK',
+                'carrier'                => 'TEST CARRIER',
+                'start'                  => 1000000000,
+                'end'                    => 1000009999,
+                'type'                   => 'private',
+                'comment'                => 'Test Comment',
                 ];
         $response = $this->call('POST',
                         '/api/didblock?token='.$this->token,
                         $post);
         //dd($response);
-		if (!$response->original['status_code'] == 200) {
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			if(isset($response->original['didblock']['id'])){
-				$this->didblock_id = $response->original['didblock']['id'];
-			}
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(200, $response->original['status_code']);
-		}
-        
+        } else {
+            if (isset($response->original['didblock']['id'])) {
+                $this->didblock_id = $response->original['didblock']['id'];
+            }
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(200, $response->original['status_code']);
+        }
     }
 
     protected function updateDidblocks()
@@ -133,62 +132,61 @@ class DidblockTest extends TestCase
                 'country_code'         => 1,
                 'name'                 => 'TEST DID BLOCK CHANGED',
                 'carrier'              => 'TEST CARRIER CHANGED',
-                //'start'                => 1000000000, 				// We don't want to allow changing start and end of a range. 
+                //'start'                => 1000000000, 				// We don't want to allow changing start and end of a range.
                 //'end'                  => 1000009999,
-				'type'				   => 'private',
-				'comment'			=> 'Test Comment Updated'
+                'type'                   => 'private',
+                'comment'                => 'Test Comment Updated',
                 ];
         $response = $this->call('PUT',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token,
                         $put);
-		//dd($response);
-		//echo $response->original['status_code'], $response->original['message'];
+        //dd($response);
+        //echo $response->original['status_code'], $response->original['message'];
         //$this->assertEquals(true, $response->original['success']);
-		if (!$response->original['status_code'] == 200) {
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(200, $response->original['status_code']);
-		}
+        } else {
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(200, $response->original['status_code']);
+        }
     }
-	
-	protected function getDidblock()
+
+    protected function getDidblock()
     {
         echo PHP_EOL.__METHOD__.' | Getting '.$this->didblock_id.' test Did block';
-        $response = $this->call('GET', 
-							'/api/didblock/'.$this->didblock_id.'?token='.$this->token);
+        $response = $this->call('GET',
+                            '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
         $this->didblock = $response->original['didblock'];
-		
-		if (!$response->original['status_code'] == 200) {
+
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(200, $response->original['status_code']);
-		}
+        } else {
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(200, $response->original['status_code']);
+        }
     }
-	
-	protected function deleteDidblocks()
+
+    protected function deleteDidblocks()
     {
         echo PHP_EOL.__METHOD__.' | Deleting '.$this->didblock_id.' test Did block';
         $response = $this->call('DELETE',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
-        
-		if (!$response->original['status_code'] == 200) {
+
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(200, $response->original['status_code']);
-		}
+        } else {
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(200, $response->original['status_code']);
+        }
     }
 
-	/*
-		Create Bad Data that should fail here. 
-	*/
-	
-	
-	protected function createDidblocks_fail_11digits()
+    /*
+        Create Bad Data that should fail here.
+    */
+
+    protected function createDidblocks_fail_11digits()
     {
-		// This test should fail because it has 11 digits on a NANP country code. 
+        // This test should fail because it has 11 digits on a NANP country code.
         echo PHP_EOL.__METHOD__.' | Creating test Did block with 11 digits';
         $post = [
                 'country_code'         => 1,
@@ -202,44 +200,43 @@ class DidblockTest extends TestCase
                         $post);
         //dd($response);
 
-		// If the status_code is 500, then test is successfull. 
-		if (!$response->original['status_code'] == 500) {
+        // If the status_code is 500, then test is successfull.
+        if (! $response->original['status_code'] == 500) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			echo ' | Message: '.$response->original['message'];
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(500, $response->original['status_code']);
-		}
+        } else {
+            echo ' | Message: '.$response->original['message'];
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(500, $response->original['status_code']);
+        }
     }
-	
-	protected function updateDidblocks_fail_change_range()
+
+    protected function updateDidblocks_fail_change_range()
     {
-		// This test should fail because it is trying to update the start and end of an existing range. We should protect those fields from update. 
+        // This test should fail because it is trying to update the start and end of an existing range. We should protect those fields from update.
         echo PHP_EOL.__METHOD__.' | Updating '.$this->didblock_id.' test Did block';
         $put = [
                 'country_code'         => 1,
                 'name'                 => 'TEST DID BLOCK CHANGE FAIL',
                 'carrier'              => 'TEST CARRIER CHANGED FAIL',
-                'start'                => 1000000000, 				// We don't want to allow changing start and end of a range. 
-                'end'                  => 1000000999,				// We don't want to allow changing start and end of a range. 
+                'start'                => 1000000000,                // We don't want to allow changing start and end of a range.
+                'end'                  => 1000000999,                // We don't want to allow changing start and end of a range.
                 ];
         $response = $this->call('PUT',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token,
                         $put);
         //dd($response);
 
-		// If the status_code is 500, then test is successfull. 
-		if (!$response->original['status_code'] == 500) {
+        // If the status_code is 500, then test is successfull.
+        if (! $response->original['status_code'] == 500) {
             \metaclassing\Utility::dumper($response);
-        }else{
-			echo ' | Message: '.$response->original['message'];
-			echo ' | Status Code: '.$response->original['status_code'];
-			$this->assertEquals(500, $response->original['status_code']);
-		}
+        } else {
+            echo ' | Message: '.$response->original['message'];
+            echo ' | Status Code: '.$response->original['status_code'];
+            $this->assertEquals(500, $response->original['status_code']);
+        }
     }
-	
 
     /*
-	FUTURE TESTS GO HERE
-	/**/
+    FUTURE TESTS GO HERE
+    /**/
 }

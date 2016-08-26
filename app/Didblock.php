@@ -16,8 +16,18 @@ class Didblock extends Model
     //
     use SoftDeletes;
     protected $table = 'did_block';
-    protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end', 'comment'];
-
+    protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end', 'type', 'comment'];
+	
+	/* John trying help with update protection of start and end range numbers. 
+	public function getFillable()
+    {
+		if($this->id){
+			return ['country_code', 'name', 'carrier', 'comment'];
+		}
+        return $this->fillable;
+    }
+	*/
+	
     public function log($message = '')
     {
         if ($message) {
@@ -51,6 +61,8 @@ class Didblock extends Model
 
     protected function validate()
     {
+		// ADD VALIDATION THAT IS SPECIFIC TO THE 
+		// for updating use an if isset on start and end
         if ($this->country_code == 1) {
             //            echo 'Validation succeeded'.PHP_EOL;
             return true;
@@ -60,7 +72,7 @@ class Didblock extends Model
             return true;
         } else {
             //            echo 'Validation failed'.PHP_EOL;
-            return false;
+            throw new \Exception("Invalid Country Code");
         }
     }
 
@@ -69,17 +81,17 @@ class Didblock extends Model
         // Loop thru the range and create the individual DIDs in the block.
         $range = range($this->start, $this->end);
         foreach ($range as $number) {
-            // Build the request for each number.
-            $request = [
+            // Build the request for each number. 
+			$request = [
                         'name'   => '',
                         'number' => $number,
                         'status' => 'available',
                         ];
-
-            // Create the dids inside block
-            //$this->log($request);
-            $response = $this->dids()->create($request); // This goes out and builds the new did transaction. The parent ID is joined automatically.
-            //$this->log($response);
+            
+			// Create the dids inside block
+			//$this->log($request);
+            $response = $this->dids()->create($request); // This goes out and builds the new did transaction. The parent ID is joined automatically. 
+			//$this->log($response);
         }
     }
 }

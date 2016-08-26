@@ -26,13 +26,13 @@ class DidblockTest extends TestCase
 
     protected $token;
     protected $didblocks;
-    protected $didblock;
+	protected $didblock;
     protected $didblock_id;
 
     public function testDidblockAPI()
     {
         // This is the main TEST Function. PHP Unit must be started with 'test'
-        echo PHP_EOL.__METHOD__.' Starting Telephone Number API tests';
+        echo PHP_EOL.__METHOD__.' | Starting Telephone Number API tests';
 
         $this->getJWT(env('TEST_USER_DN'));
 
@@ -41,21 +41,26 @@ class DidblockTest extends TestCase
         $this->getDidblocks();
         $this->updateDidblocks();
         $this->getDidblocks();
-        $this->getDidblock();
-        $this->deleteDidblocks();
-
-        /* Call Stuff that should fail
-
-        $this->createDidblocks_fail_11digits();
-
-        /**/
-
+		$this->getDidblock();
+		
+		
+		// Call Stuff that should fail
+		
+		$this->createDidblocks_fail_11digits();
+		
+		// This one needs error checking put in for update to block start and end editing. 
+		//$this->updateDidblocks_fail_change_range();
+		
+		/**/
+		
+		$this->deleteDidblocks();
+		
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
 
     protected function getJWT($userdn)
     {
-        echo PHP_EOL.__METHOD__.' Generating JWT for user '.$userdn;
+        echo PHP_EOL.__METHOD__.' | Generating JWT for user '.$userdn;
         $credentials = ['dn' => $userdn, 'password' => ''];
         $this->token = JWTAuth::attempt($credentials);
         echo ' got token '.$this->token;
@@ -63,85 +68,128 @@ class DidblockTest extends TestCase
 
     protected function getDidblocks()
     {
-        echo PHP_EOL.__METHOD__.' Getting DID Blocks';
+        echo PHP_EOL.__METHOD__.' | Getting DID Blocks';
         $response = $this->call('GET', '/api/didblock?token='.$this->token);
         $this->didblocks = $response->original['didblocks'];
-        $this->assertEquals(true, $response->original['success']);
-        echo ' - found '.count($response->original['didblocks']).' didblocks';
-        //dd($this->didblocks);
+        //$this->assertEquals(true, $response->original['success']);
+		//dd($this->didblocks);
+		
+		if (!$response->original['status_code'] == 200) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			echo ' | Found '.count($response->original['didblocks']).' didblocks';
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(200, $response->original['status_code']);
+		}
     }
 
     protected function getDids()
     {
-        echo PHP_EOL.__METHOD__.' Getting DID Blocks';
+        echo PHP_EOL.__METHOD__.' | Getting DID Blocks';
         $response = $this->call('GET', '/api/didblock?token='.$this->token);
         $this->didblocks = $response->original['didblocks'];
-        $this->assertEquals(true, $response->original['success']);
-        echo ' - found '.count($response->original['didblocks']).' didblocks';
         //dd($this->didblocks);
+		if (!$response->original['status_code'] == 200) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			echo ' | Found '.count($response->original['didblocks']).' didblocks';
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(200, $response->original['status_code']);
+		}
     }
 
     protected function createDidblocks()
     {
-        echo PHP_EOL.__METHOD__.' Creating test Did block';
+        echo PHP_EOL.__METHOD__.' | Creating test Did block';
         $post = [
                 'country_code'         => 1,
                 'name'                 => 'TEST DID BLOCK',
                 'carrier'              => 'TEST CARRIER',
                 'start'                => 1000000000,
                 'end'                  => 1000009999,
+				'type'				   => 'private',
+				'comment'			=> 'Test Comment'
                 ];
         $response = $this->call('POST',
                         '/api/didblock?token='.$this->token,
                         $post);
         //dd($response);
-        $this->didblock_id = $response->original['didblock']['id'];
-        $this->assertEquals(true, $response->original['success']);
+		if (!$response->original['status_code'] == 200) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			if(isset($response->original['didblock']['id'])){
+				$this->didblock_id = $response->original['didblock']['id'];
+			}
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(200, $response->original['status_code']);
+		}
+        
     }
 
     protected function updateDidblocks()
     {
-        echo PHP_EOL.__METHOD__.' Updating '.$this->didblock_id.' test Did block';
+        echo PHP_EOL.__METHOD__.' | Updating '.$this->didblock_id.' test Did block';
         $put = [
                 'country_code'         => 1,
                 'name'                 => 'TEST DID BLOCK CHANGED',
                 'carrier'              => 'TEST CARRIER CHANGED',
-                'start'                => 1000000000,
-                'end'                  => 1000009999,
+                //'start'                => 1000000000, 				// We don't want to allow changing start and end of a range. 
+                //'end'                  => 1000009999,
+				'type'				   => 'private',
+				'comment'			=> 'Test Comment Updated'
                 ];
         $response = $this->call('PUT',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token,
                         $put);
-        $this->assertEquals(true, $response->original['success']);
+		//dd($response);
+		//echo $response->original['status_code'], $response->original['message'];
+        //$this->assertEquals(true, $response->original['success']);
+		if (!$response->original['status_code'] == 200) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(200, $response->original['status_code']);
+		}
     }
-
-    protected function getDidblock()
+	
+	protected function getDidblock()
     {
-        echo PHP_EOL.__METHOD__.'  Getting '.$this->didblock_id.' test Did block';
-        $response = $this->call('GET',
-                            '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
+        echo PHP_EOL.__METHOD__.' | Getting '.$this->didblock_id.' test Did block';
+        $response = $this->call('GET', 
+							'/api/didblock/'.$this->didblock_id.'?token='.$this->token);
         $this->didblock = $response->original['didblock'];
-        $this->assertEquals(true, $response->original['success']);
-        //dd($this->didblock);
+		
+		if (!$response->original['status_code'] == 200) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(200, $response->original['status_code']);
+		}
     }
-
-    protected function deleteDidblocks()
+	
+	protected function deleteDidblocks()
     {
-        echo PHP_EOL.__METHOD__.' Deleting '.$this->didblock_id.' test Did block';
+        echo PHP_EOL.__METHOD__.' | Deleting '.$this->didblock_id.' test Did block';
         $response = $this->call('DELETE',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
-        $this->assertEquals(true, $response->original['success']);
+        
+		if (!$response->original['status_code'] == 200) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(200, $response->original['status_code']);
+		}
     }
 
-    /*
-        Create Bad Data that should fail here.
-    */
-
-    // NEED TO FIGURE OUT HOW TO MAKE A FAILURE A SUCCESS???
-
-    protected function createDidblocks_fail_11digits()
+	/*
+		Create Bad Data that should fail here. 
+	*/
+	
+	
+	protected function createDidblocks_fail_11digits()
     {
-        echo PHP_EOL.__METHOD__.' Creating test Did block';
+		// This test should fail because it has 11 digits on a NANP country code. 
+        echo PHP_EOL.__METHOD__.' | Creating test Did block with 11 digits';
         $post = [
                 'country_code'         => 1,
                 'name'                 => 'TEST DID BLOCK',
@@ -153,179 +201,45 @@ class DidblockTest extends TestCase
                         '/api/didblock?token='.$this->token,
                         $post);
         //dd($response);
-        $this->didblock_id = $response->original['didblock']['id'];
-        $this->assertEquals(true, $response->original['success']);
+
+		// If the status_code is 500, then test is successfull. 
+		if (!$response->original['status_code'] == 500) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			echo ' | Message: '.$response->original['message'];
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(500, $response->original['status_code']);
+		}
     }
+	
+	protected function updateDidblocks_fail_change_range()
+    {
+		// This test should fail because it is trying to update the start and end of an existing range. We should protect those fields from update. 
+        echo PHP_EOL.__METHOD__.' | Updating '.$this->didblock_id.' test Did block';
+        $put = [
+                'country_code'         => 1,
+                'name'                 => 'TEST DID BLOCK CHANGE FAIL',
+                'carrier'              => 'TEST CARRIER CHANGED FAIL',
+                'start'                => 1000000000, 				// We don't want to allow changing start and end of a range. 
+                'end'                  => 1000000999,				// We don't want to allow changing start and end of a range. 
+                ];
+        $response = $this->call('PUT',
+                        '/api/didblock/'.$this->didblock_id.'?token='.$this->token,
+                        $put);
+        //dd($response);
+
+		// If the status_code is 500, then test is successfull. 
+		if (!$response->original['status_code'] == 500) {
+            \metaclassing\Utility::dumper($response);
+        }else{
+			echo ' | Message: '.$response->original['message'];
+			echo ' | Status Code: '.$response->original['status_code'];
+			$this->assertEquals(500, $response->original['status_code']);
+		}
+    }
+	
 
     /*
-    protected function getAccountCertificates()
-    {
-        echo PHP_EOL.__METHOD__.' Loading certificates for accounts';
-        $this->accountcertificates = [];
-        foreach ($this->accounts as $account) {
-            $response = $this->call('GET',
-                                    '/api/ca/account/'.$account['id'].'/certificate/?token='.$this->token);
-            $this->assertEquals(true, $response->original['success']);
-            $this->accountcertificates[$account['id']] = $response->original['certificates'];
-            echo ' - found '.count($response->original['certificates']).' in account '.$account['id'];
-        }
-    }
-
-    protected function getAccountIdByName($name)
-    {
-        foreach ($this->accounts as $account) {
-            if ($account['name'] == $name) {
-                return $account['id'];
-            }
-        }
-        throw new \Exception('could not identify account id for account named '.$name);
-    }
-
-    protected function getAccountCertificateIdByName($account_id, $name)
-    {
-        foreach ($this->accountcertificates[$account_id] as $certificate) {
-            if ($certificate['name'] == $name) {
-                return $certificate['id'];
-            }
-        }
-        throw new \Exception('could not identify certificate id for account id '.$account_id.' named '.$name);
-    }
-
-    protected function selfSignCaAccountCertificates()
-    {
-        echo PHP_EOL.__METHOD__.' Self signing phpUnit Root CA cert';
-        $account_id = $this->getAccountIdByName('phpUnitCaAccount');
-        $certificate_id = $this->getAccountCertificateIdByName($account_id, 'phpUnit Root CA');
-        $response = $this->call('GET',
-                                '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/sign?token='.$this->token);
-        $this->assertEquals(true, $response->original['success']);
-    }
-
-    protected function createCertificate()
-    {
-        echo PHP_EOL.__METHOD__.' Creating new certificate for example.com';
-        $account_id = $this->getAccountIdByName('phpUnitCaAccount');
-        $post = [
-                    'name'     => 'example.com',
-                    'subjects' => ['example.com', 'www.example.com', 'test.phpunit.org'],
-                    'type'     => 'server',
-                ];
-        $response = $this->call('POST',
-                                '/api/ca/account/'.$account_id.'/certificate/?token='.$this->token,
-                                $post);
-        $this->assertEquals(true, $response->original['success']);
-    }
-
-    protected function generateKeys()
-    {
-        echo PHP_EOL.__METHOD__.' Generating keys for example.com cert';
-        $account_id = $this->getAccountIdByName('phpUnitCaAccount');
-        $certificate_id = $this->getAccountCertificateIdByName($account_id, 'example.com');
-        $response = $this->call('GET',
-                                '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/generatekeys?token='.$this->token);
-        $this->assertEquals(true, $response->original['success']);
-    }
-
-    protected function generateCSR()
-    {
-        echo PHP_EOL.__METHOD__.' Generating csr for example.com cert';
-        $account_id = $this->getAccountIdByName('phpUnitCaAccount');
-        $certificate_id = $this->getAccountCertificateIdByName($account_id, 'example.com');
-        $response = $this->call('GET',
-                                '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/generaterequest?token='.$this->token);
-        $this->assertEquals(true, $response->original['success']);
-    }
-
-    protected function signCSR()
-    {
-        echo PHP_EOL.__METHOD__.' Signing csr for example.com cert';
-        $account_id = $this->getAccountIdByName('phpUnitCaAccount');
-        $certificate_id = $this->getAccountCertificateIdByName($account_id, 'example.com');
-        $response = $this->call('GET',
-                                '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/sign?token='.$this->token);
-        if (! $response->original['success']) {
-            \metaclassing\Utility::dumper($response);
-        }
-        $this->assertEquals(true, $response->original['success']);
-    }
-
-    protected function validateCertificateRouteAccess($expected)
-    {
-        echo PHP_EOL.__METHOD__.' Validating certificate route access conditions';
-        $i = 0;
-        $account_id = $this->getAccountIdByName('phpUnitCaAccount');
-        $certificate_id = $this->getAccountCertificateIdByName($account_id, 'example.com');
-        //
-        echo PHP_EOL.__METHOD__.' User can certificates: '.$expected[$i];
-        $response = $this->call('GET', '/api/ca/account/'.$account_id.'/certificate/?token='.$this->token);
-        if ($expected[$i++]) {
-            $this->assertEquals(true, $response->original['success']);
-        } else {
-            $this->assertEquals(0, count($response->original['certificates']));
-        }
-        //
-        echo PHP_EOL.__METHOD__.' User can view assigned certificate: '.$expected[$i];
-        $response = $this->call('GET', '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/?token='.$this->token);
-        if ($expected[$i++]) {
-            $this->assertEquals(true, $response->original['success']);
-        } else {
-            $this->assertEquals(401, $response->original['status_code']);
-        }
-        //
-        echo PHP_EOL.__METHOD__.' User can create new certificate: '.$expected[$i];
-        $post = [
-                'name'             => 'phpUnit Test Cert',
-                'subjects'         => '[]',
-                'type'             => 'server',
-                ];
-        $response = $this->call('POST',
-                        '/api/ca/account/'.$account_id.'/certificate/?token='.$this->token,
-                        $post);
-        if ($expected[$i++]) {
-            $this->assertEquals(true, $response->original['success']);
-        } else {
-            $this->assertEquals(401, $response->original['status_code']);
-        }
-        //
-        echo PHP_EOL.__METHOD__.' User can generate csr: '.$expected[$i];
-        $response = $this->call('GET', '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/generaterequest/?token='.$this->token);
-        if ($expected[$i++]) {
-            $this->assertEquals(true, $response->original['success']);
-        } else {
-            $this->assertEquals(401, $response->original['status_code']);
-        }
-        //
-        echo PHP_EOL.__METHOD__.' User can sign csr: '.$expected[$i];
-        $response = $this->call('GET', '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/sign/?token='.$this->token);
-        if ($expected[$i++]) {
-            $this->assertEquals(true, $response->original['success']);
-        } else {
-            $this->assertEquals(401, $response->original['status_code']);
-        }
-        //
-        echo PHP_EOL.__METHOD__.' User can renew cert: '.$expected[$i];
-        $response = $this->call('GET', '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/renew/?token='.$this->token);
-        if ($expected[$i++]) {
-            $this->assertEquals(true, $response->original['success']);
-        } else {
-            $this->assertEquals(401, $response->original['status_code']);
-        }
-        //
-        echo PHP_EOL.__METHOD__.' User can view pkcs12: '.$expected[$i];
-        $response = $this->call('GET', '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/pkcs12/?token='.$this->token);
-        if ($expected[$i++]) {
-            // I have literally no idea how to test this response format
-        } else {
-            $this->assertEquals(401, $response->original['status_code']);
-        }
-        //
-        echo PHP_EOL.__METHOD__.' User can view pem: '.$expected[$i];
-        $response = $this->call('GET', '/api/ca/account/'.$account_id.'/certificate/'.$certificate_id.'/pem/?token='.$this->token);
-        if ($expected[$i++]) {
-            // I have literally no idea how to test this response format
-        } else {
-            $this->assertEquals(401, $response->original['status_code']);
-        }
-    }
-/**/
+	FUTURE TESTS GO HERE
+	/**/
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Didblock;
 //use App\Didblock;
 
 class DidblockSeeder extends Seeder
@@ -14,19 +14,32 @@ class DidblockSeeder extends Seeder
     public function run()
     {
         $count = 0;
-        $start = 4025550000;
-        $end = 4025550999;
+        $start = 1234560000;
+        $end = 1234560009;
 
         // Create DIDs until the count is excedded.
-        while ($count < 100000) {
+        while ($count < 5) {
             $count++;
-            $start = $start + 100;
-            $end = $end + 100;
-
-            // Insert into DB.
+			
+            /* Insert into DB.
             DB::table('did_block')->insert([
-            ['country_code' => 1, 'name' => 'TEST DID Block '.str_random(10), 'carrier' => str_random(10), 'start' => $start, 'end' => $end, 'comment' => str_random(10)],
+            ['country_code' => 1, 'name' => 'TEST DID Block '.str_random(10), 'carrier' => str_random(10), 'start' => $start, 'end' => $end, 'comment' => str_random(10), 'type' => 'public'],
             ]);
+			*/
+			
+			//Insert using Model.
+			Didblock::create([	'country_code' => 1, 
+								'name' => 'TEST DID Block '.str_random(10), 
+								'carrier' => str_random(10), 
+								'start' => $start, 
+								'end' => $end, 
+								'comment' => str_random(10), 
+								'type' => 'public'
+								]
+            );
+			
+			$start = $start + 10;
+            $end = $end + 10;
         }
 
 

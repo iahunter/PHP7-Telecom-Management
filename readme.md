@@ -2,7 +2,7 @@
 
 This is an app running on Laravel 5.2 + Dingo + JWT + Bouncer
 
-REST API to create, update, and delete phone number blocks for number tracking. It can be called via anything capable of interacting with a RESTful/JSON API.
+RESTful API to create, read, update, and delete phone number blocks for number tracking. It can be called via anything capable of interacting with a RESTful/JSON API.
 
 Authentication is possible via client TLS certificate, or LDAP if enabled and configured. User management is not in scope. 
 

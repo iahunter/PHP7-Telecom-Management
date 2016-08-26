@@ -61,10 +61,10 @@ class Didcontroller extends Controller
         if ($request['start'] > $request['end']) {
             throw new \Exception('Error: Range start must not be greater than range end');
         }
-
-        // Check if start and end are in same NPA NXX if they have country Code of 1.
-        if (($request['country_code'] == 1) && (! $this->is_in_same_npanxx($request['start'], $request['end']))) {
-            throw new \Exception('Range Start and End must be in same NPA NXX');
+		
+		// Check if start and end are in same NPA NXX if they have country Code of 1. 
+        if (($request['country_code'] == 1) && (!$this->is_in_same_npanxx($request['start'], $request['end']))) {
+            throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
         }
 
         // Check to make sure that block is not greater than or equal to 10000 DIDs. 0000 - 9999 - This will help keep all in same NPANXX
@@ -72,22 +72,38 @@ class Didcontroller extends Controller
         if ($diff >= 10000) {
             throw new \Exception('Error: Block must not be greater than 10000 DIDs');
         }
-
+		
+		// Check if country code is 1 and number cannot be more than 10 digits. 
+        if ($request['country_code'] == 1) {
+			if ((!$this->less_10digits($request['start']) || (!$this->less_10digits($request['end'])))) {
+				throw new \Exception('NANP Start or End Range must not be more than 10 digits long');
+			}
+		}
         return $request;
     }
+	
+	
+	public function less_10digits($num)
+	{
+		$num_length = strlen((string)$num);
+		if($num_length <= 10) {
+			return true;
+		}
+	}
 
-    public function is_in_same_npanxx($start, $end)
-    {
-        $startarray = str_split($start, 6);
-        $endarray = str_split($end, 6);
-        $npanxx_start = $startarray[0];
-        $npanxx_end = $endarray[0];
-
-        if ($npanxx_start == $npanxx_end) {
-            //print "Equal \n";
-            return true;
-        }
-    }
+	public function is_in_same_npanxx($start, $end)
+	{
+		// Function to check if the start and end begin with the same 6 digits. 
+		$startarray = str_split($start, 6);
+		$endarray = str_split($end, 6);
+		$npanxx_start = $startarray[0];
+		$npanxx_end = $endarray[0];
+		
+		if ($npanxx_start == $npanxx_end){
+			//print "Equal \n";
+			return true;
+		}
+	}
 
     public function is_in_range($val, $min, $max)
     {

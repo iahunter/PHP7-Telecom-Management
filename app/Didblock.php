@@ -59,7 +59,7 @@ class Didblock extends Model
         return $this->hasMany(Did::class);
     }
 
-	public function less_10digits($num)
+    public function less_10digits($num)
     {
         $num_length = strlen((string) $num);
         if ($num_length <= 10) {
@@ -105,11 +105,11 @@ class Didblock extends Model
 
         // Model Method using count(). If the number of rows that overlaps with the range return true.
         // Check if block start is between any existing blocks.
-        if (Didblock::where([['country_code', '=', $country_code], ['start', '<=', $start], ['end', '>=', $start]])->count()) {
+        if (self::where([['country_code', '=', $country_code], ['start', '<=', $start], ['end', '>=', $start]])->count()) {
             return true;
         }
         // Check if block end is between any existing blocks.
-        if (Didblock::where([['country_code', '=', $country_code], ['start', '<=', $end], ['end', '>=', $end]])->count()) {
+        if (self::where([['country_code', '=', $country_code], ['start', '<=', $end], ['end', '>=', $end]])->count()) {
             return true;
 
             // *** FUTURE ***
@@ -119,7 +119,7 @@ class Didblock extends Model
 
     protected function validate()
     {
-		if (! $this->name) {
+        if (! $this->name) {
             throw new \Exception('No Name Set');
         }
         // Make sure the start and end attributes are impossible to change once set
@@ -136,17 +136,17 @@ class Didblock extends Model
 
 
         // Check if Name is set
-        if(!$this->country_code){
+        if (! $this->country_code) {
             if (empty($this->original['name']) || $this->original['name'] == '') {
                 throw new \Exception('No Name Set');
             }
         }
 
-        if (!$this->start) {
+        if (! $this->start) {
             throw new \Exception('No Range Start Set');
         }
 
-		if (!$this->end) {
+        if (! $this->end) {
             throw new \Exception('No Range End Set');
         }
 
@@ -165,7 +165,7 @@ class Didblock extends Model
         }
 
         // Prevent 11+ digit DIDs
-        if ( $this->start > 9999999999 || $this->end > 9999999999 ) {
+        if ($this->start > 9999999999 || $this->end > 9999999999) {
             throw new \Exception('Error: DID too long');
         }
 
@@ -176,7 +176,7 @@ class Didblock extends Model
 
         // Check to make sure that block is not greater than or equal to 10000 DIDs. 0000 - 9999 - This will help keep all in same NPANXX
         $diff = $this->end - $this->start;
-		//dd($diff);
+        //dd($diff);
         if ($diff >= 10000) {
             throw new \Exception('Error: Block must not be greater than 10000 DIDs');
         }

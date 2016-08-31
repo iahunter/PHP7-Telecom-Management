@@ -20,7 +20,7 @@ class Didcontroller extends Controller
 
     public function didblock_validation($request)
     {
-		/*
+        /*
         // Check if Country Code is set.
         if (empty($request['country_code']) || $request['country_code'] == '') {
             throw new \Exception('No Country Code Set');
@@ -30,7 +30,7 @@ class Didcontroller extends Controller
             throw new \Exception('Country Code must be numeric');
         }
 
-       
+
         // Check if Name is set
         if (empty($request['name']) || $request['name'] == '') {
             throw new \Exception('No Name Set');
@@ -246,7 +246,7 @@ class Didcontroller extends Controller
 
         // Did Block Validation
         /*
-		$request = $this->didblock_validation($request);
+        $request = $this->didblock_validation($request);
 
         $ranges = [];                                                    // Build array to pass into overlap checker
         $ranges['country_code'] = $request['country_code'];                // Append the Start Range Number
@@ -269,12 +269,12 @@ class Didcontroller extends Controller
                         'didblock'       => $didblock,
                         ];
 
-            return response()->json($response);
-		/*
-	   } else {
+        return response()->json($response);
+        /*
+       } else {
             throw new \Exception('Block overlapping with existing ranges');
         }
-		*/
+        */
     }
 
     public function createDidblockold(Request $request)

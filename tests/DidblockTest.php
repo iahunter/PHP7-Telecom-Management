@@ -11,6 +11,7 @@
  * @copyright 2015-2016 @authors
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -36,32 +37,55 @@ class DidblockTest extends TestCase
 
         $this->getJWT(env('TEST_USER_DN'));
 
-        // Call all the test functions here.
-        $this->createDidblocks();
-        $this->getDidblocks();
-        $this->updateDidblocks();
-        $this->getDidblocks();
-        $this->getDidblock();
+		// Set the Test Variables and loop thru all tests
+		$this->DidblockValidationTests();
 
-
-        // Call Stuff that should fail
-
-        $this->createDidblocks_fail_no_country_code();
-        $this->createDidblocks_fail_blank_country_code();
-        $this->createDidblocks_nonnumeric_country_code();
-
-        $this->createDidblocks_fail_11digits();
-        $this->createDidblocks_fail_blank_country_code();
-
-        // This one needs error checking put in for update to block start and end editing.
-        $this->updateDidblocks_fail_change_range();
-
-        /**/
-
-        $this->deleteDidblocks();
+		echo PHP_EOL."Didblock testing complete".PHP_EOL;
 
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
+
+	// Get the Didblock creation test cases from an array
+	protected function getTestData()
+	{
+		require __DIR__.'/DidblockTest.data';
+		return $TESTS;
+	}
+
+	// Run our Didblock validation tests
+	protected function DidblockValidationTests()
+    {
+		$tests = $this->getTestData();
+		$count = 0;
+		// Loop through and run all the tests
+		foreach($tests as $name => $test) {
+			echo PHP_EOL.__METHOD__.' Case '.$count++.')';
+			// Run this specific test
+			$response = $this->createDidblock($test['input']);
+			// Handle positive and negative tests
+			if($test['success'] === true) {
+				echo ' POSITIVE '.$name.' -';
+				$this->assertEquals(200, $response->original['status_code']);
+				echo ' Created Didblock ID '.$response->original['didblock']['id'];
+			}else{
+				echo ' NEGATIVE '.$name.' -';
+				$this->assertEquals(500, $response->original['status_code']);
+				echo ' Failed to create with message '.$response->original['message'];
+			}
+		}
+		echo PHP_EOL."Didblock validation tests complete".PHP_EOL;
+    }
+
+	// This just tries to create a Didblock and returns the response
+	protected function createDidBlock($post)
+	{
+		$response = $this->call('POST',
+								'/api/didblock?token='.$this->token,
+								$post);
+		return $response;
+	}
+
+	/**************************************************************************************************/
 
     protected function getJWT($userdn)
     {
@@ -192,7 +216,6 @@ class DidblockTest extends TestCase
     /*
         Create Bad Data that should fail here.
     */
-
 
 
     /********************************************************************

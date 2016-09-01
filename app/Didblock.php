@@ -49,9 +49,10 @@ class Didblock extends Model
         static::saving(function ($didblock) {
             return $didblock->validate();
         });
-        static::created(function ($didblock) {
+		static::created(function ($didblock) {
             return $didblock->populate();
         });
+		
     }
 
     public function dids()
@@ -87,40 +88,83 @@ class Didblock extends Model
         return $val >= $min && $val <= $max;
     }
 
-    public function overlap_db_check($ranges)
+    public function overlap_db_check()
     {
-        /*
-        * This function checks if the block that is being added overlaps with an existing block that exists in the DB.
-        * Feed in the country_code, start, and end as an associative array called $ranges.
-        */
-        $country_code = $ranges['country_code'];
-        $start = $ranges['start'];
-        $end = $ranges['end'];
+		
+		/*
+		// This doesn't address country codes. We only want to throw exception if the country codes match. 
+		if (\App\Did::whereBetween('number', [$this->start, $this->end])->count()) {	
+            throw new \Exception('This block overlapps with existing DIDs');
+        }
+		
+		// OR we could do it the long way ;P
+		
 
-        /* Alternative Method - DB Method using count().
+         Alternative Method - DB Method using count().
         if(DB::table('did_block')->where([['country_code','=', $country_code],['start','>=',$start],['end','<=',$end]])->count()){
             return true;
         }
         */
 
-        // Model Method using count(). If the number of rows that overlaps with the range return true.
-        // Check if block start is between any existing blocks.
-        if (self::where([['country_code', '=', $country_code], ['start', '<=', $start], ['end', '>=', $start]])->count()) {
-            return true;
+
+		/* Overlap Function
+			if new did is overlapping if 
+			
+			new start is between start and end of other block
+				a start is between when 
+					the new start is greater than or equal to other start 
+					and less than or equal to other end. 
+			new end is between start and end of other block
+				a end is between when 
+					the new end is greater than or equal to other start
+					and less than or equal to other end. 
+			
+			other block start is between my new start and end
+			other block end is between my start and end
+		/**/
+		
+		//echo PHP_EOL."1 new Start is between) ".self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->toSql();
+        if (self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->count()) {
+			//dd(self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->get());
+            
+			throw new \Exception('This block overlapps with existing');
         }
         // Check if block end is between any existing blocks.
-        if (self::where([['country_code', '=', $country_code], ['start', '<=', $end], ['end', '>=', $end]])->count()) {
-            return true;
-
-            // *** FUTURE ***
-            // Need to return an array with ID numbers of overlapping ranges to put in the exception.
+		//echo PHP_EOL."2 new End is between) ".self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->end], ['end', '>=', $this->end]])->toSql();
+        if (self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->end], ['end', '>=', $this->end]])->count()) {
+			//dd(self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->get());
+			
+            throw new \Exception('This block overlapps with existing');
         }
+		
+		//echo PHP_EOL."3 existing start is between) ".self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->toSql();
+		// Check if block end is between any existing blocks.
+		if (self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->count()) {
+			
+            throw new \Exception('This block overlapps with existing');
+        }
+		
+		// Check if block end is between any existing blocks.
+		
+		//echo PHP_EOL."4 existing end is between) ".self::where([['country_code', '=', $this->country_code]])->whereBetween('end', [$this->start, $this->end])->toSql();
+		if (self::where([['country_code', '=', $this->country_code]])->whereBetween('end', [$this->start, $this->end])->count()) {
+			
+			//dd(self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->get());
+            throw new \Exception('This block overlapps with existing');
+        }
+		return true;
     }
 
     protected function validate()
     {
+		if( !$this->id ) {
+			$this->overlap_db_check();
+		}
         if (! $this->name) {
             throw new \Exception('No Name Set');
+        }
+		if (strlen($this->name) > 255) {
+			throw new \Exception('Name exceeded 255 characters');
         }
         // Make sure the start and end attributes are impossible to change once set
         if (isset($this->original['start']) && $this->original['start'] !== $this->start) {
@@ -156,7 +200,7 @@ class Didblock extends Model
         }
         // Check if end are numbers.
         if (! preg_match('/^[0-9]+$/', $this->end)) {
-            throw new \Exception('Range start must be numeric');
+            throw new \Exception('Range end must be numeric');
         }
 
         // Check to make sure start is not greater than end.
@@ -203,6 +247,7 @@ class Didblock extends Model
 
             // Create the dids inside block
             //$this->log($request);
+			//echo PHP_EOL.'Creating DID number '.$number;
             $response = $this->dids()->create($request); // This goes out and builds the new did transaction. The parent ID is joined automatically.
             //$this->log($response);
         }

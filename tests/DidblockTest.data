@@ -1,0 +1,110 @@
+<?php
+
+$TESTS = [
+
+		
+		'Create Valid DID Block' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560010, 'end' => 1004560020, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => true,
+			],
+
+		'Create Valid DID Block larger than 10000' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 100456000, 'end' => 1004560009, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+
+		'Create DID block Missing Start' =>
+			[
+				'input' => ['country_code' => '1','name' => 'TEST DID BLOCK', 'carrier' => 'TEST CARRIER', 'end' => 1004560049, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+
+		'Create DID Block with 11 Digits' =>
+			[
+				'input' => ['country_code' => '1','name' => 'TEST DID BLOCK', 'carrier' => 'TEST CARRIER', 'start' => 10045600300, 'end' => 10045600309, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+
+		'Create DID block with a non numeric country code' =>
+			[
+				'input' => ['country_code' => '+1','name' => 'TEST DID BLOCK', 'carrier' => 'TEST CARRIER', 'start' => 1004560040, 'end' => 1004560049, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+
+		'Create DID Block with 11 Digits' =>
+			[
+				'input' => ['country_code' => '1','name' => 'TEST DID BLOCK', 'carrier' => 'TEST CARRIER', 'start' => 11004560050, 'end' => 11004560059, 'type' => 'public', 'comment' => 'TESTING'],
+                'success' => false,
+			],
+
+		'Create DID block with no name' =>
+			[
+				'input' => ['country_code' => 1, 'carrier' => 'TEST', 'start' => 1004560010, 'end' => 1004560019, 'type' => 'public', 'comment' => 'TESTING'],
+                'success' => false,
+			],
+
+		'Create DID Block with No Carrier' =>
+			[
+				'input' => ['country_code' => 1, 'name' => 'TEST GOOD DID BLOCK', 'carrier' => '', 'start' => 1004560080, 'end' => 1004560099, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => true,
+			],
+
+		'Create DID block No End' =>
+			[
+				'input' => ['country_code' => '1','name' => 'TEST DID BLOCK', 'carrier' => 'TEST CARRIER', 'start' => 1004560040, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID block Not in same NPA NXX' =>
+			[
+				'input' => ['country_code' => '1','name' => 'TEST DID BLOCK', 'carrier' => 'TEST CARRIER', 'start' => 1004560040, 'end' => 1014560029, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID Block with Name 255 characters' =>
+			[
+				'input' => ['country_code' => '1','name' => str_random(256), 'carrier' => 'TEST CARRIER', 'start' => 1004560060, 'end' => 1004560069, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID Block with Overlapping Low' =>
+			[
+				'input' => ['country_code' => 1, 'name' => 'TEST GOOD DID BLOCK', 'carrier' => '', 'start' => 1004560001, 'end' => 1004560010, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID Block with Overlapping Low End' =>
+			[
+				'input' => ['country_code' => 1, 'name' => 'TEST GOOD DID BLOCK', 'carrier' => '', 'start' => 1004560005, 'end' => 1004560015, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID Block with Overlapping Middle End' =>
+			[
+				'input' => ['country_code' => 1, 'name' => 'TEST GOOD DID BLOCK', 'carrier' => '', 'start' => 1004560012, 'end' => 1004560017, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID Block with Overlapping Middler' =>
+			[
+				'input' => ['country_code' => 1, 'name' => 'TEST GOOD DID BLOCK', 'carrier' => '', 'start' => 1004560015, 'end' => 1004560022, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID Block with Overlapping High End' =>
+			[
+				'input' => ['country_code' => 1, 'name' => 'TEST GOOD DID BLOCK', 'carrier' => '', 'start' => 1004560020, 'end' => 1004560025, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create Valid DID Block good start' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560001, 'end' => 1004560009, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => true,
+			],
+		'Create Valid DID Block good end' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560021, 'end' => 1004560030, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => true,
+			],
+		'Create really big overlapping DID block' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560000, 'end' => 1004560040, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+
+	];

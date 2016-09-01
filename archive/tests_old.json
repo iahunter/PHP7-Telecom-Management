@@ -1,0 +1,80 @@
+[{
+	"title": "Create Valid DID Block",
+	"input": {
+		"start": 1004560000,
+		"name": "TEST",
+		"carrier": "TEST",
+		"country_code": 1,
+		"end": 1004560009
+	},
+	"expected_field": "status_code",
+	"start": 1004560000,
+	"end": 1004560009,
+	"verb": "POST",
+	"url": "/api/didblock",
+	"expected_result": "200"
+}, {
+	"input": {
+		"carrier": "TEST",
+		"end": 1004560019,
+		"country_code": 1,
+		"start": 1004560010
+	},
+	"title": "DID Block with No Name - Should Fail",
+	"verb": "POST",
+	"url": "/api/didblock/",
+	"expected_result": "500",
+	"expected_field": "status_code"
+}, {
+	"expected_field": "status_code",
+	"expected_result": "200",
+	"title": "Create: DID Block with No Carrier - this is optional and should pass ",
+	"input": {
+		"start": 1004560020,
+		"name": "TEST GOOD DID BLOCK",
+		"carrier": "",
+		"end": 1004560029,
+		"country_code": 1
+	},
+	"url": "/api/didblock/",
+	"verb": "POST"
+}, {
+	"expected_result": "500",
+	"expected_field": "status_code",
+	"title": "Create DID Block with 11 Digits",
+	"input": {
+		"name": "TEST DID BLOCK",
+		"start": 10045600300,
+		"end": 10045600390,
+		"country_code": "1",
+		"carrier": "TEST CARRIER"
+	},
+	"verb": "POST",
+	"url": "/api/didblock"
+}, {
+	"verb": "POST",
+	"url": "/api/didblock",
+	"input": {
+		"name": "TEST DID BLOCK",
+		"start": 1004560040,
+		"end": 1004560049,
+		"country_code": "+1",
+		"carrier": "TEST CARRIER"
+	},
+	"title": "Create DID block with a non numeric country code",
+	"expected_field": "status_code",
+	"expected_result": "500"
+}, {
+	"title": "Create DID Block with 11 Digits",
+	"input": {
+		"carrier": "TEST CARRIER",
+		"end": 1004560059,
+		"country_code": "1",
+		"start": 1004560050,
+		"name": "TEST DID BLOCK"
+	},
+	"verb": "POST",
+	"url": "/api/didblock",
+	"expected_field": "status_code",
+	"expected_result": "500"
+}]

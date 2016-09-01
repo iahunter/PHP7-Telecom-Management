@@ -74,7 +74,9 @@ class Didblock extends Model
 
     public function overlap_db_check()
     {
-
+		/*
+			This checks to make sure that the start and end numbers of the new range are not between the existing start and end range numbers. 
+		/**/
         //echo PHP_EOL."1 new Start is between) ".self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->toSql();
         if (self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->count()) {
             throw new \Exception('This block overlapps with existing');
@@ -83,6 +85,10 @@ class Didblock extends Model
         if (self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->end], ['end', '>=', $this->end]])->count()) {
             throw new \Exception('This block overlapps with existing');
         }
+		
+		/*
+			This checks to make sure that the exising start and end range numbers are not between the new range start and end range numbers. 
+		/**/
         //echo PHP_EOL."3 existing start is between) ".self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->toSql();
         if (self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->count()) {
             throw new \Exception('This block overlapps with existing');

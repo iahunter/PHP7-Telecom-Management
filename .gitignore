@@ -7,3 +7,4 @@ Homestead.json
 .env
 composer.lock
 tinker_group_ablity_assignments.txt
+/archive

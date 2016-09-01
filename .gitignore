@@ -2,9 +2,9 @@
 /node_modules
 /public/storage
 /public/vendor
+/archive
 Homestead.yaml
 Homestead.json
 .env
 composer.lock
 tinker_group_ablity_assignments.txt
-/archive

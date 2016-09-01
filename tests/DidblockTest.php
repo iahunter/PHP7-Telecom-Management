@@ -39,14 +39,14 @@ class DidblockTest extends TestCase
         // Set the Test Variables and loop thru all tests
         $this->DidblockValidationTests();
 
-		// Get Didblocks
-		$this->getDidblocks();
-		
-		// Get the DID block ID we care about to mess with
-		// Do all of our PUT tests against it to update
-			// Test fail to update start and end range
-			// update the type, comment, name, 
-		
+        // Get Didblocks
+        $this->getDidblocks();
+
+        // Get the DID block ID we care about to mess with
+        // Do all of our PUT tests against it to update
+            // Test fail to update start and end range
+            // update the type, comment, name,
+
         echo PHP_EOL.'Didblock testing complete'.PHP_EOL;
 
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
@@ -64,7 +64,7 @@ class DidblockTest extends TestCase
     protected function DidblockValidationTests()
     {
         $tests = $this->getTestData();
-		//\Metaclassing\Utility::dumper($tests);
+        //\Metaclassing\Utility::dumper($tests);
         $count = 0;
         // Loop through and run all the tests
         foreach ($tests as $name => $test) {
@@ -74,9 +74,9 @@ class DidblockTest extends TestCase
             // Handle positive and negative tests
             if ($test['success'] === true) {
                 echo ' POSITIVE '.$name.' -';
-				if (isset($response->original['message'])) {
-					echo ' Returned MESSAGE: '.$response->original['message'];
-				}
+                if (isset($response->original['message'])) {
+                    echo ' Returned MESSAGE: '.$response->original['message'];
+                }
                 $this->assertEquals(200, $response->original['status_code']);
                 echo ' Created Didblock ID '.$response->original['didblock']['id'];
             } else {
@@ -87,7 +87,6 @@ class DidblockTest extends TestCase
         }
         echo PHP_EOL.'Didblock validation tests complete'.PHP_EOL;
     }
-	
 
     // This just tries to create a Didblock and returns the response
     protected function createDidBlock($post)

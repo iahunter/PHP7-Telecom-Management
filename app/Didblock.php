@@ -36,6 +36,19 @@ class Didblock extends Model
         static::created(function ($didblock) {
             return $didblock->populate();
         });
+		
+		// Cascade Soft Deletes Child Dids
+		static::deleting(function ($didblock) {
+			foreach ($didblock->dids()->get() as $did){
+				$did->delete();
+			}
+        });
+		// Cascade Soft Restore Child Dids
+		static::restoring(function ($didblock) {
+			foreach ($didblock->dids()->get() as $did){
+				$did->restore();
+			}
+        });
     }
 
     public function dids()
@@ -43,6 +56,27 @@ class Didblock extends Model
         // Add children
         return $this->hasMany(Did::class);
     }
+	
+	protected function populate()
+    {
+        // Loop thru the range and create the individual DIDs in the block.
+        $range = range($this->start, $this->end);
+        foreach ($range as $number) {
+            // Build the request for each number.
+            $request = [
+                        'name'   => '',
+                        'number' => $number,
+                        'status' => 'available',
+                        ];
+
+            // Create the dids inside block
+            //$this->log($request);
+            //echo PHP_EOL.'Creating DID number '.$number;
+            $response = $this->dids()->create($request); // This goes out and builds the new did transaction. The parent ID is joined automatically.
+            //$this->log($response);
+        }
+    }
+	
 
     public function less_10digits($num)
     {
@@ -158,26 +192,6 @@ class Didblock extends Model
             if ((! $this->less_10digits($this->start) || (! $this->less_10digits($this->end)))) {
                 throw new \Exception('NANP Start or End Range must not be more than 10 digits long');
             }
-        }
-    }
-
-    protected function populate()
-    {
-        // Loop thru the range and create the individual DIDs in the block.
-        $range = range($this->start, $this->end);
-        foreach ($range as $number) {
-            // Build the request for each number.
-            $request = [
-                        'name'   => '',
-                        'number' => $number,
-                        'status' => 'available',
-                        ];
-
-            // Create the dids inside block
-            //$this->log($request);
-            //echo PHP_EOL.'Creating DID number '.$number;
-            $response = $this->dids()->create($request); // This goes out and builds the new did transaction. The parent ID is joined automatically.
-            //$this->log($response);
         }
     }
 }

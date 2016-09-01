@@ -36,18 +36,18 @@ class Didblock extends Model
         static::created(function ($didblock) {
             return $didblock->populate();
         });
-		
-		// Cascade Soft Deletes Child Dids
-		static::deleting(function ($didblock) {
-			foreach ($didblock->dids()->get() as $did){
-				$did->delete();
-			}
+
+        // Cascade Soft Deletes Child Dids
+        static::deleting(function ($didblock) {
+            foreach ($didblock->dids()->get() as $did) {
+                $did->delete();
+            }
         });
-		// Cascade Soft Restore Child Dids
-		static::restoring(function ($didblock) {
-			foreach ($didblock->dids()->get() as $did){
-				$did->restore();
-			}
+        // Cascade Soft Restore Child Dids
+        static::restoring(function ($didblock) {
+            foreach ($didblock->dids()->get() as $did) {
+                $did->restore();
+            }
         });
     }
 
@@ -56,8 +56,8 @@ class Didblock extends Model
         // Add children
         return $this->hasMany(Did::class);
     }
-	
-	protected function populate()
+
+    protected function populate()
     {
         // Loop thru the range and create the individual DIDs in the block.
         $range = range($this->start, $this->end);
@@ -76,7 +76,6 @@ class Didblock extends Model
             //$this->log($response);
         }
     }
-	
 
     public function less_10digits($num)
     {

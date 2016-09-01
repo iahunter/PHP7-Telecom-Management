@@ -38,16 +38,15 @@ class Didblock extends Model
         });
     }
 
-	
     public function dids()
     {
-		// Add children
+        // Add children
         return $this->hasMany(Did::class);
     }
 
     public function less_10digits($num)
     {
-		// Checks if number is 10 digits in length. 
+        // Checks if number is 10 digits in length.
         $num_length = strlen((string) $num);
         if ($num_length <= 10) {
             return true;
@@ -92,6 +91,7 @@ class Didblock extends Model
         if (self::where([['country_code', '=', $this->country_code]])->whereBetween('end', [$this->start, $this->end])->count()) {
             throw new \Exception('This block overlapps with existing');
         }
+
         return true;
     }
 
@@ -103,26 +103,26 @@ class Didblock extends Model
         if (! $this->name) {
             throw new \Exception('No Name Set');
         }
-		// Check if name exceeds max of 255
+        // Check if name exceeds max of 255
         if (strlen($this->name) > 255) {
             throw new \Exception('Name exceeded 255 characters');
         }
-        // Make sure the start and end attributes are impossible to change once set 
+        // Make sure the start and end attributes are impossible to change once set
         if (isset($this->original['start']) && $this->original['start'] !== $this->start) {
             throw new \Exception('Validation error, start range can not be altered once created');
         }
         if (isset($this->original['end']) && $this->original['end'] !== $this->end) {
             throw new \Exception('Validation error, end range can not be altered once created');
         }
-		// Check if country code is a number. 
+        // Check if country code is a number.
         if (! preg_match('/^[0-9]+$/', $this->country_code)) {
             throw new \Exception('Country Code must be numeric');
         }
-		// Check if range start is set
+        // Check if range start is set
         if (! $this->start) {
             throw new \Exception('No Range Start Set');
         }
-		// Check if range end is set
+        // Check if range end is set
         if (! $this->end) {
             throw new \Exception('No Range End Set');
         }

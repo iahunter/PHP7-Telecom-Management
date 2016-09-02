@@ -36,12 +36,16 @@ $api->version('v1', function ($api) {
     $api->put('didblock/{id}', 'App\Http\Controllers\Didcontroller@updateDidblock');
     $api->delete('didblock/{id}', 'App\Http\Controllers\Didcontroller@deleteDidblock');
 	
+	// List DIDs by block id
+	$api->get('didblock/{id}/dids', 'App\Http\Controllers\Didcontroller@listDidbyBlockID');
+	
+	
 	// DID App routes
-    $api->post('did', 'App\Http\Controllers\Didcontroller@createDid');
+    // $api->post('did', 'App\Http\Controllers\Didcontroller@createDid'); // Individual DID creation not allowed. 
     $api->get('did/{id}', 'App\Http\Controllers\Didcontroller@getDid');
     $api->get('did', 'App\Http\Controllers\Didcontroller@listDid');
     $api->put('did/{id}', 'App\Http\Controllers\Didcontroller@updateDid');
-    $api->delete('did/{id}', 'App\Http\Controllers\Didcontroller@deleteDid');
+    // $api->delete('did/{id}', 'App\Http\Controllers\Didcontroller@deleteDid'); // Individual DID deletion Not allowed. 
 });
 
 Route::auth();

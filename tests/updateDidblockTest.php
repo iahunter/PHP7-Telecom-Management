@@ -28,10 +28,10 @@ class updateDidblockTest extends TestCase
     protected $didblocks;
     protected $didblock;
     protected $didblock_id;
-	protected $dids;
-	
-	// Authenticate and store JWT
-	protected function getJWT($userdn)
+    protected $dids;
+
+    // Authenticate and store JWT
+    protected function getJWT($userdn)
     {
         echo PHP_EOL.__METHOD__.' | Generating JWT for user '.$userdn;
         $credentials = ['dn' => $userdn, 'password' => ''];
@@ -45,13 +45,13 @@ class updateDidblockTest extends TestCase
         echo PHP_EOL.__METHOD__.' | Starting Update API tests';
 
         $this->getJWT(env('TEST_USER_DN'));
-		
-		$this->createDidblock();						// Create Seed Data for Test. 
-        $this->updateDidblockValidationTests();			// Set the Test Variables and loop thru all tests
+
+        $this->createDidblock();                        // Create Seed Data for Test.
+        $this->updateDidblockValidationTests();            // Set the Test Variables and loop thru all tests
 
         // Get Didblocks
         $this->getDidblocks();
-		$this->getDidsbyBlockID();
+        $this->getDidsbyBlockID();
 
         // Get the DID block ID we care about to mess with
         // Do all of our PUT tests against it to update
@@ -62,9 +62,9 @@ class updateDidblockTest extends TestCase
 
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
-	
-	// Seed your Block to work on. 
-	protected function createDidblock()
+
+    // Seed your Block to work on.
+    protected function createDidblock()
     {
         echo PHP_EOL.__METHOD__.' | Creating the update test Did block';
         $input = [
@@ -95,6 +95,7 @@ class updateDidblockTest extends TestCase
     protected function getDidblockTestData()
     {
         require __DIR__.'/updateDidblockTest.data';
+
         return $TESTS;
     }
 
@@ -124,28 +125,28 @@ class updateDidblockTest extends TestCase
         }
         echo PHP_EOL.'Didblock Update validation tests complete'.PHP_EOL;
     }
-	
-	protected function updateDidblock($input)
+
+    protected function updateDidblock($input)
     {
         $response = $this->call('PUT',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token,
                         $input);
-		return $response;
+
+        return $response;
     }
 
-		
-	protected function getDidblocks()
+    protected function getDidblocks()
     {
         echo PHP_EOL.__METHOD__.' | Getting DID Blocks';
         $response = $this->call('GET', '/api/didblock?token='.$this->token);
-        
-		/*
-		foreach($response->original['didblocks'] as $i){								// Print out all the Block IDs found. 
-			//dd($i);
-			echo PHP_EOL."Found Block ID: ".$i['id'];
-		}
-		*/
-		$this->didblocks = $response->original['didblocks'];
+
+        /*
+        foreach($response->original['didblocks'] as $i){								// Print out all the Block IDs found.
+            //dd($i);
+            echo PHP_EOL."Found Block ID: ".$i['id'];
+        }
+        */
+        $this->didblocks = $response->original['didblocks'];
 
         if ($response->original['status_code'] != 200) {
             dd($response);

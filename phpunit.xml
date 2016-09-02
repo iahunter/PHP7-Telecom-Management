@@ -14,10 +14,20 @@
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+        <whitelist processUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./app/Http</directory>
+			<directory suffix=".php">./app</directory>
             <exclude>
-                <file>./app/Http/routes.php</file>
+	            <directory suffix=".php">./app/Http/Middleware</directory>
+	            <directory suffix=".php">./app/Http/Requests</directory>
+	            <directory suffix=".php">./app/Http/Controllers/Auth</directory>
+				<directory suffix=".php">./app/Console</directory>
+				<directory suffix=".php">./app/Events</directory>
+				<directory suffix=".php">./app/Exceptions</directory>
+				<directory suffix=".php">./app/Jobs</directory>
+				<directory suffix=".php">./app/Listeners</directory>
+				<directory suffix=".php">./app/Policies</directory>
+				<directory suffix=".php">./app/Providers</directory>
             </exclude>
         </whitelist>
     </filter>
@@ -27,4 +37,9 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
     </php>
+	<logging>
+	    <log type="coverage-html" target="./public/coverage" charset="UTF-8"
+	        yui="true" highlight="true"
+	        lowUpperBound="50" highLowerBound="80" />
+	</logging>
 </phpunit>

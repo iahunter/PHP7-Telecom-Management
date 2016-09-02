@@ -1,0 +1,41 @@
+<?php
+
+$TESTS = [
+
+		'Update DID block Start' =>
+			[
+				'input' => ['start' => 1004560010,],
+				'success' => false,
+			],
+
+		'Update DID block End' =>
+			[
+				'input' => ['end' => 1004560009],
+				'success' => false,
+			],
+		
+		'Update DID Block Start and End' =>
+			[
+				'input' => ['start' => 100456000, 'end' => 1004560009,],
+				'success' => false,
+			],
+
+		'Update DID block Country Code' =>
+			[
+				'input' => ['country_code' => 2],
+				'success' => false,
+			],
+			
+		'Update DID block Name' =>
+			[
+				'input' => ['name' => 'TEST DID BLOCK 123'],
+				'success' => true,
+			],
+
+		'Update Start' =>
+			[
+				'input' => ['carrier' => 'TEST GOOD CARRIER', 'type' => 'private', 'comment' => 'TESTING123465'],
+				'success' => true,
+			],
+
+	];

@@ -138,15 +138,28 @@ class Didblock extends Model
 
     protected function validate()
     {
+		// Check if range start is set
+        if (! $this->start) {
+            throw new \Exception('No Range Start Set');
+        }
+        // Check if range end is set
+        if (! $this->end) {
+            throw new \Exception('No Range End Set');
+        }
+		// Check for overlapping ranges. 
         if (! $this->id) {
             $this->overlap_db_check();
         }
+		// Check if Name is set. 
         if (! $this->name) {
             throw new \Exception('No Name Set');
         }
         // Check if name exceeds max of 255
         if (strlen($this->name) > 255) {
             throw new \Exception('Name exceeded 255 characters');
+        }
+		if (isset($this->original['country_code']) && $this->original['country_code'] !== $this->country_code) {
+            throw new \Exception('Validation error, Country Code can not be altered once created');
         }
         // Make sure the start and end attributes are impossible to change once set
         if (isset($this->original['start']) && $this->original['start'] !== $this->start) {
@@ -158,14 +171,6 @@ class Didblock extends Model
         // Check if country code is a number.
         if (! preg_match('/^[0-9]+$/', $this->country_code)) {
             throw new \Exception('Country Code must be numeric');
-        }
-        // Check if range start is set
-        if (! $this->start) {
-            throw new \Exception('No Range Start Set');
-        }
-        // Check if range end is set
-        if (! $this->end) {
-            throw new \Exception('No Range End Set');
         }
         // Check if start are numbers.
         if (! preg_match('/^[0-9]+$/', $this->start)) {

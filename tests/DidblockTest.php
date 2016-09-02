@@ -28,6 +28,15 @@ class DidblockTest extends TestCase
     protected $didblocks;
     protected $didblock;
     protected $didblock_id;
+	
+	// Authenticate and store JWT
+	protected function getJWT($userdn)
+    {
+        echo PHP_EOL.__METHOD__.' | Generating JWT for user '.$userdn;
+        $credentials = ['dn' => $userdn, 'password' => ''];
+        $this->token = JWTAuth::attempt($credentials);
+        echo ' got token '.$this->token;
+    }
 
     public function testDidblockAPI()
     {
@@ -37,7 +46,7 @@ class DidblockTest extends TestCase
         $this->getJWT(env('TEST_USER_DN'));
 
         // Set the Test Variables and loop thru all tests
-        $this->DidblockValidationTests();
+        $this->createDidblockValidationTests();
 
         // Get Didblocks
         $this->getDidblocks();
@@ -53,18 +62,16 @@ class DidblockTest extends TestCase
     }
 
     // Get the Didblock creation test cases from an array
-    protected function getTestData()
+    protected function getDidblockTestData()
     {
         require __DIR__.'/DidblockTest.data';
-
         return $TESTS;
     }
 
     // Run our Didblock validation tests
-    protected function DidblockValidationTests()
+    protected function createDidblockValidationTests()
     {
-        $tests = $this->getTestData();
-        //\Metaclassing\Utility::dumper($tests);
+        $tests = $this->getDidblockTestData();
         $count = 0;
         // Loop through and run all the tests
         foreach ($tests as $name => $test) {
@@ -87,6 +94,8 @@ class DidblockTest extends TestCase
         }
         echo PHP_EOL.'Didblock validation tests complete'.PHP_EOL;
     }
+	
+	
 
     // This just tries to create a Didblock and returns the response
     protected function createDidBlock($post)
@@ -97,16 +106,19 @@ class DidblockTest extends TestCase
 
         return $response;
     }
+	
+	protected function updateDidblock($put)
+    {
+        $response = $this->call('PUT',
+                        '/api/didblock/'.$this->didblock_id.'?token='.$this->token,
+                        $put);
+		return $response;
+    }
+	
 
     /**************************************************************************************************/
 
-    protected function getJWT($userdn)
-    {
-        echo PHP_EOL.__METHOD__.' | Generating JWT for user '.$userdn;
-        $credentials = ['dn' => $userdn, 'password' => ''];
-        $this->token = JWTAuth::attempt($credentials);
-        echo ' got token '.$this->token;
-    }
+
 
     protected function getDidblocks()
     {

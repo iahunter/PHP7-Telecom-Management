@@ -2,14 +2,19 @@
 
 $TESTS = [
 
-		
 		'Create Valid DID Block' =>
 			[
 				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560010, 'end' => 1004560020, 'type' => 'public', 'comment' => 'TESTING'],
 				'success' => true,
 			],
+			
+		'Create DID Block with no Start or End Ranges' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
 
-		'Create Valid DID Block larger than 10000' =>
+		'Create DID Block larger than 10000' =>
 			[
 				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 100456000, 'end' => 1004560009, 'type' => 'public', 'comment' => 'TESTING'],
 				'success' => false,
@@ -41,7 +46,7 @@ $TESTS = [
 
 		'Create DID block with no name' =>
 			[
-				'input' => ['country_code' => 1, 'carrier' => 'TEST', 'start' => 1004560010, 'end' => 1004560019, 'type' => 'public', 'comment' => 'TESTING'],
+				'input' => ['country_code' => 1, 'carrier' => 'TEST', 'start' => 1004560050, 'end' => 1004560059, 'type' => 'public', 'comment' => 'TESTING'],
                 'success' => false,
 			],
 
@@ -104,6 +109,31 @@ $TESTS = [
 		'Create really big overlapping DID block' =>
 			[
 				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560000, 'end' => 1004560040, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create Not in same NPA NXX' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004570000, 'end' => 1004580040, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create Start is greater thane End' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004580000, 'end' => 1004570040, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create block more than 10000 numbers' =>
+			[
+				'input' => ['country_code' => 2,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004580000, 'end' => 1004600040, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create start non numberic' =>
+			[
+				'input' => ['country_code' => 2,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => "asdf", 'end' => 1004600040, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create end non numberic' =>
+			[
+				'input' => ['country_code' => 2,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004580000, 'end' => "asdf", 'type' => 'public', 'comment' => 'TESTING'],
 				'success' => false,
 			],
 

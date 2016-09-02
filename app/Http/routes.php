@@ -29,12 +29,19 @@ $api->version('v1', function ($api) {
     $api->get('userinfo', 'App\Http\Controllers\Auth\AuthController@userinfo');
 
 
-    // Add DID App routes
+    // DID Block App routes
     $api->post('didblock', 'App\Http\Controllers\Didcontroller@createDidblock');
     $api->get('didblock/{id}', 'App\Http\Controllers\Didcontroller@getDidblock');
     $api->get('didblock', 'App\Http\Controllers\Didcontroller@listDidblock');
     $api->put('didblock/{id}', 'App\Http\Controllers\Didcontroller@updateDidblock');
     $api->delete('didblock/{id}', 'App\Http\Controllers\Didcontroller@deleteDidblock');
+	
+	// DID App routes
+    $api->post('did', 'App\Http\Controllers\Didcontroller@createDid');
+    $api->get('did/{id}', 'App\Http\Controllers\Didcontroller@getDid');
+    $api->get('did', 'App\Http\Controllers\Didcontroller@listDid');
+    $api->put('did/{id}', 'App\Http\Controllers\Didcontroller@updateDid');
+    $api->delete('did/{id}', 'App\Http\Controllers\Didcontroller@deleteDid');
 });
 
 Route::auth();

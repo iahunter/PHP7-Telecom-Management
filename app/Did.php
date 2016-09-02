@@ -17,7 +17,7 @@ class Did extends Model
     //
     use SoftDeletes;
     protected $table = 'did';
-    protected $fillable = ['didblock_id', 'name', 'number', 'status', 'system_id', 'assignments'];
+    protected $fillable = ['name', 'number', 'status', 'system_id', 'assignments'];
 
     // Get the DID Block DID belongs to
     public function didblock()

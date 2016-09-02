@@ -28,9 +28,9 @@ class DidblockTest extends TestCase
     protected $didblocks;
     protected $didblock;
     protected $didblock_id;
-	
-	// Authenticate and store JWT
-	protected function getJWT($userdn)
+
+    // Authenticate and store JWT
+    protected function getJWT($userdn)
     {
         echo PHP_EOL.__METHOD__.' | Generating JWT for user '.$userdn;
         $credentials = ['dn' => $userdn, 'password' => ''];
@@ -43,16 +43,15 @@ class DidblockTest extends TestCase
         // This is the main TEST Function. PHP Unit must be started with 'test'
         echo PHP_EOL.__METHOD__.' | Starting Telephone Number Create API tests';
 
-        $this->getJWT(env('TEST_USER_DN'));					// Get JWT for Test User
-        $this->createDidblockValidationTests();				// Set the Test Variables and loop thru all tests
+        $this->getJWT(env('TEST_USER_DN'));                    // Get JWT for Test User
+        $this->createDidblockValidationTests();                // Set the Test Variables and loop thru all tests
 
         echo PHP_EOL.'	*** Create Didblock testing complete'.PHP_EOL;
 
         echo PHP_EOL.__METHOD__.' All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
-	
-	
-	// This just tries to create a Didblock and returns the response
+
+    // This just tries to create a Didblock and returns the response
     protected function createDidBlock($post)
     {
         $response = $this->call('POST',
@@ -61,12 +60,12 @@ class DidblockTest extends TestCase
 
         return $response;
     }
-	
 
     // Get the Didblock creation test cases from an array
     protected function getDidblockTestData()
     {
         require __DIR__.'/DidblockTest.data';
+
         return $TESTS;
     }
 
@@ -96,5 +95,4 @@ class DidblockTest extends TestCase
         }
         echo PHP_EOL.'Didblock validation tests complete'.PHP_EOL;
     }
-	
 }

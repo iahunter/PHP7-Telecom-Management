@@ -52,7 +52,7 @@ class updateDidblockTest extends TestCase
         // Get Didblocks
         $this->getDidblocks();
         $this->getDidsbyBlockID();
-		
+
         echo PHP_EOL.'Didblock testing complete'.PHP_EOL;
         echo PHP_EOL.__METHOD__.' #### All verification complete, testing successful, database has been cleaned up'.PHP_EOL;
     }
@@ -74,7 +74,7 @@ class updateDidblockTest extends TestCase
                         '/api/didblock?token='.$this->token,
                         $input);
         //dd($response);
-		echo ' | Range: '.$input['start'].' - '. $input['end'];
+        echo ' | Range: '.$input['start'].' - '.$input['end'];
         if (! $response->original['status_code'] == 200) {
             echo ' | Message: '.$response->original['message'];
         } else {
@@ -90,6 +90,7 @@ class updateDidblockTest extends TestCase
     protected function getDidblockTestData()
     {
         require __DIR__.'/updateDidblockTest.data';
+
         return $TESTS;
     }
 

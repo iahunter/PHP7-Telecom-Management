@@ -17,7 +17,7 @@ class Didcontroller extends Controller
         // Only authenticated users can make these calls
         $this->middleware('jwt.auth');
     }
-	
+
     /*
      * @SWG\Get(
      *     path="/telephony/api/didblock",
@@ -86,19 +86,18 @@ class Didcontroller extends Controller
             abort(401, 'You are not authorized to create new did blocks');
         }
 
-		$didblock = Didblock::create($request->all());
+        $didblock = Didblock::create($request->all());
 
-		$response = [
-					'status_code'    => 200,
-					'success'        => true,
-					'message'        => '',
-					'request'        => $request->all(),
-					'didblock'       => $didblock,
-					];
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'didblock'       => $didblock,
+                    ];
 
         return response()->json($response);
     }
-
 
     /*
      * @SWG\Put(
@@ -109,11 +108,11 @@ class Didcontroller extends Controller
     public function updateDidblock(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        
-		// Find record by id
-		$didblock = Didblock::find($didblock_id);
-		
-		// Check Role of user
+
+        // Find record by id
+        $didblock = Didblock::find($didblock_id);
+
+        // Check Role of user
         if (! $user->can('update', $didblock)) {
             abort(401, 'You are not authorized to view didblock '.$didblock_id);
         }
@@ -141,8 +140,8 @@ class Didcontroller extends Controller
     public function deleteDidblock(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+
+        // Check Role of user
         if (! $user->can('delete', Didblock::class)) {
             abort(401, 'You are not authorized to delete did block id '.$didblock_id);
         }
@@ -158,15 +157,13 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-
-
 /*
 ##################################################################################################################################################
 
-	Begin Work on Did API 
+    Begin Work on Did API
 
 ##################################################################################################################################################
-/**/ 
+/**/
 
     /*
      * @SWG\Get(
@@ -178,7 +175,7 @@ class Didcontroller extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         $dids = \App\Did::where('didblock_id', $didblock_id)->get();
-		//return response()->json($dids);
+        //return response()->json($dids);
         $show = [];
         foreach ($dids as $did) {
             if ($user->can('read', $did)) {
@@ -191,7 +188,7 @@ class Didcontroller extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'dids'      => $show,
+                    'dids'           => $show,
                     ];
 
         return response()->json($response);
@@ -216,12 +213,11 @@ class Didcontroller extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'did'       => $did,
+                    'did'            => $did,
                     ];
 
         return response()->json($response);
     }
-
 
     /*
      * @SWG\Put(
@@ -229,15 +225,15 @@ class Didcontroller extends Controller
      *     @SWG\Response(response="200", description="Update Did by id with JSON web token by TLS client certificate authentication")
      * )
      */
-	
+
     public function updateDid(Request $request, $did_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        
-		// Find record by id
-		$did = Did::find($did_id);
 
-		// Check Role of user
+        // Find record by id
+        $did = Did::find($did_id);
+
+        // Check Role of user
         if (! $user->can('update', $did)) {
             abort(401, 'You are not authorized to view didblock '.$did_id);
         }
@@ -250,7 +246,7 @@ class Didcontroller extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'did'       => $did,
+                    'did'            => $did,
                     ];
 
         return response()->json($response);
@@ -262,14 +258,14 @@ class Didcontroller extends Controller
      *     @SWG\Response(response="200", description="Delete Did Blocks by id with JSON web token by TLS client certificate authentication")
      * )
      */
-	 
-	/* Not sure we want to advertise delete individual DIDs. Leaving this commented out for now. 
-	
+
+    /* Not sure we want to advertise delete individual DIDs. Leaving this commented out for now.
+
     public function deleteDid(Request $request, $did_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+
+        // Check Role of user
         if (! $user->can('delete', Did::class)) {
             abort(401, 'You are not authorized to delete did id '.$account_id);
         }
@@ -283,8 +279,7 @@ class Didcontroller extends Controller
                     'deleted_at'     => $did->deleted_at, ];
 
         return response()->json($response);
-    
-	}
-	*/
-	
+
+    }
+    */
 }

@@ -11,15 +11,9 @@ The current intended application stack for this application is: Ubuntu 16.04 + N
 Bouncer roles manage rights to the accounts and account certificates via the application http controllers.
 
 
-# Laravel PHP Framework
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-#Dingo
-Documentation for dingo api can be found here. https://github.com/dingo/api/wiki
-
-#JWT 
-Documentation for dingo api can be found here. https://github.com/tymondesigns/jwt-auth/wiki
-
-#Bouncer 
-Documentation for bouncer roles and permissions can be found here. https://github.com/JosephSilber/bouncer
+#Other Documentation
+Documentation for the Laravel framework can be found on the [Laravel website](http://laravel.com/docs).
+Documentation for dingo api can be found on GitHub. https://github.com/dingo/api/wiki
+Documentation for JWT can be found on GitHub. https://github.com/tymondesigns/jwt-auth/wiki
+Documentation for Bouncer roles and permissions can be found on GitHub. https://github.com/JosephSilber/bouncer
 

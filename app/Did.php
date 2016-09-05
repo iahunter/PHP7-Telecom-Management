@@ -42,15 +42,22 @@ class Did extends Model
 
     protected function validate()
     {
-        // Check if name exceeds max of 255
+        // Check if exceeds max of 255
         if (strlen($this->name) > 255) {
-            throw new \Exception('Name exceeded 255 characters');
+            throw new \Exception('name exceeded 255 characters');
+        }
+		// Check if exceeds max of 255
+        if (strlen($this->status) > 255) {
+            throw new \Exception('status exceeded 255 characters');
+        }
+		// Check if exceeds max of 255
+        if (strlen($this->system_id) > 255) {
+            throw new \Exception('system_id exceeded 255 characters');
         }
         // Make sure the start and end attributes are impossible to change once set
         if (isset($this->original['number']) && $this->original['number'] !== $this->start) {
             throw new \Exception('Validation error, Number can not be altered once created');
         }
-
         if (isset($this->assignments) && (! isJson($this->assignments))) {
             throw new \Exception('Validation error, assignement must be JSON');
         }

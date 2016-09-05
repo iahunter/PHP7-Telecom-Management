@@ -2,6 +2,18 @@
 
 $TESTS = [
 
+		'Create No Type DID Block' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560010, 'end' => 1004560020, 'comment' => 'TESTING'],
+				'success' => false,
+			],
+			
+		'Create Nonvalid Type DID Block' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560010, 'end' => 1004560020, 'type' => 'asdf','comment' => 'TESTING'],
+				'success' => false,
+			],
+			
 		'Create Valid DID Block' =>
 			[
 				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 1004560010, 'end' => 1004560020, 'type' => 'public', 'comment' => 'TESTING'],
@@ -17,6 +29,11 @@ $TESTS = [
 		'Create DID Block larger than 10000' =>
 			[
 				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 100456000, 'end' => 1004560009, 'type' => 'public', 'comment' => 'TESTING'],
+				'success' => false,
+			],
+		'Create DID Block with Country code 1 and 9 digit numbers' =>
+			[
+				'input' => ['country_code' => 1,'name' => 'TEST DID BLOCK', 'carrier' => 'TEST GOOD CARRIER', 'start' => 100456000, 'end' => 100456009, 'type' => 'public', 'comment' => 'TESTING'],
 				'success' => false,
 			],
 

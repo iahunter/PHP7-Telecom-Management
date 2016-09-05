@@ -154,12 +154,12 @@ class Didblock extends Model
         if (! $this->name) {
             throw new \Exception('No Name Set');
         }
-		// Check if type is set.
+        // Check if type is set.
         if (! $this->type) {
             throw new \Exception('No type Set');
         }
-		// Check if start and end are in same NPA NXX if they have country Code of 1.
-        if (($this->type != "public") && ($this->type != "private")) {
+        // Check if start and end are in same NPA NXX if they have country Code of 1.
+        if (($this->type != 'public') && ($this->type != 'private')) {
             throw new \Exception('Type must be set to public or private');
         }
         if (isset($this->original['country_code']) && $this->original['country_code'] !== $this->country_code) {
@@ -197,21 +197,21 @@ class Didblock extends Model
         if ($diff >= 10000) {
             throw new \Exception('Error: Block must not be greater than 10000 DIDs');
         }
-		// Check if type is public and country code is 1 and number must be 10 digits.
-		if(($this->type == "public") && ($this->country_code == 1)) {
-			if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
-				throw new \Exception('NANP Start or End Range must be 10 digits');
-			}
-		}
-		// Check if exceeds max of 255
+        // Check if type is public and country code is 1 and number must be 10 digits.
+        if (($this->type == 'public') && ($this->country_code == 1)) {
+            if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
+                throw new \Exception('NANP Start or End Range must be 10 digits');
+            }
+        }
+        // Check if exceeds max of 255
         if (strlen($this->name) > 255) {
             throw new \Exception('name exceeded 255 characters');
         }
-		// Check if exceeds max of 255
+        // Check if exceeds max of 255
         if (strlen($this->status) > 255) {
             throw new \Exception('status exceeded 255 characters');
         }
-		// Check if exceeds max of 255
+        // Check if exceeds max of 255
         if (strlen($this->system_id) > 255) {
             throw new \Exception('system_id exceeded 255 characters');
         }

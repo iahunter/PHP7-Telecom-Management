@@ -154,7 +154,7 @@ class Didblock extends Model
         if (! $this->name) {
             throw new \Exception('No Name Set');
         }
-		// Check if Name is set.
+		// Check if type is set.
         if (! $this->type) {
             throw new \Exception('No type Set');
         }

@@ -33,7 +33,7 @@ class Did extends Model
         return $this->belongsTo(Didblock::class);
     }
 
-	// Check if the string is valid json. 
+    // Check if the string is valid json.
     public function isJson($string)
     {
         json_decode($string);
@@ -47,11 +47,11 @@ class Did extends Model
         if (strlen($this->name) > 255) {
             throw new \Exception('name exceeded 255 characters');
         }
-		// Check if exceeds max of 255
+        // Check if exceeds max of 255
         if (strlen($this->status) > 255) {
             throw new \Exception('status exceeded 255 characters');
         }
-		// Check if exceeds max of 255
+        // Check if exceeds max of 255
         if (strlen($this->system_id) > 255) {
             throw new \Exception('system_id exceeded 255 characters');
         }
@@ -59,7 +59,7 @@ class Did extends Model
         if (isset($this->original['number']) && $this->original['number'] !== $this->number) {
             throw new \Exception('Validation error, Number can not be altered once created');
         }
-		// Check if the assignements is in valid json format. 
+        // Check if the assignements is in valid json format.
         if (isset($this->assignments) && (! $this->isJson($this->assignments))) {
             throw new \Exception('Validation error, assignement must be JSON');
         }

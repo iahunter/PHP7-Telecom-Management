@@ -188,10 +188,6 @@ class Didblock extends Model
         if ($this->start > $this->end) {
             throw new \Exception('Error: Range start must not be greater than range end');
         }
-        // Check if start and end are in same NPA NXX if they have country Code of 1.
-        if (($this->country_code == 1) && (! $this->is_in_same_npanxx($this->start, $this->end))) {
-            throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
-        }
         // Check to make sure that block is not greater than or equal to 10000 DIDs. 0000 - 9999 - This will help keep all in same NPANXX
         $diff = $this->end - $this->start;
         if ($diff >= 10000) {
@@ -201,6 +197,10 @@ class Didblock extends Model
 		if(($this->type == "public") && ($this->country_code == 1)) {
 			if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
 				throw new \Exception('NANP Start or End Range must be 10 digits');
+			}
+			// Check if start and end are in same NPA NXX if they have country Code of 1.
+			if (! $this->is_in_same_npanxx($this->start, $this->end)) {
+				throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
 			}
 		}
 		// Check if exceeds max of 255

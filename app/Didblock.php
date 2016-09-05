@@ -193,17 +193,17 @@ class Didblock extends Model
         if ($diff >= 10000) {
             throw new \Exception('Error: Block must not be greater than 10000 DIDs');
         }
-		// Check if type is public and country code
-		if(($this->type == "public") && ($this->country_code == 1)) {
-			// Check if number is 10 digits.
-			if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
-				throw new \Exception('NANP Start or End Range must be 10 digits');
-			}
-			// Check if start and end are in same NPA NXX if they have country Code of 1.
-			if (! $this->is_in_same_npanxx($this->start, $this->end)) {
-				throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
-			}
-		}
+        // Check if type is public and country code
+        if (($this->type == 'public') && ($this->country_code == 1)) {
+            // Check if number is 10 digits.
+            if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
+                throw new \Exception('NANP Start or End Range must be 10 digits');
+            }
+            // Check if start and end are in same NPA NXX if they have country Code of 1.
+            if (! $this->is_in_same_npanxx($this->start, $this->end)) {
+                throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
+            }
+        }
         // Check if exceeds max of 255
         if (strlen($this->name) > 255) {
             throw new \Exception('name exceeded 255 characters');

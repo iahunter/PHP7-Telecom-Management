@@ -39,17 +39,7 @@ class Didblock extends Model
 
         // Cascade Soft Deletes Child Dids
         static::deleting(function ($didblock) {
-            /*
-            $children = [];
-            foreach ($didblock->dids()->get() as $did) {
-                $children[] = $did;
-                //$did->delete();
-            }
-            */
-
-            Did::where('didblock_id', $didblock->id)->delete();
-            //Did::destroy($children);
-            //$children->delete();
+            Did::where('didblock_id', $didblock->id)->delete();				// query did children of the didblock and delete them. 
         });
         /*
         //Cascade Soft Deletes Child Dids

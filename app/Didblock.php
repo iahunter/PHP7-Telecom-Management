@@ -37,22 +37,22 @@ class Didblock extends Model
             return $didblock->populate();
         });
 
-		// Cascade Soft Deletes Child Dids
+        // Cascade Soft Deletes Child Dids
         static::deleting(function ($didblock) {
-			/*
-			$children = [];
+            /*
+            $children = [];
             foreach ($didblock->dids()->get() as $did) {
-                $children[] = $did; 
-				//$did->delete();
+                $children[] = $did;
+                //$did->delete();
             }
-			*/
-			
-			Did::where('didblock_id', $didblock->id)->delete();
-			//Did::destroy($children);
-			//$children->delete();
+            */
+
+            Did::where('didblock_id', $didblock->id)->delete();
+            //Did::destroy($children);
+            //$children->delete();
         });
-        /* 
-		//Cascade Soft Deletes Child Dids
+        /*
+        //Cascade Soft Deletes Child Dids
         static::deleting(function ($didblock) {
             foreach ($didblock->dids()->get() as $did) {
                 $did->delete();
@@ -73,28 +73,27 @@ class Didblock extends Model
         // Add children
         return $this->hasMany(Did::class);
     }
-	
 
     protected function populate()
     {
         // Loop thru the range and create the individual DIDs in the block.
         $range = range($this->start, $this->end);
-		$request_array = [];				// Create array of rows to be inserted. 
+        $request_array = [];                // Create array of rows to be inserted.
         foreach ($range as $number) {
             // Build the request for each number.
             $request = [
                         'didblock_id' => $this->id,
-						'name'   => '',
-                        'number' => $number,
-                        'status' => 'available',
-						'created_at' => $this->created_at,
-						'updated_at' => $this->updated_at,
+                        'name'        => '',
+                        'number'      => $number,
+                        'status'      => 'available',
+                        'created_at'  => $this->created_at,
+                        'updated_at'  => $this->updated_at,
                         ];
-			
-			$request_array[] = $request;			// append the row to the array. 
+
+            $request_array[] = $request;            // append the row to the array.
         }
-		
-		Did::insert($request_array);			// insert the array into the database. Much faster than inserting individual rows. 
+
+        Did::insert($request_array);            // insert the array into the database. Much faster than inserting individual rows.
     }
 
     public function not_10digits($num)
@@ -211,17 +210,17 @@ class Didblock extends Model
         if ($diff >= 10000) {
             throw new \Exception('Error: Block must not be greater than 10000 DIDs');
         }
-		// Check if type is public and country code
-		if(($this->type == "public") && ($this->country_code == 1)) {
-			// Check if number is 10 digits.
-			if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
-				throw new \Exception('NANP Start or End Range must be 10 digits');
-			}
-			// Check if start and end are in same NPA NXX if they have country Code of 1.
-			if (! $this->is_in_same_npanxx($this->start, $this->end)) {
-				throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
-			}
-		}
+        // Check if type is public and country code
+        if (($this->type == 'public') && ($this->country_code == 1)) {
+            // Check if number is 10 digits.
+            if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
+                throw new \Exception('NANP Start or End Range must be 10 digits');
+            }
+            // Check if start and end are in same NPA NXX if they have country Code of 1.
+            if (! $this->is_in_same_npanxx($this->start, $this->end)) {
+                throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
+            }
+        }
         // Check if exceeds max of 255
         if (strlen($this->name) > 255) {
             throw new \Exception('name exceeded 255 characters');

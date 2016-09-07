@@ -106,12 +106,30 @@ if (app()->environment() != 'testing') {
                 if(key && key.trim() != "") {
                     var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("{{$apiKeyVar}}", key, "{{$apiKeyInject}}");
                     window.swaggerUi.api.clientAuthorizations.add("{{$securityDefinition}}", apiKeyAuth);
+                    console.log('Set authorization header bearer: ' + JSON.stringify(apiKeyAuth) );
                 }
             }
 
             $('#input_apiKey').change(function() {
                 addApiKeyAuthorization();
             });
+
+            function automaticAuthentication() {
+		        var ajaxCall = $.ajax({
+		            url: '../api/authenticate',
+		            method: 'GET',
+		            success: function(response) {
+			            jwt = response.token;
+						console.log("Automatic authentication to API succeeded, JSON web token set to " + jwt);
+						$('#input_apiKey').val(jwt);
+						addApiKeyAuthorization();
+		            },
+		            error: function(error, errorThrown) {
+						console.log("Automatic authentication to API failed, JSON web token must be input manually");
+		            }
+	            });
+			}
+			automaticAuthentication();
 
             window.swaggerUi.load();
 
@@ -131,7 +149,7 @@ if (app()->environment() != 'testing') {
         <a id="logo" href="http://swagger.io">swagger</a>
         <form id='api_selector'>
             <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-            <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
+            <div class='input'><input placeholder="JSON Web Token" id="input_apiKey" name="apiKey" type="text"/></div>
             <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
         </form>
     </div>

@@ -1,0 +1,191 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Phone Number API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/telephony/api/didblock": {
+            "get": {
+                "tags": [
+                    "Did Block"
+                ],
+                "summary": "List of DID Blocks for authorized user",
+                "description": "",
+                "operationId": "listDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Did Block"
+                ],
+                "summary": "Create DID Block",
+                "description": "",
+                "operationId": "createDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/didblock{id}": {
+            "get": {
+                "tags": [
+                    "Did Block"
+                ],
+                "summary": "Get DID Block by ID",
+                "description": "",
+                "operationId": "getDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Did Block"
+                ],
+                "summary": "Update DID Block by ID for authorized user",
+                "description": "",
+                "operationId": "updateDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Did Block"
+                ],
+                "summary": "Delete DID Block by ID for authorized user",
+                "description": "This deletes the block and its child Dids",
+                "operationId": "updateDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/didblock{id}/dids": {
+            "get": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "List DIDs for Did Block by ID for authorized user",
+                "description": "List child DIDs for Did Block by ID",
+                "operationId": "listDidbyBlockID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/did{id}": {
+            "get": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Get DID by ID for authorized user",
+                "description": "",
+                "operationId": "getDid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Update DID by ID for authorized user",
+                "description": "This can be huge and need to add pagination",
+                "operationId": "listDid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/did": {
+            "get": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "List DIDs for authorized user",
+                "description": "This can be huge and need to add pagination",
+                "operationId": "listDid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}

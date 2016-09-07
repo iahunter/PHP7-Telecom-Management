@@ -18,7 +18,6 @@ class Didcontroller extends Controller
         $this->middleware('jwt.auth');
     }
 
-
     public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -41,7 +40,6 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-
     public function getDidblock(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -60,7 +58,6 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-
 
     public function createDidblock(Request $request)
     {
@@ -83,7 +80,6 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-
 
     public function updateDidblock(Request $request, $didblock_id)
     {
@@ -110,7 +106,6 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-
 
     public function deleteDidblock(Request $request, $didblock_id)
     {
@@ -140,7 +135,6 @@ class Didcontroller extends Controller
 ##################################################################################################################################################
 /**/
 
-
     public function listDidbyBlockID(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -164,7 +158,6 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-
     public function getDid(Request $request, $did_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -183,7 +176,6 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-
 
     public function updateDid(Request $request, $did_id)
     {
@@ -210,8 +202,6 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-
-
 
     /* Not sure we want to advertise delete individual DIDs. Leaving this commented out for now.
 

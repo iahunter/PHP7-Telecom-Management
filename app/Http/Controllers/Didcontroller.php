@@ -18,12 +18,7 @@ class Didcontroller extends Controller
         $this->middleware('jwt.auth');
     }
 
-    /*
-     * @SWG\Get(
-     *     path="/telephony/api/didblock",
-     *     @SWG\Response(response="200", description="Get list of Did Blocks with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
     public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -46,12 +41,7 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    /*
-     * @SWG\Get(
-     *     path="/telephony/api/didblock/{id}",
-     *     @SWG\Response(response="200", description="Get Did Blocks by id with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
     public function getDidblock(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -71,12 +61,7 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    /*
-     * @SWG\POST(
-     *     path="/telephony/api/didblock/",
-     *     @SWG\Response(response="200", description="Create Did Block with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
     public function createDidblock(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -99,12 +84,7 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    /*
-     * @SWG\Put(
-     *     path="/telephony/api/didblock/{id}",
-     *     @SWG\Response(response="200", description="Update Did Blocks by id with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
     public function updateDidblock(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -131,12 +111,7 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    /*
-     * @SWG\Delete(
-     *     path="/telephony/api/didblock/{id}",
-     *     @SWG\Response(response="200", description="Delete Did Blocks by id with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
     public function deleteDidblock(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -165,12 +140,7 @@ class Didcontroller extends Controller
 ##################################################################################################################################################
 /**/
 
-    /*
-     * @SWG\Get(
-     *     path="/telephony/api/didblock/{id}/dids",
-     *     @SWG\Response(response="200", description="Get list of Did Blocks with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
     public function listDidbyBlockID(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -194,12 +164,7 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    /*
-     * @SWG\Get(
-     *     path="/telephony/api/did/{id}",
-     *     @SWG\Response(response="200", description="Get Did Blocks by id with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
     public function getDid(Request $request, $did_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -219,12 +184,6 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    /*
-     * @SWG\Put(
-     *     path="/telephony/api/didblock/{id}",
-     *     @SWG\Response(response="200", description="Update Did by id with JSON web token by TLS client certificate authentication")
-     * )
-     */
 
     public function updateDid(Request $request, $did_id)
     {
@@ -252,12 +211,7 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    /*
-     * @SWG\Delete(
-     *     path="/telephony/api/didblock/{id}",
-     *     @SWG\Response(response="200", description="Delete Did Blocks by id with JSON web token by TLS client certificate authentication")
-     * )
-     */
+
 
     /* Not sure we want to advertise delete individual DIDs. Leaving this commented out for now.
 

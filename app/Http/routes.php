@@ -22,6 +22,10 @@ $api->version('v1', function ($api) {
         return "Hello world - demo app!\n";
     });
 
+	/**
+     * @SWG\Info(title="Phone Number API", version="0.1")
+     **/
+	
     // This spits back a JWT to authenticate additional API calls.
     $api->get('authenticate', 'App\Http\Controllers\Auth\AuthController@authenticate');
     $api->post('authenticate', 'App\Http\Controllers\Auth\AuthController@authenticate');
@@ -31,8 +35,26 @@ $api->version('v1', function ($api) {
 
     // DID Block App routes
     $api->post('didblock', 'App\Http\Controllers\Didcontroller@createDidblock');
+	
+	/**
+		 * @SWG\Get(
+		 *     path="/telephony/api/didblock",
+		 *     tags={"Get Did Block"},
+		 *     summary="List of DID Blocks for authorized user",
+		 *     description="",
+		 *     operationId="getDidblock",
+		 *     consumes={"application/json"},
+		 *     produces={"application/json"},
+		 *     @SWG\Response(
+		 *         response=200,
+		 *         description="successful operation",
+		 *     )
+		 * )
+		 */
     $api->get('didblock/{id}', 'App\Http\Controllers\Didcontroller@getDidblock');
     $api->get('didblock', 'App\Http\Controllers\Didcontroller@listDidblock');
+	
+	
     $api->put('didblock/{id}', 'App\Http\Controllers\Didcontroller@updateDidblock');
     $api->delete('didblock/{id}', 'App\Http\Controllers\Didcontroller@deleteDidblock');
 

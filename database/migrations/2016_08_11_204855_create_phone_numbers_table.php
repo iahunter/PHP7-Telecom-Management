@@ -21,6 +21,7 @@ class CreatePhoneNumbersTable extends Migration
             $table->bigInteger('end');                  // End of Block
             $table->string('type');                        // Public or Private Number
             $table->text('comment');                    // Comment
+			$table->json('json');                   	// JSON Custom Field Data
             $table->timestamps();                       // Time Stamps
             $table->softDeletes();                      // Soft Deletes
         });

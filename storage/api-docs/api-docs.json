@@ -5,6 +5,46 @@
         "version": "0.1"
     },
     "paths": {
+        "/telephony/api/authenticate": {
+            "get": {
+                "tags": [
+                    "Authenticate"
+                ],
+                "summary": "Get JSON web token by TLS client certificate authentication",
+                "description": "",
+                "operationId": "authenticate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Authenticate"
+                ],
+                "summary": "Get JSON web token by LDAP user authentication",
+                "description": "",
+                "operationId": "authenticate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/didblock": {
             "get": {
                 "tags": [

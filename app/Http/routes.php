@@ -13,8 +13,14 @@
 
 $api = app('Dingo\Api\Routing\Router');
 
+/* Default Route
 Route::get('/', function () {
     return view('welcome');
+});
+*/
+
+Route::get('/', function () {
+    return redirect('ui');
 });
 
 $api->version('v1', function ($api) {
@@ -66,7 +72,9 @@ $api->version('v1', function ($api) {
 
     // Disallow users to list users and get userinfo from API.
     //$api->get('listusers', 'App\Http\Controllers\Auth\AuthController@listusers');
-    //$api->get('userinfo', 'App\Http\Controllers\Auth\AuthController@userinfo');
+	
+	// Get your user info. 
+    $api->get('userinfo', 'App\Http\Controllers\Auth\AuthController@userinfo');
 
 
     /********************************

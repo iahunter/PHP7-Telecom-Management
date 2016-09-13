@@ -4,6 +4,10 @@
 /public/vendor
 /public/coverage
 /archive
+/public/ui
+/public/angular_jwt_base
+/public/telephony-ui
+
 Homestead.yaml
 Homestead.json
 .env

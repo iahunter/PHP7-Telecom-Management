@@ -10,7 +10,7 @@
 
         service.Getuserinfo = Getuserinfo;
 
-		service.userinfos = {};
+		service.userinfo = {};
 		    
 		function Getuserinfo(callback) {
 			service.userinfo = {};
@@ -22,7 +22,7 @@
             $http.get('../api/' + type)
                 .success(function (response) {
 					//console.log(response);
-					service.userinfo = response.userinfo;
+					service.userinfo = response;
 					console.log(service.userinfo);
 					callback(true);
                 })

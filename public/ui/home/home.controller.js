@@ -6,22 +6,23 @@
         .controller('Home.IndexController', Controller);
 
 	
-    function Controller($location, TelephonyService) {
+    function Controller($location, UserService) {
         var vm = this;
 
 		
         initController();
 
-		vm.messages = 'Loading Didblocks...';
-		vm.didblocks = {};
+		vm.messages = 'Loading Userinfo...';
+		vm.userinfo = {};
 
         function initController() {
-			TelephonyService.GetDidblock(function (result) {
-				console.log('callback from TelephonyService.GetDidblock responded ' + result);
-				vm.didblocks = TelephonyService.didblocks;
+			UserService.Getuserinfo(function (result) {
+				console.log('callback from UserService.userinfo responded ' + result);
+				vm.userinfo = UserService.userinfo;
+				vm.username = vm.userinfo.cn[0];
 				
-				console.log(vm.didblocks);
-				vm.messages = JSON.stringify(vm.didblocks, null, "    ");
+				console.log(vm.userinfo);
+				vm.messages = JSON.stringify(vm.userinfo, null, "    ");
 				//$scope.accounts = vm.accounts;
 			});
         }

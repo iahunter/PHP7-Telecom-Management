@@ -23,6 +23,12 @@
                 templateUrl: 'login/login.html',
                 controller: 'Login.IndexController',
                 controllerAs: 'vm'
+            })
+			.state('didblock', {
+                url: '/didblock',
+                templateUrl: 'didblock/index.html',
+                controller: 'Didblock.IndexController',
+                controllerAs: 'vm'
             });
     }
 

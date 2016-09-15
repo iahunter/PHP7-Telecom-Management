@@ -1,13 +1,22 @@
-﻿<div >
-    <h1>Home</h1>
-    <p>You have been logged in successfully!!! </p>
+﻿<div class="container">
+		<div ng-show="vm.username">
+			<h3 >Welcome {{vm.username}}</h3>
+		</div>
+		
+		<div style="margin-top: 10px"></div>
+		
+		<p><a href="#/login">Logout</a></p>
 
-	<pre ng-if="vm.messages">{{vm.messages}}</pre>
-	<div ng-repeat="didblock in vm.didblocks track by $index">
-	
-	{{didblock.start}}, {{didblock.end}}
+	<div class="jumbotron">
 
+		<h1>Telephony UI</h1> 
+		
+		<div style="margin-top: 50px"></div>
+		<li><ul>The Telephony UI is an Angular JS Frontend that interacts with the Telephony Backend Service via RESTful API calls.</ul></li>
+		<li><ul>The Telephony Backend Service is built on the Laravel Framework/Dingo API/Bouncer/JWT.</ul></li>
+		
+		<div style="margin-top: 50px"></div>
+		<h3>This App is currently under developement</h3>
 	</div>
-    <p><a href="#/login">Logout</a></p>
-	
+
 </div>

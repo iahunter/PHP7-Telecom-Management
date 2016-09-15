@@ -72,8 +72,8 @@ $api->version('v1', function ($api) {
 
     // Disallow users to list users and get userinfo from API.
     //$api->get('listusers', 'App\Http\Controllers\Auth\AuthController@listusers');
-	
-	// Get your user info. 
+
+    // Get your user info.
     $api->get('userinfo', 'App\Http\Controllers\Auth\AuthController@userinfo');
 
 

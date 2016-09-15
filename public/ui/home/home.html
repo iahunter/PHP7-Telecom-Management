@@ -1,0 +1,13 @@
+﻿<div >
+    <h1>Home</h1>
+    <p>You have been logged in successfully!!! </p>
+
+	<pre ng-if="vm.messages">{{vm.messages}}</pre>
+	<div ng-repeat="didblock in vm.didblocks track by $index">
+	
+	{{didblock.start}}, {{didblock.end}}
+
+	</div>
+    <p><a href="#/login">Logout</a></p>
+	
+</div>

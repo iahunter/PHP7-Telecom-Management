@@ -20,7 +20,7 @@ class CreatePhoneNumbersTable extends Migration
             $table->bigInteger('start');                // Start of Block
             $table->bigInteger('end');                  // End of Block
             $table->string('type');                     // Public or Private Number
-			$table->string('reserved');                 // Reserved Status for Automation Only Assignment
+            $table->string('reserved');                 // Reserved Status for Automation Only Assignment
             $table->text('comment');                    // Comment
             $table->json('json');                       // JSON Custom Field Data
             $table->timestamps();                       // Time Stamps

@@ -167,7 +167,7 @@ class Didblock extends Model
         if (($this->type != 'public') && ($this->type != 'private')) {
             throw new \Exception('Type must be set to public or private');
         }
-		// Do not allow user to change country code once set. 
+        // Do not allow user to change country code once set.
         if (isset($this->original['country_code']) && $this->original['country_code'] !== $this->country_code) {
             throw new \Exception('Validation error, Country Code can not be altered once created');
         }

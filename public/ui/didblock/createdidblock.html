@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 col-sm-8 col-lg-6">
+    <div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-2">
         <script type="text/ng-template" id="error-messages">
                         <div ng-message='required'> This Field is required </div>
                         <div ng-message='minlength'> Too short </div>
@@ -92,7 +92,27 @@
                                 </div>
                             </div>
                         </div>
+						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group"  ng-class="{'has-error': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$invalid, 'has-success': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$valid }">
+                                <label for="reserved" class="control-label">Automation Only</label>
+                                <br>
+                                <input type="checkbox"  ng-model='vm.didblockForm.reserved' name="reserved" >
+
+                                <div ng-messages="addDidblockForm.reserved.$dirty && addDidblockForm.reserved.$error">
+                                    <div ng-messages-include="error-messages"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+					
+					<!-- Print Form JSON
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+							{{vm.didblockForm}}
+						</div>
+					</div>
+					
+					-->
                     
                     <hr />
                     <div class="row">
@@ -109,7 +129,6 @@
     </div>
 </div>
 <div class="row">
-</div>
-</div>
 
-{{vm.didblockForm}}
+</div>
+</div>

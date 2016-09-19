@@ -9,7 +9,9 @@ angular
 		vm.didblockForm = {};
 
 		vm.messages = 'Loading Didblocks...';
-		vm.didblocks = {};
+		vm.didblocks = [{}];
+		
+		//vm.search = "";
 
 		function initController() {
 			telephonyService.GetDidblock(function (result) {
@@ -40,7 +42,7 @@ angular
 			}];
 		
 		vm.submitDidblock = function(form) {
-			form.category = this.selectedOption.name;
+			form.status = this.selectedOption.name;
 			form.type = this.selectedtype.name;
 			console.log("Category: " + form.category);
 			
@@ -48,7 +50,9 @@ angular
 			telephonyService.createDidblock(angular.copy(form)).then(function(data) {
 				alert("Didblock Added Succesfully" + data);
 			}, function(error) {
-				alert('An error occurred ' + error.statusText);
+				console.log(error)
+				console.log(error.data.message)
+				alert('Error: ' + error.data.message + " | Status: " + error.status);
 			});
 
 		}

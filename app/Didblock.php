@@ -163,10 +163,11 @@ class Didblock extends Model
         if (! $this->type) {
             throw new \Exception('No type Set');
         }
-        // Check if start and end are in same NPA NXX if they have country Code of 1.
+        // Check type is public or private
         if (($this->type != 'public') && ($this->type != 'private')) {
             throw new \Exception('Type must be set to public or private');
         }
+		// Do not allow user to change country code once set. 
         if (isset($this->original['country_code']) && $this->original['country_code'] !== $this->country_code) {
             throw new \Exception('Validation error, Country Code can not be altered once created');
         }

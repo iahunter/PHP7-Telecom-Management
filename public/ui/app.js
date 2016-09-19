@@ -16,7 +16,7 @@
                 url: '/',
                 templateUrl: 'home/home.html',
                 controller: 'Home.IndexController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
             })
             .state('login', {
                 url: '/login',
@@ -26,10 +26,23 @@
             })
 			.state('didblock', {
                 url: '/didblock',
-                templateUrl: 'didblock/index.html',
+                templateUrl: 'didblock/didblock.html',
+                controller: 'Didblock.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('didblockcreate', {
+                url: '/didblock/create',
+                templateUrl: 'didblock/createdidblock.html',
+                controller: 'Didblock.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('didblock.dids', {
+                url: '/didblock/:dids',
+                templateUrl: 'didblock/didblock.html',
                 controller: 'Didblock.IndexController',
                 controllerAs: 'vm'
             });
+
     }
 
     function run($rootScope, $http, $location, $localStorage, jwtHelper) {

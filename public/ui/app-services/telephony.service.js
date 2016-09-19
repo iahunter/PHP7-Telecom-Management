@@ -1,53 +1,34 @@
-﻿(function () {
-    'use strict';
+﻿angular
+	.module('app')
+	.factory('telephonyService', ['$http', '$localStorage', function($http, $localStorage){
+		
+		var self = {};
 
-    angular
-        .module('app')
-        .factory('TelephonyService', Service);
-
-    function Service($http, $localStorage) {
-        var service = {};
-
-        service.GetDidblock = GetDidblock;
+		self.GetDidblock = GetDidblock;
 
 		function GetDidblock(callback) {
-			service.didblock = {};
+			self.didblock = {};
 			GetType(callback, 'didblock');
-        }
+		}
 
-        function GetType(callback, type) {
-			service.didblock[type] = {};
-            $http.get('../api/' + type)
-                .success(function (response) {
-					service.didblocks = response.didblocks;
+		function GetType(callback, type) {
+			self.didblock[type] = {};
+			return $http.get('../api/' + type)
+				.success(function (response) {
+					self.didblocks = response.didblocks;
 					callback(true);
-                })
+				})
 				// execute callback with false to indicate failed call
 				.error(function() {
 					callback(false);
 				});
 		}
-
-		function GetDidblockDids(callback, type, didblock_id)
-		{
-			/*
-			service.accounts[type][account_id]['certificates'] = {};
-            $http.get('/api/' + type + '/accounts/' + account_id + '/certificates')
-                .success(function (response) {
-					//console.log('got success for certs acct type ' + type + ' account id ' + account_id)
-					response.certificates.forEach(function(item, index) {
-						service.accounts[type][account_id]['certificates'][item.id] = item;
-					});
-					callback(true);
-                })
-				// execute callback with false to indicate failed call
-				.error(function() {
-					callback(false);
-				});
-			*/
+		
+		self.createDidblock = function(didblock) {
+			
+			return $http.post('../api/didblock',didblock);
 		}
 		
-		return service;
-		
-    }
-})();
+		return self;
+
+	}]);

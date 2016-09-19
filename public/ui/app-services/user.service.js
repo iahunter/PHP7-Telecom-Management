@@ -23,7 +23,7 @@
                 .success(function (response) {
 					//console.log(response);
 					service.userinfo = response;
-					console.log(service.userinfo);
+					//console.log(service.userinfo);
 					callback(true);
                 })
 				// execute callback with false to indicate failed call

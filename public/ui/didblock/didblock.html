@@ -1,12 +1,12 @@
 
 <div class="well form-horizontal" style="margin-top:10px;" >
 	
-	<legend>DID Block Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+	<legend>DID Block Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 	
 	<div class="input-group col-md-3 ">
-		<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" onclick="select()" placeholder="Search" name="srch-term" id="srch-term">
+		<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">
 		<div class="input-group-btn">
-			<button class="btn btn-default btn-disabled"><i class="glyphicon glyphicon-search"></i></button>
+			<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
 		</div>
 	</div>
 	
@@ -90,15 +90,16 @@
 					
 					<th>
 						<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
-							Update At
+							Updated At
 								<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 								<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 						</a>
 					</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-			<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search">
+			<!--<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search">
 					<td>{{ didblock.id}}</a></td>
 					<td>{{ didblock.country_code}}</td>
 					<td>{{ didblock.name}}</td>
@@ -109,6 +110,40 @@
 					<td>{{ didblock.comment}}</td>
 					<td>{{ didblock.created_at}}</td>
 					<td>{{ didblock.updated_at}}</td>
+			</tr>
+			</tbody>
+			</table>-->
+			
+			<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search: strict">
+				<td>{{ didblock.id}}</a></td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.country_code}}</td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.name}}</td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.carrier}}</a></td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.start}}</td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.end}}</td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.type}}</a></td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.comment}}</td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.created_at}}</td>
+				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.updated_at}}</td>
+				<td   ng-show="!vm.edit[didblock.id]">
+					<button class="btn btn-xs btn-primary"  ng-click="vm.edit[didblock.id] = !vm.edit[didblock.id]"> Edit </button>
+					<button class="btn btn-xs btn-danger" ng-click="vm.delete(didblock)"> Delete </button>
+				</td>
+
+				<td   ng-show="vm.edit[didblock.id]">{{ didblock.country_code}}</td>
+				<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.name"></td>
+				<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.carrier"></td>
+				<td   ng-show="vm.edit[didblock.id]">{{ didblock.start}}</td>
+				<td   ng-show="vm.edit[didblock.id]">{{ didblock.end}}</td>
+				<td   ng-show="vm.edit[didblock.id]">{{ didblock.type}}</td>
+				<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.comment"></td>
+				<td   ng-show="vm.edit[didblock.id]">{{ didblock.created_at}}</td>
+				<td   ng-show="vm.edit[didblock.id]">{{ didblock.updated_at}}</td>
+				
+				<td  ng-show="vm.edit[didblock.id]">
+					<button class="btn btn-xs btn-primary"  ng-click="vm.update(didblock);vm.edit[didblock.id] = !vm.edit[didblock.id]"> Save </button>
+					<button class="btn btn-xs btn-warning"  ng-click="vm.edit[didblock.id] = !vm.edit[didblock.id]"> Undo </button>
+				</td>
 			</tr>
 			</tbody>
 		</table>

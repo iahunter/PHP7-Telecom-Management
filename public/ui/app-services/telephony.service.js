@@ -31,10 +31,22 @@
 		}
 		
 		
-		// Delete Block by ID
-		self.deleteDidblock = function(didblock) {
+		// Update Block by ID
+		self.updateDidblock = function(id, update) {
         
-			return $http.delete('../api/didblock/'+didblock.id).then(function(response) {
+			return $http.put('../api/didblock/'+id, update).then(function(response) {
+
+				var data = response.data.events;
+				return data;
+
+			 }, function(error) {return false;});
+		}
+
+		
+		// Delete Block by ID
+		self.deleteDidblock = function(id) {
+			console.log('Service - Deleting ID: '+ id);
+			return $http.delete('../api/didblock/'+id, id).then(function(response) {
 
 				var data = response.data.events;
 				return data;
@@ -42,18 +54,6 @@
 			 });
 		}
 		
-		
-		// Update Block by ID
-		self.updateDidblock = function(didblock) {
-        
-			return $http.put('../api/didblock/'+didblock.id).then(function(response) {
-
-				var data = response.data.events;
-				return data;
-
-			 }, function(error) {return false;});
-		}
-		
-		return self;
+		return self
 
 	}]);

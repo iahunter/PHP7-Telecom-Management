@@ -211,6 +211,25 @@ $api->version('v1', function ($api) {
      **/
     $api->get('did/{id}', 'App\Http\Controllers\Didcontroller@getDid');
 
+	/*
+     * @SWG\Get(
+     *     path="/telephony/api/did/number/{number}",
+     *     tags={"Did"},
+     *     summary="Get DID by number search for authorized user",
+     *     description="",
+     *     operationId="getDid",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('did/number/{number}', 'App\Http\Controllers\Didcontroller@searchDidNumber');
+	
+	
     /*
      * @SWG\Get(
      *     path="/telephony/api/did",

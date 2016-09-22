@@ -9,42 +9,19 @@ use App\Didblock;
 use App\Did;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Dingo\Api\Routing\Helpers;
+
+//use Dingo\Api\Routing\Helpers;
 
 class Didcontroller extends Controller
 {
-    use Helpers;
-
+	//use Helpers;
     public function __construct()
     {
         // Only authenticated users can make these calls
         $this->middleware('jwt.auth');
     }
-
-    /*
-    public function listDidblock()
-    {
-        $user = JWTAuth::parseToken()->authenticate();
-        $didblocks = Didblock::all();
-        $show = [];
-        foreach ($didblocks as $didblock) {
-            if ($user->can('read', $didblock)) {
-                unset($didblock->deleted_at);
-
-                $show[] = $didblock;
-            }
-        }
-        $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'didblocks'      => $show,
-                    ];
-
-        return response()->json($response);
-    }*/
-
-    public function listDidblock()
+	
+	public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
         $didblocks = Didblock::all();
@@ -160,7 +137,7 @@ class Didcontroller extends Controller
 
 ##################################################################################################################################################
 /**/
-    /*
+	/*
     public function listDidbyBlockID(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -183,14 +160,14 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }*/
-
-    public function listDidbyBlockID(Request $request, $didblock_id)
+	
+	public function listDidbyBlockID(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
         if ($user->can('read', Did::class)) {
-            $dids = \App\Did::where('didblock_id', $didblock_id)->get();
+			$dids = \App\Did::where('didblock_id', $didblock_id)->get();
         }
-        //dd($dids);
+		//dd($dids);
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
@@ -215,6 +192,36 @@ class Didcontroller extends Controller
                     'message'        => '',
                     'request'        => $request->all(),
                     'did'            => $did,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	
+	public function searchDidNumber(Request $request, $number_search)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+		
+		if (! $user->can('read', Did::class)) {
+            abort(401, 'You are not authorized to view didblock '.$did);
+        }
+		
+		// Search for DID by numberCheck if there are any matches. 
+		if (! Did::where([['number','like', $number_search.'%']])->count()){
+			abort(401, 'No number found matching search: '.$number_search); 
+		}
+
+		// Search for numbers like search. 
+		$dids = Did::where([['number','like', $number_search.'%']])->get();
+		
+		//return "HERE ".$did;
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'dids'            => $dids,
                     ];
 
         return response()->json($response);
@@ -245,6 +252,8 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	
 
     /* Not sure we want to advertise delete individual DIDs. Leaving this commented out for now.
 

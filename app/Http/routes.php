@@ -211,7 +211,7 @@ $api->version('v1', function ($api) {
      **/
     $api->get('did/{id}', 'App\Http\Controllers\Didcontroller@getDid');
 
-	/*
+    /*
      * @SWG\Get(
      *     path="/telephony/api/did/number/{number}",
      *     tags={"Did"},
@@ -228,8 +228,8 @@ $api->version('v1', function ($api) {
      * )
      **/
     $api->get('did/number/{number}', 'App\Http\Controllers\Didcontroller@searchDidNumber');
-	
-	
+
+
     /*
      * @SWG\Get(
      *     path="/telephony/api/did",

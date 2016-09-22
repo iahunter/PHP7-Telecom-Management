@@ -1,136 +1,140 @@
+<div class="container">
+
 <div style="margin:100px"></div>
 
 
-<div class="row">
-    <div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-2">
-        <script type="text/ng-template" id="error-messages">
-                        <div ng-message='required'> This Field is required </div>
-                        <div ng-message='minlength'> Too short </div>
-                        <div ng-message='maxlength'> Too long </div>
-        </script>
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h3>Create DID Block</h3></div>
-            <div class="panel-body">
-                <form class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.name.$touched && addDidblockForm.name.$invalid, 'has-success': addDidblockForm.name.$touched && addDidblockForm.name.$valid }">
-                                <label for="name" class="control-label">Name</label>
-                                <input type="text" ng-model='vm.didblockForm.name' required class="form-control"  name="name" placeholder="Name" ng-minlength='3' ng-maxlength='50'>
-                                <div ng-messages="addDidblockForm.name.$dirty && addDidblockForm.name.$error">
-                                    <div ng-message='required'> Name is required </div>
-                                    <div ng-message='minlength'>Please enter a Name at least 3 chars long</div>
-                                    <div ng-message='maxlength'>Name entered cannot be longer than 50 chars</div>
-                                </div>
-                            </div>
-                        </div>
-						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.carrier.$touched && addDidblockForm.carrier.$invalid, 'has-success': addDidblockForm.carrier.$touched && addDidblockForm.carrier.$valid }">
-                                <label for="carrier" class="control-label">Carrier</label>
-                                <input type="text" ng-model='vm.didblockForm.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
-                                <div ng-messages="addDidblockForm.carrier.$dirty && addDidblockForm.carrier.$error">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.eventDescription.$touched && addDidblockForm.eventDescription.$invalid, 'has-success': addDidblockForm.eventDescription.$touched && addDidblockForm.eventDescription.$valid }">
-                                <label for="eventDescription" class="control-label">Comment</label>
-                                <input type="textarea" ng-model='vm.didblockForm.comment' class="form-control" name="eventDescription" placeholder="Comment">
-                                <div ng-messages="addDidblockForm.eventDescription.$dirty && addDidblockForm.eventDescription.$error">
-                                    <div ng-messages-include="error-messages"></div>
-                                </div>
-                            </div>
-                        </div>
-						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.countrycode.$touched && addDidblockForm.countrycode.$invalid, 'has-success': addDidblockForm.countrycode.$touched && addDidblockForm.countrycode.$valid }">
-                                <label for="countrycode" required class=" control-label">Country Code</label>
-                                <input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.didblockForm.country_code' class="form-control" name="countrycode" placeholder="1">
-                                <div ng-messages="addDidblockForm.countrycode.$dirty && addDidblockForm.countrycode.$error">
-                                    <div ng-message="pattern">Please enter a valid country code</div>
-                                    <div ng-messages-include="error-messages"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.start.$touched && addDidblockForm.start.$invalid, 'has-success': addDidblockForm.start.$touched && addDidblockForm.start.$valid }">
-                                <label for="start" required class=" control-label">Range Start</label>
-                                <input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.didblockForm.start' class="form-control" name="start" placeholder="4029380000">
-                                <div ng-messages="addDidblockForm.start.$dirty && addDidblockForm.start.$error">
-                                    <div ng-message="pattern">Please enter the start in the numberic format</div>
-                                    <div ng-messages-include="error-messages"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.end.$touched && addDidblockForm.end.$invalid, 'has-success': addDidblockForm.end.$touched && addDidblockForm.end.$valid }">
-                                <label for="end" required class=" control-label">Range End</label>
-                                <input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.didblockForm.end' class="form-control" name="end" placeholder="4029389999">
-                                <div ng-messages="addDidblockForm.end.$dirty && addDidblockForm.end.$error">
-                                    <div ng-message="pattern">Please enter the end in the numberic format</div>
-                                    <div ng-messages-include="error-messages"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.eventCategory.$touched && addDidblockForm.eventCategory.$invalid, 'has-success': addDidblockForm.eventCategory.$touched && addDidblockForm.eventCategory.$valid }">
-                                <label for="eventCategory"  class="control-label">Category</label>
-                                <select class="form-control" required ng-model='vm.selectedOption' ng-options="category.name for category in vm.states track by category.id" data-width="100%" name="eventCategory">
-                                </select>
-                                <div ng-messages="addDidblockForm.eventCategory.$dirty && addDidblockForm.eventCategory.$error">
-                                    <div ng-messages-include="error-messages"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group" ng-class="{'has-error': addDidblockForm.type.$touched && addDidblockForm.type.$invalid, 'has-success': addDidblockForm.type.$touched && addDidblockForm.type.$valid }">
-                                <label for="type"  class="control-label">Type</label>
-                                <select class="form-control" required ng-model='vm.selectedtype' ng-options="type.name for type in vm.types track by type.id" data-width="100%" name="type">
-                                </select>
-                                <div ng-messages="addDidblockForm.type.$dirty && addDidblockForm.type.$error">
-                                    <div ng-messages-include="error-messages"></div>
-                                </div>
-                            </div>
-                        </div>
-						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group"  ng-class="{'has-error': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$invalid, 'has-success': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$valid }">
-                                <label for="reserved" class="control-label">Automation Only</label>
-                                <br>
-                                <input type="checkbox"  ng-model='vm.didblockForm.reserved' name="reserved" >
-
-                                <div ng-messages="addDidblockForm.reserved.$dirty && addDidblockForm.reserved.$error">
-                                    <div ng-messages-include="error-messages"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					
-					<!-- Print Form JSON
-					<div class="row">
-						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-							{{vm.didblockForm}}
+	<div class="row">
+		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-2">
+			<script type="text/ng-template" id="error-messages">
+							<div ng-message='required'> This Field is required </div>
+							<div ng-message='minlength'> Too short </div>
+							<div ng-message='maxlength'> Too long </div>
+			</script>
+			<div class="panel panel-primary">
+				<div class="panel-heading"><h3>Create DID Block</h3></div>
+				<div class="panel-body">
+					<form class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.name.$touched && addDidblockForm.name.$invalid, 'has-success': addDidblockForm.name.$touched && addDidblockForm.name.$valid }">
+									<label for="name" class="control-label">Name</label>
+									<input type="text" ng-model='vm.didblockForm.name' required class="form-control"  name="name" placeholder="Name" ng-minlength='3' ng-maxlength='50'>
+									<div ng-messages="addDidblockForm.name.$dirty && addDidblockForm.name.$error">
+										<div ng-message='required'> Name is required </div>
+										<div ng-message='minlength'>Please enter a Name at least 3 chars long</div>
+										<div ng-message='maxlength'>Name entered cannot be longer than 50 chars</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.carrier.$touched && addDidblockForm.carrier.$invalid, 'has-success': addDidblockForm.carrier.$touched && addDidblockForm.carrier.$valid }">
+									<label for="carrier" class="control-label">Carrier</label>
+									<input type="text" ng-model='vm.didblockForm.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
+									<div ng-messages="addDidblockForm.carrier.$dirty && addDidblockForm.carrier.$error">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.eventDescription.$touched && addDidblockForm.eventDescription.$invalid, 'has-success': addDidblockForm.eventDescription.$touched && addDidblockForm.eventDescription.$valid }">
+									<label for="eventDescription" class="control-label">Comment</label>
+									<input type="textarea" ng-model='vm.didblockForm.comment' class="form-control" name="eventDescription" placeholder="Comment">
+									<div ng-messages="addDidblockForm.eventDescription.$dirty && addDidblockForm.eventDescription.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.countrycode.$touched && addDidblockForm.countrycode.$invalid, 'has-success': addDidblockForm.countrycode.$touched && addDidblockForm.countrycode.$valid }">
+									<label for="countrycode" required class=" control-label">Country Code</label>
+									<input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.didblockForm.country_code' class="form-control" name="countrycode" placeholder="1">
+									<div ng-messages="addDidblockForm.countrycode.$dirty && addDidblockForm.countrycode.$error">
+										<div ng-message="pattern">Please enter a valid country code</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-					
-					-->
-                    
-                    <hr />
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                            <div class="form-group">
-                                <button  type="submit" ng-disabled="addDidblockForm.$invalid" class="btn btn-primary">Submit</button>
-                                <button type="reset" class="btn btn-primary">Reset</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.start.$touched && addDidblockForm.start.$invalid, 'has-success': addDidblockForm.start.$touched && addDidblockForm.start.$valid }">
+									<label for="start" required class=" control-label">Range Start</label>
+									<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.didblockForm.start' class="form-control" name="start" placeholder="4029380000">
+									<div ng-messages="addDidblockForm.start.$dirty && addDidblockForm.start.$error">
+										<div ng-message="pattern">Please enter the start in the numberic format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.end.$touched && addDidblockForm.end.$invalid, 'has-success': addDidblockForm.end.$touched && addDidblockForm.end.$valid }">
+									<label for="end" required class=" control-label">Range End</label>
+									<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.didblockForm.end' class="form-control" name="end" placeholder="4029389999">
+									<div ng-messages="addDidblockForm.end.$dirty && addDidblockForm.end.$error">
+										<div ng-message="pattern">Please enter the end in the numberic format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.eventCategory.$touched && addDidblockForm.eventCategory.$invalid, 'has-success': addDidblockForm.eventCategory.$touched && addDidblockForm.eventCategory.$valid }">
+									<label for="eventCategory"  class="control-label">Category</label>
+									<select class="form-control" required ng-model='vm.selectedOption' ng-options="category.name for category in vm.states track by category.id" data-width="100%" name="eventCategory">
+									</select>
+									<div ng-messages="addDidblockForm.eventCategory.$dirty && addDidblockForm.eventCategory.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.type.$touched && addDidblockForm.type.$invalid, 'has-success': addDidblockForm.type.$touched && addDidblockForm.type.$valid }">
+									<label for="type"  class="control-label">Type</label>
+									<select class="form-control" required ng-model='vm.selectedtype' ng-options="type.name for type in vm.types track by type.id" data-width="100%" name="type">
+									</select>
+									<div ng-messages="addDidblockForm.type.$dirty && addDidblockForm.type.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group"  ng-class="{'has-error': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$invalid, 'has-success': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$valid }">
+									<label for="reserved" class="control-label">Automation Only</label>
+									<br>
+									<input type="checkbox"  ng-model='vm.didblockForm.reserved' name="reserved" >
 
+									<div ng-messages="addDidblockForm.reserved.$dirty && addDidblockForm.reserved.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Print Form JSON
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								{{vm.didblockForm}}
+							</div>
+						</div>
+						
+						-->
+						
+						<hr />
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group">
+									<button  type="submit" ng-disabled="addDidblockForm.$invalid" class="btn btn-primary">Submit</button>
+									<button type="reset" class="btn btn-primary">Reset</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+
+	</div>
 </div>
+

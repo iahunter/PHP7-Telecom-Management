@@ -18,7 +18,7 @@ angular
 		//vm.search = "";
 
 		function initController() {
-			telephonyService.GetDidblock(function (result) {
+			telephonyService.GetDidblocks(function (result) {
 				console.log('callback from telephonyService.GetDidblock responded ' + result);
 				vm.didblocks = telephonyService.didblocks;
 				

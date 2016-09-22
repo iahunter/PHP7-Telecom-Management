@@ -114,8 +114,12 @@
 			</tbody>
 			</table>-->
 			
+			<!-- Allow you to edit and delete Blocks with new buttons -->
 			<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search: strict">
-				<td>{{ didblock.id}}</a></td>
+			
+				<!--List View-->
+				<td><a ui-sref="getdidblock({id: didblock.id})">{{ didblock.id}}</a></td>
+				<!--<td>{{ didblock.id}}</a></td>-->
 				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.country_code}}</td>
 				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.name}}</td>
 				<td   ng-show="!vm.edit[didblock.id]">{{ didblock.carrier}}</a></td>
@@ -130,6 +134,7 @@
 					<button class="btn btn-xs btn-danger" ng-click="vm.delete(didblock)"> Delete </button>
 				</td>
 
+				<!--Edit View-->
 				<td   ng-show="vm.edit[didblock.id]">{{ didblock.country_code}}</td>
 				<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.name"></td>
 				<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.carrier"></td>

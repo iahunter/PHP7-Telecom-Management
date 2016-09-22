@@ -36,10 +36,10 @@
                 controller: 'Didblock.IndexController',
                 controllerAs: 'vm'
             })
-			.state('didblock.dids', {
-                url: '/didblock/:dids',
-                templateUrl: 'didblock/didblock.html',
-                controller: 'Didblock.IndexController',
+			.state('getdidblock', {
+                url: "/didblock/{id}",
+                templateUrl: 'didblock/getdidblock.html',
+                controller: 'getDidblock.IndexController',
                 controllerAs: 'vm'
             });
 

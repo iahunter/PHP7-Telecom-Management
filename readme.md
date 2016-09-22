@@ -20,3 +20,5 @@ Documentation for JWT can be found on GitHub. https://github.com/tymondesigns/jw
 
 Documentation for Bouncer roles and permissions can be found on GitHub. https://github.com/JosephSilber/bouncer
 
+#Frontend UI 
+There is also a Frontend UI that is included using Bootstrap3, AngularJS 1.5, and angular-jwt. 

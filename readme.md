@@ -12,13 +12,19 @@ Bouncer roles manage rights to the accounts and account certificates via the app
 
 
 #Other Documentation
-Documentation for the Laravel framework can be found on the [Laravel website](http://laravel.com/docs).
+* Laravel framework can be found on the [Laravel website](http://laravel.com/docs).
 
-Documentation for dingo api can be found on GitHub. https://github.com/dingo/api/wiki
+* dingo api can be found on GitHub. https://github.com/dingo/api/wiki
 
-Documentation for JWT can be found on GitHub. https://github.com/tymondesigns/jwt-auth/wiki
+* JWT can be found on GitHub. https://github.com/tymondesigns/jwt-auth/wiki
 
-Documentation for Bouncer roles and permissions can be found on GitHub. https://github.com/JosephSilber/bouncer
+* Bouncer roles and permissions can be found on GitHub. https://github.com/JosephSilber/bouncer
 
 #Frontend UI 
 There is also a Frontend UI that is included using Bootstrap3, AngularJS 1.5, and angular-jwt. 
+
+* Bootstrap is at http://getbootstrap.com. 
+
+* AngularJS is at https://docs.angularjs.org/api
+
+* Angular-JWT is at https://github.com/auth0/angular-jwt. 

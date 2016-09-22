@@ -19,7 +19,7 @@ class DidblockSeeder extends Seeder
         $end = 1234560009;
 
         // Create DIDs until the count is excedded.
-        while ($count < 5) {
+        while ($count < 100) {
             $count++;
 
             /* Insert into DB.

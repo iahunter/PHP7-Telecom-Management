@@ -16,10 +16,11 @@ angular
 		vm.didblocks = [{}];
 		
 		//vm.search = "";
+		
 
 		function initController() {
 			telephonyService.GetDidblocks(function (result) {
-				console.log('callback from telephonyService.GetDidblock responded ' + result);
+				console.log('callback from telephonyService.GetDidblocks responded ' + result);
 				vm.didblocks = telephonyService.didblocks;
 				
 				console.log(vm.didblocks);

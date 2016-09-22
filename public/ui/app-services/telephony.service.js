@@ -1,18 +1,18 @@
 ﻿angular
 	.module('app')
-	.factory('telephonyService', ['$http', '$localStorage', '$stateParams', function($http, $localStorage, $stateParams){
+	.factory('telephonyService', ['$http', '$localStorage', '$stateParams', '$q', function($http, $localStorage, $stateParams, $q){
 		
 		var self = {};
 
 		self.GetDidblocks = GetDidblocks;
 
 		function GetDidblocks(callback) {
-			self.didblock = {};
+			self.didblocks = {};
 			GetType(callback, 'didblock');
 		}
 
 		function GetType(callback, type) {
-			self.didblock[type] = {};
+			self.didblocks[type] = {};
 			return $http.get('../api/' + type)
 				.success(function (response) {
 					self.didblocks = response.didblocks;
@@ -23,34 +23,36 @@
 					callback(false);
 				});
 		}
-		
-		
-		
-				// Update Block by ID
-		self.getDidblock = function(id) {
-			return $http.get('../api/didblock/'+id)
-				.success(function (response) {
-					//console.log(response);
-					self.didblock = response.didblock;
-					
-				})
-				// execute callback with false to indicate failed call
-				.error(function() {
-				});
-		}
-		
+
 		// Update Block by ID
-		self.getDidblockDids = function(id) {
-			return $http.get('../api/didblock/'+id+'/dids')
-				.success(function (response) {
-					//console.log(response);
-					self.dids = response.dids;
-					//console.log(self.dids);
-				})
-				// execute callback with false to indicate failed call
-				.error(function() {
-				});
+		self.getDidblock = function(id) {
+			var defer = $q.defer();
+			return $http.get('../api/didblock/'+id)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					
+			  });
 		}
+		
+		// Get Dids by Block ID
+		self.getDidblockDids = function(id) {
+			var defer = $q.defer();
+			return $http.get('../api/didblock/'+id+'/dids')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+			
+			});
+		}
+			  
 		
 		
 		// Create Block
@@ -81,6 +83,17 @@
 				return data;
 
 			 });
+		}
+		
+		// Update Block by ID
+		self.updateDid = function(id, update) {
+        
+			return $http.put('../api/did/'+id, update).then(function(response) {
+
+				var data = response.data;
+				return data;
+
+			 }, function(error) {return false;});
 		}
 		
 

@@ -17,23 +17,27 @@ angular
 		
 		var id = $stateParams.id;
 		
-		vm.didblock = telephonyService.getDidblock(id);
-		console.log(vm.didblock);
-		
-		vm.dids = telephonyService.getDidblockDids(id);
-		console.log(vm.dids);
-		
-		function initController() {
-			telephonyService.getDidblockDids(function (result, id) {
-				console.log('callback from telephonyService.GetDidblock responded ' + result);
-				vm.dids = telephonyService.dids;
+		vm.getdidblock = telephonyService.getDidblock(id)
+			.then(function(res){
+				//success
+				//console.log("HERE ");console.log(res)
+				return vm.didblock = res.data.didblock;
 				
-				console.log(vm.didblocks);
-				vm.messages = JSON.stringify(vm.didblocks, null, "    ");
-				//$scope.accounts = vm.accounts;
+				
+			}, function(err){
+				//Error
 			});
-		}
-		
+			
+		vm.getdidblockdids = telephonyService.getDidblockDids(id)
+			.then(function(res){
+				//success
+				console.log("HERE ");console.log(res)
+				return vm.dids = res.data.dids;
+				
+				
+			}, function(err){
+				//Error
+			});
 		
 		
 		// Drop down values to use in Add form.
@@ -59,13 +63,13 @@ angular
 		
 		// Update DID Block service called by the save button.
 		vm.update = function(did) {
-			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates.
-			var didblock_update = {};
-			didblock_update.name = did.name;
-			didblock_update.carrier = did.carrier;
-			didblock_update.comment = did.comment;
+			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
+			var did_update = {};
+			did_update.name = did.name;
+			did_update.status = did.status;
+			did_update.system_id = did.system_id;
 			
-			// Send Block ID and the updated variables to the update service.
+			// Send Block ID and the updated variables to the update service. 
 			telephonyService.updateDid(did.id, did_update).then(function(data) {
 			  return $state.reload();
 			}, function(error) {

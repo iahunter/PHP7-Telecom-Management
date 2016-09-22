@@ -9,19 +9,19 @@ use App\Didblock;
 use App\Did;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
-
 use Dingo\Api\Routing\Helpers;
 
 class Didcontroller extends Controller
 {
-	use Helpers;
+    use Helpers;
+
     public function __construct()
     {
         // Only authenticated users can make these calls
         $this->middleware('jwt.auth');
     }
 
-	/*
+    /*
     public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -43,8 +43,8 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }*/
-	
-	public function listDidblock()
+
+    public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
         $didblocks = Didblock::all();
@@ -160,7 +160,7 @@ class Didcontroller extends Controller
 
 ##################################################################################################################################################
 /**/
-	/*
+    /*
     public function listDidbyBlockID(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -183,14 +183,14 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }*/
-	
-	public function listDidbyBlockID(Request $request, $didblock_id)
+
+    public function listDidbyBlockID(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
         if ($user->can('read', Did::class)) {
-			$dids = \App\Did::where('didblock_id', $didblock_id)->get();
+            $dids = \App\Did::where('didblock_id', $didblock_id)->get();
         }
-		//dd($dids);
+        //dd($dids);
         $response = [
                     'status_code'    => 200,
                     'success'        => true,

@@ -9,25 +9,18 @@ angular
 		};
 
 		vm.messages = 'Loading Didblocks...';
-		//vm.didblock = [{}];
-		vm.didblock = [{}];
-		vm.dids = [{}];
-		
-		//vm.search = "";
 		
 		var id = $stateParams.id;
 		
 		vm.getdidblock = telephonyService.getDidblock(id)
 			.then(function(res){
-				//success
-				//console.log("HERE ");console.log(res)
 				return vm.didblock = res.data.didblock;
 				
 				
 			}, function(err){
 				//Error
 			});
-			
+		
 		vm.getdidblockdids = telephonyService.getDidblockDids(id)
 			.then(function(res){
 				//success

@@ -10,15 +10,41 @@ use App\Did;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use Dingo\Api\Routing\Helpers;
+
 class Didcontroller extends Controller
 {
+	use Helpers;
     public function __construct()
     {
         // Only authenticated users can make these calls
         $this->middleware('jwt.auth');
     }
 
+	/*
     public function listDidblock()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $didblocks = Didblock::all();
+        $show = [];
+        foreach ($didblocks as $didblock) {
+            if ($user->can('read', $didblock)) {
+                unset($didblock->deleted_at);
+
+                $show[] = $didblock;
+            }
+        }
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'didblocks'      => $show,
+                    ];
+
+        return response()->json($response);
+    }*/
+	
+	public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
         $didblocks = Didblock::all();
@@ -134,7 +160,7 @@ class Didcontroller extends Controller
 
 ##################################################################################################################################################
 /**/
-
+	/*
     public function listDidbyBlockID(Request $request, $didblock_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -153,6 +179,23 @@ class Didcontroller extends Controller
                     'success'        => true,
                     'message'        => '',
                     'dids'           => $show,
+                    ];
+
+        return response()->json($response);
+    }*/
+	
+	public function listDidbyBlockID(Request $request, $didblock_id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->can('read', Did::class)) {
+			$dids = \App\Did::where('didblock_id', $didblock_id)->get();
+        }
+		//dd($dids);
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'dids'           => $dids,
                     ];
 
         return response()->json($response);

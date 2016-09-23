@@ -70,7 +70,7 @@ class Didblock extends Model
         foreach ($range as $number) {
             // Build the request for each number.
             $request = [
-                        'parent' => $this->id,
+                        'parent'      => $this->id,
                         'name'        => '',
                         'number'      => $number,
                         'status'      => 'available',

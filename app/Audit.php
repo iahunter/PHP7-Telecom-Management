@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+
 //use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Audit extends Model
@@ -12,8 +13,8 @@ class Audit extends Model
     protected $table = 'audit';
     protected $fillable = ['file', 'method', 'message', 'previous'];
 
-	// Cast data type conversions. Converting one type of data to another. 
-	protected $casts = [
-			'previous' => 'array',
-		];
+    // Cast data type conversions. Converting one type of data to another.
+    protected $casts = [
+            'previous' => 'array',
+        ];
 }

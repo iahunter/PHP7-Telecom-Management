@@ -39,7 +39,7 @@ class Didblock extends Model
 
         // Cascade Soft Deletes Child Dids
         static::deleting(function ($didblock) {
-            Did::where('didblock_id', $didblock->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
+            Did::where('parent', $didblock->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
         });
 
         // Cascade Soft Restore Child Dids
@@ -51,7 +51,7 @@ class Didblock extends Model
         });
 
         static::restoring(function ($didblock) {
-            Did::where('didblock_id', $didblock->id)->restore(); 			// Alternative to foreach - prob faster. not tested.
+            Did::where('parent', $didblock->id)->restore(); 			// Alternative to foreach - prob faster. not tested.
         });
         */
     }
@@ -70,7 +70,7 @@ class Didblock extends Model
         foreach ($range as $number) {
             // Build the request for each number.
             $request = [
-                        'didblock_id' => $this->id,
+                        'parent' => $this->id,
                         'name'        => '',
                         'number'      => $number,
                         'status'      => 'available',

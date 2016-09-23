@@ -14,14 +14,17 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Didcontroller extends Controller
 {
-    //use Helpers;
+	
+
+	//use Helpers;
     public function __construct()
     {
         // Only authenticated users can make these calls
         $this->middleware('jwt.auth');
     }
-
-    public function listDidblock()
+	
+	
+	public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
         $didblocks = Didblock::all();
@@ -43,12 +46,12 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-    public function getDidblock(Request $request, $didblock_id)
+    public function getDidblock(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $didblock = Didblock::find($didblock_id);
+        $didblock = Didblock::find($id);
         if (! $user->can('read', $didblock)) {
-            abort(401, 'You are not authorized to view didblock '.$didblock_id);
+            abort(401, 'You are not authorized to view didblock '.$id);
         }
 
         $response = [
@@ -68,7 +71,11 @@ class Didcontroller extends Controller
 
         // Check Role of user
         if (! $user->can('create', Didblock::class)) {
-            abort(401, 'You are not authorized to create new did blocks');
+			
+			// Add Audit Log Entry
+			$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to create new did blocks'", 'previous' => $request]);
+            
+			abort(401, 'You are not authorized to create new did blocks');
         }
 
         $didblock = Didblock::create($request->all());
@@ -80,20 +87,27 @@ class Didcontroller extends Controller
                     'request'        => $request->all(),
                     'didblock'       => $didblock,
                     ];
-
+		
+		// Add Audit Log Entry 
+		$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
+		
         return response()->json($response);
     }
 
-    public function updateDidblock(Request $request, $didblock_id)
+    public function updateDidblock(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         // Find record by id
-        $didblock = Didblock::find($didblock_id);
+        $didblock = Didblock::find($id);
 
         // Check Role of user
         if (! $user->can('update', $didblock)) {
-            abort(401, 'You are not authorized to view didblock '.$didblock_id);
+			
+			// Add Audit Log Entry
+			$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to create new did blocks'", 'previous' => $request]);
+			
+            abort(401, 'You are not authorized to view didblock '.$id);
         }
 
         $didblock->fill($request->all());
@@ -106,27 +120,37 @@ class Didcontroller extends Controller
                     'request'        => $request->all(),
                     'didblock'       => $didblock,
                     ];
-
+		// Add Audit Log Entry 
+		$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
+		
         return response()->json($response);
     }
 
-    public function deleteDidblock(Request $request, $didblock_id)
+    public function deleteDidblock(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
         if (! $user->can('delete', Didblock::class)) {
-            abort(401, 'You are not authorized to delete did block id '.$didblock_id);
-        }
+			
+			// Add Audit Log Entry
+			$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to create new did blocks'", 'previous' => $request]);
 
-        $didblock = Didblock::find($didblock_id);                                        // Find the block in the database by id
+			abort(401, 'You are not authorized to delete did block id '.$id);
+			
+		}
+
+        $didblock = Didblock::find($id);                                        // Find the block in the database by id
         $didblock->delete();                                                            // Delete the did block.
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
-                    'message'        => 'Did Block '.$didblock_id.' successfully deleted',
+                    'message'        => 'Did Block '.$id.' successfully deleted',
                     'deleted_at'     => $didblock->deleted_at, ];
 
+		// Add Audit Log Entry 
+		$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
+		
         return response()->json($response);
     }
 
@@ -137,11 +161,11 @@ class Didcontroller extends Controller
 
 ##################################################################################################################################################
 /**/
-    /*
-    public function listDidbyBlockID(Request $request, $didblock_id)
+	/*
+    public function listDidbyBlockID(Request $request, $parent)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $dids = \App\Did::where('didblock_id', $didblock_id)->get();
+        $dids = \App\Did::where('parent', $parent)->get();
         //return response()->json($dids);
         $show = [];
         foreach ($dids as $did) {
@@ -160,14 +184,14 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }*/
-
-    public function listDidbyBlockID(Request $request, $didblock_id)
+	
+	public function listDidbyBlockID(Request $request, $parent)
     {
         $user = JWTAuth::parseToken()->authenticate();
         if ($user->can('read', Did::class)) {
-            $dids = \App\Did::where('didblock_id', $didblock_id)->get();
+			$dids = \App\Did::where('parent', $parent)->get();
         }
-        //dd($dids);
+		//dd($dids);
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
@@ -196,30 +220,61 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-
-    public function searchDidNumber(Request $request, $number_search)
+	
+	
+	public function searchDidNumber(Request $request, $number_search)
     {
         $user = JWTAuth::parseToken()->authenticate();
-
-        if (! $user->can('read', Did::class)) {
+		
+		if (! $user->can('read', Did::class)) {
             abort(401, 'You are not authorized to view didblock '.$did);
         }
+		
+		// Search for DID by numberCheck if there are any matches. 
+		if (! Did::where([['number','like', $number_search.'%']])->count()){
+			abort(404, 'No number found matching search: '.$number_search); 
+		}
 
-        // Search for DID by numberCheck if there are any matches.
-        if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
-            abort(401, 'No number found matching search: '.$number_search);
-        }
-
-        // Search for numbers like search.
-        $dids = Did::where([['number', 'like', $number_search.'%']])->get();
-
-        //return "HERE ".$did;
+		// Search for numbers like search. 
+		$dids = Did::where([['number','like', $number_search.'%']])->get();
+		
+		//return "HERE ".$did;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    'request'         => $request->all(),
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'dids'            => $dids,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function searchDidbyParent(Request $request, $parentid, $column, $search)
+    {
+		// ********NEW SEARCH***********
+        $user = JWTAuth::parseToken()->authenticate();
+		
+		if (! $user->can('read', Did::class)) {
+            abort(401, 'You are not authorized to view didblock '.$did);
+        }
+		
+		// Search for DID by numberCheck if there are any matches. 
+		if (! Did::where([['parent','=', $parentid],[$column,'like', $search.'%']])->count()){
+			abort(404, 'No number found matching search: '.$search); 
+		}
+
+		// Search for numbers like search. 
+		$dids = Did::where([['parent','=', $parentid],[$column,'like', $search.'%']])->get();
+
+		//return "HERE ".$did;
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
                     'dids'            => $dids,
                     ];
 
@@ -235,7 +290,11 @@ class Didcontroller extends Controller
 
         // Check Role of user
         if (! $user->can('update', $did)) {
-            abort(401, 'You are not authorized to view didblock '.$did_id);
+            
+			// Add Audit Log Entry
+			$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to view didblock '".$did_id, 'previous' => $did]);
+
+			abort(401, 'You are not authorized to view didblock '.$did_id);
         }
 
         $did->fill($request->all());
@@ -249,8 +308,13 @@ class Didcontroller extends Controller
                     'did'            => $did,
                     ];
 
+		// Add Audit Log Entry 
+		$user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
+		
         return response()->json($response);
     }
+	
+	
 
     /* Not sure we want to advertise delete individual DIDs. Leaving this commented out for now.
 

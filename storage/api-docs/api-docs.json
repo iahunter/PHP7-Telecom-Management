@@ -144,7 +144,7 @@
                 }
             }
         },
-        "/telephony/api/didblock{id}/dids": {
+        "/telephony/api/didblock/{id}/dids": {
             "get": {
                 "tags": [
                     "Did"
@@ -165,7 +165,7 @@
                 }
             }
         },
-        "/telephony/api/did{id}": {
+        "/telephony/api/did/id/{id}": {
             "get": {
                 "tags": [
                     "Did"
@@ -184,14 +184,37 @@
                         "description": "successful operation"
                     }
                 }
-            },
-            "put": {
+            }
+        },
+        "/telephony/api/did/number/{number}": {
+            "get": {
                 "tags": [
                     "Did"
                 ],
-                "summary": "Update DID by ID for authorized user",
-                "description": "This can be huge and need to add pagination",
-                "operationId": "listDid",
+                "summary": "Get DID by number search for authorized user",
+                "description": "",
+                "operationId": "getDid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/did/searchbyparent/{parentid}/{column}/{search}": {
+            "get": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Search DID by parent ID and column search for authorized user",
+                "description": "",
+                "operationId": "getDid",
                 "consumes": [
                     "application/json"
                 ],
@@ -211,6 +234,27 @@
                     "Did"
                 ],
                 "summary": "List DIDs for authorized user",
+                "description": "This can be huge and need to add pagination",
+                "operationId": "listDid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/did/{id}": {
+            "put": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Update DID by ID for authorized user",
                 "description": "This can be huge and need to add pagination",
                 "operationId": "listDid",
                 "consumes": [

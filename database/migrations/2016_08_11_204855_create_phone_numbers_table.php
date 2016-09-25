@@ -17,7 +17,7 @@ class CreatePhoneNumbersTable extends Migration
             $table->string('name');                     // Name
             $table->string('carrier');                  // Carrier Name
             $table->string('country_code');             // simple name to reference the account by
-			$table->bigInteger('start');                // Start of Block
+            $table->bigInteger('start');                // Start of Block
             $table->bigInteger('end');                  // End of Block
             $table->string('type');                     // Public or Private Number
             $table->string('reserved');                 // Reserved Status for Automation Only Assignment

@@ -8,7 +8,7 @@ Authentication is possible via client TLS certificate, or LDAP if enabled and co
 
 The current intended application stack for this application is: Ubuntu 16.04 + Nginx + PHP 7 + Mysql 5.7
 
-Bouncer roles manage rights to the accounts and account certificates via the application http controllers.
+Bouncer roles manage rights to the numbers databases via the application http controllers.
 
 
 #Backend

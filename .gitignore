@@ -16,3 +16,10 @@ Homestead.json
 .env
 composer.lock
 tinker_group_ablity_assignments.txt
+
+
+tests/ImportBlockData.csv
+tests/ImportBlockTest.php
+
+database/seeds/BouncerRoles.php
+database/seeds/ImportDIDListSeeder.php

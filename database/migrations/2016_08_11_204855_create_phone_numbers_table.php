@@ -14,10 +14,10 @@ class CreatePhoneNumbersTable extends Migration
     {
         Schema::create('did_block', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('country_code');             // simple name to reference the account by
             $table->string('name');                     // Name
             $table->string('carrier');                  // Carrier Name
-            $table->bigInteger('start');                // Start of Block
+            $table->string('country_code');             // simple name to reference the account by
+			$table->bigInteger('start');                // Start of Block
             $table->bigInteger('end');                  // End of Block
             $table->string('type');                     // Public or Private Number
             $table->string('reserved');                 // Reserved Status for Automation Only Assignment

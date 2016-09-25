@@ -1,7 +1,23 @@
 angular
 	.module('app')
+	.filter('sumofValue', function () {
+		return function (data, key1, key2) {        
+			if (angular.isUndefined(data) && angular.isUndefined(key1)  && angular.isUndefined(key2)) 
+				return 0;        
+			var sum = 0;
+			angular.forEach(data,function(value){
+				//console.log(value);
+				//console.log(parseInt(value[key1]));
+				sum = sum + (parseInt(value[key1]));
+				//sum = sum + (parseInt(value[key1]) * parseInt(value[key2]));
+			});
+			//console.log(sum);
+			return sum;
+		}
+	})
+	
 	.controller('Didblock.IndexController', ['telephonyService', '$location', '$state', function(telephonyService, $location, $state) {
-		
+	
 		var vm = this;
 		
 		initController();
@@ -14,16 +30,27 @@ angular
 
 		vm.messages = 'Loading Didblocks...';
 		vm.didblocks = [{}];
-		
+		vm.loading = true;
 		//vm.search = "";
 		
+		/*
+		$scope.getTotal = function(){
+			var total = 0;
+			for(var i = 0; i < $scope.cart.products.length; i++){
+				var product = $scope.cart.products[i];
+				total += (product.price * product.quantity);
+			}
+			return total;
+		}
+		*/
 
 		function initController() {
 			telephonyService.GetDidblocks(function (result) {
 				console.log('callback from telephonyService.GetDidblocks responded ' + result);
 				vm.didblocks = telephonyService.didblocks;
 				
-				console.log(vm.didblocks);
+				vm.loading = false;
+				//console.log(vm.didblocks);
 				vm.messages = JSON.stringify(vm.didblocks, null, "    ");
 				//$scope.accounts = vm.accounts;
 			});

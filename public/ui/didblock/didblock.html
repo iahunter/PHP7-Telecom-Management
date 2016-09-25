@@ -5,7 +5,9 @@
 	<div class="well form-horizontal" style="margin-top:10px;" >
 	
 	<legend>DID Block Inventory <button class="btn btn-default btn-sm pull-right" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
-	
+		
+		<h4>Total DIDs: {{vm.resultValue | sumofValue: 'size'}}</h4>
+		
 		<div class="input-group col-md-3 ">
 			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">
 			<div class="input-group-btn">
@@ -14,7 +16,7 @@
 		</div>
 		
 		<!--<h5>Total DIDs: {{vm.Total}}</h5>-->
-		<h4>Total DIDs: {{vm.resultValue | sumofValue: 'size'}}</h4>
+		
 		
 		<div style="margin:25px"></div>
 		

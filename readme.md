@@ -11,7 +11,7 @@ The current intended application stack for this application is: Ubuntu 16.04 + N
 Bouncer roles manage rights to the accounts and account certificates via the application http controllers.
 
 
-#Other Documentation
+#Backend
 * Laravel framework can be found on the [Laravel website](http://laravel.com/docs).
 
 * dingo api can be found on GitHub. https://github.com/dingo/api/wiki

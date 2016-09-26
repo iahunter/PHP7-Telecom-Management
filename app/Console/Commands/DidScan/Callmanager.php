@@ -92,7 +92,7 @@ class Callmanager extends Command
 	protected function updateDidInfo($npanxx, $didinfo)
 	{
 		// Get the DID records matching $npanxx.'%'
-		$dids = do the thing;
+		$dids = ""; //do the thing;
 		// Go through all the mathcing DID's and update them, OR set them to available
 			// maybe WRAP this in a try/catch block to handle individual number update failures!
 		foreach($dids as $did) {
@@ -107,7 +107,7 @@ class Callmanager extends Command
 					$did->jsoncrap = [];
 					$did->whatever = 'available';
 				}
-				$did->save
+				$did->save;
 			} catch (\Exception $e) {
 				echo 'Exception processing one DID '.$did->number.' '.$e->getMessage().PHP_EOL;
 			}

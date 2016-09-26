@@ -38,23 +38,23 @@ class Callmanager extends Command
      */
     public function handle()
     {
-//		ini_set('soap.wsdl_cache_enable', "0");
+        //		ini_set('soap.wsdl_cache_enable', "0");
 //		ini_set('soap.wsdl_cache_ttl',0);
 //		$wsdl = storage_path(env('CALLMANAGER_WSDL'));
 //		print "wsdl file path is:".$wsdl.PHP_EOL;
-		try {
-			$cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-													storage_path(env('CALLMANAGER_WSDL')),
-													env('CALLMANAGER_USER'),
-													env('CALLMANAGER_PASS')
-													);
+        try {
+            $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
 //			$sites = $cucm->get_site_names();
 //			dd($sites);
-			$didcrap = $cucm->get_route_plan_by_name('402938%');
-			echo json_encode($didcrap).PHP_EOL;
-		}catch (\Exception $e) {
-			print "Callmanager blew uP: ".$e->getMessage().PHP_EOL;
-			dd($e->getTrace());
-		}
+            $didcrap = $cucm->get_route_plan_by_name('402938%');
+            echo json_encode($didcrap).PHP_EOL;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
     }
 }

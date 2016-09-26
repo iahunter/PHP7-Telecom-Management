@@ -22,3 +22,5 @@ tests/ImportBlockData.csv
 tests/ImportBlockTest.php
 
 database/seeds/ImportDIDListSeeder.php
+
+storage/axl/

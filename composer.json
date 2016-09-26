@@ -19,8 +19,9 @@
         "phpseclib/phpseclib": "^2.0",
         "tymon/jwt-auth": "^1.0",
         "silber/bouncer": "^0.1.7",
-        "metaclassing/Utility": "dev-master",
-        "darkaonline/l5-swagger": "^3.1"
+        "metaclassing/utility": "dev-master",
+        "darkaonline/l5-swagger": "^3.1",
+        "metaclassing/PHP5-CallManager-AXL": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -70,12 +70,13 @@ class Didblock extends Model
         foreach ($range as $number) {
             // Build the request for each number.
             $request = [
-                        'parent'      => $this->id,
-                        'name'        => '',
-                        'number'      => $number,
-                        'status'      => 'available',
-                        'created_at'  => $this->created_at,
-                        'updated_at'  => $this->updated_at,
+                        'parent'     	 	=> $this->id,
+                        'name'        		=> '',
+						'country_code'      => $this->country_code,
+                        'number'      		=> $number,
+                        'status'      		=> 'available',
+                        'created_at'  		=> $this->created_at,
+                        'updated_at'  		=> $this->updated_at,
                         ];
 
             $request_array[] = $request;            // append the row to the array.

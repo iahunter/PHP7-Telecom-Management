@@ -34,7 +34,8 @@ class CreatePhoneNumbersTable extends Migration
                 $table->foreign('parent')->references('id')->on('did_block')->onDelete('cascade');        // Create foreign key and try cascade deletes
 
             $table->string('name');                       // Name
-            $table->bigInteger('number');                // Phone Number
+            $table->string('country_code');             // simple name to reference the account by
+			$table->bigInteger('number');                // Phone Number
             $table->string('status');                    // Status - Active/Reserved/Available
             $table->string('system_id');                // Future - System ID - CUCM/Lync ID
             $table->json('assignments');                   // JSON Custom Field Data

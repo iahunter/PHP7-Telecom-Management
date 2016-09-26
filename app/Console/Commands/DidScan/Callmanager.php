@@ -4,6 +4,7 @@ namespace App\Console\Commands\DidScan;
 
 use Illuminate\Console\Command;
 use App\Did;
+use App\Didblock;
 
 class Callmanager extends Command
 {
@@ -91,8 +92,19 @@ class Callmanager extends Command
 	// This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
 	protected function updateDidInfo($npanxx, $didinfo)
 	{
-		// Get the DID records matching $npanxx.'%'
-		$dids = ""; //do the thing;
+		
+		/*
+		print "NPANXX: ";
+		//dd($npanxx);
+		print "DID INFO: ";
+		dd($didinfo);
+		*/
+		
+		// Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
+		if (\App\Did::where([['number','like', $npanxx.'%']])->count()){
+			$dids = \App\Did::where([['country_code','=', 1],['number','like', $npanxx.'%']])->get();
+		}
+
 		// Go through all the mathcing DID's and update them, OR set them to available
 			// maybe WRAP this in a try/catch block to handle individual number update failures!
 		foreach($dids as $did) {
@@ -101,16 +113,23 @@ class Callmanager extends Command
 				if($did->status == 'reserved') { continue; }
 				// IF this DID IS in the results from call wrangler, update it!
 				if(isset($didinfo[$did->number])) {
-					$did->jsoncrap = $didinfo[$did->number];
+					$did->assignments = json_encode($didinfo[$did->number]);
+					$did->status = 'inuse';
+					$did->system_id = 'CUCM-Enterprise-Cluster';
 				// OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
 				}else{
-					$did->jsoncrap = [];
-					$did->whatever = 'available';
+					$did->assignments = null;
+					$did->status = 'available';
+					$did->system_id = '';
 				}
-				$did->save;
+				//dd($did);
+				$did->save();
 			} catch (\Exception $e) {
 				echo 'Exception processing one DID '.$did->number.' '.$e->getMessage().PHP_EOL;
 			}
+			print "Processin DID: ".$did->number." ".PHP_EOL;
+			//die();
+		
 		}
 	}
 

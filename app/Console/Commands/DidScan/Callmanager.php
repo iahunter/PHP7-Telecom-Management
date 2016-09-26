@@ -5,6 +5,7 @@ namespace App\Console\Commands\DidScan;
 use Illuminate\Console\Command;
 use App\Did;
 use App\Didblock;
+use DB;
 
 class Callmanager extends Command
 {
@@ -45,7 +46,15 @@ class Callmanager extends Command
 		// Loop through our NPA/NXX's and get their devices out of call wrangler
 		foreach($prefixes as $npanxx) {
 			// Get the devices for this npa/nxx out of cucm
+			/*try{*/
+			
 			$didinfo = $this->getDidsByNPANXX($npanxx);
+			
+			/*}catch (\Exception $e) {
+				echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+				dd($e->getTrace());
+			}*/
+			
 			// Update all our DID information for this NPANXX based on those device records.
 			$this->updateDidInfo($npanxx, $didinfo);
 		}
@@ -56,13 +65,30 @@ class Callmanager extends Command
 	protected function getDidNPANXXList()
 	{
 		// In reality we need to write a stupid statement with the queer-y-builder for substr(number, 1, 6) as prefix
-		$prefixes = ['402938','913953'];
-		return $prefixes;
+		//$prefixes = ['402938','913953'];
+		
+		//$prefixes = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))->groupBy(DB::raw('npanxx'))->get();
+		$prefixes = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))->distinct()->get();
+		$return = [];
+		//dd($prefixes);
+		foreach ($prefixes as $prefix){
+			//$napnxx = $prefix['original:protected'];
+			print_r($prefix->npanxx);
+			print PHP_EOL;
+			$return[] = $prefix->npanxx;
+			
+			
+		}
+		print_r($return);
+		//print_r($prefixes);
+		//die();
+		return $return;
 	}
 
 	// Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
 	protected function getDidsByNPANXX($npanxx)
 	{
+		print $npanxx;
         try {
             $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
@@ -70,9 +96,17 @@ class Callmanager extends Command
                                                     env('CALLMANAGER_PASS')
                                                     );
             $didinfo = $cucm->get_route_plan_by_name($npanxx.'%');
+			//print_r($didinfo);
+			
+			
 			unset($cucm);
 			// Process the junk we got back from call mangler and turn it into something useful
 			$results = [];
+			if (!$didinfo){
+				// Return blank array if no results in $didinfo.
+				print "didinfo is blank!";
+				return $results;
+			}
 			foreach($didinfo as $idfk) {
 				if(!isset($results[$idfk['dnOrPattern']])) {
 					$results[$idfk['dnOrPattern']] = [];
@@ -127,7 +161,7 @@ class Callmanager extends Command
 			} catch (\Exception $e) {
 				echo 'Exception processing one DID '.$did->number.' '.$e->getMessage().PHP_EOL;
 			}
-			print "Processin DID: ".$did->number." ".PHP_EOL;
+			print "Processing DID: ".$did->number." ".PHP_EOL;
 			//die();
 		
 		}

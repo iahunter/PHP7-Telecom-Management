@@ -25,15 +25,7 @@
 									<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 									<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'country_code'; sortReverse = !sortReverse" style="color:black">
-								Country Code
-									<span ng-show="sortType == 'country_code' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'country_code' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>					
+						</th>				
 
 						<th>
 							<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
@@ -50,6 +42,14 @@
 									<span ng-show="sortType == 'carrier' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 							</a>
 						</th>					
+						
+						<th>
+							<a href="" ng-click="sortType = 'country_code'; sortReverse = !sortReverse" style="color:black">
+								Country Code
+									<span ng-show="sortType == 'country_code' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'country_code' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>	
 						
 						<th>
 							<a href="" ng-click="sortType = 'start'; sortReverse = !sortReverse" style="color:black">
@@ -105,9 +105,9 @@
 
 				<tr>
 						<td>{{ vm.didblock.id}}</a></td>
-						<td>{{ vm.didblock.country_code}}</td>
 						<td>{{ vm.didblock.name}}</td>
 						<td>{{ vm.didblock.carrier}}</a></td>
+						<td>{{ vm.didblock.country_code}}</td>
 						<td>{{ vm.didblock.start}}</td>
 						<td>{{ vm.didblock.end}}</td>
 						<td>{{ vm.didblock.type}}</a></td>

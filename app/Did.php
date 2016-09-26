@@ -17,7 +17,12 @@ class Did extends Model
     //
     use SoftDeletes;
     protected $table = 'did';
-    protected $fillable = ['name', 'number', 'status', 'system_id', 'assignments'];
+    protected $fillable = ['name', 'number', 'status', 'system_id'];
+
+    // Cast data type conversions. Converting one type of data to another.
+    protected $casts = [
+            'assignments' => 'array',
+        ];
 
     protected static function boot()
     {

@@ -35,7 +35,7 @@ class CreatePhoneNumbersTable extends Migration
 
             $table->string('name');                       // Name
             $table->string('country_code');             // simple name to reference the account by
-			$table->bigInteger('number');                // Phone Number
+            $table->bigInteger('number');                // Phone Number
             $table->string('status');                    // Status - Active/Reserved/Available
             $table->string('system_id');                // Future - System ID - CUCM/Lync ID
             $table->json('assignments');                   // JSON Custom Field Data

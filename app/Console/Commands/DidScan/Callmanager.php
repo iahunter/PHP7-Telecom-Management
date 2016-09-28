@@ -45,42 +45,29 @@ class Callmanager extends Command
 
         // Loop through our NPA/NXX's and get their devices out of call wrangler
         foreach ($prefixes as $npanxx) {
-            // Get the devices for this npa/nxx out of cucm
-            /*try{*/
-
-            $didinfo = $this->getDidsByNPANXX($npanxx);
-
-            /*}catch (\Exception $e) {
+            $didinfo = [];
+            try{
+                // Get the devices for this npa/nxx out of cucm
+                $didinfo = $this->getDidsByNPANXX($npanxx);
+            }catch (\Exception $e) {
                 echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
                 dd($e->getTrace());
-            }*/
-
+            }
             // Update all our DID information for this NPANXX based on those device records.
             $this->updateDidInfo($npanxx, $didinfo);
         }
-        // Fries are done! DING!
     }
 
     // This gets a SIMPLE array of NPA/NXX for our numbers in the database.
     protected function getDidNPANXXList()
     {
-        // In reality we need to write a stupid statement with the queer-y-builder for substr(number, 1, 6) as prefix
-        //$prefixes = ['402938','913953'];
-
         //$prefixes = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))->groupBy(DB::raw('npanxx'))->get();
-        $prefixes = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))->distinct()->get();
-        $return = [];
-        //dd($prefixes);
-        foreach ($prefixes as $prefix) {
-            //$napnxx = $prefix['original:protected'];
-            print_r($prefix->npanxx);
-            echo PHP_EOL;
-            $return[] = $prefix->npanxx;
+        $results = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))->distinct()->get();
+        $prefixes = [];
+        foreach ($results as $result) {
+            $prefixes[] = $result->npanxx;
         }
-        print_r($return);
-        //print_r($prefixes);
-        //die();
-        return $return;
+        return $prefixes;
     }
 
     // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
@@ -94,9 +81,6 @@ class Callmanager extends Command
                                                     env('CALLMANAGER_PASS')
                                                     );
             $didinfo = $cucm->get_route_plan_by_name($npanxx.'%');
-            //print_r($didinfo);
-
-
             unset($cucm);
             // Process the junk we got back from call mangler and turn it into something useful
             $results = [];
@@ -126,14 +110,6 @@ class Callmanager extends Command
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     protected function updateDidInfo($npanxx, $didinfo)
     {
-
-        /*
-        print "NPANXX: ";
-        //dd($npanxx);
-        print "DID INFO: ";
-        dd($didinfo);
-        */
-
         // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
         if (\App\Did::where([['number', 'like', $npanxx.'%']])->count()) {
             $dids = \App\Did::where([['country_code', '=', 1], ['number', 'like', $npanxx.'%']])->get();
@@ -149,12 +125,12 @@ class Callmanager extends Command
                 }
                 // IF this DID IS in the results from call wrangler, update it!
                 if (isset($didinfo[$did->number])) {
-                    $did->assignments = json_encode($didinfo[$did->number]);
+                    $did->assignments = $didinfo[$did->number];
                     $did->status = 'inuse';
                     $did->system_id = 'CUCM-Enterprise-Cluster';
                 // OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
                 } else {
-                    $did->assignments = null;
+                    $did->assignments = [];
                     $did->status = 'available';
                     $did->system_id = '';
                 }

@@ -8,9 +8,9 @@ asdf
 #/public/ui
 /public/angular_jwt_base
 /public/telephony-ui
-
 /public/old
 
+public/ui/company-content/
 
 Homestead.yaml
 Homestead.json
@@ -24,4 +24,7 @@ tests/ImportBlockTest.php
 
 database/seeds/ImportDIDListSeeder.php
 
+
+
 storage/axl/
+

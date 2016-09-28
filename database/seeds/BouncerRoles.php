@@ -32,5 +32,27 @@ class BouncerRoles extends Seeder
                 Bouncer::allow($group)->to($task, $type);
             }
         }
+		
+		// Assign groups who are only allowed to read and update names. 
+        $group = env('READ_UPDATE_GRP');
+
+        $tasks = [
+            'read',
+            'update',
+        ];
+
+        $types = [
+            App\Didblock::class,
+            App\Did::class,
+        ];
+
+        foreach ($types as $type) {
+            foreach ($tasks as $task) {
+                Bouncer::allow($group)->to($task, $type);
+            }
+        }
+		
+		
+		
     }
 }

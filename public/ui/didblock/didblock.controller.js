@@ -1,21 +1,64 @@
 angular
 	.module('app')
 	.filter('sumofValue', function () {
-		return function (data, key1, key2) {        
-			if (angular.isUndefined(data) && angular.isUndefined(key1)  && angular.isUndefined(key2)) 
+		return function (data, key) {        
+			//console.log(key);
+			
+			if (angular.isUndefined(data) && angular.isUndefined(key))
 				return 0;        
+			
 			var sum = 0;
 			angular.forEach(data,function(value){
 				//console.log(value);
-				//console.log(parseInt(value[key1]));
-				sum = sum + (parseInt(value[key1]));
-				//sum = sum + (parseInt(value[key1]) * parseInt(value[key2]));
+				//console.log(parseInt(value[key]));
+				sum = sum + (parseInt(value[key]));
 			});
 			//console.log(sum);
 			return sum;
 		}
 	})
-	
+
+	// Look at moving this inside my controller. Too slow and bulky. Can't extract varibles out to display. 
+	.filter('countTypes', function () {
+		return function (data, key) {        
+			
+			var obj = {};
+			angular.forEach(data,function(value){
+
+			//obj['name'] = 'test';
+			//console.log(obj);
+			
+			console.log(value);
+			
+			if (obj[value[key]] == undefined){
+				console.log("WE ARE HERE INSIDE IF");
+				obj[value[key]] = 1;
+				//obj[key] = obj[value.key] + 1;
+				console.log(obj);
+			}else{
+				console.log("WE ARE HERE INSIDE ELSE");
+				obj[value[key]] = obj[value[key]] + 1;;
+			}
+				
+			console.log(obj);
+			
+			
+			});
+		
+			var returns = '';
+			angular.forEach(obj,function(value, key){
+			console.log(key);
+			//console.log(value);
+
+			returns += key + ": " + value + ', ';
+			});
+
+			return returns;
+		
+		}
+		
+	})
+
 	.controller('Didblock.IndexController', ['telephonyService', '$location', '$state', function(telephonyService, $location, $state) {
 	
 		var vm = this;

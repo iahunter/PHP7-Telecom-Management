@@ -46,10 +46,10 @@ class Callmanager extends Command
         // Loop through our NPA/NXX's and get their devices out of call wrangler
         foreach ($prefixes as $npanxx) {
             $didinfo = [];
-            try{
+            try {
                 // Get the devices for this npa/nxx out of cucm
                 $didinfo = $this->getDidsByNPANXX($npanxx);
-            }catch (\Exception $e) {
+            } catch (\Exception $e) {
                 echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
                 dd($e->getTrace());
             }
@@ -67,6 +67,7 @@ class Callmanager extends Command
         foreach ($results as $result) {
             $prefixes[] = $result->npanxx;
         }
+
         return $prefixes;
     }
 

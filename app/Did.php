@@ -38,7 +38,6 @@ class Did extends Model
         return $this->belongsTo(Didblock::class);
     }
 
-
     protected function validate()
     {
         // Check if exceeds max of 255

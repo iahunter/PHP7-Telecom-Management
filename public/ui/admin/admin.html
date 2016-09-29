@@ -1,0 +1,56 @@
+﻿<div class="container">
+		<div ng-if="vm.username">
+		<!-- Populate User info if avaible -->
+			<h3 >Welcome {{vm.username}}<br>  
+			<h5>{{vm.title}}</h5>
+			<div ng-if="vm.photo">
+				<img style="background-repeat: no-repeat; background-position: 50%; border-radius: 50%; width: 80px; height: 95px;" class="pull-right"src=data:image/png;base64,{{vm.photo}}></h3>
+			</div>
+		</div>
+		
+		<!--	Testing the ability to include another controller info on a different page. 
+		<div ng-controller="Didblock.IndexController as DidblockCtrl">
+			{{DidblockCtrl.didblocks}}
+		</div>
+		-->
+		<div style="margin-top: 10px"></div>
+		
+		<p><a href="#/login">Logout</a></p>
+
+	<div class="jumbotron">
+
+		<h1>Telephony UI</h1>
+		<hr>
+
+		<div style="margin-top: 50px"></div>
+		<li><ul>The Telephony UI is a Bootstrap/Angular JS Frontend that interacts with the Telephony Backend Service via RESTful API calls using JWTs.</ul></li>
+		<li><ul>The Telephony Backend Service is built on the Laravel Framework/Dingo API/Bouncer/JWT.</ul></li>
+		<div style="margin-top: 50px"></div>
+		
+		<hr>
+		
+		<!--Include Company Splash Page Content Here-->
+		<ng-include src="'company-content/splashpage.html'"></ng-include>
+		
+		
+		<hr>
+		
+		<p>To Do: <p>
+		<li><ul>Add Saftey Confirm on Delete to ask user if they are sure they want to delete.</ul></li>
+		<li><ul>Work on Searching the backend for a DID Block and DIDs</ul></li>
+		<li><ul>Need to do pagination. Browser is taking up too much RAM and is very slow fetching data on Huge Blocks</ul></li>
+		<li><ul>Maybe move inline editing to a form instead as this changes the size of the table when clicking into edit</ul></li>
+		<li><ul>Use Include HTML for reusable Code such as Header, Navbar, Footer</ul></li>
+		<li><ul>Persist JWT Token after page refresh in Safari</ul></li>
+		<li><ul>Add Available, Inuse, and Reserved Counts to Main Page and Block Summary Pages. </ul></li>
+		<li><ul>Bulk Block Import Page, Import by CSV or Text Paste - For NonSequential Numbers  :( </ul></li>
+		<li><ul>Figure out User based Permissions in Bouncer</ul></li>
+		<li><ul>...</ul></li>
+		
+		<p>Bug Tracker: <p>
+		<li><ul>Sort by System ID is not working for some reason in DID Block Summary Page. </ul></li>
+		<li><ul>...</ul></li>
+		
+	</div>
+
+</div>

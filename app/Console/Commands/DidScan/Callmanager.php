@@ -74,7 +74,7 @@ class Callmanager extends Command
     // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function getDidsByNPANXX($npanxx)
     {
-        echo $npanxx;
+        echo "Getting NAPNXX: ".$npanxx." numbers from CUCM...".PHP_EOL;
         try {
             $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
@@ -131,7 +131,7 @@ class Callmanager extends Command
                     $did->system_id = 'CUCM-Enterprise-Cluster';
                 // OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
                 } else {
-                    $did->assignments = [];
+                    $did->assignments = null;
                     $did->status = 'available';
                     $did->system_id = '';
                 }

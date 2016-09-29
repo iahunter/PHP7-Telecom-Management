@@ -41,6 +41,12 @@
                 templateUrl: 'didblock/getdidblock.html',
                 controller: 'getDidblock.IndexController',
                 controllerAs: 'vm'
+            })
+			.state('admin', {
+                url: "/admin",
+                templateUrl: 'admin/admin.html',
+                controller: 'Admin.IndexController',
+                controllerAs: 'vm'
             });
 
     }

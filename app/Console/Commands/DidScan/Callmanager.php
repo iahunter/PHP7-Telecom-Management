@@ -74,7 +74,7 @@ class Callmanager extends Command
     // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function getDidsByNPANXX($npanxx)
     {
-        echo "Getting NAPNXX: ".$npanxx." numbers from CUCM...".PHP_EOL;
+        echo 'Getting NAPNXX: '.$npanxx.' numbers from CUCM...'.PHP_EOL;
         try {
             $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),

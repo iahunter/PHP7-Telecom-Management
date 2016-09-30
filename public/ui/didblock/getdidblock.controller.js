@@ -24,8 +24,27 @@ angular
 		vm.getdidblockdids = telephonyService.getDidblockDids(id)
 			.then(function(res){
 				//success
-				console.log("HERE ");console.log(res)
-				return vm.dids = res.data.dids;
+				//console.log("HERE ");console.log(res)
+				
+				vm.dids = res.data.dids;
+				
+				/*
+				// Loop thru all the dids and get did
+				angular.forEach(vm.dids,function(did){
+				console.log(did);
+				
+					// Loop thru and get all the assignments
+					angular.forEach(did,function(assignments){
+					console.log(assignments);
+					
+					// Can we extract and push a key:value to an existing object
+
+					})
+
+				})
+				*/
+				
+				return vm.dids
 				
 				
 			}, function(err){

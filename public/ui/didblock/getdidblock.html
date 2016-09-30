@@ -225,10 +225,28 @@
 						<td>{{ did.id}}</a></td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.parent}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.name}}</td>
-						<td   ng-show="!vm.edit[did.id]">{{ did.number}}</a></td>
+						<td   ng-show="!vm.edit[did.id]">{{ did.number}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.status}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.system_id}}</td>
-						<td   ng-show="!vm.edit[did.id]">{{ did.assignments}}</a></td>
+						<td   ng-show="!vm.edit[did.id]" >
+						
+							<!--Nested Table inside Row-->
+							<table ng-show="did.assignments" class="table table-condensed table-bordered" style="background-color: transparent;">
+								<td><i>Pattern</i></td>
+								<td><i>Partition</i></td>
+								<td><i>Type</i></td>
+								<td><i>Detail</i></td>
+								<tr ng-repeat="assignment in did.assignments track by $index">
+									<td>{{assignment.dnOrPattern}}</td>
+									
+									<td>{{assignment.partition._}}</td>
+									<td>{{assignment.type}}</td>
+									<td>{{assignment.routeDetail}}</td>
+								</tr>
+							</table>
+							
+						</td>
+						
 						<td   ng-show="!vm.edit[did.id]">{{ did.created_at}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.updated_at}}</td>
 						<td   ng-show="!vm.edit[did.id]">
@@ -241,7 +259,24 @@
 						<td   ng-show="vm.edit[did.id]">{{ did.number}}</td>
 						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.status"></td>
 						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.system_id"></td>
-						<td   ng-show="vm.edit[did.id]">{{ did.assignments}}</td>
+						<td   ng-show="vm.edit[did.id]">
+						
+							<!--Nested Table inside Row-->
+							<table ng-show="did.assignments" class="table table-condensed table-bordered" style="background-color: transparent;">
+								<td><i>Pattern</i></td>
+								<td><i>Partition</i></td>
+								<td><i>Type</i></td>
+								<td><i>Detail</i></td>
+								<tr ng-repeat="assignment in did.assignments track by $index">
+									<td>{{assignment.dnOrPattern}}</td>
+									
+									<td>{{assignment.partition._}}</td>
+									<td>{{assignment.type}}</td>
+									<td>{{assignment.routeDetail}}</td>
+								</tr>
+							</table>
+						
+						</td>
 						<td   ng-show="vm.edit[did.id]">{{ did.created_at}}</td>
 						<td   ng-show="vm.edit[did.id]">{{ did.updated_at}}</td>
 						

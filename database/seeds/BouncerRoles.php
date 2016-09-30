@@ -51,5 +51,24 @@ class BouncerRoles extends Seeder
                 Bouncer::allow($group)->to($task, $type);
             }
         }
+		
+		// Assign groups who are only allowed to read
+        $group = env('READ_ONLY_GRP');
+
+        $tasks = [
+            'read',
+        ];
+
+        $types = [
+            App\Didblock::class,
+            App\Did::class,
+        ];
+
+        foreach ($types as $type) {
+            foreach ($tasks as $task) {
+                Bouncer::allow($group)->to($task, $type);
+            }
+        }
+		
     }
 }

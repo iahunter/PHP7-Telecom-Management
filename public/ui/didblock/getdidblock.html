@@ -231,19 +231,21 @@
 						<td   ng-show="!vm.edit[did.id]" >
 						
 							<!--Nested Table inside Row-->
-							<table ng-show="did.assignments" class="table table-condensed table-bordered" style="background-color: transparent;">
-								<td><i>Pattern</i></td>
-								<td><i>Partition</i></td>
-								<td><i>Type</i></td>
-								<td><i>Detail</i></td>
-								<tr ng-repeat="assignment in did.assignments track by $index">
-									<td>{{assignment.dnOrPattern}}</td>
-									
-									<td>{{assignment.partition._}}</td>
-									<td>{{assignment.type}}</td>
-									<td>{{assignment.routeDetail}}</td>
-								</tr>
-							</table>
+							<div ng-show="did.assignments" class="panel panel-default" style="background-color: transparent;">
+								<table class="table table-condensed table-bordered" style="background-color: transparent;">
+									<td><i>Pattern</i></td>
+									<td><i>Partition</i></td>
+									<td><i>Type</i></td>
+									<td><i>Detail</i></td>
+									<tr ng-repeat="assignment in did.assignments track by $index">
+										<td>{{assignment.dnOrPattern}}</td>
+										
+										<td>{{assignment.partition._}}</td>
+										<td>{{assignment.type}}</td>
+										<td>{{assignment.routeDetail}}</td>
+									</tr>
+								</table>
+							</div>
 							
 						</td>
 						
@@ -262,6 +264,7 @@
 						<td   ng-show="vm.edit[did.id]">
 						
 							<!--Nested Table inside Row-->
+							<div ng-show="did.assignments" class="panel panel-default">
 							<table ng-show="did.assignments" class="table table-condensed table-bordered" style="background-color: transparent;">
 								<td><i>Pattern</i></td>
 								<td><i>Partition</i></td>
@@ -275,6 +278,7 @@
 									<td>{{assignment.routeDetail}}</td>
 								</tr>
 							</table>
+							</div>
 						
 						</td>
 						<td   ng-show="vm.edit[did.id]">{{ did.created_at}}</td>

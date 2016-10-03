@@ -34,7 +34,7 @@ angular
 					
 					
 					// Enable the Options to be generated for the chart. 
-					vm.didblock.chartoptions = { legend: { display: true}, title: {display:true, text:'Number Block Usage'}};
+					vm.didblock.chartoptions = { responsive: true, legend: { display: true}, title: {display:true, text:'Number Block Usage'}};
 					
 					console.log(vm.didblock.chartoptions);
 					
@@ -113,11 +113,11 @@ angular
 			
 			// Send Block ID and the updated variables to the update service. 
 			telephonyService.updateDid(did.id, did_update).then(function(data) {
-			  return $state.reload();
+			  //return $state.reload();
 			}, function(error) {
 				alert('An error occurred while updating the event')
 			});
-			$state.reload();
+			//$state.reload();
 		}
 
 	}]);

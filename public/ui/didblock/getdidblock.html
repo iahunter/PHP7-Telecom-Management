@@ -6,7 +6,7 @@
 		<div style="margin:50px"></div>
 		
 		<legend>DID Block Details<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
-
+		<div class="well" style="background-color: #f1f3f3;">
 		<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
@@ -147,21 +147,20 @@
 			</table>
 		</div>
 
-		<legend >DID Block Capacity</legend>
 		<div style="margin:25px"></div>
 		
-		<div row>
-			<div class="container col-md-3">
-				<canvas id="pie" class="chart chart-pie chart-xs"
-					chart-data="vm.didblock.chartdata" 
-					chart-labels="vm.didblock.chartlabels"
-					chart-options="vm.didblock.chartoptions">
-				</canvas> 
-			</div>
+		<div class="container" style="display: block; max-width: 550px; max-height: 250px;">
+			<canvas id="pie" class="chart chart-pie chart-xs"
+				chart-data="vm.didblock.chartdata" 
+				chart-labels="vm.didblock.chartlabels"
+				chart-options="vm.didblock.chartoptions">
+			</canvas> 
 		</div>
 		
-		<div style="margin:250px"></div>
 		
+		
+		<div style="margin:25px"></div>
+		</div>
 		<hr>
 		
 		<div class="input-group col-md-3 ">
@@ -285,7 +284,7 @@
 						<td   ng-show="!vm.edit[did.id]">{{ did.name}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.status}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.system_id}}</td>
-						<td   ng-show="!vm.edit[did.id]" >
+						<td   ng-show="!vm.edit[did.id]">
 						
 							<!--Nested Table inside Row-->
 							<div ng-show="did.assignments" class="panel panel-default" style="background-color: transparent;">

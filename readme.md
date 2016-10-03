@@ -21,10 +21,12 @@ Bouncer roles manage rights to the numbers databases via the application http co
 * Bouncer roles and permissions can be found on GitHub. https://github.com/JosephSilber/bouncer
 
 #Frontend UI 
-There is also a Frontend UI that is included using Bootstrap3, AngularJS 1.5, and angular-jwt. 
+There is also a Frontend UI that is included using Bootstrap3, AngularJS 1.5, Angular-Chart.js and angular-jwt. 
 
 * Bootstrap is at http://getbootstrap.com. 
 
 * AngularJS is at https://docs.angularjs.org/api
+
+* Angular Chart is at https://jtblin.github.io/angular-chart.js/
 
 * Angular-JWT is at https://github.com/auth0/angular-jwt. 

@@ -53,24 +53,22 @@ class Didcontroller extends Controller
             ->groupBy('did_block.id')
             ->groupBy('did.status')
             ->get();
-			
-		$statsarray = [];
-		
-		foreach ($stats as $stat){
-			if(!isset($statsarray[$stat->id])){
-				$statsarray[$stat->id] = [
-					"available" 	=> 0, 
-					"inuse" 		=> 0,
-				]; 
-			}
-			$statsarray[$stat->id][$stat->status] = $stat->statuscount;
-			
-		}
-			
-			
-		return $statsarray;
+
+        $statsarray = [];
+
+        foreach ($stats as $stat) {
+            if (! isset($statsarray[$stat->id])) {
+                $statsarray[$stat->id] = [
+                    'available'    => 0,
+                    'inuse'        => 0,
+                ];
+            }
+            $statsarray[$stat->id][$stat->status] = $stat->statuscount;
+        }
+
+
+        return $statsarray;
     }
-	
 
     public function getDidblock(Request $request, $id)
     {

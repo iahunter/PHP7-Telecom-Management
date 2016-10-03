@@ -59,6 +59,38 @@
 							</a>
 						</th>
 						
+												<th>
+							<a href="" ng-click="sortType = 'size'; sortReverse = !sortReverse" style="color:black">
+								Block Size
+									<span ng-show="sortType == 'size' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'size' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						<th>
+							<a href="" ng-click="sortType = 'stats.available'; sortReverse = !sortReverse" style="color:black">
+								Available
+									<span ng-show="sortType == 'stats.available' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'stats.available' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						<th>
+							<a href="" ng-click="sortType = 'stats.inuse'; sortReverse = !sortReverse" style="color:black">
+								Inuse
+									<span ng-show="sortType == 'stats.inuse' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'stats.inuse' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						<th>
+							<a href="" ng-click="sortType = 'capacity'; sortReverse = !sortReverse" style="color:black">
+								Capacity
+									<span ng-show="sortType == 'capacity' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'capacity' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
 						<th>
 							<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
 								Type
@@ -102,6 +134,10 @@
 						<td>{{ vm.didblock.country_code}}</td>
 						<td>{{ vm.didblock.start}}</td>
 						<td>{{ vm.didblock.end}}</td>
+						<td>{{ vm.didblock.size}}</td>
+						<td>{{ vm.didblock.stats.available}}</td>
+						<td>{{ vm.didblock.stats.inuse}}</td>
+						<td>{{ vm.didblock.capacity | number:0}}%</td>
 						<td>{{ vm.didblock.type}}</a></td>
 						<td>{{ vm.didblock.comment}}</td>
 						<td>{{ vm.didblock.created_at}}</td>

@@ -15,7 +15,7 @@ angular
 		vm.getdidblock = telephonyService.getDidblock(id)
 			.then(function(res){
 				
-				//** Loop thru and create chart data for each block. 
+				//** Loop thru and create chart data for block. 
 					vm.didblock = res.data.didblock;
 					//console.log(block.stats);
 					vm.didblock['chartlabels'] = [];
@@ -32,14 +32,20 @@ angular
 						
 					}
 					
+					
 					// Enable the Options to be generated for the chart. 
 					vm.didblock.chartoptions = { legend: { display: true}, title: {display:true, text:'Number Block Usage'}};
 					
 					console.log(vm.didblock.chartoptions);
 					
-					//** End of Chart Data
+				//** End of Chart Data
+				console.log(vm.didblock.stats.inuse);
+				
+				//Calculate size and usage percentage. 
+				vm.didblock.size = vm.didblock.end - vm.didblock.start + 1;
+				vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100;
 					
-					return vm.didblock;
+				return vm.didblock;
 				
 			}, function(err){
 				//Error

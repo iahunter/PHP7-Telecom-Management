@@ -108,12 +108,12 @@
 						</th>
 						
 						
-						<!-- Uncomment to include Chart Column. -->
+						<!-- Uncomment to include Chart Column. 
 						<th>
 								Chart
 
 						</th>
-						
+						-->
 						
 						<th>
 							<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
@@ -171,11 +171,13 @@
 					<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.available = didblock.stats.inuse / didblock.size * 100">{{didblock.available | number:0}}%</td>
 					
 					<!-- Chart -->
+					<!--
 					<td   ng-show="!vm.edit[didblock.id]">
-						<canvas id="base" class="chart-horizontal-bar" style="width: 100% !important; height:10px;"
+						<canvas id="base" class="chart-horizontal-bar"
 							chart-data="didblock.chartdata" chart-labels="didblock.chartlabels" >
 						</canvas> 
 					</td>
+					-->
 					
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.type}}</td>
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.comment}}</td>
@@ -199,11 +201,12 @@
 					<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.available = didblock.stats.inuse / didblock.size * 100">{{didblock.available | number:0}}%</td>
 					
 					<!-- Chart -->
+					
+					<!--
 					<td   ng-show="vm.edit[didblock.id]">
-						<canvas id="base" class="chart-horizontal-bar" style="width: 100% !important; height:10px;"
-							chart-data="didblock.chartdata" chart-labels="didblock.chartlabels" >
-						</canvas> 
+
 					</td>
+					-->
 					
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.type}}</td>
 					<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.comment"></td>

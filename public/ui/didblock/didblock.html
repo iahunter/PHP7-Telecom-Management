@@ -16,8 +16,6 @@
 			</div>
 		</div>
 		
-		<!--<h5>Total DIDs: {{vm.Total}}</h5>-->
-		
 		
 		<div style="margin:25px"></div>
 		
@@ -33,7 +31,9 @@
 			<div class="row">
 				
 			</div>
-				<!--<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+				<!--
+				Loading...
+				<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
 				-->
 		</div>
 		
@@ -100,6 +100,28 @@
 						</th>
 						
 						<th>
+							<a href="" ng-click="sortType = 'inuse'; sortReverse = !sortReverse" style="color:black">
+								Inuse
+									<span ng-show="sortType == 'inuse' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'inuse' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						<th>
+							<a href="" ng-click="sortType = 'available'; sortReverse = !sortReverse" style="color:black">
+								Available
+									<span ng-show="sortType == 'available' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'available' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						<th>
+								Chart
+
+						</th>
+						
+						
+						<th>
 							<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
 								Type
 									<span ng-show="sortType == 'type' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -164,7 +186,21 @@
 					<!--<td   ng-show="!vm.edit[didblock.id]">{{ didblock.end - didblock.start + 1}}</td>-->
 					<!--<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.total = didblock.end - didblock.start + 1; vm.Total = vm.Total + didblock.total">{{didblock.total}}</td>-->
 					<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.size = didblock.end - didblock.start + 1">{{didblock.size}}</td>
-					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.type}}</a></td>
+					
+					<td   ng-show="!vm.edit[didblock.id]">{{didblock.stats.inuse}}</a></td>
+					<td   ng-show="!vm.edit[didblock.id]">{{didblock.stats.available}}</a></td>
+					
+					
+					<td   ng-show="!vm.edit[didblock.id]">
+
+					<canvas id="base" class="chart-horizontal-bar" style="width: 100% !important; height:10px;"
+						chart-data="didblock.chartdata" chart-labels="didblock.chartlabels" >
+					</canvas> 
+					
+					
+					</td>
+					
+					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.type}}</td>
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.comment}}</td>
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.created_at}}</td>
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.updated_at}}</td>
@@ -182,6 +218,10 @@
 					<!--<td   ng-show="vm.edit[didblock.id]">{{ didblock.end - didblock.start + 1}}</td>-->
 					<!--<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.total = didblock.end - didblock.start + 1;"></td>-->
 					<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.size = didblock.end - didblock.start + 1;">{{didblock.size}}</td>
+
+					<td   ng-show="vm.edit[didblock.id]">{{didblock.stats.inuse}}</a></td>
+					<td   ng-show="vm.edit[didblock.id]">{{didblock.stats.available}}</a></td>
+					
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.type}}</td>
 					<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.comment"></td>
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.created_at}}</td>

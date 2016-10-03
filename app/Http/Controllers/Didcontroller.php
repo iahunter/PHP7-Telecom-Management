@@ -58,7 +58,10 @@ class Didcontroller extends Controller
 		
 		foreach ($stats as $stat){
 			if(!isset($statsarray[$stat->id])){
-				$statsarray[$stat->id] = []; 
+				$statsarray[$stat->id] = [
+					"available" 	=> 0, 
+					"inuse" 		=> 0,
+				]; 
 			}
 			$statsarray[$stat->id][$stat->status] = $stat->statuscount;
 			

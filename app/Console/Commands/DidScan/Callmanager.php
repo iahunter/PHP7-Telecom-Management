@@ -111,6 +111,8 @@ class Callmanager extends Command
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     protected function updateDidInfo($npanxx, $didinfo)
     {
+		//print_r($didinfo);
+		//die();
         // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
         if (\App\Did::where([['number', 'like', $npanxx.'%']])->count()) {
             $dids = \App\Did::where([['country_code', '=', 1], ['number', 'like', $npanxx.'%']])->get();

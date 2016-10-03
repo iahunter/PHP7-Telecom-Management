@@ -28,26 +28,26 @@ angular
 			//obj['name'] = 'test';
 			//console.log(obj);
 			
-			console.log(value);
+			//console.log(value);
 			
 			if (obj[value[key]] == undefined){
-				console.log("WE ARE HERE INSIDE IF");
+				//console.log("WE ARE HERE INSIDE IF");
 				obj[value[key]] = 1;
 				//obj[key] = obj[value.key] + 1;
-				console.log(obj);
+				//console.log(obj);
 			}else{
-				console.log("WE ARE HERE INSIDE ELSE");
+				//console.log("WE ARE HERE INSIDE ELSE");
 				obj[value[key]] = obj[value[key]] + 1;;
 			}
 				
-			console.log(obj);
+			//console.log(obj);
 			
 			
 			});
 		
 			var returns = '';
 			angular.forEach(obj,function(value, key){
-			console.log(key);
+			//console.log(key);
 			//console.log(value);
 
 			returns += key + ": " + value + ', ';
@@ -91,6 +91,33 @@ angular
 			telephonyService.GetDidblocks(function (result) {
 				console.log('callback from telephonyService.GetDidblocks responded ' + result);
 				vm.didblocks = telephonyService.didblocks;
+				
+				// Work on getting percentages 
+				
+				
+				//** Loop thru and create chart data for each block. 
+				angular.forEach(vm.didblocks,function(block){
+					//console.log(block.stats);
+					block['chartlabels'] = [];
+					block['chartdata'] = [];
+					block['chartseries'] = [];
+					
+					for(var key in block.stats){
+						//console.log(key);
+						//console.log(block.stats[key]);
+						
+						block['chartlabels'].push(key);
+						block['chartdata'].push(block.stats[key]);
+						block['chartseries'].push(key);
+						
+					}
+					console.log(block.chartlabels);
+					console.log(block.chartdata);
+					console.log(block.chartseries);
+				})
+				//** End of Chart Data
+				
+				console.log(vm.didblocks);
 				
 				vm.loading = false;
 				//console.log(vm.didblocks);

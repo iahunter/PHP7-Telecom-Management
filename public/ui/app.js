@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ui.router', 'ngMessages', 'ngStorage', 'angular-jwt'])
+        .module('app', ['ui.router', 'ngMessages', 'ngStorage', 'angular-jwt', 'chart.js'])
         .config(config)
         .run(run);
 

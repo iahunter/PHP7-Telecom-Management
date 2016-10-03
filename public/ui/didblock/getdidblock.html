@@ -141,6 +141,7 @@
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
 						<tr class="danger">
+							<!--
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 									ID
@@ -148,7 +149,8 @@
 										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							
+							-->
+							<!--
 							<th>
 								<a href="" ng-click="sortType = 'parent'; sortReverse = !sortReverse" style="color:black">
 									Parent ID
@@ -156,14 +158,7 @@
 										<span ng-show="sortType == 'parent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>									
-
-							<th>
-								<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
-									Name
-										<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+							-->
 							
 							<th>
 								<a href="" ng-click="sortType = 'number'; sortReverse = !sortReverse" style="color:black">
@@ -171,7 +166,15 @@
 										<span ng-show="sortType == 'number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
-							</th>					
+							</th>
+
+							<th>
+								<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+									Name
+										<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>							
 							
 							<th>
 								<a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse" style="color:black">
@@ -222,10 +225,10 @@
 					<tr ng-repeat="did in vm.dids | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
-						<td>{{ did.id}}</a></td>
-						<td   ng-show="!vm.edit[did.id]">{{ did.parent}}</td>
-						<td   ng-show="!vm.edit[did.id]">{{ did.name}}</td>
+						<!--<td>{{ did.id}}</a></td>-->
+						<!--<td>{{ did.parent}}</td>-->
 						<td   ng-show="!vm.edit[did.id]">{{ did.number}}</td>
+						<td   ng-show="!vm.edit[did.id]">{{ did.name}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.status}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.system_id}}</td>
 						<td   ng-show="!vm.edit[did.id]" >
@@ -256,15 +259,14 @@
 						</td>
 
 						<!--Edit View-->
-						<td   ng-show="vm.edit[did.id]">{{ did.parent}}</td>
-						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.name"></td>
 						<td   ng-show="vm.edit[did.id]">{{ did.number}}</td>
+						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.name"></td>
 						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.status"></td>
 						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.system_id"></td>
 						<td   ng-show="vm.edit[did.id]">
 						
 							<!--Nested Table inside Row-->
-							<div ng-show="did.assignments" class="panel panel-default">
+							<div ng-show="did.assignments" class="panel panel-default" style="background-color: transparent;">
 							<table ng-show="did.assignments" class="table table-condensed table-bordered" style="background-color: transparent;">
 								<td><i>Pattern</i></td>
 								<td><i>Partition</i></td>

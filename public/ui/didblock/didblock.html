@@ -100,21 +100,15 @@
 						</th>
 						
 						<th>
-							<a href="" ng-click="sortType = 'inuse'; sortReverse = !sortReverse" style="color:black">
-								Inuse
-									<span ng-show="sortType == 'inuse' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'inuse' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							<a href="" ng-click="sortType = 'capacity'; sortReverse = !sortReverse" style="color:black">
+								Capacity
+									<span ng-show="sortType == 'capacity' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'capacity' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 							</a>
 						</th>
 						
-						<th>
-							<a href="" ng-click="sortType = 'available'; sortReverse = !sortReverse" style="color:black">
-								Available
-									<span ng-show="sortType == 'available' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'available' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
 						
+						<!-- Uncomment to include Chart Column. -->
 						<th>
 								Chart
 
@@ -156,20 +150,7 @@
 					</tr>
 				</thead>
 				<tbody>
-				<!--<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search">
-						<td>{{ didblock.id}}</a></td>
-						<td>{{ didblock.country_code}}</td>
-						<td>{{ didblock.name}}</td>
-						<td>{{ didblock.carrier}}</a></td>
-						<td>{{ didblock.start}}</td>
-						<td>{{ didblock.end}}</td>
-						<td>{{ didblock.type}}</a></td>
-						<td>{{ didblock.comment}}</td>
-						<td>{{ didblock.created_at}}</td>
-						<td>{{ didblock.updated_at}}</td>
-				</tr>
-				</tbody>
-				</table>-->
+
 				
 				<!-- Allow you to edit and delete Blocks with new buttons -->
 				<!--<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
@@ -187,17 +168,13 @@
 					<!--<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.total = didblock.end - didblock.start + 1; vm.Total = vm.Total + didblock.total">{{didblock.total}}</td>-->
 					<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.size = didblock.end - didblock.start + 1">{{didblock.size}}</td>
 					
-					<td   ng-show="!vm.edit[didblock.id]">{{didblock.stats.inuse}}</a></td>
-					<td   ng-show="!vm.edit[didblock.id]">{{didblock.stats.available}}</a></td>
+					<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.available = didblock.stats.inuse / didblock.size * 100">{{didblock.available | number:0}}%</td>
 					
-					
+					<!-- Chart -->
 					<td   ng-show="!vm.edit[didblock.id]">
-
-					<canvas id="base" class="chart-horizontal-bar" style="width: 100% !important; height:10px;"
-						chart-data="didblock.chartdata" chart-labels="didblock.chartlabels" >
-					</canvas> 
-					
-					
+						<canvas id="base" class="chart-horizontal-bar" style="width: 100% !important; height:10px;"
+							chart-data="didblock.chartdata" chart-labels="didblock.chartlabels" >
+						</canvas> 
 					</td>
 					
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.type}}</td>
@@ -219,8 +196,14 @@
 					<!--<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.total = didblock.end - didblock.start + 1;"></td>-->
 					<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.size = didblock.end - didblock.start + 1;">{{didblock.size}}</td>
 
-					<td   ng-show="vm.edit[didblock.id]">{{didblock.stats.inuse}}</a></td>
-					<td   ng-show="vm.edit[didblock.id]">{{didblock.stats.available}}</a></td>
+					<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.available = didblock.stats.inuse / didblock.size * 100">{{didblock.available | number:0}}%</td>
+					
+					<!-- Chart -->
+					<td   ng-show="vm.edit[didblock.id]">
+						<canvas id="base" class="chart-horizontal-bar" style="width: 100% !important; height:10px;"
+							chart-data="didblock.chartdata" chart-labels="didblock.chartlabels" >
+						</canvas> 
+					</td>
 					
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.type}}</td>
 					<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.comment"></td>

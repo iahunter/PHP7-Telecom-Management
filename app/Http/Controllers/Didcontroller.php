@@ -25,13 +25,13 @@ class Didcontroller extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         $didblocks = Didblock::all();
-		
-		$stats = $this->getDidblockUtilization();
-		
+
+        $stats = $this->getDidblockUtilization();
+
         $show = [];
         foreach ($didblocks as $didblock) {
             if ($user->can('read', $didblock)) {
-				$didblock->stats = $stats[$didblock->id];
+                $didblock->stats = $stats[$didblock->id];
                 $show[] = $didblock;
             }
         }
@@ -44,14 +44,14 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function getDidblockUtilization()
+
+    public function getDidblockUtilization()
     {
-		$stats = DB::table('did_block')
+        $stats = DB::table('did_block')
             ->leftJoin('did', 'did_block.id', '=', 'did.parent')
             ->select('did_block.id', 'did_block.name', 'did.status', DB::raw('count(did.id) as statuscount'))
-			->groupBy('did_block.id')
-			->groupBy('did.status')
+            ->groupBy('did_block.id')
+            ->groupBy('did.status')
             ->get();
 			
 		$statsarray = [];
@@ -70,6 +70,7 @@ class Didcontroller extends Controller
 			
 		return $statsarray;
     }
+	
 
     public function getDidblock(Request $request, $id)
     {

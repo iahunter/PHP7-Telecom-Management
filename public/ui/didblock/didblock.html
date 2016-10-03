@@ -102,6 +102,22 @@
 						</th>
 						
 						<th>
+							<a href="" ng-click="sortType = 'stats.available'; sortReverse = !sortReverse" style="color:black">
+								Available
+									<span ng-show="sortType == 'stats.available' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'stats.available' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						<th>
+							<a href="" ng-click="sortType = 'stats.inuse'; sortReverse = !sortReverse" style="color:black">
+								Inuse
+									<span ng-show="sortType == 'stats.inuse' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'stats.inuse' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						<th>
 							<a href="" ng-click="sortType = 'capacity'; sortReverse = !sortReverse" style="color:black">
 								Capacity
 									<span ng-show="sortType == 'capacity' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -166,14 +182,13 @@
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.country_code}}</td>
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.start}}</td>
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.end}}</td>
-					<!--<td   ng-show="!vm.edit[didblock.id]">{{ didblock.end - didblock.start + 1}}</td>-->
-					<!--<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.total = didblock.end - didblock.start + 1; vm.Total = vm.Total + didblock.total">{{didblock.total}}</td>-->
 					<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.size = didblock.end - didblock.start + 1">{{didblock.size}}</td>
+					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.stats.available}}</td>
+					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.stats.inuse}}</td>
+					<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.capacity = didblock.stats.inuse / didblock.size * 100">{{didblock.capacity | number:0}}%</td>
 					
-					<td   ng-show="!vm.edit[didblock.id]" ng-init="didblock.available = didblock.stats.inuse / didblock.size * 100">{{didblock.available | number:0}}%</td>
+					<!-- Chart Removed. Too intensive and takes to long to load. 
 					
-					<!-- Chart -->
-					<!--
 					<td   ng-show="!vm.edit[didblock.id]">
 						<canvas id="base" class="chart-horizontal-bar"
 							chart-data="didblock.chartdata" chart-labels="didblock.chartlabels" >
@@ -196,19 +211,10 @@
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.country_code}}</td>
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.start}}</td>
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.end}}</td>
-					<!--<td   ng-show="vm.edit[didblock.id]">{{ didblock.end - didblock.start + 1}}</td>-->
-					<!--<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.total = didblock.end - didblock.start + 1;"></td>-->
 					<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.size = didblock.end - didblock.start + 1;">{{didblock.size}}</td>
-
-					<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.available = didblock.stats.inuse / didblock.size * 100">{{didblock.available | number:0}}%</td>
-					
-					<!-- Chart -->
-					
-					<!--
-					<td   ng-show="vm.edit[didblock.id]">
-
-					</td>
-					-->
+					<td   ng-show="vm.edit[didblock.id]">{{ didblock.stats.available}}</td>
+					<td   ng-show="vm.edit[didblock.id]">{{ didblock.stats.inuse}}</td>
+					<td   ng-show="vm.edit[didblock.id]" ng-init="didblock.capacity = didblock.stats.inuse / didblock.size * 100">{{didblock.capacity | number:0}}%</td>
 					
 					<td   ng-show="vm.edit[didblock.id]">{{ didblock.type}}</td>
 					<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.comment"></td>

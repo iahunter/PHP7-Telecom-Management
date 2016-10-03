@@ -32,6 +32,11 @@ angular
 						
 					}
 					
+					// Enable the Options to be generated for the chart. 
+					vm.didblock.chartoptions = { legend: { display: true}, title: {display:true, text:'Number Block Usage'}};
+					
+					console.log(vm.didblock.chartoptions);
+					
 					//** End of Chart Data
 					
 					return vm.didblock;

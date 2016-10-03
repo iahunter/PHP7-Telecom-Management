@@ -58,6 +58,8 @@ angular
 		}
 		
 	})
+	
+	
 
 	.controller('Didblock.IndexController', ['telephonyService', '$location', '$state', function(telephonyService, $location, $state) {
 	
@@ -86,6 +88,8 @@ angular
 			return total;
 		}
 		*/
+		
+
 
 		function initController() {
 			telephonyService.GetDidblocks(function (result) {
@@ -170,11 +174,12 @@ angular
 			
 			// Send Block ID and the updated variables to the update service. 
 			telephonyService.updateDidblock(didblock.id, didblock_update).then(function(data) {
-			  return $state.reload();
+				//alert('Saved')
+			  //return $state.reload();
 			}, function(error) {
 				alert('An error occurred while updating the event')
 			});
-			$state.reload();
+			//$state.reload();
 		}
 		
 		

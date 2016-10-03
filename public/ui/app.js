@@ -50,6 +50,7 @@
             });
 
     }
+	
 
     function run($rootScope, $http, $location, $localStorage, jwtHelper) {
         // keep user logged in after page refresh

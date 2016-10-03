@@ -116,8 +116,10 @@
 		
 		<div row>
 			<div class="container col-md-3">
-				<canvas id="pie" class="chart chart-pie"
-					chart-data="vm.didblock.chartdata" chart-labels="vm.didblock.chartlabels" >
+				<canvas id="pie" class="chart chart-pie chart-xs"
+					chart-data="vm.didblock.chartdata" 
+					chart-labels="vm.didblock.chartlabels"
+					chart-options="vm.didblock.chartoptions">
 				</canvas> 
 			</div>
 		</div>
@@ -201,10 +203,10 @@
 							</th>
 							
 							<th>
-								<a href="" ng-click="sortType = 'systemid'; sortReverse = !sortReverse" style="color:black">
+								<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
 									System ID
-										<span ng-show="sortType == 'systemid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'systemid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										<span ng-show="sortType == 'system_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							

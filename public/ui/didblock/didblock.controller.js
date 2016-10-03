@@ -113,9 +113,7 @@ angular
 					}
 				})
 				//** End of Chart Data
-				
-				console.log(vm.didblocks);
-				
+
 				vm.loading = false;
 				//console.log(vm.didblocks);
 				vm.messages = JSON.stringify(vm.didblocks, null, "    ");

@@ -4,7 +4,9 @@
 
 	<div class="well form-horizontal" style="margin-top:10px;" >
 	
-	<legend>DID Block Inventory <button class="btn btn-default btn-sm pull-right" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+	<div style="margin:50px"></div>
+	
+	<legend>DID Block Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
 		<h4>Total DIDs: {{vm.resultValue | sumofValue: 'size'}}</h4>
 		<h5>Block Types: {{vm.resultValue | countTypes: 'type'}}</h5>

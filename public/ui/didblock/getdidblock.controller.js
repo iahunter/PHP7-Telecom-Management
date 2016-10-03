@@ -33,8 +33,6 @@ angular
 					}
 					
 					//** End of Chart Data
-
-					console.log(vm.didblock);
 					
 					return vm.didblock;
 				

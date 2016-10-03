@@ -111,9 +111,6 @@ angular
 						block['chartseries'].push(key);
 						
 					}
-					console.log(block.chartlabels);
-					console.log(block.chartdata);
-					console.log(block.chartseries);
 				})
 				//** End of Chart Data
 				

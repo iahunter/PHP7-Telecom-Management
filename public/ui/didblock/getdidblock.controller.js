@@ -14,8 +14,29 @@ angular
 		
 		vm.getdidblock = telephonyService.getDidblock(id)
 			.then(function(res){
-				return vm.didblock = res.data.didblock;
 				
+				//** Loop thru and create chart data for each block. 
+					vm.didblock = res.data.didblock;
+					//console.log(block.stats);
+					vm.didblock['chartlabels'] = [];
+					vm.didblock['chartdata'] = [];
+					vm.didblock['chartseries'] = [];
+					
+					for(var key in vm.didblock.stats){
+						//console.log(key);
+						//console.log(vm.didblock.stats[key]);
+						
+						vm.didblock['chartlabels'].push(key);
+						vm.didblock['chartdata'].push(vm.didblock.stats[key]);
+						vm.didblock['chartseries'].push(key);
+						
+					}
+					
+					//** End of Chart Data
+
+					console.log(vm.didblock);
+					
+					return vm.didblock;
 				
 			}, function(err){
 				//Error

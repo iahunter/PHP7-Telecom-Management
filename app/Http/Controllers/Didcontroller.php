@@ -74,6 +74,11 @@ class Didcontroller extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         $didblock = Didblock::find($id);
+		
+		$stats = $this->getDidblockUtilization();
+		
+		$didblock->stats = $stats[$didblock->id];
+		
         if (! $user->can('read', $didblock)) {
             abort(401, 'You are not authorized to view didblock '.$id);
         }

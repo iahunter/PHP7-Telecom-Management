@@ -81,11 +81,10 @@ class Didblock extends Model
 
             $request_array[] = $request;            // append the row to the array.
         }
-		
-		foreach(array_chunk($request_array,1000) as $chunk){
-			
-			Did::insert($chunk);            // insert the array into the database. Much faster than inserting individual rows.
-		}
+
+        foreach (array_chunk($request_array, 1000) as $chunk) {
+            Did::insert($chunk);            // insert the array into the database. Much faster than inserting individual rows.
+        }
     }
 
     public function not_10digits($num)

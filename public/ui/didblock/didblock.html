@@ -196,9 +196,13 @@
 					<td   ng-show="!vm.edit[didblock.id]">{{ didblock.updated_at}}</td>
 					<td   ng-show="!vm.edit[didblock.id]">
 						<button class="btn btn-primary btn-xs "  ng-click="vm.edit[didblock.id] = !vm.edit[didblock.id]"> Edit </button>
-						<!--<button class="btn btn-danger btn-xs " ng-click="vm.delete(didblock)"> Delete </button>-->
+						
+						<!-- Function moved ot modal...
+						<button class="btn btn-danger btn-xs " ng-click="vm.delete(didblock)"> Delete </button>-->
+						
 						<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#modal-1"> Delete </button>
 					
+						<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
 						<div class="modal fade" id="modal-1" role="dialog">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -227,6 +231,8 @@
 								</div>
 							</div>
 						</div>
+						<!-- End of Modal -->
+						
 					</td>
 
 					<!--Edit View-->

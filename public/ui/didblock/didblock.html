@@ -9,7 +9,6 @@
 	<legend>DID Block Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
 		<h4>Total DIDs: {{vm.resultValue | sumofValue: 'size'}}</h4>
-		<h5>Block Types: {{vm.resultValue | countTypes: 'type'}}</h5>
 		
 		<div class="input-group col-md-3 ">
 			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">

@@ -25,32 +25,28 @@ angular
 			var obj = {};
 			angular.forEach(data,function(value){
 
-			//obj['name'] = 'test';
-			//console.log(obj);
-			
-			//console.log(value);
-			
-			if (obj[value[key]] == undefined){
-				//console.log("WE ARE HERE INSIDE IF");
-				obj[value[key]] = 1;
-				//obj[key] = obj[value.key] + 1;
+				//obj['name'] = 'test';
 				//console.log(obj);
-			}else{
-				//console.log("WE ARE HERE INSIDE ELSE");
-				obj[value[key]] = obj[value[key]] + 1;;
-			}
 				
-			//console.log(obj);
-			
+				//console.log(value);
+				
+				if (obj[value[key]] == undefined){
+					//console.log("WE ARE HERE INSIDE IF");
+					obj[value[key]] = 1;
+
+				}else{
+					//console.log("WE ARE HERE INSIDE ELSE");
+					obj[value[key]] = obj[value[key]] + 1;;
+				}
 			
 			});
 		
 			var returns = '';
 			angular.forEach(obj,function(value, key){
-			//console.log(key);
-			//console.log(value);
+				//console.log(key);
+				//console.log(value);
 
-			returns += key + ": " + value + ', ';
+				returns += key + ": " + value + ', ';
 			});
 
 			return returns;
@@ -76,28 +72,14 @@ angular
 		vm.messages = 'Loading Didblocks...';
 		vm.didblocks = [{}];
 		vm.loading = true;
-		//vm.search = "";
-		
-		/*
-		$scope.getTotal = function(){
-			var total = 0;
-			for(var i = 0; i < $scope.cart.products.length; i++){
-				var product = $scope.cart.products[i];
-				total += (product.price * product.quantity);
-			}
-			return total;
-		}
-		*/
-		
-
 
 		function initController() {
 			telephonyService.GetDidblocks(function (result) {
 				console.log('callback from telephonyService.GetDidblocks responded ' + result);
 				vm.didblocks = telephonyService.didblocks;
 				
-				// Work on getting percentages 
 				
+				vm.blocktypes = {};		// Initialilze Object for Type Counting
 				
 				//** Loop thru and create chart data for each block. 
 				angular.forEach(vm.didblocks,function(block){
@@ -115,13 +97,27 @@ angular
 						block['chartseries'].push(key);
 						
 					}
-				})
 				//** End of Chart Data
-
+				
+				// Count Block Types
+					if (vm.blocktypes[block['type']] == undefined){
+						//console.log("WE ARE HERE INSIDE IF");
+						vm.blocktypes[block['type']] = 1;
+						//obj[key] = obj[value.key] + 1;
+						//console.log(obj);
+					}else{
+						//console.log("WE ARE HERE INSIDE ELSE");
+						vm.blocktypes[block['type']] = vm.blocktypes[block['type']] + 1;;
+					}
+				// End of Block Type Counting
+					
+				})
+				
+				console.log(vm.blocktypes);
+				
 				vm.loading = false;
-				//console.log(vm.didblocks);
 				vm.messages = JSON.stringify(vm.didblocks, null, "    ");
-				//$scope.accounts = vm.accounts;
+
 			});
 		}
 		

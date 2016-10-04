@@ -213,15 +213,17 @@
 										<p>You are about to delete Bloock ID: {{ didblock.id}}</p>
 										<table class="table table-striped table-condensed table-bordered table-hover">
 											<tr>
+												<th>Name</th>
 												<th>Start</th>
 												<th>End</th>
 											</tr>
 											<tr>
+												<td>{{ didblock.name}}</td>
 												<td>{{ didblock.start}}</td>
 												<td>{{ didblock.end}}</td>
 											</tr>
 										</table>
-										<p>All provisioned information will be lost. Are you sure you want to proceed? </p>
+										<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
 									</div>
 									<div class="modal-footer">
 										<a class="btn btn-primary" data-dismiss="modal">Cancel</a>

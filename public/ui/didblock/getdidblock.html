@@ -313,7 +313,13 @@
 						<!--Edit View-->
 						<td   ng-show="vm.edit[did.id]">{{ did.number}}</td>
 						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.name"></td>
-						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.status"></td>
+						<td ng-show="vm.edit[did.id]">
+							<select class="form-control" ng-model='did.status' data-width="100%" name="statusCategory">
+								<option value="available">available</option>
+								<option value="reserved">reserved</option>
+								<option value="inuse">inuse</option>
+							</select>
+						</td>
 						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.system_id"></td>
 						<td   ng-show="vm.edit[did.id]">
 						

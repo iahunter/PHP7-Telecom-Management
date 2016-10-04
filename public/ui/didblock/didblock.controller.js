@@ -186,7 +186,15 @@ angular
 		// Delete DID Block 
 		vm.delete = function(didblock) {
 			telephonyService.deleteDidblock(didblock.id).then(function(data) {
-				$(".modal-backdrop").hide();
+
+			
+				// jQuery Hack to fix body from the Model. 
+					$(".modal-backdrop").hide();
+					$('body').removeClass("modal-open");
+					$('body').removeClass("modal-open");
+					$('body').removeAttr( 'style' );
+				// End of Hack */
+			
 				return $state.reload();
           }, function(error) {
 				alert('An error occurred');

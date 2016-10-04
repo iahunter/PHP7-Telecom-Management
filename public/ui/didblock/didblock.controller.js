@@ -186,6 +186,7 @@ angular
 		// Delete DID Block 
 		vm.delete = function(didblock) {
 			telephonyService.deleteDidblock(didblock.id).then(function(data) {
+				$(".modal-backdrop").hide();
 				return $state.reload();
           }, function(error) {
 				alert('An error occurred');

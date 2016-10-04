@@ -3,186 +3,181 @@
 <div style="margin-left:80px; margin-right:80px;">
 	<div class="well form-horizontal" style="margin-top:10px;" >
 	
-		<div style="margin:50px"></div>
-		
-		<legend>Number Block Details<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		<div class="well" style="background-color: #f1f3f3;">
-		<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-			<table class="table table-striped table-bordered table-hover">
-				<thead>
-					<tr class="success">
-						<th>
-							<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
-								ID
-									<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>				
+			<div style="margin:50px"></div>
+		
+			<legend>Number Block Details<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+		
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr class="success">
+							<th>
+								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+									ID
+										<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>				
 
-						<th>
-							<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
-								Name
-									<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'carrier'; sortReverse = !sortReverse" style="color:black">
-								Carrier
-									<span ng-show="sortType == 'carrier' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'carrier' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>					
-						
-						<th>
-							<a href="" ng-click="sortType = 'country_code'; sortReverse = !sortReverse" style="color:black">
-								Country Code
-									<span ng-show="sortType == 'country_code' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'country_code' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>	
-						
-						<th>
-							<a href="" ng-click="sortType = 'start'; sortReverse = !sortReverse" style="color:black">
-								Block Start
-									<span ng-show="sortType == 'start' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'start' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'end'; sortReverse = !sortReverse" style="color:black">
-								Block End
-									<span ng-show="sortType == 'end' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'end' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-												<th>
-							<a href="" ng-click="sortType = 'size'; sortReverse = !sortReverse" style="color:black">
-								Block Size
-									<span ng-show="sortType == 'size' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'size' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'stats.available'; sortReverse = !sortReverse" style="color:black">
-								Available
-									<span ng-show="sortType == 'stats.available' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'stats.available' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'stats.inuse'; sortReverse = !sortReverse" style="color:black">
-								Inuse
-									<span ng-show="sortType == 'stats.inuse' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'stats.inuse' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'capacity'; sortReverse = !sortReverse" style="color:black">
-								Capacity
-									<span ng-show="sortType == 'capacity' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'capacity' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
-								Type
-									<span ng-show="sortType == 'type' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'type' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
+							<th>
+								<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+									Name
+										<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'carrier'; sortReverse = !sortReverse" style="color:black">
+									Carrier
+										<span ng-show="sortType == 'carrier' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'carrier' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>					
+							
+							<th>
+								<a href="" ng-click="sortType = 'country_code'; sortReverse = !sortReverse" style="color:black">
+									Country Code
+										<span ng-show="sortType == 'country_code' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'country_code' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							
+							<th>
+								<a href="" ng-click="sortType = 'start'; sortReverse = !sortReverse" style="color:black">
+									Block Start
+										<span ng-show="sortType == 'start' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'start' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'end'; sortReverse = !sortReverse" style="color:black">
+									Block End
+										<span ng-show="sortType == 'end' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'end' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+													<th>
+								<a href="" ng-click="sortType = 'size'; sortReverse = !sortReverse" style="color:black">
+									Block Size
+										<span ng-show="sortType == 'size' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'size' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'stats.available'; sortReverse = !sortReverse" style="color:black">
+									Available
+										<span ng-show="sortType == 'stats.available' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'stats.available' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'stats.inuse'; sortReverse = !sortReverse" style="color:black">
+									Inuse
+										<span ng-show="sortType == 'stats.inuse' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'stats.inuse' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'capacity'; sortReverse = !sortReverse" style="color:black">
+									Capacity
+										<span ng-show="sortType == 'capacity' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'capacity' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
+									Type
+										<span ng-show="sortType == 'type' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'type' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
-						<th>
-							<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
-								Comment
-									<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
+							<th>
+								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
+									Comment
+										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
-						<th>
-							<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
-								Created At
-									<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						
-						<th>
-							<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
-								Updated At
-									<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-									<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-							</a>
-						</th>
-						<!--<th>Actions</th>-->
+							<th>
+								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+									Created At
+										<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
+									Updated At
+										<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<!--<th>Actions</th>-->
+						</tr>
+					</thead>
+					<tbody>
+
+					<tr>
+							<td>{{ vm.didblock.id}}</a></td>
+							<td>{{ vm.didblock.name}}</td>
+							<td>{{ vm.didblock.carrier}}</a></td>
+							<td>{{ vm.didblock.country_code}}</td>
+							<td>{{ vm.didblock.start}}</td>
+							<td>{{ vm.didblock.end}}</td>
+							<td>{{ vm.didblock.size}}</td>
+							<td>{{ vm.didblock.stats.available}}</td>
+							<td>{{ vm.didblock.stats.inuse}}</td>
+							<td>{{ vm.didblock.capacity | number:0}}%</td>
+							<td>{{ vm.didblock.type}}</a></td>
+							<td>{{ vm.didblock.comment}}</td>
+							<td>{{ vm.didblock.created_at}}</td>
+							<td>{{ vm.didblock.updated_at}}</td>
 					</tr>
-				</thead>
-				<tbody>
+					</tbody>
+				</table>
+			</div>
 
-				<tr>
-						<td>{{ vm.didblock.id}}</a></td>
-						<td>{{ vm.didblock.name}}</td>
-						<td>{{ vm.didblock.carrier}}</a></td>
-						<td>{{ vm.didblock.country_code}}</td>
-						<td>{{ vm.didblock.start}}</td>
-						<td>{{ vm.didblock.end}}</td>
-						<td>{{ vm.didblock.size}}</td>
-						<td>{{ vm.didblock.stats.available}}</td>
-						<td>{{ vm.didblock.stats.inuse}}</td>
-						<td>{{ vm.didblock.capacity | number:0}}%</td>
-						<td>{{ vm.didblock.type}}</a></td>
-						<td>{{ vm.didblock.comment}}</td>
-						<td>{{ vm.didblock.created_at}}</td>
-						<td>{{ vm.didblock.updated_at}}</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div style="margin:25px"></div>
-		
-		<div class="container" style="display: block; max-width: 550px; max-height: 250px;">
-			<canvas id="pie" class="chart chart-pie chart-xs"
-				chart-data="vm.didblock.chartdata" 
-				chart-labels="vm.didblock.chartlabels"
-				chart-options="vm.didblock.chartoptions">
-			</canvas> 
-		</div>
-		
-		
-		
-		<div style="margin:25px"></div>
-		</div>
-
-
-		
-		
-
-		<div ng-if="!vm.dids" class="well">
+			<div style="margin:25px"></div>
+			
+			<!-- Loading -->
+			<div ng-if="!vm.dids" class="well">
 				<div class="row">
-					<h4 class="col-sm-3 col-sm-offset-4">Loading DIDs... Please Wait...</h4>
-					<div class="container loader col-sm-1" style="margin:-5px; margin-left:-100px"></div>
+					<div class="container loader"></div>
 				</div>
-				<div class="row">
-					
+				<div style="margin:25px"></div>
+			</div>
+
+			<div style="margin:25px"></div>
+			
+			<div ng-if="vm.dids">
+			<!-- If Did Block isset - Pring out the chart. -->
+				<div class="container" style="display: block; max-width: 550px; max-height: 250px;">
+					<canvas id="pie" class="chart chart-pie chart-xs"
+						chart-data="vm.didblock.chartdata" 
+						chart-labels="vm.didblock.chartlabels"
+						chart-options="vm.didblock.chartoptions">
+					</canvas> 
 				</div>
-					<!--<img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-					-->
-				
+			</div>
+			
+			<div style="margin:25px"></div>
+			
 		</div>
-		
+
 		<div style="margin:75px"></div>
 		
-		<div ng-if="vm.dids">
-			<legend >Numbers</legend>
+		<legend >Numbers</legend>
 			
 					
 		<div class="input-group col-md-3 ">

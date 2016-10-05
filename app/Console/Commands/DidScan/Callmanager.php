@@ -37,8 +37,8 @@ class Callmanager extends Command
      * Execute the console command.
      *
      * @return mixed
-	 *
-	 * This function is what is kicked off by the console command. 
+     *
+     * This function is what is kicked off by the console command.
      */
     public function handle()
     {

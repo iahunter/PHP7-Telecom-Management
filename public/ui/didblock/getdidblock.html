@@ -150,30 +150,41 @@
 
 			<div style="margin:25px"></div>
 			
-			<!-- Loading -->
-			<div ng-if="!vm.dids" class="well">
+			<!--Print Chart-->
+			<div class="container" style="display: block; max-width: 550px; max-height: 250px;">
+				<canvas id="pie" class="chart chart-pie chart-xs"
+					chart-data="vm.didblock.chartdata" 
+					chart-labels="vm.didblock.chartlabels"
+					chart-options="vm.didblock.chartoptions">
+				</canvas> 
+			</div>
+			
+			<div style="margin:25px"></div>
+		
+		</div>
+		
+		
+		<!-- Loading -->
+		
+		<div ng-if="!vm.dids">
+			<legend >Loading Numbers. Please be patient... </legend>
+			<div class="well">
 				<div class="row">
 					<div class="container loader"></div>
 				</div>
 				<div style="margin:25px"></div>
 			</div>
-
-			<div style="margin:25px"></div>
-			
-			<div ng-if="vm.dids">
-			<!-- If Did Block isset - Pring out the chart. -->
-				<div class="container" style="display: block; max-width: 550px; max-height: 250px;">
-					<canvas id="pie" class="chart chart-pie chart-xs"
-						chart-data="vm.didblock.chartdata" 
-						chart-labels="vm.didblock.chartlabels"
-						chart-options="vm.didblock.chartoptions">
-					</canvas> 
-				</div>
-			</div>
-			
-			<div style="margin:25px"></div>
-			
 		</div>
+		
+
+		<div style="margin:25px"></div>
+			
+		<!--After done loading Print the TAble-->
+		<div ng-if="vm.dids">		
+			
+		<div style="margin:25px"></div>
+			
+		
 
 		<div style="margin:75px"></div>
 		
@@ -353,4 +364,5 @@
 				</table>
 			</div>
 		</div>
+	</div>
 </div>

@@ -16,8 +16,8 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\DidScan\Callmanager::class,
         Commands\CallManager\SiteLocal911::class,
-		Commands\CallManager\SiteDetailsReport::class,
-		Commands\CallManager\CssReport::class,
+        Commands\CallManager\SiteDetailsReport::class,
+        Commands\CallManager\CssReport::class,
     ];
 
     /**

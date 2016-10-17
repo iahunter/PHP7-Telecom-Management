@@ -35,46 +35,46 @@ $api->version('v1', function ($api) {
 
     // Authenticate returns a JWT upon success to authenticate additional API calls.
 
-	/**
-	 * @SWG\Get(
-	 *     path="/telephony/api/authenticate",
-	 *     tags={"Authentication"},
-	 *     summary="Get JSON web token by TLS client certificate authentication",
-	 *     @SWG\Response(
-	 *         response=200,
-	 *         description="Authentication succeeded",
-	 *         ),
-	 *     ),
-	 * )
-	 **/
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/authenticate",
+     *     tags={"Authentication"},
+     *     summary="Get JSON web token by TLS client certificate authentication",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Authentication succeeded",
+     *         ),
+     *     ),
+     * )
+     **/
     $api->get('authenticate', 'App\Http\Controllers\Auth\AuthController@authenticate');
 
-	/**
-	 * @SWG\Post(
-	 *     path="/telephony/api/authenticate",
-	 *     tags={"Authentication"},
-	 *     summary="Get JSON web token by LDAP user authentication",
-	 *     @SWG\Parameter(
-	 *         name="username",
-	 *         in="formData",
-	 *         description="LDAP username",
-	 *         required=true,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="password",
-	 *         in="formData",
-	 *         description="LDAP password",
-	 *         required=true,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Response(
-	 *         response=200,
-	 *         description="Authentication succeeded",
-	 *         ),
-	 *     ),
-	 * )
-	 **/
+    /**
+     * @SWG\Post(
+     *     path="/telephony/api/authenticate",
+     *     tags={"Authentication"},
+     *     summary="Get JSON web token by LDAP user authentication",
+     *     @SWG\Parameter(
+     *         name="username",
+     *         in="formData",
+     *         description="LDAP username",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="password",
+     *         in="formData",
+     *         description="LDAP password",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Authentication succeeded",
+     *         ),
+     *     ),
+     * )
+     **/
     $api->post('authenticate', 'App\Http\Controllers\Auth\AuthController@authenticate');
 
 
@@ -97,62 +97,62 @@ $api->version('v1', function ($api) {
      *     operationId="createDidblock",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="name",
-	 *         in="formData",
-	 *         description="Name of New Block",
-	 *         required=true,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="carrier",
-	 *         in="formData",
-	 *         description="Carrier Information",
-	 *         required=false,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="comment",
-	 *         in="formData",
-	 *         description="Comment",
-	 *         required=false,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="country_code",
-	 *         in="formData",
-	 *         description="Country Code",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
-	 *	   @SWG\Parameter(
-	 *         name="start",
-	 *         in="formData",
-	 *         description="Range Start",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
-	 *	   @SWG\Parameter(
-	 *         name="end",
-	 *         in="formData",
-	 *         description="Range End",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="type",
-	 *         in="formData",
-	 *         description="public or private",
-	 *         required=true,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="reserved",
-	 *         in="formData",
-	 *         description="Automation Only",
-	 *         required=false,
-	 *         type="boolean"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="formData",
+     *         description="Name of New Block",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="carrier",
+     *         in="formData",
+     *         description="Carrier Information",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="comment",
+     *         in="formData",
+     *         description="Comment",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="country_code",
+     *         in="formData",
+     *         description="Country Code",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *	   @SWG\Parameter(
+     *         name="start",
+     *         in="formData",
+     *         description="Range Start",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *	   @SWG\Parameter(
+     *         name="end",
+     *         in="formData",
+     *         description="Range End",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="type",
+     *         in="formData",
+     *         description="public or private",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="reserved",
+     *         in="formData",
+     *         description="Automation Only",
+     *         required=false,
+     *         type="boolean"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -170,13 +170,13 @@ $api->version('v1', function ($api) {
      *     operationId="getDidblock",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="id",
-	 *         in="path",
-	 *         description="ID of block id",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -213,34 +213,34 @@ $api->version('v1', function ($api) {
      *     operationId="updateDidblock",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="id",
-	 *         in="path",
-	 *         description="ID of block id",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="name",
-	 *         in="formData",
-	 *         description="Name of New Block",
-	 *         required=true,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="carrier",
-	 *         in="formData",
-	 *         description="Carrier Information",
-	 *         required=false,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="comment",
-	 *         in="formData",
-	 *         description="Comment",
-	 *         required=false,
-	 *         type="string"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="formData",
+     *         description="Name of New Block",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="carrier",
+     *         in="formData",
+     *         description="Carrier Information",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="comment",
+     *         in="formData",
+     *         description="Comment",
+     *         required=false,
+     *         type="string"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -259,13 +259,13 @@ $api->version('v1', function ($api) {
      *     operationId="updateDidblock",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="id",
-	 *         in="path",
-	 *         description="ID of block to Delete",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of block to Delete",
+     *         required=true,
+     *         type="integer"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -285,13 +285,13 @@ $api->version('v1', function ($api) {
      *     operationId="listDidbyBlockID",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="id",
-	 *         in="path",
-	 *         description="ID of block id",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -315,13 +315,13 @@ $api->version('v1', function ($api) {
      *     operationId="getDid",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="id",
-	 *         in="path",
-	 *         description="ID of did id",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of did id",
+     *         required=true,
+     *         type="integer"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -340,13 +340,13 @@ $api->version('v1', function ($api) {
      *     operationId="getDid",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="number",
-	 *         in="path",
-	 *         description="Search for Number",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="number",
+     *         in="path",
+     *         description="Search for Number",
+     *         required=true,
+     *         type="integer"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -365,27 +365,27 @@ $api->version('v1', function ($api) {
      *     operationId="getDid",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="parentid",
-	 *         in="path",
-	 *         description="ID of parent",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="column",
-	 *         in="path",
-	 *         description="Column to Search",
-	 *         required=true,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="search",
-	 *         in="path",
-	 *         description="Search String",
-	 *         required=true,
-	 *         type="string"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="parentid",
+     *         in="path",
+     *         description="ID of parent",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="column",
+     *         in="path",
+     *         description="Column to Search",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="search",
+     *         in="path",
+     *         description="Search String",
+     *         required=true,
+     *         type="string"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
@@ -405,27 +405,27 @@ $api->version('v1', function ($api) {
      *     operationId="listDid",
      *     consumes={"application/json"},
      *     produces={"application/json"},
-	 *     @SWG\Parameter(
-	 *         name="id",
-	 *         in="path",
-	 *         description="ID of did",
-	 *         required=true,
-	 *         type="integer"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="name",
-	 *         in="formData",
-	 *         description="Name of New Block",
-	 *         required=false,
-	 *         type="string"
-	 *     ),
-	 *     @SWG\Parameter(
-	 *         name="status",
-	 *         in="formData",
-	 *         description="Available, Reserved",
-	 *         required=false,
-	 *         type="string"
-	 *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of did",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="formData",
+     *         description="Name of New Block",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="status",
+     *         in="formData",
+     *         description="Available, Reserved",
+     *         required=false,
+     *         type="string"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",

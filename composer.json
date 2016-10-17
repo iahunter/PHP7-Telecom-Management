@@ -14,7 +14,6 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "dingo/api": "1.0.x@dev",
-        "metaclassing/utility": "dev-master",
 		"adldap/adldap": "4.0.4.x-dev",
         "phpseclib/phpseclib": "^2.0",
         "tymon/jwt-auth": "^1.0",

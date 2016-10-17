@@ -15,7 +15,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\DidScan\Callmanager::class,
-        Commands\CallManager\Site911Local::class,
+        Commands\CallManager\SiteLocal911::class,
+		Commands\CallManager\SiteDetailsReport::class,
+		Commands\CallManager\CssReport::class,
     ];
 
     /**

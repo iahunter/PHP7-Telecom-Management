@@ -4,43 +4,44 @@
         "title": "Phone Number API",
         "version": "0.1"
     },
+    "basePath": "",
     "paths": {
         "/telephony/api/authenticate": {
             "get": {
                 "tags": [
-                    "Authenticate"
+                    "Authentication"
                 ],
                 "summary": "Get JSON web token by TLS client certificate authentication",
-                "description": "",
-                "operationId": "authenticate",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Authentication succeeded"
                     }
                 }
             },
             "post": {
                 "tags": [
-                    "Authenticate"
+                    "Authentication"
                 ],
                 "summary": "Get JSON web token by LDAP user authentication",
-                "description": "",
-                "operationId": "authenticate",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "LDAP username",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "LDAP password",
+                        "required": true,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation"
+                        "description": "Authentication succeeded"
                     }
                 }
             }
@@ -78,6 +79,64 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Name of New Block",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "carrier",
+                        "in": "formData",
+                        "description": "Carrier Information",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Comment",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "country_code",
+                        "in": "formData",
+                        "description": "Country Code",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "start",
+                        "in": "formData",
+                        "description": "Range Start",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "end",
+                        "in": "formData",
+                        "description": "Range End",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "type",
+                        "in": "formData",
+                        "description": "public or private",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "reserved",
+                        "in": "formData",
+                        "description": "Automation Only",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -85,7 +144,7 @@
                 }
             }
         },
-        "/telephony/api/didblock{id}": {
+        "/telephony/api/didblock/{id}": {
             "get": {
                 "tags": [
                     "Did Block"
@@ -98,6 +157,15 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -118,6 +186,36 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Name of New Block",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "carrier",
+                        "in": "formData",
+                        "description": "Carrier Information",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Comment",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -136,6 +234,15 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block to Delete",
+                        "required": true,
+                        "type": "integer"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -158,6 +265,15 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -178,6 +294,15 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of did id",
+                        "required": true,
+                        "type": "integer"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -200,6 +325,15 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "description": "Search for Number",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -221,26 +355,28 @@
                 "produces": [
                     "application/json"
                 ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
+                "parameters": [
+                    {
+                        "name": "parentid",
+                        "in": "path",
+                        "description": "ID of parent",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "column",
+                        "in": "path",
+                        "description": "Column to Search",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "path",
+                        "description": "Search String",
+                        "required": true,
+                        "type": "string"
                     }
-                }
-            }
-        },
-        "/telephony/api/did": {
-            "get": {
-                "tags": [
-                    "Did"
-                ],
-                "summary": "List DIDs for authorized user",
-                "description": "This can be huge and need to add pagination",
-                "operationId": "listDid",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
                 ],
                 "responses": {
                     "200": {
@@ -262,6 +398,29 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of did",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Name of New Block",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "formData",
+                        "description": "Available, Reserved",
+                        "required": false,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {

@@ -8,3 +8,4 @@ enabled:
 
 disabled:
  - no_unused_imports
+ - phpdoc_to_comment

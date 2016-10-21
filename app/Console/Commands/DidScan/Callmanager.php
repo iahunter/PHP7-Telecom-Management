@@ -126,7 +126,14 @@ class Callmanager extends Command
             try {
                 // SKIP updating OR making available DID's that are RESERVED!
                 if ($did->status == 'reserved') {
-                    continue;
+                    //continue;
+					if (isset($didinfo[$did->number])) {
+                    $did->assignments = $didinfo[$did->number];
+                    $did->status = 'inuse';
+                    $did->system_id = 'CUCM-Enterprise-Cluster';
+					}else{
+						continue;
+					}
                 }
                 // IF this DID IS in the results from call wrangler, update it!
                 if (isset($didinfo[$did->number])) {

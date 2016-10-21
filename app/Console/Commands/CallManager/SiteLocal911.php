@@ -50,7 +50,7 @@ class SiteLocal911 extends Command
 
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                            // Get a list of sites by calling get device pools and discard ones we don't care about.
-
+		//$sites = ['KHONEKSS'];
         foreach ($sites as $site) {
 
             // Step 2. Get everything to do with the site for each site.
@@ -131,7 +131,7 @@ class SiteLocal911 extends Command
 
 
                 $css_next_index = max(array_keys($css_report[$value])) + 1;                // Set the next index ID by adding one to the max index number that currently exists.
-                echo 'HREE';
+                //echo 'HREE';
 
                 foreach ($newpartitions as $partition) {
                     $MATCH = false;                                                        // Set Match back to false for each.

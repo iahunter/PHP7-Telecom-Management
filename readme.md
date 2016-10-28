@@ -2,7 +2,7 @@
 
 * Used to manage phone number inventory and tracking of reserved, available, and inuse status. 
 
-* Additional tools to be used with Cisco Call Manager for System Management will be added in the future
+* Additional System Management Tools will be added for Cisco Call Manager in the future
 
 
 #App Summary

@@ -19,7 +19,8 @@ class CreateAuditsTable extends Migration
             $table->text('old')->nullable();
             $table->text('new')->nullable();
             $table->string('user_id')->nullable();
-            $table->string('route')->nullable();
+			//$table->string('route')->nullable();
+            $table->text('route')->nullable();
             $table->ipAddress('ip_address', 45)->nullable();
             $table->timestamp('created_at');
         });

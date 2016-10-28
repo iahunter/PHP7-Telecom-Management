@@ -1,4 +1,11 @@
-#Telephone Number Database / API
+#Telecom Management / Number Database / RESTful API
+
+* Used to manage phone number inventory and tracking of reserved, available, and inuse status. 
+
+* Additional tools to be used with Cisco Call Manager for System Management will be added in the future
+
+
+#App Summary
 
 This is an app running on Laravel 5.3 + Dingo + JWT + Bouncer + L5-Swagger
 

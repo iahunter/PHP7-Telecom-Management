@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Did;
 use OwenIt\Auditing\Auditable;
 
 class Didblock extends Model
 {
-	use Auditable;
+    use Auditable;
     use SoftDeletes;
     protected $table = 'did_block';
     protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end', 'type', 'comment'];
@@ -149,23 +148,23 @@ class Didblock extends Model
     protected function validate()
     {
         // Check if range start is set
-        if (! $this->start) {
+        if (!$this->start) {
             throw new \Exception('No Range Start Set');
         }
         // Check if range end is set
-        if (! $this->end) {
+        if (!$this->end) {
             throw new \Exception('No Range End Set');
         }
         // Check for overlapping ranges.
-        if (! $this->id) {
+        if (!$this->id) {
             $this->overlap_db_check();
         }
         // Check if Name is set.
-        if (! $this->name) {
+        if (!$this->name) {
             throw new \Exception('No Name Set');
         }
         // Check if type is set.
-        if (! $this->type) {
+        if (!$this->type) {
             throw new \Exception('No type Set');
         }
         // Check type is public or private
@@ -184,15 +183,15 @@ class Didblock extends Model
             throw new \Exception('Validation error, end range can not be altered once created');
         }
         // Check if country code is a number.
-        if (! preg_match('/^[0-9]+$/', $this->country_code)) {
+        if (!preg_match('/^[0-9]+$/', $this->country_code)) {
             throw new \Exception('Country Code must be numeric');
         }
         // Check if start are numbers.
-        if (! preg_match('/^[0-9]+$/', $this->start)) {
+        if (!preg_match('/^[0-9]+$/', $this->start)) {
             throw new \Exception('Range start must be numeric');
         }
         // Check if end are numbers.
-        if (! preg_match('/^[0-9]+$/', $this->end)) {
+        if (!preg_match('/^[0-9]+$/', $this->end)) {
             throw new \Exception('Range end must be numeric');
         }
         // Check to make sure start is not greater than end.
@@ -207,11 +206,11 @@ class Didblock extends Model
         // Check if type is public and country code
         if (($this->type == 'public') && ($this->country_code == 1)) {
             // Check if number is 10 digits.
-            if ((! $this->not_10digits($this->start) || (! $this->not_10digits($this->end)))) {
+            if ((!$this->not_10digits($this->start) || (!$this->not_10digits($this->end)))) {
                 throw new \Exception('NANP Start or End Range must be 10 digits');
             }
             // Check if start and end are in same NPA NXX if they have country Code of 1.
-            if (! $this->is_in_same_npanxx($this->start, $this->end)) {
+            if (!$this->is_in_same_npanxx($this->start, $this->end)) {
                 throw new \Exception('Range Start and End must be in same NPA NXX for NANP Numbers');
             }
         }

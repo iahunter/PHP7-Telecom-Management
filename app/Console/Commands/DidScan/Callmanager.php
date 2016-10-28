@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\DidScan;
 
-use Illuminate\Console\Command;
 use App\Did;
 use App\Didblock;
 use DB;
+use Illuminate\Console\Command;
 
 class Callmanager extends Command
 {
@@ -87,19 +87,19 @@ class Callmanager extends Command
             unset($cucm);
             // Process the junk we got back from call mangler and turn it into something useful
             $results = [];
-            if (! $didinfo) {
+            if (!$didinfo) {
                 // Return blank array if no results in $didinfo.
                 echo 'didinfo is blank!';
 
                 return $results;
             }
             foreach ($didinfo as $idfk) {
-                if (! isset($results[$idfk['dnOrPattern']])) {
+                if (!isset($results[$idfk['dnOrPattern']])) {
                     $results[$idfk['dnOrPattern']] = [];
                 }
                 $results[$idfk['dnOrPattern']][] = $idfk;
             }
-            if (! count($results)) {
+            if (!count($results)) {
                 throw new \Exception('Indexed results from call mangler are emptys!!111one');
             }
 
@@ -127,13 +127,13 @@ class Callmanager extends Command
                 // SKIP updating OR making available DID's that are RESERVED!
                 if ($did->status == 'reserved') {
                     //continue;
-					if (isset($didinfo[$did->number])) {
-                    $did->assignments = $didinfo[$did->number];
-                    $did->status = 'inuse';
-                    $did->system_id = 'CUCM-Enterprise-Cluster';
-					}else{
-						continue;
-					}
+                    if (isset($didinfo[$did->number])) {
+                        $did->assignments = $didinfo[$did->number];
+                        $did->status = 'inuse';
+                        $did->system_id = 'CUCM-Enterprise-Cluster';
+                    } else {
+                        continue;
+                    }
                 }
                 // IF this DID IS in the results from call wrangler, update it!
                 if (isset($didinfo[$did->number])) {

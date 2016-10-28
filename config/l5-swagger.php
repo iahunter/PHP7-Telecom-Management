@@ -26,11 +26,11 @@ return [
         |--------------------------------------------------------------------------
         */
 
-		// *** Look at changing this ***
+        // *** Look at changing this ***
 
         //'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'api_key'),
-		'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'token'),
-		
+        'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'token'),
+
         /*
         |--------------------------------------------------------------------------
         | Edit to set the securityDefinition that is used in requests
@@ -38,7 +38,7 @@ return [
         */
 
         'security_definition' => env('L5_SWAGGER_API_SECURITY_DEFINITION', 'api_key'),
-		//'security_definition' => env('L5_SWAGGER_API_SECURITY_DEFINITION', 'token'),
+        //'security_definition' => env('L5_SWAGGER_API_SECURITY_DEFINITION', 'token'),
 
         /*
         |--------------------------------------------------------------------------
@@ -109,9 +109,9 @@ return [
         | Absolute path to directory containing the swagger annotations are stored.
         |--------------------------------------------------------------------------
         */
-		
-		// *** Change to routes to point Swagger  - This can be an array  ***
-		
+
+        // *** Change to routes to point Swagger  - This can be an array  ***
+
         'annotations' => base_path('routes'),
 
         /*

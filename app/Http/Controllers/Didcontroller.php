@@ -101,9 +101,6 @@ class Didcontroller extends Controller
         // Check Role of user
         if (! $user->can('create', Didblock::class)) {
 
-            // Add Audit Log Entry
-            $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to create new did blocks'", 'previous' => $request]);
-
             abort(401, 'You are not authorized to create new did blocks');
         }
 
@@ -116,9 +113,6 @@ class Didcontroller extends Controller
                     'request'        => $request->all(),
                     'didblock'       => $didblock,
                     ];
-
-        // Add Audit Log Entry
-        $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
 
         return response()->json($response);
     }
@@ -133,9 +127,6 @@ class Didcontroller extends Controller
         // Check Role of user
         if (! $user->can('update', $didblock)) {
 
-            // Add Audit Log Entry
-            $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to create new did blocks'", 'previous' => $request]);
-
             abort(401, 'You are not authorized to view didblock '.$id);
         }
 
@@ -149,8 +140,6 @@ class Didcontroller extends Controller
                     'request'        => $request->all(),
                     'didblock'       => $didblock,
                     ];
-        // Add Audit Log Entry
-        $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
 
         return response()->json($response);
     }
@@ -162,8 +151,6 @@ class Didcontroller extends Controller
         // Check Role of user
         if (! $user->can('delete', Didblock::class)) {
 
-            // Add Audit Log Entry
-            $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to create new did blocks'", 'previous' => $request]);
 
             abort(401, 'You are not authorized to delete did block id '.$id);
         }
@@ -176,8 +163,6 @@ class Didcontroller extends Controller
                     'message'        => 'Did Block '.$id.' successfully deleted',
                     'deleted_at'     => $didblock->deleted_at, ];
 
-        // Add Audit Log Entry
-        $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
 
         return response()->json($response);
     }
@@ -318,8 +303,6 @@ class Didcontroller extends Controller
         // Check Role of user
         if (! $user->can('update', $did)) {
 
-            // Add Audit Log Entry
-            $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => "401, 'You are not authorized to view didblock '".$did_id, 'previous' => $did]);
 
             abort(401, 'You are not authorized to view didblock '.$did_id);
         }
@@ -335,8 +318,6 @@ class Didcontroller extends Controller
                     'did'            => $did,
                     ];
 
-        // Add Audit Log Entry
-        $user->audit()->create(['file' => __TRAIT__, 'method' => __METHOD__, 'message' => '', 'previous' => $response]);
 
         return response()->json($response);
     }

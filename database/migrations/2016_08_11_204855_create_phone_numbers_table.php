@@ -15,14 +15,14 @@ class CreatePhoneNumbersTable extends Migration
         Schema::create('did_block', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');                     // Name
-            $table->string('carrier');                  // Carrier Name
+            $table->string('carrier')->nullable();      // Carrier Name
             $table->string('country_code');             // simple name to reference the account by
             $table->bigInteger('start');                // Start of Block
             $table->bigInteger('end');                  // End of Block
             $table->string('type');                     // Public or Private Number
-            $table->string('reserved');                 // Reserved Status for Automation Only Assignment
-            $table->text('comment');                    // Comment
-            $table->json('json');                       // JSON Custom Field Data
+            $table->string('reserved')->nullable();                 // Reserved Status for Automation Only Assignment
+            $table->text('comment')->nullable();                    // Comment
+            $table->json('json')->nullable();                       // JSON Custom Field Data
             $table->timestamps();                       // Time Stamps
             $table->softDeletes();                      // Soft Deletes
         });
@@ -33,12 +33,12 @@ class CreatePhoneNumbersTable extends Migration
             $table->integer('parent')->unsigned()->index();    // Parent Block ID
                 $table->foreign('parent')->references('id')->on('did_block')->onDelete('cascade');        // Create foreign key and try cascade deletes
 
-            $table->string('name');                       // Name
+            $table->string('name')->nullable();                       // Name
             $table->string('country_code');             // simple name to reference the account by
             $table->bigInteger('number');                // Phone Number
             $table->string('status');                    // Status - Active/Reserved/Available
-            $table->string('system_id');                // Future - System ID - CUCM/Lync ID
-            $table->json('assignments');                   // JSON Custom Field Data
+            $table->string('system_id')->nullable();                // Future - System ID - CUCM/Lync ID
+            $table->json('assignments')->nullable();                   // JSON Custom Field Data
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
 

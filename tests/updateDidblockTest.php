@@ -69,8 +69,11 @@ class updateDidblockTest extends TestCase
                 'end'                    => 1004560809,
                 'type'                   => 'private',
                 'comment'                => 'Test Comment',
+				'reserved'                => '',
                 ];
-        $response = $this->call('POST',
+        
+		//dd($input);
+		$response = $this->call('POST',
                         '/api/didblock?token='.$this->token,
                         $input);
         //dd($response);

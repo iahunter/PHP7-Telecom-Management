@@ -37,9 +37,4 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         return [];
     }
 
-    public function audit()
-    {
-        // Add children Audit Logs
-        return $this->hasMany(\App\Audit::class);
-    }
 }

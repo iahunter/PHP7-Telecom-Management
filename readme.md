@@ -1,32 +1,27 @@
-#Telephone Number Database / API
+# Laravel PHP Framework
 
-This is an app running on Laravel 5.2 + Dingo + JWT + Bouncer
+[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
+[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
-RESTful API to create, read, update, and delete phone number blocks for number tracking. It can be called via anything capable of interacting with a RESTful/JSON API.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-Authentication is possible via client TLS certificate, or LDAP if enabled and configured. User management is not in scope. 
+Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
 
-The current intended application stack for this application is: Ubuntu 16.04 + Nginx + PHP 7 + Mysql 5.7
+## Official Documentation
 
-Bouncer roles manage rights to the numbers databases via the application http controllers.
+Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
 
+## Contributing
 
-#Backend
-* Laravel framework can be found on the [Laravel website](http://laravel.com/docs).
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
 
-* dingo api can be found on GitHub. https://github.com/dingo/api/wiki
+## Security Vulnerabilities
 
-* JWT can be found on GitHub. https://github.com/tymondesigns/jwt-auth/wiki
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
-* Bouncer roles and permissions can be found on GitHub. https://github.com/JosephSilber/bouncer
+## License
 
-#Frontend UI 
-There is also a Frontend UI that is included using Bootstrap3, AngularJS 1.5, Angular-Chart.js and angular-jwt. 
-
-* Bootstrap is at http://getbootstrap.com. 
-
-* AngularJS is at https://docs.angularjs.org/api
-
-* Angular Chart is at https://jtblin.github.io/angular-chart.js/
-
-* Angular-JWT is at https://github.com/auth0/angular-jwt. 
+The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

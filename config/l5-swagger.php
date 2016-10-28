@@ -26,8 +26,11 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'token'),
+		// *** Look at changing this ***
 
+        //'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'api_key'),
+		'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'token'),
+		
         /*
         |--------------------------------------------------------------------------
         | Edit to set the securityDefinition that is used in requests
@@ -35,6 +38,7 @@ return [
         */
 
         'security_definition' => env('L5_SWAGGER_API_SECURITY_DEFINITION', 'api_key'),
+		//'security_definition' => env('L5_SWAGGER_API_SECURITY_DEFINITION', 'token'),
 
         /*
         |--------------------------------------------------------------------------
@@ -105,8 +109,10 @@ return [
         | Absolute path to directory containing the swagger annotations are stored.
         |--------------------------------------------------------------------------
         */
-
-        'annotations' => base_path('app'),
+		
+		// *** Change to routes to point Swagger  - This can be an array  ***
+		
+        'annotations' => base_path('routes'),
 
         /*
         |--------------------------------------------------------------------------
@@ -122,7 +128,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'assets_public' => '/vendor/l5-swagger',
+        'assets_public' => '/telephony/vendor/l5-swagger',
 
         /*
         |--------------------------------------------------------------------------
@@ -138,7 +144,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'base' => '',
+        'base' => env('L5_SWAGGER_BASE_PATH', null),
 
         /*
         |--------------------------------------------------------------------------
@@ -184,6 +190,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Edit to change the maximum number of characters to highlight code.
+    |--------------------------------------------------------------------------
+    */
+    'highlightThreshold' => env('L5_SWAGGER_HIGHLIGHT_THRESHOLD', 5000),
+
+    /*
+    |--------------------------------------------------------------------------
     | Uncomment to pass the validatorUrl parameter to SwaggerUi init on the JS
     | side.  A null value here disables validation.  A string will override
     | the default url.  If not specified, behavior is default and validation
@@ -215,6 +228,15 @@ return [
         //  'TestMe' => 'testValue',
         //],
 
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Uncomment to add constants which can be used in anotations
+    |--------------------------------------------------------------------------
+     */
+    'constants' => [
+        //'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
     ],
 
 ];

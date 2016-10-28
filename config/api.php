@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'standardsTree' => env('API_STANDARDS_TREE', 'exampleapi'),
+    'standardsTree' => env('API_STANDARDS_TREE', 'x'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'subtype' => env('API_SUBTYPE', 'examplesubtype'),
+    'subtype' => env('API_SUBTYPE', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ return [
     |
     */
 
-    'prefix' => env('API_PREFIX', 'api'),
+    'prefix' => env('API_PREFIX', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'name' => env('API_NAME', 'examplename'),
+    'name' => env('API_NAME', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -137,11 +137,11 @@ return [
     */
 
     'errorFormat' => [
-        'message'     => ':message',
-        'errors'      => ':errors',
-        'code'        => ':code',
+        'message' => ':message',
+        'errors' => ':errors',
+        'code' => ':code',
         'status_code' => ':status_code',
-        'debug'       => ':debug',
+        'debug' => ':debug',
     ],
 
     /*
@@ -168,7 +168,7 @@ return [
     */
 
     'auth' => [
-        'jwt' => 'Dingo\Api\Auth\Provider\JWT',
+
     ],
 
     /*

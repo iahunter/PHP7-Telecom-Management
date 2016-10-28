@@ -10,6 +10,8 @@
 /public/old
 
 public/ui/company-content/
+public/ui/bower_components
+
 
 Homestead.yaml
 Homestead.json
@@ -26,4 +28,5 @@ database/seeds/ImportDIDListSeeder.php
 
 
 storage/axl/
+
 

@@ -1,5 +1,6 @@
 <?php
 
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/sites",

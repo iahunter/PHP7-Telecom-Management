@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // Include Parent DID Block
 use App\Didblock;
+use OwenIt\Auditing\Auditable;
 
 /*
 * Create Did Model Here
@@ -15,6 +16,7 @@ use App\Didblock;
 class Did extends Model
 {
     //
+	use Auditable;
     use SoftDeletes;
     protected $table = 'did';
     protected $fillable = ['name', 'number', 'status', 'system_id'];

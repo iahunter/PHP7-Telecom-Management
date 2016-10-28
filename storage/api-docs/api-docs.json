@@ -1,17 +1,56 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Phone Number API",
-        "version": "0.1"
+        "title": "Telephony Management API",
+        "version": "1.0"
     },
-    "basePath": "",
     "paths": {
+        "/telephony/api/authenticate": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get JSON web token by TLS client certificate authentication",
+                "responses": {
+                    "200": {
+                        "description": "Authentication succeeded"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get JSON web token by LDAP user authentication",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "LDAP username",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "LDAP password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Authentication succeeded"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/sites": {
             "get": {
                 "tags": [
                     "VoIP - CUCM"
                 ],
-                "summary": "Get List of Sites from CUCM by Device Pools",
+                "summary": "Get List of Sites from CUCM Device Pools",
                 "description": "",
                 "operationId": "getDidblock",
                 "consumes": [
@@ -406,46 +445,6 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/telephony/api/authenticate": {
-            "get": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Get JSON web token by TLS client certificate authentication",
-                "responses": {
-                    "200": {
-                        "description": "Authentication succeeded"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Get JSON web token by LDAP user authentication",
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "formData",
-                        "description": "LDAP username",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "password",
-                        "in": "formData",
-                        "description": "LDAP password",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Authentication succeeded"
                     }
                 }
             }

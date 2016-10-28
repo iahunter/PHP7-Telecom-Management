@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Did;
+use OwenIt\Auditing\Auditable;
 
 class Didblock extends Model
 {
+	use Auditable;
     use SoftDeletes;
     protected $table = 'did_block';
     protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end', 'type', 'comment'];

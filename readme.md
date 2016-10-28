@@ -1,6 +1,6 @@
 #Telephone Number Database / API
 
-This is an app running on Laravel 5.3 + Dingo + JWT + Bouncer
+This is an app running on Laravel 5.3 + Dingo + JWT + Bouncer + L5-Swagger
 
 RESTful API to create, read, update, and delete phone number blocks for number tracking. It can be called via anything capable of interacting with a RESTful/JSON API.
 
@@ -19,6 +19,12 @@ Bouncer roles manage rights to the numbers databases via the application http co
 * JWT can be found on GitHub. https://github.com/tymondesigns/jwt-auth/wiki
 
 * Bouncer roles and permissions can be found on GitHub. https://github.com/JosephSilber/bouncer
+
+* Auditing can be found on Github. https://github.com/owen-it/laravel-auditing
+
+* Swagger API Documentation can be found on Github. https://github.com/DarkaOnLine/L5-Swagger
+
+* Cisco Call Manager AXL Library can be found on Github. https://github.com/metaclassing/PHP5-CallManager-AXL
 
 #Frontend UI 
 There is also a Frontend UI that is included using Bootstrap3, AngularJS 1.5, Angular-Chart.js and angular-jwt. 

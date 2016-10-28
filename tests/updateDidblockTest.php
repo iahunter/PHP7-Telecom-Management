@@ -7,17 +7,16 @@
  *
  *
  * @category  default
+ *
  * @author    Travis Riesenberg
  * @copyright 2015-2016 @authors
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Did;
+use App\Didblock;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\User;
-use App\Didblock;
-use App\Did;
 
 class updateDidblockTest extends TestCase
 {
@@ -62,23 +61,23 @@ class updateDidblockTest extends TestCase
     {
         echo PHP_EOL.__METHOD__.' | Creating the update test Did block';
         $input = [
-                'country_code'           => 1,
-                'name'                   => 'TEST DID BLOCK',
-                'carrier'                => 'TEST CARRIER',
-                'start'                  => 1004560800,
-                'end'                    => 1004560809,
-                'type'                   => 'private',
-                'comment'                => 'Test Comment',
-				'reserved'                => '',
+                'country_code'            => 1,
+                'name'                    => 'TEST DID BLOCK',
+                'carrier'                 => 'TEST CARRIER',
+                'start'                   => 1004560800,
+                'end'                     => 1004560809,
+                'type'                    => 'private',
+                'comment'                 => 'Test Comment',
+                'reserved'                => '',
                 ];
-        
-		//dd($input);
-		$response = $this->call('POST',
+
+        //dd($input);
+        $response = $this->call('POST',
                         '/api/didblock?token='.$this->token,
                         $input);
         //dd($response);
         echo ' | Range: '.$input['start'].' - '.$input['end'];
-        if (! $response->original['status_code'] == 200) {
+        if (!$response->original['status_code'] == 200) {
             echo ' | Message: '.$response->original['message'];
         } else {
             if (isset($response->original['didblock']['id'])) {
@@ -176,7 +175,7 @@ class updateDidblockTest extends TestCase
                             '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
         $this->didblock = $response->original['didblock'];
 
-        if (! $response->original['status_code'] == 200) {
+        if (!$response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
         } else {
             echo ' | Status Code: '.$response->original['status_code'];
@@ -190,7 +189,7 @@ class updateDidblockTest extends TestCase
         $response = $this->call('DELETE',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
 
-        if (! $response->original['status_code'] == 200) {
+        if (!$response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
         } else {
             echo ' | Status Code: '.$response->original['status_code'];

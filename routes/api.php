@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +17,11 @@ $api = app('Dingo\Api\Routing\Router');
 
 
 $api->version('v1', function ($api) {
-	 
     $api->get('hello', function () {
         return "Hello world - demo app!\n";
     });
-	
-	/**
+
+    /*
      * @SWG\Info(title="Telephony Management API", version="1.0")
      **/
 
@@ -34,14 +32,12 @@ $api->version('v1', function ($api) {
     // Get your user info.
     $api->get('userinfo', 'App\Http\Controllers\Auth\AuthController@userinfo');
 
-	// Auth routes
+    // Auth routes
     require __DIR__.'/api.auth.php';
-	
-	// Did and Didblock routes
+
+    // Did and Didblock routes
     require __DIR__.'/api.did.php';
 
-	// CUCM routes
+    // CUCM routes
     require __DIR__.'/api.cucm.php';
-	
 });
-

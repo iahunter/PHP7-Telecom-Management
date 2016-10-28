@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Didblock;
+use Illuminate\Database\Seeder;
 
 //use App\Didblock;
 

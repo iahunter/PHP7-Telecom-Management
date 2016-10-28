@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
-		Commands\DidScan\Callmanager::class,
+        Commands\DidScan\Callmanager::class,
         Commands\CallManager\SiteLocal911::class,
         Commands\CallManager\SiteDetailsReport::class,
         Commands\CallManager\CssReport::class,
@@ -23,7 +23,8 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)

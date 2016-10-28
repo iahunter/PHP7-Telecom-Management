@@ -7,17 +7,16 @@
  *
  *
  * @category  default
+ *
  * @author    Travis Riesenberg
  * @copyright 2015-2016 @authors
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Did;
+use App\Didblock;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\User;
-use App\Didblock;
-use App\Did;
 
 class DidblockTest extends TestCase
 {

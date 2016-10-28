@@ -17,4 +17,3 @@
      * )
      **/
     $api->get('cucm/sites', 'App\Http\Controllers\Cucm@listsites');
-

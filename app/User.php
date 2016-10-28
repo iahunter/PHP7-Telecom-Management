@@ -36,5 +36,4 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
     {
         return [];
     }
-
 }

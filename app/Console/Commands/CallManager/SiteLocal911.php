@@ -50,7 +50,7 @@ class SiteLocal911 extends Command
 
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                            // Get a list of sites by calling get device pools and discard ones we don't care about.
-		//$sites = ['KHONEKSS'];
+        //$sites = ['KHONEKSS'];
         foreach ($sites as $site) {
 
             // Step 2. Get everything to do with the site for each site.
@@ -70,7 +70,7 @@ class SiteLocal911 extends Command
                 $partitions = $site_details['RoutePartition'];
                 //print_r($partitions);
 
-                if (! in_array($partition['name'], $site_details['RoutePartition'])) {
+                if (!in_array($partition['name'], $site_details['RoutePartition'])) {
                     echo $partition['name'].'Does not exist so we are going to add it.';
 
                     // Add Partion
@@ -296,7 +296,7 @@ class SiteLocal911 extends Command
             // Array of DP we don't want to include.
             $discard = ['TEST', 'Self_Provisioning', 'ECD', '911Enable', 'ATT_SIP', 'Travis', 'CENCOLIT', 'TEMPLATE'];
 
-            if (! $sites) {
+            if (!$sites) {
                 // Return blank array if no results in $didinfo.
                 echo 'didinfo is blank!';
 
@@ -310,7 +310,7 @@ class SiteLocal911 extends Command
                 }
             }
 
-            if (! count($sites)) {
+            if (!count($sites)) {
                 throw new \Exception('Indexed results from call mangler is empty');
             }
 
@@ -467,7 +467,7 @@ class SiteLocal911 extends Command
 
                 // Append CSS Members to Results with Name as Key.
                 print_r($MEMBERS);
-            if (! empty($MEMBERS)) {
+            if (!empty($MEMBERS)) {
                 $RESULTS[$css['name']] = $MEMBERS;
             }
         }

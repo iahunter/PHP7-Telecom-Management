@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\SiteLocal911::class,
         Commands\CallManager\SiteDetailsReport::class,
         Commands\CallManager\CssReport::class,
-		Commands\CallManager\OwnerUpdate::class,
+        Commands\CallManager\OwnerUpdate::class,
     ];
 
     /**

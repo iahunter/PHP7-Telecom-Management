@@ -1,6 +1,6 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "name": "iahunter/php7-telecom-management",
+    "description": "Telecom Management Server",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",

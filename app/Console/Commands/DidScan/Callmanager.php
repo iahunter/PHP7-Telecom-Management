@@ -87,19 +87,19 @@ class Callmanager extends Command
             unset($cucm);
             // Process the junk we got back from call mangler and turn it into something useful
             $results = [];
-            if (!$didinfo) {
+            if (! $didinfo) {
                 // Return blank array if no results in $didinfo.
                 echo 'didinfo is blank!';
 
                 return $results;
             }
             foreach ($didinfo as $idfk) {
-                if (!isset($results[$idfk['dnOrPattern']])) {
+                if (! isset($results[$idfk['dnOrPattern']])) {
                     $results[$idfk['dnOrPattern']] = [];
                 }
                 $results[$idfk['dnOrPattern']][] = $idfk;
             }
-            if (!count($results)) {
+            if (! count($results)) {
                 throw new \Exception('Indexed results from call mangler are emptys!!111one');
             }
 

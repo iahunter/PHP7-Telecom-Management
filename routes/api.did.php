@@ -59,7 +59,7 @@
      *         name="type",
      *         in="formData",
      *         description="public or private",
-	 * 		   enum={"public", "private"},
+     * 		   enum={"public", "private"},
      *         required=true,
      *         type="string"
      *     ),

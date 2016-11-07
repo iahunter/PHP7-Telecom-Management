@@ -51,7 +51,7 @@ class SiteDetailsReport extends Command
             $sites = $this->cucm->get_site_names();
             //$sites = ["KHONEOMA"];
 
-            if (!count($sites)) {
+            if (! count($sites)) {
                 throw new \Exception('Indexed results from call mangler is empty');
             }
 

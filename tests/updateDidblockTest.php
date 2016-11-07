@@ -77,7 +77,7 @@ class updateDidblockTest extends TestCase
                         $input);
         //dd($response);
         echo ' | Range: '.$input['start'].' - '.$input['end'];
-        if (!$response->original['status_code'] == 200) {
+        if (! $response->original['status_code'] == 200) {
             echo ' | Message: '.$response->original['message'];
         } else {
             if (isset($response->original['didblock']['id'])) {
@@ -175,7 +175,7 @@ class updateDidblockTest extends TestCase
                             '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
         $this->didblock = $response->original['didblock'];
 
-        if (!$response->original['status_code'] == 200) {
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
         } else {
             echo ' | Status Code: '.$response->original['status_code'];
@@ -189,7 +189,7 @@ class updateDidblockTest extends TestCase
         $response = $this->call('DELETE',
                         '/api/didblock/'.$this->didblock_id.'?token='.$this->token);
 
-        if (!$response->original['status_code'] == 200) {
+        if (! $response->original['status_code'] == 200) {
             \metaclassing\Utility::dumper($response);
         } else {
             echo ' | Status Code: '.$response->original['status_code'];

@@ -56,7 +56,7 @@ class Didcontroller extends Controller
         $statsarray = [];
 
         foreach ($stats as $stat) {
-            if (!isset($statsarray[$stat->id])) {
+            if (! isset($statsarray[$stat->id])) {
                 $statsarray[$stat->id] = [
                     'available'    => 0,
                     'inuse'        => 0,
@@ -78,7 +78,7 @@ class Didcontroller extends Controller
 
         $didblock->stats = $stats[$didblock->id];
 
-        if (!$user->can('read', $didblock)) {
+        if (! $user->can('read', $didblock)) {
             abort(401, 'You are not authorized to view didblock '.$id);
         }
 
@@ -98,7 +98,7 @@ class Didcontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
-        if (!$user->can('create', Didblock::class)) {
+        if (! $user->can('create', Didblock::class)) {
             abort(401, 'You are not authorized to create new did blocks');
         }
 
@@ -123,7 +123,7 @@ class Didcontroller extends Controller
         $didblock = Didblock::find($id);
 
         // Check Role of user
-        if (!$user->can('update', $didblock)) {
+        if (! $user->can('update', $didblock)) {
             abort(401, 'You are not authorized to view didblock '.$id);
         }
 
@@ -146,7 +146,7 @@ class Didcontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
-        if (!$user->can('delete', Didblock::class)) {
+        if (! $user->can('delete', Didblock::class)) {
             abort(401, 'You are not authorized to delete did block id '.$id);
         }
 
@@ -214,7 +214,7 @@ class Didcontroller extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         $did = Did::find($did_id);
-        if (!$user->can('read', $did)) {
+        if (! $user->can('read', $did)) {
             abort(401, 'You are not authorized to view didblock '.$did_id);
         }
 
@@ -233,12 +233,12 @@ class Didcontroller extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
 
-        if (!$user->can('read', Did::class)) {
+        if (! $user->can('read', Did::class)) {
             abort(401, 'You are not authorized to view didblock '.$did);
         }
 
         // Search for DID by numberCheck if there are any matches.
-        if (!Did::where([['number', 'like', $number_search.'%']])->count()) {
+        if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
             abort(404, 'No number found matching search: '.$number_search);
         }
 
@@ -263,12 +263,12 @@ class Didcontroller extends Controller
         // ********NEW SEARCH***********
         $user = JWTAuth::parseToken()->authenticate();
 
-        if (!$user->can('read', Did::class)) {
+        if (! $user->can('read', Did::class)) {
             abort(401, 'You are not authorized to view didblock '.$did);
         }
 
         // Search for DID by numberCheck if there are any matches.
-        if (!Did::where([['parent', '=', $parentid], [$column, 'like', $search.'%']])->count()) {
+        if (! Did::where([['parent', '=', $parentid], [$column, 'like', $search.'%']])->count()) {
             abort(404, 'No number found matching search: '.$search);
         }
 
@@ -296,7 +296,7 @@ class Didcontroller extends Controller
         $did = Did::find($did_id);
 
         // Check Role of user
-        if (!$user->can('update', $did)) {
+        if (! $user->can('update', $did)) {
             abort(401, 'You are not authorized to view didblock '.$did_id);
         }
 

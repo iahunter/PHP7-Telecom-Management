@@ -59,6 +59,7 @@
      *         name="type",
      *         in="formData",
      *         description="public or private",
+	 * 		   enum={"public", "private"},
      *         required=true,
      *         type="string"
      *     ),
@@ -77,7 +78,7 @@
      **/
     $api->post('didblock', 'App\Http\Controllers\Didcontroller@createDidblock');
 
-    /*
+    /**
      * @SWG\Get(
      *     path="/telephony/api/didblock/{id}",
      *     tags={"Did Block"},
@@ -102,7 +103,7 @@
     $api->get('didblock/{id}', 'App\Http\Controllers\Didcontroller@getDidblock');
 
 
-    /*
+    /**
      * @SWG\Get(
      *     path="/telephony/api/didblock",
      *     tags={"Did Block"},
@@ -120,7 +121,7 @@
      **/
     $api->get('didblock', 'App\Http\Controllers\Didcontroller@listDidblock');
 
-    /*
+    /**
      * @SWG\Put(
      *     path="/telephony/api/didblock/{id}",
      *     tags={"Did Block"},
@@ -166,7 +167,7 @@
      **/
     $api->put('didblock/{id}', 'App\Http\Controllers\Didcontroller@updateDidblock');
 
-    /*
+    /**
      * @SWG\Delete(
      *     path="/telephony/api/didblock/{id}",
      *     tags={"Did Block"},
@@ -192,7 +193,7 @@
     $api->delete('didblock/{id}', 'App\Http\Controllers\Didcontroller@deleteDidblock');
 
     // List DIDs by block id
-    /*
+    /**
      * @SWG\Get(
      *     path="/telephony/api/didblock/{id}/dids",
      *     tags={"Did"},
@@ -222,7 +223,7 @@
     // $api->post('did', 'App\Http\Controllers\Didcontroller@createDid'); // Individual DID creation not allowed.
         // List DIDs by block id
 
-    /*
+    /**
      * @SWG\Get(
      *     path="/telephony/api/did/id/{id}",
      *     tags={"Did"},
@@ -247,7 +248,7 @@
      **/
     $api->get('did/id/{id}', 'App\Http\Controllers\Didcontroller@getDid');
 
-    /*
+    /**
      * @SWG\Get(
      *     path="/telephony/api/did/number/{number}",
      *     tags={"Did"},
@@ -272,7 +273,7 @@
      **/
     $api->get('did/number/{number}', 'App\Http\Controllers\Didcontroller@searchDidNumber');
 
-    /*
+    /**
      * @SWG\Get(
      *     path="/telephony/api/did/searchbyparent/{parentid}/{column}/{search}",
      *     tags={"Did"},
@@ -312,7 +313,7 @@
     $api->get('did/searchbyparent/{parentid}/{column}/{search}', 'App\Http\Controllers\Didcontroller@searchDidbyParent');
 
 
-    /*
+    /**
      * @SWG\Put(
      *     path="/telephony/api/did/{id}",
      *     tags={"Did"},

@@ -9,7 +9,7 @@
                    'expires'    => 1,
                ];
     $api->group($options, function ($api) {
-        /*
+        /**
          * @SWG\Get(
          *     path="/telephony/api/authenticate",
          *     tags={"Authentication"},
@@ -22,7 +22,7 @@
          * )
          **/
         $api->get('', 'AuthController@authenticate');
-        /*
+        /**
          * @SWG\Post(
          *     path="/telephony/api/authenticate",
          *     tags={"Authentication"},

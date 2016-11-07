@@ -48,7 +48,7 @@
         "/telephony/api/cucm/sites": {
             "get": {
                 "tags": [
-                    "VoIP - CUCM"
+                    "Management - CUCM"
                 ],
                 "summary": "Get List of Sites from CUCM Device Pools",
                 "description": "",
@@ -58,6 +58,128 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/site/{name}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "Get Site Details by Name",
+                "description": "",
+                "operationId": "getSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/site": {
+            "post": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "Create New Site in CUCM",
+                "description": "",
+                "operationId": "createSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "formData",
+                        "description": "Design Type",
+                        "required": true,
+                        "type": "integer",
+                        "enum": [
+                            "1",
+                            "2",
+                            "3",
+                            "4"
+                        ]
+                    },
+                    {
+                        "name": "srst",
+                        "in": "formData",
+                        "description": "SRST IP Address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "h323",
+                        "in": "formData",
+                        "description": "H323 Gateway",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "timezone",
+                        "in": "formData",
+                        "description": "TimeZone and Format",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "npa",
+                        "in": "formData",
+                        "description": "NAP (###)",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "nxx",
+                        "in": "formData",
+                        "description": "NXX (###)",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "didrange",
+                        "in": "formData",
+                        "description": "DID Ranges \\n example 40[2-9]X",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "operator",
+                        "in": "formData",
+                        "description": "Operator Last 4 digits of DID",
+                        "required": false,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -147,7 +269,11 @@
                         "in": "formData",
                         "description": "public or private",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "public",
+                            "private"
+                        ]
                     },
                     {
                         "name": "reserved",

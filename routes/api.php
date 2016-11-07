@@ -21,7 +21,7 @@ $api->version('v1', function ($api) {
         return "Hello world - demo app!\n";
     });
 
-    /*
+    /**
      * @SWG\Info(title="Telephony Management API", version="1.0")
      **/
 

@@ -96,7 +96,7 @@ class Cucm extends Controller
     public function createSite(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
+
         $site = $request->sitecode;
 
 
@@ -109,15 +109,14 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function getPhone(Request $request)
+
+    public function getPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
+
         $name = $request->name;
 
-		try {
+        try {
             $phone = $this->cucm->get_phone_by_name($name);
 
             if (! count($phone)) {
@@ -137,13 +136,12 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function listCssDetails(Request $request)
+
+    public function listCssDetails(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		try {
-            $list = $this->cucm->get_object_type_by_site("%", "Css");
+        try {
+            $list = $this->cucm->get_object_type_by_site('%', 'Css');
 
             if (! count($list)) {
                 throw new \Exception('Indexed results from call mangler is empty');
@@ -152,25 +150,25 @@ class Cucm extends Controller
             echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
-		
-		$CSS_LIST = [];
-		foreach($list as $key => $value){
-			$UUID = $key;
-			
-			try {
-            $css = $this->cucm->get_object_type_by_uuid($UUID, "Css");
 
-            if (! count($css)) {
-                throw new \Exception('Indexed results from call mangler is empty');
+        $CSS_LIST = [];
+        foreach ($list as $key => $value) {
+            $UUID = $key;
+
+            try {
+                $css = $this->cucm->get_object_type_by_uuid($UUID, 'Css');
+
+                if (! count($css)) {
+                    throw new \Exception('Indexed results from call mangler is empty');
+                }
+            } catch (\Exception $e) {
+                echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+                dd($e->getTrace());
             }
-			} catch (\Exception $e) {
-				echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-				dd($e->getTrace());
-			}
 
-			$CSS_LIST[] = $css;
-			//$CSS_LIST[] = ;
-		}
+            $CSS_LIST[] = $css;
+            //$CSS_LIST[] = ;
+        }
 
         $response = [
                     'status_code'    => 200,
@@ -181,16 +179,15 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function listCssDetailsbyName(Request $request)
+
+    public function listCssDetailsbyName(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		$name = $request->name;
-		
-		try {
-            $css = $this->cucm->get_object_type_by_name($name, "Css");;
+
+        $name = $request->name;
+
+        try {
+            $css = $this->cucm->get_object_type_by_name($name, 'Css');
 
             if (! count($css)) {
                 throw new \Exception('Indexed results from call mangler is empty');
@@ -209,5 +206,4 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
 }

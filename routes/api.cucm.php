@@ -17,8 +17,8 @@
      * )
      **/
     $api->get('cucm/sites', 'App\Http\Controllers\Cucm@listsites');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/site/{name}",
      *     tags={"Management - CUCM"},
@@ -41,8 +41,8 @@
      * )
      **/
     $api->get('cucm/site/{name}', 'App\Http\Controllers\Cucm@getSite');
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/site",
      *     tags={"Management - CUCM"},
@@ -62,7 +62,7 @@
      *         name="type",
      *         in="formData",
      *         description="Design Type",
-	 *		   enum={"1", "2", "3", "4"},
+     *		   enum={"1", "2", "3", "4"},
      *         required=true,
      *         type="integer"
      *     ),
@@ -101,14 +101,14 @@
      *         required=true,
      *         type="integer"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="didrange",
      *         in="formData",
      *         description="DID Ranges \n example 40[2-9]X",
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="operator",
      *         in="formData",
      *         description="Operator Last 4 digits of DID",
@@ -122,8 +122,8 @@
      * )
      **/
     $api->post('cucm/site', 'App\Http\Controllers\Cucm@createSite');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/phone/{name}",
      *     tags={"Management - CUCM"},
@@ -146,9 +146,9 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucm@getPhone');
-	
-	
-	/**
+
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/css",
      *     tags={"Management - CUCM"},
@@ -164,8 +164,8 @@
      * )
      **/
     $api->get('cucm/css', 'App\Http\Controllers\Cucm@listCssDetails');
-	
-		/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/css/{name}",
      *     tags={"Management - CUCM"},
@@ -188,4 +188,3 @@
      * )
      **/
     $api->get('cucm/css/{name}', 'App\Http\Controllers\Cucm@listCssDetailsbyName');
-

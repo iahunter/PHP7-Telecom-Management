@@ -188,6 +188,87 @@
                 }
             }
         },
+        "/telephony/api/cucm/phone/{name}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "Get Phone Details by Name",
+                "description": "",
+                "operationId": "getPhone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of Phone",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/css": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "List Css details",
+                "description": "",
+                "operationId": "getCssDetails",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/css/{name}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "List Css details by Name",
+                "description": "",
+                "operationId": "getCssbyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of Css",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/didblock": {
             "get": {
                 "tags": [

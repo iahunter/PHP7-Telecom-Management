@@ -65,7 +65,7 @@
      * )
      **/
     $api->get('cucm/css/{name}', 'App\Http\Controllers\Cucm@listCssDetailsbyName');
-	
+
 
     /**
      * @SWG\Get(
@@ -107,8 +107,8 @@
      * )
      **/
     $api->get('cucm/site/{name}', 'App\Http\Controllers\Cucmsite@getSite');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/site/details/{name}",
      *     tags={"Management - CUCM - Site Provisioning"},
@@ -131,9 +131,9 @@
      * )
      **/
     $api->get('cucm/site/details/{name}', 'App\Http\Controllers\Cucmsite@getSiteDetails');
-	
-	
-	/**
+
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/site",
      *     tags={"Management - CUCM - Site Provisioning"},

@@ -21,7 +21,6 @@ class Cucm extends Controller
                                                     );
     }
 
-
     public function getPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -52,7 +51,7 @@ class Cucm extends Controller
     public function listCssDetails(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
+
         try {
             $list = $this->cucm->get_object_type_by_site('%', 'Css');
 

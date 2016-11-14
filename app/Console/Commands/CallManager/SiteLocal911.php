@@ -44,13 +44,13 @@ class SiteLocal911 extends Command
      */
     public function handle()
     {
-        $DEV = false;                                        // Toggle Development
+        $DEV = true;                                        // Toggle Development
         $DEBUG = true;
         $COUNT = 0;
 
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                            // Get a list of sites by calling get device pools and discard ones we don't care about.
-        //$sites = ['KHONEKSS'];
+        $sites = [];										// Comment this out to actually run this. 
         foreach ($sites as $site) {
 
             // Step 2. Get everything to do with the site for each site.

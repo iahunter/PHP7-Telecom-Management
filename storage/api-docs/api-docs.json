@@ -228,7 +228,7 @@
                     "Management - CUCM - Site Provisioning"
                 ],
                 "summary": "Create New Site in CUCM",
-                "description": "\n\tSelect the correct Site Design Type according to your sites specific requirements. \n\t\tType 1 - Site migrating to centralized SIP and Centralized E911\n\t\tType 2 - Site using Local Gateway/SRST and Centralized E911\n\t\tType 3 - Site using Centralized SIP but leveraging local gateway for 911/SRST\n\t\tType 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
+                "description": "\n\tSelect the correct Site Design Type according to your sites specific requirements. \n\t\tType 1 - Site migrating to centralized SIP and Centralized E911\n\t\tType 2 - Site using Local Gateway/SRST and Centralized E911\n\t\tType 3 - Site using Centralized SIP but leveraging local gateway/SRST for 911\n\t\tType 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"

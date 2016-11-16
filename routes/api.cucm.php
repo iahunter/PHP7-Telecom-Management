@@ -37,10 +37,10 @@
      *         response=200,
      *         description="successful operation",
      *     ),
-	 *     @SWG\Response(
-	 *         response="401",
-	 *         description="Unauthorized user",
-	 *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
      * )
      **/
     $api->get('cucm/css/{name}', 'App\Http\Controllers\Cucm@listCssDetailsbyName');

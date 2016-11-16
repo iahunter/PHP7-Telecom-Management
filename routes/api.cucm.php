@@ -40,4 +40,3 @@
      * )
      **/
     $api->get('cucm/css/{name}', 'App\Http\Controllers\Cucm@listCssDetailsbyName');
-

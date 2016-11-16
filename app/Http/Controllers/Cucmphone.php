@@ -8,7 +8,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Cucmphone extends Cucm
 {
-
     public function getPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -35,5 +34,4 @@ class Cucmphone extends Cucm
 
         return response()->json($response);
     }
-
 }

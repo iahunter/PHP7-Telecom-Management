@@ -238,7 +238,7 @@ class Cucmsite extends Cucm
                   "Stack trace:\n".
                   "{$E->getTraceAsString()}".
                   "Data sent:\n";
-            $DATA[$TYPE]['exception'] = $EXCEPTION;
+            $DATA['exception'] = $EXCEPTION;
             $this->results[$TYPE] = $DATA;
         }
     }

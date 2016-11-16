@@ -40,4 +40,6 @@ $api->version('v1', function ($api) {
 
     // CUCM routes
     require __DIR__.'/api.cucm.php';
+    require __DIR__.'/api.cucm.site.php';
+	require __DIR__.'/api.cucm.phone.php';
 });

@@ -48,7 +48,7 @@
         "/telephony/api/cucm/phone/{name}": {
             "get": {
                 "tags": [
-                    "Management - CUCM"
+                    "Management - CUCM - Phone Provisioning"
                 ],
                 "summary": "Get Phone Details by Name",
                 "description": "",

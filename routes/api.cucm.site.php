@@ -12,7 +12,11 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-     *     )
+     *     ),
+	 *     @SWG\Response(
+	 *         response="401",
+	 *         description="Unauthorized user",
+	 *     ),
      * )
      **/
     $api->get('cucm/sites', 'App\Http\Controllers\Cucmsite@listsites');
@@ -36,7 +40,11 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-     *     )
+     * 	   ),
+	 *     @SWG\Response(
+	 *         response="401",
+	 *         description="Unauthorized user",
+	 *     ),
      * )
      **/
     $api->get('cucm/site/{name}', 'App\Http\Controllers\Cucmsite@getSite');
@@ -60,7 +68,11 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-     *     )
+     *     ),
+	 *     @SWG\Response(
+	 *         response="401",
+	 *         description="Unauthorized user",
+	 *     ),
      * )
      **/
     $api->get('cucm/site/details/{name}', 'App\Http\Controllers\Cucmsite@getSiteDetails');
@@ -71,7 +83,12 @@
      *     path="/telephony/api/cucm/site",
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Create New Site in CUCM",
-     *     description="",
+     *     description="
+	Select the correct Site Design Type according to your sites specific requirements. 
+		Type 1 - Site migrating to centralized SIP and Centralized E911
+		Type 2 - Site using Local Gateway/SRST and Centralized E911
+		Type 3 - Site using Centralized SIP but leveraging local gateway for 911/SRST
+		Type 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
      *     operationId="createSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
@@ -85,7 +102,7 @@
      *     @SWG\Parameter(
      *         name="type",
      *         in="formData",
-     *         description="Design Type",
+     *         description="Design Type - See Implementation Notes Above",
      *		   enum={"1", "2", "3", "4"},
      *         required=true,
      *         type="integer"
@@ -100,9 +117,13 @@
      *     @SWG\Parameter(
      *         name="h323ip",
      *         in="formData",
-     *         description="H323 Gateway",
+     *         description="If multiple H323 Gateways, enter each one on new line. These will get added to the site route group. ",
      *         required=false,
-     *         type="string",
+     *         type="array",
+	 *         @SWG\Items(
+	 *             type="string",
+	 *             description="",
+	 *         ),
      *     ),
      *	   @SWG\Parameter(
      *         name="timezone",
@@ -142,7 +163,11 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-     *     )
+     *     ),
+	 *     @SWG\Response(
+	 *         response="401",
+	 *         description="Unauthorized user",
+	 *     ),
      * )
      **/
     $api->post('cucm/site', 'App\Http\Controllers\Cucmsite@createSite');

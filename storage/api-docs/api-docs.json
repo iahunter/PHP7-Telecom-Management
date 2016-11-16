@@ -71,6 +71,9 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }
@@ -122,6 +125,9 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }
@@ -143,6 +149,9 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }
@@ -173,6 +182,9 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }
@@ -203,6 +215,9 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }
@@ -213,7 +228,7 @@
                     "Management - CUCM - Site Provisioning"
                 ],
                 "summary": "Create New Site in CUCM",
-                "description": "",
+                "description": "\n\tSelect the correct Site Design Type according to your sites specific requirements. \n\t\tType 1 - Site migrating to centralized SIP and Centralized E911\n\t\tType 2 - Site using Local Gateway/SRST and Centralized E911\n\t\tType 3 - Site using Centralized SIP but leveraging local gateway for 911/SRST\n\t\tType 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -232,7 +247,7 @@
                     {
                         "name": "type",
                         "in": "formData",
-                        "description": "Design Type",
+                        "description": "Design Type - See Implementation Notes Above",
                         "required": true,
                         "type": "integer",
                         "enum": [
@@ -252,9 +267,13 @@
                     {
                         "name": "h323ip",
                         "in": "formData",
-                        "description": "H323 Gateway",
+                        "description": "If multiple H323 Gateways, enter each one on new line. These will get added to the site route group. ",
                         "required": false,
-                        "type": "string"
+                        "type": "array",
+                        "items": {
+                            "description": "",
+                            "type": "string"
+                        }
                     },
                     {
                         "name": "timezone",
@@ -295,6 +314,9 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }

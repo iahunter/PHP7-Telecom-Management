@@ -13,10 +13,10 @@
      *         response=200,
      *         description="successful operation",
      *     ),
-	 *     @SWG\Response(
-	 *         response="401",
-	 *         description="Unauthorized user",
-	 *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
      * )
      **/
     $api->get('cucm/sites', 'App\Http\Controllers\Cucmsite@listsites');
@@ -41,10 +41,10 @@
      *         response=200,
      *         description="successful operation",
      * 	   ),
-	 *     @SWG\Response(
-	 *         response="401",
-	 *         description="Unauthorized user",
-	 *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
      * )
      **/
     $api->get('cucm/site/{name}', 'App\Http\Controllers\Cucmsite@getSite');
@@ -69,10 +69,10 @@
      *         response=200,
      *         description="successful operation",
      *     ),
-	 *     @SWG\Response(
-	 *         response="401",
-	 *         description="Unauthorized user",
-	 *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
      * )
      **/
     $api->get('cucm/site/details/{name}', 'App\Http\Controllers\Cucmsite@getSiteDetails');
@@ -84,11 +84,11 @@
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Create New Site in CUCM",
      *     description="
-	Select the correct Site Design Type according to your sites specific requirements. 
-		Type 1 - Site migrating to centralized SIP and Centralized E911
-		Type 2 - Site using Local Gateway/SRST and Centralized E911
-		Type 3 - Site using Centralized SIP but leveraging local gateway/SRST for 911
-		Type 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
+     Select the correct Site Design Type according to your sites specific requirements.
+     Type 1 - Site migrating to centralized SIP and Centralized E911
+     Type 2 - Site using Local Gateway/SRST and Centralized E911
+     Type 3 - Site using Centralized SIP but leveraging local gateway/SRST for 911
+     Type 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
      *     operationId="createSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
@@ -120,10 +120,10 @@
      *         description="If multiple H323 Gateways, enter each one on new line. These will get added to the site route group. ",
      *         required=false,
      *         type="array",
-	 *         @SWG\Items(
-	 *             type="string",
-	 *             description="",
-	 *         ),
+     *         @SWG\Items(
+     *             type="string",
+     *             description="",
+     *         ),
      *     ),
      *	   @SWG\Parameter(
      *         name="timezone",
@@ -164,10 +164,10 @@
      *         response=200,
      *         description="successful operation",
      *     ),
-	 *     @SWG\Response(
-	 *         response="401",
-	 *         description="Unauthorized user",
-	 *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
      * )
      **/
     $api->post('cucm/site', 'App\Http\Controllers\Cucmsite@createSite');

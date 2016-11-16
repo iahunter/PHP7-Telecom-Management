@@ -20,10 +20,10 @@
      *         response=200,
      *         description="successful operation",
      *     ),
-	 *     @SWG\Response(
-	 *         response="401",
-	 *         description="Unauthorized user",
-	 *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');

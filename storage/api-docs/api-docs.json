@@ -132,6 +132,79 @@
                 }
             }
         },
+        "/telephony/api/cucm/routepattern/{routePartitionName}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "List Route Patterns details by Partition",
+                "description": "",
+                "operationId": "listRoutePatternbyPartition",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "routePartitionName",
+                        "in": "path",
+                        "description": "Route Partition",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/search/{type}/{name}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "List Object Type details by Name",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of Object",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "Object Type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/sites": {
             "get": {
                 "tags": [
@@ -156,7 +229,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/{name}": {
+        "/telephony/api/cucm/site/summary/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Site Provisioning"
@@ -174,7 +247,7 @@
                     {
                         "name": "name",
                         "in": "path",
-                        "description": "ID of block id",
+                        "description": "Name of Site",
                         "required": true,
                         "type": "integer"
                     }
@@ -228,7 +301,7 @@
                     "Management - CUCM - Site Provisioning"
                 ],
                 "summary": "Create New Site in CUCM",
-                "description": "\n\tSelect the correct Site Design Type according to your sites specific requirements. \n\t\tType 1 - Site migrating to centralized SIP and Centralized E911\n\t\tType 2 - Site using Local Gateway/SRST and Centralized E911\n\t\tType 3 - Site using Centralized SIP but leveraging local gateway/SRST for 911\n\t\tType 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
+                "description": "\n     Select the correct Site Design Type according to your sites specific requirements.\n     Type 1 - Site migrating to centralized SIP and Centralized E911\n     Type 2 - Site using Local Gateway/SRST and Centralized E911\n     Type 3 - Site using Centralized SIP but leveraging local gateway/SRST for 911\n     Type 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -301,7 +374,11 @@
                         "in": "formData",
                         "description": "Example: 40[2-9]X",
                         "required": true,
-                        "type": "string"
+                        "type": "array",
+                        "items": {
+                            "description": "",
+                            "type": "string"
+                        }
                     },
                     {
                         "name": "operator",

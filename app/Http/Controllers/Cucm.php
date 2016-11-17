@@ -91,4 +91,56 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
+	
+	
+	public function listRoutePatternsByPartition(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+		
+        try {
+            $result = $this->cucm->get_object_type_by_site($request->routePartitionName, 'RoutePattern');
+
+            if (! count($result)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $result,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function getObjectTypebyName(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+		
+        try {
+            $result = $this->cucm->get_object_type_by_name($request->name, $request->type);
+
+            if (! count($result)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $result,
+                    ];
+
+        return response()->json($response);
+    }
+	
 }

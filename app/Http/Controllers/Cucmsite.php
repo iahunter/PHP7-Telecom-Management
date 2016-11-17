@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Cucmsite extends Cucm
 {
+	// Variable to return to user
     public $results;
 
     public function listsites()
@@ -205,6 +206,7 @@ class Cucmsite extends Cucm
         $result = $this->provision_cucm_site_axl(
         //$result = [
                                                 $SITECODE,
+												$SITE_TYPE,
                                                 $SRSTIP,
                                                 $H323LIST,
                                                 $TIMEZONE,
@@ -247,6 +249,7 @@ class Cucmsite extends Cucm
 
     private function provision_cucm_site_axl(
                                                 $SITE,
+												$SITE_TYPE,
                                                 $SRSTIP,
                                                 $H323LIST,
                                                 $TIMEZONE,
@@ -261,27 +264,30 @@ class Cucmsite extends Cucm
         // Check if the site exists in the CUCM database first.
         $site_array = $this->cucm->get_all_object_types_by_site($SITE);
 
-        // 1 - Add a SRST router
+		
+		if ($SRSTIP){
+			// 1 - Add a SRST router
+			// Calculated data structure
+			$TYPE = 'Srst';
+			$DATA = [
+					'name'         => "SRST_{$SITE}",
+					'ipAddress'    => $SRSTIP,
+					'port'         => 2000,
+					'SipPort'      => 5060,
+					];
 
-        // Calculated data structure
-        $TYPE = 'Srst';
-        $DATA = [
-                'name'         => "SRST_{$SITE}",
-                'ipAddress'    => $SRSTIP,
-                'port'         => 2000,
-                'SipPort'      => 5060,
-                ];
-
-        // Check if the object already exists. If it isn't then add it.
-        if (! empty($site_array[$TYPE])) {
-            if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
-            } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
-            }
-        } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
-        }
+			// Check if the object already exists. If it isn't then add it.
+			if (! empty($site_array[$TYPE])) {
+				if (in_array($DATA['name'], $site_array[$TYPE])) {
+					$this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+				} else {
+					$this->wrap_add_object($DATA, $TYPE, $SITE);
+				}
+			} else {
+				$this->wrap_add_object($DATA, $TYPE, $SITE);
+			}
+		}
+        
 
 
 
@@ -310,7 +316,8 @@ class Cucmsite extends Cucm
 
 
         // 2.1 - Add a 911 route partition
-
+		
+		
         // Calculated variables
         $TYPE = 'RoutePartition';
         // Prepared datastructure

@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/site/{name}",
+     *     path="/telephony/api/cucm/site/summary/{name}",
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Get Site Summary by Name",
      *     description="",
@@ -33,7 +33,7 @@
      *     @SWG\Parameter(
      *         name="name",
      *         in="path",
-     *         description="ID of block id",
+     *         description="Name of Site",
      *         required=true,
      *         type="integer"
      *     ),
@@ -47,7 +47,7 @@
      *     ),
      * )
      **/
-    $api->get('cucm/site/{name}', 'App\Http\Controllers\Cucmsite@getSite');
+    $api->get('cucm/site/summary/{name}', 'App\Http\Controllers\Cucmsite@getSite');
 
     /**
      * @SWG\Get(
@@ -151,7 +151,11 @@
      *         in="formData",
      *         description="Example: 40[2-9]X",
      *         required=true,
-     *         type="string"
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="",
+     *         ),
      *     ),
      *     @SWG\Parameter(
      *         name="operator",

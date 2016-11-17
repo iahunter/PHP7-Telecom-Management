@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\SiteDetailsReport::class,
         Commands\CallManager\CssReport::class,
         Commands\CallManager\OwnerUpdate::class,
+		Commands\CallManager\BuildCUCMSiteDefaults::class,
     ];
 
     /**

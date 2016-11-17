@@ -91,12 +91,11 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function listRoutePatternsByPartition(Request $request)
+
+    public function listRoutePatternsByPartition(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
+
         try {
             $result = $this->cucm->get_object_type_by_site($request->routePartitionName, 'RoutePattern');
 
@@ -117,11 +116,11 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	public function getObjectTypebyName(Request $request)
+
+    public function getObjectTypebyName(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
+
         try {
             $result = $this->cucm->get_object_type_by_name($request->name, $request->type);
 
@@ -142,5 +141,4 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
 }

@@ -71,9 +71,9 @@ class BuildCUCMSiteDefaults extends Command
         $this->results[] = $this->addGlobalPartitions();
         $this->results[] = $this->addGlobalCss();
         $this->results[] = $this->addGlobalRoutePartitions();
-		$this->results[] = $this->addBlockRoutePartitions();
-		$this->results[] = $this->addApplicationDialRules();
-		
+        $this->results[] = $this->addBlockRoutePartitions();
+        $this->results[] = $this->addApplicationDialRules();
+
 
         print_r($this->results);
     }
@@ -851,15 +851,14 @@ class BuildCUCMSiteDefaults extends Command
 
         return $result;
     }
-	
-	
-	// Add translation Patterns with blocked patterns for each level. 
-	public function addBlockRoutePartitions()
+
+    // Add translation Patterns with blocked patterns for each level.
+    public function addBlockRoutePartitions()
     {
-        
-// Pasted in from Excel with following headers. 
-// Pattern	Partition	Description		
-		$INPUT = <<<END
+
+// Pasted in from Excel with following headers.
+// Pattern	Partition	Description
+        $INPUT = <<<END
 9.1[2-9]XX[2-9]XXXXXX	PT_BLOCK_LD	global block LD
 9.[2-9]XX[2-9]XXXXXX	PT_BLOCK_LOCAL	global block local
 9.1800[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
@@ -928,38 +927,38 @@ class BuildCUCMSiteDefaults extends Command
 \+1246[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
 END;
 
-		// Map the tab delimited string to array with mapped keys
-		$ARRAY = array_map(
-							// Anonymous inline function callback
-							function ($LINE) {
-												// split each row into a tab delimited array
-												return array_combine(
-																		// And map these keys to each value extracted
-																		[
-																			'pattern',	'routePartitionName',	'description',
-																		] , explode("\t",$LINE)
-																	);
-							} , explode("\n",$INPUT)
-						);
+        // Map the tab delimited string to array with mapped keys
+        $ARRAY = array_map(
+                            // Anonymous inline function callback
+                            function ($LINE) {
+                                // split each row into a tab delimited array
+                                                return array_combine(
+                                                                        // And map these keys to each value extracted
+                                                                        [
+                                                                            'pattern',    'routePartitionName',    'description',
+                                                                        ], explode("\t", $LINE)
+                                                                    );
+                            }, explode("\n", $INPUT)
+                        );
 
-		// remove empty elements from the data set (they are not arrays)
-		//$DATA = [];
-		foreach($ARRAY as $KEY => $ELEMENT) {
-			if( !is_array($ELEMENT) ) {
-				unset($ARRAY[$KEY]);
-			}else{
-				// Add required fields to the array
-				$ELEMENT['blockEnable'] = 'true';
-				$ELEMENT['useCallingPartyPhoneMask'] = 'Default';
-				$ELEMENT['networkLocation'] = 'OffNet';
-				$ELEMENT['patternUrgency'] = 'false';
-				$ELEMENT['usage'] = 'Translation';
-				//print_r($ELEMENT);
-				$DATA[] = $ELEMENT;
-			}
-		}
-		
-		//print_r($DATA);
+        // remove empty elements from the data set (they are not arrays)
+        //$DATA = [];
+        foreach ($ARRAY as $KEY => $ELEMENT) {
+            if (! is_array($ELEMENT)) {
+                unset($ARRAY[$KEY]);
+            } else {
+                // Add required fields to the array
+                $ELEMENT['blockEnable'] = 'true';
+                $ELEMENT['useCallingPartyPhoneMask'] = 'Default';
+                $ELEMENT['networkLocation'] = 'OffNet';
+                $ELEMENT['patternUrgency'] = 'false';
+                $ELEMENT['usage'] = 'Translation';
+                //print_r($ELEMENT);
+                $DATA[] = $ELEMENT;
+            }
+        }
+
+        //print_r($DATA);
 
         /* Prepared datastructure
         $DATA = [
@@ -979,12 +978,12 @@ END;
 
                                                         ],
                     ],
-				];
+                ];
 
-		*/
+        */
 
-		$TYPE = 'TransPattern';
-		
+        $TYPE = 'TransPattern';
+
         // Check if the object already exists. If it isn't then add it.
         foreach ($DATA as $PATTERN) {
             // Get a list of all current objects by type to use to see what is exists now.
@@ -1011,37 +1010,37 @@ END;
 
         return $result;
     }
-	
-	// Add Application Dial Rules
-	public function addApplicationDialRules()
+
+    // Add Application Dial Rules
+    public function addApplicationDialRules()
     {
-		$DATA = [
+        $DATA = [
 
                     // 10digit-to-E164
                     [
-                        'name'                        		=> '10digit-to-E164',
-                        'description'               		=> 'take 10 digits map to E164',
-                        'numberBeginWith'             		=> '',
-                        'numberOfDigits'                    => '10',
-                        'digitsToBeRemoved'       			=> '0',
-                        'prefixPattern'                		=> '+1',
-                        'priority'                			=> '0',
+                        'name'                                 => '10digit-to-E164',
+                        'description'                          => 'take 10 digits map to E164',
+                        'numberBeginWith'                      => '',
+                        'numberOfDigits'                       => '10',
+                        'digitsToBeRemoved'                    => '0',
+                        'prefixPattern'                        => '+1',
+                        'priority'                             => '0',
                     ],
-					// 11digit-to-E164
+                    // 11digit-to-E164
                     [
-                        'name'                        		=> '11digit-to-E164',
-                        'description'               		=> '11 digits beginning w/ 1 to E164',
-                        'numberBeginWith'             		=> '1',
-                        'numberOfDigits'                    => '11',
-                        'digitsToBeRemoved'       			=> '0',
-                        'prefixPattern'                		=> '+',
-                        'priority'                			=> '1',
+                        'name'                                 => '11digit-to-E164',
+                        'description'                          => '11 digits beginning w/ 1 to E164',
+                        'numberBeginWith'                      => '1',
+                        'numberOfDigits'                       => '11',
+                        'digitsToBeRemoved'                    => '0',
+                        'prefixPattern'                        => '+',
+                        'priority'                             => '1',
                     ],
-				];
-				
-		$TYPE = 'ApplicationDialRules';
-		
-		foreach ($DATA as $RULE) {
+                ];
+
+        $TYPE = 'ApplicationDialRules';
+
+        foreach ($DATA as $RULE) {
             // Get a list of all current objects by type to use to see what is exists now.
             try {
                 $objects = $this->cucm->get_object_type_by_site($RULE['name'], $TYPE);
@@ -1065,6 +1064,5 @@ END;
         }
 
         return $result;
-	}
-	
+    }
 }

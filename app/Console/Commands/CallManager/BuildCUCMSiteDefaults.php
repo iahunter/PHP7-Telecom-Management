@@ -50,13 +50,30 @@ class BuildCUCMSiteDefaults extends Command
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
             $result = "{$TYPE} CREATED: {$REPLY}\n\n";
         } catch (\Exception $E) {
-            $EXCEPTION = "Exception adding object type {$DATA['name']}:".
-                  "{$E->getMessage()}".
-                  "Stack trace:\n".
-                  "{$E->getTraceAsString()}".
-                  "Data sent:\n";
-            $result = $EXCEPTION;
-        }
+			if(isset($DATA['name'])){
+				$EXCEPTION = "Exception adding object type {$DATA['name']}:".
+					"{$E->getMessage()}".
+					  "Stack trace:\n".
+					  "{$E->getTraceAsString()}".
+					  "Data sent:\n";
+				$result = $EXCEPTION;
+			}
+			elseif(isset($DATA['pattern'])){
+				$EXCEPTION = "Exception adding object type {$DATA['pattern']}:".
+					  "{$E->getMessage()}".
+					  "Stack trace:\n".
+					  "{$E->getTraceAsString()}".
+					  "Data sent:\n";
+				$result = $EXCEPTION;
+			}else{
+				$EXCEPTION = "Exception adding object type {$TYPE}:".
+					  "{$E->getMessage()}".
+					  "Stack trace:\n".
+					  "{$E->getTraceAsString()}".
+					  "Data sent:\n";
+				$result = $EXCEPTION;
+			}
+		}
 
         return $result;
     }
@@ -73,8 +90,8 @@ class BuildCUCMSiteDefaults extends Command
         $this->results[] = $this->addGlobalRoutePartitions();
 		$this->results[] = $this->addBlockRoutePartitions();
 		$this->results[] = $this->addApplicationDialRules();
-		
-
+		$this->results[] = $this->addCallingPartyTransformationPatterns();
+		$this->results[] = $this->addCalledPartyTransformationPatterns();
         print_r($this->results);
     }
 
@@ -1061,6 +1078,129 @@ END;
                 }
             } else {
                 $result[$TYPE][] = $this->wrap_add_object($RULE, $TYPE);
+            }
+        }
+
+        return $result;
+	}
+	
+	
+	// Add Calling Party Transformations
+	public function addCallingPartyTransformationPatterns()
+    {
+		$DATA = [
+                    [
+                        'pattern'                        => '\+.[2-9]XXXXXXXXX',
+                        //'description'                    => 'at the gw/trunk the digits received from the carrier are prefixed w/ a +, this is simply to remap into E164',
+						'description'                    => 'GW/Trunk add +, this is simply to remap into E164',
+                        'routePartitionName'             => 'PT_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                        'digitDiscardInstructionName'    => 'predot',
+                        'callingPartyPrefixDigits'       => '+1',
+                    ],
+					[
+                        'pattern'                        => '\+011.!',
+                        //'description'                    => 'at the gw/trunk the digits received from the carrier are prefixed w/ a +, this is simply to remap into E164',
+						'description'                    => 'GW/Trunk add +, this is simply to remap into E164',
+                        'routePartitionName'             => 'PT_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                        'digitDiscardInstructionName'    => 'predot',
+                        'callingPartyPrefixDigits'       => '+',
+                    ],
+					[
+                        'pattern'                        => '\+1.[2-9]XXXXXXXXX',
+                        //'description'                    => 'since weve set all inbound calls to show a e164 in caller id its now important that when we send that back out to the carrier for things like call forward or SNR we dont send them and e164 calling party number so this remaps the call into the original format',
+                        'description'                    => 'Toward Carrier - convert to original format',
+						'routePartitionName'             => 'PT_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+                        'digitDiscardInstructionName'    => 'predot',
+                        'callingPartyPrefixDigits'       => '',
+                    ],
+					[
+                        'pattern'                        => '\+.!',
+                        //'description'                    => 'since weve set all inbound calls to show a e164 in caller id its now important that when we send that back out to the carrier for things like call forward or SNR we dont send them and e164 calling party number so this remaps the call into the original format',
+                        'description'                    => 'Toward Carrier - convert to original format',
+                        'routePartitionName'             => 'PT_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+                        'digitDiscardInstructionName'    => 'predot',
+                        'callingPartyPrefixDigits'       => '011',
+                    ],
+				];
+				
+		$TYPE = 'CallingPartyTransformationPattern';
+		
+		foreach ($DATA as $OBJECT) {
+            // Get a list of all current objects by type to use to see what is exists now.
+            try {
+                $objects = $this->cucm->get_object_type_by_site($OBJECT['routePartitionName'], $TYPE);
+            } catch (\Exception $E) {
+                echo 'Exception Getting CallingPartyTransformationPattern from CUCM:'.
+                      "{$E->getMessage()}".
+                      "Stack trace:\n".
+                      "{$E->getTraceAsString()}".
+                      "Data sent:\n";
+            }
+
+            if (! empty($objects)) {
+                if (in_array($OBJECT['pattern'], $objects)) {
+                    $result[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
+                } else {
+                    $result[$TYPE][] = $this->wrap_add_object($OBJECT, $TYPE);
+                }
+            } else {
+                $result[$TYPE][] = $this->wrap_add_object($OBJECT, $TYPE);
+            }
+        }
+
+        return $result;
+	}
+	
+	
+	// Add Calling Party Transformations
+	public function addCalledPartyTransformationPatterns()
+    {
+		$DATA = [
+                    [
+                        'pattern'                        => '\+.!',
+						'description'                    => 'digits sent to gw or session boarder controller',
+                        'routePartitionName'             => 'PT_GLOBAL_GW_CALLED_XFORM',
+                        'digitDiscardInstructionName'    => 'predot',
+                        'calledPartyPrefixDigits'      	 => '9011',
+                    ],
+					[
+                        'pattern'                        => '\+.011!',
+						'description'                    => 'digits sent to gw or session boarder controller',
+                        'routePartitionName'             => 'PT_GLOBAL_GW_CALLED_XFORM',
+                        'digitDiscardInstructionName'    => 'predot',
+                        'calledPartyPrefixDigits'      	 => '9',
+                    ],
+					[
+                        'pattern'                        => '\+1.[2-9]XX[2-9]XXXXXX',
+						'description'                    => 'digits sent to gw or session boarder controller',
+                        'routePartitionName'             => 'PT_GLOBAL_GW_CALLED_XFORM',
+                        'digitDiscardInstructionName'    => 'predot',
+                        'calledPartyPrefixDigits'      	 => '9',
+                    ],
+				];
+				
+		$TYPE = 'CalledPartyTransformationPattern';
+		
+		foreach ($DATA as $OBJECT) {
+            // Get a list of all current objects by type to use to see what is exists now.
+            try {
+                $objects = $this->cucm->get_object_type_by_site($OBJECT['routePartitionName'], $TYPE);
+            } catch (\Exception $E) {
+                echo 'Exception Getting CalledPartyTransformationPattern from CUCM:'.
+                      "{$E->getMessage()}".
+                      "Stack trace:\n".
+                      "{$E->getTraceAsString()}".
+                      "Data sent:\n";
+            }
+
+            if (! empty($objects)) {
+                if (in_array($OBJECT['pattern'], $objects)) {
+                    $result[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
+                } else {
+                    $result[$TYPE][] = $this->wrap_add_object($OBJECT, $TYPE);
+                }
+            } else {
+                $result[$TYPE][] = $this->wrap_add_object($OBJECT, $TYPE);
             }
         }
 

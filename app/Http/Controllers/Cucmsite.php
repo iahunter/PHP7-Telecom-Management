@@ -293,50 +293,62 @@ class Cucmsite extends Cucm
 
 
         // 2 - Add a route partition
-
-        // Calculated variables
+		// Calculated variables
         $TYPE = 'RoutePartition';
         // Prepared datastructure
-        $DATA = [
-                'name'                            => 'PT_'.$SITE,
-                'description'                     => $SITE,
-                'useOriginatingDeviceTimeZone'    => 'true',
-                ];
+        $PARTITIONS = [
+						[
+						'name'                            => 'PT_'.$SITE.'_SVC',
+						'description'                     => 'Site PT, park, pickup, HG, CTI Ports, CTI-RP',
+						'useOriginatingDeviceTimeZone'    => 'true',
+						],
+						[
+						'name'                            => 'PT_'.$SITE'_XLATE',
+						'description'                     => 'Site Specific Translation Patterns/Speed Dials',
+						'useOriginatingDeviceTimeZone'    => 'true',
+						],
+						/* We may no longer be using this Partition
+						[
+						'name'                            => 'PT_'.$SITE,
+						'description'                     => $SITE,
+						'useOriginatingDeviceTimeZone'    => 'true',
+						],
+						*/
+					];
 
-        // Check if the object already exists. If it isn't then add it.
-        if (! empty($site_array[$TYPE])) {
-            if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
-            } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
-            }
-        } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
-        }
+		if ($SITE_TYPE >= 3){
+			// Add a 911 route partition for Site Types 3 and 4. 
+			$PARTITIONS[] = [
+							'name'                            => 'PT_'.$SITE.'_911',
+							'description'                     => $SITE.' 911 Calling',
+							'useOriginatingDeviceTimeZone'    => 'true',
+							];
+		}
+		
+		if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)){
+			// Add a 911 route partition for Site Types 3 and 4. 
+			$PARTITIONS[] = [
+							'name'                            => 'PT_'.$SITE.'_GW_CALLED_XFORM',
+							'description'                     => 'Site Specific GW called party Xform',
+							'useOriginatingDeviceTimeZone'    => 'true',
+							];
+		}
+		
+		
+		
+		foreach($PARTITIONS as $DATA){
+			// Check if the object already exists. If it isn't then add it.
+			if (! empty($site_array[$TYPE])) {
+				if (in_array($DATA['name'], $site_array[$TYPE])) {
+					$this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+				} else {
+					$this->wrap_add_object($DATA, $TYPE, $SITE);
+				}
+			} else {
+				$this->wrap_add_object($DATA, $TYPE, $SITE);
+			}
+		}
 
-
-        // 2.1 - Add a 911 route partition
-
-
-        // Calculated variables
-        $TYPE = 'RoutePartition';
-        // Prepared datastructure
-        $DATA = [
-                'name'                            => 'PT_'.$SITE.'_911',
-                'description'                     => $SITE.' 911 Calling',
-                'useOriginatingDeviceTimeZone'    => 'true',
-                ];
-
-        // Check if the object already exists. If it isn't then add it.
-        if (! empty($site_array[$TYPE])) {
-            if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
-            } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
-            }
-        } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
-        }
 
 
         // 3 - Add a CSS

@@ -71,6 +71,9 @@ class BuildCUCMSiteDefaults extends Command
         $this->results[] = $this->addGlobalPartitions();
         $this->results[] = $this->addGlobalCss();
         $this->results[] = $this->addGlobalRoutePartitions();
+		$this->results[] = $this->addBlockRoutePartitions();
+		$this->results[] = $this->addApplicationDialRules();
+		
 
         print_r($this->results);
     }
@@ -848,4 +851,220 @@ class BuildCUCMSiteDefaults extends Command
 
         return $result;
     }
+	
+	
+	// Add translation Patterns with blocked patterns for each level. 
+	public function addBlockRoutePartitions()
+    {
+        
+// Pasted in from Excel with following headers. 
+// Pattern	Partition	Description		
+		$INPUT = <<<END
+9.1[2-9]XX[2-9]XXXXXX	PT_BLOCK_LD	global block LD
+9.[2-9]XX[2-9]XXXXXX	PT_BLOCK_LOCAL	global block local
+9.1800[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+9.1888[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+9.1877[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+9.1866[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+9.1855[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+9.1844[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+9.011!	PT_BLOCK_INTL	global block intl
+9.011!#	PT_BLOCK_INTL	global block intl
+\+!	PT_BLOCK_INTL	global block intl
+\+011!	PT_BLOCK_INTL	global block intl
+\+1[2-9]XX[2-9]XXXXXX	PT_BLOCK_LD	global block LD
+\+1800[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+\+1888[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+\+1877[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+\+1866[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+\+1855[2-9]XXXXXX	PT_BLOCK_TOLLFREE	global block toll free
+9.1900[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1[89]76[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1809[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1264[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1284[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1[34]73[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1597[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1664[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1767[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1852[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1869[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1340[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1671[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1784[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1268[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1345[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1441[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1592[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1649[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1758[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1787[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1868[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1242[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+9.1246[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1900[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1[89]76[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1809[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1264[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1284[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1[34]73[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1597[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1664[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1767[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1852[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1869[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1340[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1671[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1784[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1268[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1345[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1441[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1592[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1649[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1758[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1787[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1868[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1242[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+\+1246[2-9]XXXXXX	PT_BLOCK_FRAUD	optional, known toll charge or fraud
+END;
+
+		// Map the tab delimited string to array with mapped keys
+		$ARRAY = array_map(
+							// Anonymous inline function callback
+							function ($LINE) {
+												// split each row into a tab delimited array
+												return array_combine(
+																		// And map these keys to each value extracted
+																		[
+																			'pattern',	'routePartitionName',	'description',
+																		] , explode("\t",$LINE)
+																	);
+							} , explode("\n",$INPUT)
+						);
+
+		// remove empty elements from the data set (they are not arrays)
+		//$DATA = [];
+		foreach($ARRAY as $KEY => $ELEMENT) {
+			if( !is_array($ELEMENT) ) {
+				unset($ARRAY[$KEY]);
+			}else{
+				// Add required fields to the array
+				$ELEMENT['blockEnable'] = 'true';
+				$ELEMENT['useCallingPartyPhoneMask'] = 'Default';
+				$ELEMENT['networkLocation'] = 'OffNet';
+				$ELEMENT['patternUrgency'] = 'false';
+				$ELEMENT['usage'] = 'Translation';
+				//print_r($ELEMENT);
+				$DATA[] = $ELEMENT;
+			}
+		}
+		
+		//print_r($DATA);
+
+        /* Prepared datastructure
+        $DATA = [
+
+                    // Interntational
+                    [
+                        'pattern'                        => '9.011!',
+                        'description'                    => 'NANP International Calling',
+                        'routePartitionName'             => 'PT_PSTN_INTL',
+                        'blockEnable'                    => 'false',
+                        'useCallingPartyPhoneMask'       => 'Default',
+                        'networkLocation'                => 'OffNet',
+                        'patternUrgency'                 => 'false',
+
+                        'destination'                    => [
+                                                            'routeListName' => 'Universal-Route_List',
+
+                                                        ],
+                    ],
+				];
+
+		*/
+
+		$TYPE = 'TransPattern';
+		
+        // Check if the object already exists. If it isn't then add it.
+        foreach ($DATA as $PATTERN) {
+            // Get a list of all current objects by type to use to see what is exists now.
+            try {
+                $objects = $this->cucm->get_object_type_by_site($PATTERN['routePartitionName'], $TYPE);
+            } catch (\Exception $E) {
+                echo 'Exception Getting TransPatterns from CUCM:'.
+                      "{$E->getMessage()}".
+                      "Stack trace:\n".
+                      "{$E->getTraceAsString()}".
+                      "Data sent:\n";
+            }
+
+            if (! empty($objects)) {
+                if (in_array($PATTERN['pattern'], $objects)) {
+                    $result[$TYPE][] = "{$TYPE} Skipping... {$PATTERN['pattern']} already exists.";
+                } else {
+                    $result[$TYPE][] = $this->wrap_add_object($PATTERN, $TYPE);
+                }
+            } else {
+                $result[$TYPE][] = $this->wrap_add_object($PATTERN, $TYPE);
+            }
+        }
+
+        return $result;
+    }
+	
+	// Add Application Dial Rules
+	public function addApplicationDialRules()
+    {
+		$DATA = [
+
+                    // 10digit-to-E164
+                    [
+                        'name'                        		=> '10digit-to-E164',
+                        'description'               		=> 'take 10 digits map to E164',
+                        'numberBeginWith'             		=> '',
+                        'numberOfDigits'                    => '10',
+                        'digitsToBeRemoved'       			=> '0',
+                        'prefixPattern'                		=> '+1',
+                        'priority'                			=> '0',
+                    ],
+					// 11digit-to-E164
+                    [
+                        'name'                        		=> '11digit-to-E164',
+                        'description'               		=> '11 digits beginning w/ 1 to E164',
+                        'numberBeginWith'             		=> '1',
+                        'numberOfDigits'                    => '11',
+                        'digitsToBeRemoved'       			=> '0',
+                        'prefixPattern'                		=> '+',
+                        'priority'                			=> '1',
+                    ],
+				];
+				
+		$TYPE = 'ApplicationDialRules';
+		
+		foreach ($DATA as $RULE) {
+            // Get a list of all current objects by type to use to see what is exists now.
+            try {
+                $objects = $this->cucm->get_object_type_by_site($RULE['name'], $TYPE);
+            } catch (\Exception $E) {
+                echo 'Exception Getting Application Dial Rules from CUCM:'.
+                      "{$E->getMessage()}".
+                      "Stack trace:\n".
+                      "{$E->getTraceAsString()}".
+                      "Data sent:\n";
+            }
+
+            if (! empty($objects)) {
+                if (in_array($RULE['name'], $objects)) {
+                    $result[$TYPE][] = "{$TYPE} Skipping... {$RULE['name']} already exists.";
+                } else {
+                    $result[$TYPE][] = $this->wrap_add_object($RULE, $TYPE);
+                }
+            } else {
+                $result[$TYPE][] = $this->wrap_add_object($RULE, $TYPE);
+            }
+        }
+
+        return $result;
+	}
+	
 }

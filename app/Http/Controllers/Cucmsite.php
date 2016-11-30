@@ -92,6 +92,17 @@ class Cucmsite extends Cucm
 
     public function createSite(Request $request)
     {
+		/***************************************************************************************************
+			We have 4 Differnet Site Designs that are supported. The Design Types are outlined below. 
+			
+			Type 1	Centralized SIP and 911 Enable							SIP Trunking - E911
+			Type 2	Local Gateway and migrating to 911 Enable				Local Trunking - E911
+			Type 3	SIP but leveraging Local Gateway for 911				SIP Trunking - Local 911
+			Type 4	Local Gateway for 911 and inbound/outbound dialing		Local Trunking - Local 911
+			
+		***************************************************************************************************/
+		
+		
         $user = JWTAuth::parseToken()->authenticate();
 
         $SITE_TYPE = $request->type;
@@ -112,7 +123,9 @@ class Cucmsite extends Cucm
         if (isset($request->h323ip) && $request->h323ip) {
             $H323TEXT = $request->h323ip;
         }
-        $H323LIST = preg_split('/\r\n|\r|\n/', $H323TEXT);
+		//print $H323TEXT;
+        //$H323LIST = preg_split('/\r\n|\r|\n/', $H323TEXT);
+		$H323LIST = explode(',', $H323TEXT);
 
         // Loop through H323 IP addresses in an array and validate them as IPs
         foreach ($H323LIST as $KEY => $H323IP) {
@@ -127,7 +140,7 @@ class Cucmsite extends Cucm
             }
         }
         $H323LIST = array_values($H323LIST);
-
+		
         // Check their timezone
         if (! isset($request->timezone) || ! $request->timezone) {
             return 'Error, no timezone selected';
@@ -153,7 +166,8 @@ class Cucmsite extends Cucm
         } else {
             return 'No DID ranges provided';
         }
-        $DIDLIST = preg_split('/\r\n|\r|\n/', $DIDTEXT);
+        //$DIDLIST = preg_split('/\r\n|\r|\n/', $DIDTEXT);
+		$DIDLIST = explode(',', $DIDTEXT);
         if (! count($DIDLIST)) {
             return 'No DID ranges found';
         }
@@ -233,7 +247,7 @@ class Cucmsite extends Cucm
         try {
             //print "Attempting to add a {$TYPE} for {$SITE}:";
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-            $this->results[$TYPE] = "{$TYPE} CREATED: {$REPLY}\n\n";
+            $this->results[$TYPE][] = "{$TYPE} CREATED: {$REPLY}\n\n";
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type {$TYPE} for site {$SITE}:".
                   "{$E->getMessage()}".
@@ -279,7 +293,7 @@ class Cucmsite extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                    $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
                     $this->wrap_add_object($DATA, $TYPE, $SITE);
                 }
@@ -287,10 +301,6 @@ class Cucmsite extends Cucm
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
         }
-
-
-
-
 
         // 2 - Add a route partition
 		// Calculated variables
@@ -303,7 +313,7 @@ class Cucmsite extends Cucm
 						'useOriginatingDeviceTimeZone'    => 'true',
 						],
 						[
-						'name'                            => 'PT_'.$SITE'_XLATE',
+						'name'                            => 'PT_'.$SITE.'_XLATE',
 						'description'                     => 'Site Specific Translation Patterns/Speed Dials',
 						'useOriginatingDeviceTimeZone'    => 'true',
 						],
@@ -333,14 +343,12 @@ class Cucmsite extends Cucm
 							'useOriginatingDeviceTimeZone'    => 'true',
 							];
 		}
-		
-		
-		
+
 		foreach($PARTITIONS as $DATA){
 			// Check if the object already exists. If it isn't then add it.
 			if (! empty($site_array[$TYPE])) {
 				if (in_array($DATA['name'], $site_array[$TYPE])) {
-					$this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+					$this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
 				} else {
 					$this->wrap_add_object($DATA, $TYPE, $SITE);
 				}
@@ -355,37 +363,220 @@ class Cucmsite extends Cucm
 
         // Calculated variables
         $TYPE = 'Css';
-        // Prepared datastructure
-        $DATA = [
-                'name'            => "CSS_{$SITE}",
-                'description'     => "CSS for {$SITE}",
+		$CSS = [];
+		
+        // For Site Types 1 and 2 add CSS
+		if($SITE_TYPE <= 2){
+			$DATA = [
+                'name'            => "CSS_{$SITE}_DEVICE",
+                'description'     => "CSS for {$SITE} Device Assignment",
                 'members'         => [
                                     'member' => [
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}",
-                                                    'index'                => 1,
+													// E911
+													[
+                                                    'routePartitionName'   => "PT_911Enable",
                                                     ],
                                                     [
-                                                    'routePartitionName'   => 'Global-All-Lines',
-                                                    'index'                => 2,
+                                                    'routePartitionName'   => "PT_{$SITE}_SVC",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_{$SITE}_XLATE",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "Global-All-Lines",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "System-Voicemail",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_GLOBAL_SVC",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_GLOBAL_XLATE",
                                                     ],
                                                     [
-                                                    'routePartitionName'   => 'PT_'.$SITE.'_911',
-                                                    'index'                => 3,
+                                                    'routePartitionName'   => 'PT_PSTN_LOCAL_10_DIGIT',
                                                     ],
-                                                ],
-                                    ],
+                                                    [
+                                                    'routePartitionName'   => 'PT_PSTN_TOLLFREE',
+                                                    ],
+													[
+                                                    'routePartitionName'   => 'PT_PSTN_LD',
+                                                    ],
+													[
+                                                    'routePartitionName'   => 'PT_PSTN_INTL',
+                                                    ]
+                                                ]
+                                    ]
                 ];
-        // Check if the object already exists. If it isn't then add it.
-        if (! empty($site_array[$TYPE])) {
-            if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
-            } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
-            }
-        } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
-        }
+			
+			
+			/* This is not working for some reason. Getting exception - Cannot insert a null into column (callingsearchspacemember.sortorder)
+			
+			if($SITE_TYPE <= 2){
+				$ADD_PARTITION = ['routePartitionName'   => "PT_911Enable",];
+				array_unshift($DATA['members']['member'], $ADD_PARTITION);
+			}
+			if($SITE_TYPE >= 3){
+				$ADD_PARTITION = ['routePartitionName'   => "PT_{$SITE}_911",];
+				array_unshift($DATA['members']['member'], $ADD_PARTITION);
+			}
+			*/
+
+			// Add the index to each member in order. 
+			$i = 1;
+			foreach($DATA['members']['member'] as $key => $value){
+				$value['index'] = $i++;
+				$DATA['members']['member'][$key] = $value;
+			}
+			
+			// Append the CSS to the $CSS Array
+			$CSS[] = $DATA;
+		}
+		
+		
+		
+		// For Site Types 3 and 4 add site specific 911 CSS and other CSSs
+		if($SITE_TYPE >= 3){
+			$DATA = [
+                'name'            => "CSS_{$SITE}_DEVICE",
+                'description'     => "CSS for {$SITE} Device Assignment",
+                'members'         => [
+                                    'member' => [
+													// E911
+													[
+                                                    'routePartitionName'   => "PT_{$SITE}_911",
+                                                    ],
+                                                    [
+                                                    'routePartitionName'   => "PT_{$SITE}_SVC",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_{$SITE}_XLATE",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "Global-All-Lines",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "System-Voicemail",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_GLOBAL_SVC",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_GLOBAL_XLATE",
+                                                    ],
+                                                    [
+                                                    'routePartitionName'   => 'PT_PSTN_LOCAL_10_DIGIT',
+                                                    ],
+                                                    [
+                                                    'routePartitionName'   => 'PT_PSTN_TOLLFREE',
+                                                    ],
+													[
+                                                    'routePartitionName'   => 'PT_PSTN_LD',
+                                                    ],
+													[
+                                                    'routePartitionName'   => 'PT_PSTN_INTL',
+                                                    ]
+                                                ]
+                                    ]
+                ];
+			
+
+			// Add the index to each member in order. 
+			$i = 1;
+			foreach($DATA['members']['member'] as $key => $value){
+				$value['index'] = $i++;
+				$DATA['members']['member'][$key] = $value;
+			}
+
+			// Append the CSS to the $CSS Array
+			$CSS[] = $DATA;
+		}
+		
+		// For Site Types 2 and 4 add GW CALLED TRANFORMATIONS
+		if(($SITE_TYPE == 2) || ($SITE_TYPE == 4)){
+			$DATA = [
+                'name'            => "CSS_{$SITE}_GW_CALLED_XFORM",
+                'description'     => "Applied outbound on a site local trunk or gw",
+                'members'         => [
+                                    'member' => [
+													[
+                                                    'routePartitionName'   => "PT_{$SITE}_GW_CALLED_XFORM",
+                                                    ],
+                                                    [
+                                                    'routePartitionName'   => "PT_GLOBAL_GW_CALLED_XFORM",
+                                                    ],
+                                                ]
+                                    ]
+                ];
+			
+
+			// Add the index to each member in order. 
+			$i = 1;
+			foreach($DATA['members']['member'] as $key => $value){
+				$value['index'] = $i++;
+				$DATA['members']['member'][$key] = $value;
+			}
+
+			// Append the CSS to the $CSS Array
+			$CSS[] = $DATA;
+		}
+		
+		// For Site Types 2,3,4 add Incoming Gateway CSS
+		if($SITE_TYPE >= 2){
+			$DATA = [
+                'name'            => "CSS_{$SITE}_INCOMING_GW",
+                'description'     => "Applied to incoming CSS on site gw or sip trunk",
+                'members'         => [
+                                    'member' => [
+													[
+                                                    'routePartitionName'   => "PT_{$SITE}_SVC",
+                                                    ],
+                                                    [
+                                                    'routePartitionName'   => "PT_{$SITE}_XLATE",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "Global-All-Lines",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "System-Voicemail",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_GLOBAL_SVC",
+                                                    ],
+													[
+                                                    'routePartitionName'   => "PT_GLOBAL_XLATE",
+                                                    ],
+                                                ]
+                                    ]
+                ];
+			
+
+			// Add the index to each member in order. 
+			$i = 1;
+			foreach($DATA['members']['member'] as $key => $value){
+				$value['index'] = $i++;
+				$DATA['members']['member'][$key] = $value;
+			}
+
+			// Append the CSS to the $CSS Array
+			$CSS[] = $DATA;
+		}
+		
+		// Now add each CSS that is in the $CSS array for the site. 
+		foreach($CSS as $DATA){
+			//print_r($DATA);
+			// Check if the object already exists. If it isn't then add it.
+			if (! empty($site_array[$TYPE])) {
+				if (in_array($DATA['name'], $site_array[$TYPE])) {
+					$this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+				} else {
+					$this->wrap_add_object($DATA, $TYPE, $SITE);
+				}
+			} else {
+				$this->wrap_add_object($DATA, $TYPE, $SITE);
+			}
+		}
 
         // 4 - Add a location
 
@@ -402,7 +593,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -481,7 +672,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -513,7 +704,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -531,13 +722,20 @@ class Cucmsite extends Cucm
                 'dateTimeSettingName'     => $TIMEZONE,
                 'callManagerGroupName'    => "CMG-{$SITE}",
                 'regionName'              => "R_{$SITE}",
-                'srstName'                => "SRST_{$SITE}",
+                'srstName'                => "Disable",
                 'locationName'            => "LOC_{$SITE}",
                 ];
+		
+		
+		if (isset($SRSTIP)){
+			// If there is a SRST Set then you can add it to the Device Pool
+			$DATA['srstName'] = "SRST_{$SITE}";
+		}
+		
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -560,7 +758,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -583,7 +781,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -606,7 +804,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -640,7 +838,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -675,7 +873,7 @@ class Cucmsite extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -683,97 +881,113 @@ class Cucmsite extends Cucm
             $this->wrap_add_object($DATA, $TYPE, $SITE);
         }
 
-        // 13 - Add H323 Gateways
+		
+		if($SITE_TYPE >= 2){
+			
+			// 13 - Add H323 Gateways
+			$ROUTERMODEL = 'Cisco 2951';
+			// Calculated variables
+			$TYPE = 'H323Gateway';
+			
+			if(!empty($H323LIST)){
+				foreach ($H323LIST as $H323IP) {
+					// Prepared datastructure
+					$DATA = [
+							'name'                         => $H323IP,
+							'description'                  => "{$SITE} {$H323IP} {$ROUTERMODEL}",
+							'callingSearchSpaceName'       => "CSS_{$SITE}_INCOMING_GW",
+							'devicePoolName'               => "DP_{$SITE}",
+							'locationName'                 => "LOC_{$SITE}",
+							'product'                      => 'H.323 Gateway',
+							'class'                        => 'Gateway',
+							'protocol'                     => 'H.225',
+							'protocolSide'                 => 'Network',
+							'signalingPort'                => '1720',
+							'tunneledProtocol'             => '',
+							'useTrustedRelayPoint'         => '',
+							'packetCaptureMode'            => '',
+							'callingPartySelection'        => '',
+							'callingLineIdPresentation'    => '',
+							'calledPartyIeNumberType'      => '',
+							'callingPartyIeNumberType'     => '',
+							'calledNumberingPlan'          => '',
+							'callingNumberingPlan'         => '',
+							'sigDigits'         		   => [
+																'_' 		=> 	"99",
+																'enable' 	=>	"false",
+															],
+							];
+					// Check if the object already exists. If it isn't then add it.
+					if (! empty($site_array[$TYPE])) {
+						if (in_array($DATA['name'], $site_array[$TYPE])) {
+							$this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+						} else {
+							$this->wrap_add_object($DATA, $TYPE, $SITE);
+						}
+					} else {
+						$this->wrap_add_object($DATA, $TYPE, $SITE);
+					}
+				}
+			}
+		}
 
-        $ROUTERMODEL = 'Cisco 2951';
-        // Calculated variables
-        $TYPE = 'H323Gateway';
-        // Prepared datastructure
-        foreach ($H323LIST as $H323IP) {
-            $DATA = [
-                    'name'                         => $H323IP,
-                    'description'                  => "{$SITE} {$H323IP} {$ROUTERMODEL}",
-                    'callingSearchSpaceName'       => "CSS_{$SITE}",
-                    'devicePoolName'               => "DP_{$SITE}",
-                    'locationName'                 => "LOC_{$SITE}",
-                    'product'                      => 'H.323 Gateway',
-                    'class'                        => 'Gateway',
-                    'protocol'                     => 'H.225',
-                    'protocolSide'                 => 'Network',
-                    'signalingPort'                => '1720',
-                    'tunneledProtocol'             => '',
-                    'useTrustedRelayPoint'         => '',
-                    'packetCaptureMode'            => '',
-                    'callingPartySelection'        => '',
-                    'callingLineIdPresentation'    => '',
-                    'calledPartyIeNumberType'      => '',
-                    'callingPartyIeNumberType'     => '',
-                    'calledNumberingPlan'          => '',
-                    'callingNumberingPlan'         => '',
-                    ];
-            // Check if the object already exists. If it isn't then add it.
-            if (! empty($site_array[$TYPE])) {
-                if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
-                } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
-                }
-            } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
-            }
-        }
+
 
 
         // 14 - Add a route group
+		
+		$TYPE = 'RouteGroup';
+		
+		// Calculated variables for Site Types 2 thru 4. 
+		if ($SITE_TYPE >= 2){
+			// Prepared datastructure
+			$i = 1;
+			if (count($H323LIST) <= 1) {
+				foreach ($H323LIST as $H323IP) {
+					$H323MEMBER = [
+									'deviceName'            => $H323IP,
+									// Increment order @ each iteration through previous loop!
+									'deviceSelectionOrder'    => $i++,
+									'port'                    => '0',
+									];
+				}
+				$DATA = [
+					'name'                     => "RG_{$SITE}",
+					'distributionAlgorithm'    => 'Top Down',
+					'members'                  => [
+												'member'    => $H323MEMBER,
+												],
+					];
+			} else {
+				$DATA = [
+					'name'                     => "RG_{$SITE}",
+					'distributionAlgorithm'    => 'Top Down',
+					'members'                  => [
+												'member'    => [],
+												],
+					];
+				// Calculate multiple members to add to this array with order numbers
 
-        // Calculated variables
-        $TYPE = 'RouteGroup';
-        // Prepared datastructure
-        $i = 1;
-        if (count($H323LIST) <= 1) {
-            foreach ($H323LIST as $H323IP) {
-                $H323MEMBER = [
-                                'deviceName'            => $H323IP,
-                                // Increment order @ each iteration through previous loop!
-                                'deviceSelectionOrder'    => $i++,
-                                'port'                    => '0',
-                                ];
-            }
-            $DATA = [
-                'name'                     => "RG_{$SITE}",
-                'distributionAlgorithm'    => 'Top Down',
-                'members'                  => [
-                                            'member'    => $H323MEMBER,
-                                            ],
-                ];
-        } else {
-            $DATA = [
-                'name'                     => "RG_{$SITE}",
-                'distributionAlgorithm'    => 'Top Down',
-                'members'                  => [
-                                            'member'    => [],
-                                            ],
-                ];
-            // Calculate multiple members to add to this array with order numbers
-
-            foreach ($H323LIST as $H323IP) {
-                $H323MEMBER = [
-                                'deviceName'            => $H323IP,
-                                // Increment order @ each iteration through previous loop!
-                                'deviceSelectionOrder'    => $i++,
-                                'port'                    => '0',
-                                ];
-                array_push($DATA['members']['member'], $H323MEMBER);
-            }
-        }
-
-
-
+				foreach ($H323LIST as $H323IP) {
+					$H323MEMBER = [
+									'deviceName'            => $H323IP,
+									// Increment order @ each iteration through previous loop!
+									'deviceSelectionOrder'    => $i++,
+									'port'                    => '0',
+									];
+					// This is f#$%ing stupid - the array_push blows up call manager put appending without calling the function works fine. 
+					//array_push($DATA['members']['member'], $H323MEMBER);
+					$DATA['members']['member'][] = $H323MEMBER;
+				}
+			}
+		}
+		
+		//print_r($DATA);
 
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
+                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
@@ -795,6 +1009,11 @@ class Cucmsite extends Cucm
                                             'value'        => "RG_{$SITE}",
                                             ],
                 ];
+
+		// If the site type is 1  or 3 then we need to override the SLRG to be our Centralized SIP Route Group for SIP Trunking
+		if (($SITE_TYPE == 1) || ($SITE_TYPE == 3)){
+			$DATA['localRouteGroup']['value'] = "RG_CENTRAL_SBC_GRP";
+		}
         // Run the update operation
         try {
             //print "Attempting to update object type {$TYPE} for {$SITE}:";
@@ -807,7 +1026,7 @@ class Cucmsite extends Cucm
                   "{$E->getTraceAsString()}".
                   "Data sent:\n";
             $DATA[$TYPE]['exception'] = $EXCEPTION;
-            $this->results[$TYPE] = $DATA;
+            $this->results[$TYPE][] = $DATA;
         }
 
 
@@ -820,17 +1039,17 @@ class Cucmsite extends Cucm
         // Prepare and add datastructures
         foreach ($DIDLIST as $PATTERN) {
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}",
+                    'routePartitionName'               => "PT_{$SITE}_XLATE",
                     'pattern'                          => $PATTERN,
                     'calledPartyTransformationMask'    => "{$NPA}{$NXX}XXXX",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}",
+                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
                     'description'                      => "{$SITE} dial pattern {$PATTERN}",
                     'usage'                            => 'Translation',
                     ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
-                    $this->results[$TYPE] = "Skipping... {$DATA['pattern']} already exists.";
+                    $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
                     $this->wrap_add_object($DATA, $TYPE, $SITE);
                 }
@@ -839,17 +1058,17 @@ class Cucmsite extends Cucm
             }
 
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}",
+                    'routePartitionName'               => "PT_{$SITE}_XLATE",
                     'pattern'                          => "*{$PATTERN}",
                     'calledPartyTransformationMask'    => "*{$NPA}{$NXX}XXXX",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}",
+                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
                     'description'                      => "{$SITE} voicemail pattern {$PATTERN}",
                     'usage'                            => 'Translation',
                     ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
-                    $this->results[$TYPE] = "Skipping... {$DATA['pattern']} already exists.";
+                    $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
                     $this->wrap_add_object($DATA, $TYPE, $SITE);
                 }
@@ -858,20 +1077,20 @@ class Cucmsite extends Cucm
             }
         }
 
-        if (isset($OPERATOR)) {
+        if ((isset($OPERATOR)) && (!empty($OPERATOR))) {
             // Create Operator Translation Patterns.
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}",
+                    'routePartitionName'               => "PT_{$SITE}_XLATE",
                     'pattern'                          => '0',
                     'calledPartyTransformationMask'    => "{$OPERATOR}",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}",
+                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
                     'description'                      => "{$SITE} dial pattern Operator {$OPERATOR}",
                     'usage'                            => 'Translation',
                     ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
-                    $this->results[$TYPE] = "Skipping... {$DATA['pattern']} already exists.";
+                    $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
                     $this->wrap_add_object($DATA, $TYPE, $SITE);
                 }
@@ -880,17 +1099,17 @@ class Cucmsite extends Cucm
             }
 
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}",
+                    'routePartitionName'               => "PT_{$SITE}_XLATE",
                     'pattern'                          => '*0',
                     'calledPartyTransformationMask'    => "*{$OPERATOR}",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}",
+                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
                     'description'                      => "{$SITE} dial pattern Operator Voicemail *{$OPERATOR}",
                     'usage'                            => 'Translation',
                     ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
-                    $this->results[$TYPE] = "Skipping... {$DATA['pattern']} already exists.";
+                    $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
                     $this->wrap_add_object($DATA, $TYPE, $SITE);
                 }
@@ -899,93 +1118,96 @@ class Cucmsite extends Cucm
             }
         }
 
-        // 17 - Create our 911 Route List
+		if ($SITE_TYPE >= 3){
+			// 17 - Create our 911 Route List
 
-        // Calculated variables
-        $TYPE = 'RouteList';
+			// Calculated variables
+			$TYPE = 'RouteList';
 
-        // Build Array of Route List
-        $DATA = [
-                    'name'                        => "RL_{$SITE}_911",
-                    'description'                 => "{$SITE} - 911 Calling Route List",
-                    'callManagerGroupName'        => "CMG-{$SITE}",
-                    'routeListEnabled'            => true,
-                    'runOnEveryNode'              => true,
+			// Build Array of Route List
+			$DATA = [
+						'name'                        => "RL_{$SITE}_911",
+						'description'                 => "{$SITE} - 911 Calling Route List",
+						'callManagerGroupName'        => "CMG-{$SITE}",
+						'routeListEnabled'            => true,
+						'runOnEveryNode'              => true,
 
-                    'members'                    => [
-                                                        'member' => [
-                                                                    'routeGroupName'                         => "RG_{$SITE}",
-                                                                    'selectionOrder'                         => 1,
-                                                                    'useFullyQualifiedCallingPartyNumber'    => 'Default',
-                                                                    ],
-                                                    ],
-                ];
-        // Check if the object already exists. If it isn't then add it.
-        if (! empty($site_array[$TYPE])) {
-            if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE] = "Skipping... {$DATA['name']} already exists.";
-            } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
-            }
-        } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
-        }
+						'members'                    => [
+															'member' => [
+																		'routeGroupName'                         => "RG_{$SITE}",
+																		'selectionOrder'                         => 1,
+																		'useFullyQualifiedCallingPartyNumber'    => 'Default',
+																		],
+														],
+					];
+			// Check if the object already exists. If it isn't then add it.
+			if (! empty($site_array[$TYPE])) {
+				if (in_array($DATA['name'], $site_array[$TYPE])) {
+					$this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+				} else {
+					$this->wrap_add_object($DATA, $TYPE, $SITE);
+				}
+			} else {
+				$this->wrap_add_object($DATA, $TYPE, $SITE);
+			}
 
 
-        // 18 - Create our 911 Route Patterns
+			// 18 - Create our 911 Route Patterns
 
-        // Calculated variables
-        $TYPE = 'RoutePattern';
+			// Calculated variables
+			$TYPE = 'RoutePattern';
 
-        // Build Array of Route List
+			// Build Array of Route List
 
-        $PATTERNS = [
-                    [
-                        'pattern'                     => '911',
-                        'description'                 => "{$SITE} 911 - Emergency Services",
-                        'routePartitionName'          => "PT_{$SITE}_911",
-                        'blockEnable'                 => 'false',
-                        'useCallingPartyPhoneMask'    => 'Default',
-                        'networkLocation'             => 'OffNet',
-                        //"routeFilterName"			=> "",
-                        'patternUrgency'            => 'false',
+			$PATTERNS = [
+						[
+							'pattern'                     => '911',
+							'description'                 => "{$SITE} 911 - Emergency Services",
+							'routePartitionName'          => "PT_{$SITE}_911",
+							'blockEnable'                 => 'false',
+							'useCallingPartyPhoneMask'    => 'Default',
+							'networkLocation'             => 'OffNet',
+							//"routeFilterName"			=> "",
+							'patternUrgency'            => 'false',
 
-                        'destination'                    => [
-                                                            'routeListName' => "RL_{$SITE}_911",
+							'destination'                    => [
+																'routeListName' => "RL_{$SITE}_911",
 
-                                                        ],
-                    ],
-                    [
-                        'pattern'                     => '9.911',
-                        'description'                 => "{$SITE} 911 - Emergency Services",
-                        'routePartitionName'          => "PT_{$SITE}_911",
-                        'blockEnable'                 => 'false',
-                        'useCallingPartyPhoneMask'    => 'Default',
-                        'networkLocation'             => 'OffNet',
-                        //"routeFilterName"			=> "",
-                        'patternUrgency'            => 'false',
+															],
+						],
+						[
+							'pattern'                     => '9.911',
+							'description'                 => "{$SITE} 911 - Emergency Services",
+							'routePartitionName'          => "PT_{$SITE}_911",
+							'blockEnable'                 => 'false',
+							'useCallingPartyPhoneMask'    => 'Default',
+							'networkLocation'             => 'OffNet',
+							//"routeFilterName"			=> "",
+							'patternUrgency'            => 'false',
 
-                        'destination'                    => [
-                                                            'routeListName' => "RL_{$SITE}_911",
+							'destination'                    => [
+																'routeListName' => "RL_{$SITE}_911",
 
-                                                        ],
-                    ],
-        ];
+															],
+						],
+			];
 
-        // Add each pattern in the array.
-        foreach ($PATTERNS as $DATA) {
-            // Check if the object already exists. If it isn't then add it.
-            if (! empty($site_array[$TYPE])) {
-                if (in_array($DATA['pattern'], $site_array['RoutePattern'])) {
-                    $this->results[$TYPE] = "Skipping... {$DATA['pattern']} already exists.";
-                    continue;
-                } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
-                }
-            } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
-            }
-        }
+			// Add each pattern in the array.
+			foreach ($PATTERNS as $DATA) {
+				// Check if the object already exists. If it isn't then add it.
+				if (! empty($site_array[$TYPE])) {
+					if (in_array($DATA['pattern'], $site_array['RoutePattern'])) {
+						$this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
+						continue;
+					} else {
+						$this->wrap_add_object($DATA, $TYPE, $SITE);
+					}
+				} else {
+					$this->wrap_add_object($DATA, $TYPE, $SITE);
+				}
+			}
+		}	
+
 
         return $this->results;
     }

@@ -110,19 +110,19 @@
      *     @SWG\Parameter(
      *         name="srstip",
      *         in="formData",
-     *         description="SRST IP Address",
+     *         description="SRST IP Address - Not required for Type 1 Designs",
      *         required=false,
      *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="h323ip",
      *         in="formData",
-     *         description="If multiple H323 Gateways, enter each one on new line. These will get added to the site route group. ",
+     *         description="These are required for Design Type 2,3,and 4. If multiple H323 Gateways, enter each one on new line. These will get added to the site route group. ",
      *         required=false,
      *         type="array",
      *         @SWG\Items(
      *             type="string",
-     *             description="",
+     *             description="H323 Gateways",
      *         ),
      *     ),
      *	   @SWG\Parameter(

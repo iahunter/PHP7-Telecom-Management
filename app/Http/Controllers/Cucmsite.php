@@ -1001,10 +1001,6 @@ class Cucmsite extends Cucm
             }
         }
 
-        //print_r($DATA);
-
-
-
 
         // 15 - Update an existing device pool to add the new route group above
 

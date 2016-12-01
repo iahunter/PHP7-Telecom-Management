@@ -46,26 +46,26 @@ class BuildCUCMSiteDefaults extends Command
      */
     public function wrap_add_object($DATA, $TYPE)
     {
-		// Get the name to reference the object. 
-		if (isset($DATA['name'])) {
-			$OBJECT = $DATA['name'];
-		}elseif (isset($DATA['pattern'])){
-			$OBJECT = $DATA['pattern'];
-		}else{
-			$OBJECT = $TYPE;
-		}
+        // Get the name to reference the object.
+        if (isset($DATA['name'])) {
+            $OBJECT = $DATA['name'];
+        } elseif (isset($DATA['pattern'])) {
+            $OBJECT = $DATA['pattern'];
+        } else {
+            $OBJECT = $TYPE;
+        }
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-			$result = "{$TYPE} CREATED: {$REPLY}\n\n";
+            $result = "{$TYPE} CREATED: {$REPLY}\n\n";
         } catch (\Exception $E) {
-                $EXCEPTION = "Exception adding object type {$OBJECT}:".
+            $EXCEPTION = "Exception adding object type {$OBJECT}:".
                       "{$E->getMessage()}".
                       "Stack trace:\n".
                       "{$E->getTraceAsString()}".
                       "Data sent:\n";
-                $result = $EXCEPTION;
-		}
-	
+            $result = $EXCEPTION;
+        }
+
 
         return $result;
     }

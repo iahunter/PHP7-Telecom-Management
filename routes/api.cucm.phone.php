@@ -27,3 +27,6 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
+	
+	
+

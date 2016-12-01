@@ -84,11 +84,11 @@
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Create New Site in CUCM",
      *     description="
-     Select the correct Site Design Type according to your sites specific requirements.
-     Type 1 - Site migrating to centralized SIP and Centralized E911
-     Type 2 - Site using Local Gateway/SRST and Centralized E911
-     Type 3 - Site using Centralized SIP but leveraging local gateway/SRST for 911
-     Type 4 - Site using Local Gateway for 911 and Inbound/Outbound Calling",
+     Select the correct Site Design Type according to your site's specific requirements.
+     Type 1 - Centralized SIP Trunking and Centralized E911
+     Type 2 - Local Gateway Trunking but using Centralized E911
+     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911
+     Type 4 - Local Gateway Trunking and 911",
      *     operationId="createSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
@@ -110,7 +110,7 @@
      *     @SWG\Parameter(
      *         name="srstip",
      *         in="formData",
-     *         description="SRST IP Address - Not required for Type 1 Designs",
+     *         description="SRST IP Address - Not required for Type 1 Designs. Recommended but not required for Type 2,3, and 4",
      *         required=false,
      *         type="string"
      *     ),
@@ -128,28 +128,29 @@
      *	   @SWG\Parameter(
      *         name="timezone",
      *         in="formData",
-     *         description="TimeZone and Format",
+     *         description="TimeZone and Format - These are prebuilt in CUCM and may need customized to your environment. ",
+	 *		   enum={"Alaska-12", "Arizona-12", "Central-12", "Eastern-12", "Hawaii-12", "Mountain-12", "Pacific-12"},
      *         required=true,
      *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="npa",
      *         in="formData",
-     *         description="NAP (###)",
+     *         description="NAP (###) - Area Code",
      *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         name="nxx",
      *         in="formData",
-     *         description="NXX (###)",
+     *         description="NXX (###) - Prefix",
      *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         name="didrange",
      *         in="formData",
-     *         description="Example: 40[2-9]X",
+     *         description="Last 4 digit Ranges. Use Regex to represent the DID Ranges. Use multiple Lines to represent multiple ranges. Example: 40[2-9]X",
      *         required=true,
      *         type="array",
      *         @SWG\Items(

@@ -86,9 +86,13 @@ class BuildCUCMSiteDefaults extends Command
         $this->results[] = $this->addCalledPartyTransformationPatterns();
 
         /********************************************************************
-            You need to manually add the SIP Trunks for your SBCs.
+            
+			* Prebuilt - Universal-Route_List Points to the Standard Local Route Group.
+			
+			You need to manually add the SIP Trunks for your SBCs.
             Then create a new Route Group named 'RG_CENTRAL_SBC_GRP' with the SIP trunks pointing to your SBC IPs as the only members.
             This will be used by Site Device Pools later when adding sites.
+			
         /********************************************************************/
 
         print_r($this->results);

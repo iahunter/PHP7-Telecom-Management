@@ -1123,9 +1123,12 @@ class Cucmsite extends Cucm
                 $this->wrap_add_object($DATA, $TYPE, $SITE);
             }
         }
+		
+		// 17 - Create our Route Lists
 
         if ($SITE_TYPE >= 3) {
-            // 17 - Create our 911 Route List
+            
+			//Create 911 Route Lists
 
             // Calculated variables
             $TYPE = 'RouteList';

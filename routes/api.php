@@ -22,7 +22,7 @@ $api->version('v1', function ($api) {
     });
 
     /**
-     * @SWG\Info(title="Telephony Management API", version="1.0")
+     * @SWG\Info(title="Telecom Management - API Documentation", version="1.0")
      **/
 
 

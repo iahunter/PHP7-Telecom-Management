@@ -27,9 +27,9 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
-	
-	
-	 /**
+
+
+    /**
      * @SWG\Delete(
      *     path="/telephony/api/cucm/phone/{name}",
      *     tags={"Management - CUCM - Phone Provisioning"},
@@ -53,9 +53,9 @@
      * )
      **/
     $api->delete('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@deletePhone');
-	
-	
-	/**
+
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/phone",
      *     tags={"Management - CUCM - Phone Provisioning"},
@@ -78,66 +78,66 @@
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="name",
      *         in="formData",
      *         description="Phone Name - Example 0004DEADBEEF",
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="firstname",
      *         in="formData",
      *         description="First Name - John",
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="lastname",
      *         in="formData",
      *         description="Last Name - Doe",
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="username",
      *         in="formData",
      *         description="User Name - John.Doe",
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="dn",
      *         in="formData",
      *         description="Directory Number - Example: 4025551234",
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="extlength",
      *         in="formData",
      *         description="Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
-	 *		   enum={"4", "5", "10"},
+     *		   enum={"4", "5", "10"},
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="language",
      *         in="formData",
      *         description="Language",
-	 *		   enum={"English", "French"},
+     *		   enum={"English", "French"},
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="voicemail",
      *         in="formData",
      *         description="Does user require a Voicemail Box with this DN?",
-	 *		   enum={"true", "false"},
+     *		   enum={"true", "false"},
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="notes",
      *         in="formData",
      *         description="Notes",
@@ -154,4 +154,4 @@
      *     ),
      * )
      **/
-	$api->post('cucm/phone', 'App\Http\Controllers\Cucmphone@createPhone');
+    $api->post('cucm/phone', 'App\Http\Controllers\Cucmphone@createPhone');

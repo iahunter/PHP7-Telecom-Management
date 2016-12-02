@@ -20,14 +20,12 @@ class Cucm extends Controller
                                                     env('CALLMANAGER_PASS')
                                                     );
     }
-	
-	
-	// Variable to return to user
+
+    // Variable to return to user
     public $results;
-	
-	
-	// CUCM Add Wrapper
-	public function wrap_add_object($DATA, $TYPE)
+
+    // CUCM Add Wrapper
+    public function wrap_add_object($DATA, $TYPE)
     {
         // Get the name to reference the object.
         if (isset($DATA['name'])) {

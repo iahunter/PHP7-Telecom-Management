@@ -8,7 +8,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Cucmsite extends Cucm
 {
-
     public function listsites()
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -243,7 +242,6 @@ class Cucmsite extends Cucm
 
         return response()->json($response);
     }
-
 
     // Build all the elements needed for the site.
 
@@ -1174,40 +1172,40 @@ class Cucmsite extends Cucm
                                                             ],
                         ],
             ];
-			
-			// Insert Patterns to cause a delay after dialling 911 - This waits for the T302 Timer to expire before sending the call to Emergency Services
-			// This has been used to reduce misdaialing 911 callling. T302 Timer in Service Parameters has been reduced to 4000 ms. 
-			// Set the Environmental Variable to true to use this setting. Default is false. 
-			if (env('CUCM_911_T302_DELAY')){
-				$PATTERNS[] = [
-                            'pattern'                     => '911!',
-                            'description'                 => "{$SITE} 911 - Emergency Services - T302 Delay",
-                            'routePartitionName'          => "PT_{$SITE}_911",
-                            'blockEnable'                 => 'true',
-                            'useCallingPartyPhoneMask'    => 'Default',
-                            'networkLocation'             => 'OffNet',
-                            'patternUrgency'            => 'false',
-							'destination'                    => [
+
+            // Insert Patterns to cause a delay after dialling 911 - This waits for the T302 Timer to expire before sending the call to Emergency Services
+            // This has been used to reduce misdaialing 911 callling. T302 Timer in Service Parameters has been reduced to 4000 ms.
+            // Set the Environmental Variable to true to use this setting. Default is false.
+            if (env('CUCM_911_T302_DELAY')) {
+                $PATTERNS[] = [
+                            'pattern'                        => '911!',
+                            'description'                    => "{$SITE} 911 - Emergency Services - T302 Delay",
+                            'routePartitionName'             => "PT_{$SITE}_911",
+                            'blockEnable'                    => 'true',
+                            'useCallingPartyPhoneMask'       => 'Default',
+                            'networkLocation'                => 'OffNet',
+                            'patternUrgency'                 => 'false',
+                            'destination'                    => [
                                                                 'routeListName' => "RL_{$SITE}_911",
 
                                                             ],
                         ];
-				
-				$PATTERNS[] = [
-                            'pattern'                     => '9.911!',
-                            'description'                 => "{$SITE} 9911 - Emergency Services - T302 Delay",
-                            'routePartitionName'          => "PT_{$SITE}_911",
-                            'blockEnable'                 => 'true',
-                            'useCallingPartyPhoneMask'    => 'Default',
-                            'networkLocation'             => 'OffNet',
-                            'patternUrgency'            => 'false',
-							'destination'                    => [
+
+                $PATTERNS[] = [
+                            'pattern'                        => '9.911!',
+                            'description'                    => "{$SITE} 9911 - Emergency Services - T302 Delay",
+                            'routePartitionName'             => "PT_{$SITE}_911",
+                            'blockEnable'                    => 'true',
+                            'useCallingPartyPhoneMask'       => 'Default',
+                            'networkLocation'                => 'OffNet',
+                            'patternUrgency'                 => 'false',
+                            'destination'                    => [
                                                                 'routeListName' => "RL_{$SITE}_911",
 
                                                             ],
                         ];
-			//print_r($PATTERNS);
-			}
+            //print_r($PATTERNS);
+            }
 
             // Add each pattern in the array.
             foreach ($PATTERNS as $DATA) {

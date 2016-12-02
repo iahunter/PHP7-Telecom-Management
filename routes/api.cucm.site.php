@@ -129,7 +129,7 @@
      *         name="timezone",
      *         in="formData",
      *         description="TimeZone and Format - These are prebuilt in CUCM and may need customized to your environment. ",
-	 *		   enum={"Alaska-12", "Arizona-12", "Central-12", "Eastern-12", "Hawaii-12", "Mountain-12", "Pacific-12"},
+     *		   enum={"Alaska-12", "Arizona-12", "Central-12", "Eastern-12", "Hawaii-12", "Mountain-12", "Pacific-12"},
      *         required=true,
      *         type="string"
      *     ),

@@ -76,6 +76,150 @@
                         "description": "Unauthorized user"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Management - CUCM - Phone Provisioning"
+                ],
+                "summary": "Remove Phone by Name",
+                "description": "",
+                "operationId": "deletePhone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of Phone to Delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/phone": {
+            "post": {
+                "tags": [
+                    "Management - CUCM - Phone Provisioning"
+                ],
+                "summary": "Create New Phone in CUCM",
+                "description": "",
+                "operationId": "createSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "device",
+                        "in": "formData",
+                        "description": "Device Type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Phone Name - Example 0004DEADBEEF",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "firstname",
+                        "in": "formData",
+                        "description": "First Name - John",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "formData",
+                        "description": "Last Name - Doe",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "User Name - John.Doe",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn",
+                        "in": "formData",
+                        "description": "Directory Number - Example: 4025551234",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "extlength",
+                        "in": "formData",
+                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "4",
+                            "5",
+                            "10"
+                        ]
+                    },
+                    {
+                        "name": "language",
+                        "in": "formData",
+                        "description": "Language",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "English",
+                            "French"
+                        ]
+                    },
+                    {
+                        "name": "voicemail",
+                        "in": "formData",
+                        "description": "Does user require a Voicemail Box with this DN?",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "true",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "notes",
+                        "in": "formData",
+                        "description": "Notes",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
             }
         },
         "/telephony/api/cucm/css": {
@@ -367,7 +511,7 @@
                     {
                         "name": "npa",
                         "in": "formData",
-                        "description": "NAP (###) - Area Code",
+                        "description": "NPA (###) - Area Code",
                         "required": true,
                         "type": "integer"
                     },
@@ -593,7 +737,7 @@
                 ],
                 "summary": "Delete DID Block by ID for authorized user",
                 "description": "This deletes the block and its child Dids",
-                "operationId": "updateDidblock",
+                "operationId": "deleteDidblock",
                 "consumes": [
                     "application/json"
                 ],

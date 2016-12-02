@@ -20,6 +20,36 @@ class Cucm extends Controller
                                                     env('CALLMANAGER_PASS')
                                                     );
     }
+	
+	
+	// Variable to return to user
+    public $results;
+	
+	
+	// CUCM Add Wrapper
+	public function wrap_add_object($DATA, $TYPE)
+    {
+        // Get the name to reference the object.
+        if (isset($DATA['name'])) {
+            $OBJECT = $DATA['name'];
+        } elseif (isset($DATA['pattern'])) {
+            $OBJECT = $DATA['pattern'];
+        } else {
+            $OBJECT = $TYPE;
+        }
+        try {
+            $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
+            $this->results[$TYPE][] = "{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
+        } catch (\Exception $E) {
+            $EXCEPTION = "Exception adding object type: {$TYPE}".
+                  "{$E->getMessage()}".
+                  "Stack trace:\n".
+                  "{$E->getTraceAsString()}".
+                  "Data sent:\n";
+            $DATA['exception'] = $EXCEPTION;
+            $this->results[$TYPE] = $DATA;
+        }
+    }
 
     public function listCssDetails(Request $request)
     {

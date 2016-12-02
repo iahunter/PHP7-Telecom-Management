@@ -173,7 +173,7 @@
      *     tags={"Did Block"},
      *     summary="Delete DID Block by ID for authorized user",
      *     description="This deletes the block and its child Dids",
-     *     operationId="updateDidblock",
+     *     operationId="deleteDidblock",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(

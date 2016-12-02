@@ -8,8 +8,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Cucmsite extends Cucm
 {
-    // Variable to return to user
-    public $results;
 
     public function listsites()
     {
@@ -246,30 +244,6 @@ class Cucmsite extends Cucm
         return response()->json($response);
     }
 
-    public function wrap_add_object($DATA, $TYPE, $SITE)
-    {
-        // Get the name to reference the object.
-        if (isset($DATA['name'])) {
-            $OBJECT = $DATA['name'];
-        } elseif (isset($DATA['pattern'])) {
-            $OBJECT = $DATA['pattern'];
-        } else {
-            $OBJECT = $TYPE;
-        }
-        try {
-            //print "Attempting to add a {$TYPE} for {$SITE}:";
-            $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-            $this->results[$TYPE][] = "{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
-        } catch (\Exception $E) {
-            $EXCEPTION = "Exception adding object type {$TYPE} for site {$SITE}:".
-                  "{$E->getMessage()}".
-                  "Stack trace:\n".
-                  "{$E->getTraceAsString()}".
-                  "Data sent:\n";
-            $DATA['exception'] = $EXCEPTION;
-            $this->results[$TYPE] = $DATA;
-        }
-    }
 
     // Build all the elements needed for the site.
 
@@ -307,10 +281,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         }
 
@@ -362,10 +336,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         }
 
@@ -583,10 +557,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         }
 
@@ -607,10 +581,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
         // 5 - Add a region
@@ -686,10 +660,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
 
@@ -718,10 +692,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
         // 7 - Add a device pool
@@ -749,10 +723,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
         // 8 - Add a conference bridge
@@ -772,10 +746,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
         // 9 - Add media termination point 1
@@ -795,10 +769,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
         // 10 - Add media termination point 2
@@ -818,10 +792,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
         // 11 - Add a media resource group
@@ -852,10 +826,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
         // 12 - Add a media resource list
@@ -887,10 +861,10 @@ class Cucmsite extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         } else {
-            $this->wrap_add_object($DATA, $TYPE, $SITE);
+            $this->wrap_add_object($DATA, $TYPE);
         }
 
 
@@ -934,10 +908,10 @@ class Cucmsite extends Cucm
                         if (in_array($DATA['name'], $site_array[$TYPE])) {
                             $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                         } else {
-                            $this->wrap_add_object($DATA, $TYPE, $SITE);
+                            $this->wrap_add_object($DATA, $TYPE);
                         }
                     } else {
-                        $this->wrap_add_object($DATA, $TYPE, $SITE);
+                        $this->wrap_add_object($DATA, $TYPE);
                     }
                 }
             }
@@ -994,10 +968,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         }
 
@@ -1057,10 +1031,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
 
             $DATA = [
@@ -1076,10 +1050,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         }
 
@@ -1098,10 +1072,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
 
             $DATA = [
@@ -1117,10 +1091,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
         }
 
@@ -1154,10 +1128,10 @@ class Cucmsite extends Cucm
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
                     $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             } else {
-                $this->wrap_add_object($DATA, $TYPE, $SITE);
+                $this->wrap_add_object($DATA, $TYPE);
             }
 
 
@@ -1200,6 +1174,40 @@ class Cucmsite extends Cucm
                                                             ],
                         ],
             ];
+			
+			// Insert Patterns to cause a delay after dialling 911 - This waits for the T302 Timer to expire before sending the call to Emergency Services
+			// This has been used to reduce misdaialing 911 callling. T302 Timer in Service Parameters has been reduced to 4000 ms. 
+			// Set the Environmental Variable to true to use this setting. Default is false. 
+			if (env('CUCM_911_T302_DELAY')){
+				$PATTERNS[] = [
+                            'pattern'                     => '911!',
+                            'description'                 => "{$SITE} 911 - Emergency Services - T302 Delay",
+                            'routePartitionName'          => "PT_{$SITE}_911",
+                            'blockEnable'                 => 'true',
+                            'useCallingPartyPhoneMask'    => 'Default',
+                            'networkLocation'             => 'OffNet',
+                            'patternUrgency'            => 'false',
+							'destination'                    => [
+                                                                'routeListName' => "RL_{$SITE}_911",
+
+                                                            ],
+                        ];
+				
+				$PATTERNS[] = [
+                            'pattern'                     => '9.911!',
+                            'description'                 => "{$SITE} 9911 - Emergency Services - T302 Delay",
+                            'routePartitionName'          => "PT_{$SITE}_911",
+                            'blockEnable'                 => 'true',
+                            'useCallingPartyPhoneMask'    => 'Default',
+                            'networkLocation'             => 'OffNet',
+                            'patternUrgency'            => 'false',
+							'destination'                    => [
+                                                                'routeListName' => "RL_{$SITE}_911",
+
+                                                            ],
+                        ];
+			//print_r($PATTERNS);
+			}
 
             // Add each pattern in the array.
             foreach ($PATTERNS as $DATA) {
@@ -1209,10 +1217,10 @@ class Cucmsite extends Cucm
                         $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                         continue;
                     } else {
-                        $this->wrap_add_object($DATA, $TYPE, $SITE);
+                        $this->wrap_add_object($DATA, $TYPE);
                     }
                 } else {
-                    $this->wrap_add_object($DATA, $TYPE, $SITE);
+                    $this->wrap_add_object($DATA, $TYPE);
                 }
             }
         }

@@ -49,7 +49,6 @@ class Cucmsite extends Cucm
             dd($e->getTrace());
         }
 
-
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
@@ -75,7 +74,6 @@ class Cucmsite extends Cucm
             echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
-
 
         $response = [
                     'status_code'    => 200,
@@ -116,7 +114,6 @@ class Cucmsite extends Cucm
         } else {
             $SRSTIP = '';
         }
-
 
         // Turn the users text into an array of IP addresses
         $H323TEXT = '';
@@ -216,7 +213,6 @@ class Cucmsite extends Cucm
             $CUCM2 = 'KHONEMDCVCS05';
         }
 
-
         // Final user information required to provision a CUCM SITE:
         $result = $this->provision_cucm_site_axl(
         //$result = [
@@ -261,7 +257,6 @@ class Cucmsite extends Cucm
 
         // Check if the site exists in the CUCM database first.
         $site_array = $this->cucm->get_all_object_types_by_site($SITE);
-
 
         if ($SRSTIP) {
             // 1 - Add a SRST router
@@ -341,8 +336,6 @@ class Cucmsite extends Cucm
             }
         }
 
-
-
         // 3 - Add a CSS
 
         // Calculated variables
@@ -394,7 +387,6 @@ class Cucmsite extends Cucm
                                     ],
                 ];
 
-
             /* This is not working for some reason. Getting exception - Cannot insert a null into column (callingsearchspacemember.sortorder)
 
             if($SITE_TYPE <= 2){
@@ -417,8 +409,6 @@ class Cucmsite extends Cucm
             // Append the CSS to the $CSS Array
             $CSS[] = $DATA;
         }
-
-
 
         // For Site Types 3 and 4 add site specific 911 CSS and other CSSs
         if ($SITE_TYPE >= 3) {
@@ -465,7 +455,6 @@ class Cucmsite extends Cucm
                                     ],
                 ];
 
-
             // Add the index to each member in order.
             $i = 1;
             foreach ($DATA['members']['member'] as $key => $value) {
@@ -493,7 +482,6 @@ class Cucmsite extends Cucm
                                                 ],
                                     ],
                 ];
-
 
             // Add the index to each member in order.
             $i = 1;
@@ -534,7 +522,6 @@ class Cucmsite extends Cucm
                                                 ],
                                     ],
                 ];
-
 
             // Add the index to each member in order.
             $i = 1;
@@ -664,7 +651,6 @@ class Cucmsite extends Cucm
             $this->wrap_add_object($DATA, $TYPE);
         }
 
-
         // 6 - Add a call mangler group
 
         // Calculated variables
@@ -709,7 +695,6 @@ class Cucmsite extends Cucm
                 'srstName'                => 'Disable',
                 'locationName'            => "LOC_{$SITE}",
                 ];
-
 
         if ((isset($SRSTIP)) && (! empty($SRSTIP))) {
             // If there is a SRST Set then you can add it to the Device Pool
@@ -865,7 +850,6 @@ class Cucmsite extends Cucm
             $this->wrap_add_object($DATA, $TYPE);
         }
 
-
         if ($SITE_TYPE >= 2) {
 
             // 13 - Add H323 Gateways
@@ -973,7 +957,6 @@ class Cucmsite extends Cucm
             }
         }
 
-
         // 15 - Update an existing device pool to add the new route group above
 
         // Calculated variables
@@ -1006,8 +989,6 @@ class Cucmsite extends Cucm
             $DATA[$TYPE]['exception'] = $EXCEPTION;
             $this->results[$TYPE][] = $DATA;
         }
-
-
 
         // 16 - Create our translation patterns from user input
 
@@ -1132,7 +1113,6 @@ class Cucmsite extends Cucm
                 $this->wrap_add_object($DATA, $TYPE);
             }
 
-
             // 18 - Create our 911 Route Patterns
 
             // Calculated variables
@@ -1222,7 +1202,6 @@ class Cucmsite extends Cucm
                 }
             }
         }
-
 
         return $this->results;
     }

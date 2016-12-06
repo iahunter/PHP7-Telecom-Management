@@ -77,7 +77,6 @@
      **/
     $api->get('cucm/site/details/{name}', 'App\Http\Controllers\Cucmsite@getSiteDetails');
 
-
     /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/site",

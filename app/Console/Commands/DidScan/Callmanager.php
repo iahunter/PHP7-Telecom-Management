@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\DidScan;
 
+use DB;
 use App\Did;
 use App\Didblock;
-use DB;
 use Illuminate\Console\Command;
 
 class Callmanager extends Command

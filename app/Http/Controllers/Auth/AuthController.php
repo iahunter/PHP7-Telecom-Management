@@ -14,15 +14,16 @@
  * @copyright 2015-2016 @authors
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Http\Request;
-// added by 3
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+// added by 3
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller
 {

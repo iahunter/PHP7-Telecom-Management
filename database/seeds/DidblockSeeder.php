@@ -43,9 +43,6 @@ class DidblockSeeder extends Seeder
             $end = $end + 10;
         }
 
-
-
-
         // Create Seed Data for DID Block table
         /*
         DB::table('did_block')->insert(array(

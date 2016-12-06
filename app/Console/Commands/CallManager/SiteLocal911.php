@@ -63,7 +63,6 @@ class SiteLocal911 extends Command
                 print_r($newpartitions);
             }
 
-
             foreach ($newpartitions as $partition) {
                 //print_r($partition);
                 //print "Partitions: ";
@@ -89,7 +88,6 @@ class SiteLocal911 extends Command
                 }
             }
 
-
             // Step 4. Update current CSS with new Partition at the end of the list for each site.
 
             $current_css = $site_details['Css'];
@@ -113,7 +111,6 @@ class SiteLocal911 extends Command
                 echo 'Getting CSS Members...';
                 print_r($css_details);
 
-
                 if ($css_details['partitionUsage'] == 'Intercom') {
                     echo "Skipping CSS {$value}... We don't want to act on Intercom CSSs";
                     print_r($css_details);
@@ -128,7 +125,6 @@ class SiteLocal911 extends Command
                     print_r($css_details);
                     continue;
                 }
-
 
                 $css_next_index = max(array_keys($css_report[$value])) + 1;                // Set the next index ID by adding one to the max index number that currently exists.
                 //echo 'HREE';
@@ -168,8 +164,6 @@ class SiteLocal911 extends Command
                 }
             }
 
-
-
             // Step 5. Create new 911 Route List and add the SLRG go it as a member for each site.
 
             /* You can get a RouteList Report by uncommenting this.
@@ -192,7 +186,6 @@ class SiteLocal911 extends Command
             }
             */
 
-
             $DPUUID = $site_details['DevicePool'];
 
             foreach ($DPUUID as $key => $value) {
@@ -202,7 +195,6 @@ class SiteLocal911 extends Command
                 $SLRG = $DP['localRouteGroup']['value'];                                    // Get the SLRG
                 $CCMGRP = $DP['callManagerGroupName']['_'];                                    // Get the Call Manager Group
             }
-
 
             $RL911 = $this->build_new_911_routelist_array($site, $CCMGRP, $SLRG);            // Create the array to pass to the add function.
 
@@ -224,8 +216,6 @@ class SiteLocal911 extends Command
                     dd($e->getTrace());
                 }
             }
-
-
 
             // Step 6. Add Route Patterns with Partition and RL assignements for each site.
 
@@ -472,8 +462,6 @@ class SiteLocal911 extends Command
             }
         }
 
-
-
         return $RESULTS;
     }
 
@@ -589,7 +577,6 @@ class SiteLocal911 extends Command
     protected function build_new_911_routepatterns_array($SITE)
     {
         echo 'Building Site 911 Route Patterns Array...'.PHP_EOL;
-
 
         $DATA = [
                     [

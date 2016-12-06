@@ -66,7 +66,6 @@ class BuildCUCMSiteDefaults extends Command
             $result = $EXCEPTION;
         }
 
-
         return $result;
     }
 
@@ -246,7 +245,6 @@ class BuildCUCMSiteDefaults extends Command
                   "{$E->getTraceAsString()}".
                   "Data sent:\n";
         }
-
 
         // 1. Add a Global Css
 
@@ -605,7 +603,6 @@ class BuildCUCMSiteDefaults extends Command
                                                         ],
                     ],
 
-
                     // Toll Free Calling
                     [
                         'pattern'                        => '9.1800[2-9]XXXXXX',
@@ -706,7 +703,6 @@ class BuildCUCMSiteDefaults extends Command
                                                         ],
                     ],
 
-
                     // E164 Calling
                     // E164 - International Calling
                     [
@@ -753,7 +749,6 @@ class BuildCUCMSiteDefaults extends Command
 
                                                         ],
                     ],
-
 
                     // E164 - Toll Free Calling
                     [
@@ -842,8 +837,6 @@ class BuildCUCMSiteDefaults extends Command
                     ],
 
                 ];
-
-
 
         // Check if the object already exists. If it isn't then add it.
         foreach ($DATA as $PATTERN) {

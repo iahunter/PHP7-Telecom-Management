@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Did;
 use App\Didblock;
-use DB;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -64,7 +64,6 @@ class Didcontroller extends Controller
             }
             $statsarray[$stat->id][$stat->status] = $stat->statuscount;
         }
-
 
         return $statsarray;
     }
@@ -157,7 +156,6 @@ class Didcontroller extends Controller
                     'success'        => true,
                     'message'        => 'Did Block '.$id.' successfully deleted',
                     'deleted_at'     => $didblock->deleted_at, ];
-
 
         return response()->json($response);
     }
@@ -310,7 +308,6 @@ class Didcontroller extends Controller
                     'request'        => $request->all(),
                     'did'            => $did,
                     ];
-
 
         return response()->json($response);
     }

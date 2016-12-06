@@ -45,7 +45,6 @@
      **/
     $api->get('cucm/css/{name}', 'App\Http\Controllers\Cucm@listCssDetailsbyName');
 
-
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/routepattern/{routePartitionName}",
@@ -73,8 +72,6 @@
      * )
      **/
     $api->get('cucm/routepattern/{routePartitionName}', 'App\Http\Controllers\Cucm@listRoutePatternsByPartition');
-
-
 
     /**
      * @SWG\Get(

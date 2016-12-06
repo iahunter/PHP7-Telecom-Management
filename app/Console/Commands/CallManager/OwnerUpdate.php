@@ -62,7 +62,6 @@ class OwnerUpdate extends Command
         $LEN = count($SITES);
         echo "Found {$LEN} Sites in CUCM...".PHP_EOL;
 
-
         //$SITES = ["CENNEOMA"];
         $SITE_COUNT = 0;
         foreach ($SITES as $SITE) {
@@ -102,7 +101,6 @@ class OwnerUpdate extends Command
                             }
                         }
 
-
                         // If we have the global varible set to true then skip else set it to blank.
 
                         if ($new_owner == '') {
@@ -115,7 +113,6 @@ class OwnerUpdate extends Command
                                 $removed_unassigned++;
                             }
                         }
-
 
                         // Update Phone with new Owner ID.
 

@@ -102,7 +102,6 @@
      **/
     $api->get('didblock/{id}', 'App\Http\Controllers\Didcontroller@getDidblock');
 
-
     /**
      * @SWG\Get(
      *     path="/telephony/api/didblock",
@@ -218,7 +217,6 @@
      **/
     $api->get('didblock/{id}/dids', 'App\Http\Controllers\Didcontroller@listDidbyBlockID');
 
-
     // DID App routes
     // $api->post('did', 'App\Http\Controllers\Didcontroller@createDid'); // Individual DID creation not allowed.
         // List DIDs by block id
@@ -311,7 +309,6 @@
      * )
      **/
     $api->get('did/searchbyparent/{parentid}/{column}/{search}', 'App\Http\Controllers\Didcontroller@searchDidbyParent');
-
 
     /**
      * @SWG\Put(

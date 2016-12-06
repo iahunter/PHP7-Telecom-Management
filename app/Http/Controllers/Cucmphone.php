@@ -24,6 +24,9 @@ class Cucmphone extends Cucm
             echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
+		
+		// Append Line Details to the phone. 
+		$phone['line_details'] = $this->cucm->get_lines_details_by_phone_name($name);
 
         $response = [
                     'status_code'    => 200,
@@ -217,6 +220,17 @@ class Cucmphone extends Cucm
                     'asciiAlertingName'            => substr($FULLNAME, 0, 28),
                     'voiceMailProfileName'         => $VOICEMAILPROFILE,
                     'presenceGroupName'            => 'Standard Presence group',
+					
+					// E164 Alternative Number Mask
+					'e164AltNum' 				=> [
+                                                        'numMask'     				=> "+1{$DN}",
+                                                        'isUrgent' 					=> "true",
+														'addLocalRoutePartition' 	=> "true",
+														'routePartition'			=> "Global-All-Lines",
+														'active'					=> "true";
+                                                    ],
+													
+					// Call Forward Settings
                     'callForwardAll'               => [
                                                         'forwardToVoiceMail'                 => 'false',
                                                         'callingSearchSpaceName'             => $LINECSS,
@@ -286,7 +300,7 @@ class Cucmphone extends Cucm
         'protocol'                           => $PROTOCOL,
         'protocolSide'                       => 'User',
         'devicePoolName'                     => 'DP_'.$SITE,
-        'callingSearchSpaceName'             => 'CSS_'.$SITE,
+        'callingSearchSpaceName'             => 'CSS_'.$SITE.'_DEVICE',
         'locationName'                       => 'LOC_'.$SITE,
         'commonPhoneConfigName'              => 'Standard Common Phone Profile',
         'useTrustedRelayPoint'               => 'Default',
@@ -296,7 +310,7 @@ class Cucmphone extends Cucm
         'packetCaptureMode'                  => 'None',
         'certificateOperation'               => '',
         'deviceMobilityMode'                 => '',
-        'subscribeCallingSearchSpaceName'    => 'CSS-Internal-911',
+        'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
         'vendorConfig'                       => [
                                     'webAccess'        => 1,
             ],

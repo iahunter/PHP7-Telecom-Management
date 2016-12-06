@@ -41,7 +41,7 @@
      *     @SWG\Parameter(
      *         name="name",
      *         in="path",
-     *         description="Name of Phone to Delete",
+     *         description="Name of Phone to Delete - Example SEP0004DEADBEEF",
      *         required=true,
      *         type="string"
      *     ),

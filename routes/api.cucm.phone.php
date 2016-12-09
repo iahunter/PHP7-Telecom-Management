@@ -28,7 +28,6 @@
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
 
-
     /**
      * @SWG\Delete(
      *     path="/telephony/api/cucm/phone/{name}",
@@ -53,7 +52,6 @@
      * )
      **/
     $api->delete('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@deletePhone');
-
 
     /**
      * @SWG\Post(

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Phoneplanner extends Model
+class Site extends Model
 {
     //
 }

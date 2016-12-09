@@ -12,7 +12,7 @@
      *     @SWG\Parameter(
      *         name="name",
      *         in="path",
-     *         description="Name of Phone",
+     *         description="Name of Phone - Example SEP0004DEADBEEF",
      *         required=true,
      *         type="string"
      *     ),
@@ -27,6 +27,7 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
+
 
     /**
      * @SWG\Delete(
@@ -52,6 +53,7 @@
      * )
      **/
     $api->delete('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@deletePhone');
+
 
     /**
      * @SWG\Post(

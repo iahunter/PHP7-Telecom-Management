@@ -63,7 +63,7 @@
                     {
                         "name": "name",
                         "in": "path",
-                        "description": "Name of Phone",
+                        "description": "Name of Phone - Example SEP0004DEADBEEF",
                         "required": true,
                         "type": "string"
                     }
@@ -94,7 +94,7 @@
                     {
                         "name": "name",
                         "in": "path",
-                        "description": "Name of Phone to Delete",
+                        "description": "Name of Phone to Delete - Example SEP0004DEADBEEF",
                         "required": true,
                         "type": "string"
                     }

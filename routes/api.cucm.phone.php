@@ -153,9 +153,8 @@
      * )
      **/
     $api->post('cucm/phone', 'App\Http\Controllers\Cucmphone@createPhone');
-	
-	
-	 /**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/upload/phones",
      *     tags={"Management - CUCM - Phone Provisioning"},
@@ -182,20 +181,19 @@
      * )
      **/
     $api->post('cucm/upload/phones', 'App\Http\Controllers\Cucmphone@uploadPhones');
-	
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/paste/phones",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Upload Phone Planning Document in CUCM",
-	 *     description="
-		Paste phones in from excel into the text box area. This must be in the correct format to be parsed correctly. 
-		See phone planning template for correct format. Do not include headers when pasting.
-	
-	phones format: 
-	'First Name'	'Last Name'	'Username'	'MAC Address'	'Device Type'	'10 digit Extension'	'Language'	'Default Password for User ID Access'	U'nity Mailbox Y/N'	'NOTES'
-",
+     *     description="
+     Paste phones in from excel into the text box area. This must be in the correct format to be parsed correctly.
+     See phone planning template for correct format. Do not include headers when pasting.
+
+     phones format:
+     'First Name'	'Last Name'	'Username'	'MAC Address'	'Device Type'	'10 digit Extension'	'Language'	'Default Password for User ID Access'	U'nity Mailbox Y/N'	'NOTES'
+     ",
      *     operationId="insert phones",
      *     consumes={"application/json"},
      *     produces={"application/json"},

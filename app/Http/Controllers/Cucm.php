@@ -23,33 +23,27 @@ class Cucm extends Controller
 
     // Variable to return to user
     public $results;
-	
-	public function start_ldap_sync()
-    {
-         try {
-             $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'true');
-			 
-			 print $ldapsync->return . PHP_EOL;
-			 
-         } catch (\Exception $e) {
-             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-         }
 
-         
+    public function start_ldap_sync()
+    {
+        try {
+            $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'true');
+
+            echo $ldapsync->return.PHP_EOL;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
     }
-	
-	public function stop_ldap_sync()
-    {
-         try {
-             $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'false');
-			 
-			 print $ldapsync->return . PHP_EOL;
-			 
-         } catch (\Exception $e) {
-             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-         }
 
-         
+    public function stop_ldap_sync()
+    {
+        try {
+            $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'false');
+
+            echo $ldapsync->return.PHP_EOL;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
     }
 
     // CUCM Add Wrapper

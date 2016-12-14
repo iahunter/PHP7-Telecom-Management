@@ -219,70 +219,70 @@ class AuthController extends Controller
         }
     }
 
-	public function changeLdapPhone($username, $phonenumber)
+    public function changeLdapPhone($username, $phonenumber)
     {
-		if (! $this->ldap) {
-			$this->ldapinit();
-		}
-        $user = $this->ldap->user()->info($username, array("*"));
-        if ($user[0]['dn'] == NULL) {
-            throw new \Exception("Error getting DN for username " . $username);
+        if (! $this->ldap) {
+            $this->ldapinit();
         }
-        $user_dn        = $user[0]["dn"];
-		//print_r($user_dn);
-		$user_ipphone = "";
-		if(isset($user[0]["ipphone"][0])){
-			$user_ipphone   = $user[0]["ipphone"][0];
-		}
+        $user = $this->ldap->user()->info($username, ['*']);
+        if ($user[0]['dn'] == null) {
+            throw new \Exception('Error getting DN for username '.$username);
+        }
+        $user_dn = $user[0]['dn'];
+        //print_r($user_dn);
+        $user_ipphone = '';
+        if (isset($user[0]['ipphone'][0])) {
+            $user_ipphone = $user[0]['ipphone'][0];
+        }
 
-		$ldapshost = 'ldaps:/'.'/'.env('LDAP_HOST');
+        $ldapshost = 'ldaps:/'.'/'.env('LDAP_HOST');
         $ad = ldap_connect($ldapshost);
-        if(!$ad) {
-            throw new \Exception("Could not reconnect to AD for modifications");
+        if (! $ad) {
+            throw new \Exception('Could not reconnect to AD for modifications');
         }
         ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
-        $bd = ldap_bind($ad, env('LDAP_USER'), env('LDAP_PASS') );
-        if(!$bd) {
-            throw new \Exception("Error rebinding to AD as user " . env('LDAP_USER') );
+        $bd = ldap_bind($ad, env('LDAP_USER'), env('LDAP_PASS'));
+        if (! $bd) {
+            throw new \Exception('Error rebinding to AD as user '.env('LDAP_USER'));
         }
         // set the users new phone number
-        $change["ipPhone"] = $phonenumber;
+        $change['ipPhone'] = $phonenumber;
         // execute the LDAP modify query
         $result = ldap_mod_replace($ad, $user_dn, $change);
-        if(!$result) {
-            throw new \Exception("Error modifying AD attribute for DN " . $user_dn);
+        if (! $result) {
+            throw new \Exception('Error modifying AD attribute for DN '.$user_dn);
         }
         ldap_unbind($ad);
-        return array(
-					"user" => $user_dn,
-					"ipphone" => [
-									"old" => $user_ipphone,
-									"new" => $phonenumber,
-								]
-                    );
+
+        return [
+                    'user'    => $user_dn,
+                    'ipphone' => [
+                                    'old' => $user_ipphone,
+                                    'new' => $phonenumber,
+                                ],
+                    ];
     }
-	
-	
-	public function getUserLdapPhone($username)
+
+    public function getUserLdapPhone($username)
     {
-		
-		if (! $this->ldap) {
-			$this->ldapinit();
-		}
-        $user = $this->ldap->user()->info($username, array("*"));
-        if ($user[0]['dn'] == NULL) {
-            throw new \Exception("Error getting DN for username " . $username);
+        if (! $this->ldap) {
+            $this->ldapinit();
         }
-        $user_dn        = $user[0]["dn"];
-		//print_r($user_dn);
-		$user_ipphone = "";
-		if(isset($user[0]["ipphone"][0])){
-			$user_ipphone   = $user[0]["ipphone"][0];
-		}
-        return array(
-					"user" => $user_dn,
-					"ipphone"  => $user_ipphone,
-                    );
+        $user = $this->ldap->user()->info($username, ['*']);
+        if ($user[0]['dn'] == null) {
+            throw new \Exception('Error getting DN for username '.$username);
+        }
+        $user_dn = $user[0]['dn'];
+        //print_r($user_dn);
+        $user_ipphone = '';
+        if (isset($user[0]['ipphone'][0])) {
+            $user_ipphone = $user[0]['ipphone'][0];
+        }
+
+        return [
+                    'user'     => $user_dn,
+                    'ipphone'  => $user_ipphone,
+                    ];
     }
 
     public function getLdapUserByName($username)

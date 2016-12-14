@@ -44,13 +44,12 @@ class Ldapsync extends Command
      */
     public function handle()
     {
-         try {
-             $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'true');
-			 
-			 print $ldapsync->return . PHP_EOL;
-			 
-         } catch (\Exception $e) {
-             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-         }
+        try {
+            $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'true');
+
+            echo $ldapsync->return.PHP_EOL;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
     }
 }

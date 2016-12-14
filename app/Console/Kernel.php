@@ -20,6 +20,8 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CssReport::class,
         Commands\CallManager\OwnerUpdate::class,
         Commands\CallManager\BuildCUCMSiteDefaults::class,
+		Commands\CallManager\Ldapsync::class,
+		Commands\CallManager\AddPhones::class,
     ];
 
     /**

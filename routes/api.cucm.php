@@ -1,5 +1,39 @@
 <?php
 
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/ldap/start",
+     *     tags={"Management - CUCM"},
+     *     summary="Start LDAP Sync",
+     *     description="",
+     *     operationId="",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('cucm/ldap/start', 'App\Http\Controllers\Cucm@start_ldap_sync');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/ldap/stop",
+     *     tags={"Management - CUCM"},
+     *     summary="Stop LDAP Sync",
+     *     description="",
+     *     operationId="",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('cucm/ldap/stop', 'App\Http\Controllers\Cucm@stop_ldap_sync');
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/css",

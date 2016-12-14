@@ -363,6 +363,20 @@ class BuildCUCMSiteDefaults extends Command
                                                     ],
                                         ],
                     ],
+					
+					// Transformation CSSs
+                    [
+                    'name'            => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                    'description'     => 'inbound direction on SIP trunk or GW from PSTN',
+                    'members'         => [
+                                        'member' => [
+                                                        [
+                                                        'routePartitionName'   => 'PT_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                                                        'index'                => 1,
+                                                        ],
+                                                    ],
+                                        ],
+                    ],
 
                     // Transformation CSSs
                     [

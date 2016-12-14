@@ -131,7 +131,7 @@
                     {
                         "name": "device",
                         "in": "formData",
-                        "description": "Device Type",
+                        "description": "Device Type - Example: 7945, 8841, IP Communicator",
                         "required": true,
                         "type": "string"
                     },
@@ -159,7 +159,7 @@
                     {
                         "name": "username",
                         "in": "formData",
-                        "description": "User Name - John.Doe",
+                        "description": "User Name - John.Doe, CallManager.Unassign",
                         "required": true,
                         "type": "string"
                     },
@@ -218,6 +218,137 @@
                     },
                     "401": {
                         "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/upload/phones": {
+            "post": {
+                "tags": [
+                    "Management - CUCM - Phone Provisioning"
+                ],
+                "summary": "Upload Phone Planning Document in CUCM",
+                "description": "Upload .csv file of phones",
+                "operationId": "createSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "phones",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/paste/phones": {
+            "post": {
+                "tags": [
+                    "Management - CUCM - Phone Provisioning"
+                ],
+                "summary": "Upload Phone Planning Document in CUCM",
+                "description": "\n\t\tPaste phones in from excel into the text box area. This must be in the correct format to be parsed correctly. \n\t\tSee phone planning template for correct format. Do not include headers when pasting.\n\t\n\tphones format: \n\t'First Name'\t'Last Name'\t'Username'\t'MAC Address'\t'Device Type'\t'10 digit Extension'\t'Language'\t'Default Password for User ID Access'\tU'nity Mailbox Y/N'\t'NOTES'\n",
+                "operationId": "insert phones",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "extlength",
+                        "in": "formData",
+                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "4",
+                            "5",
+                            "10"
+                        ]
+                    },
+                    {
+                        "name": "phones",
+                        "in": "formData",
+                        "description": "Paste in data from phone planning template - Do not include header info. Follow Format above in notes.",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "description": "Phones",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/ldap/start": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "Start LDAP Sync",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/ldap/stop": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "Stop LDAP Sync",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
                     }
                 }
             }
@@ -934,6 +1065,103 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/ldap/users": {
+            "get": {
+                "tags": [
+                    "Management - LDAP"
+                ],
+                "summary": "List LDAP Users",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/ldap/user/get/{username}": {
+            "get": {
+                "tags": [
+                    "Management - LDAP"
+                ],
+                "summary": "Get User IPPhone in LDAP",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "samAccountName",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/ldap/user/update/ipphone": {
+            "put": {
+                "tags": [
+                    "Management - LDAP"
+                ],
+                "summary": "Change IP Phone in LDAP",
+                "description": "This updates the IP Phone Field in Active Directory so that CUCM imports the user into its database during the LDAP Sync process.",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "samAccountName",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ipphone",
+                        "in": "formData",
+                        "description": "Directory Number",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }

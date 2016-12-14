@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\CallManager;
 
-use Illuminate\Console\Command;
 use App\Http\Controllers\Cucm;
+use Illuminate\Console\Command;
 use App\Http\Controllers\Cucmphone;
 
 class AddPhones extends Command
@@ -27,7 +27,6 @@ class AddPhones extends Command
      *
      * @return void
      */
-	 
     public function __construct()
     {
         parent::__construct();
@@ -38,15 +37,13 @@ class AddPhones extends Command
      *
      * @return mixed
      */
-	 
-	public $phones = <<<END
+    public $phones = <<<'END'
 
 CENNEOMA	CIPC		CENNEOMA_CIPC	7942	4027349204	English	147369	N	
 Travis 	Riesenberg		88908D730016	8841	4029384404	English			
 	
 END;
 
-	 
     public function handle()
     {
         $cucm->pastePhones($phones);

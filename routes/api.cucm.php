@@ -1,6 +1,6 @@
 <?php
 
-	/**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/ldap/start",
      *     tags={"Management - CUCM"},
@@ -16,8 +16,8 @@
      * )
      **/
     $api->get('cucm/ldap/start', 'App\Http\Controllers\Cucm@start_ldap_sync');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/ldap/stop",
      *     tags={"Management - CUCM"},

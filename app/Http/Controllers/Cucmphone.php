@@ -37,20 +37,20 @@ class Cucmphone extends Cucm
 
         print_r($data);
     }
-	
-	
-	public function phones_string_to_array($INPUT){
-		
-		//print_r($INPUT);
-		$INPUT = explode(PHP_EOL, $INPUT);
-		//print_r($INPUT);
 
-		$PHONES = [];
+    public function phones_string_to_array($INPUT)
+    {
+
+        //print_r($INPUT);
+        $INPUT = explode(PHP_EOL, $INPUT);
+        //print_r($INPUT);
+
+        $PHONES = [];
         foreach ($INPUT as $LINE) {
-			if($LINE == ''){
-				unset($LINE);
-				continue;
-			}
+            if ($LINE == '') {
+                unset($LINE);
+                continue;
+            }
             //$LINE = explode("\t",$LINE);
             //print_r($LINE);
             $PHONE = array_combine(
@@ -62,9 +62,9 @@ class Cucmphone extends Cucm
                             );
             $PHONES[] = $PHONE;
         }
-		
+
         return $PHONES;
-	}
+    }
 
     public function pastePhones(Request $request)
     {
@@ -129,10 +129,10 @@ class Cucmphone extends Cucm
         return response()->json($response);
     }
 
-    
-	public function deletePhonebyName($NAME){
-		
-		// Try to remove device from CUCM
+    public function deletePhonebyName($NAME)
+    {
+
+        // Try to remove device from CUCM
         try {
             $RESULT = $this->cucm->get_phone_by_name($NAME);
             $TYPE = 'Phone';
@@ -146,12 +146,9 @@ class Cucmphone extends Cucm
         } catch (\Exception $E) {
             return "{$NAME} Does not exist in CUCM Database.\n";
         }
-	}
-	
-	
-	
-	
-	public function deletePhone(Request $request)
+    }
+
+    public function deletePhone(Request $request)
     {
 
         // Check if name is Set
@@ -159,10 +156,8 @@ class Cucmphone extends Cucm
             return 'Error, no name set';
         }
         $NAME = $request->name;
-		
-		return $this->deletePhonebyName($NAME);
-		
-        
+
+        return $this->deletePhonebyName($NAME);
     }
 
     // Create New Phone
@@ -455,12 +450,11 @@ class Cucmphone extends Cucm
 
         // Check to see if this phone already exists. If it does print out the old config and delete it.
         $REMOVED_PHONES = [];
-        print "Checking if {$NAME} if Exists:\n";
-        
-		$REMOVED = $this->deletePhonebyName($NAME);
-        
-		print_r($REMOVED);
-        
+        echo "Checking if {$NAME} if Exists:\n";
+
+        $REMOVED = $this->deletePhonebyName($NAME);
+
+        print_r($REMOVED);
 
         $RETURN = [];
 
@@ -481,7 +475,6 @@ class Cucmphone extends Cucm
         $this->wrap_add_object($PHONE, 'Phone');
         $RETURN['phone']['log'] = $this->results;
         //$this->results = [];
-
 
         return json_decode(json_encode($this->results), true);
         //return $RETURN;

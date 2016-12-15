@@ -60,7 +60,8 @@ class Cucm extends Controller
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
             $this->results[$TYPE][] = "{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
-			return $REPLY;
+
+            return $REPLY;
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type: {$TYPE}".
                   "{$E->getMessage()}".
@@ -70,7 +71,6 @@ class Cucm extends Controller
             $DATA['exception'] = $EXCEPTION;
             $this->results[$TYPE] = $DATA;
         }
-		
     }
 
     public function listCssDetails(Request $request)

@@ -37,6 +37,34 @@ class Cucmphone extends Cucm
 
         print_r($data);
     }
+	
+	
+	public function phones_string_to_array($INPUT){
+		
+		//print_r($INPUT);
+		$INPUT = explode(PHP_EOL, $INPUT);
+		//print_r($INPUT);
+
+		$PHONES = [];
+        foreach ($INPUT as $LINE) {
+			if($LINE == ''){
+				unset($LINE);
+				continue;
+			}
+            //$LINE = explode("\t",$LINE);
+            //print_r($LINE);
+            $PHONE = array_combine(
+                                // And map these keys to each value extracted
+                                [
+                                    'firstname',    'lastname',    'username',        'name',        'device',
+                                    'dn',    'language',    'defaultpass',    'voicemail',    'notes',
+                                ], explode("\t", $LINE)
+                            );
+            $PHONES[] = $PHONE;
+        }
+		
+        return $PHONES;
+	}
 
     public function pastePhones(Request $request)
     {
@@ -53,8 +81,8 @@ class Cucmphone extends Cucm
             $PHONE = array_combine(
                                 // And map these keys to each value extracted
                                 [
-                                    'firstname',    'lastname',    'username',        'mac',        'device',
-                                    'extension',    'language',    'defaultpass',    'mailbox',    'notes',
+                                    'firstname',    'lastname',    'username',       'name',        'device',
+                                    'dn',    'language',    'defaultpass',    'voicemail',    'notes',
                                 ], explode("\t", $LINE)
                             );
             $PHONE['site'] = $request->sitecode;
@@ -63,7 +91,7 @@ class Cucmphone extends Cucm
             $PHONES[] = $PHONE;
         }
 
-        print_r($PHONES);
+        return $PHONES;
     }
 
     public function getPhone(Request $request)
@@ -101,16 +129,10 @@ class Cucmphone extends Cucm
         return response()->json($response);
     }
 
-    public function deletePhone(Request $request)
-    {
-
-        // Check if name is Set
-        if (! isset($request->name) || ! $request->name) {
-            return 'Error, no name set';
-        }
-        $NAME = $request->name;
-
-        // Try to remove device from CUCM
+    
+	public function deletePhonebyName($NAME){
+		
+		// Try to remove device from CUCM
         try {
             $RESULT = $this->cucm->get_phone_by_name($NAME);
             $TYPE = 'Phone';
@@ -124,12 +146,29 @@ class Cucmphone extends Cucm
         } catch (\Exception $E) {
             return "{$NAME} Does not exist in CUCM Database.\n";
         }
+	}
+	
+	
+	
+	
+	public function deletePhone(Request $request)
+    {
+
+        // Check if name is Set
+        if (! isset($request->name) || ! $request->name) {
+            return 'Error, no name set';
+        }
+        $NAME = $request->name;
+		
+		return $this->deletePhonebyName($NAME);
+		
+        
     }
 
     // Create New Phone
     public function createPhone(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
+        //$user = JWTAuth::parseToken()->authenticate();
 
         // Check if sitecode is Set
         if (! isset($request->sitecode) || ! $request->sitecode) {
@@ -415,11 +454,13 @@ class Cucmphone extends Cucm
         }
 
         // Check to see if this phone already exists. If it does print out the old config and delete it.
-        /*
+        $REMOVED_PHONES = [];
         print "Checking if {$NAME} if Exists:\n";
-        $REMOVED = $this->deletePhone($NAME);
-        array_push($REMOVED_PHONES, $REMOVED);
-        */
+        
+		$REMOVED = $this->deletePhonebyName($NAME);
+        
+		print_r($REMOVED);
+        
 
         $RETURN = [];
 
@@ -427,20 +468,22 @@ class Cucmphone extends Cucm
         $RETURN['line']['config'] = $PHONELINE;
         $this->wrap_add_object($PHONELINE, 'Line');
         $RETURN['line']['log'] = $this->results;
-        $this->results = [];
+        //$this->results = [];
 
         // Update Line
         $RETURN['line']['config']['e164AltNum'] = $PHONELINE;
         $RESULT = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, 'Line');
         $RETURN['phone']['log']['e164AltNum'] = $RESULT;
-        $this->results = [];
+        //$this->results = [];
 
         // Add Phone
         $RETURN['phone']['config'] = $PHONE;
         $this->wrap_add_object($PHONE, 'Phone');
         $RETURN['phone']['log'] = $this->results;
-        $this->results = [];
+        //$this->results = [];
 
-        return $RETURN;
+
+        return json_decode(json_encode($this->results), true);
+        //return $RETURN;
     }
 }

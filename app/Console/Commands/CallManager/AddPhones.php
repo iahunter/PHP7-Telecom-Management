@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\CallManager;
 
-use App\Http\Controllers\Cucm;
 use Illuminate\Console\Command;
+use App\Http\Controllers\Cucm;
 use App\Http\Controllers\Cucmphone;
 
 class AddPhones extends Command
@@ -27,9 +27,11 @@ class AddPhones extends Command
      *
      * @return void
      */
+	 
     public function __construct()
-    {
-        parent::__construct();
+    {  
+		$this->cucmphone = new Cucmphone;
+	   parent::__construct();
     }
 
     /**
@@ -37,15 +39,37 @@ class AddPhones extends Command
      *
      * @return mixed
      */
-    public $phones = <<<'END'
-
-CENNEOMA	CIPC		CENNEOMA_CIPC	7942	4027349204	English	147369	N	
-Travis 	Riesenberg		88908D730016	8841	4029384404	English			
 	
-END;
-
+	public $site = "CENCONER";
+	public $extlength = 4;
+	
     public function handle()
     {
-        $cucm->pastePhones($phones);
+		// Include the phones.php $phones variable to import phones.
+		require __DIR__."/Imports/Phones.txt";
+        //print $phones;
+
+		$phones = $this->cucmphone->phones_string_to_array($phones);
+		
+		$PHONE = [];
+		foreach($phones as $phone){
+			//$phone['sitecode'] = $this->site;
+			$phone['sitecode'] = $site;
+			
+			//$phone['extlength'] = $this->extlength;
+			$phone['extlength'] = $extlength;
+			$PHONES[] = $phone;
+		}
+		//print_r($PHONES);
+		
+		$ARRAY = [];
+		foreach($PHONES as $PHONE){
+			print "Adding Phone...".PHP_EOL;
+			print_r($PHONE);
+			$REQUEST = $this->cucmphone->createPhone(new \Illuminate\Http\Request($PHONE));
+			print_r($REQUEST);
+			$ARRAY[] = $REQUEST; 
+		}
+
     }
 }

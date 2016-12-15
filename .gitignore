@@ -25,7 +25,7 @@ tests/ImportBlockTest.php
 
 database/seeds/ImportDIDListSeeder.php
 
-
+app/Console/Commands/CallManager/Imports/
 
 storage/axl/
 

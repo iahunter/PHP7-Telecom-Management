@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\BuildCUCMSiteDefaults::class,
         Commands\CallManager\Ldapsync::class,
         Commands\CallManager\AddPhones::class,
+		Commands\CallManager\LdapUserUpdate::class,
     ];
 
     /**

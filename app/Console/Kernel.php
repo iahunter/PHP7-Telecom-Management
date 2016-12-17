@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\DidScan\Callmanager::class,
+		
         Commands\CallManager\SiteLocal911::class,
         Commands\CallManager\SiteDetailsReport::class,
         Commands\CallManager\CssReport::class,
@@ -23,6 +24,8 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\Ldapsync::class,
         Commands\CallManager\AddPhones::class,
         Commands\CallManager\LdapUserUpdate::class,
+		
+		Commands\UnityConnection\UnityConnMB::class,
     ];
 
     /**

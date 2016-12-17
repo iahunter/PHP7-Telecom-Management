@@ -12,6 +12,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/iahunter/PHP5-CallManager-AXL.git"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/iahunter/PHP7-UnityConnection-CUPI.git"
       }
     ],
     "require": {
@@ -33,7 +37,8 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-		"iahunter/PHP5-CallManager-AXL": "dev-master"
+		"iahunter/PHP5-CallManager-AXL": "dev-master",
+        "iahunter/PHP7-UnityConnection-CUPI": "dev-master"
     },
     "autoload": {
         "classmap": [

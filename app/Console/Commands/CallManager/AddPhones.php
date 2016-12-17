@@ -65,7 +65,8 @@ class AddPhones extends Command
             echo 'Adding Phone...'.PHP_EOL;
             print_r($PHONE);
             $REQUEST = $this->cucmphone->createPhone(new \Illuminate\Http\Request($PHONE));
-            print_r($REQUEST);
+            $RESULT = $REQUEST;
+			print_r($RESULT);
             $ARRAY[] = $REQUEST;
         }
     }

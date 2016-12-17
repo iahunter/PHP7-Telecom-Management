@@ -261,7 +261,7 @@
                     "Management - CUCM - Phone Provisioning"
                 ],
                 "summary": "Upload Phone Planning Document in CUCM",
-                "description": "\n\t\tPaste phones in from excel into the text box area. This must be in the correct format to be parsed correctly. \n\t\tSee phone planning template for correct format. Do not include headers when pasting.\n\t\n\tphones format: \n\t'First Name'\t'Last Name'\t'Username'\t'MAC Address'\t'Device Type'\t'10 digit Extension'\t'Language'\t'Default Password for User ID Access'\tU'nity Mailbox Y/N'\t'NOTES'\n",
+                "description": "\n     Paste phones in from excel into the text box area. This must be in the correct format to be parsed correctly.\n     See phone planning template for correct format. Do not include headers when pasting.\n\n     phones format:\n     'First Name'\t'Last Name'\t'Username'\t'MAC Address'\t'Device Type'\t'10 digit Extension'\t'Language'\t'Default Password for User ID Access'\tU'nity Mailbox Y/N'\t'NOTES'\n     ",
                 "operationId": "insert phones",
                 "consumes": [
                     "application/json"
@@ -466,6 +466,39 @@
                         "name": "type",
                         "in": "path",
                         "description": "Object Type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/search/user/{alias}": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "List Object Type details by Name",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "alias",
+                        "in": "path",
+                        "description": "Name of Object",
                         "required": true,
                         "type": "string"
                     }

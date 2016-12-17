@@ -141,10 +141,8 @@
      * )
      **/
     $api->get('cucm/search/{type}/{name}', 'App\Http\Controllers\Cucm@getObjectTypebyName');
-	
-	
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/search/user/{alias}",
      *     tags={"Management - UnityConnection"},

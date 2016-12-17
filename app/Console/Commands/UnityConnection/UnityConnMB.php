@@ -51,14 +51,15 @@ class UnityConnMB extends Command
 	*
 	* Change this every time you import a different Site!!! 
 	*********************************************************/
-	public $user_template = "CHANGE ME";
+	public $user_template;
 	 
     public function handle()
     {
 		
 		// Paste in your users into this file from excel to be parsed and imported. 
 		require __DIR__.'/../CallManager/Imports/Phones.txt';
-	
+		
+		$this->user_template = $user_template;
 		$phones = $this->cucmphone->phones_string_to_array($phones);
 		
 		//print_r($phones);

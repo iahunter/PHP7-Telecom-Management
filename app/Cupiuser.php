@@ -10,10 +10,10 @@ use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
 class Cupiuser extends Model
 {
     //
-	
+
     public static function finduserbyalias($alias)
     {
-        $client = new GuzzleHttpClient;
+        $client = new GuzzleHttpClient();
 
         $URL = env('UNITYCONNECTION_URL');
 
@@ -34,7 +34,7 @@ class Cupiuser extends Model
     public static function updateUserbyobjectid($ID, $UPDATE = [])
     {
         // *******Something is not working with this for some reason. *****
-        $client = new GuzzleHttpClient;
+        $client = new GuzzleHttpClient();
 
         $URL = env('UNITYCONNECTION_URL');
 
@@ -57,7 +57,7 @@ class Cupiuser extends Model
 
     public static function getLDAPUserbyAlias($alias)
     {
-        $client = new GuzzleHttpClient;
+        $client = new GuzzleHttpClient();
 
         $URL = env('UNITYCONNECTION_URL');
 
@@ -77,7 +77,7 @@ class Cupiuser extends Model
 
     public static function importLDAPUser($TEMPLATE, $UPDATE)
     {
-        $client = new GuzzleHttpClient;
+        $client = new GuzzleHttpClient();
 
         $URL = env('UNITYCONNECTION_URL');
 

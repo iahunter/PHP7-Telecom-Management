@@ -34,7 +34,7 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'sites'      => $show,
+                    'sites'          => $show,
                     ];
 
         return response()->json($response);
@@ -56,7 +56,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'       => $site,
+                    'site'           => $site,
                     ];
 
         return response()->json($response);
@@ -64,7 +64,7 @@ class SitePlanController extends Controller
 
     public function createsite(Request $request)
     {
-		print "TRAVIS";
+        echo 'TRAVIS';
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
@@ -79,7 +79,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'       => $site,
+                    'site'           => $site,
                     ];
 
         return response()->json($response);
@@ -105,7 +105,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'       => $site,
+                    'site'           => $site,
                     ];
 
         return response()->json($response);
@@ -131,7 +131,6 @@ class SitePlanController extends Controller
         return response()->json($response);
     }
 
-
     public function listPhonebyBlockID(Request $request, $parent)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -140,9 +139,9 @@ class SitePlanController extends Controller
         }
         //dd($Phones);
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
+                    'status_code'      => 200,
+                    'success'          => true,
+                    'message'          => '',
                     'Phones'           => $Phones,
                     ];
 
@@ -158,10 +157,10 @@ class SitePlanController extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
+                    'status_code'      => 200,
+                    'success'          => true,
+                    'message'          => '',
+                    'request'          => $request->all(),
                     'Phone'            => $Phone,
                     ];
 
@@ -187,10 +186,10 @@ class SitePlanController extends Controller
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    'request'         => $request->all(),
+                    'status_code'       => 200,
+                    'success'           => true,
+                    'message'           => '',
+                    'request'           => $request->all(),
                     'Phones'            => $Phones,
                     ];
 
@@ -217,10 +216,10 @@ class SitePlanController extends Controller
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    'request'         => $request->all(),
+                    'status_code'       => 200,
+                    'success'           => true,
+                    'message'           => '',
+                    'request'           => $request->all(),
                     'Phones'            => $Phones,
                     ];
 
@@ -243,10 +242,10 @@ class SitePlanController extends Controller
         $Phone->save();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
+                    'status_code'      => 200,
+                    'success'          => true,
+                    'message'          => '',
+                    'request'          => $request->all(),
                     'Phone'            => $Phone,
                     ];
 

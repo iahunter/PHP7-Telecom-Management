@@ -116,8 +116,8 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	public function listDateTimeGroup(Request $request)
+
+    public function listDateTimeGroup(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -132,7 +132,7 @@ class Cucm extends Controller
             dd($e->getTrace());
         }
 
-		/*
+        /*
         $CSS_LIST = [];
         foreach ($list as $key => $value) {
             $UUID = $key;
@@ -151,7 +151,7 @@ class Cucm extends Controller
             $CSS_LIST[] = $css;
             //$CSS_LIST[] = ;
         }
-		*/
+        */
 
         $response = [
                     'status_code'    => 200,

@@ -12,13 +12,13 @@ class Site extends Model
     use Auditable;
     use SoftDeletes;
     protected $table = 'site';
-    protected $fillable = ['sitecode', 'type', 'srstip','h323ip','npa','nxx','timezone','operator','comment', 'didrange','details'];
+    protected $fillable = ['sitecode', 'type', 'srstip', 'h323ip', 'npa', 'nxx', 'timezone', 'operator', 'comment', 'didrange', 'details'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'h323ip' => 'array',
-			'didrange' => 'array',
-			'details' => 'array',
+            'h323ip'   => 'array',
+            'didrange' => 'array',
+            'details'  => 'array',
         ];
 
     protected static function boot()
@@ -28,7 +28,6 @@ class Site extends Model
             return $site->validate();
         });
     }
-
 
     protected function validate()
     {
@@ -44,7 +43,5 @@ class Site extends Model
         if (strlen($this->system_id) > 255) {
             throw new \Exception('system_id exceeded 255 characters');
         }
-
     }
 }
-

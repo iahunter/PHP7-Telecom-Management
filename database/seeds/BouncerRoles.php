@@ -24,6 +24,7 @@ class BouncerRoles extends Seeder
         $types = [
             App\Didblock::class,
             App\Did::class,
+			App\Site::class,
         ];
 
         foreach ($types as $type) {
@@ -43,6 +44,7 @@ class BouncerRoles extends Seeder
         $types = [
             App\Didblock::class,
             App\Did::class,
+			App\Site::class,
         ];
 
         foreach ($types as $type) {
@@ -61,6 +63,7 @@ class BouncerRoles extends Seeder
         $types = [
             App\Didblock::class,
             App\Did::class,
+			App\Site::class,
         ];
 
         foreach ($types as $type) {

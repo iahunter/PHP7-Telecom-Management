@@ -116,6 +116,52 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
+	
+	public function listDateTimeGroup(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        try {
+            $list = $this->cucm->get_object_type_by_site('%', 'DateTimeGroup');
+
+            if (! count($list)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+
+		/*
+        $CSS_LIST = [];
+        foreach ($list as $key => $value) {
+            $UUID = $key;
+
+            try {
+                $css = $this->cucm->get_object_type_by_uuid($UUID, 'DateTimeGroup');
+
+                if (! count($css)) {
+                    throw new \Exception('Indexed results from call mangler is empty');
+                }
+            } catch (\Exception $e) {
+                echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+                dd($e->getTrace());
+            }
+
+            $CSS_LIST[] = $css;
+            //$CSS_LIST[] = ;
+        }
+		*/
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $list,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function listCssDetailsbyName(Request $request)
     {

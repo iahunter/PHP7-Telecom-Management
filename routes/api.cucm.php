@@ -50,6 +50,23 @@
      * )
      **/
     $api->get('cucm/css', 'App\Http\Controllers\Cucm@listCssDetails');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/dateandtime",
+     *     tags={"Management - CUCM"},
+     *     summary="List Date Time Groups",
+     *     description="",
+     *     operationId="listDateTimeGroup",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('cucm/dateandtime', 'App\Http\Controllers\Cucm@listDateTimeGroup');
 
     /**
      * @SWG\Get(

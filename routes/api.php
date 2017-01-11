@@ -34,11 +34,15 @@ $api->version('v1', function ($api) {
 
     // Did and Didblock routes
     require __DIR__.'/api.did.php';
+	
+	// Site Planning Routes
+	require __DIR__.'/api.site.plan.php';
 
     // CUCM routes
     require __DIR__.'/api.cucm.php';
     require __DIR__.'/api.cucm.site.php';
     require __DIR__.'/api.cucm.phone.php';
+	
 
     // LDAP routes
     require __DIR__.'/api.ldap.php';

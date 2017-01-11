@@ -50,8 +50,8 @@
      * )
      **/
     $api->get('cucm/css', 'App\Http\Controllers\Cucm@listCssDetails');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/dateandtime",
      *     tags={"Management - CUCM"},

@@ -18,15 +18,15 @@ class CreateCucmPlanning extends Migration
             $table->increments('id');
             $table->string('sitecode');                         // Name
             $table->text('comment')->nullable();            // Comment
-			$table->text('system_id')->nullable();          // Comment
-			$table->text('type')->nullable();          		// Comment
-			$table->text('srstip')->nullable();          	// Comment
-			$table->json('h323ip')->nullable();            	// JSON Details Custom Field Data
-			$table->text('npa')->nullable();            	// JSON Details Custom Field Data
-			$table->text('nxx')->nullable();            	// JSON Details Custom Field Data
-			$table->text('timezone')->nullable();           // JSON Details Custom Field Data
-			$table->json('didrange')->nullable();           // JSON Details Custom Field Data
-			$table->text('operator')->nullable();          	// Comment
+            $table->text('system_id')->nullable();          // Comment
+            $table->text('type')->nullable();                  // Comment
+            $table->text('srstip')->nullable();              // Comment
+            $table->json('h323ip')->nullable();                // JSON Details Custom Field Data
+            $table->text('npa')->nullable();                // JSON Details Custom Field Data
+            $table->text('nxx')->nullable();                // JSON Details Custom Field Data
+            $table->text('timezone')->nullable();           // JSON Details Custom Field Data
+            $table->json('didrange')->nullable();           // JSON Details Custom Field Data
+            $table->text('operator')->nullable();              // Comment
             $table->json('details')->nullable();            // JSON Details Custom Field Data
             $table->timestamps();                           // Time Stamps
             $table->softDeletes();                          // Soft Deletes
@@ -63,8 +63,7 @@ class CreateCucmPlanning extends Migration
     public function down()
     {
         //
-		Schema::drop('phones');
+        Schema::drop('phones');
         Schema::drop('site');
-        
     }
 }

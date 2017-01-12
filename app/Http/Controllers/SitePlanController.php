@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Site;
+use App\Phone;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -34,7 +35,7 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'sites'          => $show,
+                    'sites'      => $show,
                     ];
 
         return response()->json($response);
@@ -45,8 +46,6 @@ class SitePlanController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         $site = Site::find($id);
 
-        $site->stats = $stats[$site->id];
-
         if (! $user->can('read', $site)) {
             abort(401, 'You are not authorized to view site '.$id);
         }
@@ -56,7 +55,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'           => $site,
+                    'site'       => $site,
                     ];
 
         return response()->json($response);
@@ -64,7 +63,6 @@ class SitePlanController extends Controller
 
     public function createsite(Request $request)
     {
-        echo 'TRAVIS';
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
@@ -79,7 +77,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'           => $site,
+                    'site'       => $site,
                     ];
 
         return response()->json($response);
@@ -105,7 +103,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'           => $site,
+                    'site'       => $site,
                     ];
 
         return response()->json($response);
@@ -116,7 +114,7 @@ class SitePlanController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
-        if (! $user->can('delete', site::class)) {
+        if (! $user->can('delete', Site::class)) {
             abort(401, 'You are not authorized to delete Phone block id '.$id);
         }
 
@@ -131,17 +129,39 @@ class SitePlanController extends Controller
         return response()->json($response);
     }
 
-    public function listPhonebyBlockID(Request $request, $parent)
+	public function createPhone(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('create', Phone::class)) {
+            abort(401, 'You are not authorized to create new Phone blocks');
+        }
+
+        $phone = Phone::create($request->all());
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'site'       => $phone,
+                    ];
+
+        return response()->json($response);
+    }
+
+    public function listphonebySiteID(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
         if ($user->can('read', Phone::class)) {
-            $Phones = \App\Phone::where('parent', $parent)->get();
+            $Phones = \App\Phone::where('parent', $id)->get();
         }
         //dd($Phones);
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
                     'Phones'           => $Phones,
                     ];
 
@@ -157,10 +177,10 @@ class SitePlanController extends Controller
         }
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'request'          => $request->all(),
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
                     'Phone'            => $Phone,
                     ];
 
@@ -176,20 +196,20 @@ class SitePlanController extends Controller
         }
 
         // Search for Phone by numberCheck if there are any matches.
-        if (! Phone::where([['number', 'like', $number_search.'%']])->count()) {
-            abort(404, 'No number found matching search: '.$number_search);
+        if (! Phone::where([['dn', 'like', $number_search.'%']])->count()) {
+            abort(404, 'No dn found matching search: '.$number_search);
         }
 
         // Search for numbers like search.
-        $Phones = Phone::where([['number', 'like', $number_search.'%']])->get();
+        $Phones = Phone::where([['dn', 'like', $number_search.'%']])->get();
 
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'request'           => $request->all(),
+                    'status_code'     => 200,
+                    'success'         => true,
+                    'message'         => '',
+                    'request'         => $request->all(),
                     'Phones'            => $Phones,
                     ];
 
@@ -216,10 +236,10 @@ class SitePlanController extends Controller
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'request'           => $request->all(),
+                    'status_code'     => 200,
+                    'success'         => true,
+                    'message'         => '',
+                    'request'         => $request->all(),
                     'Phones'            => $Phones,
                     ];
 
@@ -242,17 +262,16 @@ class SitePlanController extends Controller
         $Phone->save();
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'request'          => $request->all(),
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
                     'Phone'            => $Phone,
                     ];
 
         return response()->json($response);
     }
 
-    /* Not sure we want to advertise delete individual Phones. Leaving this commented out for now.
 
     public function deletePhone(Request $request, $Phone_id)
     {
@@ -268,11 +287,10 @@ class SitePlanController extends Controller
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
-                    'message'        => 'Phone Block '.$Phone_id.' successfully deleted',
+                    'message'        => 'Phone '.$Phone_id.' successfully deleted',
                     'deleted_at'     => $Phone->deleted_at, ];
 
         return response()->json($response);
 
     }
-    */
 }

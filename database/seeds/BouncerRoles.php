@@ -25,7 +25,7 @@ class BouncerRoles extends Seeder
             App\Didblock::class,
             App\Did::class,
             App\Site::class,
-			App\Phone::class,
+            App\Phone::class,
         ];
 
         foreach ($types as $type) {
@@ -46,7 +46,7 @@ class BouncerRoles extends Seeder
             App\Didblock::class,
             App\Did::class,
             App\Site::class,
-			App\Phone::class,
+            App\Phone::class,
         ];
 
         foreach ($types as $type) {
@@ -66,7 +66,7 @@ class BouncerRoles extends Seeder
             App\Didblock::class,
             App\Did::class,
             App\Site::class,
-			App\Phone::class,
+            App\Phone::class,
         ];
 
         foreach ($types as $type) {

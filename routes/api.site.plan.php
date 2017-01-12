@@ -386,7 +386,7 @@
      * )
      **/
     $api->post('site/phone', 'App\Http\Controllers\SitePlanController@createPhone');
-	
+
     // List phones by block id
     /**
      * @SWG\Get(

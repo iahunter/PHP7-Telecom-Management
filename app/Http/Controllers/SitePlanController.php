@@ -35,7 +35,7 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'sites'          => $show,
+                    'sites'      => $show,
                     ];
 
         return response()->json($response);
@@ -55,7 +55,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'           => $site,
+                    'site'       => $site,
                     ];
 
         return response()->json($response);
@@ -77,7 +77,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'           => $site,
+                    'site'       => $site,
                     ];
 
         return response()->json($response);
@@ -103,7 +103,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'           => $site,
+                    'site'       => $site,
                     ];
 
         return response()->json($response);
@@ -129,7 +129,7 @@ class SitePlanController extends Controller
         return response()->json($response);
     }
 
-    public function createPhone(Request $request)
+	public function createPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -145,7 +145,7 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'site'           => $phone,
+                    'phone'       => $phone,
                     ];
 
         return response()->json($response);
@@ -159,10 +159,10 @@ class SitePlanController extends Controller
         }
         //dd($Phones);
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'Phones'           => $Phones,
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'phones'           => $Phones,
                     ];
 
         return response()->json($response);
@@ -177,11 +177,11 @@ class SitePlanController extends Controller
         }
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'request'          => $request->all(),
-                    'Phone'            => $Phone,
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'phone'            => $Phone,
                     ];
 
         return response()->json($response);
@@ -206,11 +206,11 @@ class SitePlanController extends Controller
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'request'           => $request->all(),
-                    'Phones'            => $Phones,
+                    'status_code'     => 200,
+                    'success'         => true,
+                    'message'         => '',
+                    'request'         => $request->all(),
+                    'phones'            => $Phones,
                     ];
 
         return response()->json($response);
@@ -236,11 +236,11 @@ class SitePlanController extends Controller
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'request'           => $request->all(),
-                    'Phones'            => $Phones,
+                    'status_code'     => 200,
+                    'success'         => true,
+                    'message'         => '',
+                    'request'         => $request->all(),
+                    'phones'            => $Phones,
                     ];
 
         return response()->json($response);
@@ -262,15 +262,16 @@ class SitePlanController extends Controller
         $Phone->save();
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'request'          => $request->all(),
-                    'Phone'            => $Phone,
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'phone'            => $Phone,
                     ];
 
         return response()->json($response);
     }
+
 
     public function deletePhone(Request $request, $Phone_id)
     {
@@ -287,8 +288,12 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => 'Phone '.$Phone_id.' successfully deleted',
-                    'deleted_at'     => $Phone->deleted_at, ];
+                    'deleted_at'     => $Phone->deleted_at, 
+					'phone'     	 => $Phone, 
+					];
+					
 
         return response()->json($response);
+
     }
 }

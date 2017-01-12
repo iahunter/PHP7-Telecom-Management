@@ -1,0 +1,141 @@
+<div style="margin:100px"></div>
+
+<div class="container">
+<div class="well">
+<div style="margin:50px"></div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-2">
+			<script type="text/ng-template" id="error-messages">
+							<div ng-message='required'> This Field is required </div>
+							<div ng-message='minlength'> Too short </div>
+							<div ng-message='maxlength'> Too long </div>
+			</script>
+			<div class="panel panel-primary">
+				<div class="panel-heading"><h3>Create New Site</h3></div>
+				<div class="panel-body">
+					<form class="form" role="form" id="addsiteForm" ng-submit='addsiteForm.$valid && vm.submitsite(vm.siteForm)' novalidate name="addsiteForm">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.name.$touched && addsiteForm.name.$invalid, 'has-success': addsiteForm.name.$touched && addsiteForm.name.$valid }">
+									<label for="name" class="control-label">Name</label>
+									<input type="text" ng-model='vm.siteForm.name' required class="form-control"  name="name" placeholder="Name" ng-minlength='3' ng-maxlength='50'>
+									<div ng-messages="addsiteForm.name.$dirty && addsiteForm.name.$error">
+										<div ng-message='required'> Name is required </div>
+										<div ng-message='minlength'>Please enter a Name at least 3 chars long</div>
+										<div ng-message='maxlength'>Name entered cannot be longer than 50 chars</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.carrier.$touched && addsiteForm.carrier.$invalid, 'has-success': addsiteForm.carrier.$touched && addsiteForm.carrier.$valid }">
+									<label for="carrier" class="control-label">Carrier</label>
+									<input type="text" ng-model='vm.siteForm.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
+									<div ng-messages="addsiteForm.carrier.$dirty && addsiteForm.carrier.$error">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.eventDescription.$touched && addsiteForm.eventDescription.$invalid, 'has-success': addsiteForm.eventDescription.$touched && addsiteForm.eventDescription.$valid }">
+									<label for="eventDescription" class="control-label">Comment</label>
+									<input type="textarea" ng-model='vm.siteForm.comment' class="form-control" name="eventDescription" placeholder="Comment">
+									<div ng-messages="addsiteForm.eventDescription.$dirty && addsiteForm.eventDescription.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.countrycode.$touched && addsiteForm.countrycode.$invalid, 'has-success': addsiteForm.countrycode.$touched && addsiteForm.countrycode.$valid }">
+									<label for="countrycode" required class=" control-label">Country Code</label>
+									<input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.siteForm.country_code' class="form-control" name="countrycode" placeholder="1">
+									<div ng-messages="addsiteForm.countrycode.$dirty && addsiteForm.countrycode.$error">
+										<div ng-message="pattern">Please enter a valid country code</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.start.$touched && addsiteForm.start.$invalid, 'has-success': addsiteForm.start.$touched && addsiteForm.start.$valid }">
+									<label for="start" required class=" control-label">Range Start</label>
+									<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.start' class="form-control" name="start" placeholder="4029380000">
+									<div ng-messages="addsiteForm.start.$dirty && addsiteForm.start.$error">
+										<div ng-message="pattern">Please enter the start in the numberic format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.end.$touched && addsiteForm.end.$invalid, 'has-success': addsiteForm.end.$touched && addsiteForm.end.$valid }">
+									<label for="end" required class=" control-label">Range End</label>
+									<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.end' class="form-control" name="end" placeholder="4029389999">
+									<div ng-messages="addsiteForm.end.$dirty && addsiteForm.end.$error">
+										<div ng-message="pattern">Please enter the end in the numberic format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.eventCategory.$touched && addsiteForm.eventCategory.$invalid, 'has-success': addsiteForm.eventCategory.$touched && addsiteForm.eventCategory.$valid }">
+									<label for="eventCategory"  class="control-label">Category</label>
+									<select class="form-control" required ng-model='vm.selectedOption' ng-options="category.name for category in vm.states track by category.id" data-width="100%" name="eventCategory">
+									</select>
+									<div ng-messages="addsiteForm.eventCategory.$dirty && addsiteForm.eventCategory.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.type.$touched && addsiteForm.type.$invalid, 'has-success': addsiteForm.type.$touched && addsiteForm.type.$valid }">
+									<label for="type"  class="control-label">Type</label>
+									<select class="form-control" required ng-model='vm.selectedtype' ng-options="type.name for type in vm.types track by type.id" data-width="100%" name="type">
+									</select>
+									<div ng-messages="addsiteForm.type.$dirty && addsiteForm.type.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group"  ng-class="{'has-error': addsiteForm.reserved.$touched && addsiteForm.reserved.$invalid, 'has-success': addsiteForm.reserved.$touched && addsiteForm.reserved.$valid }">
+									<label for="reserved" class="control-label">Automation Only</label>
+									<br>
+									<input type="checkbox"  ng-model='vm.siteForm.reserved' name="reserved" >
+
+									<div ng-messages="addsiteForm.reserved.$dirty && addsiteForm.reserved.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						 Print Form JSON
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								{{vm.siteForm}}
+							</div>
+						</div>
+						
+						<!---->
+						
+						<hr />
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group">
+									<button  type="submit" ng-disabled="addsiteForm.$invalid" class="btn btn-primary">Submit</button>
+									<button type="reset" class="btn btn-primary">Reset</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div style="margin:25px"></div>
+	</div>
+</div>
+</div>

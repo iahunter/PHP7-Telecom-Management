@@ -42,6 +42,24 @@
                 controller: 'getDidblock.IndexController',
                 controllerAs: 'vm'
             })
+			.state('site', {
+                url: '/site',
+                templateUrl: 'siteplanning/site.html',
+                controller: 'Site.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('sitecreate', {
+                url: '/site/create',
+                templateUrl: 'siteplanning/createsite.html',
+                controller: 'Site.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('getsite', {
+                url: '/site/{id}',
+                templateUrl: 'siteplanning/getsite.html',
+                controller: 'getSite.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('admin', {
                 url: "/admin",
                 templateUrl: 'admin/admin.html',

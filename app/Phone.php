@@ -12,7 +12,7 @@ class Phone extends Model
     use Auditable;
     use SoftDeletes;
     protected $table = 'phone';
-    protected $fillable = ['parent', 'name', 'device', 'firstname','lastname','username','dn','language','voicemail', 'deployed','provisioned','assignments','system_id', 'notes'];
+    protected $fillable = ['parent', 'name', 'device', 'firstname', 'lastname', 'username', 'dn', 'language', 'voicemail', 'deployed', 'provisioned', 'assignments', 'system_id', 'notes'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
@@ -26,7 +26,6 @@ class Phone extends Model
             return $phone->validate();
         });
     }
-
 
     protected function validate()
     {
@@ -42,6 +41,5 @@ class Phone extends Model
         if (strlen($this->system_id) > 255) {
             throw new \Exception('system_id exceeded 255 characters');
         }
-
     }
 }

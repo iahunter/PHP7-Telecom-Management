@@ -18,15 +18,15 @@ class CreateCucmPlanning extends Migration
             $table->increments('id');
             $table->string('sitecode');                         // Name
             $table->text('comment')->nullable();            // Comment
-			$table->text('system_id')->nullable();          // Comment
-			$table->text('type')->nullable();          		// Comment
-			$table->text('srstip')->nullable();          	// Comment
-			$table->json('h323ip')->nullable();            	// JSON Details Custom Field Data
-			$table->text('npa')->nullable();            	// JSON Details Custom Field Data
-			$table->text('nxx')->nullable();            	// JSON Details Custom Field Data
-			$table->text('timezone')->nullable();           // JSON Details Custom Field Data
-			$table->json('didrange')->nullable();           // JSON Details Custom Field Data
-			$table->text('operator')->nullable();          	// Comment
+            $table->text('system_id')->nullable();          // Comment
+            $table->text('type')->nullable();                  // Comment
+            $table->text('srstip')->nullable();              // Comment
+            $table->json('h323ip')->nullable();                // JSON Details Custom Field Data
+            $table->text('npa')->nullable();                // JSON Details Custom Field Data
+            $table->text('nxx')->nullable();                // JSON Details Custom Field Data
+            $table->text('timezone')->nullable();           // JSON Details Custom Field Data
+            $table->json('didrange')->nullable();           // JSON Details Custom Field Data
+            $table->text('operator')->nullable();              // Comment
             $table->json('details')->nullable();            // JSON Details Custom Field Data
             $table->timestamps();                           // Time Stamps
             $table->softDeletes();                          // Soft Deletes
@@ -38,7 +38,7 @@ class CreateCucmPlanning extends Migration
             $table->integer('parent')->unsigned()->index();    // Parent Block ID
                 $table->foreign('parent')->references('id')->on('site')->onDelete('cascade');        // Create foreign key and try cascade deletes
 
-            $table->string('name');    					// Name
+            $table->string('name');                        // Name
             $table->string('device');                 // simple name to reference the account by
             $table->string('firstname');            // simple name to reference the account by
             $table->string('lastname');             // simple name to reference the account by
@@ -50,7 +50,7 @@ class CreateCucmPlanning extends Migration
             $table->boolean('provisioned')->nullable();                 // Deployed Status - true/false
             $table->json('assignments')->nullable();                   // JSON Custom Field Data
             $table->string('system_id')->nullable();
-			$table->string('notes')->nullable();			// Future - System ID - CUCM/Lync ID
+            $table->string('notes')->nullable();            // Future - System ID - CUCM/Lync ID
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
         });
@@ -64,8 +64,7 @@ class CreateCucmPlanning extends Migration
     public function down()
     {
         //
-		Schema::drop('phone');
+        Schema::drop('phone');
         Schema::drop('site');
-        
     }
 }

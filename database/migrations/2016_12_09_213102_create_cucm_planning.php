@@ -22,10 +22,11 @@ class CreateCucmPlanning extends Migration
             $table->text('type')->nullable();                  // Comment
             $table->text('srstip')->nullable();              // Comment
             $table->json('h323ip')->nullable();                // JSON Details Custom Field Data
+			$table->text('didrange')->nullable();           // JSON Details Custom Field Data
             $table->text('npa')->nullable();                // JSON Details Custom Field Data
             $table->text('nxx')->nullable();                // JSON Details Custom Field Data
             $table->text('timezone')->nullable();           // JSON Details Custom Field Data
-            $table->json('didrange')->nullable();           // JSON Details Custom Field Data
+            $table->json('didblocks')->nullable();           // JSON Details ID of DID Blocks used for the site. 
             $table->text('operator')->nullable();              // Comment
             $table->json('details')->nullable();            // JSON Details Custom Field Data
             $table->timestamps();                           // Time Stamps

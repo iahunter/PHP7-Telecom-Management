@@ -27,29 +27,69 @@ angular
 			});
 		}
 		
+		vm.getdatetimegrps = siteService.getcucmdatetimegrps()
+			.then(function(res){
+				//success
+				//console.log("HERE ");console.log(res)
+				//console.log(res);
+				
+				var groups = res.data.response;
+				
+				
+				// Create our blank simple array for datatimegrps 
+				vm.datetimegrps = [];
+				
+				// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
+				angular.forEach(groups, function(value, key) {
+				  console.log(value);
+				  // Push value to array. 
+				  vm.datetimegrps.push(value);
+				});
+				
+				//console.log(vm.datetimegrps);
+				return vm.datetimegrps;
+				
+				
+			}, function(err){
+				alert(err);
+			});
+			
+		vm.getdidblocks = siteService.getdidblocks()
+			.then(function(res){
+				vm.didblocks = res.data.didblocks;
+				
+				console.log(vm.didblocks);
+				/*
+				// Create our blank simple array for datatimegrps 
+				vm.datetimegrps = [];
+				
+				// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
+				angular.forEach(groups, function(value, key) {
+				  console.log(value);
+				  // Push value to array. 
+				  vm.datetimegrps.push(value);
+				});
+				*/
+				
+				//console.log(vm.datetimegrps);
+				return vm.didblocks;
+				
+				
+			}, function(err){
+				alert(err);
+			});
+		
+		
 		
 		// Drop down values to use in Add form. 
-		vm.states = [{
-				id: 1,
-				name: 'available'
-			}, {
-				id: 2,
-				name: 'reserved'
-			}];
+		vm.extlength = [4,5,10];
 		
-		vm.types = [{
-				id: 1,
-				name: 'public'
-			}, {
-				id: 2,
-				name: 'private'
-			}];
+
 		
 		// Create DID Block 
 		vm.submitsite = function(form) {
-			form.status = this.selectedOption.name;
-			form.type = this.selectedtype.name;
-			console.log("Category: " + form.category);
+
+			console.log(form);
 			
 			
 			siteService.createsite(angular.copy(form)).then(function(data) {
@@ -69,6 +109,7 @@ angular
 		// Update DID Block service called by the save button. 
 		vm.update = function(site) {
 			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
+			/*
 			var site_update = {};
 			site_update.name = site.name;
 			site_update.carrier = site.carrier;
@@ -76,6 +117,8 @@ angular
 			
 			// Send Block ID and the updated variables to the update service. 
 			siteService.updatesite(site.id, site_update).then(function(data) {
+			*/	
+			siteService.updatesite(site.id, site).then(function(data) {
 				//alert('Saved')
 			  //return $state.reload();
 			}, function(error) {
@@ -103,7 +146,13 @@ angular
           });
 
 		}
-		
-		
-		
-	}]);
+	}])
+	
+	// Be nice to use a directive at some point to help template HTML
+	.directive('trRow', function ($compile) {
+
+		return {
+			template: '<tr><td ng-bind="row.id"></td><td><strong ng-bind="row.name"></strong></td><td ng-bind="row.description"></td></tr>'
+		};
+	});
+

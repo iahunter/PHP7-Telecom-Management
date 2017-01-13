@@ -53,7 +53,36 @@
 			
 			});
 		}
-			  
+		
+		// Get CUCM Date Time Groups
+		self.getcucmdatetimegrps = function() {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/dateandtime')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					
+			  });
+		}
+
+		// Get CUCM Date Time Groups
+		self.getdidblocks = function() {
+			var defer = $q.defer();
+			return $http.get('../api/didblock')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					
+			  });
+		}		
 		
 		
 		// Create Block

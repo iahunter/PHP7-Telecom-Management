@@ -945,6 +945,36 @@
                 }
             }
         },
+        "/telephony/api/didblock/number/{number}": {
+            "get": {
+                "tags": [
+                    "Did Block"
+                ],
+                "summary": "Get DIDBock by start number search for authorized user",
+                "description": "",
+                "operationId": "searchDidblocks",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "description": "Search for Number",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/didblock/{id}/dids": {
             "get": {
                 "tags": [
@@ -1327,6 +1357,17 @@
                         "in": "formData",
                         "description": "Last 4 digit Ranges. Use Regex to represent the DID Ranges. Use multiple Lines to represent multiple ranges. Example: 40[2-9]X",
                         "required": true,
+                        "type": "array",
+                        "items": {
+                            "description": "",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "didblocks",
+                        "in": "formData",
+                        "description": "DID Block IDs assigned to the site.",
+                        "required": false,
                         "type": "array",
                         "items": {
                             "description": "",

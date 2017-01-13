@@ -85,6 +85,17 @@
      *         ),
      *     ),
      *     @SWG\Parameter(
+     *         name="didblocks",
+     *         in="formData",
+     *         description="DID Block IDs assigned to the site.",
+     *         required=false,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="",
+     *         ),
+     *     ),
+     *     @SWG\Parameter(
      *         name="operator",
      *         in="formData",
      *         description="Operator Last 4 digits of DID",

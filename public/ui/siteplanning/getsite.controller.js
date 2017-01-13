@@ -55,7 +55,7 @@ angular
 				//Error
 			});
 		
-		
+
 		// Drop down values to use in Add form.
 		vm.states = [{
 				id: 1,

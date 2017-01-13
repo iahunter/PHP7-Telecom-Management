@@ -119,6 +119,31 @@
      * )
      **/
     $api->get('didblock', 'App\Http\Controllers\Didcontroller@listDidblock');
+	
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/didblock/number/{number}",
+     *     tags={"Did Block"},
+     *     summary="Get DIDBock by start number search for authorized user",
+     *     description="",
+     *     operationId="searchDidblocks",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="number",
+     *         in="path",
+     *         description="Search for Number",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('didblock/number/{number}', 'App\Http\Controllers\Didcontroller@searchDidblock');
 
     /**
      * @SWG\Put(

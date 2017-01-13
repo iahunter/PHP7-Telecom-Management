@@ -12,12 +12,13 @@ class Site extends Model
     use Auditable;
     use SoftDeletes;
     protected $table = 'site';
-    protected $fillable = ['sitecode', 'type', 'srstip', 'h323ip', 'npa', 'nxx', 'timezone', 'operator', 'comment', 'didrange', 'details'];
+    protected $fillable = ['sitecode', 'type', 'srstip', 'h323ip', 'npa', 'nxx', 'timezone', 'operator', 'comment', 'didrange', 'didblocks', 'details'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
             'h323ip'   => 'array',
             'didrange' => 'array',
+			'didblocks' => 'array',
             'details'  => 'array',
         ];
 
@@ -26,6 +27,11 @@ class Site extends Model
         parent::boot();
         static::saving(function ($site) {
             return $site->validate();
+        });
+		
+		// Cascade Soft Deletes Child Dids
+        static::deleting(function ($site) {
+            Phone::where('parent', $site->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
         });
     }
 

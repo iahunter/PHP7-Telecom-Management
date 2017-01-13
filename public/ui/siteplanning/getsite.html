@@ -77,6 +77,14 @@
 								</a>
 							</th>
 							
+							<th>
+								<a href="" ng-click="sortType = 'didblocks'; sortReverse = !sortReverse" style="color:black">
+									Did Block IDs
+										<span ng-show="sortType == 'didblocks' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'didblocks' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
 							
 							<th>
 								<a href="" ng-click="sortType = 'operator'; sortReverse = !sortReverse" style="color:black">
@@ -131,6 +139,7 @@
 							<td>{{ vm.site.npa}}</td>
 							<td>{{ vm.site.nxx}}</td>
 							<td>{{ vm.site.didrange}}</td>
+							<td>{{ vm.site.didblocks}}</td>
 							<td>{{ vm.site.operator}}</td>
 							<td>{{ vm.site.type}}</a></td>
 							<td>{{ vm.site.comment}}</td>

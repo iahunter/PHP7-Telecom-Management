@@ -91,6 +91,35 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	public function searchDidblock(Request $request, $number_search)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user->can('read', Did::class)) {
+            abort(401, 'You are not authorized to view didblock '.$did);
+        }
+
+        // Search for DID by numberCheck if there are any matches.
+        if (! Didblock::where([['start', 'like', $number_search.'%']])->count()) {
+            abort(404, 'No Block found matching search: '.$number_search);
+        }
+
+        // Search for numbers like search.
+        $didblocks = Didblock::where([['start', 'like', $number_search.'%']])->get();
+
+        //return "HERE ".$did;
+
+        $response = [
+                    'status_code'     => 200,
+                    'success'         => true,
+                    'message'         => '',
+                    'request'         => $request->all(),
+                    'didblocks'            => $didblocks,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function createDidblock(Request $request)
     {

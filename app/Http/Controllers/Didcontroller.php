@@ -91,8 +91,8 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function searchDidblock(Request $request, $number_search)
+
+    public function searchDidblock(Request $request, $number_search)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -111,10 +111,10 @@ class Didcontroller extends Controller
         //return "HERE ".$did;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    'request'         => $request->all(),
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
                     'didblocks'            => $didblocks,
                     ];
 

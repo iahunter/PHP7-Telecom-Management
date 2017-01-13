@@ -16,10 +16,10 @@ class Site extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'h323ip'   => 'array',
-            'didrange' => 'array',
-			'didblocks' => 'array',
-            'details'  => 'array',
+            'h323ip'    => 'array',
+            'didrange'  => 'array',
+            'didblocks' => 'array',
+            'details'   => 'array',
         ];
 
     protected static function boot()
@@ -28,8 +28,8 @@ class Site extends Model
         static::saving(function ($site) {
             return $site->validate();
         });
-		
-		// Cascade Soft Deletes Child Dids
+
+        // Cascade Soft Deletes Child Dids
         static::deleting(function ($site) {
             Phone::where('parent', $site->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
         });

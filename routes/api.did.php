@@ -119,7 +119,7 @@
      * )
      **/
     $api->get('didblock', 'App\Http\Controllers\Didcontroller@listDidblock');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/didblock/number/{number}",

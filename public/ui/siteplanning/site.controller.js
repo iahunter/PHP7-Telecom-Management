@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Site.IndexController', ['siteService', '$location', '$state', function(siteService, $location, $state) {
+	.controller('Site.IndexController', ['siteService', 'cucmService','$location', '$state', function(siteService, cucmService, $location, $state) {
 	
 		var vm = this;
 		
@@ -15,11 +15,58 @@ angular
 		vm.messages = 'Loading sites...';
 		vm.sites = [{}];
 		vm.loading = true;
+		
+		function isInArrayNgForeach(field, arr) {
+			var result = false;
+			//console.log("HERRE")
+			//console.log(field);
+			//console.log(arr);
+			
+			angular.forEach(arr, function(value, key) {
+				//console.log(value);
+				if(field == value)
+					result = true;
+			});
+
+			return result;
+		}
 
 		function initController() {
 			siteService.Getsites(function (result) {
 				console.log('callback from siteService.Getsites responded ' + result);
-				vm.sites = siteService.sites;
+				
+				var sites = siteService.sites;
+				
+				vm.sites = [];
+				// Get list of CUCM Sites
+				vm.listcucmsites = cucmService.listcucmsites()
+					.then(function(res){
+						vm.cucmsites = res.data.response;
+						
+						console.log(vm.cucmsites);
+						//return vm.cucmsites;
+						
+						angular.forEach(sites, function(key,value) {
+							site = key.sitecode;
+							if(isInArrayNgForeach(site, vm.cucmsites)){
+
+								key.cucmprovisioned = true;
+								vm.sites.push(key);
+								console.log(key);
+							}else{
+								key.cucmprovisioned = false;
+								vm.sites.push(key);
+								console.log(key);
+							}
+							
+						});
+
+					}, function(err){
+						alert(err);
+					});
+				
+				
+								
 				
 				vm.loading = false;
 				vm.messages = JSON.stringify(vm.sites, null, "    ");
@@ -27,21 +74,16 @@ angular
 			});
 		}
 		
-		vm.getdatetimegrps = siteService.getcucmdatetimegrps()
+
+		vm.getdatetimegrps = cucmService.getcucmdatetimegrps()
 			.then(function(res){
-				//success
-				//console.log("HERE ");console.log(res)
-				//console.log(res);
-				
 				var groups = res.data.response;
-				
-				
+
 				// Create our blank simple array for datatimegrps 
 				vm.datetimegrps = [];
 				
 				// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
 				angular.forEach(groups, function(value, key) {
-				  console.log(value);
 				  // Push value to array. 
 				  vm.datetimegrps.push(value);
 				});
@@ -53,33 +95,19 @@ angular
 			}, function(err){
 				alert(err);
 			});
-			
+
 		vm.getdidblocks = siteService.getdidblocks()
 			.then(function(res){
 				vm.didblocks = res.data.didblocks;
-				
-				console.log(vm.didblocks);
-				/*
-				// Create our blank simple array for datatimegrps 
-				vm.datetimegrps = [];
-				
-				// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
-				angular.forEach(groups, function(value, key) {
-				  console.log(value);
-				  // Push value to array. 
-				  vm.datetimegrps.push(value);
-				});
-				*/
-				
-				//console.log(vm.datetimegrps);
+
 				return vm.didblocks;
-				
-				
+
 			}, function(err){
 				alert(err);
 			});
 		
-		
+
+			
 		
 		// Drop down values to use in Add form. 
 		vm.extlength = [4,5,10];

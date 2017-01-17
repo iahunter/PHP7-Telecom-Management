@@ -41,8 +41,9 @@ class Cucmsite extends Cucm
 
         try {
             $site = $this->cucm->get_all_object_types_by_site($name);
-            if (! count($site)) {
-                throw new \Exception('Indexed results from call mangler is empty');
+            if (! count($site['DevicePool'])) {
+				$site = "0";
+                //throw new \Exception('Indexed results from call mangler is empty');
             }
         } catch (\Exception $e) {
             echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
@@ -212,10 +213,26 @@ class Cucmsite extends Cucm
             $CUCM1 = 'KHONESDCVCS03';
             $CUCM2 = 'KHONEMDCVCS05';
         }
-
+		
+		/*
+		// Setup for testing. 
+		$result = [
+					$SITECODE,
+					$SITE_TYPE,
+					$SRSTIP,
+					$H323LIST,
+					$TIMEZONE,
+					$NPA,
+					$NXX,
+					$DIDLIST,
+					$CUCM1,
+					$CUCM2,
+					$OPERATOR
+				];
+		*/
+		
         // Final user information required to provision a CUCM SITE:
         $result = $this->provision_cucm_site_axl(
-        //$result = [
                                                 $SITECODE,
                                                 $SITE_TYPE,
                                                 $SRSTIP,
@@ -228,7 +245,7 @@ class Cucmsite extends Cucm
                                                 $CUCM2,
                                                 $OPERATOR
                                                 );
-        //	];
+		
         $response = [
             'status_code'    => 200,
             'success'        => true,

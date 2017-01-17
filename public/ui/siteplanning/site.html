@@ -54,6 +54,14 @@
 							</th>
 							
 							<th>
+								<a href="" ng-click="sortType = 'cucmprovisioned'; sortReverse = !sortReverse" style="color:black">
+									CUCM Provisioned
+										<span ng-show="sortType == 'cucmprovisioned' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'cucmprovisioned' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
 									SRST IP 
 										<span ng-show="sortType == 'srstip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -120,10 +128,18 @@
 							</th>
 							
 							<th>
-								<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
-									Type
-										<span ng-show="sortType == 'type' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'type' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'trunking'; sortReverse = !sortReverse" style="color:black">
+									Trunking
+										<span ng-show="sortType == 'trunking' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'trunking' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'e911'; sortReverse = !sortReverse" style="color:black">
+									911
+										<span ng-show="sortType == 'e911' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'e911' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 
@@ -155,7 +171,6 @@
 					</thead>
 					<tbody>
 
-					
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
 					<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">
@@ -164,6 +179,7 @@
 						<td><a ui-sref="getsite({id: site.id})"><button class="btn btn-xs btn-default btn-block">{{ site.id}}</button></a></td>
 						<!--<td>{{ site.id}}</a></td>-->
 						<td   ng-show="!vm.edit[site.id]">{{ site.sitecode}}</td>
+						<td   ng-show="!vm.edit[site.id]">{{ site.cucmprovisioned}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.srstip}}</a></td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.h323ip}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.timezone}}</td>
@@ -172,7 +188,8 @@
 						<td   ng-show="!vm.edit[site.id]">{{ site.didrange}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.didblocks}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.operator}}</td>
-						<td   ng-show="!vm.edit[site.id]">{{ site.type}}</td>
+						<td   ng-show="!vm.edit[site.id]">{{ site.trunking}}</td>
+						<td   ng-show="!vm.edit[site.id]">{{ site.e911}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.comment}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}}</td>
@@ -195,15 +212,13 @@
 											<p>You are about to delete Bloock ID: {{ site.id}}</p>
 											<table class="table table-striped table-condensed table-bordered table-hover">
 												<tr>
-													<th>Name</th>
-													<th>timezone</th>
-													<th>npa</th>
+													<th>ID</th>
+													<th>Sitecode</th>
+
 												</tr>
 												<tr>
-													<td>{{ site.name}}</td>
-													<td>{{ site.timezone}}</td>
-													<td>{{ site.npa}}</td>
-													<td>{{ site.nxx}}</td>
+													<td>{{ site.id}}</td>
+													<td>{{ site.sitecode}}</td>
 												</tr>
 											</table>
 											<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
@@ -225,6 +240,7 @@
 
 						<!--Edit View-->
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.sitecode"></td>
+						<td   ng-show="vm.edit[site.id]">{{ site.cucmprovisioned }}</td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.srstip"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.h323ip"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.timezone"></td>
@@ -233,7 +249,8 @@
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.didrange"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.didblocks"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.operator"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.type"></td>
+						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.trunking"></td>
+						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.e911"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.comment"></td>
 						<td   ng-show="vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="vm.edit[site.id]">{{ site.updated_at}}</td>
@@ -251,10 +268,10 @@
 							
 					</tbody>
 				</table>
-			</div> <!--npa of Panel-->
+			</div> <!--npa of Panel
 			
 			<a href="#/site/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
-			
+			-->
 		</div>
 	</div>
 </div>

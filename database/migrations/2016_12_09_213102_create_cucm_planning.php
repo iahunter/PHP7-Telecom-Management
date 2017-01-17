@@ -19,7 +19,9 @@ class CreateCucmPlanning extends Migration
             $table->string('sitecode');                         // Name
             $table->text('comment')->nullable();            // Comment
             $table->text('system_id')->nullable();          // Comment
-            $table->text('type')->nullable();                  // Comment
+            //$table->text('type')->nullable();                  // Comment
+			$table->text('trunking')->nullable();           // Comment
+			$table->text('e911')->nullable();                  // Comment
             $table->text('srstip')->nullable();              // Comment
             $table->json('h323ip')->nullable();                // JSON Details Custom Field Data
             $table->text('didrange')->nullable();           // JSON Details Custom Field Data

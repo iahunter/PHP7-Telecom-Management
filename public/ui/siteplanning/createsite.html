@@ -40,14 +40,15 @@
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-								<div class="form-group" ng-class="{'has-error': addsiteForm.eventDescription.$touched && addsiteForm.eventDescription.$invalid, 'has-success': addsiteForm.eventDescription.$touched && addsiteForm.eventDescription.$valid }">
-									<label for="eventDescription" class="control-label">Comment</label>
-									<input type="textarea" ng-model='vm.siteForm.comment' class="form-control" name="eventDescription" placeholder="Comment">
-									<div ng-messages="addsiteForm.eventDescription.$dirty && addsiteForm.eventDescription.$error">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.comment.$touched && addsiteForm.comment.$invalid, 'has-success': addsiteForm.comment.$touched && addsiteForm.comment.$valid }">
+									<label for="comment" class="control-label">Comment</label>
+									<input type="textarea" ng-model='vm.siteForm.comment' class="form-control" name="comment" placeholder="Comment">
+									<div ng-messages="addsiteForm.comment.$dirty && addsiteForm.comment.$error">
 										<div ng-messages-include="error-messages"></div>
 									</div>
 								</div>
 							</div>
+							<!--
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.countrycode.$touched && addsiteForm.countrycode.$invalid, 'has-success': addsiteForm.countrycode.$touched && addsiteForm.countrycode.$valid }">
 									<label for="countrycode" required class=" control-label">Country Code</label>
@@ -58,6 +59,7 @@
 									</div>
 								</div>
 							</div>
+							-->
 						</div>
 						<div class="row">
 
@@ -95,15 +97,26 @@
 										<div ng-messages-include="error-messages"></div>
 									</div>
 								</div>
-							</div>	
-							
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.operator.$touched && addsiteForm.operator.$invalid, 'has-success': addsiteForm.operator.$touched && addsiteForm.operator.$valid }">
+									<label for="operator" required class=" control-label">Operator last 4 digits of DID <i>(optional)</i></label>
+									<input type="text" required ng-pattern='/^[0-9]/' ng-model='vm.siteForm.operator' class="form-control" name="operator" placeholder="4000" ng-maxlength='4' ng-maxlength='4'>
+									<div ng-messages="addsiteForm.operator.$dirty && addsiteForm.operator.$error">
+										<div ng-message="pattern">Please enter the operator last 4 digits of DID</div>
+										<div ng-message='minlength'>Operator must be 4 digits</div>
+										<div ng-message='minlength'>Operator must be 4 digits</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
 						</div>
 						
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.didblocks.$touched && addsiteForm.didblocks.$invalid, 'has-success': addsiteForm.didblocks.$touched && addsiteForm.eventCategory.$valid }">
 									<label for="didblocks"  class="control-label">DID Blocks (From DID Database - multiples)</label>
-									<select class="form-control" required ng-model='vm.siteForm.didblocks' ng-options="block.id as block.start + ' - ' + block.end  + ' | ' + block.name for block in vm.didblocks | filter: vm.siteForm.npa  | orderBy:'start'" data-width="100%" name="didblocks" multiple >
+									<select style='height:200px' class="form-control" required ng-model='vm.siteForm.didblocks' ng-options="block.id as block.start + ' - ' + block.end  + ' | ' + block.name for block in vm.didblocks | filter: vm.siteForm.npa  | orderBy:'start'" data-width="100%" name="didblocks" multiple >
 									</select>
 									<div ng-messages="addsiteForm.didblocks.$dirty && addsiteForm.didblocks.$error">
 										<div ng-messages-include="error-messages"></div>
@@ -111,21 +124,48 @@
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div style="height:25px"></div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.trunking.$touched && addsiteForm.trunking.$invalid, 'has-success': addsiteForm.trunking.$touched && addsiteForm.trunking.$valid }">
-									<label for="trunking"  class="control-label">Trunking - Not working</label><br>
-									<label> 
-										<input type="radio" class="radio-inline" required ng-model='vm.siteForm.trunking' ng-value="sip" data-width="100%" name="trunking">
-										SIP
-									</label>
-									<label> 
-										<input type="radio" class="radio-inline" required ng-model='vm.siteForm.trunking' ng-value="local" data-width="100%" name="trunking">
-										Local PRI
-									</label>
-									<div ng-messages="addsiteForm.trunking.$dirty && addsiteForm.trunking.$error">
-										<div ng-messages-include="error-messages"></div>
-									</div>
+									<label for="trunking"  class="control-label">Trunking</label><br>
+										<div class="panel panel-default panel-body">
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.siteForm.trunking' value="sip" data-width="100%" name="trunking">
+												SIP
+											</label>
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.siteForm.trunking' value="local" data-width="100%" name="trunking">
+												Local PRI
+											</label>
+											<div ng-messages="addsiteForm.trunking.$dirty && addsiteForm.trunking.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
 								</div>
 							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div style="height:10px"></div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.e911.$touched && addsiteForm.e911.$invalid, 'has-success': addsiteForm.e911.$touched && addsiteForm.e911.$valid }">
+									<label for="e911"  class="control-label">E911</label><br>
+										<div class="panel panel-default panel-body">
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.siteForm.e911' value="911enable" data-width="100%" name="e911">
+												911Enable
+											</label>
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.siteForm.e911' value="local" data-width="100%" name="e911">
+												Local 911
+											</label>
+											<div ng-messages="addsiteForm.e911.$dirty && addsiteForm.e911.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+								</div>
+							</div>
+							
 						</div>
 						
 						<div class="row">
@@ -146,6 +186,33 @@
 									<select class="form-control" required ng-model='vm.siteForm.extlength' ng-options="extlength as extlength for extlength in vm.extlength" data-width="100%" name="extlength">
 									</select>
 									<div ng-messages="addsiteForm.extlength.$dirty && addsiteForm.extlength.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="row" ng-show="vm.siteForm.trunking == 'local'|| vm.siteForm.e911 == 'local'">
+						
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.srstip.$touched && addsiteForm.srstip.$invalid, 'has-success': addsiteForm.srstip.$touched && addsiteForm.srstip.$valid }">
+									<label for="srstip" class=" control-label">SRST IP Address <br><i>(optional)</i></label>
+									<input type="textarea" ng-pattern='/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/' ng-model='vm.siteForm.srstip' class="form-control" name="srstip" placeholder="10.0.0.1" ng-minlength='6'>
+									<div ng-messages="addsiteForm.srstip.$dirty && addsiteForm.srstip.$error">
+										<div ng-message="pattern">Please enter the srstip in IP Address Format</div>
+										<div ng-message='minlength'>Please enter the srstip in IP Address Format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.h323ip.$touched && addsiteForm.h323ip.$invalid, 'has-success': addsiteForm.h323ip.$touched && addsiteForm.h323ip.$valid }">
+									<label for="h323ip" class=" control-label">H323 Gateway IP Addresses <br><i>(optional, comma delimited)</i></label>
+									<input type="textarea" ng-pattern='/((25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)(,\n|,?$))/' ng-model='vm.siteForm.h323ip' class="form-control" name="h323ip" placeholder="10.0.0.1,10.1.1.1" ng-minlength='6'>
+									<div ng-messages="addsiteForm.h323ip.$dirty && addsiteForm.h323ip.$error">
+										<div ng-message="pattern">Please enter the h323ip in IP Address Format</div>
+										<div ng-message='minlength'>Please enter the h323ip in IP Address Format</div>
 										<div ng-messages-include="error-messages"></div>
 									</div>
 								</div>

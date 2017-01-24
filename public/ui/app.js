@@ -65,6 +65,12 @@
                 templateUrl: 'admin/admin.html',
                 controller: 'Admin.IndexController',
                 controllerAs: 'vm'
+            })
+			.state('sonus', {
+                url: "/sonus",
+                templateUrl: 'sonus/sonus.activecalls.html',
+                controller: 'Sonus.IndexController',
+                controllerAs: 'vm'
             });
 
     }

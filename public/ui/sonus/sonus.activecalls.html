@@ -1,0 +1,112 @@
+<div style="margin:100px"></div>
+
+<div style="margin-left:80px; margin-right:80px;">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	
+	<div style="margin:50px"></div>
+	
+	<legend>Sonus SBC Call Summary<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+		
+		
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		
+		
+		<div style="margin:25px"></div>
+
+		
+		<!-- Loading -->
+		<div ng-if="vm.loading" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+		
+		<div ng-if="vm.noactivecalls;" class="well">
+			<div class="row">
+				<h3>No Active Calls Found</h3>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+		
+		<div ng-if="!vm.loading && !vm.noactivecalls">
+			
+			<h3>Found {{vm.callcount}} Active Calls </h3>
+			
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr class="success">
+							<th>
+								<a href="" ng-click="sortType = 'sbc'; sortReverse = !sortReverse" style="color:black">
+									SBC
+										<span ng-show="sortType == 'sbc' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+						
+							<th>
+								<a href="" ng-click="sortType = 'GCID'; sortReverse = !sortReverse" style="color:black">
+									GCID
+										<span ng-show="sortType == 'GCID' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'GCID' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+							<th>
+								<a href="" ng-click="sortType = 'state'; sortReverse = !sortReverse" style="color:black">
+									state
+										<span ng-show="sortType == 'state' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'state' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'callingNumber'; sortReverse = !sortReverse" style="color:black">
+									callingNumber
+										<span ng-show="sortType == 'callingNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'callingNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'calledNumber'; sortReverse = !sortReverse" style="color:black">
+									calledNumber
+										<span ng-show="sortType == 'calledNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'calledNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+
+
+						</tr>
+					</thead>
+					<tbody>
+
+					<!-- Allow you to edit and delete Blocks with new buttons -->
+					<!--<tr ng-repeat="calls in vm.callss | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
+					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
+
+						<td>{{ call.SBC}}</td>
+						<td>{{ call.GCID}}</td>
+						<td>{{ call.state}}</td>
+						<td>{{ call.callingNumber}}</td>
+						<td>{{ call.calledNumber}}</td>
+
+					</tr>
+							
+					</tbody>
+				</table>
+			</div> 
+		</div>
+	</div>
+</div>
+
+	
+

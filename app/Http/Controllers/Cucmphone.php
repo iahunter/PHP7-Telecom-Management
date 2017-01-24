@@ -144,7 +144,7 @@ class Cucmphone extends Cucm
                 return $RETURN;
             }
         } catch (\Exception $E) {
-            return "{$NAME} Does not exist in CUCM Database.\n";
+            //return "{$NAME} Does not exist in CUCM Database.\n";
         }
     }
 
@@ -433,7 +433,9 @@ class Cucmphone extends Cucm
                                                                                                 'userId' => $USERNAME,
                                                                                             ],
                                                                             ],
-                                                    'recordingMediaSource' => 'Phone Preferred',
+                                                    // Had to change this to Gateway Preferred instead of Phone Preferred to support 7960 phone types since they do not support on 7960. 
+													// May need to add if statement if this is needed in the future. 
+													'recordingMediaSource' => 'Gateway Preferred',
                                                 ],
                                     ],
             ];
@@ -450,11 +452,11 @@ class Cucmphone extends Cucm
 
         // Check to see if this phone already exists. If it does print out the old config and delete it.
         $REMOVED_PHONES = [];
-        echo "Checking if {$NAME} if Exists:\n";
+        //echo "Checking if {$NAME} if Exists:\n";
 
         $REMOVED = $this->deletePhonebyName($NAME);
 
-        print_r($REMOVED);
+        //print_r($REMOVED);
 
         $RETURN = [];
 

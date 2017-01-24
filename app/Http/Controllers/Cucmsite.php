@@ -837,25 +837,65 @@ class Cucmsite extends Cucm
         // Calculated variables
         $TYPE = 'MediaResourceList';
         // Prepared datastructure
-        $DATA = [
+        
+		if ($SITE_TYPE == 4){
+			$DATA = [
                 'name'            => "MRGL_{$SITE}",
                 'members'         => [
                                     'member'    => [
                                                         [
                                                         'mediaResourceGroupName'       => "MRG_{$SITE}",
-                                                        'order'                        => '0',
+                                                        //'order'                        => '0',
                                                         ],
                                                         [
                                                         'mediaResourceGroupName'       => 'MRG_Sub1_Resources',
-                                                        'order'                        => '1',
+                                                        //'order'                        => '1',
                                                         ],
                                                         [
                                                         'mediaResourceGroupName'       => 'MRG_Pub_Resources',
-                                                        'order'                        => '2',
+                                                        //'order'                        => '2',
                                                         ],
                                                     ],
                                     ],
                 ];
+			
+		}else{
+			$DATA = [
+					'name'            => "MRGL_{$SITE}",
+					'members'         => [
+										'member'    => [
+															[
+															'mediaResourceGroupName'       => "MRG_{$SITE}",
+															//'order'                        => '0',
+															],
+															[
+															'mediaResourceGroupName'       => env('DSPFARM_MRG'),
+															//'order'                        => '0',
+															],
+															[
+															'mediaResourceGroupName'       => 'MRG_Sub1_Resources',
+															//'order'                        => '1',
+															],
+															[
+															'mediaResourceGroupName'       => 'MRG_Pub_Resources',
+															//'order'                        => '2',
+															],
+														],
+										],
+					];	
+		}
+		
+		
+		
+		
+		
+		// Add the index to each member in order.
+		$i = 1;
+		foreach ($DATA['members']['member'] as $key => $value) {
+			$value['order'] = $i++;
+			$DATA['members']['member'][$key] = $value;
+		}
+		
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -1094,7 +1134,58 @@ class Cucmsite extends Cucm
             }
         }
 
-        // 17 - Create our Route Lists
+        
+		// 17 - Create Called Party Transformations. 
+		
+		if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
+			$DATA = [
+				[
+					// Local Calling via E.164 dialing. Can add multiple NPAs here if needed but would need to be manual. 
+					'pattern'                           => "\+1.{$NPA}[2-9]XXXXXX",
+					'description'                       => 'digits sent to gw or session boarder controller',
+					'routePartitionName'                => "PT_{$SITE}_GW_CALLED_XFORM",
+					'digitDiscardInstructionName'       => 'predot',
+					'calledPartyPrefixDigits'           => '9',
+				],
+				[
+					// Leveraging a pri and needs to send 91+ 10 digits to h323 gateway
+					'pattern'                           => '\+.1[2-9]XX[2-9]XXXXXX',
+					'description'                       => 'digits sent to gw or session boarder controller',
+					'routePartitionName'                => "PT_{$SITE}_GW_CALLED_XFORM",
+					'digitDiscardInstructionName'       => 'predot',
+					'calledPartyPrefixDigits'           => '9',
+				],
+			];
+
+			$TYPE = 'CalledPartyTransformationPattern';
+
+			foreach ($DATA as $OBJECT) {
+				// Get a list of all current objects by type to use to see what is exists now.
+				try {
+					$objects = $this->cucm->get_object_type_by_site($OBJECT['routePartitionName'], $TYPE);
+				} catch (\Exception $E) {
+					echo 'Exception Getting CalledPartyTransformationPattern from CUCM:'.
+						  "{$E->getMessage()}".
+						  "Stack trace:\n".
+						  "{$E->getTraceAsString()}".
+						  "Data sent:\n";
+				}
+
+				if (! empty($objects)) {
+					if (in_array($OBJECT['pattern'], $objects)) {
+						$result[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
+					} else {
+						$result[$TYPE][] = $this->wrap_add_object($OBJECT, $TYPE);
+					}
+				} else {
+					$result[$TYPE][] = $this->wrap_add_object($OBJECT, $TYPE);
+				}
+			}
+				
+		}
+		
+		
+		// 18 - Create our Route Lists
 
         if ($SITE_TYPE >= 3) {
 

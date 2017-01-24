@@ -78,6 +78,15 @@ angular
 				console.log('callback from telephonyService.GetDidblocks responded ' + result);
 				vm.didblocks = telephonyService.didblocks;
 				
+				console.log(vm.didblocks);
+				// Check if Token has expired. If so then direct them to login screen. 
+				if (vm.didblocks.message == "Token has expired"){
+					console.log("Token has expired");
+					alert("Token has expired, Please login");
+					$state.go("login");
+				}
+				
+				vm.didblocks = vm.didblocks.didblocks
 				
 				vm.blocktypes = {};		// Initialilze Object for Type Counting
 				

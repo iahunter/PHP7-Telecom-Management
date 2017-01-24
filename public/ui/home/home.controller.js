@@ -17,7 +17,7 @@
 
         function initController() {
 			UserService.Getuserinfo(function (result) {
-				console.log('callback from UserService.userinfo responded ' + result);
+				//console.log('callback from UserService.userinfo responded ' + result);
 				vm.userinfo = UserService.userinfo;
 				//vm.username = vm.userinfo.cn[0];
 				vm.username = vm.userinfo.cn[0];

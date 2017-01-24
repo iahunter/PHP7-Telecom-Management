@@ -1,6 +1,6 @@
 ﻿angular
 	.module('app')
-	.factory('siteService', ['$http', '$localStorage', '$stateParams', '$q', function($http, $localStorage, $stateParams, $q){
+	.factory('siteService', ['$http', '$localStorage', '$stateParams', '$q', '$state', function($http, $localStorage, $stateParams, $q, $state){
 		
 		var self = {};
 

@@ -116,7 +116,7 @@ angular
 
 					vm.site = res.data.site;
 					vm.sitecode = res.data.site.sitecode;
-					console.log(vm.sitecode);
+					//console.log(vm.sitecode);
 					
 						// Check CUCM for Site Config After we have the sitecode from the database. 
 						cucmService.getsitesummary(vm.sitecode)
@@ -124,7 +124,7 @@ angular
 								
 								var cucmsitesummary = res.data.response;
 								
-								console.log(cucmsitesummary);
+								//console.log(cucmsitesummary);
 								
 								if (res.data.response == 0){
 									vm.deploybutton = true;
@@ -139,7 +139,7 @@ angular
 								
 								angular.forEach(cucmsitesummary, function(k,v) {
 									
-										console.log("VALUE: " + v);
+										//console.log("VALUE: " + v);
 										//vm.cucmsitesummary
 										angular.forEach(k, function(key,object) {
 											if(key.length != 0){
@@ -162,15 +162,12 @@ angular
 									//console.log(vm.cucmsitesummary);
 									
 								});
-								console.log("Summary 1:");
-								console.log(vm.cucmsitesummary);
 								
 								if(vm.cucmsitesummary == 0){
 									console.log("Does not exist in CUCM");
 									vm.cucmsitesummary = false;
 								}
-								console.log("Summary:");
-								console.log(vm.cucmsitesummary);
+								
 							}, function(err){
 								//Error
 							});

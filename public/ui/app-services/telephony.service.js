@@ -15,7 +15,7 @@
 			self.didblocks[type] = {};
 			return $http.get('../api/' + type)
 				.success(function (response) {
-					self.didblocks = response.didblocks;
+					self.didblocks = response;
 					callback(true);
 				})
 				// execute callback with false to indicate failed call

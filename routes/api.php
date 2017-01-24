@@ -45,7 +45,7 @@ $api->version('v1', function ($api) {
 
     // LDAP routes
     require __DIR__.'/api.ldap.php';
-	
-	// Sonus routes
+
+    // Sonus routes
     require __DIR__.'/api.sonus5k.php';
 });

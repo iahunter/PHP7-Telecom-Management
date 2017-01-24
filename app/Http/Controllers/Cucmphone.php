@@ -433,9 +433,9 @@ class Cucmphone extends Cucm
                                                                                                 'userId' => $USERNAME,
                                                                                             ],
                                                                             ],
-                                                    // Had to change this to Gateway Preferred instead of Phone Preferred to support 7960 phone types since they do not support on 7960. 
-													// May need to add if statement if this is needed in the future. 
-													'recordingMediaSource' => 'Gateway Preferred',
+                                                    // Had to change this to Gateway Preferred instead of Phone Preferred to support 7960 phone types since they do not support on 7960.
+                                                    // May need to add if statement if this is needed in the future.
+                                                    'recordingMediaSource' => 'Gateway Preferred',
                                                 ],
                                     ],
             ];

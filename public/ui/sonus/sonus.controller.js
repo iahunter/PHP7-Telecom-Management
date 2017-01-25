@@ -32,7 +32,20 @@ angular
 		function initController() {
 			vm.getactivecalls = SonusService.listactivecalls()
 				.then(function(res){
+					
+					if(res.message == "Token has expired"){
+						vm.tokenexpired = true;
+						alert("Token has expired, Please relogin");
+					}
+					
+					
 					var calls = res.data;
+					
+					if(calls.message == "Token has expired"){
+						vm.tokenexpired = true;
+						alert("Token has expired, Please relogin");
+					}
+					
 					vm.callcount = 0;
 					// Create our blank simple array for datatimegrps 
 					vm.callarray = [];

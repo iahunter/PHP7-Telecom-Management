@@ -58,23 +58,6 @@
 								</a>
 							</th>
 
-						
-							<th>
-								<a href="" ng-click="sortType = 'GCID'; sortReverse = !sortReverse" style="color:black">
-									GCID
-										<span ng-show="sortType == 'GCID' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'GCID' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-
-							<th>
-								<a href="" ng-click="sortType = 'state'; sortReverse = !sortReverse" style="color:black">
-									state
-										<span ng-show="sortType == 'state' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'state' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
 							<th>
 								<a href="" ng-click="sortType = 'callingNumber'; sortReverse = !sortReverse" style="color:black">
 									callingNumber
@@ -90,7 +73,22 @@
 										<span ng-show="sortType == 'calledNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>	
-
+							
+							<th>
+								<a href="" ng-click="sortType = 'state'; sortReverse = !sortReverse" style="color:black">
+									state
+										<span ng-show="sortType == 'state' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'state' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'GCID'; sortReverse = !sortReverse" style="color:black">
+									GCID
+										<span ng-show="sortType == 'GCID' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'GCID' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
 						</tr>
 					</thead>
@@ -101,10 +99,11 @@
 					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
 
 						<td>{{ call.SBC}}</td>
-						<td>{{ call.GCID}}</td>
-						<td>{{ call.state}}</td>
 						<td>{{ call.callingNumber}}</td>
 						<td>{{ call.calledNumber}}</td>
+						<td>{{ call.state}}</td>
+						<td>{{ call.GCID}}</td>
+						
 
 					</tr>
 							

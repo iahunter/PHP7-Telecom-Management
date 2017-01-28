@@ -5,10 +5,28 @@ angular
 		var self = {};
 
 		
-		// Get Site Summary
+		// Get SBC Call Summary
 		self.listactivecalls = function() {
 			var defer = $q.defer();
 			return $http.get('../api/sonus/activecalls')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					//console.log(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
+		
+		
+		// Get SBC Current Alarms
+		self.listactivealarms = function() {
+			var defer = $q.defer();
+			return $http.get('../api/sonus/activealarms')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					

@@ -80,10 +80,10 @@ angular
 				
 				console.log(vm.didblocks);
 				// Check if Token has expired. If so then direct them to login screen. 
-				if (vm.didblocks.message == "Token has expired"){
-					console.log("Token has expired");
-					alert("Token has expired, Please login");
-					$state.go("login");
+				if(result.message == "Token has expired"){
+					vm.tokenexpired = true;
+					alert("Token has expired, Please relogin");
+					$state.go('login');
 				}
 				
 				vm.didblocks = vm.didblocks.didblocks

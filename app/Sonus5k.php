@@ -10,9 +10,13 @@ use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
 class Sonus5k extends Model
 {
     // Sonus 5K REST API Functions
-
-    public static function listactivecalls()
+	
+	
+	public static function wrapapi($verb, $apiurl, $data = "")
     {
+		// Wrapper for Guzzle API Calls
+		$client = new GuzzleHttpClient();
+		
         $headers = [
                             'auth'    => [env('SONUSUSER'), env('SONUSPASS')],
                             'verify'  => false,
@@ -21,9 +25,27 @@ class Sonus5k extends Model
                                         'Accept'           => 'application/vnd.yang.data+json',
                                     ],
                         ];
+			if($verb == "POST"){
+				$headers['data'] = $data;
+			}
 
-        $client = new GuzzleHttpClient();
+            $apiRequest = $client->request($verb, $apiurl, $headers);
 
+            return json_decode($apiRequest->getBody()->getContents(), true);
+        }
+
+	
+	public static function configbackup($SBC)
+    {
+		$verb = "POST";
+		$apiurl = "https://{$SBC}/api/config/system/admin/{$SBC}/_operations/saveConfig";
+		$result = self::wrapapi($verb, $apiurl);
+		return $result;
+    }
+	
+	/*
+	public static function listactivecalls()
+    {
         $SBCS = [
                     env('SONUS1'),
                     env('SONUS2'),
@@ -32,12 +54,41 @@ class Sonus5k extends Model
         $CALLS = [];
         foreach ($SBCS as $SBC) {
             $URL = $SBC;
-
-            $apiRequest = $client->request('GET', "https://{$URL}/api/operational/global/callSummaryStatus/", $headers);
-
-            $CALLS[$SBC] = json_decode($apiRequest->getBody()->getContents(), true);
+			$verb = "GET";
+			$apiurl = "https://{$SBC}/api/operational/global/callSummaryStatus/";
+			$result = self::wrapapi($verb, $apiurl);
+            $CALLS[$SBC] = $result ;
         }
 
         return $CALLS;
     }
+	*/
+	
+	public static function listactivecalls($SBC)
+    {
+			$verb = "GET";
+			$apiurl = "https://{$SBC}/api/operational/global/callSummaryStatus/";
+			return self::wrapapi($verb, $apiurl);
+    }
+	
+	public static function listactivealarms($SBC)
+    {
+			$verb = "GET";
+			$apiurl = "https://{$SBC}/api/operational/alarms/currentStatus";
+			return self::wrapapi($verb, $apiurl);
+    }
+	
+	/*
+	public static function removeconfigbackup($SBC, $LOCATION)
+    {
+		$LOCATION = ['data' => $LOCATION];
+		$verb = "POST";
+		$apiurl = "https://{$SBC}/api/config/system/admin/{$SBC}/_operations/saveConfig";
+		$result = self::wrapapi($verb, $apiurl, $LOCATION);
+		print "REMOVED ".$LOCATION;
+		print_r($result);
+		return $result;
+    }
+	*/
+	
 }

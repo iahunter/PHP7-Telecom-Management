@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Sonus.IndexController', ['SonusService', '$location', '$timeout', '$state', '$scope', function(SonusService, $location, $timeout, $state, $scope) {
+	.controller('Sonus.CallController', ['SonusService', '$location', '$timeout', '$state', '$scope', function(SonusService, $location, $timeout, $state, $scope) {
 	
 		var vm = this;
 		
@@ -25,7 +25,7 @@ angular
 			$state.reload();
 		};
 
-		vm.messages = 'Loading sites...';
+		vm.messages = 'Loading Calls...';
 		//vm.sites = [{}];
 		vm.loading = true;
 		
@@ -33,19 +33,24 @@ angular
 			vm.getactivecalls = SonusService.listactivecalls()
 				.then(function(res){
 					
-					if(res.message == "Token has expired"){
-						vm.tokenexpired = true;
-						alert("Token has expired, Please relogin");
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							alert("Token has expired, Please relogin");
+							$state.go('login');
+						}
+
+						return vm.message;
 					}
 					
 					
 					var calls = res.data;
-					
-					if(calls.message == "Token has expired"){
-						vm.tokenexpired = true;
-						alert("Token has expired, Please relogin");
-					}
-					
+
 					vm.callcount = 0;
 					// Create our blank simple array for datatimegrps 
 					vm.callarray = [];
@@ -92,21 +97,6 @@ angular
 				});
 		}
 		
-		/*
-		function initController() {
-			SonusService.listactivecalls(function (result) {
-				console.log('callback from SonusService.listactivecalls responded ' + result);
-				
-				var calls = SonusService.result;
-				console.log(calls);
-				
-				
-				vm.loading = false;
-				vm.messages = JSON.stringify(vm.sites, null, "    ");
-
-			});
-		}
-		*/
 
 	}])
 

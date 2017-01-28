@@ -35,9 +35,13 @@ angular
 		
 		vm.getsitephones = siteService.getsitephones(id)
 			.then(function(res){
-				//success
-				//console.log("HERE ");console.log(res)
-				//console.log(res);
+				// Check if Token has expired. If so then direct them to login screen. 
+				if(res.message == "Token has expired"){
+					vm.tokenexpired = true;
+					alert("Token has expired, Please relogin");
+					alert(res.message);
+					$state.go('login');
+				}
 				vm.phones = res.data.phones;
 				
 				
@@ -193,6 +197,7 @@ angular
 			var site = {};
 			site.sitecode = vm.site.sitecode;
 			
+			// Change Site type based on site design user chooses. This is needed for the Laravel Controller
 			if(vm.site.trunking == 'sip' && vm.site.e911 == '911enable' ){
 				site.type = 1;
 			}

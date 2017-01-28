@@ -14,9 +14,24 @@
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: 'home/home.html',
-                controller: 'Home.IndexController',
-                controllerAs: 'vm',
+				views: {
+					'' : {
+						templateUrl: 'home/home.html',
+						controller: 'Home.IndexController',
+						controllerAs: 'vm',
+					},
+
+					/* Add Sonus Alarms to Home View
+					'sonussplashpage@home': { 
+						templateUrl: 'sonus/sonus.splashpage.html',
+						
+						// Removed, included controler as inside html splashpage
+						//controller: 'Sonus.AlarmController',
+						//controllerAs: 'vm'
+					}
+					*/
+					
+				}
             })
             .state('login', {
                 url: '/login',
@@ -66,10 +81,16 @@
                 controller: 'Admin.IndexController',
                 controllerAs: 'vm'
             })
-			.state('sonus', {
-                url: "/sonus",
+			.state('sonus/activecalls', {
+                url: "/sonus/activecalls",
                 templateUrl: 'sonus/sonus.activecalls.html',
-                controller: 'Sonus.IndexController',
+                controller: 'Sonus.CallController',
+                controllerAs: 'vm'
+            })
+			.state('sonus/activealarms', {
+                url: "/sonus/activealarms",
+                templateUrl: 'sonus/sonus.activealarms.html',
+                controller: 'Sonus.AlarmController',
                 controllerAs: 'vm'
             });
 

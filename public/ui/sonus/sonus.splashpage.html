@@ -1,44 +1,44 @@
-<div class="well form-horizontal" style="margin-top:10px;" >
+<div class="well form-horizontal" style="margin-top:10px;">
 
 <legend>SBC Summary<div style="margin:10px"></div></legend>
 
 <div class="container">
-	<!-- Add View
-	<div ui-view="sonussplashpage"></div> -->
 	<ul>
-	<div ng-controller="Sonus.AlarmController as vm">
-	<a href="#/sonus/activealarms" ng-if="!vm.message">
-		<div ng-if="vm.noactivealarms;">
-			<li>
-				<h4>No Active Alarms Found</h4>
-			</li>
+		<div ng-controller="Sonus.AlarmController as vm">
+		
+		<div ng-if="vm.message">{{vm.message}}</div>
+		
+		<a href="#/sonus/activealarms" ng-if="!vm.message">
+			<div ng-if="vm.noactivealarms;">
+				<li>
+					<h4>No Active Alarms Found</h4>
+				</li>
+			</div>
+
+			<div ng-if="!vm.loading && !vm.noactivealarms">
+				<li>
+					<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
+				</li>
+			</div>
+		</a>
 		</div>
 
-		<div ng-if="!vm.loading && !vm.noactivealarms">
-			<li>
-				<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
-			</li>
-		</div>
-	</a>
-	</div>
+		<div ng-controller="Sonus.CallController as vm">
+		<a href="#/sonus/activecalls" ng-if="!vm.message">
+			<div ng-if="vm.noactivecalls;">
+				<li>
+					<h4>No Active Calls Found</h4>
+				</li>
+			</div>
 
-	<div ng-controller="Sonus.CallController as vm">
-	<a href="#/sonus/activecalls" ng-if="!vm.message">
-		<div ng-if="vm.noactivecalls;">
-			<li>
-				<h4>No Active Calls Found</h4>
-			</li>
+			<div ng-if="!vm.loading && !vm.noactivecalls">
+				<li>
+					<h4 style="color:green">{{vm.callcount}} Active Calls Found </h4>
+				</li>
+			</div>
+		</a>
 		</div>
-
-		<div ng-if="!vm.loading && !vm.noactivecalls">
-			<li>
-				<h4 style="color:green">{{vm.callcount}} Active Calls Found </h4>
-			</li>
-		</div>
-	</a>
-	</div>
-</ul>
-
+	</ul>
 </div>	
 
 

@@ -20,9 +20,8 @@
      * )
      **/
     $api->get('sonus/activecalls', 'App\Http\Controllers\Sonus5kcontroller@listactivecalls');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/activealarms",
      *     tags={"Management - Sonus - Monitoring"},
@@ -42,10 +41,8 @@
      * )
      **/
     $api->get('sonus/activealarms', 'App\Http\Controllers\Sonus5kcontroller@listactivealarms');
-	
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/backups",
      *     tags={"Management - Sonus - Monitoring"},
@@ -65,4 +62,3 @@
      * )
      **/
     $api->get('sonus/backups', 'App\Http\Controllers\Sonus5kcontroller@compareconfigs');
-

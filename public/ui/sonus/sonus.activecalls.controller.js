@@ -16,6 +16,12 @@ angular
 
         });
 		*/
+		
+		
+		/*
+			Need to fix polling after leaving the page. 
+		
+		*/
 			
 		initController();
 		
@@ -25,8 +31,8 @@ angular
 			$state.reload();
 		};
 
-		vm.messages = 'Loading Calls...';
-		//vm.sites = [{}];
+		vm.messages = 'Loading...';
+
 		vm.loading = true;
 		
 		function initController() {
@@ -41,8 +47,8 @@ angular
 						
 						if(vm.message == "Token has expired"){
 							// Send user to login page if token expired. 
-							alert("Token has expired, Please relogin");
-							$state.go('login');
+							//alert("Token has expired, Please relogin");
+							$state.go('logout');
 						}
 
 						return vm.message;
@@ -54,10 +60,12 @@ angular
 					vm.callcount = 0;
 					// Create our blank simple array for datatimegrps 
 					vm.callarray = [];
+					vm.callcountsummary = {};
 					
 					//console.log(calls);
 					// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
 					angular.forEach(calls, function(value, key) {
+						  vm.callcountsummary[key] = 0;
 						  angular.forEach(value, function(v, k) {
 								  if (v == null){
 									  //alert("No Active Calls");
@@ -71,6 +79,7 @@ angular
 										  call['SBC'] = key;
 										  vm.callarray.push(call);
 										  vm.callcount = vm.callcount + 1;
+										  vm.callcountsummary[key] = vm.callcountsummary[key] + 1;
 										  vm.noactivecalls = false;
 									  });
 								  }
@@ -81,6 +90,7 @@ angular
 					
 					//console.log(vm.callarray);
 					
+					//console.log(vm.callcountsummary);
 					
 					if(vm.callarray.length == 0){
 						// If no active calls returned then set the noactivecalls variable to display the message to the user. 

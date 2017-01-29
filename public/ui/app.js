@@ -39,6 +39,12 @@
                 controller: 'Login.IndexController',
                 controllerAs: 'vm'
             })
+			.state('logout', {
+                url: '/logout',
+                templateUrl: 'logout/logout.html',
+                controller: 'Logout.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('didblock', {
                 url: '/didblock',
                 templateUrl: 'didblock/didblock.html',

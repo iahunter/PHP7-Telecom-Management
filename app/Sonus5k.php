@@ -62,6 +62,14 @@ class Sonus5k extends Model
         return $CALLS;
     }
     */
+	
+	public static function getactivecallstats($SBC)
+    {
+        $verb = 'GET';
+        $apiurl = "https://{$SBC}/api/operational/global/callCountStatus/activeCalls";
+
+        return self::wrapapi($verb, $apiurl);
+    }
 
     public static function listactivecalls($SBC)
     {
@@ -78,6 +86,8 @@ class Sonus5k extends Model
 
         return self::wrapapi($verb, $apiurl);
     }
+	
+	
 
     /*
     public static function removeconfigbackup($SBC, $LOCATION)

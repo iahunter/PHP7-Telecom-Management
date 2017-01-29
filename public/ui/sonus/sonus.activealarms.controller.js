@@ -19,8 +19,8 @@ angular
 			$state.reload();
 		};
 
-		vm.messages = 'Loading Alarms...';
-		//vm.sites = [{}];
+		vm.messages = 'Loading...';
+
 		vm.loading = true;
 		
 		function initController() {
@@ -35,8 +35,8 @@ angular
 						
 						if(vm.message == "Token has expired"){
 							// Send user to login page if token expired. 
-							alert("Token has expired, Please relogin");
-							$state.go('login');
+							//alert("Token has expired, Please relogin");
+							$state.go('logout');
 						}
 
 						return vm.message;

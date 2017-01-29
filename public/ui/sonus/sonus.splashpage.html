@@ -22,23 +22,44 @@
 			</div>
 		</a>
 		</div>
-
+	
 		<div ng-controller="Sonus.CallController as vm">
-		<a href="#/sonus/activecalls" ng-if="!vm.message">
-			<div ng-if="vm.noactivecalls;">
-				<li>
-					<h4>No Active Calls Found</h4>
-				</li>
-			</div>
+			<div ng-if="!vm.message">
+				<a href="#/sonus/activecalls" >
+					<div ng-if="vm.noactivecalls;">
+						<li>
+							<h4>No Active Calls Found</h4>
+						</li>
+					</div>
 
-			<div ng-if="!vm.loading && !vm.noactivecalls">
-				<li>
-					<h4 style="color:green">{{vm.callcount}} Active Calls Found </h4>
-				</li>
+					<div ng-if="!vm.loading && !vm.noactivecalls">
+						<li>
+							<h4 style="color:green">{{vm.callcount}} Active Calls Found </h4>
+						</li>
+					</div>
+				</a>
 			</div>
-		</a>
-		</div>
-	</ul>
+			<!--Print out Call Summary-->
+			<div>
+				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					<table class="table table-striped table-condensed table-bordered table-hover">
+						<thead>
+							<tr style="background-color: #cce6ff;">
+								<th>SBC</th>
+								<th>Call Count</th>
+							<tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="(key, value) in vm.callcountsummary">
+								<td> {{key}} </td> 
+								<td> {{value}} </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>	
+	</ul>	
 </div>	
 
 

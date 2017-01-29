@@ -28,6 +28,7 @@ class BouncerRoles extends Seeder
             App\Phone::class,
             App\Sonus5k::class,
             App\Cupiuser::class,
+			App\Calls::class,
         ];
 
         foreach ($types as $type) {

@@ -34,7 +34,7 @@ $api->version('v1', function ($api) {
 
     // Did and Didblock routes
     require __DIR__.'/api.did.php';
-
+	
     // Site Planning Routes
     require __DIR__.'/api.site.plan.php';
 
@@ -48,4 +48,8 @@ $api->version('v1', function ($api) {
 
     // Sonus routes
     require __DIR__.'/api.sonus5k.php';
+	
+	// SBC Call History 
+    require __DIR__.'/api.calls.php';
+
 });

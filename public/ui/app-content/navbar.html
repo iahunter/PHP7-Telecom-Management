@@ -85,15 +85,16 @@
 				<li><a href="#">Separated link</a></li>
 			  </ul>
 			</li>-->
-			<li>
-				<div ng-controller="Home.IndexController as vm">
-					<p class="navbar-text" ng-if="vm.username">Signed in as {{vm.username}}</p>
-				</div>
+			<li class="dropdown" ng-controller="Home.IndexController as vm">
+				<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ng-if="vm.username">Signed in as {{vm.username}}<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#/logout">Logout</a></li>
+				</ul>
 			</li>
 		  </ul>
 		  
-		</div><!-- /.navbar-collapse -->
-	</div><!-- /.container-fluid -->
+		</div>
+	</div>
 </nav>
 
 

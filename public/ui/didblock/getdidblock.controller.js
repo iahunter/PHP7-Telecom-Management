@@ -45,6 +45,7 @@ angular
 				vm.didblock.size = vm.didblock.end - vm.didblock.start + 1;
 				vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100;
 					
+				console.log(vm.didblock);
 				return vm.didblock;
 				
 			}, function(err){

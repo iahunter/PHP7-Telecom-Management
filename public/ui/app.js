@@ -98,6 +98,12 @@
                 templateUrl: 'sonus/sonus.activealarms.html',
                 controller: 'Sonus.AlarmController',
                 controllerAs: 'vm'
+            })
+			.state('sonus/callstats', {
+                url: "/sonus/callstats",
+                templateUrl: 'calls/calls.graph.html',
+                controller: 'CallGraph.IndexController',
+                controllerAs: 'vm'
             });
 
     }

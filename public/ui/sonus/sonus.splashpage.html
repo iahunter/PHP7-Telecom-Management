@@ -7,38 +7,40 @@
 		<div ng-controller="Sonus.AlarmController as vm">
 		
 		<div ng-if="vm.message">{{vm.message}}</div>
-		
-		<a href="#/sonus/activealarms" ng-if="!vm.message">
-			<div ng-if="vm.noactivealarms;">
-				<li>
-					<h4>No Active Alarms Found</h4>
-				</li>
-			</div>
-
-			<div ng-if="!vm.loading && !vm.noactivealarms">
-				<li>
-					<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
-				</li>
-			</div>
-		</a>
+			<a href="#/sonus/activealarms" ng-if="!vm.message">
+				<!-- Hide this. We don't want to display anything if no alarms. 
+				<div ng-if="vm.noactivealarms;">
+					<li>
+						<h4>No Active Alarms Found</h4>
+					</li>
+				</div>
+				-->
+				<div ng-if="!vm.loading && !vm.noactivealarms">
+					<li>
+						<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
+					</li>
+				</div>
+			</a>
 		</div>
 	
 		<div ng-controller="Sonus.CallController as vm">
 			<div ng-if="!vm.message">
 				<a href="#/sonus/activecalls" >
+					<!-- Hide this. We don't want to display anything if no calls.
 					<div ng-if="vm.noactivecalls;">
 						<li>
 							<h4>No Active Calls Found</h4>
 						</li>
 					</div>
-
+					-->
 					<div ng-if="!vm.loading && !vm.noactivecalls">
 						<li>
-							<h4 style="color:green">{{vm.callcount}} Active Calls Found </h4>
+							<h4>{{vm.callcount}} Active Calls Found </h4>
 						</li>
 					</div>
 				</a>
 			</div>
+		
 			<!--Print out Call Summary-->
 			<div>
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -61,6 +63,14 @@
 		</div>	
 	</ul>	
 </div>	
+
+<hr>
+
+<div ng-controller="CallGraph.IndexController as vm">
+<ng-include src="'calls/calls.graph.html'"></ng-include>
+</div>	
+
+
 
 
 

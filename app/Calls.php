@@ -14,4 +14,6 @@ class Calls extends Model
     protected $casts = [
         'stats'    => 'array',
     ];
+	
+	//protected $dateFormat = 'U';
 }

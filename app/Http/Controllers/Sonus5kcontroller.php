@@ -60,7 +60,7 @@ class Sonus5kcontroller extends Controller
 
     public function compareconfigs()
     {
-		die();
+        die();
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check user permissions

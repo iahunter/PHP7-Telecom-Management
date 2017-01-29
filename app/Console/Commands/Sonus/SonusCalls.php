@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Console\Commands\Sonus;
-use App\Sonus5k;
+
 use App\Calls;
-
+use App\Sonus5k;
 use Illuminate\Console\Command;
-
-
 
 class SonusCalls extends Command
 {
@@ -31,14 +29,13 @@ class SonusCalls extends Command
      */
     public function __construct()
     {
-		$this->SBCS = [
+        $this->SBCS = [
                         env('SONUS1'),
                         env('SONUS2'),
                         ];
-						
+
         parent::__construct();
-		// Populate SBC list
-        
+        // Populate SBC list
     }
 
     /**
@@ -48,25 +45,22 @@ class SonusCalls extends Command
      */
     public function handle()
     {
-		$totalCalls = 0;
-		$STATS = [];
-		foreach($this->SBCS as $SBC){
-			$STAT = Sonus5k::getactivecallstats($SBC);
-			$STAT = $STAT['sonusActiveCall:callCountStatus'];
-			$sbccalls = $STAT['totalCalls'];
-			$totalCalls = $totalCalls + $sbccalls;
-			$STATS[$SBC] = $STAT;
-		}
-		$INSERT['totalCalls'] = $totalCalls;
-		$INSERT['stats'] = json_encode($STATS, true);
-		print_r($INSERT);
-		//return $STATS;
-		
-		
-		$result = Calls::create($INSERT);
-		
-		print_r($result);
-		
-		
+        $totalCalls = 0;
+        $STATS = [];
+        foreach ($this->SBCS as $SBC) {
+            $STAT = Sonus5k::getactivecallstats($SBC);
+            $STAT = $STAT['sonusActiveCall:callCountStatus'];
+            $sbccalls = $STAT['totalCalls'];
+            $totalCalls = $totalCalls + $sbccalls;
+            $STATS[$SBC] = $STAT;
+        }
+        $INSERT['totalCalls'] = $totalCalls;
+        $INSERT['stats'] = json_encode($STATS, true);
+        print_r($INSERT);
+        //return $STATS;
+
+        $result = Calls::create($INSERT);
+
+        print_r($result);
     }
 }

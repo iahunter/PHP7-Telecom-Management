@@ -26,8 +26,8 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\LdapUserUpdate::class,
 
         Commands\UnityConnection\UnityConnMB::class,
-		
-		Commands\Sonus\SonusCalls::class,
+
+        Commands\Sonus\SonusCalls::class,
     ];
 
     /**

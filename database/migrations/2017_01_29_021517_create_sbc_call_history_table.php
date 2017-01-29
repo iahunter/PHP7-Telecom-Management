@@ -14,14 +14,14 @@ class CreateSbcCallHistoryTable extends Migration
     public function up()
     {
         // Site Code Table
-		Schema::create('sbc_calls', function (Blueprint $table) {
-		$table->increments('id');
-		$table->string('name')->nullable();              			// SBC Name
-		$table->integer('totalCalls');                				// Calls
-		$table->json('stats')->nullable();            				// JSON Details Custom Field Data
-		$table->timestamps();                           			// Time Stamps
-		$table->softDeletes();                          			// Soft Deletes
-		});
+        Schema::create('sbc_calls', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->nullable();                          // SBC Name
+        $table->integer('totalCalls');                                // Calls
+        $table->json('stats')->nullable();                            // JSON Details Custom Field Data
+        $table->timestamps();                                       // Time Stamps
+        $table->softDeletes();                                      // Soft Deletes
+        });
     }
 
     /**

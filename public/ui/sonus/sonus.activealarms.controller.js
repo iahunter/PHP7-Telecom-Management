@@ -7,12 +7,6 @@ angular
 
 		initController();
 		
-		/*
-			Need to fix polling after leaving the page. 
-		
-		*/
-		
-		
 		vm.siteForm = {};
 		
 		vm.refresh = function (){
@@ -91,11 +85,13 @@ angular
 				});
 		}
 		
-		pull = $interval(initController,60000); 
+		var pull = $interval(initController,60000); 
 		
-		/*
-		element.on('$destroy', function() {
-            $interval.cancel(stopTime);
-          });*/
+		$scope.$on('$destroy', function() {
+			console.log($scope);
+            $interval.cancel(pull);
+		});
+		
+		
 	}])
 

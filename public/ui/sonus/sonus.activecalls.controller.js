@@ -1,28 +1,9 @@
 angular
 	.module('app')
-	.controller('Sonus.CallController', ['SonusService', '$location', '$timeout', '$state', '$scope', function(SonusService, $location, $timeout, $state, $scope) {
+	.controller('Sonus.CallController', ['SonusService', '$location', '$timeout', '$interval', '$state', '$scope', function(SonusService, $location, $timeout, $interval, $state, $scope) {
 	
 		var vm = this;
 		
-		
-		/* Don't think we need this anymore. Keeping for example watch. 
-		$scope.$watch(function() {
-            return vm.callarray;
-        }, function(current, original) {
-			
-			vm.callarray = current;
-            console.log('vm.callarray was %s', original);
-            console.log('vm.callarray is now %s', current);
-
-        });
-		*/
-		
-		
-		/*
-			Need to fix polling after leaving the page. 
-		
-		*/
-			
 		initController();
 		
 		vm.siteForm = {};
@@ -100,13 +81,19 @@ angular
 					// Stop Loading 
 					vm.loading = false;
 					
-					$timeout(initController,5000); 
+					//$timeout(initController,5000); 
 						
 				}, function(err){
 					alert(err);
 				});
 		}
 		
+		var pull = $interval(initController,5000); 
+		
+		$scope.$on('$destroy', function() {
+			console.log($scope);
+            $interval.cancel(pull);
+		});
 
 	}])
 

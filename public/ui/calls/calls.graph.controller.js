@@ -28,12 +28,9 @@ angular
 					vm.error = true;
 					return vm.message;
 				}
-				
-				//** Loop thru and create chart data for block. 
+
 				vm.calls = res.data.result;
-				
-				//console.log(vm.calls);
-				
+
 				vm.callgraph = {};
 				
 				//console.log(block.stats);
@@ -45,9 +42,7 @@ angular
 				vm.sbcs['totalCalls'] = [];
 				
 				angular.forEach(vm.calls, function(key, value) {
-
 					vm.sbcs['totalCalls'].push(key.totalCalls);
-					
 					//console.log(key.stats);
 					angular.forEach(key.stats, function(k, v) {
 						
@@ -58,12 +53,10 @@ angular
 							vm.sbcs[v] = [];
 							vm.sbcs[v].push(k.totalCalls);
 						}
-					
 					});
 					
 					// Push date and time onto callgraph array for x axis labels. 
 					vm.callgraph['chartlabels'].push(key.created_at);
-				
 				});
 				
 				// Push data onto the chartgraph array

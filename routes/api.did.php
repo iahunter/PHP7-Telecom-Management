@@ -373,3 +373,89 @@
      **/
     $api->put('did/{id}', 'App\Http\Controllers\Didcontroller@updateDid');
     // $api->delete('did/{id}', 'App\Http\Controllers\Didcontroller@deleteDid'); // Individual DID deletion Not allowed.
+	
+	 /**
+     * @SWG\Post(
+     *     path="/telephony/api/did/searchDidNumbersinArray",
+     *     tags={"Did"},
+     *     summary="Search DIDs for Numbers in Array",
+     *     description="",
+     *     operationId="createDidblock",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="delimiter",
+     *         in="formData",
+     *         description="Number block delimiter - required if using blocks",
+     *		   enum={"comma", "tab", "space"},
+     *         required=false,
+     *         type="integer"
+     *     ),
+	 *     @SWG\Parameter(
+     *         name="blocks",
+     *         in="formData",
+     *         description="Blocks to lookup - 1 per line. Space, comma, or Tab delimited",
+     *         required=false,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="Numbers Array",
+     *         ),
+     *     ),
+     *     @SWG\Parameter(
+     *         name="numbers",
+     *         in="formData",
+     *         description="Numbers to lookup - 1 per line.",
+     *         required=false,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="Numbers Array",
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->post('did/searchDidNumbersinArray', 'App\Http\Controllers\Didcontroller@searchDidNumbersinArray');
+
+	
+	/**
+     * @SWG\Post(
+     *     path="/telephony/api/did/searchDidblockNumbersinArray",
+     *     tags={"Did"},
+     *     summary="Search DID Block Numbers in Array",
+     *     description="",
+     *     operationId="createDidblock",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="delimiter",
+     *         in="formData",
+     *         description="Number block delimiter - required if using blocks",
+     *		   enum={"comma", "tab", "space"},
+     *         required=false,
+     *         type="integer"
+     *     ),
+	 *     @SWG\Parameter(
+     *         name="blocks",
+     *         in="formData",
+     *         description="Blocks to lookup - 1 per line. Space, comma, or Tab delimited",
+     *         required=false,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="Numbers Array",
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->post('did/searchDidblockNumbersinArray', 'App\Http\Controllers\Didcontroller@searchDidblockNumbersinArray');
+
+	

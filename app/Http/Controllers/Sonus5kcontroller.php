@@ -6,6 +6,9 @@ use App\Sonus5k;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use phpseclib\Net\SFTP as Net_SFTP;
+use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Sonus5kcontroller extends Controller
 {
@@ -32,11 +35,24 @@ class Sonus5kcontroller extends Controller
         if (! $user->can('read', Sonus5k::class)) {
             abort(401, 'You are not authorized');
         }
-
+		
+		// Name of Cache key. 
+		$key = 'listactivecalls';
+		
+		// Check if calls exist in cache. If not then move on. 
+		if(Cache::has($key)){
+			//Log::info(__METHOD__.' Used Cache');
+			return Cache::get($key);
+		}
+		//Log::info(__METHOD__.' Did not Use Cache');
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
             $CALLS[$SBC] = Sonus5k::listactivecalls($SBC);
         }
+		
+		// Cache Calls for 5 seconds - Put the $CALLS as value of cache. 
+		$time = Carbon::now()->addSeconds(5);
+		Cache::put($key, $CALLS, $time);
 
         return $CALLS;
     }
@@ -49,11 +65,24 @@ class Sonus5kcontroller extends Controller
         if (! $user->can('read', Sonus5k::class)) {
             abort(401, 'You are not authorized');
         }
+		
+		// Name of Cache key. 
+		$key = 'listactivealarms';
+		
+		// Check if calls exist in cache. If not then move on. 
+		if(Cache::has($key)){
+			//Log::info(__METHOD__.' Used Cache');
+			return Cache::get($key);
+		}
 
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
             $CALLS[$SBC] = Sonus5k::listactivealarms($SBC);
         }
+		
+		// Cache Calls for 5 seconds - Put the $CALLS as value of cache. 
+		$time = Carbon::now()->addSeconds(60);
+		Cache::put($key, $CALLS, $time);
 
         return $CALLS;
     }

@@ -52,6 +52,34 @@
 			
 			});
 		}
+		
+		
+		// Get Dids by Block ID
+		self.getDid = function(number) {
+			var defer = $q.defer();
+			return $http.get('../api/did/number/'+number)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+			
+			});
+		}
+		
+		// Get DID Numbers from Array
+		self.searchDidNumbersinArray = function(numbers) {
+			
+			return $http.post('../api/did/searchDidNumbersinArray',numbers);
+		}
+		
+
+		// Get DID Numbers from Array
+		self.searchDidblockNumbersinArray = function(numbers) {
+			
+			return $http.post('../api/did/searchDidblockNumbersinArray',numbers);
+		}
 			  
 		
 		

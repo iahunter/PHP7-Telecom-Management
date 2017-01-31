@@ -63,6 +63,12 @@
                 controller: 'getDidblock.IndexController',
                 controllerAs: 'vm'
             })
+			.state('checkdidusage', {
+                url: "/checkdidusage",
+                templateUrl: 'didblock/checkdidusage.html',
+                controller: 'checkdidusage.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('site', {
                 url: '/site',
                 templateUrl: 'siteplanning/site.html',

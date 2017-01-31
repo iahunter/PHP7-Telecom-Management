@@ -1177,6 +1177,51 @@
                 }
             }
         },
+        "/telephony/api/did/searchDidNumbersinArray": {
+            "post": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Search DIDs for Numbers in Array",
+                "description": "",
+                "operationId": "createDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "blocks",
+                        "in": "formData",
+                        "description": "Blocks to lookup - 1 per line. Space, comma, or Tab delimited",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "Numbers Array",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "numbers",
+                        "in": "formData",
+                        "description": "Numbers to lookup - 1 per line.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "Numbers Array",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/ldap/users": {
             "get": {
                 "tags": [

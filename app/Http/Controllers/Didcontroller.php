@@ -189,7 +189,6 @@ class Didcontroller extends Controller
         return response()->json($response);
     }
 
-
     public function listDidbyBlockID(Request $request, $parent)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -254,90 +253,85 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function searchDidblockNumbersinArray(Request $request)
+
+    public function searchDidblockNumbersinArray(Request $request)
     {
-		/**********THIS IS BROKEN ****************/
-		
-		
+        /**********THIS IS BROKEN ****************/
+
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Did::class)) {
             abort(401, 'You are not authorized to view didblock '.$did);
         }
-		
-		$numbers = [];
-		
-		//$array = $request->all();
-		
-		if (isset($request->numbers) && $request->numbers) {
+
+        $numbers = [];
+
+        //$array = $request->all();
+
+        if (isset($request->numbers) && $request->numbers) {
             $numbers = $request->numbers;
         }
-		
-		$blocks_array = [];
-		if (isset($request->blocks) && $request->blocks) {
+
+        $blocks_array = [];
+        if (isset($request->blocks) && $request->blocks) {
             $blocks = $request->blocks;
-			$blocks = explode(',', $blocks);
-			
-			return $blocks;
-			
-			foreach($blocks as $block){
-				//$blocks = explode(',', $blocks);
-				if(!is_array($block)){
-					$block = preg_split("/,/", $block);
-				}
-				//$blocks = preg_split("/,/", $blocks);
-				//$blocks = preg_split("/[\s]/", $blocks);
-				$blocks_array[] = $block;
-			}
-			return $blocks_array;
+            $blocks = explode(',', $blocks);
+
+            return $blocks;
+
+            foreach ($blocks as $block) {
+                //$blocks = explode(',', $blocks);
+                if (! is_array($block)) {
+                    $block = preg_split('/,/', $block);
+                }
+                //$blocks = preg_split("/,/", $blocks);
+                //$blocks = preg_split("/[\s]/", $blocks);
+                $blocks_array[] = $block;
+            }
+
+            return $blocks_array;
         }
-		
-		$numbers = $array['numbers'];
-		
-		if (!is_array($numbers)){
-			//return "true";
-			$numbers = explode(',', $numbers);
-		}
-		
-		
-		
-		//return $blocks;
-		
-		$numbers = $request->all();
-		/*
-		if (isset($request->numbers) && $request->numbers) {
-			print "Setting numbers";
+
+        $numbers = $array['numbers'];
+
+        if (! is_array($numbers)) {
+            //return "true";
+            $numbers = explode(',', $numbers);
+        }
+
+        //return $blocks;
+
+        $numbers = $request->all();
+        /*
+        if (isset($request->numbers) && $request->numbers) {
+            print "Setting numbers";
             $numbers = $request->numbers;
         }
-		*/
-		//return $request->numbers;
-		
-		//return $numbers;
-		//die();
-		$dids = [];
-		foreach($numbers as $number_search){
-			if ($number_search == ''){
-				unset($number_search);
-				continue;
-			}
-				
-			// Search for DID by numberCheck if there are any matches.
-			if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
-				$did = [$number_search => false];
-			}else{
-				// Search for numbers like search.
-				$did = Did::where('number', 'like', $number_search)->get();
-				if ($did != ""){
-					$did = [$number_search => $did];
-				}
-			}
+        */
+        //return $request->numbers;
 
-				$dids[] = $did;
+        //return $numbers;
+        //die();
+        $dids = [];
+        foreach ($numbers as $number_search) {
+            if ($number_search == '') {
+                unset($number_search);
+                continue;
+            }
 
-		}
+            // Search for DID by numberCheck if there are any matches.
+            if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
+                $did = [$number_search => false];
+            } else {
+                // Search for numbers like search.
+                $did = Did::where('number', 'like', $number_search)->get();
+                if ($did != '') {
+                    $did = [$number_search => $did];
+                }
+            }
 
+            $dids[] = $did;
+        }
 
         //return "HERE ".$did;
 
@@ -351,53 +345,50 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function searchDidNumbersinArray(Request $request)
+
+    public function searchDidNumbersinArray(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Did::class)) {
             abort(401, 'You are not authorized to view didblock '.$did);
         }
-		
-		$numbers = $request->all();
-		/*
-		if (isset($request->numbers) && $request->numbers) {
-			print "Setting numbers";
+
+        $numbers = $request->all();
+        /*
+        if (isset($request->numbers) && $request->numbers) {
+            print "Setting numbers";
             $numbers = $request->numbers;
         }
-		///*/
-		//return $request->numbers;
-		if (!is_array($numbers)){
-			//return "true";
-			$numbers = explode(',', $numbers);
-		}
-        
-		//return $numbers;
-		//die();
-		$dids = [];
-		foreach($numbers as $number_search){
-			if ($number_search == ''){
-				unset($number_search);
-				continue;
-			}
-				
-			// Search for DID by numberCheck if there are any matches.
-			if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
-				$did = [$number_search => false];
-			}else{
-				// Search for numbers like search.
-				$did = Did::where('number', 'like', $number_search)->get();
-				if ($did != ""){
-					$did = [$number_search => $did];
-				}
-			}
+        ///*/
+        //return $request->numbers;
+        if (! is_array($numbers)) {
+            //return "true";
+            $numbers = explode(',', $numbers);
+        }
 
-				$dids[] = $did;
+        //return $numbers;
+        //die();
+        $dids = [];
+        foreach ($numbers as $number_search) {
+            if ($number_search == '') {
+                unset($number_search);
+                continue;
+            }
 
-		}
+            // Search for DID by numberCheck if there are any matches.
+            if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
+                $did = [$number_search => false];
+            } else {
+                // Search for numbers like search.
+                $did = Did::where('number', 'like', $number_search)->get();
+                if ($did != '') {
+                    $did = [$number_search => $did];
+                }
+            }
 
+            $dids[] = $did;
+        }
 
         //return "HERE ".$did;
 
@@ -411,7 +402,6 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
 
     public function searchDidbyParent(Request $request, $parentid, $column, $search)
     {

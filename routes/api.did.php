@@ -373,8 +373,8 @@
      **/
     $api->put('did/{id}', 'App\Http\Controllers\Didcontroller@updateDid');
     // $api->delete('did/{id}', 'App\Http\Controllers\Didcontroller@deleteDid'); // Individual DID deletion Not allowed.
-	
-	 /**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/did/searchDidNumbersinArray",
      *     tags={"Did"},
@@ -391,7 +391,7 @@
      *         required=false,
      *         type="integer"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="blocks",
      *         in="formData",
      *         description="Blocks to lookup - 1 per line. Space, comma, or Tab delimited",
@@ -421,8 +421,7 @@
      **/
     $api->post('did/searchDidNumbersinArray', 'App\Http\Controllers\Didcontroller@searchDidNumbersinArray');
 
-	
-	/**
+    /**
      * @SWG\Post(
      *     path="/telephony/api/did/searchDidblockNumbersinArray",
      *     tags={"Did"},
@@ -439,7 +438,7 @@
      *         required=false,
      *         type="integer"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="blocks",
      *         in="formData",
      *         description="Blocks to lookup - 1 per line. Space, comma, or Tab delimited",
@@ -457,5 +456,3 @@
      * )
      **/
     $api->post('did/searchDidblockNumbersinArray', 'App\Http\Controllers\Didcontroller@searchDidblockNumbersinArray');
-
-	

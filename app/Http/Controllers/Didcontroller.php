@@ -263,89 +263,83 @@ class Didcontroller extends Controller
         if (! $user->can('read', Did::class)) {
             abort(401, 'You are not authorized to view didblock '.$did);
         }
-		
-		//return $request->all();
-		
-		if (isset($request->delimiter) && $request->delimiter) {
+
+        //return $request->all();
+
+        if (isset($request->delimiter) && $request->delimiter) {
             $delimiter = $request->delimiter;
-        }else{
-			throw new \Exception('Delimiter is required');
-		}
-		
-		if (isset($request->blocks) && $request->blocks) {
+        } else {
+            throw new \Exception('Delimiter is required');
+        }
+
+        if (isset($request->blocks) && $request->blocks) {
             $didblocks = $request->blocks;
-        }else{
-			throw new \Exception('No DID Blocks detected');
-		}
-		
-		
-		$blocks = [];
-		foreach($didblocks as $block){
-			if($block == ""){
-				continue;
-			}
-			if ($delimiter == "comma"){
-				$block = explode(",", $block);
-				$trimblock = [];
-				foreach($block as $i){
-					if ($i != ""){
-						$trimblock[] = trim($i);
-					}
-				}
-			}
-			elseif ($delimiter == "space"){
-				$block = explode(" ", $block);
-				$trimblock = [];
-				foreach($block as $i){
-					if ($i != ""){
-						$trimblock[] = trim($i);
-					}
-					
-				}
-			}
-			elseif ($delimiter == "tab"){
-				$block = explode("\t", $block);
-				$trimblock = [];
-				foreach($block as $i){
-					if ($i != ""){
-						$trimblock[] = trim($i);
-					}
-				}
-			}
-			
-			$blocks[] = $trimblock;
-		}
-		
-		//return $blocks;
+        } else {
+            throw new \Exception('No DID Blocks detected');
+        }
+
+        $blocks = [];
+        foreach ($didblocks as $block) {
+            if ($block == '') {
+                continue;
+            }
+            if ($delimiter == 'comma') {
+                $block = explode(',', $block);
+                $trimblock = [];
+                foreach ($block as $i) {
+                    if ($i != '') {
+                        $trimblock[] = trim($i);
+                    }
+                }
+            } elseif ($delimiter == 'space') {
+                $block = explode(' ', $block);
+                $trimblock = [];
+                foreach ($block as $i) {
+                    if ($i != '') {
+                        $trimblock[] = trim($i);
+                    }
+                }
+            } elseif ($delimiter == 'tab') {
+                $block = explode("\t", $block);
+                $trimblock = [];
+                foreach ($block as $i) {
+                    if ($i != '') {
+                        $trimblock[] = trim($i);
+                    }
+                }
+            }
+
+            $blocks[] = $trimblock;
+        }
+
+        //return $blocks;
 
         $dids = [];
-		
-		foreach($blocks as $didblock){
-			
-			$start = $didblock[0];
-			$end = $didblock[1];
-			
-			foreach (range($start,$end) as $number_search) {
-				if ($number_search == '') {
-					unset($number_search);
-					continue;
-				}
 
-				// Search for DID by numberCheck if there are any matches.
-				if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
-					$did = [$number_search => false];
-				} else {
-					// Search for numbers like search.
-					$did = Did::where('number', 'like', $number_search)->get();
-					if ($did != '') {
-						$did = [$number_search => $did];
-					}
-				}
+        foreach ($blocks as $didblock) {
+            $start = $didblock[0];
+            $end = $didblock[1];
 
-				$dids[] = $did;
-			}
-		}
-        
+            foreach (range($start, $end) as $number_search) {
+                if ($number_search == '') {
+                    unset($number_search);
+                    continue;
+                }
+
+                // Search for DID by numberCheck if there are any matches.
+                if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
+                    $did = [$number_search => false];
+                } else {
+                    // Search for numbers like search.
+                    $did = Did::where('number', 'like', $number_search)->get();
+                    if ($did != '') {
+                        $did = [$number_search => $did];
+                    }
+                }
+
+                $dids[] = $did;
+            }
+        }
 
         //return "HERE ".$did;
 

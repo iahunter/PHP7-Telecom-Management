@@ -59,10 +59,11 @@
 						
 						<hr />
 						<div class="row">
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-12">
 								<div class="form-group">
 									<button  type="submit" ng-disabled="addDidblockForm.$invalid" class="btn btn-primary">Submit</button>
 									<button type="reset" class="btn btn-primary">Reset</button>
+									<button class="btn btn-default pull-right"  ng-if="vm.numberstable" ng-click="vm.toggle(vm.showassignments)"> Show Assignments </button>
 								</div>
 							</div>
 						</div>
@@ -98,7 +99,15 @@
 										<span ng-show="sortType == 'status' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'status' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
-							</th>							
+							</th>
+
+							<th ng-if="vm.showassignments">
+								<a href="" ng-click="sortType = 'assignments'; sortReverse = !sortReverse" style="color:black">
+									Assignments
+										<span ng-show="sortType == 'assignments' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'assignments' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>								
 
 						</tr>
 				</thead>
@@ -106,7 +115,25 @@
 				<tbody>
 					<tr ng-repeat="number in vm.numberstable | orderBy:sortType:sortReverse | filter:vm.search: strict">
 						<td>{{number.number}}</td> 
-						<td>{{number.status}}</td> 
+						<td>{{number.details.status}}</td> 
+						<td ng-if="vm.showassignments">
+						<!--Nested Table inside Row-->
+							<div ng-show="number.details.assignments" class="panel panel-default" style="background-color: transparent;">
+								<table class="table table-condensed table-bordered" style="background-color: transparent;">
+									<td><i>Pattern</i></td>
+									<td><i>Partition</i></td>
+									<td><i>Type</i></td>
+									<td><i>Detail</i></td>
+									<tr ng-repeat="assignment in number.details.assignments track by $index">
+										<td>{{assignment.dnOrPattern}}</td>
+										
+										<td>{{assignment.partition._}}</td>
+										<td>{{assignment.type}}</td>
+										<td>{{assignment.routeDetail}}</td>
+									</tr>
+								</table>
+							</div>
+						</td> 
 					</tr>
 				</tbody>
 				

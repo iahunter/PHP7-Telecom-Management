@@ -12,6 +12,20 @@ angular
 		
 		var id = $stateParams.id;
 		
+		vm.showassignments = false;
+		
+		vm.toggle = function(){
+			//console.log('toggle');
+			//console.log('vm.showassignments');
+			if(vm.showassignments == true){
+				vm.showassignments = false;
+			}else{
+				if(vm.showassignments == false){
+				vm.showassignments = true;
+				}
+			}
+		}
+		
 		vm.states = [{
 				id: 1,
 				name: 'comma'
@@ -36,45 +50,6 @@ angular
 			numbers['blocks'] = form.blocks.split("\n");
 			numbers['delimiter'] = vm.selectedOption.name;
 			
-			/*
-			angular.forEach(numbers.blocks, function(value, key) {
-			  //this.push(key + ': ' + value);
-			  console.log(key + ': ' + value);
-			});
-			
-			
-			
-			
-			//numbers['delimiter'] = form.delimiter;
-			
-			
-			for (i in numbers['blocks']){
-				
-			}
-			
-			console.log(numbers);
-			if(form.delimiter == 'space'){
-				
-				numbers = numbers.blocks.replace(/(\r\n|\n|\r)/gm,",");
-			}
-			numbers = numbers.blocks.replace(/(\r\n|\n|\r)/gm,",");
-			//console.log(numbers);
-			
-			var numbers = numbers.split(',');
-			//console.log(numbers);
-			
-			var checkdid = [];
-			for (key in numbers){
-				value = numbers[key];
-				if(value != ""){
-					checkdid.push(value);
-				}
-			}
-			
-			vm.checkdid = checkdid;
-			
-			//console.log(vm.checkdid);
-			*/
 			
 			console.log(numbers);
 			
@@ -102,27 +77,17 @@ angular
 						var number = {};
 						
 						number['number'] = key;
+						number['details'] = [];
 						
 						var value = v[key];
-						
-						console.log(value);
-						
-						/*
-						if (typeof(value) == "undefined" && value == null){
-							number['status'] = "Not Found";
-							numberstable.push(number);
-							continue;
-						*/
+
 						if (value == false){
-							number['status'] = "Not Found";
+							number['details']['status'] = "Not Found";
 							numberstable.push(number);
 							continue;
 						}
-						
-						//console.log('value');
-						//console.log(value[0].status);
 
-						number['status'] = value[0].status;
+						number['details'] = value[0];
 						
 						// Push Number info onto the table data array. 
 						numberstable.push(number);

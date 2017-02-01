@@ -12,6 +12,22 @@ angular
 		
 		var id = $stateParams.id;
 		
+		vm.showassignments = false;
+		
+		vm.toggle = function(){
+			//console.log('toggle');
+			//console.log('vm.showassignments');
+			if(vm.showassignments == true){
+				vm.showassignments = false;
+			}else{
+				if(vm.showassignments == false){
+				vm.showassignments = true;
+				}
+			}
+		}
+		
+		//console.log(vm.toggle);
+		
 		// Create DID Block 
 		vm.submitDidblock = function(form) { 
 		
@@ -60,27 +76,17 @@ angular
 						var number = {};
 						
 						number['number'] = key;
+						number['details'] = [];
 						
 						var value = v[key];
-						
-						console.log(value);
-						
-						/*
-						if (typeof(value) == "undefined" && value == null){
-							number['status'] = "Not Found";
-							numberstable.push(number);
-							continue;
-						*/
+
 						if (value == false){
-							number['status'] = "Not Found";
+							number['details']['status'] = "Not Found";
 							numberstable.push(number);
 							continue;
 						}
-						
-						//console.log('value');
-						//console.log(value[0].status);
 
-						number['status'] = value[0].status;
+						number['details'] = value[0];
 						
 						// Push Number info onto the table data array. 
 						numberstable.push(number);

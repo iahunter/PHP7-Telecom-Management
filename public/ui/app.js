@@ -65,8 +65,14 @@
             })
 			.state('checkdidusage', {
                 url: "/checkdidusage",
-                templateUrl: 'didblock/checkdidusage.html',
+                templateUrl: 'didblock/usage/checkdidusage.html',
                 controller: 'checkdidusage.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('checkdidblockusage', {
+                url: "/checkdidblockusage",
+                templateUrl: 'didblock/usage/checkdidblockusage.html',
+                controller: 'checkdidblockusage.IndexController',
                 controllerAs: 'vm'
             })
 			.state('site', {

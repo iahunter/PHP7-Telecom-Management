@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('checkdidusage.IndexController', ['telephonyService', '$location', '$state', '$stateParams', function(telephonyService, $location, $state, $stateParams) {
+	.controller('checkdidblockusage.IndexController', ['telephonyService', '$location', '$state', '$stateParams', function(telephonyService, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -23,21 +23,41 @@ angular
 				name: 'space'
 			}];
 		
-		vm.types = [{
-				id: 1,
-				name: 'public'
-			}, {
-				id: 2,
-				name: 'private'
-			}];
-		
+		vm.selectedOption = {};
+
 		// Create DID Block 
 		vm.submitDidblock = function(form) { 
 		
-			vm.loading = true;
-			var numbers = form.numbers.trim();
+			console.log(form);
 			
-			numbers = numbers.replace(/(\r\n|\n|\r)/gm,",");
+			vm.loading = true;
+			var numbers = {};
+			numbers['blocks'] = "";
+			numbers['blocks'] = form.blocks.split("\n");
+			numbers['delimiter'] = vm.selectedOption.name;
+			
+			/*
+			angular.forEach(numbers.blocks, function(value, key) {
+			  //this.push(key + ': ' + value);
+			  console.log(key + ': ' + value);
+			});
+			
+			
+			
+			
+			//numbers['delimiter'] = form.delimiter;
+			
+			
+			for (i in numbers['blocks']){
+				
+			}
+			
+			console.log(numbers);
+			if(form.delimiter == 'space'){
+				
+				numbers = numbers.blocks.replace(/(\r\n|\n|\r)/gm,",");
+			}
+			numbers = numbers.blocks.replace(/(\r\n|\n|\r)/gm,",");
 			//console.log(numbers);
 			
 			var numbers = numbers.split(',');
@@ -54,9 +74,12 @@ angular
 			vm.checkdid = checkdid;
 			
 			//console.log(vm.checkdid);
+			*/
+			
+			console.log(numbers);
 			
 			
-			telephonyService.searchDidblockNumbersinArray(angular.copy(vm.checkdid)).then(function(res) {
+			telephonyService.searchDidblockNumbersinArray(angular.copy(numbers)).then(function(res) {
 				//alert("Didblock Added Succesfully" + data);
 				//console.log(data);
 				var checkdidresult = "";

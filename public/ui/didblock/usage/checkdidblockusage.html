@@ -37,7 +37,7 @@
 								<div class="form-group" ng-class="{'has-error': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$invalid, 'has-success': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$valid }">
 									<label for="blocks" class="control-label">Block Ranges</label>
 									<textarea ng-model='vm.didblockForm.blocks' class="form-control" placeholder=" 4025550000	4025550999&#10 4029384000	4029384999"
-										rows="10" id="userdata" name="userdata"></textarea>
+										rows="10" id="blocks" name="blocks"></textarea>
 									<!--<input textarea" ng-model='vm.didblockForm.name' required class="form-control"  rows="10" name="name" placeholder="Name">-->
 									<div ng-messages="addDidblockForm.blocks.$dirty && addDidblockForm.blocks.$error">
 										<div ng-message='required'> Blocks are is required </div>
@@ -45,18 +45,7 @@
 								</div>
 							</div>
 						</div>
-						
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="form-group" ng-class="{'has-error': addDidblockForm.numbers.$touched && addDidblockForm.numbers.$invalid, 'has-success': addDidblockForm.numbers.$touched && addDidblockForm.name.$valid }">
-									<label for="numbers" class="control-label">Numbers</label>
-									<textarea ng-model='vm.didblockForm.numbers' class="form-control" placeholder=" 4025550000&#10 4025550001&#10 4025550002&#10 4025550003&#10 4025550004&#10" rows="10" id="userdata" name="userdata"></textarea>
-									<div ng-messages="addDidblockForm.numbers.$dirty && addDidblockForm.numbers.$error">
-										<div ng-message='required'> Numbers are is required </div>
-									</div>
-								</div>
-							</div>
-						</div>
+
 							
 						
 						 Print Form JSON

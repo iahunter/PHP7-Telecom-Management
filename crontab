@@ -1,8 +1,9 @@
 
 # Drop this into your Crontab for scheduled tasks
 
+
 # Get SBC Call stats every 10 mins
-*/10 * * * * /<Path to App>/telephony/artisan sonus:write-callsummary-db                      
+*/10 * * * * /opt/dcoapi/telephony/artisan sonus:write-callsummary-db > /dev/null 2>&1
 
 # Update Number Database with CUCM scan every hour
-0 * * * * /<Path to App>/telephony/artisan didscan:callmanager                      
+0 * * * * /opt/dcoapi/telephony/artisan didscan:callmanager > /dev/null 2>&1

@@ -22,8 +22,8 @@
          * )
          **/
         $api->get('', 'AuthController@authenticate');
-		
-		/**
+
+        /**
          * @SWG\Get(
          *     path="/telephony/api/authenticate/renew",
          *     tags={"Authentication"},
@@ -36,7 +36,7 @@
          * )
          **/
         $api->get('/renew', 'AuthController@renew');
-		
+
         /**
          * @SWG\Post(
          *     path="/telephony/api/authenticate",

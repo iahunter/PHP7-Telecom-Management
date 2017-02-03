@@ -158,4 +158,3 @@
      * )
      **/
     $api->get('cucm/search/{type}/{name}', 'App\Http\Controllers\Cucm@getObjectTypebyName');
-

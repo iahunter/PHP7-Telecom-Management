@@ -71,13 +71,13 @@ class UnityConnMB extends Command
                 echo "No Voicemail for {$phone['username']}...".PHP_EOL;
                 continue;
             }
-			
-			$USERNAME = $phone['username'];
-			$DN = $phone['dn'];
-			$TEMPLATE = $this->user_template;
-			$OVERRIDE = 'true';
-			
-			$userarray = Cupi::importLDAPUser($USERNAME, $DN, $TEMPLATE, $OVERRIDE = '');
+
+            $USERNAME = $phone['username'];
+            $DN = $phone['dn'];
+            $TEMPLATE = $this->user_template;
+            $OVERRIDE = 'true';
+
+            $userarray = Cupi::importLDAPUser($USERNAME, $DN, $TEMPLATE, $OVERRIDE = '');
 
             $usersarray[] = $userarray;
         }

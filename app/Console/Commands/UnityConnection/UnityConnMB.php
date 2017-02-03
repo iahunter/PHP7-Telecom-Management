@@ -13,7 +13,7 @@ class UnityConnMB extends Command
      *
      * @var string
      */
-    protected $signature = 'unityconnection:import-mailboxes';
+    protected $signature = 'unityconnection:import-ldapuser-mailboxes';
 
     /**
      * The console command description.
@@ -71,62 +71,13 @@ class UnityConnMB extends Command
                 echo "No Voicemail for {$phone['username']}...".PHP_EOL;
                 continue;
             }
-
-            $userarray = [];
-            $userarray['username'] = $phone['username'];
-            $userarray['new_dn'] = $phone['dn'];
-
-            // Check if user has a current mailbox.
-            $mailbox = Cupi::finduserbyalias($phone['username']);
-            if (isset($mailbox['User']['ObjectId'])) {
-                $userarray['ObjectId'] = $mailbox['User']['ObjectId'];
-
-                //print_r($mailbox);
-                if (isset($mailbox['User']['DtmfAccessId'])) {
-                    $userarray['old_dn'] = $mailbox['User']['DtmfAccessId'];
-
-                    // If override is set to true and the existing and the new mb are different then override the mailbox dn.
-                    if (($this->override) && ($userarray['old_dn'] != $userarray['new_dn'])) {
-                        print_r($mailbox);
-                        $ID = $userarray['ObjectId'];
-                        $UPDATE = ['DtmfAccessId' => $userarray['new_dn']];
-                        //$UPDATE = ['City' => $userarray['username']];
-                        print_r($UPDATE);
-                        $UPDATED = Cupi::updateUserbyobjectid($ID, $UPDATE);
-                        print_r($UPDATED);
-                        $userarray['updatemailbox'] = $UPDATED;
-
-                        print_r($userarray);
-                    }
-                }
-
-            // If not then find the user in LDAP and import user with selected template and new DN.
-            } else {
-                echo "Finding User {$userarray['username']}...".PHP_EOL;
-                $LDAPUSER = Cupi::getLDAPUserbyAlias($userarray['username']);
-                print_r($LDAPUSER);
-                if ($LDAPUSER['@total'] >= 1) {
-                    echo "User Found: Importing User {$userarray['username']}...".PHP_EOL;
-                    if ($LDAPUSER['@total'] == 1) {
-                        $userarray['ldap'] = $LDAPUSER['ImportUser'];
-                    } elseif ($LDAPUSER['@total'] > 1) {
-                        foreach ($LDAPUSER['ImportUser'] as $USER) {
-                            print_r($USER);
-                            if ($USER['alias'] == $userarray['username']) {
-                                $userarray['ldap'] = $USER;
-                            }
-                        }
-                    }
-
-                    // Import User with Site Template.
-                    $userarray['ldap']['dtmfAccessId'] = $userarray['new_dn'];
-                    //print_r($userarray);
-                    $IMPORT = Cupi::importLDAPUser($this->user_template, $userarray['ldap']);
-                    $userarray['user_imported'] = $IMPORT;
-                } elseif ($LDAPUSER['@total'] == 0) {
-                    $userarray['error'] = 'No User Found';
-                }
-            }
+			
+			$USERNAME = $phone['username'];
+			$DN = $phone['dn'];
+			$TEMPLATE = $this->user_template;
+			$OVERRIDE = 'true';
+			
+			$userarray = Cupi::importLDAPUser($USERNAME, $DN, $TEMPLATE, $OVERRIDE = '');
 
             $usersarray[] = $userarray;
         }

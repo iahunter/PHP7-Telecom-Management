@@ -33,6 +33,22 @@ angular
 
 		function initController() {
 			siteService.Getsites(function (result) {
+				
+				// Check for errors and if token has expired. 
+				if(result.message){
+					console.log(res);
+					vm.message = result.message;
+					console.log(vm.message);
+					
+					if(vm.message == "Token has expired"){
+						// Send user to login page if token expired. 
+						//alert("Token has expired, Please relogin");
+						$state.go('logout');
+					}
+
+					return vm.message;
+				}
+				
 				console.log('callback from siteService.Getsites responded ' + result);
 				
 				var sites = siteService.sites;
@@ -43,7 +59,7 @@ angular
 					.then(function(res){
 						vm.cucmsites = res.data.response;
 						
-						console.log(vm.cucmsites);
+						//console.log(vm.cucmsites);
 						//return vm.cucmsites;
 						
 						angular.forEach(sites, function(key,value) {
@@ -52,11 +68,11 @@ angular
 
 								key.cucmprovisioned = true;
 								vm.sites.push(key);
-								console.log(key);
+								//console.log(key);
 							}else{
 								key.cucmprovisioned = false;
 								vm.sites.push(key);
-								console.log(key);
+								//console.log(key);
 							}
 							
 						});

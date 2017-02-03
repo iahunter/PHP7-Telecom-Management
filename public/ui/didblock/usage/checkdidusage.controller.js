@@ -52,6 +52,7 @@ angular
 			
 			//console.log(vm.checkdid);
 			
+			vm.count = 0;
 			
 			telephonyService.searchDidNumbersinArray(angular.copy(vm.checkdid)).then(function(res) {
 				//alert("Didblock Added Succesfully" + data);
@@ -89,6 +90,7 @@ angular
 						number['details'] = value[0];
 						
 						// Push Number info onto the table data array. 
+						vm.count = vm.count + 1;
 						numberstable.push(number);
 					};
 				};

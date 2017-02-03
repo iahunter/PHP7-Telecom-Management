@@ -53,6 +53,7 @@ angular
 			
 			console.log(numbers);
 			
+			vm.count = 0;
 			
 			telephonyService.searchDidblockNumbersinArray(angular.copy(numbers)).then(function(res) {
 				//alert("Didblock Added Succesfully" + data);
@@ -90,6 +91,7 @@ angular
 						number['details'] = value[0];
 						
 						// Push Number info onto the table data array. 
+						vm.count = vm.count + 1;
 						numberstable.push(number);
 					};
 				};

@@ -45,6 +45,19 @@
                 }
             }
         },
+        "/telephony/api/authenticate/renew": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get JSON web token by TLS client certificate authentication",
+                "responses": {
+                    "200": {
+                        "description": "Authentication succeeded"
+                    }
+                }
+            }
+        },
         "/telephony/api/sbc/callstats/listcallstats": {
             "get": {
                 "tags": [
@@ -525,39 +538,6 @@
                 }
             }
         },
-        "/telephony/api/cupi/search/user/{alias}": {
-            "get": {
-                "tags": [
-                    "Management - UnityConnection"
-                ],
-                "summary": "List Object Type details by Name",
-                "description": "",
-                "operationId": "getObjectTypebyName",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "alias",
-                        "in": "path",
-                        "description": "Name of Object",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
         "/telephony/api/cucm/sites": {
             "get": {
                 "tags": [
@@ -749,6 +729,244 @@
                         "required": false,
                         "type": "string"
                     }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/user/search/{alias}": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Seach for current user by alias",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "alias",
+                        "in": "path",
+                        "description": "Name of Object",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/user/getLDAPUserbyAlias/{alias}": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Seach for LDAP user by alias",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "alias",
+                        "in": "path",
+                        "description": "Name of Object",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/user/ldapimport": {
+            "post": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Import User Mailbox from LDAP",
+                "description": "",
+                "operationId": "importuser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn",
+                        "in": "formData",
+                        "description": "Extension Number for Mailbox",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "template",
+                        "in": "formData",
+                        "description": "Extension Number for Mailbox",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/user/create": {
+            "post": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Import User Mailbox from LDAP",
+                "description": "",
+                "operationId": "importuser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn",
+                        "in": "formData",
+                        "description": "Extension Number for Mailbox",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "template",
+                        "in": "formData",
+                        "description": "User Template Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/user/delete/{username}": {
+            "delete": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Delete User",
+                "description": "This deletes the user by object_id",
+                "operationId": "deleteuser",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "username",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/templates/listusertemplates": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "List User Templates",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/templates/listusertemplatesnames": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "List User Template Names",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
                 ],
                 "responses": {
                     "200": {
@@ -1193,6 +1411,18 @@
                 ],
                 "parameters": [
                     {
+                        "name": "delimiter",
+                        "in": "formData",
+                        "description": "Number block delimiter - required if using blocks",
+                        "required": false,
+                        "type": "integer",
+                        "enum": [
+                            "comma",
+                            "tab",
+                            "space"
+                        ]
+                    },
+                    {
                         "name": "blocks",
                         "in": "formData",
                         "description": "Blocks to lookup - 1 per line. Space, comma, or Tab delimited",
@@ -1207,6 +1437,52 @@
                         "name": "numbers",
                         "in": "formData",
                         "description": "Numbers to lookup - 1 per line.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "Numbers Array",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/did/searchDidblockNumbersinArray": {
+            "post": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Search DID Block Numbers in Array",
+                "description": "",
+                "operationId": "createDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "delimiter",
+                        "in": "formData",
+                        "description": "Number block delimiter - required if using blocks",
+                        "required": false,
+                        "type": "integer",
+                        "enum": [
+                            "comma",
+                            "tab",
+                            "space"
+                        ]
+                    },
+                    {
+                        "name": "blocks",
+                        "in": "formData",
+                        "description": "Blocks to lookup - 1 per line. Space, comma, or Tab delimited",
                         "required": false,
                         "type": "array",
                         "items": {

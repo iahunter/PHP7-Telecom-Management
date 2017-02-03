@@ -159,30 +159,3 @@
      **/
     $api->get('cucm/search/{type}/{name}', 'App\Http\Controllers\Cucm@getObjectTypebyName');
 
-    /**
-     * @SWG\Get(
-     *     path="/telephony/api/cupi/search/user/{alias}",
-     *     tags={"Management - UnityConnection"},
-     *     summary="List Object Type details by Name",
-     *     description="",
-     *     operationId="getObjectTypebyName",
-     *     consumes={"application/json"},
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="alias",
-     *         in="path",
-     *         description="Name of Object",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation",
-     *     ),
-     *     @SWG\Response(
-     *         response="401",
-     *         description="Unauthorized user",
-     *     ),
-     * )
-     **/
-    $api->get('cupi/search/user/{alias}', 'App\Http\Controllers\Unityuser@finduserbyalias');

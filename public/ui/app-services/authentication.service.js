@@ -16,6 +16,7 @@
         function Login(username, password, callback) {
             $http.post('../api/authenticate', { username: username, password: password })								// *** Point the Authenticate URL to your API Location****
                 .success(function (response) {
+					console.log(response.token);
                     // login successful if there's a token in the response
                     if (response.token) {
                         // store username and token in local storage to keep user logged in between page refreshes

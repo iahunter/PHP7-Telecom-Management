@@ -22,6 +22,21 @@
          * )
          **/
         $api->get('', 'AuthController@authenticate');
+		
+		/**
+         * @SWG\Get(
+         *     path="/telephony/api/authenticate/renew",
+         *     tags={"Authentication"},
+         *     summary="Get JSON web token by TLS client certificate authentication",
+         *     @SWG\Response(
+         *         response=200,
+         *         description="Authentication succeeded",
+         *         ),
+         *     ),
+         * )
+         **/
+        $api->get('/renew', 'AuthController@renew');
+		
         /**
          * @SWG\Post(
          *     path="/telephony/api/authenticate",

@@ -82,6 +82,13 @@ class AuthController extends Controller
         }
         abort(401, "All authentication methods available have failed\n".$error);
     }
+	
+	public function renew()
+	{
+		$user = JWTAuth::parseToken()->authenticate();
+		
+		
+	}
 
     protected function certauth()
     {

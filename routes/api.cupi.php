@@ -27,9 +27,8 @@
      * )
      **/
     $api->get('cupi/user/search/{alias}', 'App\Http\Controllers\Cupicontroller@finduserbyalias');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/user/getLDAPUserbyAlias/{alias}",
      *     tags={"Management - UnityConnection"},
@@ -56,7 +55,7 @@
      * )
      **/
     $api->get('cupi/user/getLDAPUserbyAlias/{alias}', 'App\Http\Controllers\Cupicontroller@getLDAPUserbyAlias');
-	
+
     /**
      * @SWG\Post(
      *     path="/telephony/api/cupi/user/ldapimport",
@@ -98,9 +97,8 @@
      * )
      **/
     $api->post('cupi/user/ldapimport', 'App\Http\Controllers\Cupicontroller@importLDAPUser');
-	
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cupi/user/create",
      *     tags={"Management - UnityConnection"},
@@ -141,9 +139,8 @@
      * )
      **/
     $api->post('cupi/user/create', 'App\Http\Controllers\Cupicontroller@createuser');
-	
-	
-	/**
+
+    /**
      * @SWG\Delete(
      *     path="/telephony/api/cupi/user/delete/{username}",
      *     tags={"Management - UnityConnection"},
@@ -167,9 +164,8 @@
      * )
      **/
     $api->delete('/cupi/user/delete/{username}', 'App\Http\Controllers\Cupicontroller@deleteuser');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/templates/listusertemplates",
      *     tags={"Management - UnityConnection"},
@@ -190,8 +186,7 @@
      **/
     $api->get('cupi/templates/listusertemplates', 'App\Http\Controllers\Cupicontroller@listusertemplates');
 
-	
-	/**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/templates/listusertemplatesnames",
      *     tags={"Management - UnityConnection"},

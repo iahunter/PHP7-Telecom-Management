@@ -32,7 +32,7 @@ class Site extends Model
         // Cascade Soft Deletes Child Dids
         static::deleting(function ($site) {
             Phoneplan::where('site', $site->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
-			Phone::where('site', $site->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
+            Phone::where('site', $site->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
         });
     }
 

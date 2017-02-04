@@ -333,7 +333,6 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-	
 
     public function getphoneplanbyname(Request $request, $name)
     {
@@ -382,7 +381,7 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-	
+
     public function getphonebyphoneplan(Request $request, $id)
     {
         // ********NEW SEARCH***********
@@ -392,12 +391,12 @@ class SitePlanController extends Controller
             abort(401, 'You are not authorized to view phone plan '.$id);
         }
 
-		/*
+        /*
         // Search for Phone by numberCheck if there are any matches.
         if (! Phone::where('phoneplan', '=', $id)->count()) {
             abort(404, 'No phones found matching Phoneplan: '.$id);
         }
-		*/
+        */
 
         // Search for numbers like search.
         $Phones = Phone::where('phoneplan', '=', $id)->get();
@@ -414,7 +413,6 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-
 
     public function createphoneplan(Request $request)
     {

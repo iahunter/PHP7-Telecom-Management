@@ -153,7 +153,7 @@ class SitePlanController extends Controller
     }
 
 
-    public function (Request $request, $Phone_id)
+    public function getphone(Request $request, $Phone_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
         $Phone = Phone::find($Phone_id);

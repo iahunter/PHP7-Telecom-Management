@@ -144,8 +144,8 @@
      * )
      **/
     $api->get('site/{id}', 'App\Http\Controllers\SitePlanController@getsite');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/site/{id}/phoneplans",
      *     tags={"Site Planning - Site"},
@@ -168,8 +168,8 @@
      * )
      **/
     $api->get('site/{id}/phoneplans', 'App\Http\Controllers\SitePlanController@listphoneplanbysiteid');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/site/{id}/phones",
      *     tags={"Site Planning - Site"},
@@ -192,7 +192,7 @@
      * )
      **/
     $api->get('site/{id}/phones', 'App\Http\Controllers\SitePlanController@listphonesbysiteid');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/site",

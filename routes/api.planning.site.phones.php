@@ -111,8 +111,8 @@
      * )
      **/
     $api->post('phone', 'App\Http\Controllers\SitePlanController@createPhone');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/phone/id/{id}",
      *     tags={"Site Planning - Phone"},

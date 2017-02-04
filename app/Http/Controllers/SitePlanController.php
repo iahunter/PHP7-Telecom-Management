@@ -152,24 +152,8 @@ class SitePlanController extends Controller
         return response()->json($response);
     }
 
-    public function listphonebySiteID(Request $request, $id)
-    {
-        $user = JWTAuth::parseToken()->authenticate();
-        if ($user->can('read', Phone::class)) {
-            $Phones = \App\Phone::where('site', $id)->get();
-        }
-        //dd($Phones);
-        $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'result'           => $Phones,
-                    ];
 
-        return response()->json($response);
-    }
-
-    public function getPhone(Request $request, $Phone_id)
+    public function (Request $request, $Phone_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
         $Phone = Phone::find($Phone_id);
@@ -348,6 +332,34 @@ class SitePlanController extends Controller
             'message'          => '',
             //'request'        => $request->all(),
             'result'           => $phoneplan,
+            ];
+
+        return response()->json($response);
+    }
+	
+	public function listphonesbysiteid(Request $request, $id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('read', Phoneplan::class)) {
+            abort(401, 'You are not authorized to view Phone Plan');
+        }
+
+        // Search for Phone by numberCheck if there are any matches.
+        if (! Phone::where('site', '=', $id)->count()) {
+            abort(404, 'No number found matching search: '.$search);
+        }
+
+        // Search for numbers like search.
+        $phones = Phone::where('site', '=', $id)->get();
+
+        $response = [
+            'status_code'      => 200,
+            'success'          => true,
+            'message'          => '',
+            //'request'        => $request->all(),
+            'result'           => $phones,
             ];
 
         return response()->json($response);

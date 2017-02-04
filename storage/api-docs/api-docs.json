@@ -2024,36 +2024,6 @@
                 }
             }
         },
-        "/telephony/api/phone/site/{id}": {
-            "get": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "List phones for Site Plan by ID for authorized user",
-                "description": "List child phones for Site Plan by ID",
-                "operationId": "listphonebySiteID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID Number of Site",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/telephony/api/phone/id/{id}": {
             "get": {
                 "tags": [
@@ -2582,6 +2552,66 @@
                         "name": "id",
                         "in": "path",
                         "description": "ID of block to Delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/site/{id}/phoneplans": {
+            "get": {
+                "tags": [
+                    "Site Planning - Site"
+                ],
+                "summary": "Get Site Plan Phone Plans by ID",
+                "description": "",
+                "operationId": "getsite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/site/{id}/phones": {
+            "get": {
+                "tags": [
+                    "Site Planning - Site"
+                ],
+                "summary": "Get Site Plan Phones by ID",
+                "description": "",
+                "operationId": "getsite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block id",
                         "required": true,
                         "type": "integer"
                     }

@@ -144,7 +144,55 @@
      * )
      **/
     $api->get('site/{id}', 'App\Http\Controllers\SitePlanController@getsite');
-
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/site/{id}/phoneplans",
+     *     tags={"Site Planning - Site"},
+     *     summary="Get Site Plan Phone Plans by ID",
+     *     description="",
+     *     operationId="getsite",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('site/{id}/phoneplans', 'App\Http\Controllers\SitePlanController@listphoneplanbysiteid');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/site/{id}/phones",
+     *     tags={"Site Planning - Site"},
+     *     summary="Get Site Plan Phones by ID",
+     *     description="",
+     *     operationId="getsite",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('site/{id}/phones', 'App\Http\Controllers\SitePlanController@listphonesbysiteid');
+	
     /**
      * @SWG\Get(
      *     path="/telephony/api/site",

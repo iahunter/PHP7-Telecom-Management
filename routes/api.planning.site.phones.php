@@ -111,37 +111,8 @@
      * )
      **/
     $api->post('phone', 'App\Http\Controllers\SitePlanController@createPhone');
-
-    // List phones by block id
-    /**
-     * @SWG\Get(
-     *     path="/telephony/api/phone/site/{id}",
-     *     tags={"Site Planning - Phone"},
-     *     summary="List phones for Site Plan by ID for authorized user",
-     *     description="List child phones for Site Plan by ID",
-     *     operationId="listphonebySiteID",
-     *     consumes={"application/json"},
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID Number of Site",
-     *         required=true,
-     *         type="integer"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation",
-     *     ),
-     * )
-     **/
-    $api->get('/phone/site/{id}', 'App\Http\Controllers\SitePlanController@listphonebySiteID');
-
-    // phone App routes
-    // $api->post('phone', 'App\Http\Controllers\SitePlanController@createphone'); // Individual phone creation not allowed.
-        // List phones by block id
-
-    /**
+	
+	/**
      * @SWG\Get(
      *     path="/telephony/api/phone/id/{id}",
      *     tags={"Site Planning - Phone"},

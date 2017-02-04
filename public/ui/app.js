@@ -93,6 +93,18 @@
                 controller: 'getSite.IndexController',
                 controllerAs: 'vm'
             })
+			.state('getphoneplan', {
+                url: '/phoneplan/{id}/',
+                templateUrl: 'siteplanning/phoneplans/getphoneplan.html',
+                controller: 'getPhonePlan.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('phoneplancreate', {
+                url: '/phoneplan/create',
+                templateUrl: 'siteplanning/phoneplans/createphoneplan.html',
+                controller: 'getPhonePlan.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('admin', {
                 url: "/admin",
                 templateUrl: 'admin/admin.html',

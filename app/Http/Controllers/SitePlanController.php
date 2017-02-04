@@ -200,36 +200,6 @@ class SitePlanController extends Controller
         return response()->json($response);
     }
 
-    public function getphonebyphoneplan(Request $request, $id)
-    {
-        // ********NEW SEARCH***********
-        $user = JWTAuth::parseToken()->authenticate();
-
-        if (! $user->can('read', Phone::class)) {
-            abort(401, 'You are not authorized to view phone plan '.$id);
-        }
-
-        // Search for Phone by numberCheck if there are any matches.
-        if (! Phone::where('phoneplan', '=', $id)->count()) {
-            abort(404, 'No phones found matching Phoneplan: '.$id);
-        }
-
-        // Search for numbers like search.
-        $Phones = Phone::where('phoneplan', '=', $id)->get();
-
-        //return "HERE ".$Phone;
-
-        $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    //'request'           => $request->all(),
-                    'result'            => $Phones,
-                    ];
-
-        return response()->json($response);
-    }
-
     public function updatePhone(Request $request, $Phone_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -319,7 +289,7 @@ class SitePlanController extends Controller
 
         // Search for Phone by numberCheck if there are any matches.
         if (! Phoneplan::where('site', '=', $id)->count()) {
-            abort(404, 'No number found matching search: '.$search);
+            abort(404, 'No plan found matching site: '.$id);
         }
 
         // Search for numbers like search.
@@ -363,6 +333,7 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
+	
 
     public function getphoneplanbyname(Request $request, $name)
     {
@@ -406,11 +377,44 @@ class SitePlanController extends Controller
                     'success'        => true,
                     'message'        => '',
                     //'request'        => $request->all(),
-                    'site'           => $phoneplan,
+                    'result'           => $phoneplan,
                     ];
 
         return response()->json($response);
     }
+	
+    public function getphonebyphoneplan(Request $request, $id)
+    {
+        // ********NEW SEARCH***********
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user->can('read', Phone::class)) {
+            abort(401, 'You are not authorized to view phone plan '.$id);
+        }
+
+		/*
+        // Search for Phone by numberCheck if there are any matches.
+        if (! Phone::where('phoneplan', '=', $id)->count()) {
+            abort(404, 'No phones found matching Phoneplan: '.$id);
+        }
+		*/
+
+        // Search for numbers like search.
+        $Phones = Phone::where('phoneplan', '=', $id)->get();
+
+        //return "HERE ".$Phone;
+
+        $response = [
+                    'status_code'       => 200,
+                    'success'           => true,
+                    'message'           => '',
+                    //'request'           => $request->all(),
+                    'result'            => $Phones,
+                    ];
+
+        return response()->json($response);
+    }
+
 
     public function createphoneplan(Request $request)
     {

@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getSite.IndexController', ['siteService', 'cucmService', '$location', '$state', '$stateParams', function(siteService, cucmService, $location, $state, $stateParams) {
+	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', '$location', '$state', '$stateParams', function(siteService, sitePhonePlanService, cucmService, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -33,7 +33,7 @@ angular
 		*/
 		
 		
-		vm.getsitephones = siteService.getsitephones(id)
+		vm.getsitephoneplans = sitePhonePlanService.getsitephoneplans(id)
 			.then(function(res){
 				// Check if Token has expired. If so then direct them to login screen. 
 				if(res.message == "Token has expired"){
@@ -42,7 +42,8 @@ angular
 					alert(res.message);
 					$state.go('login');
 				}
-				vm.phones = res.data.phones;
+				console.log(res);
+				vm.phoneplans = res.data.result;
 				
 				
 				/*
@@ -62,7 +63,7 @@ angular
 				*/
 				
 				
-				return vm.phones
+				return vm.phoneplans
 				
 				
 			}, function(err){

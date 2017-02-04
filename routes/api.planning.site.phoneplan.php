@@ -130,8 +130,8 @@
      * )
      **/
     $api->get('phoneplan/id/{id}', 'App\Http\Controllers\SitePlanController@getphoneplan');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/phoneplan/id/{id}/phones",
      *     tags={"Site Planning - Phone Plan"},
@@ -155,7 +155,6 @@
      * )
      **/
     $api->get('phoneplan/id/{id}/phones', 'App\Http\Controllers\SitePlanController@getphonebyphoneplan');
-
 
     /**
      * @SWG\Get(
@@ -182,7 +181,6 @@
      **/
     $api->get('phoneplan/name/{name}', 'App\Http\Controllers\SitePlanController@getphoneplanbyname');
 
-
     /**
      * @SWG\Put(
      *     path="/telephony/api/phoneplan/{id}",
@@ -198,7 +196,7 @@
      *         description="Phone Plan ID Number",
      *         required=true,
      *         type="integer"
-     *     ),	 
+     *     ),
      *     @SWG\Parameter(
      *         name="site",
      *         in="formData",

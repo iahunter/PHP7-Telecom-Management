@@ -189,7 +189,6 @@
      **/
     $api->get('phone/number/{dn}', 'App\Http\Controllers\SitePlanController@searchphoneNumber');
 
-
     /**
      * @SWG\Put(
      *     path="/telephony/api/phone/{id}",

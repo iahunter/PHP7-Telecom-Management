@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCucmPlanning extends Migration
+class CreateSitePlanning extends Migration
 {
     /**
      * Run the migrations.
@@ -31,6 +31,8 @@ class CreateCucmPlanning extends Migration
             $table->json('didblocks')->nullable();           // JSON Details ID of DID Blocks used for the site.
             $table->text('operator')->nullable();              // Comment
             $table->json('details')->nullable();            // JSON Details Custom Field Data
+			//$table->string('createdby');            // simple name to reference the account by
+			//$table->string('updatedby');            // simple name to reference the account by
             $table->timestamps();                           // Time Stamps
             $table->softDeletes();                          // Soft Deletes
         });
@@ -38,16 +40,23 @@ class CreateCucmPlanning extends Migration
         // Child Phone Plan - parent site
         Schema::create('phoneplan', function (Blueprint $table) {
             $table->increments('id');
+			/*
             $table->integer('parent')->unsigned()->index();    // Parent Block ID
                 $table->foreign('parent')->references('id')->on('site')->onDelete('cascade');        // Create foreign key and try cascade deletes
+			*/
+			$table->integer('site')->unsigned()->index();    // Parent Block ID
+                $table->foreign('site')->references('id')->on('site')->onDelete('cascade');        // Create foreign key and try cascade deletes
 
             $table->string('name');                        // Name
-            $table->string('description');                 // simple name to reference the account by
-            $table->string('createdby');            // simple name to reference the account by
-            $table->string('status');             // simple name to reference the account by
-            $table->boolean('deployed')->nullable();             // Deployed Status - true/false
+            $table->string('description')->nullable();                 // simple name to reference the account by
+            $table->string('status')->nullable();           // simple name to reference the account by
+            //$table->boolean('deployed')->nullable();             // Deployed Status - true/false
             $table->string('system_id')->nullable();
             $table->string('notes')->nullable();            // Future - System ID - CUCM/Lync ID
+			$table->string('language')->nullable();            // Future - System ID - CUCM/Lync ID
+			$table->json('json')->nullable();            // JSON Details Custom Field Data
+			//$table->string('createdby');            // simple name to reference the account by
+			//$table->string('updatedby');            // simple name to reference the account by
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
         });
@@ -55,10 +64,13 @@ class CreateCucmPlanning extends Migration
         // Child Phone - parent site
         Schema::create('phone', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent')->unsigned()->index();    // Parent Block ID
-                $table->foreign('parent')->references('id')->on('phoneplan')->onDelete('cascade');        // Create foreign key and try cascade deletes
-
-            $table->string('name');                                    // Name
+            
+			$table->integer('phoneplan')->unsigned()->index();    // Parent Block ID
+                $table->foreign('phoneplan')->references('id')->on('phoneplan')->onDelete('cascade');        // Create foreign key and try cascade deletes
+			$table->integer('site')->unsigned()->index();    // Parent Block ID
+                $table->foreign('site')->references('id')->on('site')->onDelete('cascade');        // Create foreign key and try cascade deletes
+            
+			$table->string('name');                                    // Name
             $table->string('device');                                 // simple name to reference the account by
             $table->string('firstname');                            // simple name to reference the account by
             $table->string('lastname');                             // simple name to reference the account by
@@ -72,6 +84,8 @@ class CreateCucmPlanning extends Migration
             $table->json('assignments')->nullable();                   // JSON Custom Field Data
             $table->string('system_id')->nullable();
             $table->string('notes')->nullable();            // Future - System ID - CUCM/Lync ID
+			//$table->string('createdby');            // simple name to reference the account by
+			//$table->string('updatedby');            // simple name to reference the account by
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
         });
@@ -86,6 +100,7 @@ class CreateCucmPlanning extends Migration
     {
         //
         Schema::drop('phone');
+		Schema::drop('phoneplan');
         Schema::drop('site');
     }
 }

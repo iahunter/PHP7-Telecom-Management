@@ -6,24 +6,24 @@ use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Phone extends Model
+class Phoneplan extends Model
 {
     //
     use Auditable;
     use SoftDeletes;
-    protected $table = 'phone';
-    protected $fillable = ['phoneplan', 'site', 'name', 'device', 'firstname', 'lastname', 'username', 'dn', 'language', 'voicemail', 'deployed', 'provisioned', 'assignments', 'system_id', 'notes'];
+    protected $table = 'phoneplan';
+    protected $fillable = ['site', 'name', 'description', 'status', 'system_id', 'notes', 'language', 'json'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'assignments' => 'array',
+            'json' => 'array',
         ];
 
     protected static function boot()
     {
         parent::boot();
-        static::saving(function ($phone) {
-            return $phone->validate();
+        static::saving(function ($phoneplan) {
+            return $phoneplan->validate();
         });
     }
 
@@ -34,7 +34,7 @@ class Phone extends Model
             throw new \Exception('name exceeded 255 characters');
         }
         // Check if exceeds max of 255
-        if (strlen($this->comment) > 255) {
+        if (strlen($this->description) > 255) {
             throw new \Exception('status exceeded 255 characters');
         }
         // Check if exceeds max of 255

@@ -43,7 +43,7 @@
 		// Get Dids by Block ID
 		self.getsitephones = function(id) {
 			var defer = $q.defer();
-			return $http.get('../api/site/'+id+'/phones')
+			return $http.get('../api/phone/site/'+id)
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					// Must return the promise to the controller. 

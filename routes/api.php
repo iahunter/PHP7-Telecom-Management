@@ -36,7 +36,9 @@ $api->version('v1', function ($api) {
     require __DIR__.'/api.did.php';
 
     // Site Planning Routes
-    require __DIR__.'/api.site.plan.php';
+    require __DIR__.'/api.planning.site.php';
+	require __DIR__.'/api.planning.site.phoneplan.php';
+	require __DIR__.'/api.planning.site.phones.php';
 
     // CUCM routes
     require __DIR__.'/api.cucm.php';

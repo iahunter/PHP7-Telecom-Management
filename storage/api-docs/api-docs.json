@@ -906,7 +906,7 @@
                     "Management - UnityConnection"
                 ],
                 "summary": "Delete User",
-                "description": "This deletes the user by object_id",
+                "description": "This deletes the user by username",
                 "operationId": "deleteuser",
                 "consumes": [
                     "application/json"
@@ -1595,6 +1595,753 @@
                 }
             }
         },
+        "/telephony/api/phoneplan": {
+            "post": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "Create New Phone Plans for Phone Import Job",
+                "description": "",
+                "operationId": "createPhoneplan",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "site",
+                        "in": "formData",
+                        "description": "Parent Site ID Number",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Phone Name - Example 0004DEADBEEF",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "formData",
+                        "description": "description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "formData",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "system_id",
+                        "in": "formData",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "language",
+                        "in": "formData",
+                        "description": "Language",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "English",
+                            "French"
+                        ]
+                    },
+                    {
+                        "name": "json",
+                        "in": "formData",
+                        "description": "Unstructure Stuff",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phoneplan/site/{id}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "List phones for Site Plan by ID for authorized user",
+                "description": "List child phones for Site Plan by ID",
+                "operationId": "listphoneplanbysiteid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Number of Site",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phoneplan/id/{id}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "Get Phoneplan by ID",
+                "description": "",
+                "operationId": "getphoneplanbyid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of phoneplan id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phonelan/name/{name}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "Get phone by number search for authorized user",
+                "description": "",
+                "operationId": "getphoneplanbyname",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Search Site Plans for Phones with DN Number",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phoneplan/searchbyparent/{parentid}/{column}/{search}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "Search phone by parent ID and column search for authorized user",
+                "description": "",
+                "operationId": "getphone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "parentid",
+                        "in": "path",
+                        "description": "ID of parent",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "column",
+                        "in": "path",
+                        "description": "Column to Search",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "path",
+                        "description": "Search String",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phoneplan/{id}": {
+            "put": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "Update phone by ID for authorized user",
+                "description": "This can be huge and need to add pagination",
+                "operationId": "listphone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of phone",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "parent",
+                        "in": "formData",
+                        "description": "Parent Site ID Number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "device",
+                        "in": "formData",
+                        "description": "Device Type - Example: 7945, 8841, IP Communicator",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Phone Name - Example 0004DEADBEEF",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "firstname",
+                        "in": "formData",
+                        "description": "First Name - John",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "formData",
+                        "description": "Last Name - Doe",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "User Name - John.Doe, CallManager.Unassign",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn",
+                        "in": "formData",
+                        "description": "Directory Number - Example: 4025551234",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "extlength",
+                        "in": "formData",
+                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "4",
+                            "5",
+                            "10"
+                        ]
+                    },
+                    {
+                        "name": "language",
+                        "in": "formData",
+                        "description": "Language",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "English",
+                            "French"
+                        ]
+                    },
+                    {
+                        "name": "voicemail",
+                        "in": "formData",
+                        "description": "Does user require a Voicemail Box with this DN?",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "notes",
+                        "in": "formData",
+                        "description": "Notes",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "Delete Phone from Site Plan by ID for authorized user",
+                "description": "This deletes the phone by ID number",
+                "operationId": "deletephone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Phone to Delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phone": {
+            "post": {
+                "tags": [
+                    "Site Planning - Phone"
+                ],
+                "summary": "Create New Phone in Site Plan",
+                "description": "",
+                "operationId": "createPhone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "parent",
+                        "in": "formData",
+                        "description": "Parent Site ID Number",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "device",
+                        "in": "formData",
+                        "description": "Device Type - Example: 7945, 8841, IP Communicator",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Phone Name - Example 0004DEADBEEF",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "firstname",
+                        "in": "formData",
+                        "description": "First Name - John",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "formData",
+                        "description": "Last Name - Doe",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "User Name - John.Doe, CallManager.Unassign",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn",
+                        "in": "formData",
+                        "description": "Directory Number - Example: 4025551234",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "extlength",
+                        "in": "formData",
+                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "4",
+                            "5",
+                            "10"
+                        ]
+                    },
+                    {
+                        "name": "language",
+                        "in": "formData",
+                        "description": "Language",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "English",
+                            "French"
+                        ]
+                    },
+                    {
+                        "name": "voicemail",
+                        "in": "formData",
+                        "description": "Does user require a Voicemail Box with this DN?",
+                        "required": true,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "notes",
+                        "in": "formData",
+                        "description": "Notes",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phone/site/{id}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone"
+                ],
+                "summary": "List phones for Site Plan by ID for authorized user",
+                "description": "List child phones for Site Plan by ID",
+                "operationId": "listphonebySiteID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Number of Site",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phone/id/{id}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone"
+                ],
+                "summary": "Get phone by ID for authorized user",
+                "description": "",
+                "operationId": "getphone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of phone id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phone/number/{dn}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone"
+                ],
+                "summary": "Get phone by number search for authorized user",
+                "description": "",
+                "operationId": "getphone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "dn",
+                        "in": "path",
+                        "description": "Search Site Plans for Phones with DN Number",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phone/searchbyparent/{parentid}/{column}/{search}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone"
+                ],
+                "summary": "Search phone by parent ID and column search for authorized user",
+                "description": "",
+                "operationId": "getphone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "parentid",
+                        "in": "path",
+                        "description": "ID of parent",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "column",
+                        "in": "path",
+                        "description": "Column to Search",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "path",
+                        "description": "Search String",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phone/{id}": {
+            "put": {
+                "tags": [
+                    "Site Planning - Phone"
+                ],
+                "summary": "Update phone by ID for authorized user",
+                "description": "This can be huge and need to add pagination",
+                "operationId": "listphone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of phone",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "parent",
+                        "in": "formData",
+                        "description": "Parent Site ID Number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "device",
+                        "in": "formData",
+                        "description": "Device Type - Example: 7945, 8841, IP Communicator",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Phone Name - Example 0004DEADBEEF",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "firstname",
+                        "in": "formData",
+                        "description": "First Name - John",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "formData",
+                        "description": "Last Name - Doe",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "User Name - John.Doe, CallManager.Unassign",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn",
+                        "in": "formData",
+                        "description": "Directory Number - Example: 4025551234",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "extlength",
+                        "in": "formData",
+                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "4",
+                            "5",
+                            "10"
+                        ]
+                    },
+                    {
+                        "name": "language",
+                        "in": "formData",
+                        "description": "Language",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "English",
+                            "French"
+                        ]
+                    },
+                    {
+                        "name": "voicemail",
+                        "in": "formData",
+                        "description": "Does user require a Voicemail Box with this DN?",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "notes",
+                        "in": "formData",
+                        "description": "Notes",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Site Planning - Phone"
+                ],
+                "summary": "Delete Phone from Site Plan by ID for authorized user",
+                "description": "This deletes the phone by ID number",
+                "operationId": "deletephone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Phone to Delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/site": {
             "get": {
                 "tags": [
@@ -1912,396 +2659,6 @@
                         "name": "id",
                         "in": "path",
                         "description": "ID of block to Delete",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/telephony/api/site/phone": {
-            "post": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "Create New Phone in Site Plan",
-                "description": "",
-                "operationId": "createPhone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "parent",
-                        "in": "formData",
-                        "description": "Parent Site ID Number",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "device",
-                        "in": "formData",
-                        "description": "Device Type - Example: 7945, 8841, IP Communicator",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "name",
-                        "in": "formData",
-                        "description": "Phone Name - Example 0004DEADBEEF",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "firstname",
-                        "in": "formData",
-                        "description": "First Name - John",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lastname",
-                        "in": "formData",
-                        "description": "Last Name - Doe",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "username",
-                        "in": "formData",
-                        "description": "User Name - John.Doe, CallManager.Unassign",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "dn",
-                        "in": "formData",
-                        "description": "Directory Number - Example: 4025551234",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "extlength",
-                        "in": "formData",
-                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
-                        "required": true,
-                        "type": "string",
-                        "enum": [
-                            "4",
-                            "5",
-                            "10"
-                        ]
-                    },
-                    {
-                        "name": "language",
-                        "in": "formData",
-                        "description": "Language",
-                        "required": true,
-                        "type": "string",
-                        "enum": [
-                            "English",
-                            "French"
-                        ]
-                    },
-                    {
-                        "name": "voicemail",
-                        "in": "formData",
-                        "description": "Does user require a Voicemail Box with this DN?",
-                        "required": true,
-                        "type": "boolean"
-                    },
-                    {
-                        "name": "notes",
-                        "in": "formData",
-                        "description": "Notes",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/site/{id}/phones": {
-            "get": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "List phones for Site Plan by ID for authorized user",
-                "description": "List child phones for Site Plan by ID",
-                "operationId": "listphonebySiteID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID Number of Site",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/telephony/api/phone/id/{id}": {
-            "get": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "Get phone by ID for authorized user",
-                "description": "",
-                "operationId": "getphone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of phone id",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/telephony/api/phone/number/{dn}": {
-            "get": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "Get phone by number search for authorized user",
-                "description": "",
-                "operationId": "getphone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "dn",
-                        "in": "path",
-                        "description": "Search Site Plans for Phones with DN Number",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/telephony/api/phone/searchbyparent/{parentid}/{column}/{search}": {
-            "get": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "Search phone by parent ID and column search for authorized user",
-                "description": "",
-                "operationId": "getphone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "parentid",
-                        "in": "path",
-                        "description": "ID of parent",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "column",
-                        "in": "path",
-                        "description": "Column to Search",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "search",
-                        "in": "path",
-                        "description": "Search String",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/telephony/api/phone/{id}": {
-            "put": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "Update phone by ID for authorized user",
-                "description": "This can be huge and need to add pagination",
-                "operationId": "listphone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of phone",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "parent",
-                        "in": "formData",
-                        "description": "Parent Site ID Number",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "device",
-                        "in": "formData",
-                        "description": "Device Type - Example: 7945, 8841, IP Communicator",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "name",
-                        "in": "formData",
-                        "description": "Phone Name - Example 0004DEADBEEF",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "firstname",
-                        "in": "formData",
-                        "description": "First Name - John",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lastname",
-                        "in": "formData",
-                        "description": "Last Name - Doe",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "username",
-                        "in": "formData",
-                        "description": "User Name - John.Doe, CallManager.Unassign",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "dn",
-                        "in": "formData",
-                        "description": "Directory Number - Example: 4025551234",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "extlength",
-                        "in": "formData",
-                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
-                        "required": false,
-                        "type": "string",
-                        "enum": [
-                            "4",
-                            "5",
-                            "10"
-                        ]
-                    },
-                    {
-                        "name": "language",
-                        "in": "formData",
-                        "description": "Language",
-                        "required": false,
-                        "type": "string",
-                        "enum": [
-                            "English",
-                            "French"
-                        ]
-                    },
-                    {
-                        "name": "voicemail",
-                        "in": "formData",
-                        "description": "Does user require a Voicemail Box with this DN?",
-                        "required": false,
-                        "type": "boolean"
-                    },
-                    {
-                        "name": "notes",
-                        "in": "formData",
-                        "description": "Notes",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "Delete Phone from Site Plan by ID for authorized user",
-                "description": "This deletes the phone by ID number",
-                "operationId": "deletephone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of Phone to Delete",
                         "required": true,
                         "type": "integer"
                     }

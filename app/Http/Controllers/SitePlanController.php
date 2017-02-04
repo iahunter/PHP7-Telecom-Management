@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Site;
 use App\Phone;
+use App\Phoneplan;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -155,7 +156,7 @@ class SitePlanController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         if ($user->can('read', Phone::class)) {
-            $Phones = \App\Phone::where('parent', $id)->get();
+            $Phones = \App\Phone::where('site', $id)->get();
         }
         //dd($Phones);
         $response = [
@@ -226,12 +227,12 @@ class SitePlanController extends Controller
         }
 
         // Search for Phone by numberCheck if there are any matches.
-        if (! Phone::where([['parent', '=', $parentid], [$column, 'like', $search.'%']])->count()) {
+        if (! Phone::where([['phoneplan', '=', $parentid], [$column, 'like', $search.'%']])->count()) {
             abort(404, 'No number found matching search: '.$search);
         }
 
         // Search for numbers like search.
-        $Phones = Phone::where([['parent', '=', $parentid], [$column, 'like', $search.'%']])->get();
+        $Phones = Phone::where([['phoneplan', '=', $parentid], [$column, 'like', $search.'%']])->get();
 
         //return "HERE ".$Phone;
 
@@ -293,4 +294,154 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
+	
+	/**
+		Phone Plans
+	**/
+	
+    public function listphoneplan()
+    {
+		$user = JWTAuth::parseToken()->authenticate();
+		
+		// Check Role of user
+        if (! $user->can('read', Phoneplan::class)) {
+            abort(401, 'You are not authorized to view Phone Plan');
+        }
+
+        $phoneplans = Phoneplan::all();
+
+        $show = [];
+        foreach ($phoneplans as $phoneplan) {
+            if ($user->can('read', $phoneplan)) {
+                $show[] = $phoneplan;
+            }
+        }
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'sites'          => $show,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function listphoneplanbysiteid(Request $request, $id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+		
+		// Check Role of user
+        if (! $user->can('read', Phoneplan::class)) {
+            abort(401, 'You are not authorized to view Phone Plan');
+        }
+
+
+		// Search for Phone by numberCheck if there are any matches.
+        if (! Phoneplan::where('site', '=', $id)->count()) {
+            abort(404, 'No number found matching search: '.$search);
+        }
+
+        // Search for numbers like search.
+        $phoneplan = Phoneplan::where('site', '=', $id)->get();
+
+		$response = [
+			'status_code'    => 200,
+			'success'        => true,
+			'message'        => '',
+			'result'           => $phoneplan,
+			];
+
+        return response()->json($response);
+	}
+	
+    public function getphoneplan(Request $request, $id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $phoneplan = Phoneplan::find($id);
+
+        if (! $user->can('read', $phoneplan)) {
+            abort(401, 'You are not authorized to view site '.$id);
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'site'           => $phoneplan,
+                    ];
+
+        return response()->json($response);
+    }
+
+
+    public function createphoneplan(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('create', Phoneplan::class)) {
+            abort(401, 'You are not authorized to create new Phone blocks');
+        }
+
+        $phoneplan = Phoneplan::create($request->all());
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'site'           => $phoneplan,
+                    ];
+
+        return response()->json($response);
+    }
+
+    public function updatephoneplan(Request $request, $id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Find record by id
+        $phoneplan = Phoneplan::find($id);
+
+        // Check Role of user
+        if (! $user->can('update', $phoneplan)) {
+            abort(401, 'You are not authorized to view site '.$id);
+        }
+
+        $phoneplan->fill($request->all());
+        $phoneplan->save();
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'request'        => $request->all(),
+                    'site'           => $phoneplan,
+                    ];
+
+        return response()->json($response);
+    }
+
+    public function deletephoneplan(Request $request, $id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('delete', Site::class)) {
+            abort(401, 'You are not authorized to delete Phone block id '.$id);
+        }
+
+        $phoneplan = Phoneplan::find($id);                                        // Find the block in the database by id
+        $phoneplan->delete();                                                            // Delete the Phone block.
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => 'Phone Block '.$id.' successfully deleted',
+                    'deleted_at'     => $phoneplan->deleted_at, ];
+
+        return response()->json($response);
+    }
+
+	
+	
 }

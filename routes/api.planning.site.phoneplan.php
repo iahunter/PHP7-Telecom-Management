@@ -4,7 +4,7 @@
     /********************************
         Site Phone Plan App routes
     ********************************/
- 
+
     /**
      * @SWG\Post(
      *     path="/telephony/api/phoneplan",

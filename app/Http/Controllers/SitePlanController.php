@@ -294,16 +294,15 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-	
-	/**
-		Phone Plans
-	**/
-	
+
+    /**
+     Phone Plans
+     **/
     public function listphoneplan()
     {
-		$user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
         if (! $user->can('read', Phoneplan::class)) {
             abort(401, 'You are not authorized to view Phone Plan');
         }
@@ -325,18 +324,17 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-	
-	public function listphoneplanbysiteid(Request $request, $id)
+
+    public function listphoneplanbysiteid(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+
+        // Check Role of user
         if (! $user->can('read', Phoneplan::class)) {
             abort(401, 'You are not authorized to view Phone Plan');
         }
 
-
-		// Search for Phone by numberCheck if there are any matches.
+        // Search for Phone by numberCheck if there are any matches.
         if (! Phoneplan::where('site', '=', $id)->count()) {
             abort(404, 'No number found matching search: '.$search);
         }
@@ -344,16 +342,16 @@ class SitePlanController extends Controller
         // Search for numbers like search.
         $phoneplan = Phoneplan::where('site', '=', $id)->get();
 
-		$response = [
-			'status_code'    => 200,
-			'success'        => true,
-			'message'        => '',
-			'result'           => $phoneplan,
-			];
+        $response = [
+            'status_code'      => 200,
+            'success'          => true,
+            'message'          => '',
+            'result'           => $phoneplan,
+            ];
 
         return response()->json($response);
-	}
-	
+    }
+
     public function getphoneplan(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -373,7 +371,6 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-
 
     public function createphoneplan(Request $request)
     {
@@ -441,7 +438,4 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-
-	
-	
 }

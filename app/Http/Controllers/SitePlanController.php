@@ -152,7 +152,6 @@ class SitePlanController extends Controller
         return response()->json($response);
     }
 
-
     public function getphone(Request $request, $Phone_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -336,8 +335,8 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
-	
-	public function listphonesbysiteid(Request $request, $id)
+
+    public function listphonesbysiteid(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 

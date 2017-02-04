@@ -145,8 +145,8 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'request'        => $request->all(),
-                    'phone'          => $phone,
+                    //'request'        => $request->all(),
+                    'result'          => $phone,
                     ];
 
         return response()->json($response);
@@ -163,7 +163,7 @@ class SitePlanController extends Controller
                     'status_code'      => 200,
                     'success'          => true,
                     'message'          => '',
-                    'phones'           => $Phones,
+                    'result'           => $Phones,
                     ];
 
         return response()->json($response);
@@ -181,8 +181,8 @@ class SitePlanController extends Controller
                     'status_code'      => 200,
                     'success'          => true,
                     'message'          => '',
-                    'request'          => $request->all(),
-                    'phone'            => $Phone,
+                    //'request'          => $request->all(),
+                    'result'            => $Phone,
                     ];
 
         return response()->json($response);
@@ -210,29 +210,29 @@ class SitePlanController extends Controller
                     'status_code'       => 200,
                     'success'           => true,
                     'message'           => '',
-                    'request'           => $request->all(),
-                    'phones'            => $Phones,
+                    //'request'           => $request->all(),
+                    'result'            => $Phones,
                     ];
 
         return response()->json($response);
     }
 
-    public function searchPhonebyParent(Request $request, $parentid, $column, $search)
+    public function getphonebyphoneplan(Request $request, $id)
     {
         // ********NEW SEARCH***********
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Phone::class)) {
-            abort(401, 'You are not authorized to view site '.$Phone);
+            abort(401, 'You are not authorized to view phone plan '.$id);
         }
 
         // Search for Phone by numberCheck if there are any matches.
-        if (! Phone::where([['phoneplan', '=', $parentid], [$column, 'like', $search.'%']])->count()) {
-            abort(404, 'No number found matching search: '.$search);
+        if (! Phone::where('phoneplan', '=', $id)->count()) {
+            abort(404, 'No phones found matching Phoneplan: '.$id);
         }
 
         // Search for numbers like search.
-        $Phones = Phone::where([['phoneplan', '=', $parentid], [$column, 'like', $search.'%']])->get();
+        $Phones = Phone::where('phoneplan', '=', $id)->get();
 
         //return "HERE ".$Phone;
 
@@ -240,8 +240,8 @@ class SitePlanController extends Controller
                     'status_code'       => 200,
                     'success'           => true,
                     'message'           => '',
-                    'request'           => $request->all(),
-                    'phones'            => $Phones,
+                    //'request'           => $request->all(),
+                    'result'            => $Phones,
                     ];
 
         return response()->json($response);
@@ -266,8 +266,8 @@ class SitePlanController extends Controller
                     'status_code'      => 200,
                     'success'          => true,
                     'message'          => '',
-                    'request'          => $request->all(),
-                    'phone'            => $Phone,
+                    //'request'          => $request->all(),
+                    'result'            => $Phone,
                     ];
 
         return response()->json($response);
@@ -288,8 +288,8 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => 'Phone '.$Phone_id.' successfully deleted',
+					'phone'          => $Phone,
                     'deleted_at'     => $Phone->deleted_at,
-                    'phone'          => $Phone,
                     ];
 
         return response()->json($response);
@@ -319,7 +319,7 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'sites'          => $show,
+                    'result'          => $show,
                     ];
 
         return response()->json($response);
@@ -346,6 +346,35 @@ class SitePlanController extends Controller
             'status_code'      => 200,
             'success'          => true,
             'message'          => '',
+			//'request'        => $request->all(),
+            'result'           => $phoneplan,
+            ];
+
+        return response()->json($response);
+    }
+	
+	    public function getphoneplanbyname(Request $request, $name)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('read', Phoneplan::class)) {
+            abort(401, 'You are not authorized to view Phone Plan');
+        }
+
+        // Search for Phone by numberCheck if there are any matches.
+        if (! Phoneplan::where('name', '=', $name)->count()) {
+            abort(404, 'No number found matching search: '.$search);
+        }
+
+        // Search for numbers like search.
+        $phoneplan = Phoneplan::where('name', '=', $name)->get();
+
+        $response = [
+            'status_code'      => 200,
+            'success'          => true,
+            'message'          => '',
+			//'request'        => $request->all(),
             'result'           => $phoneplan,
             ];
 
@@ -365,7 +394,7 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'request'        => $request->all(),
+                    //'request'        => $request->all(),
                     'site'           => $phoneplan,
                     ];
 
@@ -387,6 +416,7 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
+					//'request'        => $request->all(),
                     'site'           => $phoneplan,
                     ];
 
@@ -396,14 +426,17 @@ class SitePlanController extends Controller
     public function updatephoneplan(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-
+		
         // Find record by id
         $phoneplan = Phoneplan::find($id);
+		
 
+		/* Fix this later
         // Check Role of user
         if (! $user->can('update', $phoneplan)) {
-            abort(401, 'You are not authorized to view site '.$id);
+            abort(401, 'You are not authorized to update phone plan '.$id);
         }
+		*/ 
 
         $phoneplan->fill($request->all());
         $phoneplan->save();
@@ -412,8 +445,8 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'request'        => $request->all(),
-                    'site'           => $phoneplan,
+                    //'request'        => $request->all(),
+                    'result'           => $phoneplan,
                     ];
 
         return response()->json($response);
@@ -429,12 +462,17 @@ class SitePlanController extends Controller
         }
 
         $phoneplan = Phoneplan::find($id);                                        // Find the block in the database by id
+		
         $phoneplan->delete();                                                            // Delete the Phone block.
+		
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
-                    'message'        => 'Phone Block '.$id.' successfully deleted',
-                    'deleted_at'     => $phoneplan->deleted_at, ];
+                    'message'        => '',
+					//'request'        => $request->all(),
+					'result'		 => 'Phone Block '.$id.' successfully deleted',
+                    'deleted_at'     => $phoneplan->deleted_at, 
+					];
 
         return response()->json($response);
     }

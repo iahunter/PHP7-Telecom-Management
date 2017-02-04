@@ -15,7 +15,14 @@
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
-     *         name="parent",
+     *         name="phoneplan",
+     *         in="formData",
+     *         description="Parent Phone Plan ID Number",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="site",
      *         in="formData",
      *         description="Parent Site ID Number",
      *         required=true,
@@ -182,43 +189,6 @@
      **/
     $api->get('phone/number/{dn}', 'App\Http\Controllers\SitePlanController@searchphoneNumber');
 
-    /**
-     * @SWG\Get(
-     *     path="/telephony/api/phone/searchbyparent/{parentid}/{column}/{search}",
-     *     tags={"Site Planning - Phone"},
-     *     summary="Search phone by parent ID and column search for authorized user",
-     *     description="",
-     *     operationId="getphone",
-     *     consumes={"application/json"},
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="parentid",
-     *         in="path",
-     *         description="ID of parent",
-     *         required=true,
-     *         type="integer"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="column",
-     *         in="path",
-     *         description="Column to Search",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="search",
-     *         in="path",
-     *         description="Search String",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation",
-     *     ),
-     * )
-     **/
-    $api->get('phone/searchbyparent/{parentid}/{column}/{search}', 'App\Http\Controllers\SitePlanController@searchphonebyParent');
 
     /**
      * @SWG\Put(
@@ -237,10 +207,17 @@
      *         type="integer"
      *     ),
      *     @SWG\Parameter(
-     *         name="parent",
+     *         name="phoneplan",
+     *         in="formData",
+     *         description="Parent Phone Plan ID Number",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="site",
      *         in="formData",
      *         description="Parent Site ID Number",
-     *         required=false,
+     *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Parameter(

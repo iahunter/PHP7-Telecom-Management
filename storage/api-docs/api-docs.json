@@ -1734,12 +1734,42 @@
                 }
             }
         },
-        "/telephony/api/phonelan/name/{name}": {
+        "/telephony/api/phoneplan/id/{id}/phones": {
             "get": {
                 "tags": [
                     "Site Planning - Phone Plan"
                 ],
-                "summary": "Get phone by number search for authorized user",
+                "summary": "Get Phone Plan Phones by Plan ID",
+                "description": "",
+                "operationId": "getphoneplanbyid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of phoneplan id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/phoneplan/name/{name}": {
+            "get": {
+                "tags": [
+                    "Site Planning - Phone Plan"
+                ],
+                "summary": "Get phone plan by name",
                 "description": "",
                 "operationId": "getphoneplanbyname",
                 "consumes": [
@@ -1755,50 +1785,6 @@
                         "description": "Search Site Plans for Phones with DN Number",
                         "required": true,
                         "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/telephony/api/phoneplan/searchbyparent/{parentid}/{column}/{search}": {
-            "get": {
-                "tags": [
-                    "Site Planning - Phone Plan"
-                ],
-                "summary": "Search phone by parent ID and column search for authorized user",
-                "description": "",
-                "operationId": "getphone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "parentid",
-                        "in": "path",
-                        "description": "ID of parent",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "column",
-                        "in": "path",
-                        "description": "Column to Search",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "search",
-                        "in": "path",
-                        "description": "Search String",
-                        "required": true,
-                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -1826,23 +1812,16 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of phone",
+                        "description": "Phone Plan ID Number",
                         "required": true,
                         "type": "integer"
                     },
                     {
-                        "name": "parent",
+                        "name": "site",
                         "in": "formData",
                         "description": "Parent Site ID Number",
                         "required": false,
                         "type": "integer"
-                    },
-                    {
-                        "name": "device",
-                        "in": "formData",
-                        "description": "Device Type - Example: 7945, 8841, IP Communicator",
-                        "required": false,
-                        "type": "string"
                     },
                     {
                         "name": "name",
@@ -1852,44 +1831,25 @@
                         "type": "string"
                     },
                     {
-                        "name": "firstname",
+                        "name": "description",
                         "in": "formData",
-                        "description": "First Name - John",
+                        "description": "description",
                         "required": false,
                         "type": "string"
                     },
                     {
-                        "name": "lastname",
+                        "name": "status",
                         "in": "formData",
-                        "description": "Last Name - Doe",
+                        "description": "",
                         "required": false,
                         "type": "string"
                     },
                     {
-                        "name": "username",
+                        "name": "system_id",
                         "in": "formData",
-                        "description": "User Name - John.Doe, CallManager.Unassign",
+                        "description": "",
                         "required": false,
                         "type": "string"
-                    },
-                    {
-                        "name": "dn",
-                        "in": "formData",
-                        "description": "Directory Number - Example: 4025551234",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "extlength",
-                        "in": "formData",
-                        "description": "Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
-                        "required": false,
-                        "type": "string",
-                        "enum": [
-                            "4",
-                            "5",
-                            "10"
-                        ]
                     },
                     {
                         "name": "language",
@@ -1903,16 +1863,9 @@
                         ]
                     },
                     {
-                        "name": "voicemail",
+                        "name": "json",
                         "in": "formData",
-                        "description": "Does user require a Voicemail Box with this DN?",
-                        "required": false,
-                        "type": "boolean"
-                    },
-                    {
-                        "name": "notes",
-                        "in": "formData",
-                        "description": "Notes",
+                        "description": "Unstructure Stuff",
                         "required": false,
                         "type": "string"
                     }
@@ -1968,7 +1921,14 @@
                 ],
                 "parameters": [
                     {
-                        "name": "parent",
+                        "name": "phoneplan",
+                        "in": "formData",
+                        "description": "Parent Phone Plan ID Number",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "site",
                         "in": "formData",
                         "description": "Parent Site ID Number",
                         "required": true,
@@ -2154,50 +2114,6 @@
                 }
             }
         },
-        "/telephony/api/phone/searchbyparent/{parentid}/{column}/{search}": {
-            "get": {
-                "tags": [
-                    "Site Planning - Phone"
-                ],
-                "summary": "Search phone by parent ID and column search for authorized user",
-                "description": "",
-                "operationId": "getphone",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "parentid",
-                        "in": "path",
-                        "description": "ID of parent",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "column",
-                        "in": "path",
-                        "description": "Column to Search",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "search",
-                        "in": "path",
-                        "description": "Search String",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/telephony/api/phone/{id}": {
             "put": {
                 "tags": [
@@ -2221,10 +2137,17 @@
                         "type": "integer"
                     },
                     {
-                        "name": "parent",
+                        "name": "phoneplan",
+                        "in": "formData",
+                        "description": "Parent Phone Plan ID Number",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "site",
                         "in": "formData",
                         "description": "Parent Site ID Number",
-                        "required": false,
+                        "required": true,
                         "type": "integer"
                     },
                     {

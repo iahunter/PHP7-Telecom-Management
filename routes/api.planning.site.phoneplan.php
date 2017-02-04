@@ -130,12 +130,38 @@
      * )
      **/
     $api->get('phoneplan/id/{id}', 'App\Http\Controllers\SitePlanController@getphoneplan');
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/phoneplan/id/{id}/phones",
+     *     tags={"Site Planning - Phone Plan"},
+     *     summary="Get Phone Plan Phones by Plan ID",
+     *     description="",
+     *     operationId="getphoneplanbyid",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of phoneplan id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('phoneplan/id/{id}/phones', 'App\Http\Controllers\SitePlanController@getphonebyphoneplan');
+
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/phonelan/name/{name}",
+     *     path="/telephony/api/phoneplan/name/{name}",
      *     tags={"Site Planning - Phone Plan"},
-     *     summary="Get phone by number search for authorized user",
+     *     summary="Get phone plan by name",
      *     description="",
      *     operationId="getphoneplanbyname",
      *     consumes={"application/json"},
@@ -154,46 +180,8 @@
      *     ),
      * )
      **/
-    $api->get('phonelan/name/{name}', 'App\Http\Controllers\SitePlanController@searchphoneNumber');
+    $api->get('phoneplan/name/{name}', 'App\Http\Controllers\SitePlanController@getphoneplanbyname');
 
-    /**
-     * @SWG\Get(
-     *     path="/telephony/api/phoneplan/searchbyparent/{parentid}/{column}/{search}",
-     *     tags={"Site Planning - Phone Plan"},
-     *     summary="Search phone by parent ID and column search for authorized user",
-     *     description="",
-     *     operationId="getphone",
-     *     consumes={"application/json"},
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="parentid",
-     *         in="path",
-     *         description="ID of parent",
-     *         required=true,
-     *         type="integer"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="column",
-     *         in="path",
-     *         description="Column to Search",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="search",
-     *         in="path",
-     *         description="Search String",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation",
-
-     *     ),
-     * )
-     **/
-    $api->get('phoneplan/searchbyparent/{parentid}/{column}/{search}', 'App\Http\Controllers\SitePlanController@searchphonebyParent');
 
     /**
      * @SWG\Put(
@@ -207,23 +195,16 @@
      *     @SWG\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of phone",
+     *         description="Phone Plan ID Number",
      *         required=true,
      *         type="integer"
-     *     ),
+     *     ),	 
      *     @SWG\Parameter(
-     *         name="parent",
+     *         name="site",
      *         in="formData",
      *         description="Parent Site ID Number",
      *         required=false,
      *         type="integer"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="device",
-     *         in="formData",
-     *         description="Device Type - Example: 7945, 8841, IP Communicator",
-     *         required=false,
-     *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="name",
@@ -233,38 +214,23 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
-     *         name="firstname",
+     *         name="description",
      *         in="formData",
-     *         description="First Name - John",
+     *         description="description",
      *         required=false,
      *         type="string"
      *     ),
      *     @SWG\Parameter(
-     *         name="lastname",
+     *         name="status",
      *         in="formData",
-     *         description="Last Name - Doe",
+     *         description="",
      *         required=false,
      *         type="string"
      *     ),
      *     @SWG\Parameter(
-     *         name="username",
+     *         name="system_id",
      *         in="formData",
-     *         description="User Name - John.Doe, CallManager.Unassign",
-     *         required=false,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="dn",
-     *         in="formData",
-     *         description="Directory Number - Example: 4025551234",
-     *         required=false,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="extlength",
-     *         in="formData",
-     *         description="Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",
-     *		   enum={"4", "5", "10"},
+     *         description="",
      *         required=false,
      *         type="string"
      *     ),
@@ -277,16 +243,9 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
-     *         name="voicemail",
+     *         name="json",
      *         in="formData",
-     *         description="Does user require a Voicemail Box with this DN?",
-     *         required=false,
-     *         type="boolean"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="notes",
-     *         in="formData",
-     *         description="Notes",
+     *         description="Unstructure Stuff",
      *         required=false,
      *         type="string"
      *     ),
@@ -297,7 +256,6 @@
      * )
      **/
     $api->put('phoneplan/{id}', 'App\Http\Controllers\SitePlanController@updatephoneplan');
-    // $api->delete('phone/{id}', 'App\Http\Controllers\SitePlanController@deletephone'); // Individual phone deletion Not allowed.
 
     /**
      * @SWG\Delete(

@@ -8,8 +8,8 @@ class Calls extends Model
 {
     //use Auditable;
     //use SoftDeletes;
-	//protected $dateFormat = 'U';
-	
+    //protected $dateFormat = 'U';
+
     protected $table = 'sbc_calls';
     protected $fillable = ['name', 'totalCalls', 'stats'];
 
@@ -17,6 +17,5 @@ class Calls extends Model
         'stats'    => 'array',
     ];
 
-	
     //protected $dateFormat = 'U';
 }

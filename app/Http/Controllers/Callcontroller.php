@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Calls;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
-use Carbon\Carbon;
 
 class Callcontroller extends Controller
 {
@@ -48,12 +47,12 @@ class Callcontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-		$currentDate = \Carbon\Carbon::now();
-		$now = $currentDate->toDateTimeString();
-		$weekago = $currentDate->subHours(168)->toDateTimeString();
+        $currentDate = \Carbon\Carbon::now();
+        $now = $currentDate->toDateTimeString();
+        $weekago = $currentDate->subHours(168)->toDateTimeString();
 
-		$calls = Calls::whereBetween('created_at', array($weekago,$now))->get();
-		
+        $calls = Calls::whereBetween('created_at', [$weekago, $now])->get();
+
         $stats = [];
         foreach ($calls as $call) {
             $call['stats'] = json_decode($call['stats']);
@@ -68,20 +67,20 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_last_24hrs_callstats()
+
+    public function list_last_24hrs_callstats()
     {
         $user = JWTAuth::parseToken()->authenticate();
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
         }
 
-		$currentDate = \Carbon\Carbon::now();
-		$now = $currentDate->toDateTimeString();
-		$weekago = $currentDate->subHours(24)->toDateTimeString();
+        $currentDate = \Carbon\Carbon::now();
+        $now = $currentDate->toDateTimeString();
+        $weekago = $currentDate->subHours(24)->toDateTimeString();
 
-		$calls = Calls::whereBetween('created_at', array($weekago,$now))->get();
-		
+        $calls = Calls::whereBetween('created_at', [$weekago, $now])->get();
+
         $stats = [];
         foreach ($calls as $call) {
             $call['stats'] = json_decode($call['stats']);
@@ -96,5 +95,4 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
-	
 }

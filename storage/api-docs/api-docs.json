@@ -58,10 +58,58 @@
                 }
             }
         },
-        "/telephony/api/sbc/callstats/listcallstats": {
+        "/telephony/api/calls/listcallstats": {
             "get": {
                 "tags": [
-                    "SBC - History"
+                    "Calls"
+                ],
+                "summary": "List Call Stats",
+                "description": "",
+                "operationId": "listcallstats",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/calls/dayscallstats": {
+            "get": {
+                "tags": [
+                    "Calls"
+                ],
+                "summary": "List Call Stats",
+                "description": "",
+                "operationId": "listcallstats",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/calls/weekscallstats": {
+            "get": {
+                "tags": [
+                    "Calls"
                 ],
                 "summary": "List Call Stats",
                 "description": "",

@@ -120,7 +120,7 @@
 			
 		<div style="margin:75px"></div>
 		
-		<legend >Phone Provisioning</legend>
+		<legend >Phones and Users</legend>
 			
 					
 		<div class="input-group col-md-3 ">
@@ -135,7 +135,7 @@
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" >
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
-						<tr class="danger">
+						<tr class="info">
 
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
@@ -154,30 +154,6 @@
 								</a>
 							</th>									
 							-->
-							
-							<th>
-								<a href="" ng-click="sortType = 'dn'; sortReverse = !sortReverse" style="color:black">
-									Directory Number
-										<span ng-show="sortType == 'dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-
-							<th>
-								<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
-									Name
-										<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>							
-							
-							<th>
-								<a href="" ng-click="sortType = 'device'; sortReverse = !sortReverse" style="color:black">
-									Device Type
-										<span ng-show="sortType == 'device' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'device' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
 							<th>
 								<a href="" ng-click="sortType = 'firstname'; sortReverse = !sortReverse" style="color:black">
 									Firstname
@@ -199,6 +175,35 @@
 										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+									Name
+										<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'device'; sortReverse = !sortReverse" style="color:black">
+									Device Type
+										<span ng-show="sortType == 'device' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'device' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'dn'; sortReverse = !sortReverse" style="color:black">
+									Directory Number
+										<span ng-show="sortType == 'dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+														
+							
+							
+							
 							<th>
 								<a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse" style="color:black">
 									Language
@@ -206,13 +211,7 @@
 										<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<th>
-								<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
-									System ID
-										<span ng-show="sortType == 'system_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+							
 							<th>
 								<a href="" ng-click="sortType = 'voicemail'; sortReverse = !sortReverse" style="color:black">
 									Voicemail
@@ -226,6 +225,14 @@
 									Notes
 										<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
+									System ID
+										<span ng-show="sortType == 'system_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 
@@ -256,17 +263,16 @@
 						<!--List View-->
 						<td>{{ phone.id}}</a></td>
 						<!--<td>{{ phone.parent}}</td>-->
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.dn}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.firstname}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.lastname}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.username}}</td>
+						<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>
+						<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
+						<td   ng-show="!vm.edit[phone.id]">{{ phone.dn}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.system_id}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.voicemail}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.notes}}</td>
-						
+						<td   ng-show="!vm.edit[phone.id]">{{ phone.system_id}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
 						<td   ng-show="!vm.edit[phone.id]">

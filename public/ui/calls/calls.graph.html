@@ -1,7 +1,32 @@
 <!--Print Chart-->
 
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
-SBC Call Summary
+<h4>Day Call Summary</h4>
+	<canvas id="line" class="chart chart-line chart-xs"
+		chart-series="vm.dayscallgraph.chartseries" 
+		chart-data="vm.dayscallgraph.chartdata" 
+		chart-labels="vm.dayscallgraph.chartlabels"
+		chart-options="vm.dayscallgraph.chartoptions">
+	</canvas> 
+</div>
+
+<hr>
+
+<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
+<h4>Week Call Summary</h4>
+	<canvas id="line" class="chart chart-line chart-xs"
+		chart-series="vm.weekscallgraph.chartseries" 
+		chart-data="vm.weekscallgraph.chartdata" 
+		chart-labels="vm.weekscallgraph.chartlabels"
+		chart-options="vm.weekscallgraph.chartoptions">
+	</canvas> 
+</div>
+
+<hr>
+
+<!--
+<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
+<h4>Overall Call Summary</h4>
 	<canvas id="line" class="chart chart-line chart-xs"
 		chart-series="vm.callgraph.chartseries" 
 		chart-data="vm.callgraph.chartdata" 
@@ -9,5 +34,6 @@ SBC Call Summary
 		chart-options="vm.callgraph.chartoptions">
 	</canvas> 
 </div>
+-->
 
 <div style="margin:25px"></div>

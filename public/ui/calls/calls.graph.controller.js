@@ -10,8 +10,7 @@ angular
 
 		vm.error = false;
 		
-
-		vm.createcallgraph = CallService.listcallstats()
+		CallService.dayscallstats()
 			.then(function(res){
 				
 				// Check for errors and if token has expired. 
@@ -22,7 +21,145 @@ angular
 					
 					if(vm.message == "Token has expired"){
 						// Send user to login page if token expired. 
-						alert(vm.message);
+						//alert(vm.message);
+						$state.go('logout');
+					}
+					vm.error = true;
+					return vm.message;
+				}
+
+				vm.calls = res.data.result;
+
+				vm.dayscallgraph = {};
+				
+				//console.log(block.stats);
+				vm.dayscallgraph['chartlabels'] = [];
+				vm.dayscallgraph['chartdata'] = [];
+				vm.dayscallgraph['chartseries'] = [];
+				
+				vm.sbcs = [];
+				vm.sbcs['totalCalls'] = [];
+				
+				angular.forEach(vm.calls, function(key, value) {
+					vm.sbcs['totalCalls'].push(key.totalCalls);
+					//console.log(key.stats);
+					angular.forEach(key.stats, function(k, v) {
+						
+						// Create the SBC arrays for individual call counts. 
+						if (vm.sbcs[v]){
+							vm.sbcs[v].push(k.totalCalls);
+						}else{
+							vm.sbcs[v] = [];
+							vm.sbcs[v].push(k.totalCalls);
+						}
+					});
+					
+					// Push date and time onto callgraph array for x axis labels. 
+					vm.dayscallgraph['chartlabels'].push(key.created_at);
+				});
+				
+				// Push data onto the chartgraph array
+				for (key in vm.sbcs){
+					//console.log(key);
+					var value = vm.sbcs[key];
+					//console.log(value);
+					vm.dayscallgraph['chartseries'].push(key);
+					vm.dayscallgraph['chartdata'].push(value);
+				}
+				
+				// Enable the Options to be generated for the chart. 
+				vm.dayscallgraph.chartoptions = { responsive: true, legend: { display: true}, title: {display:false, text:'SBC Call Summary'}};
+				
+				//console.log(vm.dayscallgraph);
+
+				return vm.calls;
+				
+			}, function(err){
+				//Error
+			});
+		
+		CallService.weekscallstats()
+			.then(function(res){
+				
+				// Check for errors and if token has expired. 
+				if(res.data.message){
+					console.log(res);
+					vm.message = res.data.message;
+					console.log(vm.message);
+					
+					if(vm.message == "Token has expired"){
+						// Send user to login page if token expired. 
+						//alert(vm.message);
+						$state.go('logout');
+					}
+					vm.error = true;
+					return vm.message;
+				}
+
+				vm.calls = res.data.result;
+
+				vm.weekscallgraph = {};
+				
+				//console.log(block.stats);
+				vm.weekscallgraph['chartlabels'] = [];
+				vm.weekscallgraph['chartdata'] = [];
+				vm.weekscallgraph['chartseries'] = [];
+				
+				vm.sbcs = [];
+				vm.sbcs['totalCalls'] = [];
+				
+				angular.forEach(vm.calls, function(key, value) {
+					vm.sbcs['totalCalls'].push(key.totalCalls);
+					//console.log(key.stats);
+					angular.forEach(key.stats, function(k, v) {
+						
+						// Create the SBC arrays for individual call counts. 
+						if (vm.sbcs[v]){
+							vm.sbcs[v].push(k.totalCalls);
+						}else{
+							vm.sbcs[v] = [];
+							vm.sbcs[v].push(k.totalCalls);
+						}
+					});
+					
+					// Push date and time onto callgraph array for x axis labels. 
+					vm.weekscallgraph['chartlabels'].push(key.created_at);
+				});
+				
+				// Push data onto the chartgraph array
+				for (key in vm.sbcs){
+					//console.log(key);
+					var value = vm.sbcs[key];
+					//console.log(value);
+					vm.weekscallgraph['chartseries'].push(key);
+					vm.weekscallgraph['chartdata'].push(value);
+				}
+				
+				// Enable the Options to be generated for the chart. 
+				vm.weekscallgraph.chartoptions = { responsive: true, legend: { display: true}, title: {display:false, text:'SBC Call Summary'}};
+				
+				//console.log(vm.weekscallgraph);
+
+				return vm.calls;
+				
+			}, function(err){
+				//Error
+			});
+
+		// Overall Call stats. Can get large and unmanageable. May want to make this into a selectable time graph and do some type of summarization on backend. 
+		/*
+		CallService.listcallstats()
+			.then(function(res){
+				
+				// Check for errors and if token has expired. 
+				if(res.data.message){
+					console.log(res);
+					vm.message = res.data.message;
+					console.log(vm.message);
+					
+					if(vm.message == "Token has expired"){
+						// Send user to login page if token expired. 
+						//alert(vm.message);
 						$state.go('logout');
 					}
 					vm.error = true;
@@ -78,4 +215,8 @@ angular
 			}, function(err){
 				//Error
 			});
+			
+		*/
+			
+			
 	}]);

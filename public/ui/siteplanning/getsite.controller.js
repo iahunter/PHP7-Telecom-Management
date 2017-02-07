@@ -19,20 +19,6 @@ angular
 		
 		vm.deploybutton = false;
 		
-		/*
-		vm.getsite = siteService.getsite(id)
-			.then(function(res){
-
-				vm.site = res.data.site;
-				vm.sitecode = vm.site.sitecode;
-				//console.log(vm.sitecode);
-				
-			}, function(err){
-				//Error
-			});
-		*/
-		
-		
 		vm.getsitephoneplans = sitePhonePlanService.getsitephoneplans(id)
 			.then(function(res){
 				// Check if Token has expired. If so then direct them to login screen. 
@@ -45,23 +31,7 @@ angular
 				console.log(res);
 				vm.phoneplans = res.data.result;
 				
-				
-				/*
-				// Loop thru all the phones and get phone
-				angular.forEach(vm.phones,function(phone){
-				console.log(phone);
-				
-					// Loop thru and get all the assignments
-					angular.forEach(phone,function(assignments){
-					console.log(assignments);
-					
-					// Can we extract and push a key:value to an existing object
 
-					})
-
-				})
-				*/
-				
 				
 				return vm.phoneplans
 				
@@ -93,15 +63,15 @@ angular
 		vm.edit = {};
 		
 		// Update phone Block service called by the save button.
-		vm.update = function(phone) {
+		vm.updatephoneplan = function(phone) {
 			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
 			var phone_update = {};
 			phone_update.name = phone.name;
-			phone_update.status = phone.status;
-			phone_update.system_id = phone.system_id;
+			phone_update.description = phone.description;
+			phone_update.language = phone.language;
 			
 			// Send Block ID and the updated variables to the update service. 
-			siteService.updatephone(phone.id, phone_update).then(function(data) {
+			sitePhonePlanService.updatephoneplan(phone.id, phone_update).then(function(data) {
 			  //return $state.reload();
 			}, function(error) {
 				alert('An error occurred while updating the event')
@@ -119,8 +89,8 @@ angular
 			vm.getsite = siteService.getsite(id)
 				.then(function(res){
 
-					vm.site = res.data.site;
-					vm.sitecode = res.data.site.sitecode;
+					vm.site = res.data.result;
+					vm.sitecode = res.data.result.sitecode;
 					//console.log(vm.sitecode);
 					
 						// Check CUCM for Site Config After we have the sitecode from the database. 

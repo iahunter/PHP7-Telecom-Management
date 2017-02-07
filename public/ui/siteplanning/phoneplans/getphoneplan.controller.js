@@ -24,9 +24,9 @@ angular
 				// Check if Token has expired. If so then direct them to login screen. 
 				if(res.message == "Token has expired"){
 					vm.tokenexpired = true;
-					alert("Token has expired, Please relogin");
-					alert(res.message);
-					$state.go('login');
+					//alert("Token has expired, Please relogin");
+					//alert(res.message);
+					$state.go('logout');
 				}
 				vm.site = res.data.result;
 				
@@ -42,9 +42,9 @@ angular
 				// Check if Token has expired. If so then direct them to login screen. 
 				if(res.message == "Token has expired"){
 					vm.tokenexpired = true;
-					alert("Token has expired, Please relogin");
-					alert(res.message);
-					$state.go('login');
+					//alert("Token has expired, Please relogin");
+					//alert(res.message);
+					$state.go('logout');
 				}
 				vm.phones = res.data.result;
 				
@@ -71,12 +71,31 @@ angular
 			phone_update.system_id = phone.system_id;
 			
 			// Send Block ID and the updated variables to the update service. 
-			siteService.updatephone(phone.id, phone_update).then(function(data) {
+			sitePhonePlanService.updatephone(phone.id, phone).then(function(data) {
 			  //return $state.reload();
 			}, function(error) {
 				alert('An error occurred while updating the event')
 			});
 			//$state.reload();
+		}
+		
+		// Delete DID Block 
+		vm.delete = function(phone) {
+			sitePhonePlanService.deletephone(phone.id).then(function(data) {
+
+			
+				// jQuery Hack to fix body from the Model. 
+					$(".modal-backdrop").hide();
+					$('body').removeClass("modal-open");
+					$('body').removeClass("modal-open");
+					$('body').removeAttr( 'style' );
+				// End of Hack */
+			
+				return $state.reload();
+          }, function(error) {
+				alert('An error occurred');
+          });
+
 		}
 		
 		

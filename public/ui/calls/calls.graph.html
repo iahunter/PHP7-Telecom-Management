@@ -1,8 +1,8 @@
 <!--Print Chart-->
 
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
-<h4>Day Call Summary</h4>
-	<canvas id="line" class="chart chart-line chart-xs"
+<h4>1 Day Call Summary</h4>
+	<canvas id="daycalls" class="chart chart-line chart-xs"
 		chart-series="vm.dayscallgraph.chartseries" 
 		chart-data="vm.dayscallgraph.chartdata" 
 		chart-labels="vm.dayscallgraph.chartlabels"
@@ -13,8 +13,8 @@
 <hr>
 
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
-<h4>Week Call Summary</h4>
-	<canvas id="line" class="chart chart-line chart-xs"
+<h4>7 Day Call Summary</h4>
+	<canvas id="weekcalls" class="chart chart-line chart-xs"
 		chart-series="vm.weekscallgraph.chartseries" 
 		chart-data="vm.weekscallgraph.chartdata" 
 		chart-labels="vm.weekscallgraph.chartlabels"
@@ -24,7 +24,7 @@
 
 <hr>
 
-<!--
+<!---
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
 <h4>Overall Call Summary</h4>
 	<canvas id="line" class="chart chart-line chart-xs"

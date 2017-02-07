@@ -55,8 +55,8 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'request'        => $request->all(),
-                    'site'           => $site,
+                    //'request'        => $request->all(),
+                    'result'           => $site,
                     ];
 
         return response()->json($response);
@@ -77,7 +77,7 @@ class SitePlanController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'request'        => $request->all(),
+                    //'request'        => $request->all(),
                     'site'           => $site,
                     ];
 

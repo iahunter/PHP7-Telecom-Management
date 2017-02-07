@@ -62,15 +62,17 @@ angular
 		// Edit state for phone block Edit button.
 		vm.edit = {};
 		
-		// Update phone Block service called by the save button.
+		// Update 
 		vm.update = function(phone) {
+			
+			/* No longer using this. 
 			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
 			var phone_update = {};
 			phone_update.name = phone.name;
 			phone_update.status = phone.status;
 			phone_update.system_id = phone.system_id;
+			*/
 			
-			// Send Block ID and the updated variables to the update service. 
 			sitePhonePlanService.updatephone(phone.id, phone).then(function(data) {
 			  //return $state.reload();
 			}, function(error) {
@@ -79,7 +81,7 @@ angular
 			//$state.reload();
 		}
 		
-		// Delete DID Block 
+		// Delete 
 		vm.delete = function(phone) {
 			sitePhonePlanService.deletephone(phone.id).then(function(data) {
 

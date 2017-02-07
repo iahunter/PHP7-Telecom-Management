@@ -297,19 +297,23 @@
 											<h4>Are you sure? <h4>
 										</div>
 										<div class="modal-body">
-											<p>You are about to delete Plan ID: {{ phone.id}}</p>
+											<p>You are about to delete Phone ID: {{ phone.id}}</p>
 											<table class="table table-striped table-condensed table-bordered table-hover">
 												<tr>
-													<th>ID</th>
-													<th>Name</th>
-													<th>Description</th>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>User Name</th>
+													<th>Device Name</th>
+													<th>Directory Number</th>
 													
 
 												</tr>
 												<tr>
-													<td>{{ phone.id}}</td>
+													<td>{{ phone.firstname}}</td>
+													<td>{{ phone.lastname}}</td>
+													<td>{{ phone.username}}</td>
 													<td>{{ phone.name}}</td>
-													<td>{{ phone.description}}</td>
+													<td>{{ phone.dn}}</td>
 												</tr>
 											</table>
 											<p>All provisioned information will be lost. Are you sure you want to proceed?</p>

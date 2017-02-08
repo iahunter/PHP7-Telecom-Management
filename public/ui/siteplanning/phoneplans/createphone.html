@@ -1,0 +1,43 @@
+
+<div style="margin:25px"></div>
+<table class="table table-striped table-condensed table-bordered table-hover" ng-show="vm.showaddrow">
+	<thead>
+		<tr class="default">
+			<th>Firstname</th>							
+			<th>Lastname</th>
+			<th>Username</th>
+			<th>Name</th>
+			<th>Device Type</th>
+			<th>Directory Number</th>
+			<th>Language</th>
+			<th>Voicemail</th>
+			<th>Notes</th>
+			<th>System ID</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	</thead>
+	<tbody>
+	<!-- Allow you to edit and delete Blocks with new buttons -->
+	<tr>
+		
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.firstname"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.lastname"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.username"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.name"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.device"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.dn"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.language"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.voicemail"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.notes"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.system_id"></td>
+		
+		<td  ng-show="vm.showaddrow">
+			<!--<button class="btn btn-xs btn-primary"  ng-click="vm.createphone(phone);vm.edit[phone.id] = !vm.edit[phone.id]"> Save </button>-->
+			<button class="btn btn-xs btn-primary"  ng-click="vm.createphone(newphone)"> Save </button>
+			<button class="btn btn-xs btn-warning"  ng-click="vm.phoneaddtoggle(vm.showaddrow)"> Undo </button>
+		</td>
+	</tr>
+	</tbody>
+</table>

@@ -11,6 +11,18 @@ angular
 		
 		vm.isArray = angular.isArray;
 		
+		vm.showaddrow = false;
+		
+		vm.phoneaddtoggle = function(){
+			if(vm.showaddrow == true){
+				vm.showaddrow = false;
+			}else{
+				if(vm.showaddrow == false){
+				vm.showaddrow = true;
+				}
+			}
+		}
+		
 		
 
 		vm.messages = 'Loading sites...';
@@ -28,8 +40,9 @@ angular
 					//alert(res.message);
 					$state.go('logout');
 				}
+
 				vm.site = res.data.result;
-				
+				console.log(vm.site);
 				return vm.site
 				
 				
@@ -58,6 +71,21 @@ angular
 	
 		
 
+		// Create Phone 
+		vm.createphone = function(phone) {
+			phone.phoneplan = id;
+			phone.site = vm.site.site;
+			
+			console.log(phone);
+			
+			sitePhonePlanService.createphone(phone).then(function(data) {
+			  //alert('phone was added successfully');
+			  return $state.reload();
+			}, function(error) {
+				alert('An error occurred while updating the event')
+			});
+			//$state.reload();
+		}
 		
 		// Edit state for phone block Edit button.
 		vm.edit = {};

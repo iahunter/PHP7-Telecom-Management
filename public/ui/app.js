@@ -21,8 +21,9 @@
 						controllerAs: 'vm',
 					},
 
-					/* Add Sonus Alarms to Home View
-					'sonussplashpage@home': { 
+					/*
+					Add Sonus Alarms to Home View
+					'sonussplashpage@home': {
 						templateUrl: 'sonus/sonus.splashpage.html',
 						
 						// Removed, included controler as inside html splashpage

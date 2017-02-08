@@ -100,7 +100,7 @@
 
 		
 		<div ng-if="!vm.phones">
-			<legend >Loading Numbers. Please be patient... </legend>
+			<legend >Loading... Please be patient... </legend>
 			<div class="well">
 				<div class="row">
 					<div class="container loader"></div>
@@ -132,7 +132,10 @@
 		</div>
 		<div style="margin:25px"></div>
 
-		<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+		<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
+		<button class="btn btn-primary btn-sm" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+		
+		<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
 		
 		<div style="margin:25px"></div>
 			
@@ -305,8 +308,6 @@
 													<th>User Name</th>
 													<th>Device Name</th>
 													<th>Directory Number</th>
-													
-
 												</tr>
 												<tr>
 													<td>{{ phone.firstname}}</td>

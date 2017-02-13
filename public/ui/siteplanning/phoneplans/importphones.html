@@ -1,0 +1,231 @@
+<div style="margin:100px"></div>
+
+<div style="margin-left:80px; margin-right:80px;">
+<div class="well">
+<div style="margin:50px"></div>
+
+	<div class="row">
+	
+		
+	
+		<div class="col-sm-12 col-lg-12">
+				<script type="text/ng-template" id="error-messages">
+								<div ng-message='required'> This Field is required </div>
+								<div ng-message='minlength'> Too short </div>
+								<div ng-message='maxlength'> Too long </div>
+				</script>
+					<legend><h1>Import Phones into Plan ID {{vm.site.id}}</h1></legend>
+					
+					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<h5></pre>
+					
+
+						<form ng-if="!vm.numberstable" class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
+							
+							<div class="row">
+							
+								<div class="col-lg-2">
+									<div class="form-group" ng-class="{'has-error': addDidblockForm.delimiter.$touched && addDidblockForm.delimiter.$invalid, 'has-success': addDidblockForm.delimiter.$touched && addDidblockForm.delimiter.$valid }">
+										<label for="delimiter" class="control-label">Block Range Delimiter</label>
+										<select class="form-control" required ng-model='vm.selectedOption' ng-options="delimiter.name for delimiter in vm.states track by delimiter.id" data-width="100%" name="delimiter">
+										</select>
+										<div ng-messages="addDidblockForm.delimiter.$dirty && addDidblockForm.delimiter.$error">
+											<div ng-message='required'> delimiter is required </div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group" ng-class="{'has-error': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$invalid, 'has-success': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$valid }">
+										<label for="blocks" class="control-label">Block Ranges</label>
+										<textarea ng-model='vm.didblockForm.blocks' class="form-control" placeholder=" 4025550000	4025550999&#10 4029384000	4029384999"
+											rows="10" id="blocks" name="blocks"></textarea>
+										<!--<input textarea" ng-model='vm.didblockForm.name' required class="form-control"  rows="10" name="name" placeholder="Name">-->
+										<div ng-messages="addDidblockForm.blocks.$dirty && addDidblockForm.blocks.$error">
+											<div ng-message='required'> Blocks are is required </div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+								
+							<!--
+							 Print Form JSON
+							<div class="row">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									{{vm.didblockForm}}
+								</div>
+							</div>
+							
+							-->
+							
+							<hr />
+							<div class="row">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-12">
+									<div class="form-group">
+										<button  type="submit" ng-disabled="addDidblockForm.$invalid" class="btn btn-primary">Submit</button>
+										<button type="reset" class="btn btn-primary">Reset</button>
+									</div>
+								</div>
+							</div>
+						</form>
+
+				
+				<div style="margin:25px"></div>
+				
+				<!-- Loading -->
+				<div ng-if="vm.loading" class="well">
+					<div class="row">
+						<div class="container loader"></div>
+					</div>
+					<div style="margin:25px"></div>
+				</div>
+				
+				
+				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.numberstable" >
+					<table class="table table-striped table-condensed table-bordered table-hover">
+						<thead>
+							<tr class="info">	
+								<th>
+									<a href="" ng-click="sortType = 'firstname'; sortReverse = !sortReverse" style="color:black">
+										Firstname
+											<span ng-show="sortType == 'firstname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'firstname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>	
+								<th>
+									<a href="" ng-click="sortType = 'lastname'; sortReverse = !sortReverse" style="color:black">
+										Lastname
+											<span ng-show="sortType == 'lastname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'lastname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+										Username
+											<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+										MAC Address
+											<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'device'; sortReverse = !sortReverse" style="color:black">
+										Device Type
+											<span ng-show="sortType == 'device' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'device' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>								
+								<th>
+									<a href="" ng-click="sortType = 'dn'; sortReverse = !sortReverse" style="color:black">
+										10 digit Extension
+											<span ng-show="sortType == 'dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+								<th>
+									<a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse" style="color:black">
+										Language
+											<span ng-show="sortType == 'language' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+								<th>
+									<a href="" ng-click="sortType = 'vmpass'; sortReverse = !sortReverse" style="color:black">
+										Default Password for User ID Access
+											<span ng-show="sortType == 'vmpass' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'vmpass' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>	
+
+								<th>
+									<a href="" ng-click="sortType = 'voicemail'; sortReverse = !sortReverse" style="color:black">
+										Unity Mailbox Y/N
+											<span ng-show="sortType == 'voicemail' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'voicemail' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>	
+
+								<th>
+									<a href="" ng-click="sortType = 'notes'; sortReverse = !sortReverse" style="color:black">
+										Notes
+											<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>	
+								<th>
+									<a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse" style="color:black">
+										Status
+											<span ng-show="sortType == 'status' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'status' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>									
+
+							</tr>
+					</thead>
+				
+					<tbody>
+						<tr ng-repeat="number in vm.numberstable | orderBy:sortType:sortReverse | filter:vm.search: strict">
+							<td>{{number.firstname}}</td> 
+							<td>{{number.lastname}}</td> 
+							<td>{{number.username}}</td> 
+							<td>{{number.name}}</td> 
+							<td>{{number.device}}</td> 
+							<td>{{number.dn}}</td> 
+							<td>{{number.language}}</td> 
+							<td>{{number.vmpass}}</td> 
+							<td>{{number.voicemail}}</td> 
+							<td>{{number.notes}}</td> 
+							<td>{{number.status}}</td> 
+							<!--
+							<td ng-if="vm.showassignments">
+							Nested Table inside Row
+								<div ng-show="number.details.assignments" class="panel panel-default" style="background-color: transparent;">
+									<table class="table table-condensed table-bordered" style="background-color: transparent;">
+										<td><i>Pattern</i></td>
+										<td><i>Partition</i></td>
+										<td><i>Type</i></td>
+										<td><i>Detail</i></td>
+										<tr ng-repeat="assignment in number.details.assignments track by $index">
+											<td>{{assignment.dnOrPattern}}</td>
+											
+											<td>{{assignment.partition._}}</td>
+											<td>{{assignment.type}}</td>
+											<td>{{assignment.routeDetail}}</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+							-->
+						</tr>
+					</tbody>
+					
+				</table>
+					<!--{{vm.numberstable}}-->
+			</div>
+			
+			<div class="row" ng-if="vm.numberstable">
+				<div class="col-md-6 col-sm-6 col-xs-12 col-lg-12">
+					<div class="form-group">
+						<button class="btn btn-danger"  ng-click="vm.insertphones(vm.numberstable)"> Add Phones to Plan {{}}</button>
+						<button class="btn btn-primary" ng-click="vm.refresh()">Reset</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div style="margin:25px"></div>
+		</div>
+		
+	</div>
+</div>
+</div>

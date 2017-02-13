@@ -84,6 +84,7 @@
 					<tbody>
 
 					<tr>
+							
 							<td>{{ vm.site.id}}</a></td>
 							<td>{{ vm.site.name}}</td>
 							<td>{{ vm.site.description}}</a></td>
@@ -134,8 +135,12 @@
 
 		<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
 		<button class="btn btn-primary btn-sm" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+		<!--<button class="btn btn-primary btn-sm" ng-click="vm.phonebulkaddtoggle(vm.showbulkaddrows)"><i class="glyphicon glyphicon-plus"></i> Bulk Add - Needs work</button>-->
+		<a href="#/phoneplan/{{ vm.site.id}}/importphones" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
 		
 		<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
+		
+		
 		
 		<div style="margin:25px"></div>
 			
@@ -143,7 +148,7 @@
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
 						<tr class="info">
-
+							<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAll()"/>  Select All</th>
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 									ID
@@ -268,6 +273,9 @@
 					<tr ng-repeat="phone in vm.phones | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
+						<td>
+							<input type="checkbox" ng-model="phone.select" ng-click="vm.selecttouched()">
+						</td>
 						<td>{{ phone.id}}</a></td>
 						<!--<td>{{ phone.parent}}</td>-->
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.firstname}}</td>
@@ -356,6 +364,10 @@
 					</tbody>
 				</table>
 			</div>
+			<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
+			<button ng-if="vm.deleteall" class="btn btn-danger"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
+			<button ng-if="vm.deleteall" class="btn btn-primary" ng-click="vm.refresh()">Reset</button>
+			
 		</div>
 	</div>
 </div>

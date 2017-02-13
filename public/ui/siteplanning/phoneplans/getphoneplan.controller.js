@@ -109,6 +109,7 @@ angular
 			//$state.reload();
 		}
 		
+		
 		// Delete 
 		vm.delete = function(phone) {
 			sitePhonePlanService.deletephone(phone.id).then(function(data) {
@@ -127,6 +128,30 @@ angular
           });
 
 		}
+		
+		vm.selecttouched = function(){
+			vm.deleteall = true;
+		}
+		
+		vm.deleteselected = function(phones){
+			angular.forEach(phones, function(phone) {
+				if(phone.select == true){
+					console.log(phone);
+					vm.delete(phone);
+				}
+				
+			});
+		}
+		
+		
+		vm.checkAll = function() {
+			angular.forEach(vm.phones, function(phone) {
+			  phone.select = vm.selectAll;
+			  //console.log(phone);
+			  vm.selecttouched();
+			});
+		  };
+		
 		
 		
 	}]);

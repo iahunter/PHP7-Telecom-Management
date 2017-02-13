@@ -95,7 +95,7 @@
                 controllerAs: 'vm'
             })
 			.state('getphoneplan', {
-                url: '/phoneplan/{id}/',
+                url: '/phoneplan/{id}',
                 templateUrl: 'siteplanning/phoneplans/getphoneplan.html',
                 controller: 'getPhonePlan.IndexController',
                 controllerAs: 'vm'
@@ -104,6 +104,12 @@
                 url: '/phoneplan/create',
                 templateUrl: 'siteplanning/phoneplans/createphoneplan.html',
                 controller: 'getPhonePlan.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('importphones', {
+                url: '/phoneplan/{id}/importphones',
+                templateUrl: 'siteplanning/phoneplans/importphones.html',
+                controller: 'importphones.IndexController',
                 controllerAs: 'vm'
             })
 			.state('admin', {

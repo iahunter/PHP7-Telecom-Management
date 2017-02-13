@@ -24,9 +24,9 @@ angular
 				// Check if Token has expired. If so then direct them to login screen. 
 				if(res.message == "Token has expired"){
 					vm.tokenexpired = true;
-					alert("Token has expired, Please relogin");
-					alert(res.message);
-					$state.go('login');
+					//alert("Token has expired, Please relogin");
+					//alert(res.message);
+					$state.go('logout');
 				}
 				console.log(res);
 				vm.phoneplans = res.data.result;

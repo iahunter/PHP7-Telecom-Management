@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['sitePhonePlanService', 'cucmService', '$location', '$state', '$stateParams', function(sitePhonePlanService, cucmService, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'cucmService', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, cucmService, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -67,6 +67,56 @@ angular
 			}, function(err){
 				//Error
 			});
+			
+			
+		vm.getusername = function(username){
+			//console.log(username);
+			var user = {};
+			
+			LDAPService.getusername(username)
+				.then(function(res){
+					//console.log(res);
+					user.username = username;
+					
+					if(res.status == "500"){
+						//console.log(username + " Username not found")
+						user.result = '';
+						//console.log(user);
+					}else{
+						user.result = res.data.result;
+						//console.log(user);
+						
+					}
+					
+					//console.log(user);
+					
+
+				}, function(err){
+					// Error
+				});
+		
+			return user;
+		}
+
+		
+		vm.getusernames = function(phones){
+			vm.users = [];
+			angular.forEach(phones, function(phone) {
+				var userlookup = vm.getusername(phone.username);
+				//console.log(userlookup);
+				userlookup.id = phone.id;
+				console.log(userlookup.result);
+				if (userlookup.result == ""){
+					console.log("Setting user to none")
+					userlookup.result.user = "User does not exist";
+				}
+				vm.users.push(userlookup);
+			});
+			
+			console.log(vm.users);
+		}
+		
+			
 			
 	
 		

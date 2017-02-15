@@ -143,8 +143,13 @@
 		
 		
 		<div style="margin:25px"></div>
+		
+			<div class="well well-sm" style="box-shadow: 1px 1px 5px grey;" ng-if="!vm.phones.length > 0">
+				<h4>No Phones or Users Found</h4>
+				<p>Please add phones and users to the plan by clicking the Add button above.</p>
+			</div>
 			
-			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" >
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.phones.length > 0">
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
 						<tr class="info">
@@ -267,8 +272,6 @@
 						</tr>
 					</thead>
 					<tbody>
-					</thead>
-					<tbody>
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<tr ng-repeat="phone in vm.phones | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
@@ -368,6 +371,58 @@
 			<button ng-if="vm.deleteall" class="btn btn-danger"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
 			<button ng-if="vm.deleteall" class="btn btn-primary" ng-click="vm.refresh()">Reset</button>
 			
-		</div>
+			
+			<button ng-if="vm.phones.length > 0" class="btn btn-info"  ng-click="vm.getusernames(vm.phones)">Verify Users Exist in AD</button>
+			<button ng-if="vm.phones.length > 0" class="btn"  ng-click="vm.updateUserIPPhone(vm.phones)">Update AD Users IPPhone</button>
+			<button ng-if="vm.phones.length > 0" class="btn"  ng-click="vm.checkldapnames(vm.phones)">Verify Users Exist</button>
+			
+			<div style="margin:50px"></div>
+			
+			
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.users">
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr class="warning">
+							<th>
+								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+									Phone ID
+										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+									Username
+										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'result.user'; sortReverse = !sortReverse" style="color:black">
+									AD User
+										<span ng-show="sortType == 'result.user' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'result.user' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'ipphone'; sortReverse = !sortReverse" style="color:black">
+									IPPhone Number
+										<span ng-show="sortType == 'ipphone' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ipphone' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="user in vm.users | orderBy:sortType:sortReverse | filter:vm.search: strict">
+							<td>{{ user.id}}</td>
+							<td>{{ user.username}}</td>
+							<td>{{ user.result.user}}</td>
+							<td>{{ user.result.ipphone}}</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
 	</div>
 </div>

@@ -1,0 +1,35 @@
+
+<div style="margin:25px"></div>
+<div class="well form-horizontal" style="background-color:#f2f3f4" ng-show="vm.showaddrow">
+<legend>Add Phone Plan</legend>
+	<form class="form" role="form" id="addsiteForm" ng-submit='addsiteForm.$valid && vm.createphoneplan(vm.newphoneplan)' novalidate name="addsiteForm">
+		<fieldset>
+			<div class="row">
+				<div class="col-md-4" style="margin-left:15px">
+					<div class="form-group" ng-class="{'has-error': addsiteForm.name.$touched && addsiteForm.name.$invalid, 'has-success': addsiteForm.name.$touched && addsiteForm.name.$valid }">
+						<label for="name" class="control-label">Name</label>
+						<input type="text" ng-model='vm.newphoneplan.name' class="form-control"  name="name" placeholder="Name" ng-minlength='1' ng-maxlength='50' required>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4" style="margin-left:15px">
+					<div class="form-group" ng-class="{'has-error': addsiteForm.description.$touched && addsiteForm.description.$invalid, 'has-success': addsiteForm.description.$touched && addsiteForm.description.$valid }">
+						<label for="description" class="control-label">Description</label>
+						<input type="textarea" ng-model='vm.newphoneplan.description' class="form-control" name="description" placeholder="Description" required>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+			<!-- Button -->
+				<div class="col-md-4">
+					<button class="btn btn-primary"  ng-click="vm.createphoneplan(newphoneplan)"> Save </button>
+					<button class="btn btn-default"  ng-click="vm.phoneplanaddtoggle(vm.showaddrow)"> Cancel </button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div style="margin:25px"></div>
+

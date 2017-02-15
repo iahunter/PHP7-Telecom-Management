@@ -11,7 +11,7 @@ angular
 		
 		vm.isArray = angular.isArray;
 		
-		
+		vm.loading = true;
 
 		vm.messages = 'Loading sites...';
 		
@@ -32,12 +32,12 @@ angular
 				vm.phoneplans = res.data.result;
 				
 
-				
+				vm.loading = false;
 				return vm.phoneplans
 				
 				
 			}, function(err){
-				//Error
+				vm.loading = false;
 			});
 		
 
@@ -59,19 +59,34 @@ angular
 			}];
 		
 		
-		// Edit state for phone block Edit button.
+		// Edit state for phoneplan block Edit button.
 		vm.edit = {};
 		
-		// Update phone Block service called by the save button.
-		vm.updatephoneplan = function(phone) {
+		// Create Phone 
+		vm.createphoneplan = function(phoneplan) {
+			phoneplan.site = vm.site.id;
+			
+			console.log(phoneplan);
+			
+			sitePhonePlanService.createphoneplan(phoneplan).then(function(data) {
+			  //alert('phoneplan was added successfully');
+			  return $state.reload();
+			}, function(error) {
+				alert('An error occurred while updating the event')
+			});
+			//$state.reload();
+		}
+		
+		// Update phoneplan Block service called by the save button.
+		vm.updatephoneplan = function(phoneplan) {
 			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
-			var phone_update = {};
-			phone_update.name = phone.name;
-			phone_update.description = phone.description;
-			phone_update.language = phone.language;
+			var phoneplan_update = {};
+			phoneplan_update.name = phoneplan.name;
+			phoneplan_update.description = phoneplan.description;
+			phoneplan_update.language = phoneplan.language;
 			
 			// Send Block ID and the updated variables to the update service. 
-			sitePhonePlanService.updatephoneplan(phone.id, phone_update).then(function(data) {
+			sitePhonePlanService.updatephoneplan(phoneplan.id, phoneplan_update).then(function(data) {
 			  //return $state.reload();
 			}, function(error) {
 				alert('An error occurred while updating the event')
@@ -79,7 +94,37 @@ angular
 			//$state.reload();
 		}
 		
+		// Delete 
+		vm.deletephoneplan = function(phoneplan) {
+			sitePhonePlanService.deletephoneplan(phoneplan.id).then(function(data) {
+
+			
+				// jQuery Hack to fix body from the Model. 
+					$(".modal-backdrop").hide();
+					$('body').removeClass("modal-open");
+					$('body').removeClass("modal-open");
+					$('body').removeAttr( 'style' );
+				// End of Hack */
+			
+				return $state.reload();
+          }, function(error) {
+				alert('An error occurred');
+          });
+
+		}
 		
+		vm.showaddrow = false;
+		
+		vm.phoneplanaddtoggle = function(){
+			if(vm.showaddrow == true){
+				vm.showaddrow = false;
+			}else{
+				if(vm.showaddrow == false){
+				vm.showaddrow = true;
+				}
+			}
+		}
+
 		
 		vm.getsitesummary = function (id) {
 			

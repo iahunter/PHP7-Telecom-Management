@@ -91,6 +91,11 @@ angular
 					var phone = value.split("\t");
 				}
 				
+				//console.log(phone);
+				if((phone[0] == "") && (phone[1] == "") && (phone[2] == "") && (phone[3] == "")){
+					continue;
+				}
+				
 				
 				//console.log(phone);
 				phones.push(phone);

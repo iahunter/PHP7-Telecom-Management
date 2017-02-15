@@ -14,7 +14,7 @@
 								<div ng-message='minlength'> Too short </div>
 								<div ng-message='maxlength'> Too long </div>
 				</script>
-					<legend><h1>Import Phones into Plan ID {{vm.site.id}}</h1></legend>
+					<legend><h2>Import Phones into Plan ID {{vm.site.id}}</h2></legend>
 					
 					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<h5></pre>
 					
@@ -25,8 +25,8 @@
 							
 								<div class="col-lg-2">
 									<div class="form-group" ng-class="{'has-error': addDidblockForm.delimiter.$touched && addDidblockForm.delimiter.$invalid, 'has-success': addDidblockForm.delimiter.$touched && addDidblockForm.delimiter.$valid }">
-										<label for="delimiter" class="control-label">Block Range Delimiter</label>
-										<select class="form-control" required ng-model='vm.selectedOption' ng-options="delimiter.name for delimiter in vm.states track by delimiter.id" data-width="100%" name="delimiter">
+										<label for="delimiter" class="control-label">Column Delimiter</label>
+										<select class="form-control" ng-model='vm.selectedOption' ng-options="delimiter.name for delimiter in vm.states track by delimiter.id" data-width="100%" name="delimiter" required >
 										</select>
 										<div ng-messages="addDidblockForm.delimiter.$dirty && addDidblockForm.delimiter.$error">
 											<div ng-message='required'> delimiter is required </div>
@@ -38,12 +38,12 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-group" ng-class="{'has-error': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$invalid, 'has-success': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$valid }">
-										<label for="blocks" class="control-label">Block Ranges</label>
-										<textarea ng-model='vm.didblockForm.blocks' class="form-control" placeholder=" 4025550000	4025550999&#10 4029384000	4029384999"
-											rows="10" id="blocks" name="blocks"></textarea>
+										<label for="blocks" class="control-label">Phones<small> (Do not include headers) </small></label>
+										<textarea ng-model='vm.didblockForm.blocks' class="form-control" placeholder=" First Name	Last Name	Username	MAC Address	Device Type	10 digit Extension	Language	VM Password	Unity Mailbox Y/N	NOTES&#10 "
+											rows="10" id="blocks" name="blocks" required></textarea>
 										<!--<input textarea" ng-model='vm.didblockForm.name' required class="form-control"  rows="10" name="name" placeholder="Name">-->
 										<div ng-messages="addDidblockForm.blocks.$dirty && addDidblockForm.blocks.$error">
-											<div ng-message='required'> Blocks are is required </div>
+											<div ng-message='required'> Phone rows are required </div>
 										</div>
 									</div>
 								</div>

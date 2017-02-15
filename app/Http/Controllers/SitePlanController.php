@@ -288,11 +288,11 @@ class SitePlanController extends Controller
         }
 
         // Search for Phone by numberCheck if there are any matches.
-		/*
+        /*
         if (! Phoneplan::where('site', '=', $id)->count()) {
             abort(404, 'No plan found matching site: '.$id);
         }
-		*/
+        */
 
         // Search for numbers like search.
         $phoneplan = Phoneplan::where('site', '=', $id)->get();
@@ -316,13 +316,13 @@ class SitePlanController extends Controller
         if (! $user->can('read', Phoneplan::class)) {
             abort(401, 'You are not authorized to view Phone Plan');
         }
-		
-		/*
+
+        /*
         // Search for Phone by numberCheck if there are any matches.
         if (! Phone::where('site', '=', $id)->count()) {
             abort(404, 'No number found matching search: '.$search);
         }
-		*/
+        */
 
         // Search for numbers like search.
         $phones = Phone::where('site', '=', $id)->get();
@@ -346,13 +346,13 @@ class SitePlanController extends Controller
         if (! $user->can('read', Phoneplan::class)) {
             abort(401, 'You are not authorized to view Phone Plan');
         }
-		
-		/*
+
+        /*
         // Search for Phone by numberCheck if there are any matches.
         if (! Phoneplan::where('name', '=', $name)->count()) {
             abort(404, 'No number found matching search: '.$search);
         }
-		*/
+        */
 
         // Search for numbers like search.
         $phoneplan = Phoneplan::where('name', '=', $name)->get();

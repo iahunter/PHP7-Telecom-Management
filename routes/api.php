@@ -23,7 +23,7 @@ $api->version('v1', function ($api) {
      * @SWG\Info(title="Telecom Management - API Documentation", version="1.0")
      **/
 
-	// Disallow users to list users and get userinfo from API.
+    // Disallow users to list users and get userinfo from API.
     //$api->get('listusers', 'App\Http\Controllers\Auth\AuthController@listusers');
 
     // Get your user info.

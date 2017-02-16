@@ -25,8 +25,8 @@ class Phoneplan extends Model
         static::saving(function ($phoneplan) {
             return $phoneplan->validate();
         });
-		
-		// Cascade Soft Deletes Child Dids
+
+        // Cascade Soft Deletes Child Dids
         static::deleting(function ($phoneplan) {
             Phone::where('phoneplan', $phoneplan->id)->delete();                // query phone children of the and delete them. Much faster than foreach!!!
         });

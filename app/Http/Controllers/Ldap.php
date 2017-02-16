@@ -64,7 +64,7 @@ class Ldap extends Controller
         //print $username;
 
         $result = $this->Auth->getUserLdapPhone($username);
-		//print_r($result);
+        //print_r($result);
         $response = [
                     'status_code'    => 200,
                     'success'        => true,

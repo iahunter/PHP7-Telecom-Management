@@ -59,46 +59,10 @@ angular
 					//alert(res.message);
 					$state.go('logout');
 				}
+				vm.phones = res.data.result;
 				
-				phones = res.data.result;
-				console.log(phones);
-				return vm.phones = phones;
-				vm.phones = [];
-				angular.forEach(phones, function(phone) {
-					ldapuser = {};
-					if(phone.username == ""){
-						console.log(phone);
-						phone.ldapuser = false;
-					}else{
-
-						var ldapuser = vm.getusername(phone.username);
-						ldapuser = JSON.parse(JSON.stringify(ldapuser));
-						console.log(ldapuser);
-						
-						//ldapuser.id = phone.id;
-						//console.log(ldapuser.result);
-						if (ldapuser.result == ""){
-							console.log("Setting user to none")
-							ldapuser.result.user = "User does not exist";
-						}
-						/*
-						if (ldapuser.result == ""){
-							phone.ldapuser = "Not found";
-						*/
-						else{
-							console.log(ldapuser.result);
-							phone.ldapuser = ldapuser.result.user
-							phone.ldapipphone = ldapuser.result.ipphone
-						}
-						console.log(phone);
-					}
-					
-					vm.phones.push(phone);
-
-				});
+				return vm.phones
 				
-				return vm.phones;
-
 				
 			}, function(err){
 				//Error
@@ -108,65 +72,45 @@ angular
 		vm.getusername = function(username){
 			//console.log(username);
 			var user = {};
+			
 			LDAPService.getusername(username)
 				.then(function(res){
-					result = res.data.result;
-
-					//console.log(result.user);
-					user.username = username
-					if (result.ipphone == ""){
-						user.user = "User Not Found"
+					//console.log(res);
+					user.username = username;
+					
+					if(res.status == "500"){
+						//console.log(username + " Username not found")
+						user.result = '';
+						//console.log(user);
 					}else{
-						user.ipphone = result.ipphone
-						user.user = result.user
+						user.result = res.data.result;
+						//console.log(user);
+						
 					}
 					
-					return user;
+					//console.log(user);
 					
+
 				}, function(err){
 					// Error
 				});
 		
-			
+			return user;
 		}
 
 		
 		vm.getusernames = function(phones){
 			vm.users = [];
-			
 			angular.forEach(phones, function(phone) {
-				// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
-				LDAPService.getusername(phone.username)
-				.then(function(res){
-					user = [];
-					//console.log(res);
-					//user.username = username;
-					
-					
-					result = res.data.result;
-
-					// Must do these inline inside the API Call or callbacks can screw you with black objects!!!! 
-					user.id = phone.id;
-					user.username = phone.username
-					
-					if (result.ipphone == ""){
-						user.user = "User Not Found"
-					}else{
-						user.ipphone = result.ipphone
-						user.user = result.user
-					}
-					
-					console.log(user);
-					
-					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-					vm.users.push(user);
-
-				}, function(err){
-					// Error
-				});
-
-				
-				
+				var userlookup = vm.getusername(phone.username);
+				//console.log(userlookup);
+				userlookup.id = phone.id;
+				console.log(userlookup.result);
+				if (userlookup.result == ""){
+					console.log("Setting user to none")
+					userlookup.result.user = "User does not exist";
+				}
+				vm.users.push(userlookup);
 			});
 			
 			console.log(vm.users);

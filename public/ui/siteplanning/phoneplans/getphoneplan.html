@@ -1,12 +1,20 @@
 <div style="margin:100px"></div>
 
-<div style="margin-left:80px; margin-right:80px;">
+<!--<div style="margin-left:80px; margin-right:80px;">-->
+<div style="margin-left:5%; margin-right:5%;">
 	<div class="well form-horizontal" style="margin-top:10px;" >
 	
 		<div class="well" style="background-color: #f1f3f3;">
 			<div style="margin:50px"></div>
 		
-			<legend>Phone Plan Details<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+			<legend>Phone Plan Details
+				<div class="btn-group pull-right">
+					<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button> 
+					<a href="#/site/{{ vm.site.site}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site Details</button> </a>
+				</div>
+				<br>
+				<div style="margin:15px"></div>
+			</legend>
 		
 		
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -417,8 +425,8 @@
 						<tr ng-repeat="user in vm.users | orderBy:sortType:sortReverse | filter:vm.search: strict">
 							<td>{{ user.id}}</td>
 							<td>{{ user.username}}</td>
-							<td>{{ user.result.user}}</td>
-							<td>{{ user.result.ipphone}}</td>
+							<td>{{ user.user}}</td>
+							<td>{{ user.ipphone}}</td>
 						</tr>
 					</tbody>
 				</table>

@@ -83,11 +83,13 @@ angular
 				
 				
 								
-				
 				vm.loading = false;
+				
 				vm.messages = JSON.stringify(vm.sites, null, "    ");
-
+				
 			});
+			
+			
 		}
 		
 

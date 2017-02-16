@@ -275,10 +275,10 @@ class AuthController extends Controller
         }
         $user = $this->ldap->user()->info($username, ['*']);
         if ($user[0]['dn'] == null) {
-			return [
-				'user'     => "",
-				'ipphone'  => "",
-				];
+            return [
+                'user'     => '',
+                'ipphone'  => '',
+                ];
             //throw new \Exception('Error getting DN for username '.$username);
         }
         $user_dn = $user[0]['dn'];

@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'cucmService', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, cucmService, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'cucmService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, cucmService, $timeout, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -60,42 +60,36 @@ angular
 					$state.go('logout');
 				}
 				
-				phones = res.data.result;
-				console.log(phones);
-				return vm.phones = phones;
-				vm.phones = [];
-				angular.forEach(phones, function(phone) {
-					ldapuser = {};
-					if(phone.username == ""){
-						console.log(phone);
-						phone.ldapuser = false;
-					}else{
-
-						var ldapuser = vm.getusername(phone.username);
-						ldapuser = JSON.parse(JSON.stringify(ldapuser));
-						console.log(ldapuser);
-						
-						//ldapuser.id = phone.id;
-						//console.log(ldapuser.result);
-						if (ldapuser.result == ""){
-							console.log("Setting user to none")
-							ldapuser.result.user = "User does not exist";
-						}
-						/*
-						if (ldapuser.result == ""){
-							phone.ldapuser = "Not found";
-						*/
-						else{
-							console.log(ldapuser.result);
-							phone.ldapuser = ldapuser.result.user
-							phone.ldapipphone = ldapuser.result.ipphone
-						}
-						console.log(phone);
-					}
+				vm.phones = res.data.result;
+				//console.log(phones);
+				//return vm.phones = phones;
+				//vm.phones = [];
+				angular.forEach(vm.phones, function(phone) {
 					
-					vm.phones.push(phone);
+					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
+					LDAPService.getusername(phone.username)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						result = res.data.result;
 
+						if (result.user == ""){
+							phone.aduser = ""
+							phone.adipphone = ""
+							
+						}else{
+							phone.adipphone = result.ipphone
+							phone.aduser = result.user
+						}
+						
+						console.log(phone);
+						
+					});
+					
 				});
+				
 				
 				return vm.phones;
 
@@ -114,19 +108,64 @@ angular
 
 					//console.log(result.user);
 					user.username = username
-					if (result.ipphone == ""){
+					if (result.user == ""){
 						user.user = "User Not Found"
 					}else{
 						user.ipphone = result.ipphone
 						user.user = result.user
 					}
-					
+					console.log(user)
 					return user;
 					
 				}, function(err){
 					// Error
 				});
 		
+			
+		}
+		
+		vm.getphonesfromcucm = function(phones){
+			vm.cucmphones = [];
+			
+			angular.forEach(phones, function(phone) {
+				// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
+				
+				//console.log(phone);
+				
+				if(phone.device != "IP Communicator"){
+					name = "SEP"+ phone.name
+				}else{
+					name = phone.name
+				}
+				
+				cucmService.getphone(name)
+				.then(function(res){
+					user = [];
+					//console.log(res);
+					//user.username = username;
+					
+					
+					result = res.data.response;
+
+					console.log(result);
+
+					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+					if(result != "Not Found"){
+						result.phoneid = phone.id;
+						phone.inuse = true;
+						vm.cucmphones.push(result);
+					}
+					
+
+				}, function(err){
+					// Error
+				});
+
+				
+				
+			});
+			
+			console.log(vm.cucmphones);
 			
 		}
 
@@ -149,7 +188,7 @@ angular
 					user.id = phone.id;
 					user.username = phone.username
 					
-					if (result.ipphone == ""){
+					if (result.user == ""){
 						user.user = "User Not Found"
 					}else{
 						user.ipphone = result.ipphone
@@ -169,11 +208,57 @@ angular
 				
 			});
 			
-			console.log(vm.users);
+			//console.log(vm.users);
 		}
 		
+		// Update LDAP AD IP Phone field in user account
+		vm.updateadipphones = function(phones){
+			vm.ipphoneupdates = [];
 			
+			angular.forEach(phones, function(phone) {
+				
+				console.log(phone);
+				
+				if((phone.username != null) && (phone.username != "")){
+					var update = {};
+					update.username = phone.username;
+					update.ipphone = phone.dn;
+					
+					console.log(update);
+					//return update
+					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
+					LDAPService.updateadipphone(update)
+					.then(function(res){
+
+						result = res.data.result;
+
+						console.log(result);
+						
+						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+						vm.ipphoneupdates.push(result);
+
+					}, function(err){
+						// Error
+					});
+				}
+				
+
+				
+				
+			});
 			
+			//console.log(vm.ipphoneupdates);
+			
+			// Tell CUCM to do a LDAP Sync to retrieve the updates after AD account change
+			cucmService.initiate_cucm_ldap_sync()
+					.then(function(res){
+						result = res.data;
+						console.log(result);
+					}, function(err){
+						// Error
+					});
+
+		}
 	
 		
 
@@ -198,14 +283,6 @@ angular
 		
 		// Update 
 		vm.update = function(phone) {
-			
-			/* No longer using this. 
-			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
-			var phone_update = {};
-			phone_update.name = phone.name;
-			phone_update.status = phone.status;
-			phone_update.system_id = phone.system_id;
-			*/
 			
 			sitePhonePlanService.updatephone(phone.id, phone).then(function(data) {
 			  //return $state.reload();
@@ -250,13 +327,53 @@ angular
 		}
 		
 		
-		vm.checkAll = function() {
-			angular.forEach(vm.phones, function(phone) {
+		vm.checkAllcucmphones = function() {
+			angular.forEach(vm.cucmphones, function(phone) {
 			  phone.select = vm.selectAll;
 			  //console.log(phone);
-			  vm.selecttouched();
+			  vm.cucmphoneselecttouched();
 			});
 		  };
+		  
+		
+		vm.deletecucmphone = function(name) {
+			
+			cucmService.deletephone(name)
+				.then(function(res) {
+
+					conosle.log(res)
+			  }, function(error) {
+					alert('An error occurred');
+			  });
+			
+		}
+		
+		vm.cucmphonedeleteselected = function(phones){
+			angular.forEach(phones, function(phone) {
+				if(phone.select == true){
+					console.log(phone);
+					vm.deletecucmphone(phone.name);
+				}
+				
+			});
+		}
+		
+		
+		vm.cucmphonecheckAll = function() {
+			angular.forEach(vm.cucmphones, function(phone) {
+			  phone.select = vm.cucmphoneselectAll;
+			  console.log(phone);
+			  //vm.selecttouched();
+			});
+		  };
+		
+		
+		//$timeout(function(),5000, false)
+		
+		 $timeout(function(){
+            vm.getphonesfromcucm(vm.phones)
+        }, 2000);
+		
 		
 		
 		

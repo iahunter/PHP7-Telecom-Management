@@ -116,7 +116,7 @@ class Cucmphone extends Cucm
 
             $phone['line_details'] = $this->cucm->get_lines_details_by_phone_name($name);
         } else {
-            $phone = "{$name} not found";
+            $phone = "Not Found";
         }
 
         $response = [

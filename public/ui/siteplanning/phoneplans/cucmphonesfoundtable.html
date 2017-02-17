@@ -1,0 +1,74 @@
+
+<div ng-if="vm.cucmphones">
+<legend>Phones Exist in CUCM</legend>
+	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+		<table class="table table-striped table-condensed table-bordered table-hover">
+			<thead>
+				<tr class="warning">
+					<th><input type="checkbox" ng-model="vm.cucmphoneselectAll" ng-click="vm.cucmphonecheckAll()"/>  Select All</th>
+					<th>
+						<a href="" ng-click="sortType = 'phoneid'; sortReverse = !sortReverse" style="color:black">
+							Phone ID
+								<span ng-show="sortType == 'phoneid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'phoneid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+							MAC
+								<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'description'; sortReverse = !sortReverse" style="color:black">
+							Description
+								<span ng-show="sortType == 'description' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'description' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'model'; sortReverse = !sortReverse" style="color:black">
+							Model
+								<span ng-show="sortType == 'model' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'model' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'devicePoolName'; sortReverse = !sortReverse" style="color:black">
+							Device Pool
+								<span ng-show="sortType == 'devicePoolName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'devicePoolName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'ownerUserName'; sortReverse = !sortReverse" style="color:black">
+							Owner ID
+								<span ng-show="sortType == 'ownerUserName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'ownerUserName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+							Actions
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="phone in vm.cucmphones | orderBy:sortType:sortReverse | filter:vm.search: strict">
+					<td>
+						<input type="checkbox" ng-model="phone.select" ng-click="vm.cucmphoneselecttouched()">
+					</td>
+					<td>{{ phone.phoneid}}</td>
+					<td>{{ phone.name}}</td>
+					<td>{{ phone.description}}</td>
+					<td>{{ phone.model}}</td>
+					<td>{{ phone.devicePoolName._}}</td>
+					<td>{{ phone.ownerUserName._}}</td>
+					<td><a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.deletecucmphone(phone.name)">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.cucmphonedeleteselected(vm.cucmphones)">Delete Selected</a>
+</div>

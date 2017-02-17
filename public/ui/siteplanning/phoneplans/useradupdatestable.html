@@ -1,0 +1,42 @@
+
+<div ng-if="vm.ipphoneupdates">
+<legend>Active Directory Users Updated</legend>
+	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+		<table class="table table-striped table-condensed table-bordered table-hover">
+			<thead>
+				<tr class="warning">
+					<th>
+						<a href="" ng-click="sortType = 'user'; sortReverse = !sortReverse" style="color:black">
+							Username
+								<span ng-show="sortType == 'user' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'user' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'ipphone.old'; sortReverse = !sortReverse" style="color:black">
+							Old DN
+								<span ng-show="sortType == 'ipphone.old' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'ipphone.old' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'ipphone.new'; sortReverse = !sortReverse" style="color:black">
+							New DN
+								<span ng-show="sortType == 'ipphone.new' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'ipphone.new' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in vm.ipphoneupdates | orderBy:sortType:sortReverse | filter:vm.search: strict">
+					<td>{{ user.user}}</td>
+					<td>{{ user.ipphone.old}}</td>
+					<td>{{ user.ipphone.new}}</td>
+
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>
+</div>

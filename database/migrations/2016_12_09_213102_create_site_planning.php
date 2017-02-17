@@ -74,7 +74,7 @@ class CreateSitePlanning extends Migration
             $table->string('device');                                 // simple name to reference the account by
             $table->string('firstname');                            // simple name to reference the account by
             $table->string('lastname');                             // simple name to reference the account by
-            $table->string('username');                             // simple name to reference the account by
+            $table->string('username')->nullable();                 // simple name to reference the account by
             $table->string('dn');                                     // Directory Number
             $table->string('language');                                // Directory Number
             $table->boolean('phonetemplate')->nullable();           // Maybe used in the future.

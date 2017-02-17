@@ -291,8 +291,19 @@
 						<!--<td>{{ phone.parent}}</td>-->
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.firstname}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.lastname}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.username}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>
+						
+						<td   ng-show="!vm.edit[phone.id] && phone.aduser != ''" style="color:green">{{ phone.username}}</td>
+						<td   ng-show="!vm.edit[phone.id] && phone.aduser == ''" style="color:red">{{ phone.username}}</td>
+						
+						<!--
+						<td   ng-show="!vm.edit[phone.id]">{{ phone.aduser}}</td>
+						<td   ng-show="!vm.edit[phone.id]">{{ phone.adipphone}}</td>
+						-->
+						
+						<td   ng-show="!vm.edit[phone.id] && !phone.inuse">{{ phone.name}}</td>
+						<td   ng-show="!vm.edit[phone.id] && phone.inuse" style="color:orange">{{ phone.name}}</td>
+						
+						<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>-->
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.dn}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
@@ -375,62 +386,30 @@
 					</tbody>
 				</table>
 			</div>
+			
+			<div style="margin:25px"></div>
 			<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
-			<button ng-if="vm.deleteall" class="btn btn-danger"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
-			<button ng-if="vm.deleteall" class="btn btn-primary" ng-click="vm.refresh()">Reset</button>
+			<button ng-if="vm.deleteall" class="btn btn-xs btn-danger"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
+			<button class="btn btn-xs btn-primary" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 			
 			
-			<button ng-if="vm.phones.length > 0" class="btn btn-info"  ng-click="vm.getusernames(vm.phones)">Verify Users Exist in AD</button>
-			<button ng-if="vm.phones.length > 0" class="btn"  ng-click="vm.updateUserIPPhone(vm.phones)">Update AD Users IPPhone</button>
-			<button ng-if="vm.phones.length > 0" class="btn"  ng-click="vm.checkldapnames(vm.phones)">Verify Users Exist</button>
+			<div class="btn-group">
+				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusernames(vm.phones)">1. Verify Users Exist in AD</button>
+				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.updateadipphones(vm.phones)">2. Update AD Users IPPhone</button>
+				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">3. Check if any Phones Exist</button>
+			</div>
 			
 			<div style="margin:50px"></div>
 			
+			<!--User Lookup Table-->
+			<ng-include src="'siteplanning/phoneplans/aduserlookuptable.html'"></ng-include>
+			<div style="margin:50px"></div>
 			
-			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.users">
-				<table class="table table-striped table-condensed table-bordered table-hover">
-					<thead>
-						<tr class="warning">
-							<th>
-								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
-									Phone ID
-										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
-									Username
-										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'result.user'; sortReverse = !sortReverse" style="color:black">
-									AD User
-										<span ng-show="sortType == 'result.user' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'result.user' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'ipphone'; sortReverse = !sortReverse" style="color:black">
-									IPPhone Number
-										<span ng-show="sortType == 'ipphone' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'ipphone' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="user in vm.users | orderBy:sortType:sortReverse | filter:vm.search: strict">
-							<td>{{ user.id}}</td>
-							<td>{{ user.username}}</td>
-							<td>{{ user.user}}</td>
-							<td>{{ user.ipphone}}</td>
-						</tr>
-					</tbody>
-				</table>
-				
-			</div>
+			<!--User AD Updates Table-->
+			<ng-include src="'siteplanning/phoneplans/useradupdatestable.html'"></ng-include>
+			<div style="margin:50px"></div>
+			
+			<!--CUCM Phones Table-->
+			<ng-include src="'siteplanning/phoneplans/cucmphonesfoundtable.html'"></ng-include>
 	</div>
 </div>

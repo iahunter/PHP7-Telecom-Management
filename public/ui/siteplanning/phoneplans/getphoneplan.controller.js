@@ -155,6 +155,9 @@ angular
 						phone.inuse = true;
 						vm.cucmphones.push(result);
 					}
+					if(result == "Not Found"){
+						phone.inuse = false;
+					}
 					
 
 				}, function(err){
@@ -356,6 +359,11 @@ angular
 				}
 				
 			});
+			
+		$timeout(function(){
+            vm.getphonesfromcucm(vm.phones)
+        }, 2000);
+			
 		}
 		
 		

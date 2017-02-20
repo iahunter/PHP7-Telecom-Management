@@ -244,6 +244,9 @@ angular
 				vm.deploysiteresult = data.data.response;
 				
 				vm.cucmloading = false;
+				
+				alert("Site Deployed to CUCM");
+				$state.reload();
 				return vm.deploysiteresult;
 				
 				/*
@@ -255,6 +258,8 @@ angular
 					$scope.invalidaddress=true;
 				}
 				*/
+			}, function(error) {
+				alert('An error occurred while creating the site')
 			});
 			
 		};

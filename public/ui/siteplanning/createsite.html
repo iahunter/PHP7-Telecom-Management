@@ -181,11 +181,11 @@
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-								<div class="form-group" ng-class="{'has-error': addsiteForm.extlength.$touched && addsiteForm.extlength.$invalid, 'has-success': addsiteForm.extlength.$touched && addsiteForm.eventCategory.$valid }">
-									<label for="extlength"  class="control-label">Short Extension Length (Standard is 4)</label>
-									<select class="form-control" required ng-model='vm.siteForm.extlength' ng-options="extlength as extlength for extlength in vm.extlength" data-width="100%" name="extlength">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.extlen.$touched && addsiteForm.extlen.$invalid, 'has-success': addsiteForm.extlen.$touched && addsiteForm.eventCategory.$valid }">
+									<label for="extlen"  class="control-label">Short Extension Length (Standard is 4)</label>
+									<select class="form-control" required ng-model='vm.siteForm.extlen' ng-options="extlen as extlen for extlen in vm.extlen" data-width="100%" name="extlen">
 									</select>
-									<div ng-messages="addsiteForm.extlength.$dirty && addsiteForm.extlength.$error">
+									<div ng-messages="addsiteForm.extlen.$dirty && addsiteForm.extlen.$error">
 										<div ng-messages-include="error-messages"></div>
 									</div>
 								</div>

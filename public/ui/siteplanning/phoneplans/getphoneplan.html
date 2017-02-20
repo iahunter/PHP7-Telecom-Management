@@ -10,7 +10,7 @@
 			<legend>Phone Plan Details
 				<div class="btn-group pull-right">
 					<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button> 
-					<a href="#/site/{{ vm.site.site}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site Details</button> </a>
+					<a href="#/site/{{ vm.phoneplan.site}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site Details</button> </a>
 				</div>
 				<br>
 				<div style="margin:15px"></div>
@@ -93,14 +93,14 @@
 
 					<tr>
 							
-							<td>{{ vm.site.id}}</a></td>
-							<td>{{ vm.site.name}}</td>
-							<td>{{ vm.site.description}}</a></td>
-							<td>{{ vm.site.language}}</td>
-							<td>{{ vm.site.site}}</td>
-							<td>{{ vm.site.notes}}</td>
-							<td>{{ vm.site.created_at}}</td>
-							<td>{{ vm.site.updated_at}}</td>
+							<td>{{ vm.phoneplan.id}}</a></td>
+							<td>{{ vm.phoneplan.name}}</td>
+							<td>{{ vm.phoneplan.description}}</a></td>
+							<td>{{ vm.phoneplan.language}}</td>
+							<td>{{ vm.phoneplan.site}}</td>
+							<td>{{ vm.phoneplan.notes}}</td>
+							<td>{{ vm.phoneplan.created_at}}</td>
+							<td>{{ vm.phoneplan.updated_at}}</td>
 					</tr>
 					</tbody>
 				</table>
@@ -144,7 +144,7 @@
 		<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
 		<button class="btn btn-primary btn-sm" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
 		<!--<button class="btn btn-primary btn-sm" ng-click="vm.phonebulkaddtoggle(vm.showbulkaddrows)"><i class="glyphicon glyphicon-plus"></i> Bulk Add - Needs work</button>-->
-		<a href="#/phoneplan/{{ vm.site.id}}/importphones" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
+		<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
 		
 		<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
 		
@@ -397,6 +397,7 @@
 				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusernames(vm.phones)">1. Verify Users Exist in AD</button>
 				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.updateadipphones(vm.phones)">2. Update AD Users IPPhone</button>
 				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">3. Check if any Phones Exist</button>
+				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-danger"  ng-click="vm.deployphonescucm(vm.phones)">4. Deploy Phones to CUCM</button>
 			</div>
 			
 			<div style="margin:50px"></div>

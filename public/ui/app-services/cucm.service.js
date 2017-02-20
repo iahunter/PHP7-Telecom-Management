@@ -82,8 +82,7 @@ angular
 
 		
 		// Create Block
-		self.createcucmsite = function(site) {
-			
+		self.createcucmsite = function(site){
 			return $http.post('../api/cucm/site', site);
 		}
 		
@@ -119,6 +118,12 @@ angular
 			  }, function errorCallback(response) {
 					
 			  });
+		}
+		
+		
+		// Create Block
+		self.createphone = function(phone){
+			return $http.post('../api/cucm/phone', phone);
 		}
 		
 		

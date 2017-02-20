@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'cucmService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, cucmService, $timeout, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, $timeout, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -23,7 +23,6 @@ angular
 			}
 		}
 		
-		
 
 		vm.messages = 'Loading sites...';
 		
@@ -41,14 +40,25 @@ angular
 					$state.go('logout');
 				}
 
-				vm.site = res.data.result;
-				console.log(vm.site);
-				return vm.site
+				vm.phoneplan = res.data.result;
+				console.log(vm.phoneplan);
+				
+				vm.getsite = siteService.getsite(vm.phoneplan.site)
+				.then(function(result){
+					vm.site = result.data.result
+					//console.log(vm.site);
+				}, function(err){
+					//Error
+				});
+				return vm.phoneplan
 				
 				
 			}, function(err){
 				//Error
 			});
+			
+		
+		
 		
 		vm.getphoneplanphones = sitePhonePlanService.getphoneplanphones(id)
 			.then(function(res){
@@ -244,10 +254,6 @@ angular
 						// Error
 					});
 				}
-				
-
-				
-				
 			});
 			
 			//console.log(vm.ipphoneupdates);
@@ -260,7 +266,6 @@ angular
 					}, function(err){
 						// Error
 					});
-
 		}
 	
 		
@@ -268,7 +273,7 @@ angular
 		// Create Phone 
 		vm.createphone = function(phone) {
 			phone.phoneplan = id;
-			phone.site = vm.site.site;
+			phone.site = vm.phoneplan.site;
 			
 			console.log(phone);
 			
@@ -329,6 +334,14 @@ angular
 			});
 		}
 		
+		vm.checkAll = function() {
+			angular.forEach(vm.phones, function(phone) {
+			  phone.select = vm.selectAll;
+			  //console.log(phone);
+			  vm.selecttouched();
+			});
+		  };
+		
 		
 		vm.checkAllcucmphones = function() {
 			angular.forEach(vm.cucmphones, function(phone) {
@@ -339,12 +352,18 @@ angular
 		  };
 		  
 		
-		vm.deletecucmphone = function(name) {
+		vm.deletecucmphone = function(phone) {
 			
+			name = phone.name;
 			cucmService.deletephone(name)
 				.then(function(res) {
-
-					conosle.log(res)
+					
+					
+					if(res.data.deleted_uuid){
+						console.log(name + " Successfully Deleted")
+						phone = null;
+					}
+					console.log(res)
 			  }, function(error) {
 					alert('An error occurred');
 			  });
@@ -355,15 +374,15 @@ angular
 			angular.forEach(phones, function(phone) {
 				if(phone.select == true){
 					console.log(phone);
-					vm.deletecucmphone(phone.name);
+					vm.deletecucmphone(phone);
 				}
 				
 			});
 			
-		$timeout(function(){
-            vm.getphonesfromcucm(vm.phones)
-        }, 2000);
-			
+			$timeout(function(){
+				vm.getphonesfromcucm(vm.phones)
+			}, 2000);
+				
 		}
 		
 		
@@ -380,8 +399,34 @@ angular
 		
 		 $timeout(function(){
             vm.getphonesfromcucm(vm.phones)
-        }, 2000);
+        }, 500);
 		
+		
+		vm.deployphonescucm = function() {
+			angular.forEach(vm.phones, function(phone) {
+				phone.sitecode = vm.site.sitecode;
+				phone.extlength = vm.site.extlen;
+				console.log(phone);
+				cucmService.createphone(phone)
+				.then(function(res) {
+					
+					/*
+					may want to show a table of the log here or something. 
+					*/
+					console.log(res)
+				}, function(error) {
+					alert('An error occurred');
+				});
+			  
+			});
+			
+			/*
+			$timeout(function(){
+				$state.reload();
+			}, 2000);
+			*/
+			
+		};
 		
 		
 		

@@ -29,6 +29,7 @@ class CreateSitePlanning extends Migration
             $table->text('nxx')->nullable();                // JSON Details Custom Field Data
             $table->text('timezone')->nullable();           // JSON Details Custom Field Data
             $table->json('didblocks')->nullable();           // JSON Details ID of DID Blocks used for the site.
+			$table->integer('extlen')->nullable();           // JSON Details ID of DID Blocks used for the site.
             $table->text('operator')->nullable();              // Comment
             $table->json('details')->nullable();            // JSON Details Custom Field Data
             //$table->string('createdby');            // simple name to reference the account by

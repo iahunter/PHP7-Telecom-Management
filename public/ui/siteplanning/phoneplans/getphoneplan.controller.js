@@ -401,7 +401,7 @@ angular
             vm.getphonesfromcucm(vm.phones)
         }, 500);
 		
-		
+		/*
 		vm.deployphonescucm = function() {
 			angular.forEach(vm.phones, function(phone) {
 				phone.sitecode = vm.site.sitecode;
@@ -410,15 +410,26 @@ angular
 				cucmService.createphone(phone)
 				.then(function(res) {
 					
-					/*
-					may want to show a table of the log here or something. 
-					*/
+
 					console.log(res)
 				}, function(error) {
 					alert('An error occurred');
 				});
 			  
 			});
+		*/
+		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
+		vm.deployphonescucm = function() {
+			angular.forEach(vm.phones, function(phone) {
+				phone.sitecode = vm.site.sitecode;
+				phone.extlength = vm.site.extlen;
+				console.log(phone);
+			});
+				//angular.copy(vm.phones)
+				vm.newphones = cucmService.createphones(angular.copy(vm.phones));
+				
+				console.log(vm.newphones);
+			
 			
 			/*
 			$timeout(function(){

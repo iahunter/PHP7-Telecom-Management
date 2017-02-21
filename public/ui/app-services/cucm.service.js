@@ -126,6 +126,34 @@ angular
 			return $http.post('../api/cucm/phone', phone);
 		}
 		
+		self.createphones = function(arr) {
+			results = [];
+			  if (angular.isArray(arr) && arr.length > 0) {
+				console.log(arr);
+				var postdata = arr[0];
+				$http.post('../api/cucm/phone', postdata)
+				  .then(
+					  function(data) {
+						results.push(data);
+						console.log("Success.");
+						arr.shift();
+						self.createphones(arr);
+						//console.log('After Shift');
+						//console.log(arr);
+					  },
+					  function(data) {
+						results.push(data);
+						console.log("Failure.");
+						// if you want to continue even if it fails:
+						self.createphones(arr.shift());
+					  }
+				);
+			  }
+			console.log(results);
+			return results;
+		}
+		
+		
 		
 		return self
 

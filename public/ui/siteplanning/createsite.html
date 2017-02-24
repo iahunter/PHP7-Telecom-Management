@@ -100,8 +100,8 @@
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.operator.$touched && addsiteForm.operator.$invalid, 'has-success': addsiteForm.operator.$touched && addsiteForm.operator.$valid }">
-									<label for="operator" required class=" control-label">Operator last 4 digits of DID <i>(optional)</i></label>
-									<input type="text" required ng-pattern='/^[0-9]/' ng-model='vm.siteForm.operator' class="form-control" name="operator" placeholder="4000" ng-maxlength='4' ng-maxlength='4'>
+									<label for="operator" class=" control-label">Operator last 4 digits of DID <i>(optional)</i></label>
+									<input type="text" ng-pattern='/^[0-9]/' ng-model='vm.siteForm.operator' class="form-control" name="operator" placeholder="4000" ng-maxlength='4' ng-maxlength='4'>
 									<div ng-messages="addsiteForm.operator.$dirty && addsiteForm.operator.$error">
 										<div ng-message="pattern">Please enter the operator last 4 digits of DID</div>
 										<div ng-message='minlength'>Operator must be 4 digits</div>

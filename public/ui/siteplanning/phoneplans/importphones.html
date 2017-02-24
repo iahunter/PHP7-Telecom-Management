@@ -14,7 +14,11 @@
 								<div ng-message='minlength'> Too short </div>
 								<div ng-message='maxlength'> Too long </div>
 				</script>
-					<legend><h2>Import Phones into Plan ID {{vm.site.id}}</h2></legend>
+					
+					<legend>Import Phones into Plan ID {{vm.site.id}}
+					<a href="#/phoneplan/{{ vm.site.id}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site List</button> </a>
+					<br> <div style="margin:15px"></div>
+					</legend>
 					
 					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<h5></pre>
 					

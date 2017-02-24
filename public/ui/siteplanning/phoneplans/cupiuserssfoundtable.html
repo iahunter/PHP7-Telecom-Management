@@ -34,6 +34,13 @@
 								<span ng-show="sortType == 'unityuser.DtmfAccessId' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 						</a>
 					</th>
+					<th>
+						<a href="" ng-click="sortType = 'unityuser.DtmfAccessId'; sortReverse = !sortReverse" style="color:black">
+							External Unified Messaging Service
+								<span ng-show="sortType == 'unityuser.DtmfAccessId' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'unityuser.DtmfAccessId' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
 
 				</tr>
 			</thead>
@@ -47,8 +54,8 @@
 					<td>{{ phone.username}}</td>
 					<td>{{ phone.unityldapuser}}</td>
 					<td>{{ phone.unityuser.DtmfAccessId}}</td>
-					<td>{{ phone.unityuser.ExternalServiceAccountsURI}}</td>
-					<td>{{ phone.unityuser.externalserviceaccountid}}</td>
+					<!--<td>{{ phone.unityuser.ExternalServiceAccountsURI}}</td>-->
+					<!--<td>{{ phone.unityuser.externalserviceaccountid}}</td>-->
 					<td>{{ phone.unityuser.externalserviceaccount}}</td>
 				</tr>
 			</tbody>

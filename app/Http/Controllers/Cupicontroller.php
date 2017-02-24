@@ -54,14 +54,12 @@ class Cupicontroller extends Controller
         if (isset($request->template) && $request->template) {
             $template = $request->template;
         }
-		
-		if (isset($request->override) && $request->override) {
-            $override = $request->override;
-        }else{
-			$override = true;
-		}
 
-        
+        if (isset($request->override) && $request->override) {
+            $override = $request->override;
+        } else {
+            $override = true;
+        }
 
         //$alias = "travis.riesenberg";
         return Cupi::importLDAPUser($username, $dn, $template, $override);
@@ -91,8 +89,8 @@ class Cupicontroller extends Controller
         //$alias = "travis.riesenberg";
         return Cupi::createuser($username, $dn, $template);
     }
-	
-	public function updateuserdn(Request $request)
+
+    public function updateuserdn(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -149,8 +147,8 @@ class Cupicontroller extends Controller
 
         return Cupi::listusertemplatenames();
     }
-	
-	public function listexternalservices(Request $request)
+
+    public function listexternalservices(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -160,8 +158,8 @@ class Cupicontroller extends Controller
 
         return Cupi::listexternalservices();
     }
-	
-	public function getuserunifiedmessaging(Request $request)
+
+    public function getuserunifiedmessaging(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -171,5 +169,4 @@ class Cupicontroller extends Controller
 
         return Cupi::getuserexternalservice($request->objectid);
     }
-
 }

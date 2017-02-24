@@ -310,6 +310,22 @@
 											<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
 								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
+										Employee Unity Template
+											<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
+										NonEmployee Unity Template
+											<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
 
 
 								<th>
@@ -342,6 +358,8 @@
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.description}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
+							<td   ng-show="!vm.edit[phone.id]">{{ phone.employee_vm_user_template}}</td>
+							<td   ng-show="!vm.edit[phone.id]">{{ phone.nonemployee_vm_user_template}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
 							<td   ng-show="!vm.edit[phone.id]">
@@ -398,6 +416,8 @@
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.name"></td>
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.description"></td>
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.language"></td>
+							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.employee_vm_user_template"></td>
+							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.nonemployee_vm_user_template"></td>
 							<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>
 							<td   ng-show="vm.edit[phone.id]">{{ phone.updated_at}}</td>
 							

@@ -63,6 +63,22 @@
 							</th>
 							
 							<th>
+								<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
+									Employee Unity Template
+										<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
+									NonEmployee Unity Template
+										<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'notes'; sortReverse = !sortReverse" style="color:black">
 									Notes
 										<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -98,6 +114,8 @@
 							<td>{{ vm.phoneplan.description}}</a></td>
 							<td>{{ vm.phoneplan.language}}</td>
 							<td>{{ vm.phoneplan.site}}</td>
+							<td>{{ vm.phoneplan.employee_vm_user_template}}</td>
+							<td>{{ vm.phoneplan.nonemployee_vm_user_template}}</td>
 							<td>{{ vm.phoneplan.notes}}</td>
 							<td>{{ vm.phoneplan.created_at}}</td>
 							<td>{{ vm.phoneplan.updated_at}}</td>
@@ -398,6 +416,8 @@
 				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.updateadipphones(vm.phones)">2. Update AD Users IPPhone</button>
 				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">3. Check if any Phones Exist</button>
 				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-danger"  ng-click="vm.deployphonescucm(vm.phones)">4. Deploy Phones to CUCM</button>
+				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-danger"  ng-click="vm.getusersfromcupi(vm.phones)">5. Check Unity Users</button>
+				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-danger"  ng-click="vm.getusers_um_fromcupi(vm.phones)">6. Populate UM Info from Unity Users</button>
 			</div>
 			
 			<div style="margin:50px"></div>
@@ -412,5 +432,8 @@
 			
 			<!--CUCM Phones Table-->
 			<ng-include src="'siteplanning/phoneplans/cucmphonesfoundtable.html'"></ng-include>
+			
+			<!--CUPI Users Table-->
+			<ng-include src="'siteplanning/phoneplans/cupiuserssfoundtable.html'"></ng-include>
 	</div>
 </div>

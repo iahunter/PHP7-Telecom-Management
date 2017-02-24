@@ -206,3 +206,52 @@
      * )
      **/
     $api->get('cupi/templates/listusertemplatesnames', 'App\Http\Controllers\Cupicontroller@listusertemplatenames');
+
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/listexternalservices",
+     *     tags={"Management - UnityConnection"},
+     *     summary="List User Template Names",
+     *     description="",
+     *     operationId="getObjectTypebyName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/listexternalservices', 'App\Http\Controllers\Cupicontroller@listexternalservices');
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/user/getuserunifiedmessaging/{objectid}",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Get UM External Service for User Object",
+     *     description="",
+     *     operationId="getObjectTypebyName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="objectid",
+     *         in="path",
+     *         description="User Object ID",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/user/getuserunifiedmessaging/{objectid}', 'App\Http\Controllers\Cupicontroller@getuserunifiedmessaging');

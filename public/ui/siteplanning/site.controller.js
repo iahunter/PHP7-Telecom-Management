@@ -128,7 +128,7 @@ angular
 			
 		
 		// Drop down values to use in Add form. 
-		vm.extlength = [4,5,10];
+		vm.extlen = [4,5,10];
 		
 
 		

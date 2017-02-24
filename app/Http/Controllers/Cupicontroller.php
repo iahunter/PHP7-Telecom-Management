@@ -54,8 +54,14 @@ class Cupicontroller extends Controller
         if (isset($request->template) && $request->template) {
             $template = $request->template;
         }
+		
+		if (isset($request->override) && $request->override) {
+            $override = $request->override;
+        }else{
+			$override = true;
+		}
 
-        $override = true;
+        
 
         //$alias = "travis.riesenberg";
         return Cupi::importLDAPUser($username, $dn, $template, $override);
@@ -84,6 +90,27 @@ class Cupicontroller extends Controller
 
         //$alias = "travis.riesenberg";
         return Cupi::createuser($username, $dn, $template);
+    }
+	
+	public function updateuserdn(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('update', Cupi::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        //return $request;
+        if (isset($request->username) && $request->username) {
+            $username = $request->username;
+        }
+
+        if (isset($request->dn) && $request->dn) {
+            $dn = $request->dn;
+        }
+
+        //$alias = "travis.riesenberg";
+        return Cupi::createuser($username, $dn);
     }
 
     public function deleteuser(Request $request)
@@ -122,4 +149,27 @@ class Cupicontroller extends Controller
 
         return Cupi::listusertemplatenames();
     }
+	
+	public function listexternalservices(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cupi::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        return Cupi::listexternalservices();
+    }
+	
+	public function getuserunifiedmessaging(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cupi::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        return Cupi::getuserexternalservice($request->objectid);
+    }
+
 }

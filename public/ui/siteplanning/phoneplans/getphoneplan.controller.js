@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, $timeout, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, $timeout, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -130,8 +130,6 @@ angular
 				}, function(err){
 					// Error
 				});
-		
-			
 		}
 		
 		vm.getphonesfromcucm = function(phones){
@@ -181,7 +179,113 @@ angular
 			console.log(vm.cucmphones);
 			
 		}
+		
+		// Set Display Unity to False 
+		vm.displayunityusers = false;
+		
+		vm.getusersfromcupi = function(phones){
+			vm.cupiphones = [];
+			
+			angular.forEach(phones, function(phone) {
+				if(phone.username != ""){
+					cupiService.getuser(phone.username)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						
+						result = res.data.response;
+						if(result['@total'] == 0){
+							phone.unityuser = null;
+						}else{
+							phone.unityuser = result['User'];
+						}
+						
+					}, function(err){
+						// Error
+					});
+					
+					cupiService.getldapuser(phone.username)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						
+						result = res.data.response;
+						console.log(result)
+						if(result['@total'] == 0){
+							phone.unityldapuser = null;
+						}else{
+							phone.unityldapuser = result['ImportUser'];
+						}
+						
 
+						
+					}, function(err){
+						// Error
+					});
+				
+				}
+				
+				
+				console.log(phone);
+				vm.displayunityusers = true;
+			});
+			
+			
+		}
+		
+		
+		// Get the list of Unfied Messaging Services
+		vm.cupilistexternalservices = cupiService.listexternalservices()
+						.then(function(res){
+							console.log(res);
+							vm.externalservices = res.data.response.ExternalService;
+							
+						}, function(err){
+							// Error
+						});
+		
+		
+		vm.getusers_um_fromcupi = function(phones){
+				// Get the UM info for account mailbox
+				vm.cupiphones = [];
+			
+				angular.forEach(phones, function(phone) {
+					if(phone.unityuser != null){
+						
+						cupiService.getuserunifiedmessaging(phone.unityuser.ObjectId)
+						.then(function(extservice){
+							user = [];
+							//console.log(extservice);
+							//user.username = username;
+							
+							console.log(extservice);
+							extserviceresult = extservice.data.return.response;
+							if(extserviceresult['@total'] == 0){
+								phone.unityuser.externalserviceaccountid = null;
+							}else{
+								phone.unityuser.externalserviceaccountid = extserviceresult['ExternalServiceAccount']['ExternalServiceObjectId'];
+								angular.forEach(vm.externalservices, function(service) {
+									
+									console.log(service);
+									if (service.ObjectId == phone.unityuser.externalserviceaccountid){
+										console.log("HERERERER")
+										phone.unityuser.externalserviceaccount = service.DisplayName;
+									}
+								});
+							}
+							
+
+							
+						}, function(err){
+							// Error
+						});
+					}
+				});
+		}
 		
 		vm.getusernames = function(phones){
 			vm.users = [];

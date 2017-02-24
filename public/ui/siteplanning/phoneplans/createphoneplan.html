@@ -16,7 +16,24 @@
 				<div class="col-md-4" style="margin-left:15px">
 					<div class="form-group" ng-class="{'has-error': addsiteForm.description.$touched && addsiteForm.description.$invalid, 'has-success': addsiteForm.description.$touched && addsiteForm.description.$valid }">
 						<label for="description" class="control-label">Description</label>
-						<input type="textarea" ng-model='vm.newphoneplan.description' class="form-control" name="description" placeholder="Description" required>
+						<input type="textarea" ng-model='vm.newphoneplan.description' class="form-control" name="description" placeholder="Description">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2" style="margin-left:15px">
+					<div class="form-group" ng-class="{'has-error': addsiteForm.employee_vm_user_template.$touched && addsiteForm.employee_vm_user_template.$invalid, 'has-success': addsiteForm.employee_vm_user_template.$touched && addsiteForm.employee_vm_user_template.$valid }">
+						<label for="employee_vm_user_template" class="control-label">Employee Voicemail User Template</label>
+						<select class="form-control" ng-model='vm.newphoneplan.employee_vm_user_template' ng-options="template.Alias as template.Alias for template in vm.usertemplates  | filter: vm.site.sitecode  | orderBy:'Alias'" data-width="100%" name="didblocks">
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-md-2" style="margin-left:15px">
+					<div class="form-group" ng-class="{'has-error': addsiteForm.nonemployee_vm_user_template.$touched && addsiteForm.nonemployee_vm_user_template.$invalid, 'has-success': addsiteForm.nonemployee_vm_user_template.$touched && addsiteForm.nonemployee_vm_user_template.$valid }">
+						<label for="nonemployee_vm_user_template" class="control-label">NonEmployee Voicemail User Template</label>
+						<select class="form-control" ng-model='vm.newphoneplan.nonemployee_vm_user_template' ng-options="template.Alias as template.Alias for template in vm.usertemplates  | filter: vm.site.sitecode  | orderBy:'Alias'" data-width="100%" name="didblocks">
+						</select>
 					</div>
 				</div>
 			</div>

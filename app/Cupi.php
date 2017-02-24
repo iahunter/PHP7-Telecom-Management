@@ -57,6 +57,16 @@ class Cupi extends Model
     {
         $verb = 'GET';
         $apiurl = '/users/';
+        $query = ['query' => "(alias is {$alias})"];
+        $json = '';
+
+        return self::wrapapi($verb, $apiurl, $query);
+    }
+	
+	public static function finduseraliasstartswith($alias)
+    {
+        $verb = 'GET';
+        $apiurl = '/users/';
         $query = ['query' => "(alias startswith {$alias})"];
         $json = '';
 
@@ -87,7 +97,11 @@ class Cupi extends Model
 
         $templatenames = [];
         foreach ($templates as $template) {
-            $templatenames[] = $template['Alias'];
+            $templatenames[] = [
+									'Alias' => $template['Alias'],
+									'ObjectId' => $template['ObjectId'],
+								];
+								
         }
 
         return $templatenames;
@@ -260,4 +274,29 @@ class Cupi extends Model
 
         return $userarray;
     }
+	
+	public static function listexternalservices()
+    {
+        $verb = 'GET';
+        $apiurl = '/externalservices/';
+        $query = '';
+        $json = '';
+
+        return self::wrapapi($verb, $apiurl, $query);
+    }
+	
+	public static function getuserexternalservice($ID)
+    {
+        $verb = 'GET';
+        $apiurl = "/users/{$ID}/externalserviceaccounts";
+        $query = '';
+        $json = '';
+
+        $return = self::wrapapi($verb, $apiurl, $query, $json);
+
+        $return = ['return' => $return];
+
+        return $return;
+    }
+	
 }

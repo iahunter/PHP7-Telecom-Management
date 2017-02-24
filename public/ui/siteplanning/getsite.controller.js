@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', '$location', '$state', '$stateParams', function(siteService, sitePhonePlanService, cucmService, $location, $state, $stateParams) {
+	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', function(siteService, sitePhonePlanService, cucmService, cupiService, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -57,10 +57,21 @@ angular
 				id: 2,
 				name: 'private'
 			}];
+			
+		
+		vm.getvmusertemplates = cupiService.listusertemplatesnames()
+			.then(function(res) {
+				
+				vm.usertemplates = res.data;
+
+			}, function(error) {
+				alert('An error occurred while updating the event')
+			});
 		
 		
 		// Edit state for phoneplan block Edit button.
 		vm.edit = {};
+		
 		
 		// Create Phone 
 		vm.createphoneplan = function(phoneplan) {
@@ -72,7 +83,7 @@ angular
 			  //alert('phoneplan was added successfully');
 			  return $state.reload();
 			}, function(error) {
-				alert('An error occurred while updating the event')
+				alert('An error occurred while creating phone plan')
 			});
 			//$state.reload();
 		}

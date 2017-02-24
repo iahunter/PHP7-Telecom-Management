@@ -72,8 +72,8 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-	
-	public static function findmailboxbyextension($extension)
+
+    public static function findmailboxbyextension($extension)
     {
         $verb = 'GET';
         $apiurl = '/users/';

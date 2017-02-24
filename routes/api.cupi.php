@@ -55,8 +55,8 @@
      * )
      **/
     $api->get('cupi/user/getLDAPUserbyAlias/{alias}', 'App\Http\Controllers\Cupicontroller@getLDAPUserbyAlias');
-	
-	    /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/user/extension/{extension}",
      *     tags={"Management - UnityConnection"},

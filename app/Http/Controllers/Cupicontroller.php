@@ -33,8 +33,8 @@ class Cupicontroller extends Controller
         //$alias = "travis.riesenberg";
         return Cupi::getLDAPUserbyAlias($alias);
     }
-	
-	public function findmailboxbyextension(Request $request)
+
+    public function findmailboxbyextension(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions

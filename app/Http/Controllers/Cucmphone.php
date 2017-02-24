@@ -464,9 +464,9 @@ class Cucmphone extends Cucm
         $REMOVED_PHONES = [];
         //echo "Checking if {$NAME} if Exists:\n";
 
-        /* commenting removal of phone. make user manually delete phone first. 
-		$REMOVED = $this->deletePhonebyName($NAME);
-		*/
+        /* commenting removal of phone. make user manually delete phone first.
+        $REMOVED = $this->deletePhonebyName($NAME);
+        */
 
         //print_r($REMOVED);
 

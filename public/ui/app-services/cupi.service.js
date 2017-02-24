@@ -64,6 +64,20 @@ angular
 		}
 		
 		
+		// Get User mailbox by extension
+		self.getmailboxbyextension = function(extension) {
+			var defer = $q.defer();
+			return $http.get('../api/cupi/user/extension/'+extension)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+			
+			});
+		}
+		
 		// Get User External Services / Unified Messaging
 		self.getuserunifiedmessaging = function(id) {
 			var defer = $q.defer();
@@ -154,10 +168,16 @@ angular
 		
 		
 		// Create Block
-		self.createphone = function(phone){
-			return $http.post('../api/cupi/phone', phone);
+		self.createuser = function(user){
+			return $http.post('../api/cupi/user/create', user);
 		}
 		
+		// Create Block
+		self.importldapuser = function(user){
+			return $http.post('../api/cupi/user/ldapimport', user);
+		}
+		
+		/*
 		self.createphones = function(arr) {
 			results = [];
 			  if (angular.isArray(arr) && arr.length > 0) {
@@ -184,6 +204,7 @@ angular
 			console.log(results);
 			return results;
 		}
+		*/
 		
 		
 		

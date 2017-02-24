@@ -55,6 +55,34 @@
      * )
      **/
     $api->get('cupi/user/getLDAPUserbyAlias/{alias}', 'App\Http\Controllers\Cupicontroller@getLDAPUserbyAlias');
+	
+	    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/user/extension/{extension}",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Seach for current user by extension",
+     *     description="",
+     *     operationId="getObjectTypebyExension",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="extension",
+     *         in="path",
+     *         description="Name of Object",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/user/extension/{extension}', 'App\Http\Controllers\Cupicontroller@findmailboxbyextension');
 
     /**
      * @SWG\Post(

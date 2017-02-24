@@ -41,7 +41,7 @@ angular
 				}
 
 				vm.phoneplan = res.data.result;
-				console.log(vm.phoneplan);
+				//console.log(vm.phoneplan);
 				
 				vm.getsite = siteService.getsite(vm.phoneplan.site)
 				.then(function(result){
@@ -77,27 +77,31 @@ angular
 				angular.forEach(vm.phones, function(phone) {
 					
 					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
-					LDAPService.getusername(phone.username)
-					.then(function(res){
-						user = [];
-						//console.log(res);
-						//user.username = username;
-						
-						result = res.data.result;
-
-						if (result.user == ""){
-							phone.aduser = ""
-							phone.adipphone = ""
+					if((phone.username != "") && (phone.username != null)){
+						LDAPService.getusername(phone.username)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
 							
-						}else{
-							phone.adipphone = result.ipphone
-							phone.aduser = result.user
-						}
-						
-						console.log(phone);
-						
-					});
-					
+							result = res.data.result;
+
+							if (result.user == ""){
+								phone.aduser = ""
+								phone.adipphone = ""
+								
+							}else{
+								phone.adipphone = result.ipphone
+								phone.aduser = result.user
+							}
+							
+							//console.log(phone);
+							
+						});
+					}else{
+						phone.aduser = ""
+						phone.adipphone = ""
+					}
 				});
 				
 				
@@ -124,7 +128,7 @@ angular
 						user.ipphone = result.ipphone
 						user.user = result.user
 					}
-					console.log(user)
+					//console.log(user)
 					return user;
 					
 				}, function(err){
@@ -155,7 +159,7 @@ angular
 					
 					result = res.data.response;
 
-					console.log(result);
+					//console.log(result);
 
 					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 					if(result != "Not Found"){
@@ -176,57 +180,84 @@ angular
 				
 			});
 			
-			console.log(vm.cucmphones);
+			//console.log(vm.cucmphones);
 			
 		}
 		
 		// Set Display Unity to False 
 		vm.displayunityusers = false;
 		
+		
+		// This function runs thru the users in unity to check whats is in use and adds it to the object. 
 		vm.getusersfromcupi = function(phones){
 			vm.cupiphones = [];
 			
 			angular.forEach(phones, function(phone) {
-				if(phone.username != ""){
-					cupiService.getuser(phone.username)
-					.then(function(res){
-						user = [];
-						//console.log(res);
-						//user.username = username;
-						
-						
-						result = res.data.response;
-						if(result['@total'] == 0){
-							phone.unityuser = null;
-						}else{
-							phone.unityuser = result['User'];
-						}
-						
-					}, function(err){
-						// Error
-					});
-					
-					cupiService.getldapuser(phone.username)
-					.then(function(res){
-						user = [];
-						//console.log(res);
-						//user.username = username;
-						
-						
-						result = res.data.response;
-						console.log(result)
-						if(result['@total'] == 0){
-							phone.unityldapuser = null;
-						}else{
-							phone.unityldapuser = result['ImportUser'];
-						}
-						
-
-						
-					}, function(err){
-						// Error
-					});
+				phone.voicemail = angular.lowercase(phone.voicemail);
+				if((phone.voicemail == 'true') || (phone.voicemail == 't') || (phone.voicemail == 'y') || (phone.voicemail == 'yes')){
 				
+					if(phone.username != ""){
+						phone.username = angular.lowercase(phone.username);
+						cupiService.getuser(phone.username)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
+							
+							
+							result = res.data.response;
+							if(result['@total'] == 0){
+								phone.unityuser = null;
+							}else{
+								phone.unityuser = result['User'];
+							}
+							
+						}, function(err){
+							// Error
+						});
+						
+						cupiService.getldapuser(phone.username)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
+							
+							
+							result = res.data.response;
+							//console.log(result)
+							if(result['@total'] == 0){
+								phone.unityldapuser = null;
+							}else{
+								phone.unityldapuser = result['ImportUser'];
+							}
+							
+
+							
+						}, function(err){
+							// Error
+						});
+					
+					}
+					
+					cupiService.getmailboxbyextension(phone.dn)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
+							
+							
+							result = res.data.response;
+							if(result['@total'] == 0){
+								phone.unity_mailbox_inuse = null;
+							}else{
+								phone.unity_mailbox_inuse = result['User'];
+								phone.unity_mailbox_inuse.Alias = angular.lowercase(result['User']['Alias']);
+							}
+							
+						}, function(err){
+							// Error
+						});
+					
 				}
 				
 				
@@ -241,7 +272,7 @@ angular
 		// Get the list of Unfied Messaging Services
 		vm.cupilistexternalservices = cupiService.listexternalservices()
 						.then(function(res){
-							console.log(res);
+							//console.log(res);
 							vm.externalservices = res.data.response.ExternalService;
 							
 						}, function(err){
@@ -251,8 +282,6 @@ angular
 		
 		vm.getusers_um_fromcupi = function(phones){
 				// Get the UM info for account mailbox
-				vm.cupiphones = [];
-			
 				angular.forEach(phones, function(phone) {
 					if(phone.unityuser != null){
 						
@@ -262,7 +291,7 @@ angular
 							//console.log(extservice);
 							//user.username = username;
 							
-							console.log(extservice);
+							//console.log(extservice);
 							extserviceresult = extservice.data.return.response;
 							if(extserviceresult['@total'] == 0){
 								phone.unityuser.externalserviceaccountid = null;
@@ -270,19 +299,76 @@ angular
 								phone.unityuser.externalserviceaccountid = extserviceresult['ExternalServiceAccount']['ExternalServiceObjectId'];
 								angular.forEach(vm.externalservices, function(service) {
 									
-									console.log(service);
+									//console.log(service);
 									if (service.ObjectId == phone.unityuser.externalserviceaccountid){
-										console.log("HERERERER")
+										// set field to the display name to make it readable. 
 										phone.unityuser.externalserviceaccount = service.DisplayName;
 									}
 								});
 							}
-							
 
-							
 						}, function(err){
 							// Error
 						});
+					}
+				});
+		}
+		
+		
+		vm.importcupiusers = function(phones){
+				// Get the UM info for account mailbox
+				
+				angular.forEach(phones, function(phone) {
+					phone.voicemail = phone.voicemail.toLowerCase(phone.voicemail);
+					if((phone.voicemail == 'true') || (phone.voicemail == 't') || (phone.voicemail == 'y') || (phone.voicemail == 'yes')){
+						
+						var user = {};
+						user.username = phone.username;
+						user.dn = phone.dn;
+						
+						if(phone.vm_user_template){
+							user.template = phone.vm_user_template;
+						}else{
+							if((user.username == "") || (user.username == null)){
+								user.username = phone.firstname + " " + phone.lastname + " " + phone.dn;
+								user.template = vm.phoneplan.nonemployee_vm_user_template;
+								
+								// If Username exists and voicemail is set then we assume user is not a Kiewit Employee and we create a mailbox without Unified Messaging. 
+								
+								// Import LDAP User / Update User Mailbox Extension
+								console.log("Creating New User for NonEmployee...")
+								cupiService.createuser(user)
+									.then(function(res){
+										
+										console.log(res.data)
+
+									}, function(err){
+										// Error
+									});
+								
+							}else{
+								
+								// If Username is set then we assume that user exists by now. 
+								user.template = vm.phoneplan.employee_vm_user_template;
+								
+								// Import LDAP User / Update User Mailbox Extension
+								console.log("Importing User from LDAP...")
+								cupiService.importldapuser(user)
+									.then(function(res){
+										
+										console.log(res.data)
+
+									}, function(err){
+										// Error
+									});
+							
+							}
+						}
+						
+
+
+					}else{
+						console.log(phone.id + " Skipping, No Voicemail" )
 					}
 				});
 		}
@@ -312,7 +398,7 @@ angular
 						user.user = result.user
 					}
 					
-					console.log(user);
+					//console.log(user);
 					
 					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 					vm.users.push(user);
@@ -334,14 +420,14 @@ angular
 			
 			angular.forEach(phones, function(phone) {
 				
-				console.log(phone);
+				//console.log(phone);
 				
 				if((phone.username != null) && (phone.username != "")){
 					var update = {};
 					update.username = phone.username;
 					update.ipphone = phone.dn;
 					
-					console.log(update);
+					//console.log(update);
 					//return update
 					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
 					LDAPService.updateadipphone(update)
@@ -349,7 +435,7 @@ angular
 
 						result = res.data.result;
 
-						console.log(result);
+						//console.log(result);
 						
 						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 						vm.ipphoneupdates.push(result);
@@ -366,7 +452,7 @@ angular
 			cucmService.initiate_cucm_ldap_sync()
 					.then(function(res){
 						result = res.data;
-						console.log(result);
+						//console.log(result);
 					}, function(err){
 						// Error
 					});
@@ -379,7 +465,7 @@ angular
 			phone.phoneplan = id;
 			phone.site = vm.phoneplan.site;
 			
-			console.log(phone);
+			//console.log(phone);
 			
 			sitePhonePlanService.createphone(phone).then(function(data) {
 			  //alert('phone was added successfully');
@@ -493,7 +579,7 @@ angular
 		vm.cucmphonecheckAll = function() {
 			angular.forEach(vm.cucmphones, function(phone) {
 			  phone.select = vm.cucmphoneselectAll;
-			  console.log(phone);
+			  //console.log(phone);
 			  //vm.selecttouched();
 			});
 		  };

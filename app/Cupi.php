@@ -72,6 +72,16 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
+	
+	public static function findmailboxbyextension($extension)
+    {
+        $verb = 'GET';
+        $apiurl = '/users/';
+        $query = ['query' => "(DtmfAccessId is {$extension})"];
+        $json = '';
+
+        return self::wrapapi($verb, $apiurl, $query);
+    }
 
     public static function listusertemplates()
     {

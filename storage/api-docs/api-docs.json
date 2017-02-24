@@ -854,6 +854,39 @@
                 }
             }
         },
+        "/telephony/api/cupi/user/extension/{extension}": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Seach for current user by extension",
+                "description": "",
+                "operationId": "getObjectTypebyExension",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "extension",
+                        "in": "path",
+                        "description": "Name of Object",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/cupi/user/ldapimport": {
             "post": {
                 "tags": [

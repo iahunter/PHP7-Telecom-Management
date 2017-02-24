@@ -1,49 +1,51 @@
 
-<div ng-if="vm.users">
+<div ng-if="vm.users" class="well" style="background-color: #e6e6e6">
 <legend>AD User Lookup</legend>
 	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-				<table class="table table-striped table-condensed table-bordered table-hover">
-					<thead>
-						<tr class="warning">
-							<th>
-								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
-									Phone ID
-										<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
-									Username
-										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'user'; sortReverse = !sortReverse" style="color:black">
-									AD User
-										<span ng-show="sortType == 'user' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'user' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'ipphone'; sortReverse = !sortReverse" style="color:black">
-									IPPhone Number
-										<span ng-show="sortType == 'ipphone' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'ipphone' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="user in vm.users | orderBy:sortType:sortReverse | filter:vm.search: strict">
-							<td>{{ user.id}}</td>
-							<td>{{ user.username}}</td>
-							<td>{{ user.user}}</td>
-							<td>{{ user.ipphone}}</td>
-						</tr>
-					</tbody>
-				</table>
-				
-			</div>
+		<table class="table table-striped table-condensed table-bordered table-hover">
+			<thead>
+				<tr class="warning">
+					<th>
+						<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+							Phone ID
+								<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+							Username
+								<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'user'; sortReverse = !sortReverse" style="color:black">
+							AD User
+								<span ng-show="sortType == 'user' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'user' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'ipphone'; sortReverse = !sortReverse" style="color:black">
+							IPPhone Number
+								<span ng-show="sortType == 'ipphone' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'ipphone' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in vm.users | orderBy:sortType:sortReverse | filter:vm.search: strict">
+					<td>{{ user.id}}</td>
+					<td ng-if="user.user == 'User Not Found'" style="color:red">{{ user.username}}</td>
+					<td ng-if="user.user != 'User Not Found'">{{ user.username}}</td>
+					<td>{{ user.user}}</td>
+					<td>{{ user.ipphone}}</td>
+				</tr>
+			</tbody>
+		</table>
+			
+	</div>
+	<div style="margin:50px"></div>	
 </div>

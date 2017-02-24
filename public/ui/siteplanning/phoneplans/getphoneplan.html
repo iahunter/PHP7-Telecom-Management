@@ -4,7 +4,6 @@
 <div style="margin-left:5%; margin-right:5%;">
 	<div class="well form-horizontal" style="margin-top:10px;" >
 	
-		<div class="well" style="background-color: #f1f3f3;">
 			<div style="margin:50px"></div>
 		
 			<legend>Phone Plan Details
@@ -147,7 +146,7 @@
 			
 		<div style="margin:75px"></div>
 		
-		<legend >Phones and Users</legend>
+		<legend >Planning - Phones and Users</legend>
 			
 					
 		<div class="input-group col-md-3 ">
@@ -179,7 +178,7 @@
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
 						<tr class="info">
-							<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAll()"/>  Select All</th>
+							<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAll()"/></th>
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 									ID
@@ -410,37 +409,83 @@
 			<button ng-if="vm.deleteall" class="btn btn-xs btn-danger"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
 			<button class="btn btn-xs btn-primary" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 			
+			<div style="margin:50px"></div>
 			
-			<div class="btn-group">
-				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusernames(vm.phones)">1. Verify Users Exist in AD</button>
-				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.updateadipphones(vm.phones)">2. Update AD Users IPPhone</button>
-				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">3. Check if any Phones Exist</button>
-				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-danger"  ng-click="vm.deployphonescucm(vm.phones)">4. Deploy Phones to CUCM</button>
-				
+			<div class="well" style="background-color:#e0ebeb">
+			<legend>Systems Provisioning</legend>
+			<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="ADHeading">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_ad" style="color:black;cursor: pointer;" aria-expanded="true" aria-controls="collapse_ad">
+								<h4 class="panel-title" >1. Active Directory</h4></a>
+							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_ad" aria-labelledby="ADHeading">
+
+								<div class="btn-group">
+									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusernames(vm.phones)">1. Verify Users Exist in AD</button>
+									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-warning"  ng-click="vm.updateadipphones(vm.phones)">2. Update AD Users IPPhone</button>
+								</div>
+								
+								<div style="margin:50px"></div>
+								
+								<!--User Lookup Table-->
+								<ng-include src="'siteplanning/phoneplans/aduserlookuptable.html'"></ng-include>
+								<div style="margin:50px"></div>
+								
+								<!--User AD Updates Table-->
+								<ng-include src="'siteplanning/phoneplans/useradupdatestable.html'"></ng-include>
+								<div style="margin:50px"></div>
+							
+							</div>	
+						</div>
+					</div>	
+
+					
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="CUCMHeading">
+					
+							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cucm" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cucm">
+								<h4 class="panel-title" >2. Cisco Call Manager</h4></a>
+							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cucm"  aria-labelledby="CUCMHeading">
+
+								<button class="btn btn-xs btn-primary" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
+								<div class="btn-group">
+									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">3. Check if any Phones Exist</button>
+									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-danger"  ng-click="vm.deployphonescucm(vm.phones)">4. Deploy Phones to CUCM</button>
+									
+								</div>
+								<div style="margin:50px"></div>
+								
+								<!--CUCM Phones Table-->
+								<ng-include src="'siteplanning/phoneplans/cucmphonesfoundtable.html'"></ng-include>
+								<div style="margin:50px"></div>
+							</div>	
+						</div>
+					</div>	
+					
+					
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="CUPIHeading">
+					
+							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cupi" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cupi">
+								<h4 class="panel-title" >3. Cisco Unity Connection</h4></a>
+							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cupi" aria-labelledby="CUPIHeading">
+								<button class="btn btn-xs btn-primary" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
+								<div class="btn-group">
+									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusersfromcupi(vm.phones)">5. Check Unity Users</button>
+									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusers_um_fromcupi(vm.phones)">6. Populate UM Info from Unity Users</button>
+									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-danger"  ng-click="vm.importcupiusers(vm.phones)">7. Import Unity Users</button>
+								</div>
+								<div style="margin:50px"></div>
+								<!--CUPI Users Table-->
+								<ng-include src="'siteplanning/phoneplans/cupiuserssfoundtable.html'"></ng-include>
+								<div style="margin:50px"></div>
+							</div>	
+						</div>
+					</div>	
+				</div>
 			</div>
 			
-			<div style="margin:50px"></div>
-			
-			<!--User Lookup Table-->
-			<ng-include src="'siteplanning/phoneplans/aduserlookuptable.html'"></ng-include>
-			<div style="margin:50px"></div>
-			
-			<!--User AD Updates Table-->
-			<ng-include src="'siteplanning/phoneplans/useradupdatestable.html'"></ng-include>
-			<div style="margin:50px"></div>
-			
-			<!--CUCM Phones Table-->
-			<ng-include src="'siteplanning/phoneplans/cucmphonesfoundtable.html'"></ng-include>
-			<div style="margin:50px"></div>
-			
-			<button class="btn btn-xs btn-primary" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-			<div class="btn-group">
-				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusersfromcupi(vm.phones)">5. Check Unity Users</button>
-				<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusers_um_fromcupi(vm.phones)">6. Populate UM Info from Unity Users</button>
-			</div>
-			<div style="margin:50px"></div>
-			<!--CUPI Users Table-->
-			<ng-include src="'siteplanning/phoneplans/cupiuserssfoundtable.html'"></ng-include>
-			<div style="margin:50px"></div>
 	</div>
 </div>

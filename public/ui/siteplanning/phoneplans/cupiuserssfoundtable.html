@@ -1,11 +1,11 @@
 
-<div ng-if="vm.displayunityusers">
+<div ng-if="vm.displayunityusers" class="well" style="background-color: #e6e6e6">
 <legend>Users Exist in Unity</legend>
 	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 		<table class="table table-striped table-condensed table-bordered table-hover">
 			<thead>
 				<tr class="warning">
-					<th><input type="checkbox" ng-model="vm.cucmphoneselectAll" ng-click="vm.cucmphonecheckAll()"/>  Select All</th>
+					<th><input type="checkbox" ng-model="vm.cupiphoneselectAll" ng-click="vm.cupiphonecheckAll()"/></th>
 					<th>
 						<a href="" ng-click="sortType = 'phoneid'; sortReverse = !sortReverse" style="color:black">
 							Phone ID
@@ -18,6 +18,13 @@
 							Username
 								<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 								<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'dn'; sortReverse = !sortReverse" style="color:black">
+							DN
+								<span ng-show="sortType == 'dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 						</a>
 					</th>
 					<th>
@@ -35,6 +42,20 @@
 						</a>
 					</th>
 					<th>
+						<a href="" ng-click="sortType = 'unity_mailbox_inuse.Alias'; sortReverse = !sortReverse" style="color:black">
+							Current Mailbox User Matching DN
+								<span ng-show="sortType == 'unity_mailbox_inuse.Alias' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'unity_mailbox_inuse.Alias' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'unityuser.DtmfAccessId'; sortReverse = !sortReverse" style="color:black">
+							Current Mailbox Extension Matching DN
+								<span ng-show="sortType == 'unity_mailbox_inuse.DtmfAccessId' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'unity_mailbox_inuse.DtmfAccessId' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
 						<a href="" ng-click="sortType = 'unityuser.DtmfAccessId'; sortReverse = !sortReverse" style="color:black">
 							External Unified Messaging Service
 								<span ng-show="sortType == 'unityuser.DtmfAccessId' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -49,18 +70,24 @@
 					<td>
 						<input type="checkbox" ng-model="phone.cupiselect" ng-click="vm.cupiphoneselecttouched()">
 					</td>
-					{{phone}}
 					<td>{{ phone.id}}</td>
 					<td>{{ phone.username}}</td>
+					<td>{{ phone.dn}}</td>
 					<td>{{ phone.unityldapuser}}</td>
-					<td>{{ phone.unityuser.DtmfAccessId}}</td>
-					<!--<td>{{ phone.unityuser.ExternalServiceAccountsURI}}</td>-->
-					<!--<td>{{ phone.unityuser.externalserviceaccountid}}</td>-->
+					<td ng-if="phone.unityuser.DtmfAccessId != phone.dn" style="color:red">{{ phone.unityuser.DtmfAccessId}}</td>
+					<td ng-if="phone.unityuser.DtmfAccessId == phone.dn">{{ phone.unityuser.DtmfAccessId}}</td>
+					
+					<td ng-if="phone.unity_mailbox_inuse.Alias != phone.username" style="color:red">{{ phone.unity_mailbox_inuse.Alias}}</td>
+					<td ng-if="phone.unity_mailbox_inuse.Alias == phone.username">{{ phone.unity_mailbox_inuse.Alias}}</td>
+					
+					
+					
+					<td>{{ phone.unity_mailbox_inuse.DtmfAccessId}}</td>
 					<td>{{ phone.unityuser.externalserviceaccount}}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	
+	<div style="margin:25px"></div>
 	<a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.phonedeleteselected(vm.cucmphones)">Delete Selected</a>
 </div>

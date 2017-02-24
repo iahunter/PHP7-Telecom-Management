@@ -55,8 +55,8 @@ class CreateSitePlanning extends Migration
             $table->string('system_id')->nullable();
             $table->string('notes')->nullable();            // Future - System ID - CUCM/Lync ID
             $table->string('language')->nullable();            // Future - System ID - CUCM/Lync ID
-			$table->string('employee_vm_user_template')->nullable();            // CUPI User Template
-			$table->string('nonemployee_vm_user_template')->nullable();            // CUPI User Template
+            $table->string('employee_vm_user_template')->nullable();            // CUPI User Template
+            $table->string('nonemployee_vm_user_template')->nullable();            // CUPI User Template
             $table->json('json')->nullable();            // JSON Details Custom Field Data
             //$table->string('createdby');            // simple name to reference the account by
             //$table->string('updatedby');            // simple name to reference the account by
@@ -82,7 +82,7 @@ class CreateSitePlanning extends Migration
             $table->string('language');                                // Directory Number
             $table->boolean('phonetemplate')->nullable();           // Maybe used in the future.
             $table->string('voicemail');                            // Voicemail - true/false
-			$table->string('vm_user_template')->nullable();            // CUPI User Template
+            $table->string('vm_user_template')->nullable();            // CUPI User Template
             $table->boolean('deployed')->nullable();                 // Deployed Status - true/false
             $table->boolean('provisioned')->nullable();                 // Deployed Status - true/false
             $table->json('assignments')->nullable();                   // JSON Custom Field Data

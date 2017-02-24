@@ -207,7 +207,7 @@
      **/
     $api->get('cupi/templates/listusertemplatesnames', 'App\Http\Controllers\Cupicontroller@listusertemplatenames');
 
-	/**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/listexternalservices",
      *     tags={"Management - UnityConnection"},
@@ -227,8 +227,8 @@
      * )
      **/
     $api->get('cupi/listexternalservices', 'App\Http\Controllers\Cupicontroller@listexternalservices');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/user/getuserunifiedmessaging/{objectid}",
      *     tags={"Management - UnityConnection"},

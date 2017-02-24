@@ -62,8 +62,8 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-	
-	public static function finduseraliasstartswith($alias)
+
+    public static function finduseraliasstartswith($alias)
     {
         $verb = 'GET';
         $apiurl = '/users/';
@@ -98,10 +98,9 @@ class Cupi extends Model
         $templatenames = [];
         foreach ($templates as $template) {
             $templatenames[] = [
-									'Alias' => $template['Alias'],
-									'ObjectId' => $template['ObjectId'],
-								];
-								
+                                    'Alias'    => $template['Alias'],
+                                    'ObjectId' => $template['ObjectId'],
+                                ];
         }
 
         return $templatenames;
@@ -274,8 +273,8 @@ class Cupi extends Model
 
         return $userarray;
     }
-	
-	public static function listexternalservices()
+
+    public static function listexternalservices()
     {
         $verb = 'GET';
         $apiurl = '/externalservices/';
@@ -284,8 +283,8 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-	
-	public static function getuserexternalservice($ID)
+
+    public static function getuserexternalservice($ID)
     {
         $verb = 'GET';
         $apiurl = "/users/{$ID}/externalserviceaccounts";
@@ -298,5 +297,4 @@ class Cupi extends Model
 
         return $return;
     }
-	
 }

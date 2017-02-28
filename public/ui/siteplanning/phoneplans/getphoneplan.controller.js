@@ -75,7 +75,6 @@ angular
 				//return vm.phones = phones;
 				//vm.phones = [];
 				angular.forEach(vm.phones, function(phone) {
-					
 					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
 					if((phone.username != "") && (phone.username != null)){
 						LDAPService.getusername(phone.username)
@@ -138,7 +137,6 @@ angular
 		
 		vm.getphonesfromcucm = function(phones){
 			vm.cucmphones = [];
-			
 			angular.forEach(phones, function(phone) {
 				// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
 				

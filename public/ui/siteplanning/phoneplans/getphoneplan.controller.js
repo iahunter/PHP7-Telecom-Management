@@ -84,15 +84,23 @@ angular
 							//user.username = username;
 							
 							result = res.data.result;
-
-							if (result.user == ""){
+							console.log("HERE NOW")
+							console.log(result);
+							if(result != undefined){
+								if (result.user == ""){
+									phone.aduser = ""
+									phone.adipphone = ""
+								
+								}else{
+									phone.adipphone = result.ipphone
+									phone.aduser = result.user
+								}
+							}else{
 								phone.aduser = ""
 								phone.adipphone = ""
-								
-							}else{
-								phone.adipphone = result.ipphone
-								phone.aduser = result.user
 							}
+
+							
 							
 							//console.log(phone);
 							

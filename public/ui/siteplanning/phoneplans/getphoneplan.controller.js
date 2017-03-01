@@ -84,8 +84,7 @@ angular
 							//user.username = username;
 							
 							result = res.data.result;
-							console.log("HERE NOW")
-							console.log(result);
+							
 							if(result != undefined){
 								if (result.user == ""){
 									phone.aduser = ""
@@ -390,21 +389,22 @@ angular
 					//console.log(res);
 					//user.username = username;
 					
-					
-					result = res.data.result;
-
-					// Must do these inline inside the API Call or callbacks can screw you with black objects!!!! 
 					user.id = phone.id;
 					user.username = phone.username
 					
-					if (result.user == ""){
-						user.user = "User Not Found"
-					}else{
-						user.ipphone = result.ipphone
-						user.user = result.user
-					}
+					result = res.data.result;
 					
-					//console.log(user);
+					// Must do these inline inside the API Call or callbacks can screw you with black objects!!!! 
+					if(result != undefined){
+						if (result.user == ""){
+							user.user = "User Not Found"
+						}else{
+							user.ipphone = result.ipphone
+							user.user = result.user
+						}
+					}else{
+						user.user = "User Not Found"
+					}
 					
 					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 					vm.users.push(user);

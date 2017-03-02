@@ -329,7 +329,8 @@
 						
 						<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>-->
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.dn}}</td>
+						<td   ng-show="!vm.edit[phone.id] && !phone.dnint" style="color:red">{{ phone.dn}}</td>
+						<td   ng-show="!vm.edit[phone.id] && phone.dnint">{{ phone.dn}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.voicemail}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.notes}}</td>

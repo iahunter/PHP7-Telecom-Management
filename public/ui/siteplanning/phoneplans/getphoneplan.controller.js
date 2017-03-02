@@ -76,6 +76,13 @@ angular
 				//vm.phones = [];
 				angular.forEach(vm.phones, function(phone) {
 					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
+					console.log(phone.dn)
+					if((phone.dn > 1000000000) && (phone.dn < 9999999999)){
+						console.log(phone.dn)
+						phone.dnint = true;
+					}
+					
+
 					if((phone.username != "") && (phone.username != null)){
 						LDAPService.getusername(phone.username)
 						.then(function(res){

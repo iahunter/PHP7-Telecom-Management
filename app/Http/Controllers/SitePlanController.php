@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use DB;
 use App\Site;
 use App\Phone;
-use App\Phoneplan;
 use App\Didblock;
+use App\Phoneplan;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -47,19 +47,19 @@ class SitePlanController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         $site = Site::find($id);
-		
-		$didblocks = [];
-		//return $site;
-		
-		if((isset($site['didblocks'])) && is_array($site['didblocks'])){
-			foreach($site['didblocks'] as $didblock){
-				//print $didblock;
-				$didblocks[] = Didblock::find($didblock);
-				//print_r($didblock);
-			}
-			$site['didblocks'] = $didblocks;
-		}
-		
+
+        $didblocks = [];
+        //return $site;
+
+        if ((isset($site['didblocks'])) && is_array($site['didblocks'])) {
+            foreach ($site['didblocks'] as $didblock) {
+                //print $didblock;
+                $didblocks[] = Didblock::find($didblock);
+                //print_r($didblock);
+            }
+            $site['didblocks'] = $didblocks;
+        }
+
         if (! $user->can('read', $site)) {
             abort(401, 'You are not authorized to view site '.$id);
         }

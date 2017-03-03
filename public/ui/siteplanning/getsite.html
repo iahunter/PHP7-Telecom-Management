@@ -82,6 +82,7 @@
 								</a>
 							</th>
 							
+							<!--
 							<th>
 								<a href="" ng-click="sortType = 'didblocks'; sortReverse = !sortReverse" style="color:black">
 									Did Block IDs
@@ -89,7 +90,7 @@
 										<span ng-show="sortType == 'didblocks' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							
+							-->
 							
 							<th>
 								<a href="" ng-click="sortType = 'operator'; sortReverse = !sortReverse" style="color:black">
@@ -152,7 +153,8 @@
 							<td>{{ vm.site.npa}}</td>
 							<td>{{ vm.site.nxx}}</td>
 							<td>{{ vm.site.didrange}}</td>
-							<td>{{ vm.site.didblocks}}</td>
+							<!--<td>{{ vm.site.didblocks}}</td>-->
+							
 							<td>{{ vm.site.operator}}</td>
 							<td>{{ vm.site.trunking}}</td>
 							<td>{{ vm.site.e911}}</td>
@@ -163,6 +165,34 @@
 					</tbody>
 				</table>
 			</div>
+			<div ng-show="vm.site.didblocks">
+				<legend>DID Blocks</legend>
+				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					<table class="table table-condensed table-striped table-bordered table-hover">
+					
+						<thead>
+							<tr class="success">
+									<th>ID</th>
+									<th>Name</th>
+									<th>Start</th>
+									<th>End</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="block in vm.site.didblocks track by $index">
+								<td>{{block.id}}</td>
+								<td>{{block.name}}</td>
+								<td>{{block.start}}</td>
+								<td>{{block.end}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div ng-hide="vm.site.didblocks">
+			<h4>No DID Blocks Found</h4>
+			</div>
+			
 
 		<!-- Button to reimport Site Data into Form. -->
 		

@@ -122,8 +122,14 @@
 					</tbody>
 				</table>
 			</div>
+		<div style="margin:50px"></div>
+	</div>
+</div>
+		
 
-
+		<!--<div style="margin-left:80px; margin-right:80px;">-->
+		<div style="margin-left:5%; margin-right:5%;">
+		<div class="well form-horizontal" style="margin-top:10px;" >
 		
 		<div ng-if="!vm.phones">
 			<legend >Loading... Please be patient... </legend>
@@ -176,8 +182,7 @@
 			<div ng-if="vm.phones.length > 0">
 				<div class="well" >
 					<h4>{{vm.phones.length}} Entries Found</h4>
-					<div style="margin:25px"></div>
-					<h4 style="color:orange">{{vm.cucmphones.length}} Conflicting Phones Found in CUCM</h4>
+					<h4 ng-if="vm.cucmphones.length > 0" style="color:orange">{{vm.cucmphones.length}} Conflicting Phones Found in CUCM</h4>
 				</div>
 			
 			<div style="margin:25px"></div>
@@ -478,7 +483,12 @@
 					
 							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cupi" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cupi">
 								<h4 class="panel-title" >3. Cisco Unity Connection</h4></a>
+							
 							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cupi" aria-labelledby="CUPIHeading">
+								<span>Unity Users may be delayed up to 6 hours for LDAP Sync process to run. 
+								</br>
+								You can log into Unity and run the LDAP Sync process manually to expedite the process. </span>
+								<div style="margin:25px"></div>
 								<button class="btn btn-xs btn-primary" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 								<div class="btn-group">
 									<button ng-if="vm.phones.length > 0" class="btn btn-xs btn-default"  ng-click="vm.getusersfromcupi(vm.phones)">5. Check Unity Users</button>

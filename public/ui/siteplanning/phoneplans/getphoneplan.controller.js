@@ -78,7 +78,7 @@ angular
 					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
 					console.log(phone.dn)
 					if((phone.dn > 1000000000) && (phone.dn < 9999999999)){
-						console.log(phone.dn)
+						//console.log(phone.dn)
 						phone.dnint = true;
 					}
 					
@@ -170,6 +170,7 @@ angular
 					
 					
 					result = res.data.response;
+					
 
 					//console.log(result);
 

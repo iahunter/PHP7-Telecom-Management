@@ -49,6 +49,9 @@
 						</a>
 					</th>
 					<th>
+							Lines
+					</th>
+					<th>
 							Actions
 					</th>
 				</tr>
@@ -58,13 +61,33 @@
 					<td>
 						<input type="checkbox" ng-model="phone.select" ng-click="vm.cucmphoneselecttouched()">
 					</td>
+					
 					<td>{{ phone.phoneid}}</td>
 					<td>{{ phone.name}}</td>
 					<td>{{ phone.description}}</td>
 					<td>{{ phone.model}}</td>
 					<td>{{ phone.devicePoolName._}}</td>
 					<td>{{ phone.ownerUserName._}}</td>
-					<td><a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.deletecucmphone(phone.name)">Delete</a></td>
+					<td>
+						
+							<!--Nested Table inside Row-->
+							<div ng-if="phone.line_details != ''" class="panel panel-default" style="background-color: transparent;">
+								<table class="table-condensed" style="background-color: transparent;">
+									<!--
+									<td><i>Pattern</i></td>
+									<td><i>Label</i></td>
+									<td><i>Call Forwarding</i></td>
+									-->
+									<tr ng-repeat="line in phone.line_details">
+										<td ng-if="line.pattern != ''">{{line.pattern}}</td>
+										<td ng-if="line.description != ''">{{line.description}}</td>
+										<td ng-if="line.callForwardAll.destination != ''" style="color:red">Forwarded to: {{line.callForwardAll.destination}}</td>
+									</tr>
+								</table>
+							</div>
+							
+					</td>
+					<td><a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.deletecucmphone(phone)">Delete</a></td>
 				</tr>
 			</tbody>
 		</table>

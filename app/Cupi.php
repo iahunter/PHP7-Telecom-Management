@@ -307,8 +307,8 @@ class Cupi extends Model
 
         return $return;
     }
-	
-	public static function listtimezones()
+
+    public static function listtimezones()
     {
         $verb = 'GET';
         $apiurl = '/timezones';
@@ -317,99 +317,89 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-	
-	// Get caller input by object id from the usertemplate. 
-	public static function get_usertemplate_callerinput_menuentries($objectid)
+
+    // Get caller input by object id from the usertemplate.
+    public static function get_usertemplate_callerinput_menuentries($objectid)
     {
         $verb = 'GET';
         $apiurl = "/callhandlerprimarytemplates/{$objectid}/menuentries";
-        $query = "";
-		$json = "";
+        $query = '';
+        $json = '';
 
         $return = self::wrapapi($verb, $apiurl, $query, $json);
 
         return $return;
     }
-	
-	
-	public static function getusertemplate($name)
+
+    public static function getusertemplate($name)
     {
         $verb = 'GET';
-        $apiurl = "/usertemplates";
+        $apiurl = '/usertemplates';
         $query = ['query' => "(alias is {$name})"];
         $json = '';
 
         $template = self::wrapapi($verb, $apiurl, $query, $json);
-		$template = $template['response'];
-		
-		if (isset($template['UserTemplate']['CallHandlerObjectId'])){
-			
-			
+        $template = $template['response'];
+
+        if (isset($template['UserTemplate']['CallHandlerObjectId'])) {
             $objectid = $template['UserTemplate']['CallHandlerObjectId'];
-			if ($objectid){
-				$callerinput = self::get_usertemplate_callerinput_menuentries($objectid);
-				$template['callerinput'] = $callerinput['response']['MenuEntry'];
-			}
-		}
-			
+            if ($objectid) {
+                $callerinput = self::get_usertemplate_callerinput_menuentries($objectid);
+                $template['callerinput'] = $callerinput['response']['MenuEntry'];
+            }
+        }
+
         return $template;
     }
-	
-	
-	public static function getusertemplatebysite($sitecode)
+
+    public static function getusertemplatebysite($sitecode)
     {
         $verb = 'GET';
-        $apiurl = "/usertemplates";
+        $apiurl = '/usertemplates';
         $query = ['query' => "(alias startswith {$sitecode})"];
         $json = '';
 
         $templates = self::wrapapi($verb, $apiurl, $query, $json);
-		$templates = $templates['response'];
-		
-		if (isset($templates['@total']) && $templates['@total'] == 0) {
-            abort(404, "No UserTemplates found");
-        }
-		
-		elseif(isset($templates['@total']) && $templates['@total'] == 1){
-			if (isset($templates['UserTemplate']['CallHandlerObjectId'])) {
-					$objectid = $templates['UserTemplate']['CallHandlerObjectId'];
-					$callerinput = self::get_usertemplate_callerinput_menuentries($objectid);
-					$templates['UserTemplate']['callerinput'] = $callerinput;
-					$template_array[] = $templates['UserTemplate'];
-				}
-		}
-		
-		elseif(isset($templates['@total']) && $templates['@total'] >= 2){
-			foreach($templates['UserTemplate'] as $template){
-						print_r($template);
-						if (isset($template['CallHandlerObjectId'])) {
-							$objectid = $template['CallHandlerObjectId'];
-							$callerinput = self::get_usertemplate_callerinput_menuentries($objectid);
-							$template['callerinput'] = $callerinput;
-							$template_array[] = $template;
-						}
-					}
-		}
-		
-		$templates = $template_array;
+        $templates = $templates['response'];
 
+        if (isset($templates['@total']) && $templates['@total'] == 0) {
+            abort(404, 'No UserTemplates found');
+        } elseif (isset($templates['@total']) && $templates['@total'] == 1) {
+            if (isset($templates['UserTemplate']['CallHandlerObjectId'])) {
+                $objectid = $templates['UserTemplate']['CallHandlerObjectId'];
+                $callerinput = self::get_usertemplate_callerinput_menuentries($objectid);
+                $templates['UserTemplate']['callerinput'] = $callerinput;
+                $template_array[] = $templates['UserTemplate'];
+            }
+        } elseif (isset($templates['@total']) && $templates['@total'] >= 2) {
+            foreach ($templates['UserTemplate'] as $template) {
+                print_r($template);
+                if (isset($template['CallHandlerObjectId'])) {
+                    $objectid = $template['CallHandlerObjectId'];
+                    $callerinput = self::get_usertemplate_callerinput_menuentries($objectid);
+                    $template['callerinput'] = $callerinput;
+                    $template_array[] = $template;
+                }
+            }
+        }
+
+        $templates = $template_array;
 
         return $templates;
     }
-	
-	public static function createusertemplate($sitecode, $template, $copytemplate, $operator)
+
+    public static function createusertemplate($sitecode, $template, $copytemplate, $operator)
     {
-		$name = $template['Alias']; 
-		
+        $name = $template['Alias'];
+
         $verb = 'POST';
         $apiurl = '/usertemplates';
         $query = ['templateAlias' => $copytemplate];
-		
-		
+
         // Send in JSON to build the template
-		$json = $template;
-		
-		/*$json = [
+        $json = $template;
+
+        /*$json = [
                     'Alias'           => $username,
                     'DisplayName'    => $dn,
                 ];*/
@@ -417,13 +407,10 @@ class Cupi extends Model
         $return = self::wrapapi($verb, $apiurl, $query, $json);
 
         // return $return;
-		
-		
-		
-		// Check if user has a current template.
+
+        // Check if user has a current template.
         $template = self::getusertemplate($name);
-		
-		
+
         if (isset($template['@total']) && $template['@total'] == 0) {
             abort(404, 'UserTemplate not found');
         }
@@ -434,49 +421,45 @@ class Cupi extends Model
         if (isset($template['UserTemplate']['CallHandlerObjectId'])) {
             $objectid = $template['UserTemplate']['CallHandlerObjectId'];
         }
-		
-		//return $objectid;
-		
-		if (isset($operator) && $operator) 
-		{
-			if (isset($objectid) && $objectid) {
-			$update = self::update_usertemplate_operator($objectid, $sitecode, $operator);
-			
-			$template['update_operator'] = $update;
-			}
-		}
-		
-		return $template;
-    }
-	
 
-	
-	public static function update_usertemplate_operator($objectid, $sitecode, $operator)
+        //return $objectid;
+
+        if (isset($operator) && $operator) {
+            if (isset($objectid) && $objectid) {
+                $update = self::update_usertemplate_operator($objectid, $sitecode, $operator);
+
+                $template['update_operator'] = $update;
+            }
+        }
+
+        return $template;
+    }
+
+    public static function update_usertemplate_operator($objectid, $sitecode, $operator)
     {
         $verb = 'PUT';
         $apiurl = "/callhandlerprimarytemplates/{$objectid}/menuentries/0";
-        $query = "";
-		$json = [
-				  "Locked" 				=> "false",
-				  "Action" 				=> "7",
-				  "TransferNumber" 		=> "{$operator}",
-				  "DisplayName" 		=> "{$sitecode} Operator",
-				  "TransferType" 		=> "0",
-				  "TransferRings" 		=> "4"
+        $query = '';
+        $json = [
+                  'Locked'                => 'false',
+                  'Action'                => '7',
+                  'TransferNumber'        => "{$operator}",
+                  'DisplayName'           => "{$sitecode} Operator",
+                  'TransferType'          => '0',
+                  'TransferRings'         => '4',
                 ];
 
         $return = self::wrapapi($verb, $apiurl, $query, $json);
 
         return $return;
     }
-	
-	
-	public static function delete_usertemplate($name)
+
+    public static function delete_usertemplate($name)
     {
 
         // Check if user has a current template.
         $template = self::getusertemplate($name);
-		
+
         if (isset($template['@total']) && $template['@total'] == 0) {
             abort(404, 'User Template not found');
         }

@@ -192,9 +192,8 @@
      * )
      **/
     $api->delete('/cupi/user/delete/{username}', 'App\Http\Controllers\Cupicontroller@deleteuser');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/usertemplate/{name}",
      *     tags={"Management - UnityConnection"},
@@ -221,9 +220,8 @@
      * )
      **/
     $api->get('cupi/usertemplate/{name}', 'App\Http\Controllers\Cupicontroller@getusertemplate');
-	
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cupi/usertemplate/create",
      *     tags={"Management - UnityConnection"},
@@ -278,9 +276,8 @@
      * )
      **/
     $api->post('cupi/usertemplate/create', 'App\Http\Controllers\Cupicontroller@createusertemplate');
-	
-	
-	/**
+
+    /**
      * @SWG\Delete(
      *     path="/telephony/api/cupi/usertemplate/deletebyname/{name}",
      *     tags={"Management - UnityConnection"},
@@ -304,9 +301,8 @@
      * )
      **/
     $api->delete('/cupi/usertemplate/deletebyname/{name}', 'App\Http\Controllers\Cupicontroller@delete_usertemplate');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/usertemplates/listusertemplatesbysite/{sitecode}",
      *     tags={"Management - UnityConnection"},
@@ -333,7 +329,6 @@
      * )
      **/
     $api->get('cupi/usertemplates/listusertemplatesbysite/{sitecode}', 'App\Http\Controllers\Cupicontroller@listusertemplatesbysite');
-	
 
     /**
      * @SWG\Get(
@@ -376,8 +371,8 @@
      * )
      **/
     $api->get('cupi/usertemplates/names', 'App\Http\Controllers\Cupicontroller@listusertemplatenames');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/timezones",
      *     tags={"Management - UnityConnection"},
@@ -397,7 +392,6 @@
      * )
      **/
     $api->get('cupi/timezones', 'App\Http\Controllers\Cupicontroller@listtimezones');
-
 
     /**
      * @SWG\Get(

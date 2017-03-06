@@ -192,10 +192,152 @@
      * )
      **/
     $api->delete('/cupi/user/delete/{username}', 'App\Http\Controllers\Cupicontroller@deleteuser');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/usertemplate/{name}",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Get UM External Service for User Object",
+     *     description="",
+     *     operationId="getObjectTypebyName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="User Object ID",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/usertemplate/{name}', 'App\Http\Controllers\Cupicontroller@getusertemplate');
+	
+	
+	/**
+     * @SWG\Post(
+     *     path="/telephony/api/cupi/usertemplate/create",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Import User Mailbox from LDAP",
+     *     description="",
+     *     operationId="createUserTemplate",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="formData",
+     *         description="New Template Name",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="formData",
+     *         description="New Template Name",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="copytemplate",
+     *         in="formData",
+     *         description="Template to Copy",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="timezone",
+     *         in="formData",
+     *         description="Timezone",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="operator",
+     *         in="formData",
+     *         description="Timezone",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->post('cupi/usertemplate/create', 'App\Http\Controllers\Cupicontroller@createusertemplate');
+	
+	
+	/**
+     * @SWG\Delete(
+     *     path="/telephony/api/cupi/usertemplate/deletebyname/{name}",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Delete UserTemplate",
+     *     description="This deletes the user template by name",
+     *     operationId="delete_usertemplate",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Template Alias",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->delete('/cupi/usertemplate/deletebyname/{name}', 'App\Http\Controllers\Cupicontroller@delete_usertemplate');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/usertemplates/listusertemplatesbysite/{sitecode}",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Get UM External Service for User Object",
+     *     description="",
+     *     operationId="getObjectTypebyName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="Sitecode",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/usertemplates/listusertemplatesbysite/{sitecode}', 'App\Http\Controllers\Cupicontroller@listusertemplatesbysite');
+	
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/templates/listusertemplates",
+     *     path="/telephony/api/cupi/usertemplates/listusertemplates",
      *     tags={"Management - UnityConnection"},
      *     summary="List User Templates",
      *     description="",
@@ -212,11 +354,11 @@
      *     ),
      * )
      **/
-    $api->get('cupi/templates/listusertemplates', 'App\Http\Controllers\Cupicontroller@listusertemplates');
+    $api->get('cupi/usertemplates/listusertemplates', 'App\Http\Controllers\Cupicontroller@listusertemplates');
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/templates/listusertemplatesnames",
+     *     path="/telephony/api/cupi/usertemplates/names",
      *     tags={"Management - UnityConnection"},
      *     summary="List User Template Names",
      *     description="",
@@ -233,7 +375,29 @@
      *     ),
      * )
      **/
-    $api->get('cupi/templates/listusertemplatesnames', 'App\Http\Controllers\Cupicontroller@listusertemplatenames');
+    $api->get('cupi/usertemplates/names', 'App\Http\Controllers\Cupicontroller@listusertemplatenames');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/timezones",
+     *     tags={"Management - UnityConnection"},
+     *     summary="List Timezones",
+     *     description="",
+     *     operationId="ListTimeZones",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/timezones', 'App\Http\Controllers\Cupicontroller@listtimezones');
+
 
     /**
      * @SWG\Get(

@@ -1011,7 +1011,164 @@
                 }
             }
         },
-        "/telephony/api/cupi/templates/listusertemplates": {
+        "/telephony/api/cupi/usertemplate/{name}": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Get UM External Service for User Object",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "User Object ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/usertemplate/create": {
+            "post": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Import User Mailbox from LDAP",
+                "description": "",
+                "operationId": "createUserTemplate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "New Template Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "New Template Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "copytemplate",
+                        "in": "formData",
+                        "description": "Template to Copy",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "timezone",
+                        "in": "formData",
+                        "description": "Timezone",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "operator",
+                        "in": "formData",
+                        "description": "Timezone",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/usertemplate/deletebyname/{name}": {
+            "delete": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Delete UserTemplate",
+                "description": "This deletes the user template by name",
+                "operationId": "delete_usertemplate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Template Alias",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/usertemplates/listusertemplatesbysite/{sitecode}": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Get UM External Service for User Object",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/usertemplates/listusertemplates": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -1035,7 +1192,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/templates/listusertemplatesnames": {
+        "/telephony/api/cupi/usertemplates/names": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -1043,6 +1200,30 @@
                 "summary": "List User Template Names",
                 "description": "",
                 "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/timezones": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "List Timezones",
+                "description": "",
+                "operationId": "ListTimeZones",
                 "consumes": [
                     "application/json"
                 ],

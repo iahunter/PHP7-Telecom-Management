@@ -1,4 +1,6 @@
-
+<div ng-if="vm.cucmphones.length < 1" class="well" style="background-color: #e6e6e6">
+	<legend>No Phones found in CUCM</legend>
+</div>
 <div ng-if="vm.cucmphones.length > 0"  class="well" style="background-color: #e6e6e6">
 <legend>{{vm.cucmphones.length}} Phones Exist in CUCM</legend>
 	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">

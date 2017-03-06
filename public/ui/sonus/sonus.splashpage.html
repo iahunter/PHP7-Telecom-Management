@@ -3,44 +3,18 @@
 <legend>SBC Summary<div style="margin:10px"></div></legend>
 
 <div class="container">
-	<ul>
 		<div ng-controller="Sonus.AlarmController as vm">
 		
 		<div ng-if="vm.message">{{vm.message}}</div>
 			<a href="#/sonus/activealarms" ng-if="!vm.message">
-				<!-- Hide this. We don't want to display anything if no alarms. 
-				<div ng-if="vm.noactivealarms;">
-					<li>
-						<h4>No Active Alarms Found</h4>
-					</li>
-				</div>
-				-->
 				<div ng-if="!vm.loading && !vm.noactivealarms">
-					<li>
-						<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
-					</li>
+					<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
 				</div>
 			</a>
-		</div>
+		</div>	
 	
 		<div ng-controller="Sonus.CallController as vm">
-			<div ng-if="!vm.message">
-				<a href="#/sonus/activecalls" >
-					<!-- Hide this. We don't want to display anything if no calls.
-					<div ng-if="vm.noactivecalls;">
-						<li>
-							<h4>No Active Calls Found</h4>
-						</li>
-					</div>
-					-->
-					<div ng-if="!vm.loading && !vm.noactivecalls">
-						<li>
-							<h4>{{vm.callcount}} Active Calls Found </h4>
-						</li>
-					</div>
-				</a>
-			</div>
-		
+
 			<!--Print out Call Summary-->
 			<div>
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -56,12 +30,27 @@
 								<td> {{key}} </td> 
 								<td> {{value}} </td>
 							</tr>
+							<tr>
+								<td><b><a href="#/sonus/activecalls" >Total Active Calls</a></b></td>
+								<td><b><a href="#/sonus/activecalls" >{{vm.callcount}}</a></b></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-		</div>	
-	</ul>	
+			
+			<div style="margin:50px"></div>
+			
+			<!--
+			<div ng-if="!vm.message">
+				<a href="#/sonus/activecalls" >
+					<div ng-if="!vm.loading && !vm.noactivecalls">
+						<h4>{{vm.callcount}} Active Calls Found </h4>
+					</div>
+				</a>
+			</div>
+			-->
+		</div>
 </div>	
 
 <hr>

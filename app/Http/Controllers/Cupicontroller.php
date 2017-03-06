@@ -182,8 +182,8 @@ class Cupicontroller extends Controller
 
         return Cupi::getuserexternalservice($request->objectid);
     }
-	
-	public function listtimezones(Request $request)
+
+    public function listtimezones(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -193,98 +193,97 @@ class Cupicontroller extends Controller
 
         return Cupi::listtimezones();
     }
-	
-	public function getusertemplate(Request $request)
+
+    public function getusertemplate(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
             abort(401, 'You are not authorized');
         }
-		
+
         if (isset($request->name) && $request->name) {
             $name = $request->name;
         }
-		
-		$newtemplate = Cupi::getusertemplate($name);
-			
-		return $newtemplate;
-	}
-	
-	public function listusertemplatesbysite(Request $request)
+
+        $newtemplate = Cupi::getusertemplate($name);
+
+        return $newtemplate;
+    }
+
+    public function listusertemplatesbysite(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
             abort(401, 'You are not authorized');
         }
-		
+
         if (isset($request->sitecode) && $request->sitecode) {
             $sitecode = $request->sitecode;
         }
-		
-		$templates = Cupi::getusertemplatebysite($sitecode);
-			
-		return $templates;
-	}
-	
-	public function createusertemplate(Request $request)
+
+        $templates = Cupi::getusertemplatebysite($sitecode);
+
+        return $templates;
+    }
+
+    public function createusertemplate(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', Cupi::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		/* Example
-		{
-			"Alias":"TRAVIS01_Kiewit_User",
-			"DisplayName":"TRAVIS01_Kiewit_User",
-			"City": "Omaha",
-			"State": "NE",
-			"Country": "US",
-			"PostalCode": "68164",
-			"Department": "",
-			"Manager": "",
-			"Building": "",
-			"Address": ""
-		}
-		*/
-		
-		//return $request;
-		
-		if (isset($request->sitecode) && $request->sitecode) {
-            $sitecode = $request->sitecode;
-		}
 
-		// This needs work!!!! 
+        /* Example
+        {
+            "Alias":"TRAVIS01_Kiewit_User",
+            "DisplayName":"TRAVIS01_Kiewit_User",
+            "City": "Omaha",
+            "State": "NE",
+            "Country": "US",
+            "PostalCode": "68164",
+            "Department": "",
+            "Manager": "",
+            "Building": "",
+            "Address": ""
+        }
+        */
+
+        //return $request;
+
+        if (isset($request->sitecode) && $request->sitecode) {
+            $sitecode = $request->sitecode;
+        }
+
+        // This needs work!!!!
         if (isset($request->name) && $request->name) {
             $template['Alias'] = $request->name;
-			$template['DisplayName'] = $request->name;
+            $template['DisplayName'] = $request->name;
         }
-		
-		// Timezone must use some weird index number. Use listtimezones to search or match id.
+
+        // Timezone must use some weird index number. Use listtimezones to search or match id.
         if (isset($request->timezone) && $request->timezone) {
             $template['Timezone'] = $request->timezone;
         }
-		
+
         if (isset($request->copytemplate) && $request->copytemplate) {
             $copytemplate = $request->copytemplate;
         }
-		
-		if (isset($request->operator) && $request->operator) {
-            $operator = $request->operator;
-		}else{
-			$operator = "";
-		}
-		
-        $newtemplate = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
-		
 
-		return $newtemplate;
+        if (isset($request->operator) && $request->operator) {
+            $operator = $request->operator;
+        } else {
+            $operator = '';
+        }
+
+        $newtemplate = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
+
+        return $newtemplate;
     }
-	
-	public function update_usertemplate_operator(Request $request)
+
+    public function update_usertemplate_operator(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -293,33 +292,32 @@ class Cupicontroller extends Controller
         }
 
         if (isset($request->objectid) && $request->objectid) {
-			$objectid = $request->objectid;
+            $objectid = $request->objectid;
         }
-		
+
         if (isset($request->sitecode) && $request->sitecode) {
             $sitecode = $request->sitecode;
         }
-		
+
         if (isset($request->operator) && $request->operator) {
             $operator = $request->operator;
         }
-		
+
         return Cupi::update_usertemplate_operator($objectid, $sitecode, $operator);
     }
-	
-	public function delete_usertemplate(Request $request)
+
+    public function delete_usertemplate(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('delete', Cupi::class)) {
             abort(401, 'You are not authorized');
         }
-		
+
         if (isset($request->name) && $request->name) {
             $name = $request->name;
         }
-		
-		$return = Cupi::delete_usertemplate($name);
-	}
-	
+
+        $return = Cupi::delete_usertemplate($name);
+    }
 }

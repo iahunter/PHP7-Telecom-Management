@@ -197,10 +197,11 @@
 		<!-- Button to reimport Site Data into Form. -->
 		
 			<div ng-if="vm.deploybutton">
-				<hr>
-				<h4>This site does not exist in CUCM.</h4>
-				<hr>
-				<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy to CUCM</button>
+				<div class="well col-lg-6">
+					<h4>CUCM - Site Not Found.</h4>
+					<hr>
+					<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy to CUCM</button>
+				</div>
 			</div>
 			
 			<div class="panel panel-default" ng-show="vm.cucmsitesummary">
@@ -252,9 +253,59 @@
 							</div>
 					</div>	
 			</div>
-
 			-->
 
+		<div ng-if="vm.usertemplatedeploybutton">
+			<div class="well col-lg-6 pull-right">
+				<h4>Unity Connection - Site Not Found.</h4>
+				<hr>
+				<button ng-show="vm.usertemplatedeploybutton" class="btn btn-primary btn-sm" ng-click="vm.create_cupi_usertemplates()"><i class="glyphicon glyphicon-save"></i>  Deploy Unity Connection User Templates</button>
+			</div>
+		</div>
+			
+			
+		<div ng-if="vm.siteusertemplates.length > 0">
+		
+			<div class="panel panel-default" ng-show="vm.siteusertemplates">
+				<div class="panel-heading">
+					<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#usertemplates" style="color:black;cursor: pointer;"><h4>Unity Connection - User Templates</h4></a>
+				</div>
+				<div class="panel-body panel-collapse collapse" id="usertemplates">
+					<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+						<table class="table table-condensed table-striped table-bordered table-hover">
+							<thead>
+								<tr class="success">
+										<th>Alias</th>
+										<th>TimeZone</th>
+										<th>Language</th>
+										<th>External Service Account</th>
+										<th>Menu Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="template in vm.siteusertemplates track by $index">
+									<td><b>{{template.Alias}}</b></td>
+									<td>{{template.TimeZone}}</td>
+									<td>{{template.Language}}</td>
+									<td>{{template.externalserviceaccounts.return.response.TemplateExternalServiceAccount.DisplayName}}</td>
+									<td>
+										<table class="table table-condensed table-striped table-bordered table-hover">
+											<tr ng-if="template.callerinput.response.MenuEntry" ng-repeat="menuoption in template.callerinput.response.MenuEntry">
+												<td>{{menuoption.TouchtoneKey}}</td>
+												<td>{{menuoption.DisplayName}}</td>
+												<td>{{menuoption.TransferNumber}}</td>
+												<td>{{menuoption.TransferRings}}</td>
+												<td>{{menuoption}}</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>	
+		</div>
 		
 		
 		

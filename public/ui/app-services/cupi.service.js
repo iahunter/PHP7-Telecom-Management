@@ -23,7 +23,7 @@ angular
 		// List User Templates
 		self.listusertemplatesnames = function() {
 			var defer = $q.defer();
-			return $http.get('../api/cupi/templates/listusertemplatesnames')
+			return $http.get('../api/cupi/usertemplates/names')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					
@@ -33,6 +33,26 @@ angular
 			  }, function errorCallback(response) {
 					
 			  });
+		}
+		
+		// List User Templates by Sitecode
+		self.listusertemplatesbysite = function(sitecode) {
+			var defer = $q.defer();
+			return $http.get('../api/cupi/usertemplates/listusertemplatesbysite/'+sitecode)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					
+			  });
+		}
+		
+		// Create User Template
+		self.createusertemplate = function(template){
+			return $http.post('../api/cupi/usertemplate/create', template);
 		}
 		
 		// Get User

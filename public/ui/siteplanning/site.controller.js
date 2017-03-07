@@ -125,7 +125,15 @@ angular
 			});
 		
 
+		vm.languages = [{
+				id: 1,
+				name: 'english'
+			}, {
+				id: 2,
+				name: 'french'
+			}];
 			
+		console.log(vm.languages)
 		
 		// Drop down values to use in Add form. 
 		vm.extlen = [4,5,10];

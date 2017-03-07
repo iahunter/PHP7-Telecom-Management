@@ -142,6 +142,14 @@
 										<span ng-show="sortType == 'e911' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'languages'; sortReverse = !sortReverse" style="color:black">
+									Languages
+										<span ng-show="sortType == 'languages' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'languages' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
 							<th>
 								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
@@ -176,9 +184,9 @@
 					<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
-						<td><a ui-sref="getsite({id: site.id})"><button class="btn btn-xs btn-default btn-block">{{ site.id}}</button></a></td>
+						<td><a ui-sref="getsite({id: site.id})"><button class="btn btn btn-default btn-block">{{ site.id}}</button></a></td>
 						<!--<td>{{ site.id}}</a></td>-->
-						<td   ng-show="!vm.edit[site.id]">{{ site.sitecode}}</td>
+						<td   ng-show="!vm.edit[site.id]"><b style="color:#337ab7">{{ site.sitecode}}</b></td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.cucmprovisioned}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.srstip}}</a></td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.h323ip}}</td>
@@ -190,6 +198,7 @@
 						<td   ng-show="!vm.edit[site.id]">{{ site.operator}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.trunking}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.e911}}</td>
+						<td   ng-show="!vm.edit[site.id]">{{ site.languages}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.comment}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}}</td>

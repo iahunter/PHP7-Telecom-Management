@@ -58,7 +58,7 @@ angular
 				name: 'private'
 			}];
 			
-		
+
 		vm.getvmusertemplates = cupiService.listusertemplatesnames()
 			.then(function(res) {
 				
@@ -135,6 +135,62 @@ angular
 				}
 			}
 		}
+		
+		vm.usertemplatedeploybutton = false;
+		
+		// Create User Templates - ######## THIS NEEDS WORK!!! ########
+		vm.create_cupi_usertemplates = function() {
+			var language = [];
+			if(!vm.site.languages){
+				language.push("english");
+				console.log(language);
+			}else{
+				language = vm.site.languages;
+				console.log(language);
+			}
+			
+
+			
+			
+			
+			/*
+			angular.forEach(vm.site.languages, function(k,v) {
+									
+										//console.log("VALUE: " + v);
+										//vm.cucmsitesummary
+										angular.forEach(k, function(key,object) {
+											if(key.length != 0){
+												//vm.cucmsitesummary['length']++;
+												if (!vm.cucmsitesummary[v]){
+													vm.cucmsitesummary[v] = [];
+													if(key){
+														vm.cucmsitesummary[v].push(key);
+													}
+													
+												}else{
+													if(key){
+														vm.cucmsitesummary[v].push(key);
+													}
+												}
+												
+											}
+										});
+									
+									//console.log(vm.cucmsitesummary);
+									
+								});
+			
+			console.log(templates);
+			
+			cupiService.createusertemplate(template).then(function(data) {
+			  //alert('phoneplan was added successfully');
+			  return $state.reload();
+			}, function(error) {
+				alert('An error occurred while creating phone plan')
+			});
+			//$state.reload();
+			*/
+		}
 
 		
 		vm.getsitesummary = function (id) {
@@ -202,6 +258,26 @@ angular
 							}, function(err){
 								//Error
 							});
+							
+							
+						cupiService.listusertemplatesbysite(vm.sitecode)
+							.then(function(res) {
+								
+								vm.siteusertemplates = res.data;
+								//console.log(vm.siteusertemplates);
+								
+								if(vm.siteusertemplates.length > 0){
+									vm.usertemplatedeploybutton = false;
+								}
+								if(vm.siteusertemplates.length == 0){
+									vm.usertemplatedeploybutton = true;
+								}
+								
+
+							}, function(error) {
+								alert('An error occurred while updating the event')
+							});
+					
 					
 				}, function(err){
 					//Error
@@ -213,6 +289,8 @@ angular
 		};
 		
 		var getsitesummary = vm.getsitesummary(id)
+		
+
 		
 		
 		vm.deploycucmsite = function () {

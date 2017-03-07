@@ -5,15 +5,13 @@
 <div style="margin:50px"></div>
 
 	<div class="row">
-		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-2">
+		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-1">
 			<script type="text/ng-template" id="error-messages">
 							<div ng-message='required'> This Field is required </div>
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
-			<div class="panel panel-primary">
-				<div class="panel-heading"><h3>Create New Site - This needs work!</h3></div>
-				<div class="panel-body">
+				<legend><h3>Create New Site - This needs work!</h3></legend>
 					<form class="form" role="form" id="addsiteForm" ng-submit='addsiteForm.$valid && vm.submitsite(vm.siteForm)' novalidate name="addsiteForm">
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
@@ -124,8 +122,19 @@
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-								<div style="height:25px"></div>
+								<div class="form-group" ng-class="{'has-error': addsiteForm.languages.$touched && addsiteForm.languages.$invalid, 'has-success': addsiteForm.languages.$touched && addsiteForm.eventCategory.$valid }">
+									<label for="languages"  class="control-label">DID Blocks (From DID Database - multiples)</label>
+									<select style='height:200px' class="form-control" required ng-model='vm.siteForm.languages' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="languages" multiple >
+									</select>
+									<div ng-messages="addsiteForm.languages.$dirty && addsiteForm.languages.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
 							</div>
+						
+						</div>
+						
+						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.trunking.$touched && addsiteForm.trunking.$invalid, 'has-success': addsiteForm.trunking.$touched && addsiteForm.trunking.$valid }">
 									<label for="trunking"  class="control-label">Trunking</label><br>
@@ -143,9 +152,6 @@
 											</div>
 										</div>
 								</div>
-							</div>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-								<div style="height:10px"></div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.e911.$touched && addsiteForm.e911.$invalid, 'has-success': addsiteForm.e911.$touched && addsiteForm.e911.$valid }">
@@ -219,7 +225,7 @@
 							</div>
 						</div>
 						
-						 Print Form JSON
+						Print Form JSON
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								{{vm.siteForm}}

@@ -14,8 +14,8 @@ class AddLanguageToSiteTable extends Migration
     public function up()
     {
         Schema::table('site', function (Blueprint $table) {
-			$table->json('languages')->nullable();
-		});
+            $table->json('languages')->nullable();
+        });
     }
 
     /**

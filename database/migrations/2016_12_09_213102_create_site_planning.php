@@ -32,7 +32,7 @@ class CreateSitePlanning extends Migration
             $table->integer('extlen')->nullable();           // JSON Details ID of DID Blocks used for the site.
             $table->text('operator')->nullable();              // Comment
             $table->json('details')->nullable();            // JSON Details Custom Field Data
-			$table->json('languages')->nullable();           // JSON Details Custom Field Data
+            $table->json('languages')->nullable();           // JSON Details Custom Field Data
             //$table->string('createdby');            // simple name to reference the account by
             //$table->string('updatedby');            // simple name to reference the account by
             $table->timestamps();                           // Time Stamps

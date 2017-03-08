@@ -57,8 +57,18 @@ angular
 				id: 2,
 				name: 'private'
 			}];
-			
-
+		
+		/*
+		vm.getcupitimezones = cupiService.listtimezones()
+			.then(function(res) {
+				
+				vm.cupitimezones = res.data;
+				console.log(vm.cupitimezones)
+			}, function(error) {
+				alert('An error occurred while updating the event')
+			});
+		*/
+		
 		vm.getvmusertemplates = cupiService.listusertemplatesnames()
 			.then(function(res) {
 				
@@ -138,17 +148,42 @@ angular
 		
 		vm.usertemplatedeploybutton = false;
 		
+		
+		
 		// Create User Templates - ######## THIS NEEDS WORK!!! ########
 		vm.create_cupi_usertemplates = function() {
 			var language = [];
 			if(!vm.site.languages){
 				language.push("english");
-				console.log(language);
+				//console.log(language);
 			}else{
 				language = vm.site.languages;
-				console.log(language);
+				//console.log(language);
 			}
+			console.log(language);
 			
+			angular.forEach(language, function(values) {
+				console.log(values);
+				template = {};
+				template.sitecode = vm.site.sitecode;
+				template.language = values;
+				template.timezone = vm.site.timezone;
+				template.operator = vm.site.npa + vm.site.nxx + vm.site.operator;
+				
+				console.log(template)
+				
+				cupiService.createusertemplatesforsite(template).then(function(data) {
+					
+					
+					// Do something here to pring out results for user. 
+					
+					
+				}, function(error) {
+					alert('An error occurred creating the user templates')
+				});
+
+				return $state.reload();
+			});
 
 			
 			

@@ -115,6 +115,14 @@
 										<span ng-show="sortType == 'e911' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'languages'; sortReverse = !sortReverse" style="color:black">
+									Languages
+										<span ng-show="sortType == 'languages' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'languages' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
 							<th>
 								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
@@ -158,6 +166,7 @@
 							<td>{{ vm.site.operator}}</td>
 							<td>{{ vm.site.trunking}}</td>
 							<td>{{ vm.site.e911}}</td>
+							<td>{{ vm.site.languages}}</td>
 							<td>{{ vm.site.comment}}</td>
 							<td>{{ vm.site.created_at}}</td>
 							<td>{{ vm.site.updated_at}}</td>
@@ -199,8 +208,12 @@
 			<div ng-if="vm.deploybutton">
 				<div class="well col-lg-6">
 					<h4>CUCM - Site Not Found.</h4>
+					Deploy the standard objects for your site based on the trunking and 911 selected. <br>This will build the device pool, partitions, css, etc..
+					<br>
+					<br>
+					<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
 					<hr>
-					<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy to CUCM</button>
+					<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>
 				</div>
 			</div>
 			
@@ -209,7 +222,7 @@
 					<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM Configuration</h4></a>
 				</div>
 				<div class="panel-body panel-collapse collapse"" id="collapse1"><b>Site Exists in CUCM</b><hr> 
-					<table class="table table-striped table-bordered table-hover table-responsive">
+					<table class="table table-bordered table-hover table-responsive">
 						<thead>
 							<tr class="default">
 								
@@ -225,7 +238,14 @@
 							
 							<tr ng-repeat="(key,values) in vm.cucmsitesummary track by $index">
 								<td>{{key}}</td>
-								<td style="word-wrap: break-word; margin:10px;">{{values}}</td>
+								<!--<td style="word-wrap: break-word; margin:10px;">{{values}}</td>-->
+								<td>
+									<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+										<tr ng-repeat="value in values">
+											<td>{{value}}</td>
+										</tr>	
+									</table>
+								</td>
 							</tr>
 							
 						</tbody>
@@ -258,8 +278,12 @@
 		<div ng-if="vm.usertemplatedeploybutton">
 			<div class="well col-lg-6 pull-right">
 				<h4>Unity Connection - Site Not Found.</h4>
+				Deploy a User Template for Employees and Partners for each language selected for site. <br><br>
+				<br>
+				<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
 				<hr>
-				<button ng-show="vm.usertemplatedeploybutton" class="btn btn-primary btn-sm" ng-click="vm.create_cupi_usertemplates()"><i class="glyphicon glyphicon-save"></i>  Deploy Unity Connection User Templates</button>
+				
+				<button ng-show="vm.usertemplatedeploybutton" class="btn btn-primary btn-sm" ng-click="vm.create_cupi_usertemplates()"><i class="glyphicon glyphicon-save"></i>  Deploy User Templates</button>
 			</div>
 		</div>
 			

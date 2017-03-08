@@ -50,9 +50,29 @@ angular
 			  });
 		}
 		
+		// List User Templates by Sitecode
+		self.listtimezones = function() {
+			var defer = $q.defer();
+			return $http.get('../api/cupi/timezones')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					
+			  });
+		}
+		
 		// Create User Template
 		self.createusertemplate = function(template){
 			return $http.post('../api/cupi/usertemplate/create', template);
+		}
+		
+		// Create User Template
+		self.createusertemplatesforsite = function(template){
+			return $http.post('../api/cupi/usertemplate/site', template);
 		}
 		
 		// Get User

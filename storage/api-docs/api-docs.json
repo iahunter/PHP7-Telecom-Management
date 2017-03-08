@@ -1049,7 +1049,7 @@
                 "tags": [
                     "Management - UnityConnection"
                 ],
-                "summary": "Import User Mailbox from LDAP",
+                "summary": "Create User Template",
                 "description": "",
                 "operationId": "createUserTemplate",
                 "consumes": [
@@ -1074,7 +1074,7 @@
                         "type": "string"
                     },
                     {
-                        "name": "copytemplate",
+                        "name": "language",
                         "in": "formData",
                         "description": "Template to Copy",
                         "required": true,
@@ -1086,6 +1086,73 @@
                         "description": "Timezone",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "operator",
+                        "in": "formData",
+                        "description": "Timezone",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/usertemplate/site": {
+            "post": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Create Employee and Partner Templates for Site",
+                "description": "",
+                "operationId": "createUserTemplate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "New Template Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "language",
+                        "in": "formData",
+                        "description": "Language",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "english",
+                            "french"
+                        ]
+                    },
+                    {
+                        "name": "timezone",
+                        "in": "formData",
+                        "description": "Timezone",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "Alaska-12",
+                            "Arizona-12",
+                            "Central-12",
+                            "Eastern-12",
+                            "Hawaii-12",
+                            "Mountain-12",
+                            "Pacific-12"
+                        ]
                     },
                     {
                         "name": "operator",

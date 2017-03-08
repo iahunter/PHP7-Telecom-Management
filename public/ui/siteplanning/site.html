@@ -187,7 +187,9 @@
 						<td><a ui-sref="getsite({id: site.id})"><button class="btn btn btn-default btn-block">{{ site.id}}</button></a></td>
 						<!--<td>{{ site.id}}</a></td>-->
 						<td   ng-show="!vm.edit[site.id]"><b style="color:#337ab7">{{ site.sitecode}}</b></td>
-						<td   ng-show="!vm.edit[site.id]">{{ site.cucmprovisioned}}</td>
+						<!--<td   ng-show="!vm.edit[site.id]">{{ site.cucmprovisioned}}</td>-->
+						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == true' style="background-repeat: no-repeat; background-position: 5%;" background="app-content/images/checkedbox.png"></td>
+						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == false' style="background-repeat: no-repeat; background-position: 5%;" background="app-content/images/checkbox.png"></td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.srstip}}</a></td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.h323ip}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.timezone}}</td>

@@ -225,7 +225,7 @@
      * @SWG\Post(
      *     path="/telephony/api/cupi/usertemplate/create",
      *     tags={"Management - UnityConnection"},
-     *     summary="Import User Mailbox from LDAP",
+     *     summary="Create User Template",
      *     description="",
      *     operationId="createUserTemplate",
      *     consumes={"application/json"},
@@ -245,7 +245,7 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
-     *         name="copytemplate",
+     *         name="language",
      *         in="formData",
      *         description="Template to Copy",
      *         required=true,
@@ -276,6 +276,57 @@
      * )
      **/
     $api->post('cupi/usertemplate/create', 'App\Http\Controllers\Cupicontroller@createusertemplate');
+	
+    /**
+     * @SWG\Post(
+     *     path="/telephony/api/cupi/usertemplate/site",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Create Employee and Partner Templates for Site",
+     *     description="",
+     *     operationId="createUserTemplate",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="formData",
+     *         description="New Template Name",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="language",
+     *         in="formData",
+     *         description="Language",
+     *         required=true,
+     *         enum={"english", "french"},
+	 *		   type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="timezone",
+     *         in="formData",
+     *         description="Timezone",
+     *         required=true,
+     *         enum={"Alaska-12", "Arizona-12", "Central-12", "Eastern-12", "Hawaii-12", "Mountain-12", "Pacific-12"},
+	 *		   type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="operator",
+     *         in="formData",
+     *         description="Timezone",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->post('cupi/usertemplate/site', 'App\Http\Controllers\Cupicontroller@createusertemplatesforsite');
 
     /**
      * @SWG\Delete(

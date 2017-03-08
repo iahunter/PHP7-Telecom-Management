@@ -276,7 +276,7 @@
      * )
      **/
     $api->post('cupi/usertemplate/create', 'App\Http\Controllers\Cupicontroller@createusertemplate');
-	
+
     /**
      * @SWG\Post(
      *     path="/telephony/api/cupi/usertemplate/site",
@@ -299,7 +299,7 @@
      *         description="Language",
      *         required=true,
      *         enum={"english", "french"},
-	 *		   type="string"
+     *		   type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="timezone",
@@ -307,7 +307,7 @@
      *         description="Timezone",
      *         required=true,
      *         enum={"Alaska-12", "Arizona-12", "Central-12", "Eastern-12", "Hawaii-12", "Mountain-12", "Pacific-12"},
-	 *		   type="string"
+     *		   type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="operator",

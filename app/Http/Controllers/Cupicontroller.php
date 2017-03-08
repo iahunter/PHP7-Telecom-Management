@@ -282,9 +282,8 @@ class Cupicontroller extends Controller
 
         return $newtemplate;
     }
-	
-	
-	public function createusertemplatesforsite(Request $request)
+
+    public function createusertemplatesforsite(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -296,86 +295,103 @@ class Cupicontroller extends Controller
             $sitecode = $request->sitecode;
         }
 
-
         // Timezone must use some weird index number. Use listtimezones to search or match id.
         if (isset($request->timezone) && $request->timezone) {
             $timezone = $request->timezone;
-			
-			// Map CUCM DateTimeGroups to Unity Connection TimezoneIDs
-			if($timezone == "Alaska-12"){$timezone = 3;}
-			if($timezone == "Alaska-24"){$timezone = 3;}
-			if($timezone == "Arizona-12"){$timezone = 15;}
-			if($timezone == "Central-12"){$timezone = 20;}
-			if($timezone == "Central-24"){$timezone = 20;}
-			if($timezone == "Eastern-12"){$timezone = 35;}
-			if($timezone == "Eastern-24"){$timezone = 35;}
-			if($timezone == "Hawaii-12"){$timezone = 2;}
-			if($timezone == "Hawaii-24"){$timezone = 2;}
-			if($timezone == "Mountain-12"){$timezone = 10;}
-			if($timezone == "Mountain-24"){$timezone = 10;}
-			
-			// Set template variable
-			$template['TimeZone'] = $timezone;
+
+            // Map CUCM DateTimeGroups to Unity Connection TimezoneIDs
+            if ($timezone == 'Alaska-12') {
+                $timezone = 3;
+            }
+            if ($timezone == 'Alaska-24') {
+                $timezone = 3;
+            }
+            if ($timezone == 'Arizona-12') {
+                $timezone = 15;
+            }
+            if ($timezone == 'Central-12') {
+                $timezone = 20;
+            }
+            if ($timezone == 'Central-24') {
+                $timezone = 20;
+            }
+            if ($timezone == 'Eastern-12') {
+                $timezone = 35;
+            }
+            if ($timezone == 'Eastern-24') {
+                $timezone = 35;
+            }
+            if ($timezone == 'Hawaii-12') {
+                $timezone = 2;
+            }
+            if ($timezone == 'Hawaii-24') {
+                $timezone = 2;
+            }
+            if ($timezone == 'Mountain-12') {
+                $timezone = 10;
+            }
+            if ($timezone == 'Mountain-24') {
+                $timezone = 10;
+            }
+
+            // Set template variable
+            $template['TimeZone'] = $timezone;
         }
 
-		if (isset($request->operator) && $request->operator) {
+        if (isset($request->operator) && $request->operator) {
             $operator = $request->operator;
         } else {
             $operator = '';
         }
-		
-		$templates = [];
-		
-		if (isset($request->language) && $request->language) {
+
+        $templates = [];
+
+        if (isset($request->language) && $request->language) {
             $language = $request->language;
-			
-			if ($language == 'english'){
-				// Unity Connection Language ID for English
-				$languageid = 1033;
-			
-				
-				// Set Employee Template Variables
-				$template['Alias'] = "{$sitecode}_EMPLOYEE_USER";
-				$template['DisplayName'] = "{$sitecode}_EMPLOYEE_USER";
-				
-				// You can use system default language for english. 
-				//$template['Language'] = $languageid;
-				$copytemplate = env('UNITYCONNECTION_EMPLOYEE_TEMPLATE');
 
-				$templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
-				
-				// Set Partner Template Variables
-				$template['Alias'] = "{$sitecode}_PARTNER";
-				$template['DisplayName'] = "{$sitecode}_PARTNER";
-				$copytemplate = env('UNITYCONNECTION_PARTNER_TEMPLATE');
+            if ($language == 'english') {
+                // Unity Connection Language ID for English
+                $languageid = 1033;
 
-				$templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
-			}
-			
-			if ($language == 'french'){
-				// Unity Connection Language ID for French Canadian
-				$languageid = 3084;
-				$language = strtoupper($language);
-				
-				// Set Employee Template Variables
-				$template['Alias'] = "{$sitecode}_EMPLOYEE_USER_{$language}";
-				$template['DisplayName'] = "{$sitecode}_EMPLOYEE_USER_{$language}";
-				$template['Language'] = $languageid;
-				$copytemplate = env('UNITYCONNECTION_EMPLOYEE_TEMPLATE');
+                // Set Employee Template Variables
+                $template['Alias'] = "{$sitecode}_EMPLOYEE_USER";
+                $template['DisplayName'] = "{$sitecode}_EMPLOYEE_USER";
 
-				$templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
-				
-				// Set Partner Template Variables
-				$template['Alias'] = "{$sitecode}_PARTNER_{$language}";
-				$template['DisplayName'] = "{$sitecode}_PARTNER_{$language}";
-				$copytemplate = env('UNITYCONNECTION_PARTNER_TEMPLATE');
+                // You can use system default language for english.
+                //$template['Language'] = $languageid;
+                $copytemplate = env('UNITYCONNECTION_EMPLOYEE_TEMPLATE');
 
-				$templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
-				
-			}
+                $templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
+
+                // Set Partner Template Variables
+                $template['Alias'] = "{$sitecode}_PARTNER";
+                $template['DisplayName'] = "{$sitecode}_PARTNER";
+                $copytemplate = env('UNITYCONNECTION_PARTNER_TEMPLATE');
+
+                $templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
+            }
+
+            if ($language == 'french') {
+                // Unity Connection Language ID for French Canadian
+                $languageid = 3084;
+                $language = strtoupper($language);
+
+                // Set Employee Template Variables
+                $template['Alias'] = "{$sitecode}_EMPLOYEE_USER_{$language}";
+                $template['DisplayName'] = "{$sitecode}_EMPLOYEE_USER_{$language}";
+                $template['Language'] = $languageid;
+                $copytemplate = env('UNITYCONNECTION_EMPLOYEE_TEMPLATE');
+
+                $templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
+
+                // Set Partner Template Variables
+                $template['Alias'] = "{$sitecode}_PARTNER_{$language}";
+                $template['DisplayName'] = "{$sitecode}_PARTNER_{$language}";
+                $copytemplate = env('UNITYCONNECTION_PARTNER_TEMPLATE');
+
+                $templates[] = Cupi::createusertemplate($sitecode, $template, $copytemplate, $operator);
+            }
         }
-		
-
 
         return $templates;
     }

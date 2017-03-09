@@ -9,6 +9,12 @@ angular
 		vm.siteForm = {};
 		
 		vm.refresh = function (){
+			// jQuery Hack to fix body from the Model. 
+					$(".modal-backdrop").hide();
+					$('body').removeClass("modal-open");
+					$('body').removeClass("modal-open");
+					$('body').removeAttr( 'style' );
+				// End of Hack */
 			$state.reload();
 		};
 

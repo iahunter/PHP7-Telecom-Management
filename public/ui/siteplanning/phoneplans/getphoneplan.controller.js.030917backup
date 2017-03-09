@@ -5,13 +5,6 @@ angular
 		var vm = this;
 		
 		vm.refresh = function (){
-			// jQuery Hack to fix body from the Model. 
-			$(".modal-backdrop").hide();
-			$('body').removeClass("modal-open");
-			$('body').removeClass("modal-open");
-			$('body').removeAttr( 'style' );
-			// End of Hack */
-			
 			$state.reload();
 		};
 		
@@ -629,21 +622,24 @@ angular
 			  
 			});
 		*/
-
 		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
 		vm.deployphonescucm = function() {
-			vm.newphones = "";
 			angular.forEach(vm.phones, function(phone) {
 				phone.sitecode = vm.site.sitecode;
 				phone.extlength = vm.site.extlen;
 				console.log(phone);
 			});
 				//angular.copy(vm.phones)
-				var newphones = cucmService.createphones(angular.copy(vm.phones));
-			
-				vm.newphones = newphones;
-				console.log("Newphones")
+				vm.newphones = cucmService.createphones(angular.copy(vm.phones));
+				
 				console.log(vm.newphones);
+			
+			
+			/*
+			$timeout(function(){
+				$state.reload();
+			}, 2000);
+			*/
 			
 		};
 		

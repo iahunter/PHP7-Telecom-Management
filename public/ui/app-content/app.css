@@ -22,6 +22,16 @@
     100% { transform: rotate(360deg); }
 }
 
+.modal-dialog {
+  width: 90%;
+  height: 100%;
+  padding: 0;
+}
+
+.modal-content {
+  height: 100%;
+  border-radius: 0;
+}
 
 /*Slate Default Navbar*/
 .navbar-slate{background-color:#3a3f44;border-color:#2b2e32; background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);}

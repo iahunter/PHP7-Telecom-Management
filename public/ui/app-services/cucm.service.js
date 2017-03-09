@@ -128,15 +128,15 @@ angular
 		
 		
 		// Create phones - Had to make the posts inline or Informix was throwing errors. 
+		self.results = [];
 		self.createphones = function(arr) {
-			results = [];
 			  if (angular.isArray(arr) && arr.length > 0) {
 				console.log(arr);
 				var postdata = arr[0];
 				$http.post('../api/cucm/phone', postdata)
 				  .then(
 					  function(data) {
-						results.push(data);
+						self.results.push(data.data.response);
 						console.log("Success.");
 						arr.shift();
 						self.createphones(arr);
@@ -144,15 +144,15 @@ angular
 						//console.log(arr);
 					  },
 					  function(data) {
-						results.push(data);
+						self.results.push(data.data.response);
 						console.log("Failure.");
 						// if you want to continue even if it fails:
 						self.createphones(arr.shift());
 					  }
 				);
 			  }
-			console.log(results);
-			return results;
+			console.log(self.results);
+			return self.results;
 		}
 		
 		

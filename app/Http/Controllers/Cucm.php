@@ -59,17 +59,32 @@ class Cucm extends Controller
         }
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-            $this->results[$TYPE][] = "{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
+            $this->results[$TYPE] = 	[
+											"type" => $TYPE, 
+											"object" => $OBJECT,
+											"status" => "success",
+											"reply" => $REPLY, 
+											"request" 	=> $DATA,
+											
+										];
+			//"{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
 
             return $REPLY;
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type: {$TYPE}".
-                  "{$E->getMessage()}".
-                  "Stack trace:\n".
+                  "{$E->getMessage()}";
+                  /*"Stack trace:\n".
                   "{$E->getTraceAsString()}".
-                  "Data sent:\n";
-            $DATA['exception'] = $EXCEPTION;
-            $this->results[$TYPE] = $DATA;
+                  "Data sent:\n";*/
+			//$delimiter = "Stack trace:";
+			//explode ($delimiter , $EXCEPTION);
+			$this->results[$TYPE] = [
+										"type" 		=> $TYPE, 
+										"object" 	=> $OBJECT,
+										"status" 	=> "error",
+										"request" 	=> $DATA,
+										"exception"	=> $EXCEPTION,
+									];
         }
     }
 

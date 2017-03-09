@@ -3,17 +3,15 @@
 <div class="container">
 <div class="well">
 <div style="margin:50px"></div>
+<legend><h3>Create New DID Block</h3></legend>
 
 	<div class="row">
-		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-2">
+		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-1">
 			<script type="text/ng-template" id="error-messages">
 							<div ng-message='required'> This Field is required </div>
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
-			<div class="panel panel-primary">
-				<div class="panel-heading"><h3>Create DID Block</h3></div>
-				<div class="panel-body">
 					<form class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
@@ -130,8 +128,7 @@
 							</div>
 						</div>
 					</form>
-				</div>
-			</div>
+
 		</div>
 	</div>
 	<div class="row">

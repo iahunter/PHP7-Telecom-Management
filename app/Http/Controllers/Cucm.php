@@ -59,15 +59,15 @@ class Cucm extends Controller
         }
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-            $this->results[$TYPE] = 	[
-											"type" => $TYPE, 
-											"object" => $OBJECT,
-											"status" => "success",
-											"reply" => $REPLY, 
-											"request" 	=> $DATA,
-											
-										];
-			//"{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
+            $this->results[$TYPE] = [
+                                            'type'       => $TYPE,
+                                            'object'     => $OBJECT,
+                                            'status'     => 'success',
+                                            'reply'      => $REPLY,
+                                            'request'    => $DATA,
+
+                                        ];
+            //"{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
 
             return $REPLY;
         } catch (\Exception $E) {
@@ -76,15 +76,15 @@ class Cucm extends Controller
                   /*"Stack trace:\n".
                   "{$E->getTraceAsString()}".
                   "Data sent:\n";*/
-			//$delimiter = "Stack trace:";
-			//explode ($delimiter , $EXCEPTION);
-			$this->results[$TYPE] = [
-										"type" 		=> $TYPE, 
-										"object" 	=> $OBJECT,
-										"status" 	=> "error",
-										"request" 	=> $DATA,
-										"exception"	=> $EXCEPTION,
-									];
+            //$delimiter = "Stack trace:";
+            //explode ($delimiter , $EXCEPTION);
+            $this->results[$TYPE] = [
+                                        'type'         => $TYPE,
+                                        'object'       => $OBJECT,
+                                        'status'       => 'error',
+                                        'request'      => $DATA,
+                                        'exception'    => $EXCEPTION,
+                                    ];
         }
     }
 

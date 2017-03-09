@@ -123,8 +123,8 @@
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.languages.$touched && addsiteForm.languages.$invalid, 'has-success': addsiteForm.languages.$touched && addsiteForm.eventCategory.$valid }">
-									<label for="languages"  class="control-label">DID Blocks (From DID Database - multiples)</label>
-									<select style='height:200px' class="form-control" required ng-model='vm.siteForm.languages' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="languages" multiple >
+									<label for="languages"  class="control-label">Languages (select all that apply)</label>
+									<select class="form-control" required ng-model='vm.siteForm.languages' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="languages" multiple >
 									</select>
 									<div ng-messages="addsiteForm.languages.$dirty && addsiteForm.languages.$error">
 										<div ng-messages-include="error-messages"></div>

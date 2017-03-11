@@ -103,18 +103,20 @@
 						
 	<!-- Phone Deployment Modal -->
 	<div class="modal fade " id="{{vm.phoneplan.id}}-modal" role="dialog">
-		<div class="modal-dialog">
+		<div class="modal-dialog" style="width: 90%;">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3>Deploy Phones and Lines to CUCM</h3>
+					<h3>Deploy Phones and Lines</h3>
 				</div>
 
 				<div class="modal-body">
 				<p ng-hide="vm.newphones"><b style="color:red" >Warning!</b> You are about to deploy Phones to the Production System.</p>
-					<legend ng-show="vm.newphones">Summary</legend>
-					<div class="table-responsive col-md-4 col-xs-4 col-lg-4">
-						<table ng-show="vm.newphones" class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
-							<tr>
+					
+					<div class="table-responsive">
+					<div style="margin:25px"></div>
+						<div ng-show="vm.newphones" class="panel panel-default" style="width: 35%;">
+						<table class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
+							<tr class="default">
 								<th></th>
 								<th>Success</th>
 								<th>Errors</th>
@@ -137,50 +139,54 @@
 							</tr>
 							
 						</table>
+						</div>
 					</div>
 
-					
-					<legend ng-show="vm.newphones">Log</legend>
-					<div class="table-responsive col-md-12 col-xs-12 col-lg-12">
-					<table ng-show="vm.newphones" class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
-						<tr>
-							<th>Name</th>
-							<th>Description</th>
-							<th>Line</th>
-							<th>Phone</th>
-							
+					<div style="margin:50px"></div>
+					<legend ng-show="vm.newphones">Summary Report</legend>
+					<div class="table-responsive">
+						<table ng-show="vm.newphones" class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Line</th>
+								<th>Phone</th>
+								
 
-						</tr>
-						<tr ng-repeat="phone in vm.newphones">
-							<td style="display:none" ng-init="vm.newphones.total = vm.newphones.total + 1"></td>
-							<td>{{ phone.Phone.request.name}}</td>
-							<td>{{ phone.Phone.request.description}}</td>
-							<td>
-								<div ng-if="phone.Line" class="table-responsive">
-								<table class="table table-bordered table-hover" style="background-color: transparent;">
-									<tr ng-repeat="(k,v) in phone.Line">
-										
-										<td ng-if="k != 'request'">{{k}}</td>
-										<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'"  ng-init="vm.newphones.lineerrors = vm.newphones.lineerrors + 1"class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'"  ng-init="vm.newphones.linesuccess = vm.newphones.linesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
-									</tr>		
-								</table>
-								</div>
-							</td>
-							<td>
-								<div ng-if="phone.Phone" class="table-responsive">
-									<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
-										<tr ng-repeat="(k,v) in phone.Phone">
-											<td ng-if="k != 'request'">{{k}}</td>
-											<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'" ng-init="vm.newphones.phoneerrors = vm.newphones.phoneerrors + 1" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" ng-init="vm.newphones.phonesuccess = vm.newphones.phonesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+							</tr>
+							<tr ng-repeat="phone in vm.newphones">
+								<td style="display:none" ng-init="vm.newphones.total = vm.newphones.total + 1"></td>
+								<td><b>{{ phone.Phone.request.name}}</b></td>
+								<td>{{ phone.Phone.request.description}}</td>
+								<td>
+									<div ng-if="phone.Line" class="table-responsive">
+									<table class="table table-bordered table-hover" style="background-color: transparent;">
+										<tr ng-repeat="(k,v) in phone.Line">
+											<!--Hide the row data if it equals request-->
+											<td ng-if="k != 'request'"><b>{{k}}</b></td>
+											<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'"  ng-init="vm.newphones.lineerrors = vm.newphones.lineerrors + 1"class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'"  ng-init="vm.newphones.linesuccess = vm.newphones.linesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
 										</tr>		
 									</table>
-								</div>
-							</td>
-						</tr>
-					</table>
+									</div>
+								</td>
+								<td>
+									<div ng-if="phone.Phone" class="table-responsive">
+										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+											<tr ng-repeat="(k,v) in phone.Phone">
+												<!--Hide the row data if it equals request-->
+												<td ng-if="k != 'request'"><b>{{k}}</b></td>
+												<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'" ng-init="vm.newphones.phoneerrors = vm.newphones.phoneerrors + 1" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" ng-init="vm.newphones.phonesuccess = vm.newphones.phonesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+											</tr>		
+										</table>
+									</div>
+								</td>
+							</tr>
+						</table>
 					
+					</div>
 				</div>
-				</div>
+				
+				<div style="margin:25px"></div>
 				<div class="modal-footer">
 
 				

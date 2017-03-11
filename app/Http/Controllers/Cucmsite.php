@@ -1032,14 +1032,14 @@ class Cucmsite extends Cucm
             //print "Attempting to update object type {$TYPE} for {$SITE}:";
             $REPLY = $this->cucm->update_object_type_by_assoc($DATA, $TYPE);
             //$this->results['DevicePoolUpdate'] = "{$TYPE} UPDATED: {$REPLY}";
-			$this->results['DevicePoolUpdate'][] = [
-														'type'       => $TYPE,
-														'object'     => $DATA['name'],
-														'status'     => 'success',
-														'reply'      => $REPLY,
-														'request'    => $DATA,
+            $this->results['DevicePoolUpdate'][] = [
+                                                        'type'       => $TYPE,
+                                                        'object'     => $DATA['name'],
+                                                        'status'     => 'success',
+                                                        'reply'      => $REPLY,
+                                                        'request'    => $DATA,
 
-													];
+                                                    ];
         } catch (\Exception $E) {
             $EXCEPTION = "Exception updating object type {$TYPE} for site {$SITE}:".
                   "{$E->getMessage()}";
@@ -1048,12 +1048,12 @@ class Cucmsite extends Cucm
                   "Data sent:\n";*/
             //$DATA[$TYPE]['exception'] = $EXCEPTION;
             //$this->results[$TYPE][] = $DATA;
-			$this->results[$TYPE][] = [
-                                        'type'         	=> $TYPE,
-                                        'object'       	=> $DATA['name'],
-                                        'status'       	=> 'error',
-                                        'reply'    		=> $EXCEPTION,
-										'request'      	=> $DATA,
+            $this->results[$TYPE][] = [
+                                        'type'             => $TYPE,
+                                        'object'           => $DATA['name'],
+                                        'status'           => 'error',
+                                        'reply'            => $EXCEPTION,
+                                        'request'          => $DATA,
                                     ];
         }
 

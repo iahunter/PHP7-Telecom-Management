@@ -12,7 +12,7 @@ class Cucmphone extends Cucm
 
     public function uploadPhones(Request $request)
     {
-		// Upload CSV of phones for import. Not tested. 
+        // Upload CSV of phones for import. Not tested.
         $user = JWTAuth::parseToken()->authenticate();
 
         // Open CSV and Create a new DID Block for each row.
@@ -160,8 +160,8 @@ class Cucmphone extends Cucm
 
         return $this->deletePhonebyName($NAME);
     }
-	
-	// CUCM Add Phone Wrapper
+
+    // CUCM Add Phone Wrapper
     public function wrap_add_phone_object($DATA, $TYPE)
     {
         // Get the name to reference the object.
@@ -515,7 +515,7 @@ class Cucmphone extends Cucm
 
         $RETURN = [];
 
-		// Add Line
+        // Add Line
         $this->wrap_add_phone_object($PHONELINE, 'Line');
 
         // Update Line E164 Alternative Number Mask - workaround for Cisco Bug when adding Line
@@ -525,6 +525,5 @@ class Cucmphone extends Cucm
         $this->wrap_add_phone_object($PHONE, 'Phone');
 
         return json_decode(json_encode($this->results), true);
-
     }
 }

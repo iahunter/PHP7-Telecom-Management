@@ -87,8 +87,6 @@ class Cucm extends Controller
                                     ];
         }
     }
-	
-	
 
     public function listCssDetails(Request $request)
     {

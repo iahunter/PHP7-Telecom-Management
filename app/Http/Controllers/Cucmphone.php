@@ -206,35 +206,36 @@ class Cucmphone extends Cucm
     // Create New Phone
     public function createPhone(Request $request)
     {
+		$errors = [];
         //$user = JWTAuth::parseToken()->authenticate();
 
         // Check if sitecode is Set
         if (! isset($request->sitecode) || ! $request->sitecode) {
-            return 'Error, no sitecode set';
+			$errors[] = 'Error, no sitecode set';					
         }
         $SITE = $request->sitecode;
 
         // Check if device is Set
         if (! isset($request->device) || ! $request->device) {
-            return 'Error, no device set';
+            $errors[] = 'Error, no device set';
         }
         $DEVICE = $request->device;
 
         // Check if name is Set
         if (! isset($request->name) || ! $request->name) {
-            return 'Error, no name set';
+            $errors[] = 'Error, no name set';
         }
         $NAME = $request->name;
 
         // Check if firstname is Set
         if (! isset($request->firstname) || ! $request->firstname) {
-            return 'Error, no firstname set';
+            $errors[] = 'Error, no firstname set';
         }
         $FIRSTNAME = $request->firstname;
 
         // Check if lastname is Set
         if (! isset($request->lastname) || ! $request->lastname) {
-            return 'Error, no lastname set';
+            $errors[] = 'Error, no lastname set';
         }
         $LASTNAME = $request->lastname;
 
@@ -248,25 +249,26 @@ class Cucmphone extends Cucm
 
         // Check if dn is Set
         if (! isset($request->dn) || ! $request->dn) {
-            return 'Error, no dn set';
+            $errors[] = 'Error, no dn set';
         }
         $DN = $request->dn;
 
         // Check if extlength is Set
         if (! isset($request->extlength) || ! $request->extlength) {
-            return 'Error, no extlength set';
+            $errors[] = 'Error, no extlength set';
         }
         $EXTENSIONLENGTH = $request->extlength;
 
         // Check if language is Set
         if (! isset($request->language) || ! $request->language) {
-            return 'Error, no language set';
+            //$errors[] = 'Error, no language set';
+			$LANGUAGE = "english";
         }
         $LANGUAGE = $request->language;
 
         // Check if voicemail is Set
         if (! isset($request->voicemail) || ! $request->voicemail) {
-            return 'Error, no voicemail set';
+            $errors[] = 'Error, no voicemail set';
         }
         $VOICEMAIL = $request->voicemail;
 
@@ -274,6 +276,26 @@ class Cucmphone extends Cucm
         if (isset($request->notes) && $request->notes) {
             $NOTES = $request->notes;
         }
+		
+		if((isset($errors)) && !empty($errors)){
+			$result['Phone'] = [
+						'type'         => "Phone",
+						'object'       => $request->name,
+						'status'       => 'error',
+						'request'      => $request->all,
+						'exception'    => $errors,
+					];
+					
+			$response = [
+						'status_code'    => 200,
+						'success'        => true,
+						'message'        => '',
+						'response'       => $result,
+						];
+
+					return response()->json($response);
+		}
+									
 
         // Final user information required to provision phone:
         $result = $this->provision_cucm_phone_axl(

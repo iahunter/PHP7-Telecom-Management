@@ -110,9 +110,10 @@
 				</div>
 				
 				<div class="modal-body">
+					<div class="table-responsive">
 					<table ng-show="vm.newphones" class="table table-striped table-condensed table-bordered table-hover">
 						<tr>
-							<th>MAC</th>
+							<th>Name</th>
 							<th>Description</th>
 							<th>Line</th>
 							<th>Phone</th>
@@ -120,43 +121,32 @@
 
 						</tr>
 						<tr ng-repeat="phone in vm.newphones">
-							
 							<td>{{ phone.Phone.request.name}}</td>
 							<td>{{ phone.Phone.request.description}}</td>
 							<td>
-								<table class="table table-striped table-condensed table-bordered table-hover">
-									<tr>
-										<th>Number</th>
-										<th>Status</th>
-										<th>Exception</th>
-									</tr>
-									<tr>
-										<td>{{ phone.Line.object}}</td>
-										<td>{{ phone.Line.status}}</td>
-										<td ng-if="!phone.Line.exception"></td>
-										<td ng-if="phone.Line.exception">{{ phone.Line.exception}}</td>
-									</tr>
+								<div ng-if="phone.Line" class="table-responsive">
+								<table class="table table-bordered table-hover" style="background-color: transparent;">
+									<tr ng-repeat="(k,v) in phone.Line">
+										<td ng-if="k != 'request'">{{k}}</td>
+										<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+									</tr>		
 								</table>
+								</div>
 							</td>
 							<td>
-								<table class="table table-striped table-condensed table-bordered table-hover">
-									<tr>
-										<th>Name</th>
-										<th>Status</th>
-										<th>Exception</th>
-									</tr>
-									<tr>
-										<td>{{ phone.Phone.object}}</td>
-										<td>{{ phone.Phone.status}}</td>
-										<td ng-if="!phone.Phone.exception"></td>
-										<td ng-if="phone.Phone.exception">{{ phone.Phone.exception}}</td>
-									</tr>
-								</table>
+								<div ng-if="phone.Phone" class="table-responsive">
+									<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+										<tr ng-repeat="(k,v) in phone.Phone">
+											<td ng-if="k != 'request'">{{k}}</td>
+											<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+										</tr>		
+									</table>
+								</div>
 							</td>
 						</tr>
 					</table>
 					
-					
+				</div>
 				</div>
 				<div class="modal-footer">
 

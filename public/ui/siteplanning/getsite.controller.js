@@ -376,7 +376,7 @@ angular
 				
 				vm.cucmloading = false;
 				
-				alert("Site Deployed to CUCM");
+				//alert("Site Deployed to CUCM");
 				//$state.reload();
 				return vm.deploysiteresult;
 				

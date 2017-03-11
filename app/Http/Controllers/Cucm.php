@@ -78,15 +78,17 @@ class Cucm extends Controller
                   "Data sent:\n";*/
             //$delimiter = "Stack trace:";
             //explode ($delimiter , $EXCEPTION);
-            $this->results[$TYPE] = [
-                                        'type'         => $TYPE,
-                                        'object'       => $OBJECT,
-                                        'status'       => 'error',
-                                        'request'      => $DATA,
-                                        'exception'    => $EXCEPTION,
+            $this->results[$TYPE][] = [
+                                        'type'         	=> $TYPE,
+                                        'object'       	=> $OBJECT,
+                                        'status'       	=> 'error',
+                                        'reply'    		=> $EXCEPTION,
+										'request'      	=> $DATA,
                                     ];
         }
     }
+	
+	
 
     public function listCssDetails(Request $request)
     {

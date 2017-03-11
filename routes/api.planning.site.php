@@ -26,10 +26,18 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
-     *         name="type",
+     *         name="trunking",
      *         in="formData",
-     *         description="Design Type - See Implementation Notes Above",
-     *		   enum={"1", "2", "3", "4"},
+     *         description="Trunking",
+     *		   enum={"sip", "local"},
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="e911",
+     *         in="formData",
+     *         description="E911 Type",
+     *		   enum={"911enable", "local"},
      *         required=true,
      *         type="integer"
      *     ),
@@ -101,6 +109,25 @@
      *         description="Operator Last 4 digits of DID",
      *         required=false,
      *         type="string"
+     *     ),
+     *	   @SWG\Parameter(
+     *         name="extlen",
+     *         in="formData",
+     *         description="Extension Length for internal dialling. Sites with last 4 digits starting with 9 need to be 5 or 10",
+     *		   enum={"4", "5", "10"},
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="languages",
+     *         in="formData",
+     *         description="Languages that are used at the site. One per line. (english, french)",
+     *         required=false,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="",
+     *         ),
      *     ),
      *     @SWG\Parameter(
      *         name="comment",

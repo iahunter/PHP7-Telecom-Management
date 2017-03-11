@@ -83,7 +83,11 @@ class SitePlanController extends Controller
         if (! $user->can('create', Site::class)) {
             abort(401, 'You are not authorized to create new Phone blocks');
         }
+		$sitecode = strtoupper($request->sitecode);
 
+		// Change sitecode to uppercase
+		$request->merge(['sitecode' => $sitecode]);
+		
         $site = Site::create($request->all());
 
         $response = [

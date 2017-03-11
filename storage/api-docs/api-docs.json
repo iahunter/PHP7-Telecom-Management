@@ -2663,16 +2663,25 @@
                         "type": "string"
                     },
                     {
-                        "name": "type",
+                        "name": "trunking",
                         "in": "formData",
-                        "description": "Design Type - See Implementation Notes Above",
+                        "description": "Trunking",
                         "required": true,
                         "type": "integer",
                         "enum": [
-                            "1",
-                            "2",
-                            "3",
-                            "4"
+                            "sip",
+                            "local"
+                        ]
+                    },
+                    {
+                        "name": "e911",
+                        "in": "formData",
+                        "description": "E911 Type",
+                        "required": true,
+                        "type": "integer",
+                        "enum": [
+                            "911enable",
+                            "local"
                         ]
                     },
                     {
@@ -2751,6 +2760,29 @@
                         "description": "Operator Last 4 digits of DID",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "extlen",
+                        "in": "formData",
+                        "description": "Extension Length for internal dialling. Sites with last 4 digits starting with 9 need to be 5 or 10",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "4",
+                            "5",
+                            "10"
+                        ]
+                    },
+                    {
+                        "name": "languages",
+                        "in": "formData",
+                        "description": "Languages that are used at the site. One per line. (english, french)",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "",
+                            "type": "string"
+                        }
                     },
                     {
                         "name": "comment",

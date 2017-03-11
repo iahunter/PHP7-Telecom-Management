@@ -127,7 +127,13 @@ angular
 		}
 		
 		
-		// Create phones - Had to make the posts inline or Informix was throwing errors. 
+		// Create phones - Had to make the posts in series or Informix was throwing errors. 
+		
+		self.clearphoneadds = function(){
+			return self.results = [];
+		}
+		
+		
 		self.results = [];
 		self.createphones = function(arr) {
 			  if (angular.isArray(arr) && arr.length > 0) {

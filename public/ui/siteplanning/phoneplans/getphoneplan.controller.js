@@ -5,13 +5,17 @@ angular
 		var vm = this;
 		
 		vm.refresh = function (){
+			
+			// Call this to clear out the log table from Deploy Phones. 
+			cucmService.clearphoneadds();
+			
 			// jQuery Hack to fix body from the Model. 
 			$(".modal-backdrop").hide();
 			$('body').removeClass("modal-open");
 			$('body').removeClass("modal-open");
 			$('body').removeAttr( 'style' );
 			// End of Hack */
-			
+			console.log(vm.newphones);
 			$state.reload();
 		};
 		

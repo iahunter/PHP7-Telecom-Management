@@ -206,12 +206,12 @@ class Cucmphone extends Cucm
     // Create New Phone
     public function createPhone(Request $request)
     {
-		$errors = [];
+        $errors = [];
         //$user = JWTAuth::parseToken()->authenticate();
 
         // Check if sitecode is Set
         if (! isset($request->sitecode) || ! $request->sitecode) {
-			$errors[] = 'Error, no sitecode set';					
+            $errors[] = 'Error, no sitecode set';
         }
         $SITE = $request->sitecode;
 
@@ -262,7 +262,7 @@ class Cucmphone extends Cucm
         // Check if language is Set
         if (! isset($request->language) || ! $request->language) {
             //$errors[] = 'Error, no language set';
-			$LANGUAGE = "english";
+            $LANGUAGE = 'english';
         }
         $LANGUAGE = $request->language;
 
@@ -276,26 +276,25 @@ class Cucmphone extends Cucm
         if (isset($request->notes) && $request->notes) {
             $NOTES = $request->notes;
         }
-		
-		if((isset($errors)) && !empty($errors)){
-			$result['Phone'] = [
-						'type'         => "Phone",
-						'object'       => $request->name,
-						'status'       => 'error',
-						'request'      => $request->all,
-						'exception'    => $errors,
-					];
-					
-			$response = [
-						'status_code'    => 200,
-						'success'        => true,
-						'message'        => '',
-						'response'       => $result,
-						];
 
-					return response()->json($response);
-		}
-									
+        if ((isset($errors)) && ! empty($errors)) {
+            $result['Phone'] = [
+                        'type'         => 'Phone',
+                        'object'       => $request->name,
+                        'status'       => 'error',
+                        'request'      => $request->all,
+                        'exception'    => $errors,
+                    ];
+
+            $response = [
+                        'status_code'    => 200,
+                        'success'        => true,
+                        'message'        => '',
+                        'response'       => $result,
+                        ];
+
+            return response()->json($response);
+        }
 
         // Final user information required to provision phone:
         $result = $this->provision_cucm_phone_axl(

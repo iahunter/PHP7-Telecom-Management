@@ -59,7 +59,7 @@ class Cucm extends Controller
         }
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-            $this->results[$TYPE] = [
+            $this->results[$TYPE][] = [
                                             'type'       => $TYPE,
                                             'object'     => $OBJECT,
                                             'status'     => 'success',
@@ -87,6 +87,8 @@ class Cucm extends Controller
                                     ];
         }
     }
+	
+	
 
     public function listCssDetails(Request $request)
     {

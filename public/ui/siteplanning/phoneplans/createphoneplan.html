@@ -1,27 +1,37 @@
 
 <div style="margin:25px"></div>
 <div class="well form-horizontal" style="background-color:#f2f3f4" ng-show="vm.showaddrow">
-<legend>Add Phone Plan</legend>
+<legend><i class="fa fa-pencil fa-fw"></i> Add Phone Plan</legend>
 	<form class="form" role="form" id="addsiteForm" ng-submit='addsiteForm.$valid && vm.createphoneplan(vm.newphoneplan)' novalidate name="addsiteForm">
 		<fieldset>
 			<div class="row">
-				<div class="col-md-4" style="margin-left:15px">
+				<div class="col-md-6" style="margin-left:15px">
 					<div class="form-group" ng-class="{'has-error': addsiteForm.name.$touched && addsiteForm.name.$invalid, 'has-success': addsiteForm.name.$touched && addsiteForm.name.$valid }">
 						<label for="name" class="control-label">Name</label>
-						<input type="text" ng-model='vm.newphoneplan.name' class="form-control"  name="name" placeholder="Name" ng-minlength='1' ng-maxlength='50' required>
+						<div class="inputGroupContainer">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-folder-open"></i></span>
+								<input type="text" ng-model='vm.newphoneplan.name' class="form-control"  name="name" placeholder="Name" ng-minlength='1' ng-maxlength='50' required>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4" style="margin-left:15px">
+				<div class="col-md-6" style="margin-left:15px">
 					<div class="form-group" ng-class="{'has-error': addsiteForm.description.$touched && addsiteForm.description.$invalid, 'has-success': addsiteForm.description.$touched && addsiteForm.description.$valid }">
 						<label for="description" class="control-label">Description</label>
-						<input type="textarea" ng-model='vm.newphoneplan.description' class="form-control" name="description" placeholder="Description">
+						<div class="inputGroupContainer">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-bars"></i></span>
+								<input type="textarea" ng-model='vm.newphoneplan.description' class="form-control" name="description" placeholder="Description">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-2" style="margin-left:15px">
+				<div class="col-md-3" style="margin-left:15px">
 					<div class="form-group" ng-class="{'has-error': addsiteForm.employee_vm_user_template.$touched && addsiteForm.employee_vm_user_template.$invalid, 'has-success': addsiteForm.employee_vm_user_template.$touched && addsiteForm.employee_vm_user_template.$valid }">
 						<label for="employee_vm_user_template" class="control-label">Employee Voicemail User Template</label>
 						<select class="form-control" ng-model='vm.newphoneplan.employee_vm_user_template' ng-options="template.Alias as template.Alias for template in vm.usertemplates  | filter: vm.site.sitecode  | orderBy:'Alias'" data-width="100%" name="didblocks">
@@ -29,7 +39,7 @@
 					</div>
 				</div>
 				
-				<div class="col-md-2" style="margin-left:15px">
+				<div class="col-md-3" style="margin-left:15px">
 					<div class="form-group" ng-class="{'has-error': addsiteForm.nonemployee_vm_user_template.$touched && addsiteForm.nonemployee_vm_user_template.$invalid, 'has-success': addsiteForm.nonemployee_vm_user_template.$touched && addsiteForm.nonemployee_vm_user_template.$valid }">
 						<label for="nonemployee_vm_user_template" class="control-label">NonEmployee Voicemail User Template</label>
 						<select class="form-control" ng-model='vm.newphoneplan.nonemployee_vm_user_template' ng-options="template.Alias as template.Alias for template in vm.usertemplates  | filter: vm.site.sitecode  | orderBy:'Alias'" data-width="100%" name="didblocks">

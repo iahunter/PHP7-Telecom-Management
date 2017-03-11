@@ -3,7 +3,7 @@
 <div class="container">
 <div class="well">
 <div style="margin:50px"></div>
-<legend><h3>Create New DID Block</h3></legend>
+
 
 	<div class="row">
 		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-1">
@@ -12,6 +12,7 @@
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
+					<legend><h2><i class="fa fa-pencil fa-fw"></i> Create New DID Block</h2></legend>
 					<form class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">

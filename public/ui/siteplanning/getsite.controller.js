@@ -5,6 +5,13 @@ angular
 		var vm = this;
 		
 		vm.refresh = function (){
+			
+			// jQuery Hack to fix body from the Model. 
+			$(".modal-backdrop").hide();
+			$('body').removeClass("modal-open");
+			$('body').removeClass("modal-open");
+			$('body').removeAttr( 'style' );
+			// End of Hack */
 			$state.reload();
 		};
 		
@@ -370,7 +377,7 @@ angular
 				vm.cucmloading = false;
 				
 				alert("Site Deployed to CUCM");
-				$state.reload();
+				//$state.reload();
 				return vm.deploysiteresult;
 				
 				/*
@@ -383,7 +390,7 @@ angular
 				}
 				*/
 			}, function(error) {
-				alert('An error occurred while creating the site')
+				alert('An error occurred while creating the site \n' + error.data.message)
 			});
 			
 		};

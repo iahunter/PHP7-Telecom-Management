@@ -28,7 +28,14 @@
 					</th>
 					<th>
 						<a href="" ng-click="sortType = 'ipphone'; sortReverse = !sortReverse" style="color:black">
-							IPPhone Number
+							Current IPPhone Number
+								<span ng-show="sortType == 'ipphone' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'ipphone' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'ipphone'; sortReverse = !sortReverse" style="color:black">
+							New IPPhone Number
 								<span ng-show="sortType == 'ipphone' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 								<span ng-show="sortType == 'ipphone' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 						</a>
@@ -42,6 +49,7 @@
 					<td ng-if="user.user != 'User Not Found'">{{ user.username}}</td>
 					<td>{{ user.user}}</td>
 					<td>{{ user.ipphone}}</td>
+					<td>{{ user.newipphone}}</td>
 				</tr>
 			</tbody>
 		</table>

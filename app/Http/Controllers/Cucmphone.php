@@ -12,6 +12,7 @@ class Cucmphone extends Cucm
 
     public function uploadPhones(Request $request)
     {
+		// Upload CSV of phones for import. Not tested. 
         $user = JWTAuth::parseToken()->authenticate();
 
         // Open CSV and Create a new DID Block for each row.
@@ -158,6 +159,48 @@ class Cucmphone extends Cucm
         $NAME = $request->name;
 
         return $this->deletePhonebyName($NAME);
+    }
+	
+	// CUCM Add Phone Wrapper
+    public function wrap_add_phone_object($DATA, $TYPE)
+    {
+        // Get the name to reference the object.
+        if (isset($DATA['name'])) {
+            $OBJECT = $DATA['name'];
+        } elseif (isset($DATA['pattern'])) {
+            $OBJECT = $DATA['pattern'];
+        } else {
+            $OBJECT = $TYPE;
+        }
+        try {
+            $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
+            $this->results[$TYPE] = [
+                                            'type'       => $TYPE,
+                                            'object'     => $OBJECT,
+                                            'status'     => 'success',
+                                            'reply'      => $REPLY,
+                                            'request'    => $DATA,
+
+                                        ];
+            //"{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
+
+            return $REPLY;
+        } catch (\Exception $E) {
+            $EXCEPTION = "Exception adding object type: {$TYPE}".
+                  "{$E->getMessage()}";
+                  /*"Stack trace:\n".
+                  "{$E->getTraceAsString()}".
+                  "Data sent:\n";*/
+            //$delimiter = "Stack trace:";
+            //explode ($delimiter , $EXCEPTION);
+            $this->results[$TYPE] = [
+                                        'type'         => $TYPE,
+                                        'object'       => $OBJECT,
+                                        'status'       => 'error',
+                                        'request'      => $DATA,
+                                        'exception'    => $EXCEPTION,
+                                    ];
+        }
     }
 
     // Create New Phone
@@ -472,25 +515,16 @@ class Cucmphone extends Cucm
 
         $RETURN = [];
 
-        // Add Line
-        $RETURN['line']['config'] = $PHONELINE;
-        $this->wrap_add_object($PHONELINE, 'Line');
-        $RETURN['line']['log'] = $this->results;
-        //$this->results = [];
+		// Add Line
+        $this->wrap_add_phone_object($PHONELINE, 'Line');
 
-        // Update Line
-        $RETURN['line']['config']['e164AltNum'] = $PHONELINE;
+        // Update Line E164 Alternative Number Mask - workaround for Cisco Bug when adding Line
         $RESULT = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, 'Line');
-        $RETURN['phone']['log']['e164AltNum'] = $RESULT;
-        //$this->results = [];
 
         // Add Phone
-        $RETURN['phone']['config'] = $PHONE;
-        $this->wrap_add_object($PHONE, 'Phone');
-        $RETURN['phone']['log'] = $this->results;
-        //$this->results = [];
+        $this->wrap_add_phone_object($PHONE, 'Phone');
 
         return json_decode(json_encode($this->results), true);
-        //return $RETURN;
+
     }
 }

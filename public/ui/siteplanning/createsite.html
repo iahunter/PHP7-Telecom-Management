@@ -11,17 +11,25 @@
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
-				<legend><h3>Create New Site - This needs work!</h3></legend>
+				<legend><h2><i class="fa fa-pencil fa-fw"></i> Create New Site Plan</h2></legend>
+					<p>If you have not created the site DID Range, Please click the button below.<br><br>
+					<a href="#/didblock/create"><button class="btn btn-default">Add DID Block</button></a></p>
+					<hr>
 					<form class="form" role="form" id="addsiteForm" ng-submit='addsiteForm.$valid && vm.submitsite(vm.siteForm)' novalidate name="addsiteForm">
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.sitecode.$touched && addsiteForm.sitecode.$invalid, 'has-success': addsiteForm.name.$touched && addsiteForm.name.$valid }">
 									<label for="sitecode" class="control-label">Sitecode</label>
-									<input type="text" ng-model='vm.siteForm.sitecode' required class="form-control"  name="sitecode" placeholder="Sitecode" ng-minlength='8' ng-maxlength='8'>
-									<div ng-messages="addsiteForm.sitecode.$dirty && addsiteForm.sitecode.$error">
-										<div ng-message='required'> Sitecode is required </div>
-										<div ng-message='minlength'>Please enter a Sitecode at least 8 chars long</div>
-										<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+											<input type="text" ng-model='vm.siteForm.sitecode' required class="form-control"  name="sitecode" placeholder="Sitecode" ng-minlength='8' ng-maxlength='8'>
+										</div>
+										<div ng-messages="addsiteForm.sitecode.$dirty && addsiteForm.sitecode.$error">
+												<div ng-message='required'> Sitecode is required </div>
+												<div ng-message='minlength'>Please enter a Sitecode at least 8 chars long</div>
+												<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -32,17 +40,27 @@
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.carrier.$touched && addsiteForm.carrier.$invalid, 'has-success': addsiteForm.carrier.$touched && addsiteForm.carrier.$valid }">
 									<label for="carrier" class="control-label">Carrier</label>
-									<input type="text" ng-model='vm.siteForm.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
-									<div ng-messages="addsiteForm.carrier.$dirty && addsiteForm.carrier.$error">
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<input type="text" ng-model='vm.siteForm.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
+										</div>
+										<div ng-messages="addsiteForm.carrier.$dirty && addsiteForm.carrier.$error">
+										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.comment.$touched && addsiteForm.comment.$invalid, 'has-success': addsiteForm.comment.$touched && addsiteForm.comment.$valid }">
 									<label for="comment" class="control-label">Comment</label>
-									<input type="textarea" ng-model='vm.siteForm.comment' class="form-control" name="comment" placeholder="Comment">
-									<div ng-messages="addsiteForm.comment.$dirty && addsiteForm.comment.$error">
-										<div ng-messages-include="error-messages"></div>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<input type="textarea" ng-model='vm.siteForm.comment' class="form-control" name="comment" placeholder="Comment">	
+										</div>
+										<div ng-messages="addsiteForm.comment.$dirty && addsiteForm.comment.$error">
+												<div ng-messages-include="error-messages"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -64,47 +82,68 @@
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.npa.$touched && addsiteForm.npa.$invalid, 'has-success': addsiteForm.npa.$touched && addsiteForm.npa.$valid }">
 									<label for="npa" required class=" control-label">NPA (Area Code)</label>
-									<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.npa' class="form-control" name="npa" placeholder="402" ng-minlength='3' ng-maxlength='3'>
-									<div ng-messages="addsiteForm.npa.$dirty && addsiteForm.npa.$error">
-										<div ng-message="pattern">Please enter the npa in the numberic format</div>
-										<div ng-message='minlength'>Please enter least 3 digits</div>
-										<div ng-message='maxlength'>Please enter least 3 digits</div>
-										<div ng-messages-include="error-messages"></div>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.npa' class="form-control" name="npa" placeholder="402" ng-minlength='3' ng-maxlength='3'>
+										</div>
+										<div ng-messages="addsiteForm.npa.$dirty && addsiteForm.npa.$error">
+												<div ng-message="pattern">Please enter the npa in the numberic format</div>
+												<div ng-message='minlength'>Please enter 3 digits</div>
+												<div ng-message='maxlength'>Please enter 3 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.nxx.$touched && addsiteForm.nxx.$invalid, 'has-success': addsiteForm.nxx.$touched && addsiteForm.nxx.$valid }">
 									<label for="nxx" required class=" control-label">NXX (Next 3 after Area Code)</label>
-									<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.nxx' class="form-control" name="nxx" placeholder="938"  ng-minlength='3' ng-maxlength='3'>
-									<div ng-messages="addsiteForm.nxx.$dirty && addsiteForm.nxx.$error">
-										<div ng-message="pattern">Please enter the nxx in the numberic format</div>
-										<div ng-message='minlength'>Please enter least 3 digits</div>
-										<div ng-message='maxlength'>Please enter least 3 digits</div>
-										<div ng-messages-include="error-messages"></div>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.nxx' class="form-control" name="nxx" placeholder="938"  ng-minlength='3' ng-maxlength='3'>
+										</div>
+										<div ng-messages="addsiteForm.nxx.$dirty && addsiteForm.nxx.$error">
+												<div ng-message="pattern">Please enter the nxx in the numberic format</div>
+												<div ng-message='minlength'>Please enter 3 digits</div>
+												<div ng-message='maxlength'>Please enter 3 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
 									</div>
 								</div>
 							</div>	
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.didrange.$touched && addsiteForm.didrange.$invalid, 'has-success': addsiteForm.didrange.$touched && addsiteForm.didrange.$valid }">
 									<label for="didrange" required class=" control-label">DID Range Regex (Example - 40[2-9]X)</label>
-									<input type="textarea" required ng-pattern='/^[0-9,\],\-,\[,X]+/' ng-model='vm.siteForm.didrange' class="form-control" name="didrange" placeholder="40[2-9]X" ng-minlength='4'>
-									<div ng-messages="addsiteForm.didrange.$dirty && addsiteForm.didrange.$error">
-										<div ng-message="pattern">Please enter the didrange in the regex format</div>
-										<div ng-message='minlength'>Please enter least 4 charactors</div>
-										<div ng-messages-include="error-messages"></div>
+									
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="textarea" required ng-pattern='/^[0-9,\],\-,\[,X]+/' ng-model='vm.siteForm.didrange' class="form-control" name="didrange" placeholder="40[2-9]X" ng-minlength='4'>
+										</div>
+										<div ng-messages="addsiteForm.didrange.$dirty && addsiteForm.didrange.$error">
+												<div ng-message="pattern">Please enter the didrange in the regex format</div>
+												<div ng-message='minlength'>Please enter least 4 charactors</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.operator.$touched && addsiteForm.operator.$invalid, 'has-success': addsiteForm.operator.$touched && addsiteForm.operator.$valid }">
 									<label for="operator" class=" control-label">Operator last 4 digits of DID <i>(optional)</i></label>
-									<input type="text" ng-pattern='/^[0-9]/' ng-model='vm.siteForm.operator' class="form-control" name="operator" placeholder="4000" ng-maxlength='4' ng-maxlength='4'>
-									<div ng-messages="addsiteForm.operator.$dirty && addsiteForm.operator.$error">
-										<div ng-message="pattern">Please enter the operator last 4 digits of DID</div>
-										<div ng-message='minlength'>Operator must be 4 digits</div>
-										<div ng-message='minlength'>Operator must be 4 digits</div>
-										<div ng-messages-include="error-messages"></div>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" ng-pattern='/^[0-9]/' ng-model='vm.siteForm.operator' class="form-control" name="operator" placeholder="4000" ng-maxlength='4' ng-maxlength='4'>
+										</div>
+										<div ng-messages="addsiteForm.operator.$dirty && addsiteForm.operator.$error">
+												<div ng-message="pattern">Please enter the operator last 4 digits of DID</div>
+												<div ng-message='minlength'>Operator must be 4 digits</div>
+												<div ng-message='minlength'>Operator must be 4 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -227,7 +266,7 @@
 						
 						Print Form JSON
 						<div class="row">
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
 								{{vm.siteForm}}
 								
 							</div>

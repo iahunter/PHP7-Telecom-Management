@@ -53,9 +53,9 @@
 					<th>
 							Lines
 					</th>
-					<th>
+					<!--<th>
 							Actions
-					</th>
+					</th>-->
 				</tr>
 			</thead>
 			<tbody>
@@ -89,19 +89,19 @@
 							</div>
 							
 					</td>
-					<td><a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.deletecucmphone(phone)">Delete</a></td>
+					<!--<td><a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.deletecucmphone(phone)">Delete</a></td>-->
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<div style="margin:25px"></div>
-	<a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.cucmphonedeleteselected(vm.cucmphones)">Delete Selected</a>
+	<a class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="vm.cucmphonedeleteselected(vm.cucmphones)">Delete Selected</a>
 </div>
 
 
 
 						
-	<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
+	<!-- Phone Deployment Modal -->
 	<div class="modal fade " id="{{vm.phoneplan.id}}-modal" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -162,8 +162,9 @@
 
 				
 				<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
-				<a class="btn btn-danger" ng-click="vm.deployphonescucm(vm.phones)">Deploy Phone Plan Phones</a>
-				<a class="btn btn-primary" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
+				<a class="btn btn-danger btn-sm" ng-if="!vm.newphones" ng-click="vm.deployphonescucm(vm.phones)">Deploy Phone Plan Phones</a>
+				<a class="btn btn-primary btn-sm" ng-if="vm.newphones" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
+				<a class="btn btn-primary btn-sm" ng-if="!vm.newphones" data-dismiss="modal">Cancel</a>
 					
 				</div>
 			</div>

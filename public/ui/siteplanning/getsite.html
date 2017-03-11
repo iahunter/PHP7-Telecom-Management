@@ -1,6 +1,6 @@
 <div style="margin:100px"></div>
 
-<div style="margin-left:80px; margin-right:80px;">
+<div style="margin-left:5%; margin-right:5%;">
 	<div class="well form-horizontal" style="margin-top:10px;" >
 	
 			<div style="margin:50px"></div>
@@ -14,6 +14,7 @@
 			
 		
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">    
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr class="warning">
@@ -174,9 +175,11 @@
 					</tbody>
 				</table>
 			</div>
+			</div>
 			<div ng-show="vm.site.didblocks">
 				<legend>DID Blocks</legend>
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+				<div class="table-responsive">    
 					<table class="table table-condensed table-striped table-bordered table-hover">
 					
 						<thead>
@@ -197,6 +200,7 @@
 						</tbody>
 					</table>
 				</div>
+				</div>
 			</div>
 			<div ng-hide="vm.site.didblocks">
 			<h4>No DID Blocks Found</h4>
@@ -213,15 +217,83 @@
 					<br>
 					<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
 					<hr>
-					<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>
+					<!--<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>-->
+					<button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#{{vm.phoneplan.id}}-modal"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM </button>
 				</div>
 			</div>
+			
+			
+			
+				<!-- Phone Deployment Modal -->
+			<div class="modal fade " id="{{vm.phoneplan.id}}-modal" role="dialog">
+				<div class="modal-dialog">
+					<div style="background-color:white" class="modal-content">
+						<div class="modal-header">
+							<h3>Deploy Site Skeleton to CUCM</h3>
+						</div>
+						
+						<div class="modal-body">
+						
+							<table style="background-color:white" ng-show="vm.deploysiteresult" class="table table-striped table-condensed table-bordered table-hover">
+								<tr>
+									<th>Key</th>
+									<th>Values</th>
+									<!--th>Status</th>
+									<th>Reply</th>
+									<th>Request</th-->
+								</tr>
+								<tr ng-repeat="(key,values) in vm.deploysiteresult">
+									<td>{{ key}}</td>
+									<td>
+										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+											<tr ng-repeat="value in values">
+												<td>
+													<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+														<tr ng-repeat="(k,v) in value">
+															<td>{{k}}</td>
+															<td>{{v}}</td>
+														</tr>	
+													</table>
+												</td>
+											</tr>	
+										</table>
+									</td>
+									<!--
+									<td>{{ object.type}}</td>
+										<tr ng-repeat="object in vm.deploysiteresult">
+									<td>{{ object.type}}</td>
+									<td>{{ object.object}}</td>
+									<td>{{ object.status}}</td>
+									<td>{{ object.reply}}</td>
+									<td>{{ object.request}}</td>-->
+								</tr>
+							</table>
+							
+						
+						</div>
+						<div class="modal-footer">
+
+						
+						
+						
+						<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+						<button ng-show="!vm.deploysiteresult" class="btn btn-danger btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>
+						<a class="btn btn-primary btn-sm" ng-show="vm.deploysiteresult" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
+						<a class="btn btn-primary btn-sm" ng-show="!vm.deploysiteresult" data-dismiss="modal">Cancel</a>
+							
+						</div>
+					</div>
+				</div>
+			</div> <!-- npa of Modal -->
+			
+			
 			
 			<div class="panel panel-default" ng-show="vm.cucmsitesummary">
 				<div class="panel-heading">
 					<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM Configuration</h4></a>
 				</div>
-				<div class="panel-body panel-collapse collapse"" id="collapse1"><b>Site Exists in CUCM</b><hr> 
+				<div class="panel-body panel-collapse collapse"" id="collapse1"><b>Site Exists in CUCM</b><hr>
+					<div class="table-responsive">
 					<table class="table table-bordered table-hover table-responsive">
 						<thead>
 							<tr class="default">
@@ -251,6 +323,7 @@
 						</tbody>
 						
 					</table>
+					</div>
 				</div>	
 			</div>
 		
@@ -296,6 +369,7 @@
 				</div>
 				<div class="panel-body panel-collapse collapse" id="usertemplates">
 					<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					<div class="table-responsive">
 						<table class="table table-condensed table-striped table-bordered table-hover">
 							<thead>
 								<tr class="success">
@@ -327,6 +401,7 @@
 							</tbody>
 						</table>
 					</div>
+					</div>
 				</div>
 			</div>	
 		</div>
@@ -357,7 +432,7 @@
 				
 			<div style="margin:75px"></div>
 			
-			<legend >Phone Planning</legend>
+			<legend ><i class="glyphicon glyphicon-earphone"></i>  Phone Planning</legend>
 				
 						
 			<div class="input-group col-md-3 ">
@@ -384,6 +459,7 @@
 				</div>
 			
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.phoneplans.length > 0">
+				<div class="table-responsive">    
 					<table class="table table-striped table-condensed table-bordered table-hover">
 						<thead>
 							<tr class="success">
@@ -537,6 +613,7 @@
 						</tr>
 						</tbody>
 					</table>
+				</div>
 				</div>
 		</div>
 	</div>

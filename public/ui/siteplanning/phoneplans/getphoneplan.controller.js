@@ -288,6 +288,7 @@ angular
 			
 		}
 		
+		vm.trest = vm.getusersfromcupi(vm.phones);
 		
 		// Get the list of Unfied Messaging Services
 		vm.cupilistexternalservices = cupiService.listexternalservices()
@@ -406,6 +407,7 @@ angular
 					
 					user.id = phone.id;
 					user.username = phone.username
+					user.newipphone = phone.dn;
 					
 					result = res.data.result;
 					

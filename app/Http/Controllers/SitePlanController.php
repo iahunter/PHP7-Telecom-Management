@@ -440,12 +440,13 @@ class SitePlanController extends Controller
     public function createphoneplan(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-
+		
         // Check Role of user
         if (! $user->can('create', Phoneplan::class)) {
             abort(401, 'You are not authorized to create new Phone blocks');
         }
 
+		$request->merge(['created_by' => $user->username]);
         $phoneplan = Phoneplan::create($request->all());
 
         $response = [
@@ -472,7 +473,7 @@ class SitePlanController extends Controller
             abort(401, 'You are not authorized to update phone plan '.$id);
         }
         */
-
+		$request->merge(['updated_by' => $user->username]);
         $phoneplan->fill($request->all());
         $phoneplan->save();
 

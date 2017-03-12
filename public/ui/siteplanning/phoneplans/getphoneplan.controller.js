@@ -15,7 +15,7 @@ angular
 			$('body').removeClass("modal-open");
 			$('body').removeAttr( 'style' );
 			// End of Hack */
-			console.log(vm.newphones);
+			//console.log(vm.newphones);
 			$state.reload();
 		};
 		
@@ -358,14 +358,14 @@ angular
 								user.username = phone.firstname + " " + phone.lastname + " " + phone.dn;
 								user.template = vm.phoneplan.nonemployee_vm_user_template;
 								
-								// If Username exists and voicemail is set then we assume user is not a Kiewit Employee and we create a mailbox without Unified Messaging. 
+								// If Username exists and voicemail is set then we assume user is not an Employee and we create a mailbox without Unified Messaging. 
 								
 								// Import LDAP User / Update User Mailbox Extension
 								console.log("Creating New User for NonEmployee...")
 								cupiService.createuser(user)
 									.then(function(res){
 										
-										console.log(res.data)
+										//console.log(res.data)
 
 									}, function(err){
 										// Error
@@ -381,7 +381,7 @@ angular
 								cupiService.importldapuser(user)
 									.then(function(res){
 										
-										console.log(res.data)
+										//console.log(res.data)
 
 									}, function(err){
 										// Error
@@ -642,14 +642,14 @@ angular
 			angular.forEach(vm.phones, function(phone) {
 				phone.sitecode = vm.site.sitecode;
 				phone.extlength = vm.site.extlen;
-				console.log(phone);
+				//console.log(phone);
 			});
 				//angular.copy(vm.phones)
 				var newphones = cucmService.createphones(angular.copy(vm.phones));
 			
 				vm.newphones = newphones;
-				console.log("Newphones")
-				console.log(vm.newphones);
+				//console.log("Newphones")
+				//console.log(vm.newphones);
 			
 		};
 		

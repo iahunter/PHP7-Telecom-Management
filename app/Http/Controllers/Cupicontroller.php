@@ -238,8 +238,8 @@ class Cupicontroller extends Controller
 
         /* Example
         {
-            "Alias":"TRAVIS01_Kiewit_User",
-            "DisplayName":"TRAVIS01_Kiewit_User",
+            "Alias":"TRAVIS01_EMPOLOYEE_USER",
+            "DisplayName":"TRAVIS01_EMPOLOYEE_USER",
             "City": "Omaha",
             "State": "NE",
             "Country": "US",

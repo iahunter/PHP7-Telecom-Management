@@ -163,8 +163,8 @@
 									<table class="table table-bordered table-hover" style="background-color: transparent;">
 										<tr ng-repeat="(k,v) in phone.Line">
 											<!--Hide the row data if it equals request-->
-											<td ng-if="k != 'request'"><b>{{k}}</b></td>
-											<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'"  ng-init="vm.newphones.lineerrors = vm.newphones.lineerrors + 1"class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'"  ng-init="vm.newphones.linesuccess = vm.newphones.linesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+											<td ng-if="k != 'request' && k != 'type' "><b>{{k}}</b></td>
+											<td ng-if="k != 'request' && k != 'type'"><i ng-if="k == 'status' && v == 'error'"  ng-init="vm.newphones.lineerrors = vm.newphones.lineerrors + 1"class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'"  ng-init="vm.newphones.linesuccess = vm.newphones.linesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
 										</tr>		
 									</table>
 									</div>
@@ -173,9 +173,9 @@
 									<div ng-if="phone.Phone" class="table-responsive">
 										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
 											<tr ng-repeat="(k,v) in phone.Phone">
-												<!--Hide the row data if it equals request-->
-												<td ng-if="k != 'request'"><b>{{k}}</b></td>
-												<td ng-if="k != 'request'"><i ng-if="k == 'status' && v == 'error'" ng-init="vm.newphones.phoneerrors = vm.newphones.phoneerrors + 1" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" ng-init="vm.newphones.phonesuccess = vm.newphones.phonesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+												<!--Hide the row data if it equals request or type-->
+												<td ng-if="k != 'request'  && k != 'type' "><b>{{k}}</b></td>
+												<td ng-if="k != 'request'  && k != 'type' "><i ng-if="k == 'status' && v == 'error'" ng-init="vm.newphones.phoneerrors = vm.newphones.phoneerrors + 1" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" ng-init="vm.newphones.phonesuccess = vm.newphones.phonesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
 											</tr>		
 										</table>
 									</div>

@@ -17,7 +17,7 @@
 			<div class="table-responsive">    
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
-						<tr class="warning">
+						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 									ID
@@ -236,8 +236,8 @@
 							<p ng-hide="vm.deploysiteresult"><b style="color:red" >Warning!</b> You are about to deploy objects to the Production System.</p>
 							<legend ng-show="vm.deploysiteresult">Summary Report</legend>
 						
-							<div ng-if="vm.cucmloading">
-								<legend >Please wait... </legend>
+							<div ng-if="vm.deploycucmsiteloading">
+								<legend >Deploying Site. Please Wait... </legend>
 								<div class="well">
 									<div class="row">
 										<div class="container loader"></div>
@@ -246,6 +246,8 @@
 								</div>
 							</div>
 						
+							<div class="table-responsive">
+							<div style="margin:25px"></div>
 							<table style="background-color:white" ng-show="vm.deploysiteresult" class="table table-striped table-condensed table-bordered table-hover">
 								<tr>
 									<th>Key</th>
@@ -273,7 +275,7 @@
 								</tr>
 							</table>
 							
-						
+							</div>
 						</div>
 						<div class="modal-footer">
 
@@ -296,24 +298,13 @@
 				<div class="panel-heading">
 					<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM Configuration</h4></a>
 				</div>
-				<div class="panel-body panel-collapse collapse"" id="collapse1"><b>Site Exists in CUCM</b><hr>
+				<div class="panel-body panel-collapse collapse"" id="collapse1">
 					<div class="table-responsive">
 					<table class="table table-bordered table-hover table-responsive">
-						<thead>
-							<tr class="default">
-								
-								<th>
-									Key
-								</th>
-								<th>
-									Values
-								</th>
-							</tr>
-						</thead>
 						<tbody>
 							
 							<tr ng-repeat="(key,values) in vm.cucmsitesummary">
-								<td>{{key}}</td>
+								<td><b>{{key}}</b></td>
 								<!--<td style="word-wrap: break-word; margin:10px;">{{values}}</td>-->
 								<td>
 									<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
@@ -516,7 +507,13 @@
 									</a>
 								</th>
 
-
+								<th>
+									<a href="" ng-click="sortType = 'created_by'; sortReverse = !sortReverse" style="color:black">
+										Created By
+											<span ng-show="sortType == 'created_by' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'created_by' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
 								<th>
 									<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
 										Created At
@@ -526,12 +523,23 @@
 								</th>
 								
 								<th>
+									<a href="" ng-click="sortType = 'updated_by'; sortReverse = !sortReverse" style="color:black">
+										Updated By
+											<span ng-show="sortType == 'updated_by' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'updated_by' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								
+								<th>
 									<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
 										Updated At
 											<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 											<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
 								</th>
+								
+								
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -549,7 +557,9 @@
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.employee_vm_user_template}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.nonemployee_vm_user_template}}</td>
+							<td   ng-show="!vm.edit[phone.id]">{{ phone.created_by}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
+							<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_by}}</td>
 							<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
 							<td   ng-show="!vm.edit[phone.id]">
 								<button class="btn btn-xs btn-primary"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
@@ -607,7 +617,9 @@
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.language"></td>
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.employee_vm_user_template"></td>
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.nonemployee_vm_user_template"></td>
+							<td   ng-show="vm.edit[phone.id]">{{ phone.created_by}}</td>
 							<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>
+							<td   ng-show="vm.edit[phone.id]">{{ phone.updated_by}}</td>
 							<td   ng-show="vm.edit[phone.id]">{{ phone.updated_at}}</td>
 							
 							<td  ng-show="vm.edit[phone.id]">

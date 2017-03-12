@@ -35,7 +35,7 @@ angular
 					//alert(res.message);
 					$state.go('logout');
 				}
-				console.log(res);
+				//console.log(res);
 				vm.phoneplans = res.data.result;
 				
 
@@ -94,7 +94,7 @@ angular
 		vm.createphoneplan = function(phoneplan) {
 			phoneplan.site = vm.site.id;
 			
-			console.log(phoneplan);
+			//console.log(phoneplan);
 			
 			sitePhonePlanService.createphoneplan(phoneplan).then(function(data) {
 			  //alert('phoneplan was added successfully');
@@ -167,17 +167,17 @@ angular
 				language = vm.site.languages;
 				//console.log(language);
 			}
-			console.log(language);
+			//console.log(language);
 			
 			angular.forEach(language, function(values) {
-				console.log(values);
+				//console.log(values);
 				template = {};
 				template.sitecode = vm.site.sitecode;
 				template.language = values;
 				template.timezone = vm.site.timezone;
 				template.operator = vm.site.npa + vm.site.nxx + vm.site.operator;
 				
-				console.log(template)
+				//console.log(template)
 				
 				cupiService.createusertemplatesforsite(template).then(function(data) {
 					
@@ -338,8 +338,8 @@ angular
 		vm.deploycucmsite = function () {
 			// Update $scope values to form data. 
 
-			console.log(vm.site);
-			vm.cucmloading = true;
+			//console.log(vm.site);
+			vm.deploycucmsiteloading = true;
 			
 			var site = {};
 			site.sitecode = vm.site.sitecode;
@@ -366,7 +366,7 @@ angular
 			site.didrange = vm.site.didrange;
 			site.operator = vm.site.operator;
 			
-			console.log(site);
+			//console.log(site);
 		
 			
 			// Call the validate address service. 
@@ -374,7 +374,7 @@ angular
 				
 				vm.deploysiteresult = data.data.response;
 				
-				vm.cucmloading = false;
+				vm.deploycucmsiteloading = false;
 				
 				//alert("Site Deployed to CUCM");
 				//$state.reload();

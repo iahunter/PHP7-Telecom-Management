@@ -33,8 +33,8 @@ class CreateSitePlanning extends Migration
             $table->text('operator')->nullable();              // Comment
             $table->json('details')->nullable();            // JSON Details Custom Field Data
             $table->json('languages')->nullable();           // JSON Details Custom Field Data
-            //$table->string('createdby');            // simple name to reference the account by
-            //$table->string('updatedby');            // simple name to reference the account by
+            $table->string('created_by')->nullable();              // simple name to reference the account by
+            $table->string('updated_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                           // Time Stamps
             $table->softDeletes();                          // Soft Deletes
         });
@@ -59,8 +59,8 @@ class CreateSitePlanning extends Migration
             $table->string('employee_vm_user_template')->nullable();            // CUPI User Template
             $table->string('nonemployee_vm_user_template')->nullable();            // CUPI User Template
             $table->json('json')->nullable();            // JSON Details Custom Field Data
-            //$table->string('createdby');            // simple name to reference the account by
-            //$table->string('updatedby');            // simple name to reference the account by
+            $table->string('created_by')->nullable();              // simple name to reference the account by
+            $table->string('updated_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
         });
@@ -89,8 +89,8 @@ class CreateSitePlanning extends Migration
             $table->json('assignments')->nullable();                   // JSON Custom Field Data
             $table->string('system_id')->nullable();
             $table->string('notes')->nullable();            // Future - System ID - CUCM/Lync ID
-            //$table->string('createdby');            // simple name to reference the account by
-            //$table->string('updatedby');            // simple name to reference the account by
+            $table->string('created_by')->nullable();              // simple name to reference the account by
+            $table->string('updated_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
         });

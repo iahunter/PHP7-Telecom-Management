@@ -6,7 +6,7 @@
 	
 	<div style="margin:50px"></div>
 	
-	<legend><i class="fa fa-database"></i> DID Block Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+	<legend>Number Block Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
 		<h4>Total DIDs: {{vm.resultValue | sumofValue: 'size'}}</h4>
 		
@@ -38,7 +38,7 @@
 			<div class="table-responsive">    
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
-						<tr class="success">
+						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 									ID

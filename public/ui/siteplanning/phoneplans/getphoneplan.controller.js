@@ -88,6 +88,13 @@ angular
 				angular.forEach(vm.phones, function(phone) {
 					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
 					console.log(phone.dn)
+					
+					if(phone.name.length != 12){
+						phone.nameinvalid = true;
+					}
+					
+					//console.log(phone.name.length)
+					
 					if((phone.dn > 1000000000) && (phone.dn < 9999999999)){
 						//console.log(phone.dn)
 						phone.dnint = true;
@@ -107,6 +114,9 @@ angular
 								if (result.user == ""){
 									phone.aduser = ""
 									phone.adipphone = ""
+								
+								}if (result.disabled == true){
+									phone.aduser = "";
 								
 								}else{
 									phone.adipphone = result.ipphone
@@ -166,11 +176,14 @@ angular
 				// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
 				
 				//console.log(phone);
-				
-				if(phone.device != "IP Communicator"){
-					name = "SEP"+ phone.name
+				if(phone.device == "ATA190"){
+					name = "ATA"+ phone.name
+				}
+				else if(phone.device == "IP Communicator"){
+					name = phone.name
 				}else{
 					name = phone.name
+					name = "SEP"+ phone.name
 				}
 				
 				cucmService.getphone(name)
@@ -423,6 +436,9 @@ angular
 							user.ipphone = result.ipphone
 							user.user = result.user
 						}
+						if(result.disabled){
+							user.disabled = true;
+						}
 					}else{
 						user.user = "User Not Found"
 					}
@@ -635,6 +651,20 @@ angular
 			  
 			});
 		*/
+		
+		vm.ignoreexistingphones = false;
+		
+		vm.showfailuresonly = function() {
+			vm.phonefailures = [];
+			angular.forEach(vm.newphones, function(phone) {
+				if(phone.Line.status == "error" || ""  && phone.Phone.status == "error"){
+					console.log(phone.Line.status);
+					console.log(phone.Line.status);
+					vm.phonefailures.push(phone);
+				}
+			})
+			return vm.phonefailures
+		}
 
 		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
 		vm.deployphonescucm = function() {
@@ -644,12 +674,14 @@ angular
 				phone.extlength = vm.site.extlen;
 				//console.log(phone);
 			});
+			
 				//angular.copy(vm.phones)
-				var newphones = cucmService.createphones(angular.copy(vm.phones));
+				var newphones = cucmService.createphones(angular.copy(vm.phones), vm.ignoreexistingphones);
 			
 				vm.newphones = newphones;
-				//console.log("Newphones")
-				//console.log(vm.newphones);
+				
+
+				console.log(vm.newphones);
 			
 		};
 		

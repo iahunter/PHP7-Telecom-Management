@@ -135,28 +135,68 @@ angular
 		
 		
 		self.results = [];
-		self.createphones = function(arr) {
-			  if (angular.isArray(arr) && arr.length > 0) {
-				console.log(arr);
-				var postdata = arr[0];
-				$http.post('../api/cucm/phone', postdata)
-				  .then(
-					  function(data) {
-						self.results.push(data.data.response);
-						console.log("Success.");
-						arr.shift();
-						self.createphones(arr);
-						//console.log('After Shift');
-						//console.log(arr);
-					  },
-					  function(data) {
-						self.results.push(data.data.response);
-						console.log("Failure.");
-						// if you want to continue even if it fails:
-						self.createphones(arr.shift());
-					  }
-				);
-			  }
+		self.createphones = function(phones, ignoreexisting) {
+				if (angular.isArray(phones) && phones.length > 0) {
+					console.log("PHONES")
+					console.log(phones);
+					var postdata = phones[0];
+					if (ignoreexisting == true){
+						if (postdata.inuse == false){
+							//phone.inuse = false
+							$http.post('../api/cucm/phone', postdata)
+							  .then(
+								  function(data) {
+									self.results.push(data.data.response);
+									console.log("Success.");
+									phones.shift();
+									self.createphones(phones, ignoreexisting);
+									//console.log('After Shift');
+									//console.log(phones);
+								  },
+								  function(data) {
+									self.results.push(data.data.response);
+									console.log("Failure.");
+									// if you want to continue even if it fails:
+									
+									self.createphones(phones.shift(), ignoreexisting);
+								  }
+							);
+						}else{
+							var phone = {};
+							phone.skipped = true;
+							phone.Phone = {};
+							phone.Phone.request = postdata;
+							phone.Phone.skipped = true;
+							phone.Line = {};
+							phone.Line.skipped = true;
+							self.results.push(phone);
+							phones.shift();
+							self.createphones(phones, ignoreexisting);
+						}
+					}else{
+						//phone.inuse = true
+						$http.post('../api/cucm/phone', postdata)
+						  .then(
+							  function(data) {
+								self.results.push(data.data.response);
+								console.log("Success.");
+								phones.shift();
+								self.createphones(phones, ignoreexisting);
+								//console.log('After Shift');
+								//console.log(phones);
+							  },
+							  function(data) {
+								self.results.push(data.data.response);
+								console.log("Failure.");
+								// if you want to continue even if it fails:
+								self.createphones(phones.shift(), ignoreexisting );
+							  }
+						);
+					}
+					
+					
+				}
+			
 			console.log(self.results);
 			return self.results;
 		}

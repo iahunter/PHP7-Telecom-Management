@@ -45,8 +45,8 @@
 			<tbody>
 				<tr ng-repeat="user in vm.users | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					<td>{{ user.id}}</td>
-					<td ng-if="user.user == 'User Not Found'" style="color:red">{{ user.username}}</td>
-					<td ng-if="user.user != 'User Not Found'">{{ user.username}}</td>
+					<td ng-if="user.user == 'User Not Found' || user.disabled == true" style="color:red">{{ user.username}}</td>
+					<td ng-if="user.user != 'User Not Found' && user.disabled != true">{{ user.username}}</td>
 					<td>{{ user.user}}</td>
 					<td>{{ user.ipphone}}</td>
 					<td>{{ user.newipphone}}</td>

@@ -332,8 +332,9 @@
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.adipphone}}</td>
 						-->
 						
-						<td   ng-show="!vm.edit[phone.id] && !phone.inuse">{{ phone.name}}</td>
+						<td   ng-show="!vm.edit[phone.id] && !phone.inuse && !phone.nameinvalid">{{ phone.name}}</td>
 						<td   ng-show="!vm.edit[phone.id] && phone.inuse" style="color:orange">{{ phone.name}}</td>
+						<td   ng-show="!vm.edit[phone.id] && phone.nameinvalid" style="color:red">{{ phone.name}}</td>
 						
 						<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>-->
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
@@ -471,8 +472,14 @@
 									<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getphonesfromcucm(vm.phones)">3. Check if any Phones Exist</button>
 									<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-modal">4. Deploy Phones to CUCM</button>
 								</div>
-								<div style="margin:50px"></div>
+								<div style="margin:25px"></div>
 								
+								<div class="panel panel-primary panel-body" style="max-width:20%">
+									<input type="checkbox" ng-model="vm.ignoreexistingphones">
+									<label for="checkbox" class="control-label"> Ignore Existing Phones in CUCM</label>
+									
+								</div>
+								<div style="margin:50px"></div>
 								<!--CUCM Phones Table-->
 								<ng-include src="'siteplanning/phoneplans/cucmphonesfoundtable.html'"></ng-include>
 								<div style="margin:50px"></div>

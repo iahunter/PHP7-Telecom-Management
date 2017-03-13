@@ -93,7 +93,20 @@ angular
 						phone.nameinvalid = true;
 					}
 					
-					//console.log(phone.name.length)
+					// Check Valid MAC Address format for Phones not IP Communicator
+					if(phone.device != "IP Communicator"){
+						var regexp = /^[0-9a-f]{1,12}$/gi;
+						if(!phone.name.match(regexp)){
+							console.log("NO REGEX MATCH FOUND ON NAME")
+							phone.nameinvalid = true;
+						}
+					}
+					/*
+					var mac = phone.name.split("");
+					angular.forEach(mac, function(character) {
+						var regexp = /^[0-9a-f]{1,12}$/gi
+						if str.match(regexp)
+					}*/
 					
 					if((phone.dn > 1000000000) && (phone.dn < 9999999999)){
 						//console.log(phone.dn)

@@ -285,7 +285,7 @@ class Cupicontroller extends Controller
 
     public function createusertemplatesforsite(Request $request)
     {
-		// For this to work you must first have base User Templates created in the system to copy. These are defined in the .env file
+        // For this to work you must first have base User Templates created in the system to copy. These are defined in the .env file
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', Cupi::class)) {

@@ -64,17 +64,17 @@ class Ldap extends Controller
         //print $username;
 
         $result = $this->Auth->getUserLdapPhone($username);
-		$fulluser = $result['user'];
-		$fulluser = explode(',', $fulluser);
-		foreach($fulluser as $value){
-			if ($value == "OU=Disabled Users"){
-				$result['disabled'] = true;
-			}
-			if (isset($result['disabled']) &&  $result['disabled'] != true){
-				$result['disabled'] = false;
-			}
-		}
-		//return $fulluser;
+        $fulluser = $result['user'];
+        $fulluser = explode(',', $fulluser);
+        foreach ($fulluser as $value) {
+            if ($value == 'OU=Disabled Users') {
+                $result['disabled'] = true;
+            }
+            if (isset($result['disabled']) && $result['disabled'] != true) {
+                $result['disabled'] = false;
+            }
+        }
+        //return $fulluser;
         //print_r($result);
         $response = [
                     'status_code'    => 200,

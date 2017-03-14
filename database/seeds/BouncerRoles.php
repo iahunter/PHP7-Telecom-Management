@@ -29,6 +29,7 @@ class BouncerRoles extends Seeder
             App\Phoneplan::class,
             App\Sonus5k::class,
             App\Cupi::class,
+			App\Cucmclass::class,
             App\Calls::class,
         ];
 

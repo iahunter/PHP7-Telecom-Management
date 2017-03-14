@@ -198,11 +198,11 @@
 						<td   ng-show="!vm.edit[site.id]">{{ site.npa}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.nxx}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.didrange}}</td>
-						<td   ng-show="!vm.edit[site.id]">{{ site.didblocks}}</td>
+						<td  style="max-width:200px" ng-show="!vm.edit[site.id]"><span ng-repeat="didblock in site.didblocks">{{ didblock}} </span> </td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.operator}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.trunking}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.e911}}</td>
-						<td   ng-show="!vm.edit[site.id]">{{ site.languages}}</td>
+						<td   ng-show="!vm.edit[site.id]"><span ng-repeat="language in site.languages">{{ language}} </span> </td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.comment}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}}</td>

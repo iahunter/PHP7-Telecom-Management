@@ -12,6 +12,12 @@ class Cucmphone extends Cucm
 
     public function uploadPhones(Request $request)
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('create', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         // Upload CSV of phones for import. Not tested.
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -69,6 +75,12 @@ class Cucmphone extends Cucm
 
     public function pastePhones(Request $request)
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('create', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         $user = JWTAuth::parseToken()->authenticate();
 
         $INPUT = $request->phones;
@@ -98,6 +110,10 @@ class Cucmphone extends Cucm
     public function getPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
 
         $name = $request->name;
         $phone = '';
@@ -132,7 +148,12 @@ class Cucmphone extends Cucm
 
     public function deletePhonebyName($NAME)
     {
-
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('delete', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         // Try to remove device from CUCM
         try {
             $RESULT = $this->cucm->get_phone_by_name($NAME);
@@ -151,7 +172,12 @@ class Cucmphone extends Cucm
 
     public function deletePhone(Request $request)
     {
-
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('delete', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         // Check if name is Set
         if (! isset($request->name) || ! $request->name) {
             return 'Error, no name set';
@@ -206,6 +232,12 @@ class Cucmphone extends Cucm
     // Create New Phone
     public function createPhone(Request $request)
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('create', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         $errors = [];
         //$user = JWTAuth::parseToken()->authenticate();
 

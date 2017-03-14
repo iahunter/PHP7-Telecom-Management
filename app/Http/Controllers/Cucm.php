@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// Add Dummy CUCM class for permissions use for now. 
+use App\Cucmclass;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -26,6 +28,12 @@ class Cucm extends Controller
 
     public function start_ldap_sync()
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('update', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         try {
             $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'true');
 
@@ -37,6 +45,12 @@ class Cucm extends Controller
 
     public function stop_ldap_sync()
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('update', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         try {
             $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'false');
 
@@ -90,6 +104,12 @@ class Cucm extends Controller
 
     public function listCssDetails(Request $request)
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         $user = JWTAuth::parseToken()->authenticate();
 
         try {
@@ -134,6 +154,12 @@ class Cucm extends Controller
 
     public function listDateTimeGroup(Request $request)
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         $user = JWTAuth::parseToken()->authenticate();
 
         try {
@@ -180,6 +206,12 @@ class Cucm extends Controller
 
     public function listCssDetailsbyName(Request $request)
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         $user = JWTAuth::parseToken()->authenticate();
 
         $name = $request->name;
@@ -207,7 +239,12 @@ class Cucm extends Controller
 
     public function listRoutePatternsByPartition(Request $request)
     {
+		
         $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
 
         try {
             $result = $this->cucm->get_object_type_by_site($request->routePartitionName, 'RoutePattern');
@@ -233,6 +270,10 @@ class Cucm extends Controller
     public function getObjectTypebyName(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucm::class)) {
+            abort(401, 'You are not authorized');
+        }
 
         try {
             $result = $this->cucm->get_object_type_by_name($request->name, $request->type);

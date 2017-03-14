@@ -191,10 +191,11 @@ angular
 			siteService.updatesite(site.id, site_update).then(function(data) {
 			*/	
 			siteService.updatesite(site.id, site).then(function(data) {
-				//alert('Saved')
-			  //return $state.reload();
+			  //alert('Site Updated!')
+			  //$state.go('getsite', {'url': id});
+			  $location.path('/site/'+id);
 			}, function(error) {
-				alert('An error occurred while updating the event')
+				alert('An error occurred while updating the site')
 			});
 			//$state.reload();
 		}

@@ -1,0 +1,294 @@
+<div style="margin:100px"></div>
+
+<div class="container">
+<div class="well">
+<div style="margin:50px"></div>
+	
+	<div class="row">
+		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-1">
+			<script type="text/ng-template" id="error-messages">
+							<div ng-message='required'> This Field is required </div>
+							<div ng-message='minlength'> Too short </div>
+							<div ng-message='maxlength'> Too long </div>
+			</script>
+				<legend><h2><i class="fa fa-pencil fa-fw"></i> Edit Site Plan</h2></legend>
+					<p>If you have not created the site DID Range, Please click the button below.<br><br>
+					<a href="#/didblock/create"><button class="btn btn-default">Add DID Block</button></a></p>
+					<hr>
+					<form class="form" role="form" id="editsite" ng-submit='editsite.$valid && vm.update(vm.site)' novalidate name="editsite">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.sitecode.$touched && editsite.sitecode.$invalid, 'has-success': editsite.name.$touched && editsite.name.$valid }">
+									<label for="sitecode" class="control-label">Sitecode</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+											<input type="text" ng-model='vm.site.sitecode' required class="form-control"  name="sitecode" placeholder="Sitecode" ng-minlength='8' ng-maxlength='8'>
+										</div>
+										<div ng-messages="editsite.sitecode.$dirty && editsite.sitecode.$error">
+												<div ng-message='required'> Sitecode is required </div>
+												<div ng-message='minlength'>Please enter a Sitecode at least 8 chars long</div>
+												<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">	
+							
+
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.carrier.$touched && editsite.carrier.$invalid, 'has-success': editsite.carrier.$touched && editsite.carrier.$valid }">
+									<label for="carrier" class="control-label">Carrier</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<input type="text" ng-model='vm.site.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
+										</div>
+										<div ng-messages="editsite.carrier.$dirty && editsite.carrier.$error">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.comment.$touched && editsite.comment.$invalid, 'has-success': editsite.comment.$touched && editsite.comment.$valid }">
+									<label for="comment" class="control-label">Comment</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<input type="textarea" ng-model='vm.site.comment' class="form-control" name="comment" placeholder="Comment">	
+										</div>
+										<div ng-messages="editsite.comment.$dirty && editsite.comment.$error">
+												<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.countrycode.$touched && editsite.countrycode.$invalid, 'has-success': editsite.countrycode.$touched && editsite.countrycode.$valid }">
+									<label for="countrycode" required class=" control-label">Country Code</label>
+									<input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.site.country_code' class="form-control" name="countrycode" placeholder="1">
+									<div ng-messages="editsite.countrycode.$dirty && editsite.countrycode.$error">
+										<div ng-message="pattern">Please enter a valid country code</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							-->
+						</div>
+						<div class="row">
+
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.npa.$touched && editsite.npa.$invalid, 'has-success': editsite.npa.$touched && editsite.npa.$valid }">
+									<label for="npa" required class=" control-label">NPA (Area Code)</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.site.npa' class="form-control" name="npa" placeholder="402" ng-minlength='3' ng-maxlength='3'>
+										</div>
+										<div ng-messages="editsite.npa.$dirty && editsite.npa.$error">
+												<div ng-message="pattern">Please enter the npa in the numberic format</div>
+												<div ng-message='minlength'>Please enter 3 digits</div>
+												<div ng-message='maxlength'>Please enter 3 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.nxx.$touched && editsite.nxx.$invalid, 'has-success': editsite.nxx.$touched && editsite.nxx.$valid }">
+									<label for="nxx" required class=" control-label">NXX (Next 3 after Area Code)</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.site.nxx' class="form-control" name="nxx" placeholder="938"  ng-minlength='3' ng-maxlength='3'>
+										</div>
+										<div ng-messages="editsite.nxx.$dirty && editsite.nxx.$error">
+												<div ng-message="pattern">Please enter the nxx in the numberic format</div>
+												<div ng-message='minlength'>Please enter 3 digits</div>
+												<div ng-message='maxlength'>Please enter 3 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+							</div>	
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.didrange.$touched && editsite.didrange.$invalid, 'has-success': editsite.didrange.$touched && editsite.didrange.$valid }">
+									<label for="didrange" required class=" control-label">DID Range Regex (Example - 40[2-9]X)</label>
+									
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="textarea" required ng-pattern='/^[0-9,\],\-,\[,X]+/' ng-model='vm.site.didrange' class="form-control" name="didrange" placeholder="40[2-9]X" ng-minlength='4'>
+										</div>
+										<div ng-messages="editsite.didrange.$dirty && editsite.didrange.$error">
+												<div ng-message="pattern">Please enter the didrange in the regex format</div>
+												<div ng-message='minlength'>Please enter least 4 charactors</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.operator.$touched && editsite.operator.$invalid, 'has-success': editsite.operator.$touched && editsite.operator.$valid }">
+									<label for="operator" class=" control-label">Operator last 4 digits of DID <i>(optional)</i></label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" ng-pattern='/^[0-9]/' ng-model='vm.site.operator' class="form-control" name="operator" placeholder="4000" ng-maxlength='4' ng-maxlength='4'>
+										</div>
+										<div ng-messages="editsite.operator.$dirty && editsite.operator.$error">
+												<div ng-message="pattern">Please enter the operator last 4 digits of DID</div>
+												<div ng-message='minlength'>Operator must be 4 digits</div>
+												<div ng-message='minlength'>Operator must be 4 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.didblocks.$touched && editsite.didblocks.$invalid, 'has-success': editsite.didblocks.$touched && editsite.eventCategory.$valid }">
+									<label for="didblocks"  class="control-label">DID Blocks (From DID Database - multiples)</label>
+									<select style='height:200px' class="form-control" required ng-model='vm.site.didblocks' ng-options="block.id as block.start + ' - ' + block.end  + ' | ' + block.name for block in vm.didblocks | filter: vm.site.npa  | orderBy:'start'" data-width="100%" name="didblocks" multiple >
+									</select>
+									<div ng-messages="editsite.didblocks.$dirty && editsite.didblocks.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.languages.$touched && editsite.languages.$invalid, 'has-success': editsite.languages.$touched && editsite.eventCategory.$valid }">
+									<label for="languages"  class="control-label">Languages (select all that apply)</label>
+									<select class="form-control" required ng-model='vm.site.languages' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="languages" multiple >
+									</select>
+									<div ng-messages="editsite.languages.$dirty && editsite.languages.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						
+						</div>
+						
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.trunking.$touched && editsite.trunking.$invalid, 'has-success': editsite.trunking.$touched && editsite.trunking.$valid }">
+									<label for="trunking"  class="control-label">Trunking</label><br>
+										<div class="panel panel-default panel-body">
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.site.trunking' value="sip" data-width="100%" name="trunking">
+												SIP
+											</label>
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.site.trunking' value="local" data-width="100%" name="trunking">
+												Local PRI
+											</label>
+											<div ng-messages="editsite.trunking.$dirty && editsite.trunking.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.e911.$touched && editsite.e911.$invalid, 'has-success': editsite.e911.$touched && editsite.e911.$valid }">
+									<label for="e911"  class="control-label">E911</label><br>
+										<div class="panel panel-default panel-body">
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.site.e911' value="911enable" data-width="100%" name="e911">
+												911Enable
+											</label>
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.site.e911' value="local" data-width="100%" name="e911">
+												Local 911
+											</label>
+											<div ng-messages="editsite.e911.$dirty && editsite.e911.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+								</div>
+							</div>
+							
+						</div>
+						
+						<div class="row">
+
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.timezone.$touched && editsite.timezone.$invalid, 'has-success': editsite.timezone.$touched && editsite.eventCategory.$valid }">
+									<label for="timezone"  class="control-label">CUCM Data Time Group</label>
+									<select class="form-control" required ng-model='vm.site.timezone' ng-options="timezone as timezone for timezone in vm.datetimegrps" data-width="100%" name="timezone">
+									</select>
+									<div ng-messages="editsite.timezone.$dirty && editsite.timezone.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.extlen.$touched && editsite.extlen.$invalid, 'has-success': editsite.extlen.$touched && editsite.eventCategory.$valid }">
+									<label for="extlen"  class="control-label">Short Extension Length (Standard is 4)</label>
+									<select class="form-control" required ng-model='vm.site.extlen' ng-options="extlen as extlen for extlen in vm.extlen" data-width="100%" name="extlen">
+									</select>
+									<div ng-messages="editsite.extlen.$dirty && editsite.extlen.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="row" ng-show="vm.site.trunking == 'local'|| vm.site.e911 == 'local'">
+						
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.srstip.$touched && editsite.srstip.$invalid, 'has-success': editsite.srstip.$touched && editsite.srstip.$valid }">
+									<label for="srstip" class=" control-label">SRST IP Address <br><i>(optional)</i></label>
+									<input type="textarea" ng-pattern='/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/' ng-model='vm.site.srstip' class="form-control" name="srstip" placeholder="10.0.0.1" ng-minlength='6'>
+									<div ng-messages="editsite.srstip.$dirty && editsite.srstip.$error">
+										<div ng-message="pattern">Please enter the srstip in IP Address Format</div>
+										<div ng-message='minlength'>Please enter the srstip in IP Address Format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': editsite.h323ip.$touched && editsite.h323ip.$invalid, 'has-success': editsite.h323ip.$touched && editsite.h323ip.$valid }">
+									<label for="h323ip" class=" control-label">H323 Gateway IP Addresses <br><i>(optional, comma delimited)</i></label>
+									<input type="textarea" ng-pattern='/((25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)(,\n|,?$))/' ng-model='vm.site.h323ip' class="form-control" name="h323ip" placeholder="10.0.0.1,10.1.1.1" ng-minlength='6'>
+									<div ng-messages="editsite.h323ip.$dirty && editsite.h323ip.$error">
+										<div ng-message="pattern">Please enter the h323ip in IP Address Format</div>
+										<div ng-message='minlength'>Please enter the h323ip in IP Address Format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--
+						Print Form JSON
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+								{{vm.site}}
+								
+							</div>
+						</div>
+						
+						-->
+						
+						<hr />
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group">
+									<button  type="submit" ng-disabled="editsite.$invalid" class="btn btn-primary">Submit</button>
+									<!--<button type="reset" class="btn btn-primary">Reset</button>-->
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div style="margin:25px"></div>
+	</div>
+</div>
+</div>

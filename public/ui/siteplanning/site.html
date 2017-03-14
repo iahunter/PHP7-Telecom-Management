@@ -45,7 +45,13 @@
 										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-
+							<th>
+								<a href="" ng-click="sortType = 'cucmprovisioned'; sortReverse = !sortReverse" style="color:black">
+									CUCM
+										<span ng-show="sortType == 'cucmprovisioned' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'cucmprovisioned' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 							<th>
 								<a href="" ng-click="sortType = 'sitecode'; sortReverse = !sortReverse" style="color:black">
 									Sitecode
@@ -54,13 +60,7 @@
 								</a>
 							</th>
 							
-							<th>
-								<a href="" ng-click="sortType = 'cucmprovisioned'; sortReverse = !sortReverse" style="color:black">
-									CUCM Provisioned
-										<span ng-show="sortType == 'cucmprovisioned' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'cucmprovisioned' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+							
 							
 							<th>
 								<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
@@ -185,12 +185,13 @@
 					<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
-						<td><a ui-sref="getsite({id: site.id})"><button class="btn btn btn-default btn-block">{{ site.id}}</button></a></td>
+						<td><a ui-sref="getsite({id: site.id})"><button class="btn btn-xs btn-default btn-block">{{ site.id}}</button></a></td>
 						<!--<td>{{ site.id}}</a></td>-->
+						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == true'> <i class="fa fa-check-square-o" aria-hidden="true"></i></td>
+						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == false'> <i class="fa fa-square-o" aria-hidden="true"></i></td>
 						<td   ng-show="!vm.edit[site.id]"><b style="color:#337ab7">{{ site.sitecode}}</b></td>
 						<!--<td   ng-show="!vm.edit[site.id]">{{ site.cucmprovisioned}}</td>-->
-						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == true' style="background-repeat: no-repeat; background-position: 5%;" background="app-content/images/checkedbox.png"></td>
-						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == false' style="background-repeat: no-repeat; background-position: 5%;" background="app-content/images/checkbox.png"></td>
+						
 						<td   ng-show="!vm.edit[site.id]">{{ site.srstip}}</a></td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.h323ip}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.timezone}}</td>
@@ -206,7 +207,8 @@
 						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">
-							<button class="btn btn-primary btn-xs "  ng-click="vm.edit[site.id] = !vm.edit[site.id]"> Edit </button>
+							<!--<button class="btn btn-primary btn-xs "  ng-click="vm.edit[site.id] = !vm.edit[site.id]"> Edit </button>-->
+							<a href="#/site/edit/{{site.id}}"><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
 							
 							<!-- Function moved ot modal...
 							<button class="btn btn-danger btn-xs " ng-click="vm.delete(site)"> Delete </button>-->

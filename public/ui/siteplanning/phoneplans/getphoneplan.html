@@ -188,246 +188,264 @@
 				</div>
 			
 			<div style="margin:25px"></div>
-			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-			<div class="table-responsive">    
-				<table class="table table-striped table-condensed table-bordered table-hover">
-					<thead>
-						<tr class="info">
-							<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAll()"/></th>
-							<th>
-								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
-									ID
-										<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="PhonesHeading">
+			
+					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_phoneplan" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_phoneplan">
+						<h4 class="panel-title" style="color:#337ab7"><b>Phone Table </b><i class="fa fa-caret-down"></i></h4></a>
+					<div class="panel-body panel-collapse collapse  collapse in" role="tabpanel" id="collapse_phoneplan"  aria-labelledby="PhonesHeading">
+						<div style="margin:25px"></div>
+						<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+							<div class="table-responsive">    
+								<table class="table table-striped table-condensed table-bordered table-hover">
+									<thead>
+										<tr class="info">
+											<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAll()"/></th>
+											<th>
+												<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+													ID
+														<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
 
-							<!--
-							<th>
-								<a href="" ng-click="sortType = 'parent'; sortReverse = !sortReverse" style="color:black">
-									Parent ID
-										<span ng-show="sortType == 'parent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'parent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>									
-							-->
-							<th>
-								<a href="" ng-click="sortType = 'firstname'; sortReverse = !sortReverse" style="color:black">
-									Firstname
-										<span ng-show="sortType == 'firstname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'firstname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>							
-							<th>
-								<a href="" ng-click="sortType = 'lastname'; sortReverse = !sortReverse" style="color:black">
-									Lastname
-										<span ng-show="sortType == 'lastname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'lastname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
-									Username
-										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
-									Name
-										<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'device'; sortReverse = !sortReverse" style="color:black">
-									Device Type
-										<span ng-show="sortType == 'device' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'device' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'dn'; sortReverse = !sortReverse" style="color:black">
-									Directory Number
-										<span ng-show="sortType == 'dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-
-														
-							
-							
-							
-							<th>
-								<a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse" style="color:black">
-									Language
-										<span ng-show="sortType == 'language' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'voicemail'; sortReverse = !sortReverse" style="color:black">
-									Voicemail
-										<span ng-show="sortType == 'voicemail' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'voicemail' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'notes'; sortReverse = !sortReverse" style="color:black">
-									Notes
-										<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
-									System ID
-										<span ng-show="sortType == 'system_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-
-							<th>
-								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
-									Created At
-										<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
-									Updated At
-										<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					<!-- Allow you to edit and delete Blocks with new buttons -->
-					<tr ng-repeat="phone in vm.phones | orderBy:sortType:sortReverse | filter:vm.search: strict">
-					
-						<!--List View-->
-						<td>
-							<input type="checkbox" ng-model="phone.select" ng-click="vm.selecttouched()">
-						</td>
-						<td>{{ phone.id}}</a></td>
-						<!--<td>{{ phone.parent}}</td>-->
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.firstname}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.lastname}}</td>
-						
-						<td   ng-show="!vm.edit[phone.id] && phone.aduser != ''" style="color:green">{{ phone.username}}</td>
-						<td   ng-show="!vm.edit[phone.id] && phone.aduser == ''" style="color:red">{{ phone.username}}</td>
-						
-						<!--
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.aduser}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.adipphone}}</td>
-						-->
-						
-						<td   ng-show="!vm.edit[phone.id] && !phone.inuse && !phone.nameinvalid">{{ phone.name}}</td>
-						<td   ng-show="!vm.edit[phone.id] && phone.inuse" style="color:orange">{{ phone.name}}</td>
-						<td   ng-show="!vm.edit[phone.id] && phone.nameinvalid" style="color:red">{{ phone.name}}</td>
-						
-						<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>-->
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
-						<td   ng-show="!vm.edit[phone.id] && !phone.dnint" style="color:red">{{ phone.dn}}</td>
-						<td   ng-show="!vm.edit[phone.id] && phone.dnint">{{ phone.dn}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.voicemail}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.notes}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.system_id}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
-
-						
-						<td   ng-show="!vm.edit[phone.id]">
-							<button class="btn btn-xs btn-primary"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
-
-							<!-- Function moved ot modal...
-							<button class="btn btn-danger btn-xs " ng-click="vm.delete(phone)"> Delete </button>-->
-							
-							<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#{{phone.id}}-modal"> Delete </button>
-						
-							<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
-							<div class="modal fade" id="{{phone.id}}-modal" role="dialog">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4>Are you sure? <h4>
-										</div>
-										<div class="modal-body">
-											<p>You are about to delete Phone ID: {{ phone.id}}</p>
-											<table class="table table-striped table-condensed table-bordered table-hover">
-												<tr>
-													<th>First Name</th>
-													<th>Last Name</th>
-													<th>User Name</th>
-													<th>Device Name</th>
-													<th>Directory Number</th>
-												</tr>
-												<tr>
-													<td>{{ phone.firstname}}</td>
-													<td>{{ phone.lastname}}</td>
-													<td>{{ phone.username}}</td>
-													<td>{{ phone.name}}</td>
-													<td>{{ phone.dn}}</td>
-												</tr>
-											</table>
-											<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
-										</div>
-										<div class="modal-footer">
-
-										<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
-										<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(phone)">Delete</a>
-										<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
-
+											<!--
+											<th>
+												<a href="" ng-click="sortType = 'parent'; sortReverse = !sortReverse" style="color:black">
+													Parent ID
+														<span ng-show="sortType == 'parent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'parent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>									
+											-->
+											<th>
+												<a href="" ng-click="sortType = 'firstname'; sortReverse = !sortReverse" style="color:black">
+													Firstname
+														<span ng-show="sortType == 'firstname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'firstname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>							
+											<th>
+												<a href="" ng-click="sortType = 'lastname'; sortReverse = !sortReverse" style="color:black">
+													Lastname
+														<span ng-show="sortType == 'lastname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'lastname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											<th>
+												<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+													Username
+														<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
 											
-										</div>
-									</div>
-								</div>
-							</div> <!-- npa of Modal -->
-							
-							
-						</td>
+											<th>
+												<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+													Name
+														<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											
+											<th>
+												<a href="" ng-click="sortType = 'device'; sortReverse = !sortReverse" style="color:black">
+													Device Type
+														<span ng-show="sortType == 'device' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'device' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											
+											<th>
+												<a href="" ng-click="sortType = 'dn'; sortReverse = !sortReverse" style="color:black">
+													Directory Number
+														<span ng-show="sortType == 'dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
 
-						<!--Edit View-->
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.firstname"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.lastname"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.username"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.name"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.device"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.dn"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.language"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.voicemail"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.notes"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.system_id"></td>
-						<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>
-						<td   ng-show="vm.edit[phone.id]">{{ phone.updated_at}}</td>
+																		
+											
+											
+											
+											<th>
+												<a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse" style="color:black">
+													Language
+														<span ng-show="sortType == 'language' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											
+											<th>
+												<a href="" ng-click="sortType = 'voicemail'; sortReverse = !sortReverse" style="color:black">
+													Voicemail
+														<span ng-show="sortType == 'voicemail' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'voicemail' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											
+											<th>
+												<a href="" ng-click="sortType = 'notes'; sortReverse = !sortReverse" style="color:black">
+													Notes
+														<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											
+											<th>
+												<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
+													System ID
+														<span ng-show="sortType == 'system_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+
+											<th>
+												<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+													Created At
+														<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											
+											<th>
+												<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
+													Updated At
+														<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+														<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+												</a>
+											</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+									<!-- Allow you to edit and delete Blocks with new buttons -->
+									<tr ng-repeat="phone in vm.phones | orderBy:sortType:sortReverse | filter:vm.search: strict">
+									
+										<!--List View-->
+										<td>
+											<input type="checkbox" ng-model="phone.select" ng-click="vm.selecttouched()">
+										</td>
+										<td>{{ phone.id}}</a></td>
+										<!--<td>{{ phone.parent}}</td>-->
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.firstname}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.lastname}}</td>
+										
+										<td   ng-show="!vm.edit[phone.id] && phone.aduser != ''" style="color:green">{{ phone.username}}</td>
+										<td   ng-show="!vm.edit[phone.id] && phone.aduser == ''" style="color:red">{{ phone.username}}</td>
+										
+										<!--
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.aduser}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.adipphone}}</td>
+										-->
+										
+										<td   ng-show="!vm.edit[phone.id] && !phone.inuse && !phone.nameinvalid">{{ phone.name}}</td>
+										<td   ng-show="!vm.edit[phone.id] && phone.inuse" style="color:orange">{{ phone.name}}</td>
+										<td   ng-show="!vm.edit[phone.id] && phone.nameinvalid" style="color:red">{{ phone.name}}</td>
+										
+										<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>-->
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
+										<td   ng-show="!vm.edit[phone.id] && !phone.dnint" style="color:red">{{ phone.dn}}</td>
+										<td   ng-show="!vm.edit[phone.id] && phone.dnint">{{ phone.dn}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.voicemail}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.notes}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.system_id}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
+										<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
+
+										
+										<td   ng-show="!vm.edit[phone.id]">
+											<button class="btn btn-xs btn-primary"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
+
+											<!-- Function moved ot modal...
+											<button class="btn btn-danger btn-xs " ng-click="vm.delete(phone)"> Delete </button>-->
+											
+											<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#{{phone.id}}-modal"> Delete </button>
+										
+											<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
+											<div class="modal fade" id="{{phone.id}}-modal" role="dialog">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h4>Are you sure? <h4>
+														</div>
+														<div class="modal-body">
+															<p>You are about to delete Phone ID: {{ phone.id}}</p>
+															<table class="table table-striped table-condensed table-bordered table-hover">
+																<tr>
+																	<th>First Name</th>
+																	<th>Last Name</th>
+																	<th>User Name</th>
+																	<th>Device Name</th>
+																	<th>Directory Number</th>
+																</tr>
+																<tr>
+																	<td>{{ phone.firstname}}</td>
+																	<td>{{ phone.lastname}}</td>
+																	<td>{{ phone.username}}</td>
+																	<td>{{ phone.name}}</td>
+																	<td>{{ phone.dn}}</td>
+																</tr>
+															</table>
+															<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
+														</div>
+														<div class="modal-footer">
+
+														<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+														<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(phone)">Delete</a>
+														<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+
+															
+														</div>
+													</div>
+												</div>
+											</div> <!-- npa of Modal -->
+											
+											
+										</td>
+
+										<!--Edit View-->
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.firstname"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.lastname"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.username"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.name"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.device"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.dn"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.language"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.voicemail"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.notes"></td>
+										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.system_id"></td>
+										<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>
+										<td   ng-show="vm.edit[phone.id]">{{ phone.updated_at}}</td>
+										
+										<td  ng-show="vm.edit[phone.id]">
+											<button class="btn btn-xs btn-primary"  ng-click="vm.update(phone);vm.edit[phone.id] = !vm.edit[phone.id]"> Save </button>
+											<button class="btn btn-xs btn-warning"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Undo </button>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
 						
-						<td  ng-show="vm.edit[phone.id]">
-							<button class="btn btn-xs btn-primary"  ng-click="vm.update(phone);vm.edit[phone.id] = !vm.edit[phone.id]"> Save </button>
-							<button class="btn btn-xs btn-warning"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Undo </button>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
+							<div style="margin:25px"></div>
+							<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
+							<button ng-if="vm.deleteall" class="btn btn-danger btn-sm"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
+							<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
+							
+							<div style="margin:50px"></div>
+						
+						</div>
+
+					
+			
+
+			
+				</div>
 			</div>
 			
-			<div style="margin:25px"></div>
-			<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
-			<button ng-if="vm.deleteall" class="btn btn-danger btn-sm"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
-			<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-			
-			<div style="margin:50px"></div>
 			
 			<div class="well" style="background-color:#e0ebeb">
 			<legend>Systems Provisioning</legend>
@@ -436,7 +454,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="ADHeading">
 							<a role="button" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_ad" style="color:black;cursor: pointer;" aria-expanded="true" aria-controls="collapse_ad">
-								<h4 class="panel-title" >1. Active Directory</h4></a>
+								<h4 class="panel-title" style="color:#337ab7"><b>1. Active Directory </b><i class="fa fa-caret-down"></i></h4></a>
 							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_ad" aria-labelledby="ADHeading">
 
 								<div class="btn-group">
@@ -464,7 +482,7 @@
 						<div class="panel-heading" role="tab" id="CUCMHeading">
 					
 							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cucm" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cucm">
-								<h4 class="panel-title" >2. Cisco Call Manager</h4></a>
+								<h4 class="panel-title" style="color:#337ab7"><b>2. Cisco Call Manager </b><i class="fa fa-caret-down"></i></h4></a>
 							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cucm"  aria-labelledby="CUCMHeading">
 
 								<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
@@ -492,7 +510,7 @@
 						<div class="panel-heading" role="tab" id="CUPIHeading">
 					
 							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cupi" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cupi">
-								<h4 class="panel-title">3. Cisco Unity Connection</h4></a>
+								<h4 class="panel-title" style="color:#337ab7"><b>3. Cisco Unity Connection </b><i class="fa fa-caret-down"></i></h4></a>
 							
 							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cupi" aria-labelledby="CUPIHeading">
 								<span>Unity Users may be delayed up to 6 hours for LDAP Sync process to run. 

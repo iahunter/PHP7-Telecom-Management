@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Site.IndexController', ['siteService', 'cucmService','$location', '$state', function(siteService, cucmService, $location, $state) {
+	.controller('Site.IndexController', ['siteService', 'cucmService','$location', '$state', '$stateParams', function(siteService, cucmService, $location, $state, $stateParams) {
 	
 		var vm = this;
 		
@@ -21,6 +21,8 @@ angular
 		vm.messages = 'Loading sites...';
 		vm.sites = [{}];
 		vm.loading = true;
+		
+		
 		
 		function isInArrayNgForeach(field, arr) {
 			var result = false;
@@ -145,6 +147,16 @@ angular
 		vm.extlen = [4,5,10];
 		
 
+		var id = $stateParams.id;
+		
+		vm.getsite = siteService.getsite(id)
+			.then(function(res){
+
+				vm.site = res.data.result;
+			
+			}, function(err){
+							//Error
+			});
 		
 		// Create DID Block 
 		vm.submitsite = function(form) {

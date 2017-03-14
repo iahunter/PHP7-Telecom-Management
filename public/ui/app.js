@@ -88,6 +88,12 @@
                 controller: 'Site.IndexController',
                 controllerAs: 'vm'
             })
+			.state('siteedit', {
+                url: '/site/edit/{id}',
+                templateUrl: 'siteplanning/editsite.html',
+                controller: 'Site.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('getsite', {
                 url: '/site/{id}',
                 templateUrl: 'siteplanning/getsite.html',

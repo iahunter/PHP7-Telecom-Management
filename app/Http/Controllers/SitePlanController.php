@@ -57,7 +57,7 @@ class SitePlanController extends Controller
                 $didblocks[] = Didblock::find($didblock);
                 //print_r($didblock);
             }
-            $site['didblocks'] = $didblocks;
+            $site['didblocksdetails'] = $didblocks;
         }
 
         if (! $user->can('read', $site)) {

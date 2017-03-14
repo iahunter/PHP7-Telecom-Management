@@ -2,7 +2,7 @@
 
 <div style="margin-left:5%; margin-right:5%;">
 	<div class="well form-horizontal" style="margin-top:10px;" >
-	
+		<div>
 			<div style="margin:50px"></div>
 		
 			<legend>Site Details
@@ -167,7 +167,7 @@
 							<td>{{ vm.site.operator}}</td>
 							<td>{{ vm.site.trunking}}</td>
 							<td>{{ vm.site.e911}}</td>
-							<td>{{ vm.site.languages}}</td>
+							<td> <span ng-repeat="language in vm.site.languages">{{ language}} </span> </td>
 							<td>{{ vm.site.comment}}</td>
 							<td>{{ vm.site.created_at}}</td>
 							<td>{{ vm.site.updated_at}}</td>
@@ -176,7 +176,7 @@
 				</table>
 			</div>
 			</div>
-			<div ng-show="vm.site.didblocks">
+			<div ng-show="vm.site.didblocksdetails">
 				<legend>DID Blocks</legend>
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 				<div class="table-responsive">    
@@ -191,7 +191,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="block in vm.site.didblocks track by $index">
+							<tr ng-repeat="block in vm.site.didblocksdetails track by $index">
 								<td>{{block.id}}</td>
 								<td>{{block.name}}</td>
 								<td>{{block.start}}</td>
@@ -206,202 +206,214 @@
 			<h4>No DID Blocks Found</h4>
 			</div>
 			
-
+			<div style="margin:50px"></div>
+			<a href="#/site/edit/{{vm.site.id}}"><button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
+			<div style="margin:50px"></div>
+		</div>
 		<!-- Button to reimport Site Data into Form. -->
-		
-			<div ng-if="vm.deploybutton">
-				<div class="well col-lg-6">
-					<h4>CUCM - Site Not Found.</h4>
-					Deploy the standard objects for your site based on the trunking and 911 selected. <br>This will build the device pool, partitions, css, etc..
-					<br>
-					<br>
-					<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
-					<hr>
-					<!--<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>-->
-					<button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#{{vm.phoneplan.id}}-modal"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM </button>
-				</div>
-			</div>
+		<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="siteprovision">
 			
-			
-			
-				<!-- Phone Deployment Modal -->
-			<div class="modal fade " id="{{vm.phoneplan.id}}-modal" role="dialog">
-				<div class="modal-dialog" style="width: 90%;">
-					<div style="background-color:white" class="modal-content">
-						<div class="modal-header">
-							<h3>Deploy Site Skeleton to CUCM</h3>
-						</div>
+					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_provision" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_provision">
+					<h4 class="panel-title" style="color:#337ab7"><b>Systems Provisioning </b><i class="fa fa-caret-down"></i></h4></a>
+					<div class="panel-body panel-collapse collapse " role="tabpanel" id="collapse_provision"  aria-labelledby="siteprovision">
+						<div style="margin:25px"></div>
 						
-						<div class="modal-body">
-							<p ng-hide="vm.deploysiteresult"><b style="color:red" >Warning!</b> You are about to deploy objects to the Production System.</p>
-							<legend ng-show="vm.deploysiteresult">Summary Report</legend>
-						
-							<div ng-if="vm.deploycucmsiteloading">
-								<legend >Deploying Site. Please Wait... </legend>
-								<div class="well">
-									<div class="row">
-										<div class="container loader"></div>
-									</div>
-									<div style="margin:25px"></div>
-								</div>
+						<div ng-if="vm.deploybutton">
+							<div class="well col-lg-6">
+								<h4>CUCM - Site Not Found.</h4>
+								Deploy the standard objects for your site based on the trunking and 911 selected. <br>This will build the device pool, partitions, css, etc..
+								<br>
+								<br>
+								<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
+								<hr>
+								<!--<button ng-show="!vm.deploysiteresult" class="btn btn-primary btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>-->
+								<button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#{{vm.phoneplan.id}}-modal"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM </button>
 							</div>
-						
-							<div class="table-responsive">
-							<div style="margin:25px"></div>
-							<table style="background-color:white" ng-show="vm.deploysiteresult" class="table table-striped table-condensed table-bordered table-hover">
-								<tr>
-									<th>Key</th>
-									<th>Values</th>
-								</tr>
-								<tr ng-repeat="(key,values) in vm.deploysiteresult">
-									<td>{{ key}} <br> {{values.length}}</td>
-									<td>
-										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
-											<tr ng-repeat="value in values">
-												<td ng-if="value.status">
+						</div>
+			
+			
+			
+						<!-- Phone Deployment Modal -->
+						<div class="modal fade " id="{{vm.phoneplan.id}}-modal" role="dialog">
+							<div class="modal-dialog" style="width: 90%;">
+								<div style="background-color:white" class="modal-content">
+									<div class="modal-header">
+										<h3>Deploy Site Skeleton to CUCM</h3>
+									</div>
+									
+									<div class="modal-body">
+										<p ng-hide="vm.deploysiteresult"><b style="color:red" >Warning!</b> You are about to deploy objects to the Production System.</p>
+										<legend ng-show="vm.deploysiteresult">Summary Report</legend>
+									
+										<div ng-if="vm.deploycucmsiteloading">
+											<legend >Deploying Site. Please Wait... </legend>
+											<div class="well">
+												<div class="row">
+													<div class="container loader"></div>
+												</div>
+												<div style="margin:25px"></div>
+											</div>
+										</div>
+									
+										<div class="table-responsive">
+										<div style="margin:25px"></div>
+										<table style="background-color:white" ng-show="vm.deploysiteresult" class="table table-striped table-condensed table-bordered table-hover">
+											<tr>
+												<th>Key</th>
+												<th>Values</th>
+											</tr>
+											<tr ng-repeat="(key,values) in vm.deploysiteresult">
+												<td>{{ key}} <br> {{values.length}}</td>
+												<td>
 													<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
-														<tr ng-repeat="(k,v) in value">
-															<td>{{k}}</td>
-															<td><i ng-if="k == 'status' && v == 'error'" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+														<tr ng-repeat="value in values">
+															<td ng-if="value.status">
+																<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+																	<tr ng-repeat="(k,v) in value">
+																		<td>{{k}}</td>
+																		<td><i ng-if="k == 'status' && v == 'error'" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+																	</tr>	
+																</table>
+															</td>
+															<td ng-if="!value.status">
+																<i class="fa fa-exclamation-triangle"></i> {{value}}
+															</td>
 														</tr>	
 													</table>
 												</td>
-												<td ng-if="!value.status">
-													<i class="fa fa-exclamation-triangle"></i> {{value}}
-												</td>
-											</tr>	
-										</table>
-									</td>
-								</tr>
-							</table>
-							
-							</div>
-						</div>
-						<div class="modal-footer">
-
-						
-						
-						
-						<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
-						<button ng-show="!vm.deploysiteresult" class="btn btn-danger btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>
-						<a class="btn btn-primary btn-sm" ng-show="vm.deploysiteresult" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
-						<a class="btn btn-primary btn-sm" ng-show="!vm.deploysiteresult" data-dismiss="modal">Cancel</a>
-							
-						</div>
-					</div>
-				</div>
-			</div> <!-- npa of Modal -->
-			
-			
-			
-			<div class="panel panel-default" ng-show="vm.cucmsitesummary">
-				<div class="panel-heading">
-					<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM Configuration</h4></a>
-				</div>
-				<div class="panel-body panel-collapse collapse"" id="collapse1">
-					<div class="table-responsive">
-					<table class="table table-bordered table-hover table-responsive">
-						<tbody>
-							
-							<tr ng-repeat="(key,values) in vm.cucmsitesummary">
-								<td><b>{{key}}</b></td>
-								<!--<td style="word-wrap: break-word; margin:10px;">{{values}}</td>-->
-								<td>
-									<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
-										<tr ng-repeat="value in values">
-											<td>{{value}}</td>
-										</tr>	
-									</table>
-								</td>
-							</tr>
-							
-						</tbody>
-						
-					</table>
-					</div>
-				</div>	
-			</div>
-		
-			<div ng-if="vm.cucmloading">
-				<legend >Please wait... </legend>
-				<div class="well">
-					<div class="row">
-						<div class="container loader"></div>
-					</div>
-					<div style="margin:25px"></div>
-				</div>
-			</div>
-			
-			<!-- No longer in use. 
-			<div class="panel panel-default" ng-show="vm.deploysiteresult">
-				<div class="panel-heading"><h3>CUCM Result</h3></div>
-					<div class="panel-body">
-						<div ng-repeat="item in vm.deploysiteresult">
-								{{item}}
-							</div>
-					</div>	
-			</div>
-			-->
-
-		<div ng-if="vm.usertemplatedeploybutton">
-			<div class="well col-lg-6 pull-right">
-				<h4>Unity Connection - Site Not Found.</h4>
-				Deploy a User Template for Employees and Partners for each language selected for site. <br><br>
-				<br>
-				<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
-				<hr>
-				
-				<button ng-show="vm.usertemplatedeploybutton" class="btn btn-primary btn-sm" ng-click="vm.create_cupi_usertemplates()"><i class="glyphicon glyphicon-save"></i>  Deploy User Templates</button>
-			</div>
-		</div>
-			
-			
-		<div ng-if="vm.siteusertemplates.length > 0">
-		
-			<div class="panel panel-default" ng-show="vm.siteusertemplates">
-				<div class="panel-heading">
-					<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#usertemplates" style="color:black;cursor: pointer;"><h4>Unity Connection - User Templates</h4></a>
-				</div>
-				<div class="panel-body panel-collapse collapse" id="usertemplates">
-					<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-					<div class="table-responsive">
-						<table class="table table-condensed table-striped table-bordered table-hover">
-							<thead>
-								<tr class="success">
-										<th>Alias</th>
-										<th>TimeZone</th>
-										<th>Language</th>
-										<th>External Service Account</th>
-										<th>Menu Options</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="template in vm.siteusertemplates">
-									<td><b>{{template.Alias}}</b></td>
-									<td>{{template.TimeZone}}</td>
-									<td>{{template.Language}}</td>
-									<td>{{template.externalserviceaccounts.return.response.TemplateExternalServiceAccount.DisplayName}}</td>
-									<td>
-										<table class="table table-condensed table-striped table-bordered table-hover">
-											<tr ng-if="template.callerinput.response.MenuEntry" ng-repeat="menuoption in template.callerinput.response.MenuEntry">
-												<td>{{menuoption.TouchtoneKey}}</td>
-												<td>{{menuoption.DisplayName}}</td>
-												<td>{{menuoption.TransferNumber}}</td>
-												<td>{{menuoption.TransferRings}}</td>
-												<td>{{menuoption}}</td>
 											</tr>
 										</table>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+										
+										</div>
+									</div>
+									<div class="modal-footer">
+
+									
+									
+									
+									<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+									<button ng-show="!vm.deploysiteresult" class="btn btn-danger btn-sm" ng-click="vm.deploycucmsite(vm.site)"><i class="glyphicon glyphicon-save"></i>  Deploy Site to CUCM</button>
+									<a class="btn btn-primary btn-sm" ng-show="vm.deploysiteresult" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
+									<a class="btn btn-primary btn-sm" ng-show="!vm.deploysiteresult" data-dismiss="modal">Cancel</a>
+										
+									</div>
+								</div>
+							</div>
+						</div> <!-- npa of Modal -->
+			
+			
+			
+						<div class="panel panel-default" ng-show="vm.cucmsitesummary">
+							<div class="panel-heading">
+								<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM Configuration</h4></a>
+							</div>
+							<div class="panel-body panel-collapse collapse"" id="collapse1">
+								<div class="table-responsive">
+								<table class="table table-bordered table-hover table-responsive">
+									<tbody>
+										
+										<tr ng-repeat="(key,values) in vm.cucmsitesummary">
+											<td><b>{{key}}</b></td>
+											<!--<td style="word-wrap: break-word; margin:10px;">{{values}}</td>-->
+											<td>
+												<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+													<tr ng-repeat="value in values">
+														<td>{{value}}</td>
+													</tr>	
+												</table>
+											</td>
+										</tr>
+										
+									</tbody>
+									
+								</table>
+								</div>
+							</div>	
+						</div>
+					
+						<div ng-if="vm.cucmloading">
+							<legend >Please wait... </legend>
+							<div class="well">
+								<div class="row">
+									<div class="container loader"></div>
+								</div>
+								<div style="margin:25px"></div>
+							</div>
+						</div>
+			
+							<!-- No longer in use. 
+							<div class="panel panel-default" ng-show="vm.deploysiteresult">
+								<div class="panel-heading"><h3>CUCM Result</h3></div>
+									<div class="panel-body">
+										<div ng-repeat="item in vm.deploysiteresult">
+												{{item}}
+											</div>
+									</div>	
+							</div>
+							-->
+
+						<div ng-if="vm.usertemplatedeploybutton">
+							<div class="well col-lg-6 pull-right">
+								<h4>Unity Connection - Site Not Found.</h4>
+								Deploy a User Template for Employees and Partners for each language selected for site. <br><br>
+								<br>
+								<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
+								<hr>
+								
+								<button ng-show="vm.usertemplatedeploybutton" class="btn btn-primary btn-sm" ng-click="vm.create_cupi_usertemplates()"><i class="glyphicon glyphicon-save"></i>  Deploy User Templates</button>
+							</div>
+						</div>
+							
+			
+						<div ng-if="vm.siteusertemplates.length > 0">
+						
+							<div class="panel panel-default" ng-show="vm.siteusertemplates">
+								<div class="panel-heading">
+									<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#usertemplates" style="color:black;cursor: pointer;"><h4>Unity Connection - User Templates</h4></a>
+								</div>
+								<div class="panel-body panel-collapse collapse" id="usertemplates">
+									<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+									<div class="table-responsive">
+										<table class="table table-condensed table-striped table-bordered table-hover">
+											<thead>
+												<tr class="success">
+														<th>Alias</th>
+														<th>TimeZone</th>
+														<th>Language</th>
+														<th>External Service Account</th>
+														<th>Menu Options</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="template in vm.siteusertemplates">
+													<td><b>{{template.Alias}}</b></td>
+													<td>{{template.TimeZone}}</td>
+													<td>{{template.Language}}</td>
+													<td>{{template.externalserviceaccounts.return.response.TemplateExternalServiceAccount.DisplayName}}</td>
+													<td>
+														<table class="table table-condensed table-striped table-bordered table-hover">
+															<tr ng-if="template.callerinput.response.MenuEntry" ng-repeat="menuoption in template.callerinput.response.MenuEntry">
+																<td>{{menuoption.TouchtoneKey}}</td>
+																<td>{{menuoption.DisplayName}}</td>
+																<td>{{menuoption.TransferNumber}}</td>
+																<td>{{menuoption.TransferRings}}</td>
+																<td>{{menuoption}}</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+						
 					</div>
-					</div>
-				</div>
+				</div>	
 			</div>	
-		</div>
-		
-		
 		
 		
 		<!-- Loading -->
@@ -449,7 +461,7 @@
 			<div style="margin:25px"></div>
 				
 				<div class="well well-sm" style="box-shadow: 1px 1px 5px grey;" ng-if="!vm.phoneplans.length > 0">
-					<h4>No Phones Plans Found</h4>
+					<h4>No Phone Plans Found</h4>
 					<p>Please add a phone plan using the Add button above.</p>
 				</div>
 			

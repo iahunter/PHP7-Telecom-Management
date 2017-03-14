@@ -514,7 +514,13 @@ angular
 					});
 		}
 	
-		
+		vm.languages = [{
+				id: 1,
+				name: 'english'
+			}, {
+				id: 2,
+				name: 'french'
+			}];
 
 		// Create Phone 
 		vm.createphone = function(phone) {

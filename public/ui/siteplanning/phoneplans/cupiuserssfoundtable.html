@@ -15,6 +15,13 @@
 					</th>
 					<th>
 						<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+							VM Planned
+								<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+								<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+						</a>
+					</th>
+					<th>
+						<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
 							Username
 								<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 								<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
@@ -49,7 +56,7 @@
 						</a>
 					</th>
 					<th>
-						<a href="" ng-click="sortType = 'unityuser.DtmfAccessId'; sortReverse = !sortReverse" style="color:black">
+						<a href="" ng-click="sortType = 'unity_mailbox_inuse.DtmfAccessId'; sortReverse = !sortReverse" style="color:black">
 							Current Mailbox Extension Matching DN
 								<span ng-show="sortType == 'unity_mailbox_inuse.DtmfAccessId' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 								<span ng-show="sortType == 'unity_mailbox_inuse.DtmfAccessId' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
@@ -71,6 +78,7 @@
 						<input type="checkbox" ng-model="phone.cupiselect" ng-click="vm.cupiphoneselecttouched()">
 					</td>
 					<td>{{ phone.id}}</td>
+					<td>{{ phone.voicemail}}</td>
 					<td>{{ phone.username}}</td>
 					<td>{{ phone.dn}}</td>
 					<td>{{ phone.unityldapuser}}</td>

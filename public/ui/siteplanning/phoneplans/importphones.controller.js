@@ -119,7 +119,18 @@ angular
 				phonearray['name'] = phones[phone][3];
 				phonearray['device'] = phones[phone][4];
 				phonearray['dn'] = phones[phone][5];
+				
 				phonearray['language'] = phones[phone][6];
+				
+				phonearray['language'] = phonearray['language'].toLowerCase();
+				phonearray['language'] = phonearray['language'].trim()
+				if(phonearray['language'] == "" || phonearray['language'] == "e" || phonearray['language'] == "en"){
+					phonearray['language'] = 'english';
+				}
+				if(phonearray['language'] == "f" || phonearray['language'] == "fr" || phonearray['language'] == "fre"){
+					phonearray['language'] = 'french';
+				}
+				
 				phonearray['vmpass'] = phones[phone][7];
 				phonearray['voicemail'] = phones[phone][8];
 				phonearray['notes'] = phones[phone][9];

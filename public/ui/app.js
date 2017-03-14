@@ -46,6 +46,12 @@
                 controller: 'Logout.IndexController',
                 controllerAs: 'vm'
             })
+			.state('denied', {
+                url: "/accessdenied",
+                templateUrl: 'home/accessdenied.html',
+                controller: 'Home.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('didblock', {
                 url: '/didblock',
                 templateUrl: 'didblock/didblock.html',

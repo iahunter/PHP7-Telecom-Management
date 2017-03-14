@@ -131,6 +131,7 @@ class AuthController extends Controller
                 'dn'       => $dnstring,
                 ];
     }
+	
 
     protected function ldapauth(Request $request)
     {
@@ -179,6 +180,7 @@ class AuthController extends Controller
                     // Do i need to do any other validation here? Make sure group name is CN=...?
                     $user->assign($group);
                 }
+
             }
         }
 
@@ -337,14 +339,29 @@ class AuthController extends Controller
         //$ldapuser = \Metaclassing\Utility::encodeArrayUTF8($ldapuser);
         return $ldapuser;
     }
-
+	
+	public function check_if_app_user($user)
+    {
+		// Adding Telecom Group Checks. 
+		$app_groups = [env('ADMIN_GRP'),env('READ_UPDATE_GRP'),env('READ_ONLY_GRP')];
+		
+		if((isset($user['memberof'])) && $user['memberof']){
+			foreach($user['memberof'] as $group){
+				if(in_array($group, $app_groups)){
+					return true;
+				}
+			}
+		}
+	}
+	
+	
     public function userinfo()
     {
         $user = JWTAuth::parseToken()->authenticate();
         if (env('LDAP_AUTH')) {
             $user = $this->getLdapUserByName($user->username);
         }
-
+		
         return response()->json($user);
     }
 

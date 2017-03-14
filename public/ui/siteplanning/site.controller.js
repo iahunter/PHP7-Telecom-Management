@@ -141,7 +141,7 @@ angular
 				name: 'french'
 			}];
 			
-		console.log(vm.languages)
+		
 		
 		// Drop down values to use in Add form. 
 		vm.extlen = [4,5,10];
@@ -192,7 +192,6 @@ angular
 			*/	
 			siteService.updatesite(site.id, site).then(function(data) {
 			  //alert('Site Updated!')
-			  //$state.go('getsite', {'url': id});
 			  $location.path('/site/'+id);
 			}, function(error) {
 				alert('An error occurred while updating the site')

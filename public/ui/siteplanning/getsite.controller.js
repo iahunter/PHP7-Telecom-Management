@@ -333,7 +333,13 @@ angular
 		var getsitesummary = vm.getsitesummary(id)
 		
 
-		
+		vm.languages = [{
+				id: 1,
+				name: 'english'
+			}, {
+				id: 2,
+				name: 'french'
+			}];
 		
 		vm.deploycucmsite = function () {
 			// Update $scope values to form data. 

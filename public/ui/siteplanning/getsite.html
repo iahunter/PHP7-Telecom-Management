@@ -206,9 +206,9 @@
 			<h4>No DID Blocks Found</h4>
 			</div>
 			
-			<div style="margin:50px"></div>
+			<div style="margin:25px"></div>
 			<a href="#/site/edit/{{vm.site.id}}"><button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
-			<div style="margin:50px"></div>
+			<div style="margin:25px"></div>
 		</div>
 		<!-- Button to reimport Site Data into Form. -->
 		<div class="panel panel-default">
@@ -306,7 +306,7 @@
 			
 						<div class="panel panel-default" ng-show="vm.cucmsitesummary">
 							<div class="panel-heading">
-								<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM Configuration</h4></a>
+								<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM - Site Configuration</h4></a>
 							</div>
 							<div class="panel-body panel-collapse collapse"" id="collapse1">
 								<div class="table-responsive">
@@ -627,8 +627,14 @@
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.name"></td>
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.description"></td>
 							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.language"></td>
-							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.employee_vm_user_template"></td>
-							<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.nonemployee_vm_user_template"></td>
+							<td   ng-show="vm.edit[phone.id]">
+								<select class="form-control" ng-model='phone.employee_vm_user_template' ng-options="template.Alias as template.Alias for template in vm.usertemplates  | filter: vm.site.sitecode  | orderBy:'Alias'" data-width="100%" name="didblocks">
+								</select>
+							</td>
+							<td   ng-show="vm.edit[phone.id]">
+								<select class="form-control" ng-model='phone.nonemployee_vm_user_template' ng-options="template.Alias as template.Alias for template in vm.usertemplates  | filter: vm.site.sitecode  | orderBy:'Alias'" data-width="100%" name="didblocks">
+								</select>
+							</td>
 							<td   ng-show="vm.edit[phone.id]">{{ phone.created_by}}</td>
 							<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>
 							<td   ng-show="vm.edit[phone.id]">{{ phone.updated_by}}</td>

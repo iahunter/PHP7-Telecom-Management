@@ -5,13 +5,19 @@
 <div style="margin:50px"></div>
 	
 	<div class="row">
-		<div class="col-md-12 col-sm-8 col-lg-8 col-md-offset-1">
+		<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1">
 			<script type="text/ng-template" id="error-messages">
 							<div ng-message='required'> This Field is required </div>
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
-				<legend><h2><i class="fa fa-pencil fa-fw"></i> Edit Site Plan</h2></legend>
+				<legend>
+					<h2><i class="fa fa-pencil fa-fw"></i> Edit Site Plan
+					<div class="btn-group pull-right">
+						<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button> 
+						<a href="#/site/{{vm.site.id}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site Details</button> </a>
+					</div></h2>
+					</legend>
 					<p>If you have not created the site DID Range, Please click the button below.<br><br>
 					<a href="#/didblock/create"><button class="btn btn-default">Add DID Block</button></a></p>
 					<hr>
@@ -23,7 +29,7 @@
 									<div class="inputGroupContainer">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-											<input type="text" ng-model='vm.site.sitecode' required class="form-control"  name="sitecode" placeholder="Sitecode" ng-minlength='8' ng-maxlength='8'>
+											<input type="text" readonly ng-model='vm.site.sitecode' required class="form-control"  name="sitecode" placeholder="Sitecode" ng-minlength='8' ng-maxlength='8'>
 										</div>
 										<div ng-messages="editsite.sitecode.$dirty && editsite.sitecode.$error">
 												<div ng-message='required'> Sitecode is required </div>

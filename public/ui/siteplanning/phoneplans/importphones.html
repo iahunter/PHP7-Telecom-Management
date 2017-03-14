@@ -20,7 +20,7 @@
 					<br> <div style="margin:15px"></div>
 					</legend>
 					
-					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<h5></pre>
+					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<br><br><h5><b>Phone Template </b><a href="/telephony/storage/PhoneImportTemplate.xlsx"><button class="btn btn-default btn-xs">Download</button></a></pre>
 					
 
 						<form ng-if="!vm.numberstable" class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
@@ -164,13 +164,6 @@
 											<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 											<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
-								</th>	
-								<th>
-									<a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse" style="color:black">
-										Status
-											<span ng-show="sortType == 'status' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-											<span ng-show="sortType == 'status' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-									</a>
 								</th>									
 
 							</tr>
@@ -188,7 +181,6 @@
 							<td>{{number.vmpass}}</td> 
 							<td>{{number.voicemail}}</td> 
 							<td>{{number.notes}}</td> 
-							<td>{{number.status}}</td> 
 							<!--
 							<td ng-if="vm.showassignments">
 							Nested Table inside Row

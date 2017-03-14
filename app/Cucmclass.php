@@ -9,5 +9,5 @@ use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
 
 class Cucmclass extends Model
 {
-    // Added dummy class for permissions use for now. 
+    // Added dummy class for permissions use for now.
 }

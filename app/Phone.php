@@ -41,12 +41,12 @@ class Phone extends Model
         if (strlen($this->system_id) > 255) {
             throw new \Exception('system_id exceeded 255 characters');
         }
-		// Check if exceeds max of 255
+        // Check if exceeds max of 255
         if (strlen($this->language) > 255) {
             throw new \Exception('status exceeded 255 characters');
         }
-		// Check if exceeds max of 255
-        if ($this->language){
+        // Check if exceeds max of 255
+        if ($this->language) {
             $this->language = strtolower($this->language);
         }
     }

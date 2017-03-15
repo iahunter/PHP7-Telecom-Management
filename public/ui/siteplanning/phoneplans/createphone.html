@@ -28,8 +28,16 @@
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.name"></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.device"></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.dn"></td>
-		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.language"></td>
-		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.voicemail"></td>
+		<td   ng-show="vm.showaddrow">
+			<!--<input type="text" class="form-control form-control-sm" ng-model="newphone.language">-->
+			<select class="form-control" ng-model='newphone.language' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="didblocks">
+			</select>
+		</td>
+		<td   ng-show="vm.showaddrow">
+			<!--<input type="text" class="form-control form-control-sm" ng-model="newphone.voicemail">-->
+			<select class="form-control" ng-model='newphone.voicemail' ng-options="value.name as value.name for value in vm.truefalse" data-width="100%" name="voicemail">
+			</select>
+		</td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.notes"></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.system_id"></td>
 		

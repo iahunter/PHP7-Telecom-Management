@@ -30,7 +30,7 @@ class Cucm extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('update', self::class)) {
+        if (! $user->can('update', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -47,7 +47,7 @@ class Cucm extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('update', self::class)) {
+        if (! $user->can('update', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -106,7 +106,7 @@ class Cucm extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('read', self::class)) {
+        if (! $user->can('read', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -208,7 +208,7 @@ class Cucm extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('read', self::class)) {
+        if (! $user->can('read', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -241,7 +241,7 @@ class Cucm extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('read', self::class)) {
+        if (! $user->can('read', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -270,7 +270,7 @@ class Cucm extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('read', self::class)) {
+        if (! $user->can('read', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 

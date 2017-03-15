@@ -521,6 +521,14 @@ angular
 				id: 2,
 				name: 'french'
 			}];
+			
+		vm.truefalse = [{
+				id: 1,
+				name: "true"
+			}, {
+				id: 0,
+				name: "false"
+			}];
 
 		// Create Phone 
 		vm.createphone = function(phone) {

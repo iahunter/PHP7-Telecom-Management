@@ -418,7 +418,11 @@
 											<select class="form-control" ng-model='phone.language' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="didblocks">
 											</select>
 										</td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.voicemail"></td>
+										<td   ng-show="vm.edit[phone.id]">
+											<!--<input type="text" class="form-control form-control-sm" ng-model="phone.voicemail">-->
+											<select class="form-control" ng-model='phone.voicemail' ng-options="value.name as value.name for value in vm.truefalse" data-width="100%" name="voicemail">
+											</select>
+										</td>
 										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.notes"></td>
 										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.system_id"></td>
 										<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>

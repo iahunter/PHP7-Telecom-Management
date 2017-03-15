@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// Add Dummy CUCM class for permissions use for now.
+use App\Cucmclass;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -14,13 +16,10 @@ class Cucmphone extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('create', Cucm::class)) {
+        if (! $user->can('create', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-
-        // Upload CSV of phones for import. Not tested.
-        $user = JWTAuth::parseToken()->authenticate();
-
+		
         // Open CSV and Create a new DID Block for each row.
         $filename = $request->phones;
             //return $filename;
@@ -77,12 +76,10 @@ class Cucmphone extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('create', Cucm::class)) {
+        if (! $user->can('create', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-
-        $user = JWTAuth::parseToken()->authenticate();
-
+		
         $INPUT = $request->phones;
 
         $INPUT = explode(',', $INPUT);
@@ -111,7 +108,7 @@ class Cucmphone extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('read', Cucm::class)) {
+        if (! $user->can('read', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -150,7 +147,7 @@ class Cucmphone extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('delete', Cucm::class)) {
+        if (! $user->can('delete', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -174,7 +171,7 @@ class Cucmphone extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('delete', Cucm::class)) {
+        if (! $user->can('delete', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -234,12 +231,11 @@ class Cucmphone extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('create', Cucm::class)) {
+        if (! $user->can('create', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
 
         $errors = [];
-        //$user = JWTAuth::parseToken()->authenticate();
 
         // Check if sitecode is Set
         if (! isset($request->sitecode) || ! $request->sitecode) {

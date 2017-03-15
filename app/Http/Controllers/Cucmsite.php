@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// Add Dummy CUCM class for permissions use for now.
+use App\Cucmclass;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -11,6 +13,10 @@ class Cucmsite extends Cucm
     public function listsites()
     {
         $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
 
         try {
             $sites = $this->cucm->get_site_names();
@@ -36,6 +42,10 @@ class Cucmsite extends Cucm
     public function getSite(Request $request, $name)
     {
         $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
 
         $name = strtoupper($name);
 
@@ -63,6 +73,10 @@ class Cucmsite extends Cucm
     public function getSiteDetails(Request $request, $name)
     {
         $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
 
         $name = strtoupper($name);
 
@@ -104,6 +118,10 @@ class Cucmsite extends Cucm
         ***************************************************************************************************/
 
         $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('create', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
 
         $SITE_TYPE = $request->type;
 

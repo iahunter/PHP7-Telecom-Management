@@ -49,6 +49,20 @@ angular
 			});
 		}
 		
+		// Get Object by Type and Name
+		self.get_object_type_by_name = function(name, type) {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/search/'+type+'/'+name)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+			
+			});
+		}
+		
 		// Get Dids by Block ID
 		self.getphone = function(name) {
 			var defer = $q.defer();

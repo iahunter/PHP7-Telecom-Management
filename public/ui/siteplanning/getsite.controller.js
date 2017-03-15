@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', function(siteService, sitePhonePlanService, cucmService, cupiService, $location, $state, $stateParams) {
+	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', function(siteService, sitePhonePlanService, cucmService, cupiService, $location, $state, $stateParams, $scope, $timeout) {
 		
 		var vm = this;
 		
@@ -253,7 +253,7 @@ angular
 								
 								var cucmsitesummary = res.data.response;
 								
-								//console.log(cucmsitesummary);
+								console.log(cucmsitesummary);
 								
 								if (res.data.response == 0){
 									vm.deploybutton = true;
@@ -263,40 +263,58 @@ angular
 									cucmsitesummary = res.data.response;
 								}
 								
-								vm.cucmsitesummary = {};
+								vm.cucmsite = {};
+								vm.cucmsite.summary = {};
+								vm.cucmsite.details = {};
 								// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
 								
 								angular.forEach(cucmsitesummary, function(k,v) {
 									
 										//console.log("VALUE: " + v);
-										//vm.cucmsitesummary
+										//vm.cucmsite.summary
 										angular.forEach(k, function(key,object) {
 											if(key.length != 0){
-												//vm.cucmsitesummary['length']++;
-												if (!vm.cucmsitesummary[v]){
-													vm.cucmsitesummary[v] = [];
+												//vm.cucmsite.summary['length']++;
+												if (!vm.cucmsite.summary[v]){
+													vm.cucmsite.summary[v] = [];
 													if(key){
-														vm.cucmsitesummary[v].push(key);
+														vm.cucmsite.summary[v].push(key);
 													}
+													
 													
 												}else{
 													if(key){
-														vm.cucmsitesummary[v].push(key);
+														vm.cucmsite.summary[v].push(key);
 													}
+													
 												}
+												
+												cucmService.get_object_type_by_name(key, v)
+														.then(function(res) {
+															vm.cucmsite.details[key] = [];
+															vm.cucmsite.details[key] = res.data.response;
+															
+															
+															
+
+														}, function(error) {
+															alert('An error occurred while getting object')
+														});
 												
 											}
 										});
 									
-									//console.log(vm.cucmsitesummary);
+									//console.log(vm.cucmsite.details);
 									
 								});
 								
-								if(vm.cucmsitesummary == 0){
+								if(vm.cucmsite.summary == 0){
 									console.log("Does not exist in CUCM");
-									vm.cucmsitesummary = false;
+									vm.cucmsite.summary = false;
 								}
 								
+								console.log(vm.cucmsite.details)
+								console.log(vm.cucmsite.summary)
 							}, function(err){
 								//Error
 							});
@@ -317,7 +335,7 @@ angular
 								
 
 							}, function(error) {
-								alert('An error occurred while updating the event')
+								alert('An error occurred while getting user templates from unity connection')
 							});
 					
 					
@@ -329,6 +347,32 @@ angular
 				
 
 		};
+		
+		vm.cucm_object_details = {};
+		vm.get_cucm_object_type_by_name = function (name, type) {
+
+				console.log("Mouse Over");
+				
+				cucmService.get_object_type_by_name(name, type)
+					.then(function(res) {
+						var object = res.data.response;
+						//console.log(object)
+						
+						return $scope.object = object
+
+					}, function(error) {
+						alert('An error occurred while getting object')
+					});
+					
+				$timeout(function() {
+					console.log($scope.object)
+					//return $scope.object
+				}, 1000);
+				
+				return $scope.object
+				console.log($scope.object)
+			
+		}
 		
 		var getsitesummary = vm.getsitesummary(id)
 		
@@ -401,4 +445,11 @@ angular
 			
 		};
 
-	}]);
+	}])
+
+	.directive('bsPopover', function() {
+		return function(scope, element, attrs) {
+			element.find("a[rel=popover]").popover({placement: 'bottom', html: 'true'});
+		};
+	});
+

@@ -88,6 +88,7 @@ class SitePlanController extends Controller
         // Change sitecode to uppercase
         $request->merge(['sitecode' => $sitecode]);
 
+		$request->merge(['created_by' => $user->username]);
         $site = Site::create($request->all());
 
         $response = [
@@ -105,16 +106,17 @@ class SitePlanController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
 
-        // Find record by id
+		// Find record by id
         $site = Site::find($id);
-
+		
         // Check Role of user
         if (! $user->can('update', $site)) {
             abort(401, 'You are not authorized to view site '.$id);
         }
-
-        $site->fill($request->all());
-        $site->save();
+		
+		$request->merge(['updated_by' => $user->username]);
+		$site->fill($request->all());
+		$site->save();
 
         $response = [
                     'status_code'    => 200,
@@ -137,6 +139,11 @@ class SitePlanController extends Controller
         }
 
         $site = Site::find($id);                                        // Find the block in the database by id
+		
+		$request->merge(['updated_by' => $user->username]);
+		$site->fill($request->all());
+		$site->save();
+		
         $site->delete();                                                            // Delete the Phone block.
         $response = [
                     'status_code'    => 200,
@@ -155,8 +162,9 @@ class SitePlanController extends Controller
         if (! $user->can('create', Phone::class)) {
             abort(401, 'You are not authorized to create new Phone blocks');
         }
-
-        $phone = Phone::create($request->all());
+		
+		$request->merge(['created_by' => $user->username]);
+		$phone = Phone::create($request->all());
 
         $response = [
                     'status_code'    => 200,
@@ -229,8 +237,10 @@ class SitePlanController extends Controller
             abort(401, 'You are not authorized to view site '.$Phone_id);
         }
 
-        $Phone->fill($request->all());
-        $Phone->save();
+		$request->merge(['updated_by' => $user->username]);
+		$Phone->fill($request->all());
+		$Phone->save();
+		
 
         $response = [
                     'status_code'      => 200,
@@ -246,13 +256,18 @@ class SitePlanController extends Controller
     public function deletePhone(Request $request, $Phone_id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-
+		
+		$Phone = Phone::find($Phone_id);   // Find the block in the database by id
+		
         // Check Role of user
         if (! $user->can('delete', Phone::class)) {
             abort(401, 'You are not authorized to delete Phone id '.$account_id);
         }
-
-        $Phone = Phone::find($Phone_id);                                        // Find the block in the database by id
+		
+		$request->merge(['updated_by' => $user->username]);
+		$Phone->fill($request->all());
+		$Phone->save();
+                                             
         $Phone->delete();                                                            // Delete the Phone block.
         $response = [
                     'status_code'    => 200,
@@ -464,15 +479,14 @@ class SitePlanController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
 
+		// Check Role of user
+        if (! $user->can('update', Phoneplan::class)) {
+            abort(401, 'You are not authorized to create new Phone blocks');
+        }
+		
         // Find record by id
         $phoneplan = Phoneplan::find($id);
 
-        /* Fix this later
-        // Check Role of user
-        if (! $user->can('update', $phoneplan)) {
-            abort(401, 'You are not authorized to update phone plan '.$id);
-        }
-        */
         $request->merge(['updated_by' => $user->username]);
         $phoneplan->fill($request->all());
         $phoneplan->save();
@@ -496,9 +510,14 @@ class SitePlanController extends Controller
         if (! $user->can('delete', Site::class)) {
             abort(401, 'You are not authorized to delete Phone block id '.$id);
         }
-
+		
+		
         $phoneplan = Phoneplan::find($id);                                        // Find the block in the database by id
-
+		
+		$request->merge(['updated_by' => $user->username]);
+		$phoneplan->fill($request->all());
+		$phoneplan->save();
+		
         $phoneplan->delete();                                                            // Delete the Phone block.
 
         $response = [

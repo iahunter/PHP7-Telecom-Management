@@ -18,7 +18,7 @@ class Did extends Model
     use Auditable;
     use SoftDeletes;
     protected $table = 'did';
-    protected $fillable = ['name', 'number', 'status', 'system_id'];
+    protected $fillable = ['name', 'number', 'status', 'system_id', 'created_by', 'updated_by'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [

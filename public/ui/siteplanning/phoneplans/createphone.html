@@ -1,6 +1,8 @@
 
 <div style="margin:25px"></div>
-<table class="table table-striped table-condensed table-bordered table-hover" ng-show="vm.showaddrow">
+<div>
+<div ng-show="vm.showaddrow" class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+<table class="table table-striped table-condensed table-bordered table-hover">
 	<thead>
 		<tr class="default">
 			<th>Firstname</th>							
@@ -44,8 +46,10 @@
 		<td  ng-show="vm.showaddrow">
 			<!--<button class="btn btn-xs btn-primary"  ng-click="vm.createphone(phone);vm.edit[phone.id] = !vm.edit[phone.id]"> Save </button>-->
 			<button class="btn btn-xs btn-primary"  ng-click="vm.createphone(newphone)"> Save </button>
-			<button class="btn btn-xs btn-warning"  ng-click="vm.phoneaddtoggle(vm.showaddrow)"> Undo </button>
+			<button class="btn btn-xs btn-default"  ng-click="vm.phoneaddtoggle(vm.showaddrow)"> Undo </button>
 		</td>
 	</tr>
 	</tbody>
 </table>
+</div>
+</div>

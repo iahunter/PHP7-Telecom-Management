@@ -36,16 +36,16 @@ angular
 					// Enable the Options to be generated for the chart. 
 					vm.didblock.chartoptions = { responsive: true, legend: { display: true}, title: {display:true, text:'Number Block Usage'}};
 					
-					console.log(vm.didblock.chartoptions);
+					//console.log(vm.didblock.chartoptions);
 					
 				//** End of Chart Data
-				console.log(vm.didblock.stats.inuse);
+				//console.log(vm.didblock.stats.inuse);
 				
 				//Calculate size and usage percentage. 
 				vm.didblock.size = vm.didblock.end - vm.didblock.start + 1;
 				vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100;
 					
-				console.log(vm.didblock);
+				//console.log(vm.didblock);
 				return vm.didblock;
 				
 			}, function(err){
@@ -62,11 +62,11 @@ angular
 				/*
 				// Loop thru all the dids and get did
 				angular.forEach(vm.dids,function(did){
-				console.log(did);
+				//console.log(did);
 				
 					// Loop thru and get all the assignments
 					angular.forEach(did,function(assignments){
-					console.log(assignments);
+					//console.log(assignments);
 					
 					// Can we extract and push a key:value to an existing object
 

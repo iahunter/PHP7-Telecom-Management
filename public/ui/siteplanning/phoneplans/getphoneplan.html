@@ -158,7 +158,9 @@
 		
 		<p><i style="color:red">Note! </i>For System Performance Reasons, Please limit 100 phones per Phone Plan. <br>
 		Split your phone list up into multiple phone plans if greater than 100 phones and users.</p>
-			
+		
+		<div style="margin:25px"></div>
+		
 		<div class="input-group col-md-3 ">
 			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">
 			<div class="input-group-btn">
@@ -503,10 +505,10 @@
 								</div>
 								<div style="margin:25px"></div>
 								
-								<div class="panel panel-primary panel-body" style="max-width:20%">
+								<div>
+								<!--<div class="panel panel-primary panel-body" style="max-width:40%">-->
 									<input type="checkbox" ng-model="vm.ignoreexistingphones">
 									<label for="checkbox" class="control-label"> Ignore Existing Phones in CUCM</label>
-									
 								</div>
 								<div style="margin:50px"></div>
 								<!--CUCM Phones Table-->

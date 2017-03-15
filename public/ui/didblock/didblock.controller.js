@@ -75,10 +75,10 @@ angular
 
 		function initController() {
 			telephonyService.GetDidblocks(function (result) {
-				console.log('callback from telephonyService.GetDidblocks responded ' + result);
+				//console.log('callback from telephonyService.GetDidblocks responded ' + result);
 				vm.didblocks = telephonyService.didblocks;
 				
-				console.log(vm.didblocks);
+				//console.log(vm.didblocks);
 				// Check if Token has expired. If so then direct them to login screen. 
 				if(result.message == "Token has expired"){
 					vm.tokenexpired = true;
@@ -122,7 +122,7 @@ angular
 					
 				})
 				
-				console.log(vm.blocktypes);
+				//console.log(vm.blocktypes);
 				
 				vm.loading = false;
 				vm.messages = JSON.stringify(vm.didblocks, null, "    ");
@@ -152,15 +152,15 @@ angular
 		vm.submitDidblock = function(form) {
 			form.status = this.selectedOption.name;
 			form.type = this.selectedtype.name;
-			console.log("Category: " + form.category);
+			//console.log("Category: " + form.category);
 			
 			
 			telephonyService.createDidblock(angular.copy(form)).then(function(data) {
 				alert("Didblock Added Succesfully" + data);
 				$state.go('didblock');
 			}, function(error) {
-				console.log(error)
-				console.log(error.data.message)
+				//console.log(error)
+				//console.log(error.data.message)
 				alert('Error: ' + error.data.message + " | Status: " + error.status);
 			});
 

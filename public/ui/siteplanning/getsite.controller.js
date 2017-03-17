@@ -253,7 +253,7 @@ angular
 								
 								var cucmsitesummary = res.data.response;
 								
-								console.log(cucmsitesummary);
+								//console.log(cucmsitesummary);
 								
 								if (res.data.response == 0){
 									vm.deploybutton = true;
@@ -298,7 +298,7 @@ angular
 															
 															// Json stringify to make object readable in popover
 															var response = JSON.stringify(res.data.response, undefined, 2);
-															console.log(response)
+															//console.log(response)
 															vm.cucmsite.details[key] = response;
 															
 															
@@ -319,8 +319,8 @@ angular
 									vm.cucmsite.summary = false;
 								}
 								
-								console.log(vm.cucmsite.details)
-								console.log(vm.cucmsite.summary)
+								//console.log(vm.cucmsite.details)
+								//console.log(vm.cucmsite.summary)
 							}, function(err){
 								//Error
 							});
@@ -357,7 +357,7 @@ angular
 		vm.cucm_object_details = {};
 		vm.get_cucm_object_type_by_name = function (name, type) {
 
-				console.log("Mouse Over");
+				//console.log("Mouse Over");
 				
 				cucmService.get_object_type_by_name(name, type)
 					.then(function(res) {
@@ -371,12 +371,12 @@ angular
 					});
 					
 				$timeout(function() {
-					console.log($scope.object)
+					//console.log($scope.object)
 					//return $scope.object
 				}, 1000);
 				
 				return $scope.object
-				console.log($scope.object)
+				//console.log($scope.object)
 			
 		}
 		
@@ -462,7 +462,7 @@ angular
 	.directive('popOver', function ($compile, $templateCache) {
 		var getTemplate = function () {
 		
-			console.log($templateCache.get("siteplanning/sitepopover.html"));
+			//console.log($templateCache.get("siteplanning/sitepopover.html"));
 			return $templateCache.get("siteplanning/sitepopover.html");
 		}
 		return {
@@ -477,7 +477,7 @@ angular
 				var html = getTemplate();
 				popOverContent = html;    
 				popOverContent = $compile(html)(scope); 
-				console.log(scope.objvalue);
+				//console.log(scope.objvalue);
 				var options = {
 					content: popOverContent,
 					placement: "bottom",

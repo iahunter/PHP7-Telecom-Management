@@ -302,8 +302,6 @@
 							</div>
 						</div> <!-- end of Modal -->
 			
-			
-			
 						<div class="panel panel-default" ng-show="vm.cucmsite.summary">
 							<div class="panel-heading">
 								<a class="collapsed" data-toggle="collapse" ng-href="" data-target="#collapse1" style="color:black;cursor: pointer;"><h4>CUCM - Site Configuration</h4></a>
@@ -313,21 +311,23 @@
 								<table class="table table-bordered table-hover table-responsive">
 									<tbody>
 										
-										<tr ng-repeat="(key,values) in vm.cucmsite.summary">
+										<tr ng-repeat="(key,values) in vm.cucmsite.summary track by $index">
 											<td><b>{{key}}</b></td>
 											<!--<td style="word-wrap: break-word; margin:10px;">{{values}}</td>-->
 											<td>
 												<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
 													
 													<!-- Must add the directive name to the ng-repeat to get popovers to work. -->
-													<tr ng-repeat="value in values" bs-popover>
+													
+													<tr ng-repeat="value in values">
 														<td>
-															
-															<!--Loop thru and create popovers -->
-															<div ng-repeat="(objkey,objvalue) in vm.cucmsite.details" bs-popover>
-																<div ng-show="objkey == value">
-																<div class="cardBody"><a href="" id="pop{{value}}" rel="popover"  data-original-title="<b>{{objkey}}</b>" data-placement="left" data-container="body" data-trigger="click" data-html="true" data-content="<b>Object Details</b><br>{{objvalue}}">{{value}}</a></div>
+															<div ng-repeat="(objkey,objvalue) in vm.cucmsite.details" >
+																<!--Watch the ng-if-->
+																
+																<div ng-if="objkey == value" pop-over>
+																	<!-- This links to the sitepopover.html directive template-->
 																</div>
+
 															</div>
 														</td>
 													</tr>	
@@ -340,8 +340,11 @@
 								</table>
 								</div>
 							</div>	
+							<!--<script type="text/ng-template" id="popover_template.html">
+								crap
+							</script>-->
 						</div>
-					
+						
 						<div ng-if="vm.cucmloading">
 							<legend >Please wait... </legend>
 							<div class="well">

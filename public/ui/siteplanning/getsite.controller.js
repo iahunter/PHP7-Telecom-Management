@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', function(siteService, sitePhonePlanService, cucmService, cupiService, $location, $state, $stateParams, $scope, $timeout) {
+	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(siteService, sitePhonePlanService, cucmService, cupiService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
 		
 		var vm = this;
 		
@@ -291,9 +291,15 @@ angular
 												
 												cucmService.get_object_type_by_name(key, v)
 														.then(function(res) {
-															vm.cucmsite.details[key] = [];
-															vm.cucmsite.details[key] = res.data.response;
 															
+															
+															vm.cucmsite.details[key] = [];
+															//vm.cucmsite.details[key] = res.data.response;
+															
+															// Json stringify to make object readable in popover
+															var response = JSON.stringify(res.data.response, undefined, 2);
+															console.log(response)
+															vm.cucmsite.details[key] = response;
 															
 															
 
@@ -451,5 +457,36 @@ angular
 		return function(scope, element, attrs) {
 			element.find("a[rel=popover]").popover({placement: 'bottom', html: 'true'});
 		};
+	})
+	
+	.directive('popOver', function ($compile, $templateCache) {
+		var getTemplate = function () {
+		
+			console.log($templateCache.get("siteplanning/sitepopover.html"));
+			return $templateCache.get("siteplanning/sitepopover.html");
+		}
+		return {
+			restrict: "A",
+			//transclude: true,
+			//template: "<span ng-transclude></span>",
+			templateUrl: 'siteplanning/sitepopover.html',
+			//replace : true,
+			link: function (scope, element, attrs) {
+				//console.log(scope)
+				var popOverContent;
+				var html = getTemplate();
+				popOverContent = html;    
+				popOverContent = $compile(html)(scope); 
+				console.log(scope.objvalue);
+				var options = {
+					content: popOverContent,
+					placement: "bottom",
+					html: true,
+					title: scope.objkey, 
+				};
+				//$(element).popover(options);
+				element.find("a[rel=popover]").popover(options);
+			},
+		};
 	});
-
+	

@@ -22,7 +22,9 @@
     100% { transform: rotate(360deg); }
 }
 
-
+.popover{
+    max-width: 90%; // Max Width of the popover (depending on the container!)
+}
 
 .modal-dialog {
   padding: 0;

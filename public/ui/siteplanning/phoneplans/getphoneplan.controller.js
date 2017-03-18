@@ -541,7 +541,7 @@ angular
 			  //alert('phone was added successfully');
 			  return $state.reload();
 			}, function(error) {
-				alert('An error occurred while updating the event')
+				alert(error.data.message)
 			});
 			//$state.reload();
 		}

@@ -9,6 +9,7 @@
 	<legend>Site Trunking and E911 Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
 		
+		
 		<div class="input-group col-md-3 ">
 			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
 			<div class="input-group-btn">
@@ -29,6 +30,8 @@
 		</div>
 		<div ng-show="!vm.loading">
 		
+			<b>Found {{vm.sites.length}} Sites</b>
+			<div style="margin:10px"></div>
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">    
 				<table class="table table-striped table-condensed table-bordered table-hover">

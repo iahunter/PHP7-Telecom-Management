@@ -3,7 +3,10 @@
 
 
 # Get SBC Call stats every 10 mins
-*/10 * * * * /opt/dcoapi/telephony/artisan sonus:write-callsummary-db > /dev/null 2>&1
+*/10 * * * * /PATH_TO_APP/telephony/artisan sonus:write-callsummary-db > /dev/null 2>&1
 
 # Update Number Database with CUCM scan every hour
-0 * * * * /opt/dcoapi/telephony/artisan didscan:callmanager > /dev/null 2>&1
+0 * * * * /PATH_TO_APP/telephony/artisan didscan:callmanager > /dev/null 2>&1
+
+# CUCM Scheduled Jobs every hour
+0 * * * * /PATH_TO_APP/telephony/artisan callmanager:sitescan > /dev/null 2>&1

@@ -48,7 +48,8 @@ class CucmReportsController extends Controller
 			abort(401, 'You are not authorized');
 		}
 		
-		$sites = DB::table('cucmsite')->select('sitecode', 'trunking','e911')->orderBy('sitecode')->get();
+		//$sites = Cucmsiteconfigs::find(array('sitecode', 'trunking', 'e911'));
+		$sites = DB::table('cucmsite')->where('deleted_at', '=', NULL)->select('sitecode', 'trunking','e911')->orderBy('sitecode')->get();
 		
         $response = [
                     'status_code'    => 200,

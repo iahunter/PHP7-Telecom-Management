@@ -5,6 +5,7 @@ namespace App\Console\Commands\CallManager;
 use App\Cucmsiteconfigs;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use DB;
 
 class CucmSiteScan extends Command
 {
@@ -50,7 +51,23 @@ class CucmSiteScan extends Command
 		print "Starting Site Scan at: ".$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                            		// Get a list of sites by calling get device pools and discard ones we don't care about.
-        //$sites = ['ECDONP3G'];                                     	// Comment this out to actually run this.
+        //$sites = ['TRAVIS01'];
+		$dbsites = $this->getsitesfromdb();
+		
+		
+		//print_r($dbsites);
+		
+		foreach ($dbsites as $dbsite) {
+			if(!in_array($dbsite, $sites)){
+				print "DELETING: ".$dbsite.PHP_EOL;
+				print_r($this->deletesitecode($dbsite));
+				print "DELETED: ".$dbsite.PHP_EOL;
+			}
+		}
+				
+		
+		
+		//$sites = ['ECDONP3G'];                                     	// Comment this out to actually run this.
         foreach ($sites as $site) {
 			
 			print "Getting Site: ".$site.PHP_EOL;
@@ -87,14 +104,8 @@ class CucmSiteScan extends Command
 					}
 					
 				}
-				
-				/*
-				if($localRouteGroup == "RG_CENTRAL_SBC_GRP"){
-					$trunking = "sip";
-				}else{
-					$trunking = "local";
-				}*/
 			}
+			
 			print $e911.PHP_EOL;
 			
 			$this->create_update_site($site, $site_summary, $site_details, $e911, $trunking);
@@ -107,6 +118,27 @@ class CucmSiteScan extends Command
 		print "End: ".$end;
 		
     }
+	
+	protected function getsitesfromdb()
+	{
+		$dbsites = DB::table('cucmsite')->where('deleted_at', '=', NULL)->select('sitecode')->orderBy('sitecode')->get();
+		$dbsites = json_decode(json_encode($dbsites), true);
+		//print_r($dbsites);
+		$sites = [];
+		foreach($dbsites as $dbsite){
+			$sites[] = $dbsite['sitecode'];
+		}
+		return $sites;
+	}
+	
+	protected function deletesitecode($sitecode){
+		print "ENTERED deletesitecode function";
+		$record = Cucmsiteconfigs::where('sitecode', $sitecode)->first();
+        //print_r($record);
+		return $record->delete();                                                            // Delete the did block.
+		
+	}
+		
 	
 	
 	// This updates DID records with new information AND clears out no longer used phone numbers / sets them to available

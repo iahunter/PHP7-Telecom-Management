@@ -44,10 +44,10 @@ angular
 				
 				//console.log(listdevicepools);
 				//listdevicepools = ['TRAVIS01', 'KHONEKSS']
-				reject = ["CENTRAL_SBC_SIPTRUNKS", "TEMPLATE"]
+				filter = ["CENTRAL_SBC_SIPTRUNKS", "TEMPLATE"]
 				devicepools = []
 				angular.forEach(listdevicepools, function(site) {
-					if(isInArrayNgForeach(site, reject)){
+					if(isInArrayNgForeach(site, filter)){
 						console.log("inarray " + site)
 					}else{
 						console.log("Not Inarray")

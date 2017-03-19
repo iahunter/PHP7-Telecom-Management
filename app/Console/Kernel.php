@@ -15,24 +15,22 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\DidScan\Callmanager::class,
-		Commands\CallManager\Ldapsync::class,
-		Commands\CallManager\CucmSiteScan::class,
-		Commands\Sonus\SonusCalls::class,
-		
-		
-		// Commented out one time scripts - Uncomment if needed.
+        Commands\CallManager\Ldapsync::class,
+        Commands\CallManager\CucmSiteScan::class,
+        Commands\Sonus\SonusCalls::class,
+
+        // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,
         //Commands\CallManager\SiteDetailsReport::class,
         //Commands\CallManager\CssReport::class,
         //Commands\CallManager\OwnerUpdate::class,
         //Commands\CallManager\BuildCUCMSiteDefaults::class,
-        
+
         //Commands\CallManager\AddPhones::class,
         //Commands\CallManager\LdapUserUpdate::class,
 
         //Commands\UnityConnection\UnityConnMB::class,
 
-        
     ];
 
     /**

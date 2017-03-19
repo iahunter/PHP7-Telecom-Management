@@ -18,8 +18,8 @@ class CreateCucmConfigs extends Migration
             $table->increments('id');
             $table->string('sitecode');                         // Name
             $table->json('sitesummary')->nullable();           // JSON Details ID of DID Blocks used for the site.
-			$table->json('sitedetails')->nullable();           // JSON Details ID of DID Blocks used for the site.
-			$table->string('trunking')->nullable();           // Comment
+            $table->json('sitedetails')->nullable();           // JSON Details ID of DID Blocks used for the site.
+            $table->string('trunking')->nullable();           // Comment
             $table->string('e911')->nullable();                  // Comment
             $table->timestamps();                           // Time Stamps
             $table->softDeletes();                          // Soft Deletes

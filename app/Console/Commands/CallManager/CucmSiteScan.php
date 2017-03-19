@@ -46,54 +46,97 @@ class CucmSiteScan extends Command
     public function handle()
     {
         // Step 1. Get a list of sites by getting All the Device Pools.
-        $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
-        //$sites = ['TRAVIS01'];                                     	// Comment this out to actually run this.
+        $sites = $this->getSites();                            		// Get a list of sites by calling get device pools and discard ones we don't care about.
+        //$sites = ['ECDONP3G'];                                     	// Comment this out to actually run this.
         foreach ($sites as $site) {
-            echo 'Getting Site: '.$site.PHP_EOL;
-            // Step 2. Get everything to do with the site for each site.
-            $site_summary = $this->getSiteDetails($site);
-            //print_r($site_summary);
-
-            $site_details = $this->getSiteOjbectDetails($site);
-            //print_r($site_details);
-
-            $this->create_update_site($site, $site_summary, $site_details);
-        }
+			
+			print "Getting Site: ".$site.PHP_EOL;
+			// Step 2. Get everything to do with the site for each site.
+			$site_summary = $this->getSiteDetails($site);
+			//print_r($site_summary);
+			
+			$site_details = $this->getSiteOjbectDetails($site);
+			//print_r($site_details);
+			
+			$devicepools = $site_details['DevicePool'];
+			
+			//print_r($devicepool);
+			foreach($devicepools as $devicepool){
+				$localRouteGroup = $devicepool['localRouteGroup']['value'];
+				if($localRouteGroup == "RG_CENTRAL_SBC_GRP"){
+					$trunking = "sip";
+				}else{
+					$trunking = "local";
+				}
+			}
+			
+			print $trunking.PHP_EOL;
+			
+			$listcss = $site_details['Css'];
+			$e911 = 'false';
+			foreach($listcss as $css){
+				foreach($css['members']['member'] as $partition){
+					//print_r($partition);
+					if(isset($partition['routePartitionName']['_'])){
+						if($partition['routePartitionName']['_'] == 'PT_911Enable'){
+							$e911 = '911enable';
+						}
+					}
+					
+				}
+				
+				/*
+				if($localRouteGroup == "RG_CENTRAL_SBC_GRP"){
+					$trunking = "sip";
+				}else{
+					$trunking = "local";
+				}*/
+			}
+			print $e911.PHP_EOL;
+			
+			$this->create_update_site($site, $site_summary, $site_details, $e911, $trunking);
+			
+		}
+		
     }
-
-    // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
-    protected function create_update_site($sitecode, $site_summary, $site_details)
+	
+	
+	// This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
+    protected function create_update_site($sitecode, $site_summary, $site_details, $e911, $trunking)
     {
-        $INSERT['sitecode'] = $sitecode;
+		
+		$INSERT['sitecode'] = $sitecode;
         $INSERT['sitesummary'] = $site_summary;
-        $INSERT['sitedetails'] = $site_details;
-        $INSERT['e911'] = '';
-        $INSERT['trunking'] = '';
-
+		$INSERT['sitedetails'] = $site_details;
+		$INSERT['e911'] = $e911;
+		$INSERT['trunking'] = $trunking;
+		
         // Check if Site exists in the database
         if (Cucmsiteconfigs::where([['sitecode', $sitecode]])->count()) {
             $site = Cucmsiteconfigs::where([['sitecode', $sitecode]])->first();
+			
+			//print_r($site);
+			print "Site Exists".PHP_EOL;
+			
+			// Update Site with Current settings
+			$site->sitesummary = $INSERT['sitesummary'];
+			$site->sitedetails = $INSERT['sitedetails'];
+			$site->e911 = $INSERT['e911'];
+			$site->trunking = $INSERT['trunking'];
+			
+			print "Saving Site with current config...".PHP_EOL;
+			$site->save();
+			print "Saved...".PHP_EOL;
+			
+        }else{
+			print "Creating Site: ".$sitecode.PHP_EOL;
+			Cucmsiteconfigs::create($INSERT);
+			print "Created Site: ".$sitecode.PHP_EOL;
+		}
 
-            //print_r($site);
-            echo 'Site Exists'.PHP_EOL;
-
-            // Update Site with Current settings
-            $site->sitesummary = $INSERT['sitesummary'];
-            $site->sitedetails = $INSERT['sitedetails'];
-            $site->e911 = '';
-            $site->trunking = '';
-
-            echo 'Saving Site with current config...'.PHP_EOL;
-            $site->save();
-            echo 'Saved...'.PHP_EOL;
-        } else {
-            echo 'Creating Site: '.$sitecode.PHP_EOL;
-            Cucmsiteconfigs::create($INSERT);
-            echo 'Created Site: '.$sitecode.PHP_EOL;
-        }
     }
-
-    // Get a list of Sites by device pools.
+	
+	// Get a list of Sites by device pools.
     protected function getSites()
     {
         echo 'Getting sites from CUCM...'.PHP_EOL;
@@ -128,8 +171,9 @@ class CucmSiteScan extends Command
             dd($e->getTrace());
         }
     }
-
-     // Get a summary of all types supported by site.
+	
+	
+	 // Get a summary of all types supported by site.
      protected function getSiteDetails($SITE)
      {
          try {
@@ -140,8 +184,9 @@ class CucmSiteScan extends Command
 
          return $site_details;
      }
-
-     // Get a summary of all types supported by site.
+	 
+	 
+	 // Get a summary of all types supported by site.
      protected function getSiteOjbectDetails($SITE)
      {
          try {
@@ -152,4 +197,6 @@ class CucmSiteScan extends Command
 
          return $site_object_details;
      }
+	 	 
+	
 }

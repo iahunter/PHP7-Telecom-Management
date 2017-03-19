@@ -31,8 +31,8 @@ class BouncerRoles extends Seeder
             App\Cupi::class,
             App\Cucmclass::class,
             App\Calls::class,
-			App\Cucmsiteconfigs::class,
-			App\Cucmphoneconfigs::class,
+            App\Cucmsiteconfigs::class,
+            App\Cucmphoneconfigs::class,
         ];
 
         foreach ($types as $type) {

@@ -481,7 +481,7 @@ angular
 				//console.log(scope.objvalue);
 				var options = {
 					content: popOverContent,
-					placement: "bottom",
+					//placement: "bottom",
 					html: true,
 					title: scope.objkey, 
 				};

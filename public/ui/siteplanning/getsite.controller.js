@@ -289,6 +289,7 @@ angular
 													
 												}
 												
+												// Get object details for popover
 												cucmService.get_object_type_by_name(key, v)
 														.then(function(res) {
 															
@@ -320,7 +321,7 @@ angular
 								}
 								
 								//console.log(vm.cucmsite.details)
-								//console.log(vm.cucmsite.summary)
+								console.log(vm.cucmsite.summary)
 							}, function(err){
 								//Error
 							});

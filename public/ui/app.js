@@ -106,6 +106,12 @@
                 controller: 'getSite.IndexController',
                 controllerAs: 'vm'
             })
+			.state('trunking911report', {
+                url: '/reports/site-trunking-911-report',
+                templateUrl: 'reports/site-trunking-911-report.html',
+                controller: 'siteTrunking911Report.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('getphoneplan', {
                 url: '/phoneplan/{id}',
                 templateUrl: 'siteplanning/phoneplans/getphoneplan.html',

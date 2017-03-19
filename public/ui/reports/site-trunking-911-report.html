@@ -35,24 +35,24 @@
 					<thead>
 						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 							<th>
-								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+								<a href="" ng-click="sortType = 'sitecode'; sortReverse = !sortReverse" style="color:black">
 									Sitecode
-										<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										<span ng-show="sortType == 'sitecode' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'sitecode' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
-								<a href="" ng-click="sortType = 'summary.e911site'; sortReverse = !sortReverse" style="color:black">
+								<a href="" ng-click="sortType = 'e911'; sortReverse = !sortReverse" style="color:black">
 									E911
-										<span ng-show="sortType == 'summary.e911site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'summary.e911site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										<span ng-show="sortType == 'e911' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'e911' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
-								<a href="" ng-click="sortType = 'summary.sipsite'; sortReverse = !sortReverse" style="color:black">
+								<a href="" ng-click="sortType = 'trunking'; sortReverse = !sortReverse" style="color:black">
 									SIP Trunking
-										<span ng-show="sortType == 'summary.sipsite' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'summary.sipsite' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										<span ng-show="sortType == 'trunking' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'trunking' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							
@@ -62,20 +62,20 @@
 					
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
-					<tr ng-repeat="site in vm.sites " ng-show="site.name">
-							<td>{{site.name}}</td>
+					<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict" ng-show="site.sitecode">
+							<td>{{site.sitecode}}</td>
 							<td>
-								<i ng-if="site.summary.e911site == true" class="fa fa-check-square-o" aria-hidden="true"></i>
-								<i ng-if="site.summary.e911site == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
-								<i ng-if="!site.summary.e911site" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
+								<i ng-if="site.e911 == '911enable'" class="fa fa-check-square-o" aria-hidden="true"></i>
+								<i ng-if="site.e911 == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
+								<i ng-if="!site.e911" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
 								
-								{{site.summary.e911site}}
+								{{site.e911}}
 							</td>
 							<td>
-								<i ng-if="site.summary.sipsite == true" class="fa fa-check-square-o" aria-hidden="true"></i>
-								<i ng-if="site.summary.sipsite == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
-								<i ng-if="!site.summary.sipsite" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
-								{{site.summary.sipsite}}
+								<i ng-if="site.trunking == 'sip'" class="fa fa-check-square-o" aria-hidden="true"></i>
+								<i ng-if="site.trunking == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
+								<i ng-if="!site.trunking" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
+								{{site.trunking}}
 							</td>
 					</tr>
 							

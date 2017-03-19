@@ -809,6 +809,27 @@
                 }
             }
         },
+        "/telephony/api/reports/siteE911TrunkingReport": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List of DID Blocks for authorized user",
+                "description": "",
+                "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cupi/user/search/{alias}": {
             "get": {
                 "tags": [

@@ -56,7 +56,7 @@ $api->version('v1', function ($api) {
 
     // SBC Call History
     require __DIR__.'/api.calls.php';
-	
-	// CUCM Reports
-	require __DIR__.'/api.cucmreports.php';
+
+    // CUCM Reports
+    require __DIR__.'/api.cucmreports.php';
 });

@@ -97,48 +97,7 @@ class CucmSiteScan extends Command
 			Cucmsiteconfigs::create($INSERT);
 			print "Created Site: ".$sitecode.PHP_EOL;
 		}
-		
-		
-		/*
 
-        // Go through all the mathcing DID's and update them, OR set them to available
-            // maybe WRAP this in a try/catch block to handle individual number update failures!
-        foreach ($dids as $did) {
-            try {
-                // SKIP updating OR making available DID's that are RESERVED!
-                if ($did->status == 'reserved') {
-                    //continue;
-                    if (isset($didinfo[$did->number])) {
-                        $did->assignments = $didinfo[$did->number];
-                        $did->status = 'inuse';
-                        $did->system_id = 'CUCM-Enterprise-Cluster';
-                    } else {
-                        continue;
-                    }
-                }
-                // IF this DID IS in the results from call wrangler, update it!
-                if (isset($didinfo[$did->number])) {
-                    $did->assignments = $didinfo[$did->number];
-                    $did->status = 'inuse';
-                    $did->system_id = 'CUCM-Enterprise-Cluster';
-                // OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
-                } else {
-                    $did->assignments = null;
-                    $did->status = 'available';
-                    $did->system_id = '';
-                }
-                //dd($did);
-                $did->save();
-            } catch (\Exception $e) {
-                echo 'Exception processing one DID '.$did->number.' '.$e->getMessage().PHP_EOL;
-            }
-            echo 'Processing DID: '.$did->number.' '.PHP_EOL;
-            //die();
-        }
-		
-		*/
-		
-		
     }
 	
 	// Get a list of Sites by device pools.

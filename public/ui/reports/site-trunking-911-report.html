@@ -62,19 +62,20 @@
 					
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
-					<tr ng-repeat="site in vm.sites" ng-show="site.name">
+					<tr ng-repeat="site in vm.sites " ng-show="site.name">
 							<td>{{site.name}}</td>
 							<td>
 								<i ng-if="site.summary.e911site == true" class="fa fa-check-square-o" aria-hidden="true"></i>
 								<i ng-if="site.summary.e911site == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
 								<i ng-if="!site.summary.e911site" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
 								
-								
+								{{site.summary.e911site}}
 							</td>
 							<td>
 								<i ng-if="site.summary.sipsite == true" class="fa fa-check-square-o" aria-hidden="true"></i>
 								<i ng-if="site.summary.sipsite == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
 								<i ng-if="!site.summary.sipsite" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
+								{{site.summary.sipsite}}
 							</td>
 					</tr>
 							
@@ -85,7 +86,6 @@
 			
 			<a href="#/site/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
 			-->
-			<div style="margin:100px"></div>
 		</div>
 	</div>
 </div>

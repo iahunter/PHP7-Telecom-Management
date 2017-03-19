@@ -6,7 +6,7 @@ use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cucmphones extends Model
+class Cucmphoneconfigs extends Model
 {
     //
     use Auditable;
@@ -23,5 +23,4 @@ class Cucmphones extends Model
     {
         parent::boot();
     }
-
 }

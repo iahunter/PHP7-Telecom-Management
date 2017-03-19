@@ -5,7 +5,7 @@
        CUCM Reports API
     ********************************/
 
-	    /**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/sites",
      *     tags={"CUCM Reports"},
@@ -23,7 +23,6 @@
      **/
     $api->get('/reports/sites', 'App\Http\Controllers\CucmReportsController@sitesSummary');
 
-	
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/siteE911TrunkingReport",

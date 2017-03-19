@@ -25,7 +25,7 @@ class CucmReportsController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         $sites = Cucmsiteconfigs::all();
 
-		/*
+        /*
         $show = [];
         foreach ($didblocks as $didblock) {
             if ($user->can('read', $didblock)) {
@@ -37,13 +37,12 @@ class CucmReportsController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'sites'      	=> $sites,
+                    'sites'          => $sites,
                     ];
 
         return response()->json($response);
     }
-	
-	
+
     public function getDidblockUtilization()
     {
         $stats = DB::table('did_block')

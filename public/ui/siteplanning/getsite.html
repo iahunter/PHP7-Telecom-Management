@@ -188,14 +188,22 @@
 									<th>Name</th>
 									<th>Start</th>
 									<th>End</th>
+									<th>Available</th>
+									<th>Inuse</th>
+									<th>Reserved</th>
+									<th>Total</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="block in vm.site.didblocksdetails track by $index">
-								<td>{{block.id}}</td>
+								<td><b><a href="#/didblock/{{block.id}}">{{block.id}}</a></b></td>
 								<td>{{block.name}}</td>
 								<td>{{block.start}}</td>
 								<td>{{block.end}}</td>
+								<td>{{block.stats.available}}</td>
+								<td>{{block.stats.inuse}}</td>
+								<td>{{block.stats.reserved}}</td>
+								<td>{{block.end - block.start + 1}}</td>
 							</tr>
 						</tbody>
 					</table>

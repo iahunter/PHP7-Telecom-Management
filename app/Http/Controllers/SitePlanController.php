@@ -42,6 +42,31 @@ class SitePlanController extends Controller
 
         return response()->json($response);
     }
+	
+	public function getDidblockUtilization()
+    {
+        $stats = DB::table('did_block')
+            ->leftJoin('did', 'did_block.id', '=', 'did.parent')
+            ->select('did_block.id', 'did_block.name', 'did.status', DB::raw('count(did.id) as statuscount'))
+            ->groupBy('did_block.id')
+            ->groupBy('did.status')
+            ->get();
+
+        $statsarray = [];
+
+        foreach ($stats as $stat) {
+            if (! isset($statsarray[$stat->id])) {
+                $statsarray[$stat->id] = [
+                    'available'    => 0,
+                    'inuse'        => 0,
+					'reserved'     => 0,
+                ];
+            }
+            $statsarray[$stat->id][$stat->status] = $stat->statuscount;
+        }
+
+        return $statsarray;
+    }
 
     public function getsite(Request $request, $id)
     {
@@ -54,8 +79,15 @@ class SitePlanController extends Controller
         if ((isset($site['didblocks'])) && is_array($site['didblocks'])) {
             foreach ($site['didblocks'] as $didblock) {
                 //print $didblock;
-                $didblocks[] = Didblock::find($didblock);
-                //print_r($didblock);
+
+                $didblock = Didblock::find($didblock);
+				
+				// Get stats
+				$stats = $this->getDidblockUtilization();
+				
+				$didblock->stats = $stats[$didblock->id];
+				$didblocks[] = $didblock;
+				
             }
             $site['didblocksdetails'] = $didblocks;
         }

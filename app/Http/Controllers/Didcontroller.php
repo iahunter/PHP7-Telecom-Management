@@ -60,6 +60,7 @@ class Didcontroller extends Controller
                 $statsarray[$stat->id] = [
                     'available'    => 0,
                     'inuse'        => 0,
+					'reserved'     => 0,
                 ];
             }
             $statsarray[$stat->id][$stat->status] = $stat->statuscount;

@@ -11,12 +11,13 @@ class Cucmphoneconfigs extends Model
     //
     use Auditable;
     use SoftDeletes;
-    protected $table = 'cucmsite';
-    protected $fillable = ['sitecode', 'e911', 'trunking', 'config'];
+    protected $table = 'cucmphone';
+    protected $fillable = ['name', 'description', 'devicepool', 'css', 'model', 'ownerid', 'ipv4address', 'erl', 'lines', 'config'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'config'      => 'array',
+            'lines'      	=> 'array',
+			'config'      	=> 'array',
         ];
 
     protected static function boot()

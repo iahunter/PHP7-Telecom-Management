@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\DidScan\Callmanager::class,
         Commands\CallManager\Ldapsync::class,
         Commands\CallManager\CucmSiteScan::class,
+		Commands\CallManager\CucmPhoneScan::class,
         Commands\Sonus\SonusCalls::class,
 
         // Commented out one time scripts - Uncomment if needed.

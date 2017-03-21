@@ -12,10 +12,6 @@
       {
           "type": "vcs",
           "url": "https://github.com/iahunter/PHP5-CallManager-AXL.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://github.com/iahunter/PHP7-UnityConnection-CUPI.git"
       }
     ],
     "require": {
@@ -29,7 +25,8 @@
         "silber/bouncer": "^1.0",
         "darkaonline/l5-swagger": "~3.0",
         "beberlei/assert": "^2.6",
-        "owen-it/laravel-auditing": "^3.0"
+        "owen-it/laravel-auditing": "^3.0",
+        "spatie/laravel-backup": "^4.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -37,8 +34,7 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-		"iahunter/PHP5-CallManager-AXL": "dev-master",
-        "iahunter/PHP7-UnityConnection-CUPI": "dev-master"
+		"iahunter/PHP5-CallManager-AXL": "dev-master"
     },
     "autoload": {
         "classmap": [

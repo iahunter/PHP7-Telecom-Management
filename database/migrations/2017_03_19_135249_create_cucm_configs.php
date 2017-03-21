@@ -29,17 +29,17 @@ class CreateCucmConfigs extends Migration
         Schema::create('cucmphone', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-			$table->string('description')->nullable(); 
-			$table->string('devicepool')->nullable();                         
-			$table->string('model')->nullable();                         
-			$table->string('ownerid')->nullable();                        
-			$table->string('css')->nullable();          
-			$table->string('ipv4address')->nullable();    	// Future RISDB API 
-			$table->string('erl')->nullable();  			// Future E911 Integration
-			$table->json('config')->nullable();            	// JSON Details Custom Field Data
-			$table->json('lines')->nullable();              // JSON Details Custom Field Data
-            $table->timestamps();                        	// Time Stamps
-            $table->softDeletes();                        	// keep deactivated certificates in the table
+            $table->string('description')->nullable();
+            $table->string('devicepool')->nullable();
+            $table->string('model')->nullable();
+            $table->string('ownerid')->nullable();
+            $table->string('css')->nullable();
+            $table->string('ipv4address')->nullable();        // Future RISDB API
+            $table->string('erl')->nullable();            // Future E911 Integration
+            $table->json('config')->nullable();                // JSON Details Custom Field Data
+            $table->json('lines')->nullable();              // JSON Details Custom Field Data
+            $table->timestamps();                            // Time Stamps
+            $table->softDeletes();                            // keep deactivated certificates in the table
         });
     }
 

@@ -16,8 +16,8 @@ class Cucmphoneconfigs extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'lines'      	=> 'array',
-			'config'      	=> 'array',
+            'lines'           => 'array',
+            'config'          => 'array',
         ];
 
     protected static function boot()

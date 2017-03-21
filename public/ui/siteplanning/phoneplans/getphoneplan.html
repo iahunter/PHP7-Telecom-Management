@@ -534,7 +534,8 @@
 								<div class="btn-group">
 									<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getusersfromcupi(vm.phones)">5. Check Unity Users</button>
 									<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getusers_um_fromcupi(vm.phones)">6. Populate UM Info from Unity Users</button>
-									<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm"  ng-click="vm.importcupiusers(vm.phones)">7. Import Unity Users</button>
+									<!--<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm"  ng-click="vm.importcupiusers(vm.phones)">7. Import Unity Users</button>-->
+									<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplancupi-modal">7. Import Unity Users</button>
 								</div>
 								<div style="margin:50px"></div>
 								<!--CUPI Users Table-->

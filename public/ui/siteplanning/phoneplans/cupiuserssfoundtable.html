@@ -98,3 +98,225 @@
 	</div>
 	<div style="margin:25px"></div>
 </div>
+
+
+					
+	<!-- Phone Deployment Modal -->
+	<div class="modal fade " id="{{vm.phoneplan.id}}-phoneplancupi-modal" role="dialog">
+		<div class="modal-dialog" style="width: 90%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>Deploy Unity Mailboxes</h3>
+				</div>
+
+				<div class="modal-body">
+				
+					<p ng-hide="vm.creatednewmailboxes && !vm.unityfailures"><b style="color:red" >Warning!</b> You are about to deploy Phones to the Production System.</p>
+					
+					<div class="table-responsive">
+					<div style="margin:25px"></div>
+						<div ng-show="vm.creatednewmailboxes" class="panel panel-default" style="width: 35%;">
+						<table class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
+							<tr class="default">
+								<th></th>
+								<th>Success</th>
+								<th>Errors</th>
+								<th>Skipped</th>
+								<th>Complete</th>
+								<th>Total</th>
+							</tr>
+							<tr>
+								<th>Employees</th>
+								<td>{{vm.importedldapmailboxes.success}}</td>
+								<td>{{vm.importedldapmailboxes.errors}}</td>
+								<td>{{vm.importedldapmailboxes.skipped}}</td>
+								<td>{{vm.importedldapmailboxes.total}}</td>
+								<td>{{vm.importedldapmailboxes.length}}</td>
+							</tr>
+							<tr>
+								<th>Non Employees</th>
+								<td>{{vm.creatednewmailboxes.success}}</td>
+								<td>{{vm.creatednewmailboxes.errors}}</td>
+								<td>{{vm.creatednewmailboxes.skipped}}</td>
+								<td>{{vm.creatednewmailboxes.total}}</td>
+								<td>{{vm.creatednewmailboxes.length}}</td>
+							</tr>
+							
+						</table>
+						</div>
+					</div>
+
+					<div style="margin:50px"></div>
+
+					
+					<legend ng-show="vm.importedldapmailboxes && !vm.unityldapfailures">Employee Mailbox Report</legend>
+					<div class="table-responsive">
+						<table ng-show="vm.importedldapmailboxes && !vm.unityldapfailures" class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
+							<tr>
+								<th>Username</th>
+								<th>DN</th>
+								<th>Template</th>
+								<th>Status</th>
+								
+
+							</tr>
+							<tr ng-repeat="phone in vm.importedldapmailboxes">
+								<div ng-hide="phone.skipped">
+									<td style="display:none" ng-init="vm.importedldapmailboxes.total = vm.importedldapmailboxes.total + 1"></td>
+									<td><b>{{ phone.username}}</b></td>
+									<td>{{ phone.dn}}</td>
+									<td>{{ phone.template}}</td>
+									<td ng-if="phone.error">
+										<i ng-init="vm.importedldapmailboxes.errors = vm.importedldapmailboxes.errors + 1"class="fa fa-exclamation-triangle"></i>
+										{{ phone.error}}
+									</td>
+									<td>
+										<div ng-if="phone.response" class="table-responsive">
+										<table class="table table-bordered table-hover" style="background-color: transparent;">
+											<tr ng-repeat="(k,v) in phone.response">
+												<!--Hide the row data if it equals request-->
+												<i ng-init="vm.importedldapmailboxes.success = vm.importedldapmailboxes.success + 1" class="fa fa-check-square-o" aria-hidden="true"></i>
+												<td ng-hide="k == 'user_imported'"><b>{{k}}</b></td>
+												<td ng-hide="k == 'user_imported'">
+													{{v}}
+												</td>
+											</tr>		
+										</table>
+										</div>
+									</td>
+								</div>
+							</tr>
+							
+								
+						</table>
+					
+					</div>
+
+					
+					<legend ng-show="vm.creatednewmailboxes && !vm.unitycreatefailures">Non Employee Mailbox Report</legend>
+					<div class="table-responsive">
+						<table ng-show="vm.creatednewmailboxes && !vm.unitycreatefailures" class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
+							<tr>
+								<th>Username</th>
+								<th>Description</th>
+								<th>Template</th>
+								<th>Status</th>
+								
+
+							</tr>
+							<tr ng-repeat="phone in vm.creatednewmailboxes">
+								<div ng-hide="phone.skipped">
+									<td style="display:none" ng-init="vm.creatednewmailboxes.total = vm.creatednewmailboxes.total + 1"></td>
+									<td><b>{{ phone.username}}</b></td>
+									<td>{{ phone.dn}}</td>
+									<td>{{ phone.template}}</td>
+									<td ng-if="phone.error">
+										<i ng-init="vm.creatednewmailboxes.errors = vm.creatednewmailboxes.errors + 1"class="fa fa-exclamation-triangle"></i>
+										{{ phone.error}}
+									</td>
+									<td>
+										<div ng-if="phone.response" class="table-responsive">
+										<table class="table table-bordered table-hover" style="background-color: transparent;">
+											<tr ng-repeat="(k,v) in phone.response">
+												<!--Hide the row data if it equals request-->
+												<i ng-init="vm.creatednewmailboxes.success = vm.creatednewmailboxes.success + 1" class="fa fa-check-square-o" aria-hidden="true"></i>
+												<td ng-hide="k == 'user'"><b>{{k}}</b></td>
+												<td ng-hide="k == 'user'">
+													{{v}}
+												</td>
+											</tr>		
+										</table>
+										</div>
+										</div>
+									</td>
+								</div>
+							</tr>
+							
+								
+						</table>
+					
+					</div>
+				
+				
+				
+				
+				
+					<legend ng-show="vm.unityfailures">Error Summary Report</legend>
+						<div ng-show="vm.unityfailures.length == 0">
+							No Erorrs Found
+						</div>
+						
+						
+						<div class="table-responsive">
+							<table ng-show="vm.unityfailures.length > 0 " class="table table-striped table-condensed table-bordered table-hover" style="background-color: white;">
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Line</th>
+									<th>Phone</th>
+									
+
+								</tr>
+								<tr ng-repeat="phone in vm.unityfailures">
+									<div ng-hide="phone.skipped">
+										<td style="display:none" ng-init="vm.unityfailures.total = vm.unityfailures.total + 1"></td>
+										<td><b>{{ phone.Phone.request.name}}</b></td>
+										<td>{{ phone.Phone.request.description}}<br>{{ phone.Phone.request.username}}</td>
+										<td>
+											<div ng-if="phone.Line" class="table-responsive">
+											<table class="table table-bordered table-hover" style="background-color: transparent;">
+												<tr ng-repeat="(k,v) in phone.Line">
+													<!--Hide the row data if it equals request-->
+													<td ng-if="k != 'request' && k != 'type' "><b>{{k}}</b></td>
+													<td ng-if="k != 'request' && k != 'type'">
+														<i ng-if="k == 'status' && v == 'error'"  ng-init="vm.unityfailures.lineerrors = vm.unityfailures.lineerrors + 1"class="fa fa-exclamation-triangle"></i>
+														<i ng-if="k == 'status' && v == 'success'"  ng-init="vm.unityfailures.linesuccess = vm.unityfailures.linesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i>
+														<i ng-if="k == 'skipped' && v == true"  ng-init="vm.unityfailures.lineskipped = vm.unityfailures.lineskipped + 1" class="fa fa-check-square-o" aria-hidden="true"></i> 
+														{{v}}
+													</td>
+												</tr>		
+											</table>
+											</div>
+										</td>
+										<td>
+											<div ng-if="phone.Phone" class="table-responsive">
+												<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+													<tr ng-repeat="(k,v) in phone.Phone">
+														<!--Hide the row data if it equals request or type-->
+														<td ng-if="k != 'request'  && k != 'type' "><b>{{k}}</b></td>
+														<td ng-if="k != 'request'  && k != 'type' ">
+															<i ng-if="k == 'status' && v == 'error'" ng-init="vm.unityfailures.phoneerrors = vm.unityfailures.phoneerrors + 1" class="fa fa-exclamation-triangle"></i>
+															<i ng-if="k == 'status' && v == 'success'" ng-init="vm.unityfailures.phonesuccess = vm.unityfailures.phonesuccess + 1" class="fa fa-check-square-o" aria-hidden="true"></i> 
+															<i ng-if="k == 'skipped' && v == true"  ng-init="vm.unityfailures.phoneskipped = vm.unityfailures.phoneskipped + 1" class="fa fa-check-square-o" aria-hidden="true"></i> 
+															{{v}}
+														</td>
+													</tr>		
+												</table>
+											</div>
+										</td>
+									</div>
+								</tr>
+								
+									
+							</table>
+					
+						</div>
+					</div>
+				
+					<div style="margin:25px"></div>
+				<div class="modal-footer">
+
+				
+				<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+				
+				<a class="btn btn-primary btn-sm" ng-if="vm.newmailboxes" ng-click="vm.showfailuresonly()">Show Errors</a>
+				<a class="btn btn-primary btn-sm" ng-if="vm.newmailboxes" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
+				
+				<a class="btn btn-danger btn-sm" ng-if="!vm.newmailboxes" ng-click="vm.importcupiusers(vm.phones)">Deploy</a>
+				<a class="btn btn-primary btn-sm" ng-if="!vm.newmailboxes" data-dismiss="modal">Cancel</a>
+				<div style="margin:100px"></div>
+				</div>
+			
+			</div>
+		</div>
+	</div> <!-- npa of Modal -->

@@ -368,7 +368,9 @@ angular
 		
 		vm.importcupiusers = function(phones){
 				// Get the UM info for account mailbox
-				
+				vm.creatednewmailboxes = [];
+				vm.importedldapmailboxes = [];
+				vm.changedldapmailboxes = [];
 				angular.forEach(phones, function(phone) {
 					phone.voicemail = phone.voicemail.toLowerCase(phone.voicemail);
 					if((phone.voicemail == 'true') || (phone.voicemail == 't') || (phone.voicemail == 'y') || (phone.voicemail == 'yes')){
@@ -391,10 +393,18 @@ angular
 								cupiService.createuser(user)
 									.then(function(res){
 										
-										//console.log(res.data)
-
+										console.log(res.data)
+										
+										//var mailbox = res.data;
+										
+										user.response = res.data;
+										vm.creatednewmailboxes.push(user);
+										console.log(vm.creatednewmailboxes);
+										
 									}, function(err){
-										// Error
+										console.log(err);
+										user.error = err.data.message;
+										vm.creatednewmailboxes.push(user);
 									});
 								
 							}else{
@@ -407,10 +417,16 @@ angular
 								cupiService.importldapuser(user)
 									.then(function(res){
 										
-										//console.log(res.data)
-
+										console.log(res.data)
+										
+										user.response = res.data
+										vm.importedldapmailboxes.push(user);
+										console.log(vm.importedldapmailboxes);
+										
 									}, function(err){
-										// Error
+										console.log(err);
+										user.error = err.data.message;
+										vm.importedldapmailboxes.push(user);
 									});
 							
 							}

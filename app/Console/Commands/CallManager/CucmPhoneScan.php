@@ -51,9 +51,11 @@ class CucmPhoneScan extends Command
         echo 'Starting Site Scan at: '.$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
-        //$sites = ['TRAVIS01'];
+        $sites = ['TRAVIS01'];
 		$sitetotalcount = count($sites);
 		$sitecount = 0;
+		$storephonenames = [];
+		
         foreach ($sites as $site) {
 			$sitecount = $sitecount + 1;
             echo 'Getting Site: '.$site.' # '.$sitecount.' of '.$sitetotalcount.PHP_EOL;
@@ -66,8 +68,22 @@ class CucmPhoneScan extends Command
 			print "Found ".count($phonenames)." Phones in ".$site.PHP_EOL; 
 			$phonecount = 0; 
             foreach($phonenames as $key => $phonename){
+				$storephonenames[] = $phonename;
 				//print $phonename.PHP_EOL;
-				$phonedetails = $this->getphone($phonename);
+				
+				if (preg_match('/' . '^TCT.*$' . '/', $phonename)){
+					
+					try {
+							$phonedetails = $this->cucm->get_object_type_by_name($phonename, 'Phone');
+						
+					} catch (\Exception $e) {
+						print "Discarding unsupported phone type due to AXL Bug... Name: ".$phonename.PHP_EOL;
+						continue;
+					}
+				}else{
+					$phonedetails = $this->getphone($phonename);
+				}
+				
 				
 				$phone['name'] = $phonename;
 				$phone['config'] = $phonedetails;
@@ -87,14 +103,44 @@ class CucmPhoneScan extends Command
 			print PHP_EOL;
         }
 		
+		print "
 		/***************************************
-			Add DB Cleanup Actions HERE
+			     Phone Scan Complete
 		****************************************/
-
+		";
         $end = Carbon::now();
 		echo PHP_EOL;
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL;
+		
+		print "
+		/***************************************
+			Cleaning up Deleted Phones
+		****************************************/
+		";
+		$start = Carbon::now();
+		echo 'Start Time: '.$start.PHP_EOL;
+		
+		//$count = count($storephonenames);
+		
+		$dbPhones = $this->getphonesfromdb();
+		//print_r($dbPhones);
+		$count = 0;
+		foreach($dbPhones as $phone){
+			//print $phone['name'].PHP_EOL;
+			$count++;
+			
+			print $count. " of " . count($dbPhones).PHP_EOL;
+			if(!in_array($phone['name'], $storephonenames)){
+				print "Phone No longer Exists, Deleting: ".$phone['name'].PHP_EOL;
+				print_r($this->deletephone($phone['name']));
+				print "Deleted: ".$phone['name'].PHP_EOL;
+			}
+		}
+		
+		$end = Carbon::now();
+		echo 'Start Time: '.$start.PHP_EOL;
+		echo 'End Time: '.$end.PHP_EOL;
     }
 	
 	
@@ -171,22 +217,17 @@ class CucmPhoneScan extends Command
     protected function getphonesfromdb()
     {
         $dbphones = DB::table('cucmphone')->where('deleted_at', '=', null)->select('name')->orderBy('devicepool')->get();
-        $dbphones = json_decode(json_encode($dbsites), true);
-        //print_r($dbsites);
-        $phones = [];
-        foreach ($dbphones as $phone) {
-            $phones[] = $phone['name'];
-        }
+        $dbphones = json_decode(json_encode($dbphones), true);
 
-        return $phones;
+        return $dbphones;
     }
 
     protected function deletephone($name)
     {
         //echo 'ENTERED deletephone function';
-        $record = Cucmsiteconfigs::where('sitecode', $name)->first();
+        $record = Cucmphoneconfigs::where('name', $name)->first();
         //print_r($record);
-        return $record->delete();                                                            // Delete the did block.
+		return $record->delete();                                                            // Delete the did block.
     }
 
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available

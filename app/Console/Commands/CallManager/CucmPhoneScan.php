@@ -52,106 +52,102 @@ class CucmPhoneScan extends Command
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
         $sites = ['TRAVIS01'];
-		$sitetotalcount = count($sites);
-		$sitecount = 0;
-		$storephonenames = [];
-		
+        $sitetotalcount = count($sites);
+        $sitecount = 0;
+        $storephonenames = [];
+
         foreach ($sites as $site) {
-			$sitecount = $sitecount + 1;
+            $sitecount = $sitecount + 1;
             echo 'Getting Site: '.$site.' # '.$sitecount.' of '.$sitetotalcount.PHP_EOL;
-			echo 'Start Time: '.$start.PHP_EOL; 
-			echo 'Current Time: '.Carbon::now().PHP_EOL;
-			
+            echo 'Start Time: '.$start.PHP_EOL;
+            echo 'Current Time: '.Carbon::now().PHP_EOL;
+
             // Step 2. Get everything to do with the site for each site.
             $phonenames = $this->getPhonesNamesbySite($site);
-			
-			print "Found ".count($phonenames)." Phones in ".$site.PHP_EOL; 
-			$phonecount = 0; 
-            foreach($phonenames as $key => $phonename){
-				$storephonenames[] = $phonename;
-				//print $phonename.PHP_EOL;
-				
-				if (preg_match('/' . '^TCT.*$' . '/', $phonename)){
-					
-					try {
-							$phonedetails = $this->cucm->get_object_type_by_name($phonename, 'Phone');
-						
-					} catch (\Exception $e) {
-						print "Discarding unsupported phone type due to AXL Bug... Name: ".$phonename.PHP_EOL;
-						continue;
-					}
-				}else{
-					$phonedetails = $this->getphone($phonename);
-				}
-				
-				
-				$phone['name'] = $phonename;
-				$phone['config'] = $phonedetails;
-				// Set string values for phone db
-				$phone['devicepool'] = $phonedetails['devicePoolName']['_'];
-				$phone['css']= $devicepool = $phonedetails['callingSearchSpaceName']['_'];
-				$phone['model'] = $devicepool = $phonedetails['model'];
-				$phone['description'] = $devicepool = $phonedetails['description'];
-				$phone['ownerid'] = $phonedetails['ownerUserName']['_'];
 
-				// Get the Line details
-				$phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
-				print $phonecount = $phonecount + 1 ." of ".count($phonenames). " " ; 
-				$this->create_update_phone($phone);
-				//die();
-			}
-			print PHP_EOL;
+            echo 'Found '.count($phonenames).' Phones in '.$site.PHP_EOL;
+            $phonecount = 0;
+            foreach ($phonenames as $key => $phonename) {
+                $storephonenames[] = $phonename;
+                //print $phonename.PHP_EOL;
+
+                if (preg_match('/'.'^TCT.*$'.'/', $phonename)) {
+                    try {
+                        $phonedetails = $this->cucm->get_object_type_by_name($phonename, 'Phone');
+                    } catch (\Exception $e) {
+                        echo 'Discarding unsupported phone type due to AXL Bug... Name: '.$phonename.PHP_EOL;
+                        continue;
+                    }
+                } else {
+                    $phonedetails = $this->getphone($phonename);
+                }
+
+                $phone['name'] = $phonename;
+                $phone['config'] = $phonedetails;
+                // Set string values for phone db
+                $phone['devicepool'] = $phonedetails['devicePoolName']['_'];
+                $phone['css'] = $devicepool = $phonedetails['callingSearchSpaceName']['_'];
+                $phone['model'] = $devicepool = $phonedetails['model'];
+                $phone['description'] = $devicepool = $phonedetails['description'];
+                $phone['ownerid'] = $phonedetails['ownerUserName']['_'];
+
+                // Get the Line details
+                $phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
+                echo $phonecount = $phonecount + 1 .' of '.count($phonenames).' ';
+                $this->create_update_phone($phone);
+                //die();
+            }
+            echo PHP_EOL;
         }
-		
-		print "
+
+        echo '
 		/***************************************
 			     Phone Scan Complete
 		****************************************/
-		";
+		';
         $end = Carbon::now();
-		echo PHP_EOL;
+        echo PHP_EOL;
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL;
-		
-		print "
+
+        echo '
 		/***************************************
 			Cleaning up Deleted Phones
 		****************************************/
-		";
-		$start = Carbon::now();
-		echo 'Start Time: '.$start.PHP_EOL;
-		
-		//$count = count($storephonenames);
-		
-		$dbPhones = $this->getphonesfromdb();
-		//print_r($dbPhones);
-		$count = 0;
-		foreach($dbPhones as $phone){
-			//print $phone['name'].PHP_EOL;
-			$count++;
-			
-			print $count. " of " . count($dbPhones).PHP_EOL;
-			if(!in_array($phone['name'], $storephonenames)){
-				print "Phone No longer Exists, Deleting: ".$phone['name'].PHP_EOL;
-				print_r($this->deletephone($phone['name']));
-				print "Deleted: ".$phone['name'].PHP_EOL;
-			}
-		}
-		
-		$end = Carbon::now();
-		echo 'Start Time: '.$start.PHP_EOL;
-		echo 'End Time: '.$end.PHP_EOL;
+		';
+        $start = Carbon::now();
+        echo 'Start Time: '.$start.PHP_EOL;
+
+        //$count = count($storephonenames);
+
+        $dbPhones = $this->getphonesfromdb();
+        //print_r($dbPhones);
+        $count = 0;
+        foreach ($dbPhones as $phone) {
+            //print $phone['name'].PHP_EOL;
+            $count++;
+
+            echo $count.' of '.count($dbPhones).PHP_EOL;
+            if (! in_array($phone['name'], $storephonenames)) {
+                echo 'Phone No longer Exists, Deleting: '.$phone['name'].PHP_EOL;
+                print_r($this->deletephone($phone['name']));
+                echo 'Deleted: '.$phone['name'].PHP_EOL;
+            }
+        }
+
+        $end = Carbon::now();
+        echo 'Start Time: '.$start.PHP_EOL;
+        echo 'End Time: '.$end.PHP_EOL;
     }
-	
-	
-	// Get a list of Sites by device pools.
+
+    // Get a list of Sites by device pools.
     protected function getPhonesNamesbySite($site)
     {
-		// $site = 'TRAVIS01';
+        // $site = 'TRAVIS01';
         //echo 'Getting phones from CUCM Site:'.$site.'...'.PHP_EOL;
         try {
             $phones = $this->cucm->get_object_type_by_site($site, 'Phone');
-			
+
             if (! $phones) {
                 // Return blank array if no results in $didinfo.
                 //echo 'No Phones Found!';
@@ -165,15 +161,15 @@ class CucmPhoneScan extends Command
             dd($e->getTrace());
         }
     }
-	
-	// Get a list of Sites by device pools.
+
+    // Get a list of Sites by device pools.
     protected function get_lines_details_by_phone_name($NAME)
     {
-		// $site = 'TRAVIS01';
+        // $site = 'TRAVIS01';
         //echo 'Getting phone Lines from CUCM Phone:'.$NAME.'...'.PHP_EOL;
         try {
             $lines = $this->cucm->get_lines_details_by_phone_name($NAME);
-			
+
             if (! $lines) {
                 // Return blank array if no results in $didinfo.
                 //echo 'No Lines Found!';
@@ -187,16 +183,15 @@ class CucmPhoneScan extends Command
             dd($e->getTrace());
         }
     }
-	
 
-	// Get a list of Sites by device pools.
+    // Get a list of Sites by device pools.
     protected function getphone($NAME)
     {
-		// $site = 'TRAVIS01';
+        // $site = 'TRAVIS01';
         //echo 'Getting phone Lines from CUCM Phone:'.$NAME.'...'.PHP_EOL;
         try {
             $phone = $this->cucm->get_object_type_by_name($NAME, 'Phone');
-			
+
             if (! $phone) {
                 // Return blank array if no results in $didinfo.
                 echo 'No Phone Found!';
@@ -210,10 +205,8 @@ class CucmPhoneScan extends Command
             dd($e->getTrace());
         }
     }
-	
 
-	
-	//**************************************************************************//
+    //**************************************************************************//
     protected function getphonesfromdb()
     {
         $dbphones = DB::table('cucmphone')->where('deleted_at', '=', null)->select('name')->orderBy('devicepool')->get();
@@ -227,7 +220,7 @@ class CucmPhoneScan extends Command
         //echo 'ENTERED deletephone function';
         $record = Cucmphoneconfigs::where('name', $name)->first();
         //print_r($record);
-		return $record->delete();                                                            // Delete the did block.
+        return $record->delete();                                                            // Delete the did block.
     }
 
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
@@ -239,22 +232,22 @@ class CucmPhoneScan extends Command
 
             //echo 'Phone Exists'.PHP_EOL;
 
-			// Update Phone Record if exists with latest config. 
-			$phone->config = $newphone['config'];
-			$phone->devicepool = $newphone['devicepool'];
-			$phone->css = $devicepool = $newphone['css'];
-			$phone->model = $devicepool = $newphone['model'];
-			$phone->description = $devicepool = $newphone['description'];
-			$phone->ownerid = $newphone['ownerid'];
+            // Update Phone Record if exists with latest config.
+            $phone->config = $newphone['config'];
+            $phone->devicepool = $newphone['devicepool'];
+            $phone->css = $devicepool = $newphone['css'];
+            $phone->model = $devicepool = $newphone['model'];
+            $phone->description = $devicepool = $newphone['description'];
+            $phone->ownerid = $newphone['ownerid'];
 
-			// Get the Line details
-			$phone->lines = $newphone['lines'];
+            // Get the Line details
+            $phone->lines = $newphone['lines'];
 
             //echo 'Saving Site with current config...'.PHP_EOL;
             $phone->save();
             echo 'Saved '.$newphone['name'].PHP_EOL;
         } else {
-			// Create Phone
+            // Create Phone
             //echo 'Creating Phone: '.$newphone['name'].PHP_EOL;
             Cucmphoneconfigs::create($newphone);
             echo 'Created Phone: '.$newphone['name'].PHP_EOL;

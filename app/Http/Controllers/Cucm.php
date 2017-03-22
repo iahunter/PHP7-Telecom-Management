@@ -294,18 +294,18 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	public function getObjectTypebyUUID(Request $request)
+
+    public function getObjectTypebyUUID(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-		
+
         try {
             $result = $this->cucm->get_object_type_by_uuid($request->uuid, $request->type);
-			
+
             if (! count($result)) {
                 throw new \Exception('Indexed results from call mangler is empty');
             }

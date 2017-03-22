@@ -158,3 +158,38 @@
      * )
      **/
     $api->get('cucm/search/{type}/{name}', 'App\Http\Controllers\Cucm@getObjectTypebyName');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/searchuuid/{type}/{uuid}",
+     *     tags={"Management - CUCM"},
+     *     summary="List Object Type details by UUID",
+     *     description="",
+     *     operationId="getObjectTypebyName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         description="Name of Object",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *	   @SWG\Parameter(
+     *         name="type",
+     *         in="path",
+     *         description="Object Type",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/searchuuid/{type}/{uuid}', 'App\Http\Controllers\Cucm@getObjectTypebyUUID');

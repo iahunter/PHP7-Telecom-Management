@@ -262,6 +262,7 @@ angular
 								}else{
 									cucmsitesummary = res.data.response;
 								}
+								console.log(cucmsitesummary);
 								
 								vm.cucmsite = {};
 								vm.cucmsite.summary = {};
@@ -271,6 +272,7 @@ angular
 								angular.forEach(cucmsitesummary, function(k,v) {
 									
 										//console.log("VALUE: " + v);
+										//console.log(k);
 										//vm.cucmsite.summary
 										angular.forEach(k, function(key,object) {
 											if(key.length != 0){
@@ -288,9 +290,10 @@ angular
 													}
 													
 												}
+												console.log(object)
 												
 												// Get object details for popover
-												cucmService.get_object_type_by_name(key, v)
+												cucmService.get_object_type_by_uuid(object, v)
 														.then(function(res) {
 															
 															

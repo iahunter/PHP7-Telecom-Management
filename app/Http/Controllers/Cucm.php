@@ -294,4 +294,33 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
+	
+	public function getObjectTypebyUUID(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
+        try {
+            $result = $this->cucm->get_object_type_by_uuid($request->uuid, $request->type);
+			
+            if (! count($result)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $result,
+                    ];
+
+        return response()->json($response);
+    }
 }

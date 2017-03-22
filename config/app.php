@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => env('APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,12 +178,25 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+		
+		
+		// Dingo API Provider
         Dingo\Api\Provider\LaravelServiceProvider::class,
+		
+		// JWT Auth Provider
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+		
+		// Roles and Permissions
         Silber\Bouncer\BouncerServiceProvider::class,
+		
+		// Swagger API documentation provider
         L5Swagger\L5SwaggerServiceProvider::class,
+		
+		// Audit Class Logging
         OwenIt\Auditing\AuditingServiceProvider::class,
-
+		
+		// Laravel backup utility
+        Spatie\Backup\BackupServiceProvider::class,
     ],
 
     /*

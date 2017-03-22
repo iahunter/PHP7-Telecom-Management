@@ -32,6 +32,8 @@ Bouncer roles manage rights to the numbers databases via the application http co
 
 * Swagger API Documentation can be found on Github. https://github.com/DarkaOnLine/L5-Swagger
 
+* Laravel Backups can be found on Github. https://github.com/spatie/laravel-backup
+
 * Cisco Call Manager AXL Library can be found on Github. https://github.com/iahunter/PHP5-CallManager-AXL
 
 #Frontend UI 

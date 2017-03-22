@@ -695,8 +695,29 @@ angular
 			});
 		*/
 		
-		vm.ignoreexistingphones = false;
 		
+		// Show Failures for Deploy Mailboxes to Unity Connection
+		vm.showunityfailuresonly = function() {
+			vm.showunityemployeefailures = [];
+			angular.forEach(vm.importedldapmailboxes, function(phone) {
+				if(!phone.error){
+					// Hide Phones with No Errors for Show Errors button
+					phone.hide = true;
+				}
+			})
+			vm.showunitynonemployeefailures = [];
+			angular.forEach(vm.creatednewmailboxes, function(phone) {
+				if(!phone.error){
+					// Hide Phones with No Errors for Show Errors button
+					phone.hide = true;
+				}
+			})
+			vm.showunityemployeefailures = true
+			vm.showunitynonemployeefailures = true
+		}
+		
+		
+		// Show Failures for Deploy Phones to CUCM
 		vm.showfailuresonly = function() {
 			vm.phonefailures = [];
 			angular.forEach(vm.newphones, function(phone) {
@@ -708,7 +729,10 @@ angular
 			})
 			return vm.phonefailures
 		}
-
+		
+		
+		
+		vm.ignoreexistingphones = false;
 		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
 		vm.deployphonescucm = function() {
 			vm.newphones = "";

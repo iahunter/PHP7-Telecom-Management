@@ -178,24 +178,22 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-		
-		
-		// Dingo API Provider
+        // Dingo API Provider
         Dingo\Api\Provider\LaravelServiceProvider::class,
-		
-		// JWT Auth Provider
+
+        // JWT Auth Provider
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-		
-		// Roles and Permissions
+
+        // Roles and Permissions
         Silber\Bouncer\BouncerServiceProvider::class,
-		
-		// Swagger API documentation provider
+
+        // Swagger API documentation provider
         L5Swagger\L5SwaggerServiceProvider::class,
-		
-		// Audit Class Logging
+
+        // Audit Class Logging
         OwenIt\Auditing\AuditingServiceProvider::class,
-		
-		// Laravel backup utility
+
+        // Laravel backup utility
         Spatie\Backup\BackupServiceProvider::class,
     ],
 

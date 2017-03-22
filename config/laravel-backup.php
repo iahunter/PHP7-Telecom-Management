@@ -56,16 +56,16 @@ return [
             /*
              * The disk names on which the backups will be stored.
              */
-			 
-			/************************************/
-			/* Commented out Default 
+
+            /************************************/
+            /* Commented out Default
             'disks' => [
-				'local',
+                'local',
             ],
-			*/
-			
-			'disks' => [
-				'backup',
+            */
+
+            'disks' => [
+                'backup',
             ],
         ],
     ],
@@ -94,14 +94,14 @@ return [
          */
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
-		/* Default Example commented out. 
+        /* Default Example commented out.
         'mail' => [
             'to' => 'your@example.com',
         ],
-		*/
-		
-		// Set Mail settings to enviroment variables. 
-		'mail' => [
+        */
+
+        // Set Mail settings to enviroment variables.
+        'mail' => [
             'to'   => env('BACKUP_EMAIL_TO'),
         ],
 
@@ -118,10 +118,10 @@ return [
     'monitorBackups' => [
         [
             'name' => env('APP_URL'),
-			// Comment out default local
+            // Comment out default local
             //'disks' => ['local'],
-			'disks' => ['backup'],  		// Add our backup location
-            'newestBackupsShouldNotBeOlderThanDays' => 1,
+            'disks'                                  => ['backup'],        // Add our backup location
+            'newestBackupsShouldNotBeOlderThanDays'  => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,
         ],
 

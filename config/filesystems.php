@@ -42,7 +42,7 @@ return [
     */
 
     'disks' => [
-		/*
+        /*
         'local' => [
             'driver' => 'local',
             'root'   => storage_path('app'),
@@ -61,12 +61,11 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
-		*/
-		'backup' => [
+        */
+        'backup' => [
             'driver' => 'local',
             'root'   => env('BACKUP_PATH'),
          ],
-		
 
     ],
 

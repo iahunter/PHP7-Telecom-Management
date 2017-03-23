@@ -150,7 +150,7 @@ angular
 		
 		// Create DID Block 
 		vm.submitDidblock = function(form) {
-			form.status = this.selectedOption.name;
+			//form.status = this.selectedOption.name;
 			form.type = this.selectedtype.name;
 			//console.log("Category: " + form.category);
 			

@@ -186,24 +186,34 @@
 							<tr class="success">
 									<th>ID</th>
 									<th>Name</th>
+									<th>Carrier</th>
+									<th>Country Code</th>
 									<th>Start</th>
 									<th>End</th>
+									<th>Size</th>
 									<th>Available</th>
 									<th>Inuse</th>
 									<th>Reserved</th>
-									<th>Total</th>
+									<th>Capacity</th>
+									<th>Type</th>
+									<th>Comment</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="block in vm.site.didblocksdetails track by $index">
 								<td><b><a href="#/didblock/{{block.id}}">{{block.id}}</a></b></td>
-								<td>{{block.name}}</td>
-								<td>{{block.start}}</td>
-								<td>{{block.end}}</td>
-								<td>{{block.stats.available}}</td>
-								<td>{{block.stats.inuse}}</td>
-								<td>{{block.stats.reserved}}</td>
-								<td>{{block.end - block.start + 1}}</td>
+								<td>{{ block.name}}</td>
+								<td>{{ block.carrier}}</a></td>
+								<td>{{ block.country_code}}</td>
+								<td>{{ block.start}}</td>
+								<td>{{ block.end}}</td>
+								<td ng-init="block.total = block.end - block.start + 1">{{ block.total}}</td>
+								<td>{{ block.stats.available}}</td>
+								<td>{{ block.stats.inuse}}</td>
+								<td>{{ block.stats.reserved}}</td>
+								<td ng-init="block.capacity = block.stats.inuse / block.total * 100">{{ block.capacity | number:0}}%</td>
+								<td>{{ block.type}}</a></td>
+								<td>{{ block.comment}}</td>
 							</tr>
 						</tbody>
 					</table>

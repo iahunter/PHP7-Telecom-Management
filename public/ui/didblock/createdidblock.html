@@ -34,11 +34,24 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" >
 								<div class="form-group" ng-class="{'has-error': addDidblockForm.eventDescription.$touched && addDidblockForm.eventDescription.$invalid, 'has-success': addDidblockForm.eventDescription.$touched && addDidblockForm.eventDescription.$valid }">
 									<label for="eventDescription" class="control-label">Comment</label>
-									<input type="textarea" ng-model='vm.didblockForm.comment' class="form-control" name="eventDescription" placeholder="Comment">
+									<textarea rows="2" ng-model='vm.didblockForm.comment' class="form-control" name="eventDescription" placeholder="Comment"></textarea>
 									<div ng-messages="addDidblockForm.eventDescription.$dirty && addDidblockForm.eventDescription.$error">
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDidblockForm.type.$touched && addDidblockForm.type.$invalid, 'has-success': addDidblockForm.type.$touched && addDidblockForm.type.$valid }">
+									<label for="type"  class="control-label">Type</label>
+									<select class="form-control" required ng-model='vm.selectedtype' ng-options="type.name for type in vm.types track by type.id" data-width="100%" name="type">
+									</select>
+									<div ng-messages="addDidblockForm.type.$dirty && addDidblockForm.type.$error">
 										<div ng-messages-include="error-messages"></div>
 									</div>
 								</div>
@@ -76,7 +89,9 @@
 								</div>
 							</div>
 						</div>
+						
 						<div class="row">
+							<!--
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addDidblockForm.eventCategory.$touched && addDidblockForm.eventCategory.$invalid, 'has-success': addDidblockForm.eventCategory.$touched && addDidblockForm.eventCategory.$valid }">
 									<label for="eventCategory"  class="control-label">Category</label>
@@ -87,16 +102,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-								<div class="form-group" ng-class="{'has-error': addDidblockForm.type.$touched && addDidblockForm.type.$invalid, 'has-success': addDidblockForm.type.$touched && addDidblockForm.type.$valid }">
-									<label for="type"  class="control-label">Type</label>
-									<select class="form-control" required ng-model='vm.selectedtype' ng-options="type.name for type in vm.types track by type.id" data-width="100%" name="type">
-									</select>
-									<div ng-messages="addDidblockForm.type.$dirty && addDidblockForm.type.$error">
-										<div ng-messages-include="error-messages"></div>
-									</div>
-								</div>
-							</div>
+							-->
+							
+						</div>
+						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group"  ng-class="{'has-error': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$invalid, 'has-success': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$valid }">
 									<label for="reserved" class="control-label">Automation Only</label>
@@ -111,14 +120,14 @@
 						</div>
 						
 						<!-- Print Form JSON-->
-						
+						<!--
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								{{vm.didblockForm}}
 							</div>
 						</div>
 						
-						<!---->
+						-->
 						
 						<hr />
 						<div class="row">

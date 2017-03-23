@@ -2,6 +2,9 @@
 # Drop this into your Crontab for scheduled tasks
 
 
+####################################################################################
+# Telecom Management Scheduled Tasks
+
 # Get SBC Call stats every 10 mins
 */10 * * * * /PATH_TO_APP/telephony/artisan sonus:write-callsummary-db > /dev/null 2>&1
 
@@ -11,8 +14,10 @@
 # CUCM Scheduled Jobs every hour
 0 * * * * /PATH_TO_APP/telephony/artisan callmanager:sitescan > /dev/null 2>&1
 
-# CUCM Scheduled Jobs every day at 0400 UTC
-0 4 * * * /PATH_TO_APP/telephony/artisan callmanager:phonescan > /dev/null 2>&1
+# CUCM Scheduled Jobs every day at 0100
+0 1 * * * /PATH_TO_APP/telephony/artisan callmanager:phonescan > /dev/null 2>&1
 
-# Telecom Managment Backup at 0600 UTC
-0 6 * * * /PATH_TO_APP/telephony/artisan backup:run > /dev/null 2>&1
+# Telecom Managment Backup at 0400
+0 4 * * * /PATH_TO_APP/telephony/artisan backup:run > /dev/null 2>&1
+
+####################################################################################

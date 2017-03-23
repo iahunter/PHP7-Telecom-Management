@@ -35,6 +35,7 @@ class CreateSitePlanning extends Migration
             $table->json('languages')->nullable();           // JSON Details Custom Field Data
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
+			$table->string('deleted_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                           // Time Stamps
             $table->softDeletes();                          // Soft Deletes
         });
@@ -61,6 +62,7 @@ class CreateSitePlanning extends Migration
             $table->json('json')->nullable();            // JSON Details Custom Field Data
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
+			$table->string('deleted_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
         });
@@ -91,6 +93,7 @@ class CreateSitePlanning extends Migration
             $table->string('notes')->nullable();            // Future - System ID - CUCM/Lync ID
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
+			$table->string('deleted_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
         });

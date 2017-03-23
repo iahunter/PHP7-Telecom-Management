@@ -52,6 +52,6 @@ class CreateCucmConfigs extends Migration
     {
         //
         Schema::drop('cucmsite');
-        Schema::drop('cucmphones');
+        Schema::drop('cucmphone');
     }
 }

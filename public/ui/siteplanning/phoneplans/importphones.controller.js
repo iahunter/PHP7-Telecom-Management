@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('importphones.IndexController', ['telephonyService', 'sitePhonePlanService', '$location', '$state', '$stateParams', function(telephonyService, sitePhonePlanService, $location, $state, $stateParams) {
+	.controller('importphones.IndexController', ['telephonyService', 'sitePhonePlanService', '$location', '$timeout', '$state', '$stateParams', function(telephonyService, sitePhonePlanService, $location, $timeout, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -171,7 +171,11 @@ angular
 				console.log(phone);
 				vm.createphone(phone);
 			}
-			$location.path('phoneplan/'+id);
+			
+			$timeout(function(){
+				$location.path('phoneplan/'+id);
+			}, 2500);
+			//$location.path('phoneplan/'+id);
 			//return $state.go('getphoneplan/{id}');
 			
 		}

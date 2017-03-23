@@ -208,8 +208,14 @@
 					<!--{{vm.numberstable}}-->
 			</div>
 			
+			
 			<div class="row" ng-if="vm.numberstable">
+			
+				
+			
 				<div class="col-md-6 col-sm-6 col-xs-12 col-lg-12">
+				<h3>Found {{vm.numberstable.length}} Phones</h3>
+				<hr>
 					<div class="form-group">
 						<button class="btn btn-danger"  ng-click="vm.insertphones(vm.numberstable)"> Add Phones to Plan {{}}</button>
 						<button class="btn btn-primary" ng-click="vm.refresh()">Reset</button>

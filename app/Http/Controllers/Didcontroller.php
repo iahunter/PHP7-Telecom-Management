@@ -130,8 +130,8 @@ class Didcontroller extends Controller
         if (! $user->can('create', Didblock::class)) {
             abort(401, 'You are not authorized to create new did blocks');
         }
-		
-		$request->merge(['created_by' => $user->username]);
+
+        $request->merge(['created_by' => $user->username]);
 
         $didblock = Didblock::create($request->all());
 
@@ -157,9 +157,9 @@ class Didcontroller extends Controller
         if (! $user->can('update', $didblock)) {
             abort(401, 'You are not authorized to view didblock '.$id);
         }
-		
-		$request->merge(['updated_by' => $user->username]);
-		
+
+        $request->merge(['updated_by' => $user->username]);
+
         $didblock->fill($request->all());
         $didblock->save();
 
@@ -457,8 +457,8 @@ class Didcontroller extends Controller
         if (! $user->can('update', $did)) {
             abort(401, 'You are not authorized to view didblock '.$did_id);
         }
-		
-		$request->merge(['updated_by' => $user->username]);
+
+        $request->merge(['updated_by' => $user->username]);
 
         $did->fill($request->all());
         $did->save();

@@ -23,9 +23,9 @@ class CreatePhoneNumbersTable extends Migration
             $table->string('reserved')->nullable();                 // Reserved Status for Automation Only Assignment
             $table->text('comment')->nullable();                    // Comment
             $table->json('json')->nullable();                       // JSON Custom Field Data
-			$table->string('created_by')->nullable();              // simple name to reference the account by
+            $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
-			$table->string('deleted_by')->nullable();              // simple name to reference the account by
+            $table->string('deleted_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                       // Time Stamps
             $table->softDeletes();                      // Soft Deletes
         });
@@ -42,9 +42,9 @@ class CreatePhoneNumbersTable extends Migration
             $table->string('status');                    // Status - Active/Reserved/Available
             $table->string('system_id')->nullable();                // Future - System ID - CUCM/Lync ID
             $table->json('assignments')->nullable();                   // JSON Custom Field Data
-			$table->string('created_by')->nullable();              // simple name to reference the account by
+            $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
-			$table->string('deleted_by')->nullable();              // simple name to reference the account by
+            $table->string('deleted_by')->nullable();              // simple name to reference the account by
             $table->timestamps();                        // Time Stamps
             $table->softDeletes();                        // keep deactivated certificates in the table
 

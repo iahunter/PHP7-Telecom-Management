@@ -86,7 +86,10 @@
 					<div style="margin:25px"></div>
 				</div>
 				
-				
+				<ul ng-if="vm.numberstable">
+					<li><h4><i><b>Please review your phone list before you insert them.</b></i></h4></li>
+				</ul>
+				<br>
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.numberstable" >
 					<table class="table table-striped table-condensed table-bordered table-hover">
 						<thead>
@@ -164,43 +167,51 @@
 											<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 											<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
-								</th>									
+								</th>		
+
+								<th>
+									Actions
+								</th>	
 
 							</tr>
 					</thead>
 				
 					<tbody>
 						<tr ng-repeat="number in vm.numberstable | orderBy:sortType:sortReverse | filter:vm.search: strict">
-							<td>{{number.firstname}}</td> 
-							<td>{{number.lastname}}</td> 
-							<td>{{number.username}}</td> 
-							<td>{{number.name}}</td> 
-							<td>{{number.device}}</td> 
-							<td>{{number.dn}}</td> 
-							<td>{{number.language}}</td> 
-							<td>{{number.vmpass}}</td> 
-							<td>{{number.voicemail}}</td> 
-							<td>{{number.notes}}</td> 
-							<!--
-							<td ng-if="vm.showassignments">
-							Nested Table inside Row
-								<div ng-show="number.details.assignments" class="panel panel-default" style="background-color: transparent;">
-									<table class="table table-condensed table-bordered" style="background-color: transparent;">
-										<td><i>Pattern</i></td>
-										<td><i>Partition</i></td>
-										<td><i>Type</i></td>
-										<td><i>Detail</i></td>
-										<tr ng-repeat="assignment in number.details.assignments track by $index">
-											<td>{{assignment.dnOrPattern}}</td>
-											
-											<td>{{assignment.partition._}}</td>
-											<td>{{assignment.type}}</td>
-											<td>{{assignment.routeDetail}}</td>
-										</tr>
-									</table>
-								</div>
+							
+							<!-- Phone Row-->
+							<td ng-show="!vm.edit[number.name]">{{number.firstname}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.lastname}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.username}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.name}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.device}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.dn}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.language}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.vmpass}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.voicemail}}</td> 
+							<td ng-show="!vm.edit[number.name]">{{number.notes}}</td> 
+							
+							<td   ng-show="!vm.edit[number.name]">
+								<button class="btn btn-primary btn-xs "  ng-click="vm.edit[number.name] = !vm.edit[number.name]"> Edit </button>
+								<button class="btn btn-danger btn-xs " ng-click="vm.delete(number)"> Delete </button>
 							</td>
-							-->
+							
+							<!-- Updating Phone -->
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.firstname"></td> 
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.lastname"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.username"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.name"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.device"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.dn"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.language"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.vmpass"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.voicemail"></td>
+							<td ng-show="vm.edit[number.name]"><input type="text" class="form-control form-control-sm" ng-model="number.notes"></td>
+							
+							<td  ng-show="vm.edit[number.name]">
+								<button class="btn btn-xs btn-primary"  ng-click="vm.update(number);vm.edit[number.name] = !vm.edit[number.name]"> Save </button>
+								<button class="btn btn-xs btn-warning"  ng-click="vm.edit[number.name] = !vm.edit[number.name]"> Undo </button>
+							</td>
 						</tr>
 					</tbody>
 					
@@ -217,7 +228,7 @@
 				<h3>Found {{vm.numberstable.length}} Phones</h3>
 				<hr>
 					<div class="form-group">
-						<button class="btn btn-danger"  ng-click="vm.insertphones(vm.numberstable)"> Add Phones to Plan {{}}</button>
+						<button class="btn btn-danger"  ng-click="vm.insertphones(vm.numberstable)"> Add <b>{{vm.numberstable.length}}</b> Phones to Plan </button>
 						<button class="btn btn-primary" ng-click="vm.refresh()">Reset</button>
 					</div>
 				</div>

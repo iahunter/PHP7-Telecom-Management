@@ -180,5 +180,24 @@ angular
 			//return $state.go('getphoneplan/{id}');
 			
 		}
+		
+		
+		// Edit state for Phone Edit button. 
+		vm.edit = {};
+		
+		
+		// Update Phone in List with save button. 
+		vm.update = function(number) {
+			console.log(number)
+		}
+		
+		
+		// Delete Phone from List
+		vm.delete = function(number) {
+
+			var index = vm.numberstable.indexOf(number);
+			vm.numberstable.splice(index, 1);  
+
+		}
 
 	}]);

@@ -23,10 +23,9 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 // added by 3
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-
-// Logger
 use Spatie\Activitylog\Models\Activity;
+// Logger
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthController extends Controller
 {
@@ -65,9 +64,9 @@ class AuthController extends Controller
     // Added by 3, try to cert auth, if that fails try to post ldap username/password auth, if that fails go away.
     public function authenticate(Request $request)
     {
-		// Testing
-		//activity()->withProperties($request)->log("User attempting to Authenticate");
-		
+        // Testing
+        //activity()->withProperties($request)->log("User attempting to Authenticate");
+
         $error = '';
         // Only authenticate users based on CERTIFICATE info passed from webserver
         if ($_SERVER['SSL_CLIENT_VERIFY'] == 'SUCCESS') {
@@ -86,11 +85,11 @@ class AuthController extends Controller
                 $error .= "\tError with LDAP authentication {$e->getMessage()}\n";
             }
         }
-		
-		// Log activity
-		//activity()->withProperties($request)->log("All authentication methods available have failed, ".$error);
-		activity('authlog')->withProperties(['username' => $request->username])->log("All authentication methods available have failed, ".$error);
-		
+
+        // Log activity
+        //activity()->withProperties($request)->log("All authentication methods available have failed, ".$error);
+        activity('authlog')->withProperties(['username' => $request->username])->log('All authentication methods available have failed, '.$error);
+
         abort(401, "All authentication methods available have failed\n".$error);
     }
 
@@ -203,9 +202,9 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-		
-		// Log successfull Login by User
-		activity('authlog')->causedBy($user)->log("Authenticated");
+
+        // Log successfull Login by User
+        activity('authlog')->causedBy($user)->log('Authenticated');
 
         return response()->json(compact('token'));
     }

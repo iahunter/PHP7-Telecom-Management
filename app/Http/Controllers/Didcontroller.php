@@ -183,14 +183,14 @@ class Didcontroller extends Controller
             abort(401, 'You are not authorized to delete did block id '.$id);
         }
 
-        $didblock = Didblock::find($id);  
-		
-		$request->merge(['deleted_by' => $user->username]);
+        $didblock = Didblock::find($id);
+
+        $request->merge(['deleted_by' => $user->username]);
 
         $didblock->fill($request->all());
         $didblock->save();
 
-		// Find the block in the database by id
+        // Find the block in the database by id
         $didblock->delete();                                                            // Delete the did block.
         $response = [
                     'status_code'    => 200,

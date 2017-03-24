@@ -34,6 +34,8 @@ Bouncer roles manage rights to the numbers databases via the application http co
 
 * Laravel Backups can be found on Github. https://github.com/spatie/laravel-backup
 
+* Laravel Activity Log can be found on Github. https://github.com/spatie/laravel-activitylog
+
 * Cisco Call Manager AXL Library can be found on Github. https://github.com/iahunter/PHP5-CallManager-AXL
 
 #Frontend UI 

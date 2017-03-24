@@ -125,13 +125,6 @@
 			</div>
 			</div>
 		<div style="margin:50px"></div>
-	</div>
-</div>
-		
-
-		<!--<div style="margin-left:80px; margin-right:80px;">-->
-		<div style="margin-left:5%; margin-right:5%;">
-		<div class="well form-horizontal" style="margin-top:10px;" >
 		
 		<div ng-if="!vm.phones">
 			<legend >Loading... Please be patient... </legend>
@@ -156,18 +149,10 @@
 		
 		<legend >Planning - Phones and Users</legend>
 		
-		<p><i style="color:red"><b>Note! </b></i>For System Performance Reasons, Please limit 100 phones per Phone Plan. <br>
-		Split your phone list up into multiple phone plans if greater than 100 phones and users.</p>
+		<p><i style="color:red"><b>Note! </b></i>For System Performance Reasons, <b>Please limit 100 phones per Phone Plan.</b> <br><br>
+		Please Split your phone list up into multiple phone plans if greater than 100 phones and users.</p>
 		
-		<div style="margin:25px"></div>
 		
-		<div class="input-group col-md-3 ">
-			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">
-			<div class="input-group-btn">
-				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
-			</div>
-
-		</div>
 		<div style="margin:25px"></div>
 
 		<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
@@ -200,7 +185,19 @@
 					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_phoneplan" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_phoneplan">
 						<h4 class="panel-title" style="color:#337ab7"><b>Phone Table </b><i class="fa fa-caret-down"></i></h4></a>
 					<div class="panel-body panel-collapse collapse  collapse in" role="tabpanel" id="collapse_phoneplan"  aria-labelledby="PhonesHeading">
+						
 						<div style="margin:25px"></div>
+		
+						<div class="input-group col-md-3 ">
+							<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">
+							<div class="input-group-btn">
+								<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+							</div>
+
+						</div>
+						
+						<div style="margin:25px"></div>
+						
 						<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 							<div class="table-responsive">    
 								<table class="table table-striped table-condensed table-bordered table-hover">
@@ -470,6 +467,7 @@
 								<h4 class="panel-title" style="color:#337ab7"><b>1. Active Directory </b><i class="fa fa-caret-down"></i></h4></a>
 							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_ad" aria-labelledby="ADHeading">
 
+								<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 								<div class="btn-group">
 									<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusernames(vm.phones)">1. Verify Users Exist in AD</button>
 									<button ng-if="vm.phones.length > 0" class="btn btn-warning"  ng-click="vm.updateadipphones(vm.phones)">2. Update AD Users IPPhone</button>

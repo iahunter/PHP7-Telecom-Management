@@ -35,6 +35,14 @@
 							</th>
 							
 							<th>
+								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
+									Description
+										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
 									Srst IP
 										<span ng-show="sortType == 'srstip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -125,13 +133,7 @@
 								</a>
 							</th>
 
-							<th>
-								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
-									Comment
-										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+							
 
 							<th>
 								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
@@ -156,6 +158,7 @@
 					<tr>
 							<td>{{ vm.site.id}}</a></td>
 							<td>{{ vm.site.sitecode}}</td>
+							<td>{{ vm.site.comment}}</td>
 							<td>{{ vm.site.srstip}}</a></td>
 							<td>{{ vm.site.h323ip}}</td>
 							<td>{{ vm.site.timezone}}</td>
@@ -168,7 +171,6 @@
 							<td>{{ vm.site.trunking}}</td>
 							<td>{{ vm.site.e911}}</td>
 							<td> <span ng-repeat="language in vm.site.languages">{{ language}} </span> </td>
-							<td>{{ vm.site.comment}}</td>
 							<td>{{ vm.site.created_at}}</td>
 							<td>{{ vm.site.updated_at}}</td>
 					</tr>
@@ -186,6 +188,7 @@
 							<tr class="success">
 									<th>ID</th>
 									<th>Name</th>
+									<th>Comment</th>
 									<th>Carrier</th>
 									<th>Country Code</th>
 									<th>Start</th>
@@ -196,13 +199,14 @@
 									<th>Reserved</th>
 									<th>Capacity</th>
 									<th>Type</th>
-									<th>Comment</th>
+									
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="block in vm.site.didblocksdetails track by $index">
 								<td><b><a href="#/didblock/{{block.id}}">{{block.id}}</a></b></td>
 								<td>{{ block.name}}</td>
+								<td>{{ block.comment}}</td>
 								<td>{{ block.carrier}}</a></td>
 								<td>{{ block.country_code}}</td>
 								<td>{{ block.start}}</td>
@@ -213,7 +217,7 @@
 								<td>{{ block.stats.reserved}}</td>
 								<td ng-init="block.capacity = block.stats.inuse / block.total * 100">{{ block.capacity | number:0}}%</td>
 								<td>{{ block.type}}</a></td>
-								<td>{{ block.comment}}</td>
+								
 							</tr>
 						</tbody>
 					</table>

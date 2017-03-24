@@ -60,7 +60,13 @@
 								</a>
 							</th>
 							
-							
+							<th>
+								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
+									Description
+										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 							
 							<th>
 								<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
@@ -152,13 +158,7 @@
 								</a>
 							</th>
 
-							<th>
-								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
-									Comment
-										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+							
 
 							<th>
 								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
@@ -191,7 +191,7 @@
 						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == false'> <i class="fa fa-square-o" aria-hidden="true"></i></td>
 						<td   ng-show="!vm.edit[site.id]"><a ui-sref="getsite({id: site.id})"><b style="color:#337ab7">{{ site.sitecode}}</b></a></td>
 						<!--<td   ng-show="!vm.edit[site.id]">{{ site.cucmprovisioned}}</td>-->
-						
+						<td   ng-show="!vm.edit[site.id]">{{ site.comment}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.srstip}}</a></td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.h323ip}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.timezone}}</td>
@@ -203,7 +203,7 @@
 						<td   ng-show="!vm.edit[site.id]">{{ site.trunking}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.e911}}</td>
 						<td   ng-show="!vm.edit[site.id]"><span ng-repeat="language in site.languages">{{ language}} </span> </td>
-						<td   ng-show="!vm.edit[site.id]">{{ site.comment}}</td>
+						
 						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">
@@ -255,6 +255,7 @@
 						<!--Edit View-->
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.sitecode"></td>
 						<td   ng-show="vm.edit[site.id]">{{ site.cucmprovisioned }}</td>
+						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.comment"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.srstip"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.h323ip"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.timezone"></td>
@@ -266,7 +267,7 @@
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.trunking"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.e911"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.languages"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.comment"></td>
+						
 						<td   ng-show="vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="vm.edit[site.id]">{{ site.updated_at}}</td>
 						

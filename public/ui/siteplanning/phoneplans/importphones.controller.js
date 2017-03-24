@@ -35,10 +35,10 @@ angular
 		
 		vm.states = [{
 				id: 1,
-				name: 'comma'
+				name: 'tab'
 			}, {
 				id: 2,
-				name: 'tab'
+				name: 'comma'
 			}, {
 				id: 3,
 				name: 'space'
@@ -119,18 +119,44 @@ angular
 				phonearray['username'] = phones[phone][2];
 				phonearray['name'] = phones[phone][3];
 				phonearray['device'] = phones[phone][4];
-				phonearray['dn'] = phones[phone][5];
 				
+				// Trim the Cisco off of the device type as this is auto added in the backend. 
+				if(phonearray['device']){
+					console.log(phonearray['device'])
+					var device = phonearray['device'].toLowerCase();
+					
+					var regexp = /^cisco/;
+					
+					if(device.match(regexp)){
+						//console.log("Regex matching Cisco ")
+						
+						device = device.split("cisco")
+						console.log(device)
+						if (device.length > 0){
+							device = device[1]
+							device = device.trim()
+							phonearray['device'] = device;
+						}
+					}
+				}
+				
+				phonearray['dn'] = phones[phone][5];
 				phonearray['language'] = phones[phone][6];
 				
-				phonearray['language'] = phonearray['language'].toLowerCase();
 				phonearray['language'] = phonearray['language'].trim()
-				if(phonearray['language'] == "" || phonearray['language'] == "e" || phonearray['language'] == "en"){
+				
+				if(phonearray['language']){
+					phonearray['language'] = phonearray['language'].toLowerCase();
+					if(phonearray['language'] == "e" || phonearray['language'] == "en" || phonearray['language'] == "eng"){
+						phonearray['language'] = 'english';
+					}
+					if(phonearray['language'] == "f" || phonearray['language'] == "fr" || phonearray['language'] == "fre"){
+						phonearray['language'] = 'french';
+					}
+				}else{
 					phonearray['language'] = 'english';
 				}
-				if(phonearray['language'] == "f" || phonearray['language'] == "fr" || phonearray['language'] == "fre"){
-					phonearray['language'] = 'french';
-				}
+				
 				
 				phonearray['vmpass'] = phones[phone][7];
 				phonearray['voicemail'] = phones[phone][8];

@@ -20,7 +20,7 @@
 					<br> <div style="margin:15px"></div>
 					</legend>
 					
-					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<br><br><h5><b>Phone Template </b><a href="/telephony/storage/PhoneImportTemplate.xlsx"><button class="btn btn-default btn-xs">Download</button></a></pre>
+					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<br><br><h5><b>Phone Template </b><a href="/telephony/storage/PhoneImportTemplate.xlsx"><button class="btn btn-danger btn-xs">Download</button></a></pre>
 					
 
 						<form ng-if="!vm.numberstable" class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
@@ -30,7 +30,7 @@
 								<div class="col-lg-2">
 									<div class="form-group" ng-class="{'has-error': addDidblockForm.delimiter.$touched && addDidblockForm.delimiter.$invalid, 'has-success': addDidblockForm.delimiter.$touched && addDidblockForm.delimiter.$valid }">
 										<label for="delimiter" class="control-label">Column Delimiter</label>
-										<select class="form-control" ng-model='vm.selectedOption' ng-options="delimiter.name for delimiter in vm.states track by delimiter.id" data-width="100%" name="delimiter" required >
+										<select class="form-control" ng-model='vm.selectedOption' ng-options="delimiter.name for delimiter in vm.states" data-width="100%" name="delimiter" required >
 										</select>
 										<div ng-messages="addDidblockForm.delimiter.$dirty && addDidblockForm.delimiter.$error">
 											<div ng-message='required'> delimiter is required </div>

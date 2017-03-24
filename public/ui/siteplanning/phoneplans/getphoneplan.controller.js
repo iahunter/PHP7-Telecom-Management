@@ -91,15 +91,18 @@ angular
 					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
 					//console.log(phone.dn)
 					
-					if(phone.name.length != 12){
-						phone.nameinvalid = true;
-					}
-					
+
 					// Check Valid MAC Address format for Phones not IP Communicator
 					if(phone.device != "IP Communicator"){
+						
+						// Check if valid MAC
 						var regexp = /^[0-9a-f]{1,12}$/gi;
 						if(!phone.name.match(regexp)){
 							console.log("NO REGEX MATCH FOUND ON NAME")
+							phone.nameinvalid = true;
+						}
+						// If not it should be 12 digits long. 
+						if(phone.name.length != 12){
 							phone.nameinvalid = true;
 						}
 					}

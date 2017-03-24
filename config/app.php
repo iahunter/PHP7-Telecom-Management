@@ -195,6 +195,9 @@ return [
 
         // Laravel backup utility
         Spatie\Backup\BackupServiceProvider::class,
+		
+		// Laravel Activitylog
+		Spatie\Activitylog\ActivitylogServiceProvider::class,
     ],
 
     /*

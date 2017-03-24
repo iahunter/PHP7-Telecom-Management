@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getDidblock.IndexController', ['telephonyService', '$location', '$state', '$stateParams', function(telephonyService, $location, $state, $stateParams) {
+	.controller('getDidblock.IndexController', ['telephonyService', 'PageService', '$location', '$state', '$stateParams', function(telephonyService, PageService, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -11,6 +11,8 @@ angular
 		vm.messages = 'Loading Didblocks...';
 		
 		var id = $stateParams.id;
+		
+		vm.getpage = PageService.getpage('getdidblock-' + id)
 		
 		vm.getdidblock = telephonyService.getDidblock(id)
 			.then(function(res){

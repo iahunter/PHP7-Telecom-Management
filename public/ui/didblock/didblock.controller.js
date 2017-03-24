@@ -57,7 +57,7 @@ angular
 	
 	
 
-	.controller('Didblock.IndexController', ['telephonyService', '$location', '$state', function(telephonyService, $location, $state) {
+	.controller('Didblock.IndexController', ['telephonyService', 'PageService', '$location', '$state', function(telephonyService, PageService, $location, $state) {
 	
 		var vm = this;
 		
@@ -72,6 +72,8 @@ angular
 		vm.messages = 'Loading Didblocks...';
 		vm.didblocks = [{}];
 		vm.loading = true;
+		
+		vm.getpage = PageService.getpage('listdidblocks')
 
 		function initController() {
 			telephonyService.GetDidblocks(function (result) {

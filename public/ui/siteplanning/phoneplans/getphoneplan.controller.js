@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, $timeout, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, $timeout, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -38,6 +38,8 @@ angular
 		vm.messages = 'Loading sites...';
 		
 		var id = $stateParams.id;
+		
+		vm.getpage = PageService.getpage('getPhonePlan-' + id)
 		
 		vm.deploybutton = false;
 		

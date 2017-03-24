@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Site.IndexController', ['siteService', 'cucmService','$location', '$state', '$stateParams', function(siteService, cucmService, $location, $state, $stateParams) {
+	.controller('Site.IndexController', ['siteService', 'cucmService', 'PageService', '$location', '$state', '$stateParams', function(siteService, cucmService, PageService, $location, $state, $stateParams) {
 	
 		var vm = this;
 		
@@ -22,7 +22,8 @@ angular
 		vm.sites = [{}];
 		vm.loading = true;
 		
-		
+		// Page Request
+		vm.getpage = PageService.getpage('listsites')
 		
 		function isInArrayNgForeach(field, arr) {
 			var result = false;

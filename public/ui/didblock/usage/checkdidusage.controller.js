@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('checkdidusage.IndexController', ['telephonyService', '$location', '$state', '$stateParams', function(telephonyService, $location, $state, $stateParams) {
+	.controller('checkdidusage.IndexController', ['telephonyService', 'PageService', '$location', '$state', '$stateParams', function(telephonyService, PageService, $location, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -11,6 +11,10 @@ angular
 		vm.messages = 'Loading Didblocks...';
 		
 		var id = $stateParams.id;
+		
+		vm.getpage = PageService.getpage('checkdidusage')
+		
+		console.log($state)
 		
 		vm.showassignments = false;
 		

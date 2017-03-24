@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('siteTrunking911Report.IndexController', ['cucmReportService','$location', '$state', '$stateParams', function(cucmReportService, $location, $state, $stateParams) {
+	.controller('siteTrunking911Report.IndexController', ['cucmReportService', 'PageService','$location', '$state', '$stateParams', function(cucmReportService, PageService, $location, $state, $stateParams) {
 	
 		var vm = this;
 
@@ -18,6 +18,7 @@ angular
 		vm.messages = 'Loading sites...';
 		vm.loading = true;
 
+		vm.getpage = PageService.getpage('siteTrunking911Report')
 
 		vm.cucmsitetrunkreport = cucmReportService.listsitetrunkingreport()
 			.then(function(res){

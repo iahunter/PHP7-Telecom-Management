@@ -1,8 +1,9 @@
 angular
 	.module('app')
-	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(siteService, sitePhonePlanService, cucmService, cupiService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
+	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', 'PageService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(siteService, sitePhonePlanService, cucmService, cupiService, PageService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
 		
 		var vm = this;
+		
 		
 		vm.refresh = function (){
 			
@@ -23,6 +24,10 @@ angular
 		vm.messages = 'Loading sites...';
 		
 		var id = $stateParams.id;
+		
+		// Page Request
+	
+		vm.getpage = PageService.getpage('getsite-'+id)
 		
 		vm.deploybutton = false;
 		
@@ -492,5 +497,7 @@ angular
 				element.find("a[rel=popover]").popover(options);
 			},
 		};
+		
+		
 	});
 	

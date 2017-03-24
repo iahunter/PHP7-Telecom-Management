@@ -12,7 +12,7 @@ class Phoneplan extends Model
     use Auditable;
     use SoftDeletes;
     protected $table = 'phoneplan';
-    protected $fillable = ['site', 'name', 'description', 'status', 'system_id', 'notes', 'language', 'employee_vm_user_template', 'nonemployee_vm_user_template', 'json', 'created_by', 'updated_by'];
+    protected $fillable = ['site', 'name', 'description', 'status', 'system_id', 'notes', 'language', 'employee_vm_user_template', 'nonemployee_vm_user_template', 'json', 'created_by', 'updated_by', 'deleted_by'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [

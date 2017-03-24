@@ -11,7 +11,7 @@ class Didblock extends Model
     use Auditable;
     use SoftDeletes;
     protected $table = 'did_block';
-    protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end', 'type', 'comment', 'created_by', 'updated_by'];
+    protected $fillable = ['country_code', 'name', 'carrier', 'start', 'end', 'type', 'comment', 'created_by', 'updated_by', 'deleted_by'];
 
     public function log($message = '')
     {

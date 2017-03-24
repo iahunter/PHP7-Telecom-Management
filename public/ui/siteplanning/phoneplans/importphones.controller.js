@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('importphones.IndexController', ['telephonyService', 'sitePhonePlanService', '$location', '$timeout', '$state', '$stateParams', function(telephonyService, sitePhonePlanService, $location, $timeout, $state, $stateParams) {
+	.controller('importphones.IndexController', ['telephonyService', 'sitePhonePlanService', 'PageService', '$location', '$timeout', '$state', '$stateParams', function(telephonyService, sitePhonePlanService, PageService, $location, $timeout, $state, $stateParams) {
 		
 		var vm = this;
 		
@@ -12,6 +12,7 @@ angular
 		
 		var id = $stateParams.id;
 		
+		vm.getpage = PageService.getpage('importIntoPhonePlan-' + id)
 		
 		vm.clear = function(variable){
 			console.log(variable);

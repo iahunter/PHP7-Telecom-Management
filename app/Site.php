@@ -12,7 +12,7 @@ class Site extends Model
     use Auditable;
     use SoftDeletes;
     protected $table = 'site';
-    protected $fillable = ['sitecode', 'e911', 'trunking', 'srstip', 'h323ip', 'npa', 'nxx', 'timezone', 'operator', 'comment', 'didrange', 'didblocks', 'details', 'extlen', 'languages', 'created_by', 'updated_by'];
+    protected $fillable = ['sitecode', 'e911', 'trunking', 'srstip', 'h323ip', 'npa', 'nxx', 'timezone', 'operator', 'comment', 'didrange', 'didblocks', 'details', 'extlen', 'languages', 'created_by', 'updated_by', 'deleted_by'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [

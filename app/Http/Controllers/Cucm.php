@@ -59,9 +59,8 @@ class Cucm extends Controller
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
         }
     }
-	
-	
-	public function get_ldap_sync_status()
+
+    public function get_ldap_sync_status()
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions

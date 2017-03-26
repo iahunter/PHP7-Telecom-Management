@@ -7,6 +7,8 @@ use App\Cucmclass;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
+// Activity Logger
+use Spatie\Activitylog\Models\Activity;
 
 class Cucm extends Controller
 {
@@ -37,9 +39,12 @@ class Cucm extends Controller
         try {
             $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'true');
 
-            echo $ldapsync->return.PHP_EOL;
+			// Create log entry
+			activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__])->log($ldapsync->return);
+			
+            return $ldapsync->return.PHP_EOL;
         } catch (\Exception $e) {
-            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            return 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
         }
     }
 
@@ -53,10 +58,13 @@ class Cucm extends Controller
 
         try {
             $ldapsync = $this->cucm->do_ldap_sync(env('CALLMANAGER_LDAP_NAME'), 'false');
+			
+			// Create log entry
+			activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__])->log($ldapsync->return);
 
-            echo $ldapsync->return.PHP_EOL;
+            return $ldapsync->return.PHP_EOL;
         } catch (\Exception $e) {
-            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            return 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
         }
     }
 
@@ -67,11 +75,14 @@ class Cucm extends Controller
         if (! $user->can('update', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-
+		
         try {
             $ldapsync = $this->cucm->get_ldap_sync_status(env('CALLMANAGER_LDAP_NAME'));
-
-            echo $ldapsync->return.PHP_EOL;
+			
+			// Create log entry
+			activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__])->log($ldapsync->return);
+            
+			return $ldapsync->return.PHP_EOL;
         } catch (\Exception $e) {
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
         }

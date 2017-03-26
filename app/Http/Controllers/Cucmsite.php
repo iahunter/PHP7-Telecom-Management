@@ -270,6 +270,10 @@ class Cucmsite extends Cucm
             'message'        => '',
             'response'       => $result,
             ];
+		
+		
+		// Create log entry
+		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'response' => $response])->log('add site');
 
         return response()->json($response);
     }

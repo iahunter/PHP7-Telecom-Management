@@ -101,16 +101,21 @@ class Cucm extends Controller
         }
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-            $this->results[$TYPE][] = [
-                                            'type'       => $TYPE,
-                                            'object'     => $OBJECT,
-                                            'status'     => 'success',
-                                            'reply'      => $REPLY,
-                                            'request'    => $DATA,
+            
+			$LOG = [
+					'type'       => $TYPE,
+					'object'     => $OBJECT,
+					'status'     => 'success',
+					'reply'      => $REPLY,
+					'request'    => $DATA,
+				];
+			
+			
+			$this->results[$TYPE][] = $LOG;
 
-                                        ];
-            //"{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
-
+			// Create log entry
+            activity('cucm_provisioning_log')->causedBy($user)->withProperties($LOG)->log('add object');
+			
             return $REPLY;
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type: {$TYPE}".
@@ -138,7 +143,6 @@ class Cucm extends Controller
             abort(401, 'You are not authorized');
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
 
         try {
             $list = $this->cucm->get_object_type_by_site('%', 'Css');

@@ -159,7 +159,10 @@ class Cucmphone extends Cucm
                 $UUID = $RESULT['uuid'];
                 $RETURN['old'] = $RESULT;
                 $RETURN['deleted_uuid'] = $this->cucm->delete_object_type_by_uuid($UUID, $TYPE);
-
+				
+				// Create log entry
+				activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'return' => $RETURN])->log('delete object');
+				
                 return $RETURN;
             }
         } catch (\Exception $E) {
@@ -187,6 +190,13 @@ class Cucmphone extends Cucm
     // CUCM Add Phone Wrapper
     public function wrap_add_phone_object($DATA, $TYPE)
     {
+		
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('create', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         // Get the name to reference the object.
         if (isset($DATA['name'])) {
             $OBJECT = $DATA['name'];
@@ -197,15 +207,21 @@ class Cucmphone extends Cucm
         }
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
-            $this->results[$TYPE] = [
-                                            'type'       => $TYPE,
-                                            'object'     => $OBJECT,
-                                            'status'     => 'success',
-                                            'reply'      => $REPLY,
-                                            'request'    => $DATA,
+            
+			$LOG = [
+					'type'       => $TYPE,
+					'object'     => $OBJECT,
+					'status'     => 'success',
+					'reply'      => $REPLY,
+					'request'    => $DATA,
 
-                                        ];
-            //"{$TYPE} CREATED: {$OBJECT} - {$REPLY}";
+				];
+				
+			
+			// Create log entry
+			activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $LOG])->log('add object');
+			
+			$this->results[$TYPE] = $LOG;
 
             return $REPLY;
         } catch (\Exception $E) {

@@ -537,7 +537,7 @@ angular
 		
 		
 		vm.getldapsyncstatus = function() {
-			cucmService.initiate_cucm_ldap_sync()
+			cucmService.get_cucm_ldap_sync_status()
 					.then(function(res){
 						vm.ldapsyncstatus = res.data;
 						console.log(vm.ldapsyncstatus);

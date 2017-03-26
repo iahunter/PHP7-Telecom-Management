@@ -149,7 +149,7 @@ angular
 		}
 		
 		// Get LDAP Sync Status
-		self.initiate_cucm_ldap_sync = function() {
+		self.get_cucm_ldap_sync_status = function() {
 			var defer = $q.defer();
 			return $http.get('../api/cucm/ldap/status')
 				.then(function successCallback(response) {

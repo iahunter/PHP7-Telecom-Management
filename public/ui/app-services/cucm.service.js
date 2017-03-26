@@ -133,10 +133,25 @@ angular
 
 
 		
-		// Get CUCM Date Time Groups
+		//  Start LDAP Sync Process
 		self.initiate_cucm_ldap_sync = function() {
 			var defer = $q.defer();
 			return $http.get('../api/cucm/ldap/start')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					
+			  });
+		}
+		
+		// Get LDAP Sync Status
+		self.initiate_cucm_ldap_sync = function() {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/ldap/status')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					

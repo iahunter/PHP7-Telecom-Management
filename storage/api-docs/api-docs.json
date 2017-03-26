@@ -438,6 +438,27 @@
                 }
             }
         },
+        "/telephony/api/cucm/ldap/status": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "Get LDAP Sync Status",
+                "description": "",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/css": {
             "get": {
                 "tags": [
@@ -2052,6 +2073,30 @@
                         "required": true,
                         "type": "string"
                     }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/page/request/{name}": {
+            "get": {
+                "tags": [
+                    "Logging"
+                ],
+                "summary": "Page Request Log",
+                "description": "",
+                "operationId": "getActiveCalls",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
                 ],
                 "responses": {
                     "200": {

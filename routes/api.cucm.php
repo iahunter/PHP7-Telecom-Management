@@ -33,6 +33,24 @@
      * )
      **/
     $api->get('cucm/ldap/stop', 'App\Http\Controllers\Cucm@stop_ldap_sync');
+	
+	
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/ldap/status",
+     *     tags={"Management - CUCM"},
+     *     summary="Get LDAP Sync Status",
+     *     description="",
+     *     operationId="",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('cucm/ldap/status', 'App\Http\Controllers\Cucm@get_ldap_sync_status');
 
     /**
      * @SWG\Get(

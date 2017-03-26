@@ -1,550 +1,89 @@
-<div style="margin:100px"></div>
+<div style="margin:10px"></div>
 
 <!--<div style="margin-left:80px; margin-right:80px;">-->
 <div style="margin-left:5%; margin-right:5%;">
 	<div class="well form-horizontal" style="margin-top:10px;" >
 	
-			<div style="margin:50px"></div>
-		
-			<legend>Phone Plan Details
-				<div class="btn-group pull-right">
-					<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button> 
-					<a href="#/site/{{ vm.phoneplan.site}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site Details</button> </a>
-				</div>
-				<br>
-				<div style="margin:15px"></div>
-			</legend>
-		
-		
-			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-hover">
-					<thead>
-						<tr class="success">
-							<th>
-								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
-									ID
-										<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-
-						
-							<th>
-								<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
-									Name
-										<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'description'; sortReverse = !sortReverse" style="color:black">
-									Description
-										<span ng-show="sortType == 'description' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'description' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse" style="color:black">
-									Language
-										<span ng-show="sortType == 'language' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
-									Site
-										<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
-									Employee Unity Template
-										<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
-									NonEmployee Unity Template
-										<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'notes'; sortReverse = !sortReverse" style="color:black">
-									Notes
-										<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-
-
-							<th>
-								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
-									Created At
-										<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
-									Updated At
-										<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-
-					<tr>
-							
-							<td>{{ vm.phoneplan.id}}</a></td>
-							<td>{{ vm.phoneplan.name}}</td>
-							<td>{{ vm.phoneplan.description}}</a></td>
-							<td>{{ vm.phoneplan.language}}</td>
-							<td>{{ vm.phoneplan.site}}</td>
-							<td>{{ vm.phoneplan.employee_vm_user_template}}</td>
-							<td>{{ vm.phoneplan.nonemployee_vm_user_template}}</td>
-							<td>{{ vm.phoneplan.notes}}</td>
-							<td>{{ vm.phoneplan.created_at}}</td>
-							<td>{{ vm.phoneplan.updated_at}}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-			</div>
 		<div style="margin:50px"></div>
-		
-		<div ng-if="!vm.phones">
-			<legend >Loading... Please be patient... </legend>
-			<div class="well">
-				<div class="row">
-					<div class="container loader"></div>
-				</div>
-				<div style="margin:25px"></div>
+
+		<legend>Phone Plan Details
+			<div class="btn-group pull-right">
+				<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button> 
+				<a href="#/site/{{ vm.phoneplan.site}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site Details</button> </a>
 			</div>
-		</div>
+			<br>
+			<div style="margin:15px"></div>
+		</legend>
 		
-
-		<div style="margin:25px"></div>
+		<div style="margin:25px">
+			<ng-include src="'siteplanning/section-includes/include-sitedetails.html'"></ng-include>
 			
-		<!--After done loading Print the TAble-->
-		<div ng-if="vm.phones">		
+			<hr>
+			<h4><b>Phone Plan</b></h4>
+			<!-- Include Phones Table Panel -->
+			<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-details-table.html'"></ng-include>
 			
-		<div style="margin:25px"></div>
+				
+			<div style="margin:50px"></div>
 			
-			
-		<div style="margin:75px"></div>
-		
-		<legend >Planning - Phones and Users</legend>
-		
-		<p><i style="color:red"><b>Note! </b></i>For System Performance Reasons, <b>Please limit 100 phones per Phone Plan.</b> <br><br>
-		Please Split your phone list up into multiple phone plans if greater than 100 phones and users.</p>
-		
-		
-		<div style="margin:25px"></div>
-
-		<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
-		<button class="btn btn-primary btn-sm" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
-		<!--<button class="btn btn-primary btn-sm" ng-click="vm.phonebulkaddtoggle(vm.showbulkaddrows)"><i class="glyphicon glyphicon-plus"></i> Bulk Add - Needs work</button>-->
-		<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
-		
-		<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
-		
-		
-		
-		<div style="margin:25px"></div>
-		
-			<div class="well well-sm" style="box-shadow: 1px 1px 5px grey;" ng-if="!vm.phones.length > 0">
-				<h4>No Phones or Users Found</h4>
-				<p>Please add phones and users to the plan by clicking the Add button above.</p>
+			<div ng-if="!vm.phones">
+				<legend >Loading... Please be patient... </legend>
+				<div class="well">
+					<div class="row">
+						<div class="container loader"></div>
+					</div>
+					<div style="margin:25px"></div>
+				</div>
 			</div>
 			
-			<div ng-if="vm.phones.length > 0">
-				<div class="well" >
-					<h4>{{vm.phones.length}} Entries Found</h4>
-					<h4 ng-if="vm.cucmphones.length > 0" style="color:orange">{{vm.cucmphones.length}} Conflicting Phones Found in CUCM</h4>
-				</div>
-			
+
 			<div style="margin:25px"></div>
-			
-			<div class="panel panel-default">
-				<div class="panel-heading" role="tab" id="PhonesHeading">
-			
-					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_phoneplan" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_phoneplan">
-						<h4 class="panel-title" style="color:#337ab7"><b>Phone Table </b><i class="fa fa-caret-down"></i></h4></a>
-					<div class="panel-body panel-collapse collapse  collapse in" role="tabpanel" id="collapse_phoneplan"  aria-labelledby="PhonesHeading">
-						
-						<div style="margin:25px"></div>
-		
-						<div class="input-group col-md-3 ">
-							<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">
-							<div class="input-group-btn">
-								<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
-							</div>
-
-						</div>
-						
-						<div style="margin:25px"></div>
-						
-						<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-							<div class="table-responsive">    
-								<table class="table table-striped table-condensed table-bordered table-hover">
-									<thead>
-										<tr class="info">
-											<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAll()"/></th>
-											<th>
-												<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
-													ID
-														<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-
-											<!--
-											<th>
-												<a href="" ng-click="sortType = 'parent'; sortReverse = !sortReverse" style="color:black">
-													Parent ID
-														<span ng-show="sortType == 'parent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'parent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>									
-											-->
-											<th>
-												<a href="" ng-click="sortType = 'firstname'; sortReverse = !sortReverse" style="color:black">
-													Firstname
-														<span ng-show="sortType == 'firstname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'firstname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>							
-											<th>
-												<a href="" ng-click="sortType = 'lastname'; sortReverse = !sortReverse" style="color:black">
-													Lastname
-														<span ng-show="sortType == 'lastname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'lastname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											<th>
-												<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
-													Username
-														<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											
-											<th>
-												<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
-													Name
-														<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											
-											<th>
-												<a href="" ng-click="sortType = 'device'; sortReverse = !sortReverse" style="color:black">
-													Device Type
-														<span ng-show="sortType == 'device' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'device' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											
-											<th>
-												<a href="" ng-click="sortType = 'dn'; sortReverse = !sortReverse" style="color:black">
-													Directory Number
-														<span ng-show="sortType == 'dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-
-																		
-											
-											
-											
-											<th>
-												<a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse" style="color:black">
-													Language
-														<span ng-show="sortType == 'language' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											
-											<th>
-												<a href="" ng-click="sortType = 'voicemail'; sortReverse = !sortReverse" style="color:black">
-													Voicemail
-														<span ng-show="sortType == 'voicemail' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'voicemail' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											
-											<th>
-												<a href="" ng-click="sortType = 'notes'; sortReverse = !sortReverse" style="color:black">
-													Notes
-														<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											
-											<th>
-												<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
-													System ID
-														<span ng-show="sortType == 'system_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-
-											<th>
-												<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
-													Created At
-														<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											
-											<th>
-												<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
-													Updated At
-														<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-														<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-												</a>
-											</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-									<!-- Allow you to edit and delete Blocks with new buttons -->
-									<tr ng-repeat="phone in vm.phones | orderBy:sortType:sortReverse | filter:vm.search: strict">
-									
-										<!--List View-->
-										<td>
-											<input type="checkbox" ng-model="phone.select" ng-click="vm.selecttouched()">
-										</td>
-										<td>{{ phone.id}}</a></td>
-										<!--<td>{{ phone.parent}}</td>-->
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.firstname}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.lastname}}</td>
-										
-										<td   ng-show="!vm.edit[phone.id] && phone.aduser != ''" style="color:green">{{ phone.username}}</td>
-										<td   ng-show="!vm.edit[phone.id] && phone.aduser == ''" style="color:red">{{ phone.username}}</td>
-										
-										<!--
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.aduser}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.adipphone}}</td>
-										-->
-										
-										<td   ng-show="!vm.edit[phone.id] && !phone.inuse && !phone.nameinvalid">{{ phone.name}}</td>
-										<td   ng-show="!vm.edit[phone.id] && phone.inuse" style="color:orange">{{ phone.name}}</td>
-										<td   ng-show="!vm.edit[phone.id] && phone.nameinvalid" style="color:red">{{ phone.name}}</td>
-										
-										<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>-->
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.device}}</td>
-										<td   ng-show="!vm.edit[phone.id] && !phone.dnint" style="color:red">{{ phone.dn}}</td>
-										<td   ng-show="!vm.edit[phone.id] && phone.dnint">{{ phone.dn}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.voicemail}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.notes}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.system_id}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
-										<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
-
-										
-										<td   ng-show="!vm.edit[phone.id]">
-											<button class="btn btn-xs btn-primary"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
-
-											<!-- Function moved ot modal...
-											<button class="btn btn-danger btn-xs " ng-click="vm.delete(phone)"> Delete </button>-->
-											
-											<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#{{phone.id}}-modal"> Delete </button>
-										
-											<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
-											<div class="modal fade" id="{{phone.id}}-modal" role="dialog">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-															<h4>Are you sure? <h4>
-														</div>
-														<div class="modal-body">
-															<p>You are about to delete Phone ID: {{ phone.id}}</p>
-															<table class="table table-striped table-condensed table-bordered table-hover">
-																<tr>
-																	<th>First Name</th>
-																	<th>Last Name</th>
-																	<th>User Name</th>
-																	<th>Device Name</th>
-																	<th>Directory Number</th>
-																</tr>
-																<tr>
-																	<td>{{ phone.firstname}}</td>
-																	<td>{{ phone.lastname}}</td>
-																	<td>{{ phone.username}}</td>
-																	<td>{{ phone.name}}</td>
-																	<td>{{ phone.dn}}</td>
-																</tr>
-															</table>
-															<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
-														</div>
-														<div class="modal-footer">
-
-														<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
-														<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(phone)">Delete</a>
-														<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
-
-															
-														</div>
-													</div>
-												</div>
-											</div> <!-- npa of Modal -->
-											
-											
-										</td>
-
-										<!--Edit View-->
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.firstname"></td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.lastname"></td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.username"></td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.name"></td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.device"></td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.dn"></td>
-										<td   ng-show="vm.edit[phone.id]">
-											<!--<input type="text" class="form-control form-control-sm" ng-model="phone.language">-->
-											<select class="form-control" ng-model='phone.language' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="didblocks">
-											</select>
-										</td>
-										<td   ng-show="vm.edit[phone.id]">
-											<!--<input type="text" class="form-control form-control-sm" ng-model="phone.voicemail">-->
-											<select class="form-control" ng-model='phone.voicemail' ng-options="value.name as value.name for value in vm.truefalse" data-width="100%" name="voicemail">
-											</select>
-										</td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.notes"></td>
-										<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.system_id"></td>
-										<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>
-										<td   ng-show="vm.edit[phone.id]">{{ phone.updated_at}}</td>
-										
-										<td  ng-show="vm.edit[phone.id]">
-											<button class="btn btn-xs btn-primary"  ng-click="vm.update(phone);vm.edit[phone.id] = !vm.edit[phone.id]"> Save </button>
-											<button class="btn btn-xs btn-warning"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Undo </button>
-										</td>
-									</tr>
-									</tbody>
-								</table>
-								</div>
-							</div>
-						
-							<div style="margin:25px"></div>
-							<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
-							<button ng-if="vm.deleteall" class="btn btn-danger btn-sm"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
-							<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-							
-							<div style="margin:50px"></div>
-						
-						</div>
-
+				
+			<!--After done loading phones, print out the rest of the page-->
+			<div ng-if="vm.phones">		
 					
-			
+				<div style="margin:50px"></div>
 
-			
+				
+				<p><i style="color:red"><b>Note! </b></i>For System Performance Reasons, <b>Please limit 100 phones per Phone Plan.</b> <br><br>
+				Please Split your phone list up into multiple phone plans if greater than 100 phones and users.</p>
+				
+				
+				
+				<!-- Only show the Add buttons here if there are no phones in the plan. -->
+				<div ng-if="!vm.phones.length > 0">
+				
+					<div style="margin:25px"></div>
+
+					<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
+					<button class="btn btn-primary btn-sm" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+					<!--<button class="btn btn-primary btn-sm" ng-click="vm.phonebulkaddtoggle(vm.showbulkaddrows)"><i class="glyphicon glyphicon-plus"></i> Bulk Add - Needs work</button>-->
+					<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
+					
+					<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
+					
+
+					<div style="margin:25px"></div>
+				
+					<div class="well well-sm" style="box-shadow: 1px 1px 5px grey;" ng-if="!vm.phones.length > 0">
+						<h4>No Phones or Users Found</h4>
+						<p>Please add phones and users to the plan by clicking the Add button above.</p>
+					
+					
+					
+					</div>
+				
 				</div>
-			</div>
-			
-			
-			<div class="well" style="background-color:#e0ebeb">
-			<legend>Systems Provisioning</legend>
-			<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
-				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="ADHeading">
-							<a role="button" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_ad" style="color:black;cursor: pointer;" aria-expanded="true" aria-controls="collapse_ad">
-								<h4 class="panel-title" style="color:#337ab7"><b>1. Active Directory </b><i class="fa fa-caret-down"></i></h4></a>
-							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_ad" aria-labelledby="ADHeading">
-
-								<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-								<div class="btn-group">
-									<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusernames(vm.phones)">1. Verify Users Exist in AD</button>
-									<button ng-if="vm.phones.length > 0" class="btn btn-warning"  ng-click="vm.updateadipphones(vm.phones)">2. Update AD Users IPPhone</button>
-								</div>
-								
-								<div style="margin:50px"></div>
-								
-								<!--User Lookup Table-->
-								<ng-include src="'siteplanning/phoneplans/aduserlookuptable.html'"></ng-include>
-								<div style="margin:50px"></div>
-								
-								<!--User AD Updates Table-->
-								<ng-include src="'siteplanning/phoneplans/useradupdatestable.html'"></ng-include>
-								<div style="margin:50px"></div>
-							
-							</div>	
-						</div>
-					</div>	
-
 					
+				<div ng-if="vm.phones.length > 0">
+					<div style="margin:25px"></div>
 					
-					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="CUCMHeading">
+					<!-- Include Phones Table Panel -->
+					<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-phonetable-panel.html'"></ng-include>
 					
-							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cucm" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cucm">
-								<h4 class="panel-title" style="color:#337ab7"><b>2. Cisco Call Manager </b><i class="fa fa-caret-down"></i></h4></a>
-							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cucm"  aria-labelledby="CUCMHeading">
-
-								<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-								<div class="btn-group">
-									<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getphonesfromcucm(vm.phones)">3. Check if any Phones Exist</button>
-									<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplan-modal">4. Deploy Phones to CUCM</button>
-								</div>
-								<div style="margin:25px"></div>
-								
-								<div>
-								<!--<div class="panel panel-primary panel-body" style="max-width:40%">-->
-									<input type="checkbox" ng-model="vm.ignoreexistingphones">
-									<label for="checkbox" class="control-label"> Ignore Existing Phones in CUCM</label>
-								</div>
-								<div style="margin:50px"></div>
-								<!--CUCM Phones Table-->
-								<ng-include src="'siteplanning/phoneplans/cucmphonesfoundtable.html'"></ng-include>
-								
-								<!--CUCM Phones Deployment Modal-->
-								<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phone-deploy-modal.html'"></ng-include>
-								<div style="margin:50px"></div>
-							</div>	
-						</div>
-					</div>	
+					<!-- Include System Provisioning Panel -->
+					<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-panel.html'"></ng-include>
 					
-					
-					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="CUPIHeading">
-					
-							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cupi" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cupi">
-								<h4 class="panel-title" style="color:#337ab7"><b>3. Cisco Unity Connection </b><i class="fa fa-caret-down"></i></h4></a>
-							
-							<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cupi" aria-labelledby="CUPIHeading">
-								<span>Unity Users may be delayed up to 6 hours for LDAP Sync process to run. 
-								</br>
-								You can log into Unity and run the LDAP Sync process manually to expedite the process. </span>
-								<div style="margin:25px"></div>
-								<button class="btn btn-sm btn-primary" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-								<div class="btn-group">
-									<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getusersfromcupi(vm.phones)">5. Check Unity Users</button>
-									<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getusers_um_fromcupi(vm.phones)">6. Populate UM Info from Unity Users</button>
-									<!--<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm"  ng-click="vm.importcupiusers(vm.phones)">7. Import Unity Users</button>-->
-									<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplancupi-modal">7. Import Unity Users</button>
-								</div>
-								<div style="margin:50px"></div>
-								<!--CUPI Users Table-->
-								<ng-include src="'siteplanning/phoneplans/cupiuserssfoundtable.html'"></ng-include>
-								<div style="margin:50px"></div>
-							</div>	
-						</div>
-					</div>	
 				</div>
 			</div>
 		</div>

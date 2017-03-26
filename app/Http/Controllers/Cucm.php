@@ -59,6 +59,24 @@ class Cucm extends Controller
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
         }
     }
+	
+	
+	public function get_ldap_sync_status()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('update', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        try {
+            $ldapsync = $this->cucm->get_ldap_sync_status(env('CALLMANAGER_LDAP_NAME'));
+
+            echo $ldapsync->return.PHP_EOL;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
+    }
 
     // CUCM Add Wrapper
     public function wrap_add_object($DATA, $TYPE)

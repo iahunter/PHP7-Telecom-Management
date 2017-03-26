@@ -1,0 +1,108 @@
+<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;"> <!-- Wrap table inside panel to get curved table corners -->
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr class="success">
+								<th>
+									<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+										ID
+											<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+							
+								<th>
+									<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+										Name
+											<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'description'; sortReverse = !sortReverse" style="color:black">
+										Description
+											<span ng-show="sortType == 'description' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'description' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse" style="color:black">
+										Language
+											<span ng-show="sortType == 'language' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'language' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
+										Site
+											<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
+										Employee Unity Template
+											<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'site'; sortReverse = !sortReverse" style="color:black">
+										NonEmployee Unity Template
+											<span ng-show="sortType == 'site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'notes'; sortReverse = !sortReverse" style="color:black">
+										Notes
+											<span ng-show="sortType == 'notes' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+
+								<th>
+									<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+										Created At
+											<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
+										Updated At
+											<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+
+						<tr>
+								
+								<td>{{ vm.phoneplan.id}}</a></td>
+								<td>{{ vm.phoneplan.name}}</td>
+								<td>{{ vm.phoneplan.description}}</a></td>
+								<td>{{ vm.phoneplan.language}}</td>
+								<td>{{ vm.phoneplan.site}}</td>
+								<td>{{ vm.phoneplan.employee_vm_user_template}}</td>
+								<td>{{ vm.phoneplan.nonemployee_vm_user_template}}</td>
+								<td>{{ vm.phoneplan.notes}}</td>
+								<td>{{ vm.phoneplan.created_at}}</td>
+								<td>{{ vm.phoneplan.updated_at}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>

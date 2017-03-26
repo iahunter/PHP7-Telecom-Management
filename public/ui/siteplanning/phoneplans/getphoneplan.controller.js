@@ -59,7 +59,7 @@ angular
 				vm.getsite = siteService.getsite(vm.phoneplan.site)
 				.then(function(result){
 					vm.site = result.data.result
-					//console.log(vm.site);
+					console.log(vm.site);
 				}, function(err){
 					//Error
 				});
@@ -534,6 +534,17 @@ angular
 						// Error
 					});
 		}
+		
+		
+		vm.getldapsyncstatus = function() {
+			cucmService.initiate_cucm_ldap_sync()
+					.then(function(res){
+						vm.ldapsyncstatus = res.data;
+						console.log(vm.ldapsyncstatus);
+					}, function(err){
+						// Error
+					});
+		}
 	
 		vm.languages = [{
 				id: 1,
@@ -759,4 +770,22 @@ angular
 		
 		
 		
-	}]);
+	}])
+	
+	// Directive for tooltips
+	.directive('tooltip', function(){
+		return {
+			restrict: 'A',
+			link: function(scope, element, attrs){
+				console.log(element)
+				console.log(scope)
+				$(element).hover(function(){
+					// on mouseenter
+					$(element).tooltip('show');
+				}, function(){
+					// on mouseleave
+					$(element).tooltip('hide');
+				});
+			}
+		};
+	});

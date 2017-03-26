@@ -33,8 +33,7 @@
      * )
      **/
     $api->get('cucm/ldap/stop', 'App\Http\Controllers\Cucm@stop_ldap_sync');
-	
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/ldap/status",

@@ -91,6 +91,12 @@ class Cucm extends Controller
     // CUCM Add Wrapper
     public function wrap_add_object($DATA, $TYPE)
     {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('update', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+
         // Get the name to reference the object.
         if (isset($DATA['name'])) {
             $OBJECT = $DATA['name'];
@@ -101,20 +107,21 @@ class Cucm extends Controller
         }
         try {
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
+            
+			$LOG = [
+					'type'       => $TYPE,
+					'object'     => $OBJECT,
+					'status'     => 'success',
+					'reply'      => $REPLY,
+					'request'    => $DATA,
+				];
+			
+			
+			$this->results[$TYPE][] = $LOG;
 
-            $LOG = [
-                    'type'       => $TYPE,
-                    'object'     => $OBJECT,
-                    'status'     => 'success',
-                    'reply'      => $REPLY,
-                    'request'    => $DATA,
-                ];
-
-            $this->results[$TYPE][] = $LOG;
-
-            // Create log entry
+			// Create log entry
             activity('cucm_provisioning_log')->causedBy($user)->withProperties($LOG)->log('add object');
-
+			
             return $REPLY;
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type: {$TYPE}".
@@ -141,6 +148,7 @@ class Cucm extends Controller
         if (! $user->can('read', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
+
 
         try {
             $list = $this->cucm->get_object_type_by_site('%', 'Css');

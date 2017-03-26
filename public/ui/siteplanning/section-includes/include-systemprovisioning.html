@@ -47,12 +47,15 @@
 								<div class="table-responsive">
 								<div style="margin:25px"></div>
 								<table style="background-color:white" ng-show="vm.deploysiteresult" class="table table-striped table-condensed table-bordered table-hover">
+									
+									<!--
 									<tr>
 										<th>Key</th>
 										<th>Values</th>
 									</tr>
+									-->
 									<tr ng-repeat="(key,values) in vm.deploysiteresult">
-										<td>{{ key}} <br> {{values.length}}</td>
+										<td><b>{{ key}}</b> <br> {{values.length}}</td>
 										<td>
 											<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
 												<tr ng-repeat="value in values">

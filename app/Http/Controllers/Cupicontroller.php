@@ -17,9 +17,9 @@ class Cupicontroller extends Controller
         }
 
         $alias = $request->alias;
-		
-		$result = Cupi::finduserbyalias($alias);
-		
+
+        $result = Cupi::finduserbyalias($alias);
+
         return $result;
     }
 
@@ -76,14 +76,12 @@ class Cupicontroller extends Controller
             $override = true;
         }
 
-		
-		$result = Cupi::importLDAPUser($username, $dn, $template, $override);
-		
-		// Create log entry
-		activity('cupi_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'request' => $request, 'result' => $result])->log('log');
+        $result = Cupi::importLDAPUser($username, $dn, $template, $override);
 
+        // Create log entry
+        activity('cupi_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'request' => $request, 'result' => $result])->log('log');
 
-        return $result; 
+        return $result;
     }
 
     public function createuser(Request $request)
@@ -107,7 +105,6 @@ class Cupicontroller extends Controller
             $template = $request->template;
         }
 
-
         return Cupi::createuser($username, $dn, $template);
     }
 
@@ -127,7 +124,6 @@ class Cupicontroller extends Controller
         if (isset($request->dn) && $request->dn) {
             $dn = $request->dn;
         }
-
 
         return Cupi::createuser($username, $dn);
     }
@@ -264,7 +260,6 @@ class Cupicontroller extends Controller
         if (isset($request->sitecode) && $request->sitecode) {
             $sitecode = $request->sitecode;
         }
-
 
         if (isset($request->name) && $request->name) {
             $template['Alias'] = $request->name;
@@ -425,8 +420,7 @@ class Cupicontroller extends Controller
             $operator = $request->operator;
         }
 
-		$result = Cupi::update_usertemplate_operator($objectid, $sitecode, $operator);
-		
+        $result = Cupi::update_usertemplate_operator($objectid, $sitecode, $operator);
 
         return $result;
     }
@@ -442,11 +436,11 @@ class Cupicontroller extends Controller
         if (isset($request->name) && $request->name) {
             $name = $request->name;
         }
-		
-		$result = Cupi::delete_usertemplate($name);
-		
-		// Create log entry
-		activity('cupi_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'request' => $name, 'result' => $result])->log('update object');
+
+        $result = Cupi::delete_usertemplate($name);
+
+        // Create log entry
+        activity('cupi_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'request' => $name, 'result' => $result])->log('update object');
 
         $return = $result;
     }

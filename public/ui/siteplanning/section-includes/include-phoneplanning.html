@@ -156,7 +156,7 @@
 								<!--List View-->
 								<td><a ui-sref="getphoneplan({id: phone.id})"><button class="btn btn-xs btn-default btn-block">{{ phone.id}}</button></a></td>
 								<!--<td>{{ phone.parent}}</td>-->
-								<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>
+								<td   ng-show="!vm.edit[phone.id]"><a ui-sref="getphoneplan({id: phone.id})"><b>{{ phone.name}}</b></a></td>
 								<td   ng-show="!vm.edit[phone.id]">{{ phone.description}}</td>
 								<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
 								<td   ng-show="!vm.edit[phone.id]">{{ phone.employee_vm_user_template}}</td>

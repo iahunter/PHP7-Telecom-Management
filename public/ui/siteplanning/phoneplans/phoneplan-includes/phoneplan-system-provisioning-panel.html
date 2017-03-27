@@ -55,7 +55,7 @@
 											<h3>Update Users</h3>
 											<p>Update IP Phone Field for user</p>
 											
-											<button ng-if="vm.phones.length > 0" class="btn btn-warning"  ng-click="vm.updateadipphones(vm.phones)">Update AD Users IPPhone</button>
+											<button ng-if="vm.phones.length > 0" class="btn btn-danger"  ng-click="vm.updateadipphones(vm.phones)">Update AD Users IPPhone</button>
 											
 											<div style="margin-top:25px; margin-bottom:25px">
 												<!--User AD Updates Table-->
@@ -90,7 +90,7 @@
 											<p>Check if phones exist in the system matching a device name in our phone plan</p>
 											<p>Resolve Conflics prior to Deploying New Phone Configuration</p>
 											
-											<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getphonesfromcucm(vm.phones)">Check System Conflics</button>
+											<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">Check System Conflics</button>
 												<div style="margin-top:25px; margin-bottom:25px">
 													<!--User Lookup Table-->
 													<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-cucmphonesfoundtable.html'"></ng-include>
@@ -111,7 +111,7 @@
 											</div>
 											
 											
-											<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplan-modal">Deploy Phones</button>
+											<button ng-if="vm.phones.length > 0" class="btn btn-danger" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplan-modal">Deploy Phones</button>
 											
 											<div style="margin-top:25px; margin-bottom:25px">
 												<!--User AD Updates Table-->
@@ -152,9 +152,9 @@
 											<h3>Check Unity Connection Users</h3>
 											<p>Check if users and/or mailboxes exist in the system matching users or extensions in our phone plan</p>
 											
-											<button ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getusersfromcupi(vm.phones)">Check Unity Users</button>
+											<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusersfromcupi(vm.phones)">Check Unity Users</button>
 											<a ng-href="" data-toggle="um-tooltip" data-placement="right" title="Only Press after users are populated." tooltip >
-												<button  ng-if="vm.phones.length > 0" class="btn btn-default btn-sm"  ng-click="vm.getusers_um_fromcupi(vm.phones)">Get UM Info</button>
+												<button  ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusers_um_fromcupi(vm.phones)">Get UM Info</button>
 											</a>
 											
 												<div style="margin-top:25px; margin-bottom:25px">
@@ -168,7 +168,7 @@
 											<h3>Deploy Mailboxes</h3>
 											<p>Deploy User Mailboxes in Phone Plan to the System</p>
 
-											<button ng-if="vm.phones.length > 0" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplancupi-modal">Deploy Mailboxes</button>
+											<button ng-if="vm.phones.length > 0" class="btn btn-danger" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplancupi-modal">Deploy Mailboxes</button>
 											
 											<div style="margin-top:25px; margin-bottom:25px">
 												<!--User AD Updates Table-->

@@ -17,8 +17,10 @@ class Cupicontroller extends Controller
         }
 
         $alias = $request->alias;
-        //$alias = "travis.riesenberg";
-        return Cupi::finduserbyalias($alias);
+		
+		$result = Cupi::finduserbyalias($alias);
+		
+        return $result;
     }
 
     public function getLDAPUserbyAlias(Request $request)
@@ -30,7 +32,7 @@ class Cupicontroller extends Controller
         }
 
         $alias = $request->alias;
-        //$alias = "travis.riesenberg";
+
         return Cupi::getLDAPUserbyAlias($alias);
     }
 
@@ -43,7 +45,7 @@ class Cupicontroller extends Controller
         }
 
         $extension = $request->extension;
-        //$alias = "travis.riesenberg";
+
         return Cupi::findmailboxbyextension($extension);
     }
 
@@ -74,8 +76,14 @@ class Cupicontroller extends Controller
             $override = true;
         }
 
-        //$alias = "travis.riesenberg";
-        return Cupi::importLDAPUser($username, $dn, $template, $override);
+		
+		$result = Cupi::importLDAPUser($username, $dn, $template, $override);
+		
+		// Create log entry
+		activity('cupi_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'request' => $request, 'result' => $result])->log('log');
+
+
+        return $result; 
     }
 
     public function createuser(Request $request)
@@ -99,7 +107,7 @@ class Cupicontroller extends Controller
             $template = $request->template;
         }
 
-        //$alias = "travis.riesenberg";
+
         return Cupi::createuser($username, $dn, $template);
     }
 
@@ -120,7 +128,7 @@ class Cupicontroller extends Controller
             $dn = $request->dn;
         }
 
-        //$alias = "travis.riesenberg";
+
         return Cupi::createuser($username, $dn);
     }
 
@@ -257,7 +265,7 @@ class Cupicontroller extends Controller
             $sitecode = $request->sitecode;
         }
 
-        // This needs work!!!!
+
         if (isset($request->name) && $request->name) {
             $template['Alias'] = $request->name;
             $template['DisplayName'] = $request->name;
@@ -417,7 +425,10 @@ class Cupicontroller extends Controller
             $operator = $request->operator;
         }
 
-        return Cupi::update_usertemplate_operator($objectid, $sitecode, $operator);
+		$result = Cupi::update_usertemplate_operator($objectid, $sitecode, $operator);
+		
+
+        return $result;
     }
 
     public function delete_usertemplate(Request $request)
@@ -431,7 +442,12 @@ class Cupicontroller extends Controller
         if (isset($request->name) && $request->name) {
             $name = $request->name;
         }
+		
+		$result = Cupi::delete_usertemplate($name);
+		
+		// Create log entry
+		activity('cupi_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'request' => $name, 'result' => $result])->log('update object');
 
-        $return = Cupi::delete_usertemplate($name);
+        $return = $result;
     }
 }

@@ -689,7 +689,7 @@ angular
 		
 		//$timeout(function(),5000, false)
 		
-		 $timeout(function(){
+		$timeout(function(){
             vm.getphonesfromcucm(vm.phones)
         }, 500);
 		
@@ -777,8 +777,6 @@ angular
 		return {
 			restrict: 'A',
 			link: function(scope, element, attrs){
-				console.log(element)
-				console.log(scope)
 				$(element).hover(function(){
 					// on mouseenter
 					$(element).tooltip('show');

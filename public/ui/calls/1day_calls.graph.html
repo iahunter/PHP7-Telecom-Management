@@ -1,6 +1,6 @@
 <!--Print Chart-->
 
-<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
+<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" ng-controller="CallGraph.IndexController as vm">
 <h4>1 Day Call Summary</h4>
 	<canvas id="daycalls" class="chart chart-line chart-xs"
 		chart-series="vm.dayscallgraph.chartseries" 
@@ -10,8 +10,9 @@
 	</canvas> 
 </div>
 
-<hr>
 
+
+<!---
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
 <h4>7 Day Call Summary</h4>
 	<canvas id="weekcalls" class="chart chart-line chart-xs"
@@ -23,7 +24,7 @@
 </div>
 
 <hr>
-
+-->
 <!---
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">
 <h4>Overall Call Summary</h4>

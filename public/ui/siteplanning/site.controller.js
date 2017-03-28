@@ -45,9 +45,9 @@ angular
 				
 				// Check for errors and if token has expired. 
 				if(result.message){
-					console.log(res);
+					//console.log(res);
 					vm.message = result.message;
-					console.log(vm.message);
+					//console.log(vm.message);
 					
 					if(vm.message == "Token has expired"){
 						// Send user to login page if token expired. 
@@ -150,7 +150,9 @@ angular
 
 		var id = $stateParams.id;
 		
-		vm.getsite = siteService.getsite(id)
+		if(id != undefined){
+			// Fix undefined site error on site list loading.
+			vm.getsite = siteService.getsite(id)
 			.then(function(res){
 
 				vm.site = res.data.result;
@@ -158,6 +160,8 @@ angular
 			}, function(err){
 							//Error
 			});
+		}
+		
 		
 		// Create DID Block 
 		vm.submitsite = function(form) {

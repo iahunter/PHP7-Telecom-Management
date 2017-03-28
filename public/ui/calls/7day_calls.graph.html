@@ -1,0 +1,13 @@
+<!--Print Chart-->
+
+<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" div ng-controller="CallGraph.IndexController as vm">
+<h4>7 Day Call Summary</h4>
+	<canvas id="weekcalls" class="chart chart-line chart-xs"
+		chart-series="vm.weekscallgraph.chartseries" 
+		chart-data="vm.weekscallgraph.chartdata" 
+		chart-labels="vm.weekscallgraph.chartlabels"
+		chart-options="vm.weekscallgraph.chartoptions">
+	</canvas> 
+</div>
+
+<div style="margin:25px"></div>

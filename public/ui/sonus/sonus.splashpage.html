@@ -1,64 +1,63 @@
-<div class="well form-horizontal" style="margin-top:10px;">
+<div ng-controller="Sonus.CallController as vm">
+	<div class="well form-horizontal" style="margin-top:10px;" ng-if="vm.callcountsummary">
 
-<legend>SBC Summary<div style="margin:10px"></div></legend>
+	<legend>SBC Summary<div style="margin:10px"></div></legend>
 
-<div class="container">
-		<div ng-controller="Sonus.AlarmController as vm">
-		
-		<div ng-if="vm.message">{{vm.message}}</div>
-			<a href="#/sonus/activealarms" ng-if="!vm.message">
-				<div ng-if="!vm.loading && !vm.noactivealarms">
-					<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
-				</div>
-			</a>
-		</div>	
-	
-		<div ng-controller="Sonus.CallController as vm">
-
-			<!--Print out Call Summary-->
-			<div>
-				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-				<div class="table-responsive">  
-					<table class="table table-striped table-condensed table-bordered table-hover">
-						<thead>
-							<tr style="background-color: #cce6ff;">
-								<th>SBC</th>
-								<th>Call Count</th>
-							<tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="(key, value) in vm.callcountsummary">
-								<td> {{key}} </td> 
-								<td> {{value}} </td>
-							</tr>
-							<tr>
-								<td><b><a href="#/sonus/activecalls" >Total Active Calls</a></b></td>
-								<td><b><a href="#/sonus/activecalls" >{{vm.callcount}}</a></b></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				</div>
-			</div>
+	<div class="container">
+			<div ng-controller="Sonus.AlarmController as vm">
 			
-			<div style="margin:50px"></div>
-			
-			<!--
-			<div ng-if="!vm.message">
-				<a href="#/sonus/activecalls" >
-					<div ng-if="!vm.loading && !vm.noactivecalls">
-						<h4>{{vm.callcount}} Active Calls Found </h4>
+			<div ng-if="vm.message">{{vm.message}}</div>
+				<a href="#/sonus/activealarms" ng-if="!vm.message">
+					<div ng-if="!vm.loading && !vm.noactivealarms">
+						<h4 style="color:red">{{vm.alarmcount}} Active Alarms Found</h4>
 					</div>
 				</a>
+			</div>	
+		
+			<div >
+
+				<!--Print out Call Summary-->
+				<div>
+					<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					<div class="table-responsive">  
+						<table class="table table-striped table-condensed table-bordered table-hover">
+							<thead>
+								<tr style="background-color: #cce6ff;">
+									<th>SBC</th>
+									<th>Call Count</th>
+								<tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(key, value) in vm.callcountsummary">
+									<td> {{key}} </td> 
+									<td> {{value}} </td>
+								</tr>
+								<tr>
+									<td><b><a href="#/sonus/activecalls" >Total Active Calls</a></b></td>
+									<td><b><a href="#/sonus/activecalls" >{{vm.callcount}}</a></b></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					</div>
+				</div>
+				
+				<div style="margin:50px"></div>
+				
+				<!--
+				<div ng-if="!vm.message">
+					<a href="#/sonus/activecalls" >
+						<div ng-if="!vm.loading && !vm.noactivecalls">
+							<h4>{{vm.callcount}} Active Calls Found </h4>
+						</div>
+					</a>
+				</div>
+				-->
 			</div>
-			-->
-		</div>
-		
-		
-</div>	
+			
+			
+	</div>	
 
+	</div>
 
-
-
-	
-
+</div>

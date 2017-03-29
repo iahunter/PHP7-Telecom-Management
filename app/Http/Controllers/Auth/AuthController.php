@@ -92,28 +92,29 @@ class AuthController extends Controller
 
         abort(401, "All authentication methods available have failed\n".$error);
     }
-	/*
+
+    /*
     public function renew()
     {
         $user = JWTAuth::parseToken()->authenticate();
-	}
-	*/
-	public function renew(Request $request)
-	{
-		$response = [];
-		try {
-			//$user = $this->auth->user();
-			$user = JWTAuth::parseToken()->authenticate();
-			/*
-			if($user->ip != $_SERVER['REMOTE_ADDR']) {
-				throw new \Exception('Error authenticating token for your IP');
-			}
-			*/
-			$credentials = ['id' => $user->id, 'password' => ''];
-	        // This should NEVER fail.
-	        if (! $token = JWTAuth::attempt($credentials)) {
-	            throw new \Exception('Failed to generate JWT for user');
-	        }
+    }
+    */
+    public function renew(Request $request)
+    {
+        $response = [];
+        try {
+            //$user = $this->auth->user();
+            $user = JWTAuth::parseToken()->authenticate();
+            /*
+            if($user->ip != $_SERVER['REMOTE_ADDR']) {
+                throw new \Exception('Error authenticating token for your IP');
+            }
+            */
+            $credentials = ['id' => $user->id, 'password' => ''];
+            // This should NEVER fail.
+            if (! $token = JWTAuth::attempt($credentials)) {
+                throw new \Exception('Failed to generate JWT for user');
+            }
             // Build our response
             $response['token'] = $token;
             $response['success'] = true;
@@ -121,10 +122,9 @@ class AuthController extends Controller
             $response['success'] = false;
             $response['message'] = 'Encountered exception: '.$e->getMessage();
         }
-        return response()->json($response);
-	}
-			
 
+        return response()->json($response);
+    }
 
     protected function certauth()
     {

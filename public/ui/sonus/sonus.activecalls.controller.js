@@ -91,7 +91,7 @@ angular
 		var pull = $interval(initController,5000); 
 		
 		$scope.$on('$destroy', function() {
-			console.log($scope);
+			//console.log($scope);
             $interval.cancel(pull);
 		});
 

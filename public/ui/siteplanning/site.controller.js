@@ -61,7 +61,7 @@ angular
 				}else{
 					var sites = res.data.sites;
 				
-					console.log('callback from siteService.Getsites responded ');
+					//console.log('callback from siteService.Getsites responded ');
 					//var sites = siteService.sites;
 					
 					vm.sites = [];
@@ -93,7 +93,7 @@ angular
 							alert(err);
 						});
 					
-					console.log(vm.sites)
+					//console.log(vm.sites)
 									
 					vm.loading = false;
 					

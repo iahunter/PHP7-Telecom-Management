@@ -54,12 +54,12 @@ class BouncerRoles extends Seeder
             App\Did::class,
             App\Site::class,
             App\Phone::class,
-			App\Phoneplan::class,
-			App\Cucmclass::class,
-			App\Cupi::class,
-			App\Calls::class,
-			//App\Sonus5k::class,
-			App\Cucmsiteconfigs::class,
+            App\Phoneplan::class,
+            App\Cucmclass::class,
+            App\Cupi::class,
+            App\Calls::class,
+            //App\Sonus5k::class,
+            App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
         ];
 

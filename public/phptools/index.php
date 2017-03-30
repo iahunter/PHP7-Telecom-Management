@@ -1,6 +1,6 @@
 <?php
 
-print "Testing iFrames";
+echo 'Testing iFrames';
 ?>
 
 <html>

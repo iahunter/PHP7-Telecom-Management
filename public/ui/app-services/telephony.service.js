@@ -4,6 +4,7 @@
 		
 		var self = {};
 
+		/*
 		self.GetDidblocks = GetDidblocks;
 
 		function GetDidblocks(callback) {
@@ -23,6 +24,24 @@
 					callback(false);
 				});
 		}
+		
+		*/
+		
+		// Update Block by ID
+		self.didblocks = function() {
+			var defer = $q.defer();
+			return $http.get('../api/didblock')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
 
 		// Update Block by ID
 		self.getDidblock = function(id) {
@@ -35,7 +54,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -49,7 +69,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -64,7 +85,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		

@@ -1,7 +1,7 @@
 <!--Print Chart-->
 
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" ng-controller="CallGraph.IndexController as vm">
-<h4>1 Day Call Summary</h4>
+<h4 ng-if="vm.dayscallgraph">1 Day - SBC Call Summary</h4>
 	<canvas id="daycalls" class="chart chart-line chart-xs"
 		chart-series="vm.dayscallgraph.chartseries" 
 		chart-data="vm.dayscallgraph.chartdata" 

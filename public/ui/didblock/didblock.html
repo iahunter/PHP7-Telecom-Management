@@ -20,19 +20,27 @@
 		
 		<div style="margin:25px"></div>
 		
-		<a href="#/didblock/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+		<a ng-show="!vm.message" href="#/didblock/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
 		
 		<div style="margin:25px"></div>
 		
+		
 		<!-- Loading -->
-		<div ng-if="vm.loading" class="well">
+		<div ng-if="vm.loading && !vm.message" class="well">
 			<div class="row">
 				<div class="container loader"></div>
 			</div>
 			<div style="margin:25px"></div>
 		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
 		
-		<div ng-if="!vm.loading">
+		<div ng-if="vm.didblocks.length > 0">
 		
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">    

@@ -25,6 +25,12 @@ class SitePlanController extends Controller
     public function listSites()
     {
         $user = JWTAuth::parseToken()->authenticate();
+		
+		// Check Role of user
+        if (! $user->can('read', Site::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         $sites = Site::all();
 
         $show = [];
@@ -71,6 +77,12 @@ class SitePlanController extends Controller
     public function getsite(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
+		
+		// Check Role of user
+        if (! $user->can('read', Site::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
         $site = Site::find($id);
 
         $didblocks = [];

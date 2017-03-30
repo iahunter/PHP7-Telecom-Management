@@ -4,25 +4,21 @@
 		
 		var self = {};
 
-		self.Getsites = Getsites;
-
-		function Getsites(callback) {
-			self.sites = {};
-			GetType(callback, 'site');
-		}
-
-		function GetType(callback, type) {
-			self.sites[type] = {};
-			return $http.get('../api/' + type)
-				.success(function (response) {
-					self.sites = response.sites;
-					//console.log(self.sites);
-					callback(true);
-				})
-				// execute callback with false to indicate failed call
-				.error(function() {
-					callback(false);
-				});
+		
+		// Get Sites
+		self.Getsites = function() {
+			var defer = $q.defer();
+			return $http.get('../api/site')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
 		}
 
 		// Update Block by ID
@@ -36,7 +32,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -50,7 +47,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -64,7 +62,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 
@@ -80,7 +79,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 

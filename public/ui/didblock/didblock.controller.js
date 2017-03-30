@@ -61,7 +61,7 @@ angular
 	
 		var vm = this;
 		
-		initController();
+		//initController();
 		
 		vm.didblockForm = {};
 		
@@ -70,17 +70,83 @@ angular
 		};
 
 		vm.messages = 'Loading Didblocks...';
-		vm.didblocks = [{}];
+		vm.message = false;
 		vm.loading = true;
 		
 		vm.getpage = PageService.getpage('listdidblocks')
+		
+		
+		vm.getdidblocks = telephonyService.didblocks()
+			.then(function(res){
+				// Check for errors and if token has expired. 
+				if(res.data.message){
+					console.log(res);
+					vm.message = res.data.message;
+					console.log(vm.message);
+					
+					if(vm.message == "Token has expired"){
+						// Send user to login page if token expired. 
+						alert(vm.message);
+						$state.go('logout');
+					}
 
-		function initController() {
-			telephonyService.GetDidblocks(function (result) {
-				//console.log('callback from telephonyService.GetDidblocks responded ' + result);
-				vm.didblocks = telephonyService.didblocks;
+					return vm.message;
+				}
 				
-				//console.log(vm.didblocks);
+				
+				vm.didblocks = res.data.didblocks
+				
+				vm.blocktypes = {};		// Initialilze Object for Type Counting
+				
+				//** Loop thru and create chart data for each block. 
+				angular.forEach(vm.didblocks,function(block){
+					//console.log(block.stats);
+					block['chartlabels'] = [];
+					block['chartdata'] = [];
+					block['chartseries'] = [];
+					
+					for(var key in block.stats){
+						//console.log(key);
+						//console.log(block.stats[key]);
+						
+						block['chartlabels'].push(key);
+						block['chartdata'].push(block.stats[key]);
+						block['chartseries'].push(key);
+						
+					}
+					//** End of Chart Data
+				
+					// Count Block Types
+					if (vm.blocktypes[block['type']] == undefined){
+						//console.log("WE ARE HERE INSIDE IF");
+						vm.blocktypes[block['type']] = 1;
+						//obj[key] = obj[value.key] + 1;
+						//console.log(obj);
+					}else{
+						//console.log("WE ARE HERE INSIDE ELSE");
+						vm.blocktypes[block['type']] = vm.blocktypes[block['type']] + 1;;
+					}
+					// End of Block Type Counting
+					
+				})
+				
+				//console.log(vm.blocktypes);
+				
+				vm.loading = false;
+				vm.messages = JSON.stringify(vm.didblocks, null, "    ");
+				
+				
+			}, function(err){
+				console.log(err)
+				vm.loading = false;
+			});
+		/*
+		function initController() {
+			telephonyService.didblocks(function (result) {
+				//console.log('callback from telephonyService.GetDidblocks responded ' + result);
+				vm.didblocks = result;
+				
+				console.log(vm.didblocks);
 				// Check if Token has expired. If so then direct them to login screen. 
 				if(result.message == "Token has expired"){
 					vm.tokenexpired = true;
@@ -131,7 +197,7 @@ angular
 
 			});
 		}
-		
+		*/
 		
 		// Drop down values to use in Add form. 
 		vm.states = [{

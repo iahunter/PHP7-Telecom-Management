@@ -23,6 +23,12 @@ class Didcontroller extends Controller
     public function listDidblock()
     {
         $user = JWTAuth::parseToken()->authenticate();
+		
+		if (! $user->can('read', Didblock::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
+		
         $didblocks = Didblock::all();
 
         $stats = $this->getDidblockUtilization();

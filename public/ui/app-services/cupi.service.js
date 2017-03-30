@@ -16,7 +16,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -31,7 +32,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -46,7 +48,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -61,7 +64,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -85,7 +89,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -99,7 +104,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -114,7 +120,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -128,7 +135,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -143,69 +151,13 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
 		
-		
-		
-		// Get CUCM Date Time Groups
-		self.getcupidatetimegrps = function() {
-			var defer = $q.defer();
-			return $http.get('../api/cupi/dateandtime')
-				.then(function successCallback(response) {
-					defer.resolve(response);
-					
-					// Must return the promise to the controller. 
-					return defer.promise;
-					
-			  }, function errorCallback(response) {
-					
-			  });
-		}
-		
 
-		
-		// Create Block
-		self.createcupisite = function(site){
-			return $http.post('../api/cupi/site', site);
-		}
-		
-	
-	
-		// Delete Phone
-		self.deletephone = function(name) {
-			var defer = $q.defer();
-			console.log('Service - Deleting ID: '+ name);
-			return $http.delete('../api/cupi/phone/'+name, name)
-				.then(function successCallback(response) {
-					defer.resolve(response);
-					// Must return the promise to the controller. 
-					return defer.promise;
-					
-			  }, function errorCallback(response) {
-			
-			});
-		}
-
-
-		
-		// Get CUCM Date Time Groups
-		self.initiate_cupi_ldap_sync = function() {
-			var defer = $q.defer();
-			return $http.get('../api/cupi/ldap/start')
-				.then(function successCallback(response) {
-					defer.resolve(response);
-					
-					// Must return the promise to the controller. 
-					return defer.promise;
-					
-			  }, function errorCallback(response) {
-					
-			  });
-		}
-		
 		
 		// Create Block
 		self.createuser = function(user){
@@ -216,35 +168,6 @@ angular
 		self.importldapuser = function(user){
 			return $http.post('../api/cupi/user/ldapimport', user);
 		}
-		
-		/*
-		self.createphones = function(arr) {
-			results = [];
-			  if (angular.isArray(arr) && arr.length > 0) {
-				console.log(arr);
-				var postdata = arr[0];
-				$http.post('../api/cupi/phone', postdata)
-				  .then(
-					  function(data) {
-						results.push(data);
-						console.log("Success.");
-						arr.shift();
-						self.createphones(arr);
-						//console.log('After Shift');
-						//console.log(arr);
-					  },
-					  function(data) {
-						results.push(data);
-						console.log("Failure.");
-						// if you want to continue even if it fails:
-						self.createphones(arr.shift());
-					  }
-				);
-			  }
-			console.log(results);
-			return results;
-		}
-		*/
 		
 		
 		

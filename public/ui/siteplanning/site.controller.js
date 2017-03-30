@@ -4,7 +4,7 @@ angular
 	
 		var vm = this;
 		
-		initController();
+		//initController();
 		
 		vm.siteForm = {};
 		
@@ -19,7 +19,7 @@ angular
 		};
 
 		vm.messages = 'Loading sites...';
-		vm.sites = [{}];
+		
 		vm.loading = true;
 		
 		// Page Request
@@ -39,15 +39,17 @@ angular
 
 			return result;
 		}
-
-		function initController() {
-			siteService.Getsites(function (result) {
+		
+		vm.getsites = siteService.Getsites()
+		
+			.then(function(res){
 				
+				//console.log(res)
 				// Check for errors and if token has expired. 
-				if(result.message){
+				if(res.data.message){
 					//console.log(res);
-					vm.message = result.message;
-					//console.log(vm.message);
+					vm.message = res.data.message;
+					console.log(vm.message);
 					
 					if(vm.message == "Token has expired"){
 						// Send user to login page if token expired. 
@@ -56,51 +58,52 @@ angular
 					}
 
 					return vm.message;
+				}else{
+					var sites = res.data.sites;
+				
+					console.log('callback from siteService.Getsites responded ');
+					//var sites = siteService.sites;
+					
+					vm.sites = [];
+					// Get list of CUCM Sites
+					vm.listcucmsites = cucmService.listcucmsites()
+						.then(function(res){
+							
+							vm.cucmsites = res.data.response;
+							
+							//console.log(vm.cucmsites);
+							//return vm.cucmsites;
+							
+							angular.forEach(sites, function(key,value) {
+								site = key.sitecode;
+								if(isInArrayNgForeach(site, vm.cucmsites)){
+
+									key.cucmprovisioned = true;
+									vm.sites.push(key);
+									//console.log(key);
+								}else{
+									key.cucmprovisioned = false;
+									vm.sites.push(key);
+									//console.log(key);
+								}
+								
+							});
+
+						}, function(err){
+							alert(err);
+						});
+					
+					console.log(vm.sites)
+									
+					vm.loading = false;
+					
 				}
 				
-				console.log('callback from siteService.Getsites responded ' + result);
-				
-				var sites = siteService.sites;
-				
-				vm.sites = [];
-				// Get list of CUCM Sites
-				vm.listcucmsites = cucmService.listcucmsites()
-					.then(function(res){
-						vm.cucmsites = res.data.response;
-						
-						//console.log(vm.cucmsites);
-						//return vm.cucmsites;
-						
-						angular.forEach(sites, function(key,value) {
-							site = key.sitecode;
-							if(isInArrayNgForeach(site, vm.cucmsites)){
-
-								key.cucmprovisioned = true;
-								vm.sites.push(key);
-								//console.log(key);
-							}else{
-								key.cucmprovisioned = false;
-								vm.sites.push(key);
-								//console.log(key);
-							}
-							
-						});
-
-					}, function(err){
-						alert(err);
-					});
-				
-				
-								
-				vm.loading = false;
-				
-				vm.messages = JSON.stringify(vm.sites, null, "    ");
-				
+			}, function(err){
+				console.log(err)
+				alert(err);
 			});
-			
-			
-		}
-		
+
 
 		vm.getdatetimegrps = cucmService.getcucmdatetimegrps()
 			.then(function(res){

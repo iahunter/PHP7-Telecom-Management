@@ -22,8 +22,16 @@ angular
 
 		vm.cucmsitetrunkreport = cucmReportService.listsitetrunkingreport()
 			.then(function(res){
-				vm.sites = res.data.response;
-				vm.loading = false;
+				// Check for errors and if token has expired. 
+				if(res.data.message){
+					console.log(res);
+					vm.message = res.data.message;
+					console.log(vm.message);
+				}else{
+					vm.sites = res.data.response;
+					vm.loading = false;
+				}
+				
 			}, function(err){
 				alert(err);
 			});

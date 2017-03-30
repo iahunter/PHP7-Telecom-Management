@@ -16,7 +16,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -31,7 +32,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -45,7 +47,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -59,7 +62,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -73,7 +77,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -87,7 +92,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -103,7 +109,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -127,7 +134,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 
@@ -144,7 +152,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -159,7 +168,8 @@ angular
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		

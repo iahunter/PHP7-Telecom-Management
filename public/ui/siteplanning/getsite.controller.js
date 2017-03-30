@@ -33,12 +33,19 @@ angular
 		
 		vm.getsitephoneplans = sitePhonePlanService.getsitephoneplans(id)
 			.then(function(res){
-				// Check if Token has expired. If so then direct them to login screen. 
-				if(res.message == "Token has expired"){
-					vm.tokenexpired = true;
-					//alert("Token has expired, Please relogin");
-					//alert(res.message);
-					$state.go('logout');
+				// Check for errors and if token has expired. 
+				if(res.data.message){
+					console.log(res);
+					vm.message = res.data.message;
+					console.log(vm.message);
+					
+					if(vm.message == "Token has expired"){
+						// Send user to login page if token expired. 
+						alert(vm.message);
+						$state.go('logout');
+					}
+
+					return vm.message;
 				}
 				//console.log(res);
 				vm.phoneplans = res.data.result;
@@ -247,6 +254,21 @@ angular
 			
 			vm.getsite = siteService.getsite(id)
 				.then(function(res){
+					
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							alert(vm.message);
+							$state.go('logout');
+						}
+
+						return vm.message;
+					}
 
 					vm.site = res.data.result;
 					vm.sitecode = res.data.result.sitecode;

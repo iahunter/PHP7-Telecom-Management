@@ -15,7 +15,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-			
+					defer.resolve(response);
+					return defer.promise;
 			});
 		}
 		
@@ -30,7 +31,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 		
@@ -45,7 +47,8 @@
 					return defer.promise;
 					
 			  }, function errorCallback(response) {
-					
+					defer.resolve(response);
+					return defer.promise;
 			  });
 		}
 

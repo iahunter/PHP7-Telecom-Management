@@ -6,6 +6,52 @@
         .config(config)
         .run(run);
 
+		
+	function run($rootScope, $http, $location, $localStorage, jwtHelper) {
+		
+		
+        // keep user logged in after page refresh
+        if ($localStorage.currentUser) {
+			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
+			
+			
+			
+			/***** Permissions Checker *******/
+			
+			var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+			
+			//console.log(tokenPayload);
+			
+			// Global Window variable.
+			window.permissions = tokenPayload.permissions;
+			//document.permissions = tokenPayload.permissions;
+			
+			console.log(window.permissions)
+			
+			/*********************************/
+			
+			//var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
+			
+			if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
+				console.log('Cached token is expired, logging out');
+				delete $localStorage.currentUser;
+				$http.defaults.headers.common.Authorization = '';
+			}else{
+				console.log('Cached token is still valid');
+				$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+			}
+        }
+
+        // redirect to login page if not logged in and trying to access a restricted page
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            var publicPages = ['/login'];
+            var restrictedPage = publicPages.indexOf($location.path()) === -1;
+            if (restrictedPage && !$localStorage.currentUser) {
+                $location.path('/login');
+            }
+        });
+    }
+	
     function config($stateProvider, $urlRouterProvider) {
         // default route
         $urlRouterProvider.otherwise("/");
@@ -164,27 +210,5 @@
     }
 	
 
-    function run($rootScope, $http, $location, $localStorage, jwtHelper) {
-        // keep user logged in after page refresh
-        if ($localStorage.currentUser) {
-			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
-			if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
-				console.log('Cached token is expired, logging out');
-				delete $localStorage.currentUser;
-				$http.defaults.headers.common.Authorization = '';
-			}else{
-				console.log('Cached token is still valid');
-				$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
-			}
-        }
-
-        // redirect to login page if not logged in and trying to access a restricted page
-        $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            var publicPages = ['/login'];
-            var restrictedPage = publicPages.indexOf($location.path()) === -1;
-            if (restrictedPage && !$localStorage.currentUser) {
-                $location.path('/login');
-            }
-        });
-    }
+    
 })();

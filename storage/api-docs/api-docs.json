@@ -2087,11 +2087,11 @@
         "/telephony/api/page/request/{name}": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Logging and Permissions"
                 ],
                 "summary": "Page Request Log",
                 "description": "",
-                "operationId": "getActiveCalls",
+                "operationId": "",
                 "consumes": [
                     "application/json"
                 ],
@@ -2111,11 +2111,35 @@
         "/telephony/api/page/test": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Logging and Permissions"
                 ],
                 "summary": "TEST",
                 "description": "",
-                "operationId": "getActiveCalls",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/page/permissions": {
+            "get": {
+                "tags": [
+                    "Logging and Permissions"
+                ],
+                "summary": "Page View Permissions",
+                "description": "Get my page viewing permissions",
+                "operationId": "",
                 "consumes": [
                     "application/json"
                 ],

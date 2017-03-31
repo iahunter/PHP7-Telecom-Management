@@ -32,6 +32,8 @@
 		  
 </head>
 <body>
+
+	<div ng-controller="Home.IndexController as vm">
 	<!-- Include Navbar -->
 	<ng-include src="'app-content/navbar.html'"></ng-include>
 	
@@ -39,6 +41,7 @@
 	<!-- main app container -->
 		<ui-view></ui-view>
 
+	</div>
 
 	<!-- Add all Javascript sources at bottom. -->
     <!-- angular and other JavaScript dependencies -->

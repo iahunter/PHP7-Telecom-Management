@@ -34,6 +34,26 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
 
     public function getJWTCustomClaims()
     {
-        return [];
+		$claims = [];
+		$claims['permissions'] = [];
+		
+		// Check Role of user
+        if ($this->can('read', Site::class)) {
+           $claims['permissions']['read_sites'] = true;
+        }
+		
+		// Check Role of user
+        if ($this->can('read', Didblock::class)) {
+           $claims['permissions']['read_didblock'] = true;
+        }
+		
+		// Check Role of user
+        if ($this->can('read', Cucmsiteconfigs::class)) {
+           $claims['permissions']['read_cucmreports'] = true;
+        }
+		
+		$claims['permissions']['jack'] = true;
+		
+        return $claims;
     }
 }

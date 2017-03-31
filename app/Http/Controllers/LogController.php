@@ -32,4 +32,14 @@ class LogController extends Controller
             return 'Test Failed';
         }
     }
+	
+	public function permissions(Request $request)
+    {
+		$user = JWTAuth::parseToken()->authenticate();
+		
+		//print_r($user);
+		$abilities = $user->getAbilities();
+		
+        return $abilities;
+    }
 }

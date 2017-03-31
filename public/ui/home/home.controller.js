@@ -20,7 +20,7 @@
 				console.log(err)
 			});
 			
-
+		vm.permissions = window.permissions;
 
 		function initController() {
 			UserService.Getuserinfo(function (result) {

@@ -461,7 +461,7 @@ class Cupi extends Model
         }
 
         //return $objectid;
-		
+
         if (isset($operator) && $operator > 1000000000 && $operator < 9999999999) {
             if (isset($objectid) && $objectid) {
                 $template['update_operator'] = self::update_usertemplate_operator($objectid, $sitecode, $operator);

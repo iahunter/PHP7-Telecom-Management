@@ -9,6 +9,8 @@
 /public/telephony-ui
 /public/old
 
+public/ui/app-content/images/
+
 public/ui/company-content/
 public/ui/bower_components
 

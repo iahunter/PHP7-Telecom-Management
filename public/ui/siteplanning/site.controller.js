@@ -169,8 +169,9 @@ angular
 		// Create DID Block 
 		vm.submitsite = function(form) {
 
+			form.sitecode = form.sitecode.toUpperCase();
+			form.didrange = form.didrange.toUpperCase();
 			console.log(form);
-			
 			
 			siteService.createsite(angular.copy(form)).then(function(data) {
 				alert("site Added Succesfully" + data);

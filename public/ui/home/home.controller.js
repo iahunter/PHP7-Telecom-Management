@@ -1,12 +1,26 @@
 ﻿angular
 	.module('app')
-	.controller('Home.IndexController', ['UserService', '$location', '$state', function(UserService, $location, $state) {
+	.controller('Home.IndexController', ['UserService', 'PageService', '$location', '$state', function(UserService, PageService, $location, $state) {
 		var vm = this;
 
 		initController();
 
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};
+		
+		vm.getpage = PageService.getpage('home');
+		
+		vm.gettest = PageService.gettest()
+			.then(function(res){
+				// Check for errors and if token has expired. 
+				console.log(res)
+				vm.test = res;
+
+			}, function(err){
+				console.log(err)
+			});
+			
+
 
 		function initController() {
 			UserService.Getuserinfo(function (result) {

@@ -20,9 +20,8 @@
      * )
      **/
     $api->get('/page/request/{name}', 'App\Http\Controllers\LogController@log_page_name');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/page/test",
      *     tags={"Logging"},
@@ -42,4 +41,3 @@
      * )
      **/
     $api->get('/page/test', 'App\Http\Controllers\LogController@test');
-

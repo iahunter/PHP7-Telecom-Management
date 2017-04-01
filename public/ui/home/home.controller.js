@@ -1,9 +1,10 @@
 ﻿angular
 	.module('app')
-	.controller('Home.IndexController', ['UserService', 'PageService', '$location', '$state', function(UserService, PageService, $location, $state) {
+	.controller('Home.IndexController', ['UserService', 'PageService', '$location', '$state', '$timeout', function(UserService, PageService, $location, $state, $timeout) {
 		var vm = this;
 
-		initController();
+		// Match the window permission set in app.js - may want to user a service or just do an api call to get these. will decide later. 
+		vm.permissions = window.permissions;
 
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};
@@ -20,8 +21,10 @@
 				console.log(err)
 			});
 			
-		vm.permissions = window.permissions;
 
+		initController();
+		
+		
 		function initController() {
 			UserService.Getuserinfo(function (result) {
 				//console.log('callback from UserService.userinfo responded ' + result);

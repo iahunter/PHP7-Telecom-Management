@@ -34,6 +34,7 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
 
     public function getJWTCustomClaims()
     {
+		// Add custom properties to the token here. This can be used to send the browser its permissions. 
 		$claims = [];
 		$claims['permissions'] = [];
 		
@@ -52,7 +53,11 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
            $claims['permissions']['read_cucmreports'] = true;
         }
 		
-		$claims['permissions']['jack'] = true;
+		// Check Role of user
+        if ($this->can('read', Sonus5k::class)) {
+           $claims['permissions']['read_sonus5k'] = true;
+        }
+		
 		
         return $claims;
     }

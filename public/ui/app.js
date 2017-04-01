@@ -26,10 +26,12 @@
 			window.permissions = tokenPayload.permissions;
 			//document.permissions = tokenPayload.permissions;
 			
-			console.log(window.permissions)
+			//console.log(window.permissions)
 			
 			/*********************************/
 			
+			
+			// Look at checking date expire and renew automatically. 
 			//var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
 			
 			if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {

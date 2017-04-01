@@ -34,31 +34,30 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
 
     public function getJWTCustomClaims()
     {
-		// Add custom properties to the token here. This can be used to send the browser its permissions. 
-		$claims = [];
-		$claims['permissions'] = [];
-		
-		// Check Role of user
+        // Add custom properties to the token here. This can be used to send the browser its permissions.
+        $claims = [];
+        $claims['permissions'] = [];
+
+        // Check Role of user
         if ($this->can('read', Site::class)) {
-           $claims['permissions']['read_sites'] = true;
+            $claims['permissions']['read_sites'] = true;
         }
-		
-		// Check Role of user
+
+        // Check Role of user
         if ($this->can('read', Didblock::class)) {
-           $claims['permissions']['read_didblock'] = true;
+            $claims['permissions']['read_didblock'] = true;
         }
-		
-		// Check Role of user
+
+        // Check Role of user
         if ($this->can('read', Cucmsiteconfigs::class)) {
-           $claims['permissions']['read_cucmreports'] = true;
+            $claims['permissions']['read_cucmreports'] = true;
         }
-		
-		// Check Role of user
+
+        // Check Role of user
         if ($this->can('read', Sonus5k::class)) {
-           $claims['permissions']['read_sonus5k'] = true;
+            $claims['permissions']['read_sonus5k'] = true;
         }
-		
-		
+
         return $claims;
     }
 }

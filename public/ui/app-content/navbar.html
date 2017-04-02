@@ -18,7 +18,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			
-			  <ul class="nav navbar-nav" ng-if="vm.permissions.read_didblock == true">
+			  <ul class="nav navbar-nav" ng-if="vm.permissions.read.Didblock == true">
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Number Tracking</a>
 				  <ul class="dropdown-menu">
@@ -38,7 +38,7 @@
 			  </ul>
 			
 			  <!-- Collect the nav links, forms, and other content for toggling -->
-			  <ul class="nav navbar-nav" ng-show="vm.permissions.read_sites == true">
+			  <ul class="nav navbar-nav" ng-show="vm.permissions.read.Site == true">
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Provisioning</a>
 				  <ul class="dropdown-menu">
@@ -61,8 +61,8 @@
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
 				  <ul class="dropdown-menu">
-					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read_cucmreports == true">SIP & E911 Report</a></li>
-					<li><a href="#" ng-show="vm.permissions.read_cucmreports != true">None Found</a></li>
+					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">SIP & E911 Report</a></li>
+					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
 					<!--
 					<li role="separator" class="divider"></li>
 					<li><a href="#/didblock">Separated link</a></li>
@@ -73,7 +73,7 @@
 				</li>
 			  </ul>
 			  
-			  <ul class="nav navbar-nav" ng-show="vm.permissions.read_sonus5k == true">
+			  <ul class="nav navbar-nav" ng-show="vm.permissions.read.Sonus5k == true">
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SBC</a>
 				  <ul class="dropdown-menu">

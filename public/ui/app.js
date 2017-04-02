@@ -15,7 +15,7 @@
 
 			//Permissions Checker/
 			var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
-			window.permissions = tokenPayload.permissions;
+			window.telecom_mgmt_permissions = tokenPayload.permissions;
 
 			
 			// Look at checking date expire and renew automatically. 

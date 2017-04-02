@@ -12,7 +12,7 @@
 
         function initController() {
             // reset login status
-			window.permissions = {};
+			window.telecom_mgmt_permissions = {};
             AuthenticationService.Logout();
         };
 

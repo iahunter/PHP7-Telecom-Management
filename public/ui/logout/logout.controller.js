@@ -12,6 +12,7 @@
 
         function initController() {
             // reset login status
+			window.permissions = {};
             AuthenticationService.Logout();
         };
 

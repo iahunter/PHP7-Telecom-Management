@@ -24,8 +24,8 @@
 					vm.message = result.message;
 					console.log(vm.message);
 				} else if(result.token){
-					console.log('TOKEN')
-					console.log(result)
+					//console.log('TOKEN')
+					//console.log(result)
 					
 					// Permissions Checker	
 					var tokenPayload = jwtHelper.decodeToken(result.token);

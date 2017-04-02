@@ -3,7 +3,7 @@
 	.controller('Home.IndexController', ['UserService', 'PageService', '$location', '$state', '$timeout', function(UserService, PageService, $location, $state, $timeout) {
 		var vm = this;
 
-		// Match the window permission set in app.js - may want to user a service or just do an api call to get these. will decide later. 
+		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.permissions;
 
 		vm.messages = 'Loading Userinfo...';

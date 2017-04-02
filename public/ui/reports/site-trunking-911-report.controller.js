@@ -24,9 +24,9 @@ angular
 			.then(function(res){
 				// Check for errors and if token has expired. 
 				if(res.data.message){
-					console.log(res);
+					//console.log(res);
 					vm.message = res.data.message;
-					console.log(vm.message);
+					//console.log(vm.message);
 				}else{
 					vm.sites = res.data.response;
 					vm.loading = false;

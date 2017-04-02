@@ -1,7 +1,39 @@
 ﻿angular
 	.module('app')
-	.controller('Home.IndexController', ['UserService', 'PageService', '$location', '$state', '$timeout', function(UserService, PageService, $location, $state, $timeout) {
+	.controller('Home.IndexController', ['UserService', 'PageService', '$location', '$state', '$timeout', '$http', '$localStorage', 'jwtHelper', 'AuthenticationService', function(UserService, PageService, $location, $state, $timeout, $http, $localStorage, jwtHelper, AuthenticationService) {
 		var vm = this;
+		
+		// Attempt to renew token on page click - FYI - this gets called on every page for navbar. 
+        if ($localStorage.currentUser) {
+			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
+			
+			// Attempt to Renew Token
+			AuthenticationService.Renew($localStorage.currentUser.token, function (result) {
+				
+				if(result.token){
+					
+					//Permissions Checker/
+					var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+					window.telecom_mgmt_permissions = tokenPayload.permissions;
+
+					
+					// Look at checking date expire and renew automatically. 
+					var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
+					
+					console.log(date);
+					
+					if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
+						console.log('Cached token is expired, logging out');
+						delete $localStorage.currentUser;
+						$http.defaults.headers.common.Authorization = '';
+						$location.path('/logout');
+					}else{
+						console.log('Cached token is still valid');
+						$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+					}
+				}
+			})
+		}
 
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;

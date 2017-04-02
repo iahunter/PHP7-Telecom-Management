@@ -7,11 +7,12 @@
         .run(run);
 
 		
-	function run($rootScope, $http, $location, $localStorage, jwtHelper) {
+	function run($rootScope, $http, $location, $localStorage, jwtHelper, AuthenticationService) {
 		
         // keep user logged in after page refresh
         if ($localStorage.currentUser) {
 			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
+			
 
 			//Permissions Checker/
 			var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
@@ -19,7 +20,9 @@
 
 			
 			// Look at checking date expire and renew automatically. 
-			//var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
+			var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
+			
+			console.log(date);
 			
 			if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
 				console.log('Cached token is expired, logging out');

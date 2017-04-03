@@ -41,9 +41,7 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         $claims['permissions']['create'] = [];
         $claims['permissions']['update'] = [];
         $claims['permissions']['delete'] = [];
-		
-		
-       
+
         //                   Did Block
         // Check Role of user
         if ($this->can('read', Didblock::class)) {

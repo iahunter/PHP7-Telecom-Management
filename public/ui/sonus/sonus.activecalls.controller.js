@@ -28,8 +28,7 @@ angular
 						
 						if(vm.message == "Token has expired"){
 							// Send user to login page if token expired. 
-							alert(vm.message);
-							$state.go('logout');
+							$location.path('/logout');
 						}
 
 						return vm.message;

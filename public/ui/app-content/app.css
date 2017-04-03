@@ -79,3 +79,42 @@
 .navbar-slate-inverse .btn-link[disabled]:hover,fieldset[disabled] .navbar-slate-inverse .btn-link:hover,.navbar-slate-inverse .btn-link[disabled]:focus,fieldset[disabled] .navbar-slate-inverse .btn-link:focus{color:#cccccc}
 
 
+/* Slate Dropdown Menu 
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #3a3f44;
+    border: 1px solid #272b30;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #c8c8c8;
+    white-space: nowrap;
+
+}
+
+*/

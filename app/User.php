@@ -41,10 +41,10 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         $claims['permissions']['create'] = [];
         $claims['permissions']['update'] = [];
         $claims['permissions']['delete'] = [];
-
-        /*****************************************************
-                            Did Block
-        *****************************************************/
+		
+		
+       
+        //                   Did Block
         // Check Role of user
         if ($this->can('read', Didblock::class)) {
             $claims['permissions']['read']['Didblock'] = true;
@@ -65,10 +65,7 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
             $claims['permissions']['delete']['Didblock'] = true;
         }
 
-        /*****************************************************
-                            Site
-        *****************************************************/
-
+        //                    Site
         // Check Role of user
         if ($this->can('read', Site::class)) {
             $claims['permissions']['read']['Site'] = true;

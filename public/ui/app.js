@@ -28,9 +28,39 @@
 				console.log('Cached token is expired, logging out');
 				delete $localStorage.currentUser;
 				$http.defaults.headers.common.Authorization = '';
+				$location.path('/logout');
 			}else{
-				console.log('Cached token is still valid');
+				console.log('app.js Cached token is still valid');
 				$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+				
+				// Attempt to Renew Token
+				AuthenticationService.Renew($localStorage.currentUser.token, function (result) {
+					//console.log('Attempting to renew Token')
+					if(result.token){
+						
+						//Permissions Checker/
+						var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+						window.telecom_mgmt_permissions = tokenPayload.permissions;
+
+						
+						// Look at checking date expire and renew automatically. 
+						var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
+						
+						//console.log(date);
+						
+						if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
+							console.log('Cached token is expired, logging out');
+							delete $localStorage.currentUser;
+							$http.defaults.headers.common.Authorization = '';
+							$location.path('/logout');
+						}else{
+							console.log('Cached token is still valid');
+							$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+						}
+					}
+				})
+				
+				
 			}
         }
 

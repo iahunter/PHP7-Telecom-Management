@@ -5,11 +5,11 @@
 		
 		// Attempt to renew token on page click - FYI - this gets called on every page for navbar. 
         if ($localStorage.currentUser) {
-			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
+			//console.log('Found local storage login token: ' + $localStorage.currentUser.token);
 			
 			// Attempt to Renew Token
 			AuthenticationService.Renew($localStorage.currentUser.token, function (result) {
-				
+				//console.log('Attempting to renew Token')
 				if(result.token){
 					
 					//Permissions Checker/
@@ -23,12 +23,12 @@
 					console.log(date);
 					
 					if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
-						console.log('Cached token is expired, logging out');
+						console.log('home.controller.js Cached token is expired, logging out');
 						delete $localStorage.currentUser;
 						$http.defaults.headers.common.Authorization = '';
 						$location.path('/logout');
 					}else{
-						console.log('Cached token is still valid');
+						console.log('home.controller.js Cached token is still valid');
 						$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
 					}
 				}

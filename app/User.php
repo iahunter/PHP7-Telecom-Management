@@ -64,6 +64,11 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', Didblock::class)) {
             $claims['permissions']['delete']['Didblock'] = true;
         }
+		
+		 // Check Role of user
+        if ($this->can('update', Did::class)) {
+            $claims['permissions']['update']['Did'] = true;
+        }
 
         //                    Site
         // Check Role of user

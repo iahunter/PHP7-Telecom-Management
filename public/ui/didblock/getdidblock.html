@@ -284,7 +284,7 @@
 										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<th>Actions</th>
+							<th ng-if="vm.permissions.update.Did">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -323,8 +323,8 @@
 						
 						<td   ng-show="!vm.edit[did.id]">{{ did.created_at}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.updated_at}}</td>
-						<td   ng-show="!vm.edit[did.id]">
-							<button class="btn btn-xs btn-primary"  ng-click="vm.edit[did.id] = !vm.edit[did.id]"> Edit </button>
+						<td  ng-if="vm.permissions.update.Did" ng-show="!vm.edit[did.id]">
+							<button class="btn btn-xs btn-primary" ng-click="vm.edit[did.id] = !vm.edit[did.id]"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit </button>
 						</td>
 
 						<!--Edit View-->

@@ -24,7 +24,7 @@
 		
 		<div style="margin:25px"></div>
 		
-		<a ng-show="!vm.message" href="#/didblock/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+		<a ng-show="!vm.message && vm.permissions.create.Didblock" href="#/didblock/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
 		
 		<div style="margin:25px"></div>
 		
@@ -170,7 +170,7 @@
 										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<th>Actions</th>
+							<th ng-if="vm.permissions.update.Didblock || vm.permissions.delete.Didblock">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -206,52 +206,51 @@
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.comment}}</td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.created_at}}</td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.updated_at}}</td>
-						<td   ng-show="!vm.edit[didblock.id]">
-							<button class="btn btn-primary btn-xs "  ng-click="vm.edit[didblock.id] = !vm.edit[didblock.id]"> Edit </button>
+							<td ng-if="vm.permissions.update.Didblock || vm.permissions.delete.Didblock" ng-show="!vm.edit[didblock.id]">
+								<button class="btn btn-primary btn-xs "  ng-if="vm.permissions.update.Didblock" ng-click="vm.edit[didblock.id] = !vm.edit[didblock.id]"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit </button>
+								
+								<!-- Function moved ot modal...
+								<button class="btn btn-danger btn-xs " ng-click="vm.delete(didblock)"> Delete </button>-->
+								
+								<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.Didblock" data-toggle="modal" data-target="#{{didblock.id}}-modal"> Delete </button>
 							
-							<!-- Function moved ot modal...
-							<button class="btn btn-danger btn-xs " ng-click="vm.delete(didblock)"> Delete </button>-->
-							
-							<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#{{didblock.id}}-modal"> Delete </button>
-						
-							<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
-							<div class="modal fade" id="{{didblock.id}}-modal" role="dialog">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4>Are you sure? <h4>
-										</div>
-										<div class="modal-body">
-											<p>You are about to delete Bloock ID: {{ didblock.id}}</p>
-											<table class="table table-striped table-condensed table-bordered table-hover">
-												<tr>
-													<th>Name</th>
-													<th>Start</th>
-													<th>End</th>
-												</tr>
-												<tr>
-													<td>{{ didblock.name}}</td>
-													<td>{{ didblock.start}}</td>
-													<td>{{ didblock.end}}</td>
-												</tr>
-											</table>
-											<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
-										</div>
-										<div class="modal-footer">
+								<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
+								<div class="modal fade" id="{{didblock.id}}-modal" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4>Are you sure? <h4>
+											</div>
+											<div class="modal-body">
+												<p>You are about to delete Bloock ID: {{ didblock.id}}</p>
+												<table class="table table-striped table-condensed table-bordered table-hover">
+													<tr>
+														<th>Name</th>
+														<th>Start</th>
+														<th>End</th>
+													</tr>
+													<tr>
+														<td>{{ didblock.name}}</td>
+														<td>{{ didblock.start}}</td>
+														<td>{{ didblock.end}}</td>
+													</tr>
+												</table>
+												<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
+											</div>
+											<div class="modal-footer">
 
-										<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
-										<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(didblock)">Delete</a>
-										<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+											<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+											<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(didblock)">Delete</a>
+											<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
 
-											
+												
+											</div>
 										</div>
 									</div>
-								</div>
-							</div> <!-- End of Modal -->
-							
-							
-						</td>
-
+								</div> <!-- End of Modal -->
+								
+								
+							</td>
 						<!--Edit View-->
 						<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.name"></td>
 						<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.carrier"></td>

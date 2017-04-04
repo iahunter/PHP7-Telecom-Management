@@ -23,7 +23,7 @@
 		
 		<div style="margin:25px"></div>
 		
-		<a ng-if="!vm.message" href="#/site/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+		<a ng-if="!vm.message && vm.permissions.create.Site" href="#/site/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
 		
 		<div style="margin:25px"></div>
 		
@@ -58,7 +58,7 @@
 										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<th>
+							<th ng-show="vm.permissions.read.Cucmclass">
 								<a href="" ng-click="sortType = 'cucmprovisioned'; sortReverse = !sortReverse" style="color:black">
 									CUCM
 										<span ng-show="sortType == 'cucmprovisioned' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -188,7 +188,7 @@
 										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<th>Actions</th>
+							<th ng-if="vm.permissions.update.Site || vm.permissions.delete.Site">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -200,8 +200,8 @@
 						<!--List View-->
 						<td><a ui-sref="getsite({id: site.id})"><button class="btn btn-xs btn-default btn-block">{{ site.id}}</button></a></td>
 						<!--<td>{{ site.id}}</a></td>-->
-						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == true'> <i class="fa fa-check-square-o" aria-hidden="true"></i></td>
-						<td   ng-show="!vm.edit[site.id]" ng-if='site.cucmprovisioned == false'> <i class="fa fa-square-o" aria-hidden="true"></i></td>
+						<td   ng-show="!vm.edit[site.id] && vm.permissions.read.Cucmclass" ng-if='site.cucmprovisioned == true'> <i class="fa fa-check-square-o" aria-hidden="true"></i></td>
+						<td   ng-show="!vm.edit[site.id] && vm.permissions.read.Cucmclass"" ng-if='site.cucmprovisioned == false'> <i class="fa fa-square-o" aria-hidden="true"></i></td>
 						<td   ng-show="!vm.edit[site.id]"><a ui-sref="getsite({id: site.id})"><b style="color:#337ab7">{{ site.sitecode}}</b></a></td>
 						<!--<td   ng-show="!vm.edit[site.id]">{{ site.cucmprovisioned}}</td>-->
 						<td   ng-show="!vm.edit[site.id]">{{ site.comment}}</td>
@@ -219,14 +219,14 @@
 						
 						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}}</td>
-						<td   ng-show="!vm.edit[site.id]">
+						<td   ng-if="vm.permissions.update.Site || vm.permissions.delete.Site" ng-show="!vm.edit[site.id]">
 							<!--<button class="btn btn-primary btn-xs "  ng-click="vm.edit[site.id] = !vm.edit[site.id]"> Edit </button>-->
-							<a href="#/site/edit/{{site.id}}"><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
+							<a href="#/site/edit/{{site.id}}" ng-if="vm.permissions.update.Site" ><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
 							
 							<!-- Function moved ot modal...
 							<button class="btn btn-danger btn-xs " ng-click="vm.delete(site)"> Delete </button>-->
 							
-							<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#{{site.id}}-modal"> Delete </button>
+							<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.Site" data-toggle="modal" data-target="#{{site.id}}-modal"> Delete </button>
 						
 							<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
 							<div class="modal fade" id="{{site.id}}-modal" role="dialog">

@@ -117,7 +117,7 @@
 			.state('denied', {
                 url: "/accessdenied",
                 templateUrl: 'home/accessdenied.html',
-                controller: 'Home.IndexController',
+                controller: 'AccessDenied.IndexController',
                 controllerAs: 'vm'
             })
 			.state('didblock', {

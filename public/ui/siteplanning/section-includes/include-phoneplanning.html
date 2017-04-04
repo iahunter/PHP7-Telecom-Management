@@ -43,7 +43,7 @@
 				</div>
 				<div style="margin:25px"></div>
 
-				<button class="btn btn-primary btn-sm" ng-click="vm.phoneplanaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+				<button class="btn btn-primary btn-sm"  ng-if="vm.permissions.create.Phoneplan" ng-click="vm.phoneplanaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
 				
 				<div>
 					<ng-include src="'siteplanning/phoneplans/createphoneplan.html'"></ng-include>
@@ -144,7 +144,7 @@
 									</th>
 									
 									
-									<th>Actions</th>
+									<th ng-if="vm.permissions.update.Phoneplan || vm.permissions.delete.Phoneplan">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -165,13 +165,13 @@
 								<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
 								<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_by}}</td>
 								<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
-								<td   ng-show="!vm.edit[phone.id]">
-									<button class="btn btn-xs btn-primary"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
+								<td   ng-if="vm.permissions.update.Phoneplan || vm.permissions.delete.Phoneplan" ng-show="!vm.edit[phone.id]">
+									<button class="btn btn-xs btn-primary" ng-if="vm.permissions.update.Phoneplan" ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
 
 									<!-- Function moved ot modal...
 									<button class="btn btn-danger btn-xs " ng-click="vm.delete(phone)"> Delete </button>-->
 									
-									<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#{{phone.id}}-modal"> Delete </button>
+									<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.Phoneplan" data-toggle="modal" data-target="#{{phone.id}}-modal"> Delete </button>
 								
 									<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
 									<div class="modal fade" id="{{phone.id}}-modal" role="dialog">

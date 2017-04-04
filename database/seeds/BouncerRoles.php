@@ -79,8 +79,8 @@ class BouncerRoles extends Seeder
         $types = [
             App\Didblock::class,
             App\Did::class,
-            App\Site::class,
             App\Phone::class,
+			App\Phoneplan::class,
         ];
 
         foreach ($types as $type) {

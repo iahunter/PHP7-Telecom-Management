@@ -82,7 +82,7 @@ class AuthController extends Controller
             try {
                 return $this->goodauth($this->ldapauth($request));
             } catch (\Exception $e) {
-                $error .= "\tError with LDAP authentication {$e->getMessage()}\n";
+                $error .= "\tError with LDAP authentication. {$e->getMessage()}\n";
             }
         }
 
@@ -90,7 +90,7 @@ class AuthController extends Controller
         //activity()->withProperties($request)->log("All authentication methods available have failed, ".$error);
         activity('authlog')->withProperties(['username' => $request->username])->log('All authentication methods available have failed, '.$error);
 
-        abort(401, "All authentication methods available have failed\n".$error);
+        abort(401, "Authentication failed. ".$error);
     }
 
     /*

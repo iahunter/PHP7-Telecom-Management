@@ -17,6 +17,8 @@ angular
 		};
 		
 		
+		
+		
 		vm.isArray = angular.isArray;
 		
 		vm.loading = true;
@@ -28,6 +30,13 @@ angular
 		// Page Request
 	
 		vm.getpage = PageService.getpage('getsite-'+id)
+		
+		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
+		vm.permissions = window.telecom_mgmt_permissions;
+		
+		if(!vm.permissions.read.Site){
+			$location.path('/accessdenied');
+		}
 		
 		vm.deploybutton = false;
 		

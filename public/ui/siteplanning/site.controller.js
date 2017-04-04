@@ -4,6 +4,10 @@ angular
 	
 		var vm = this;
 		
+		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
+		vm.permissions = window.telecom_mgmt_permissions;
+		
+		
 		//initController();
 		
 		vm.siteForm = {};
@@ -24,6 +28,11 @@ angular
 		
 		// Page Request
 		vm.getpage = PageService.getpage('listsites')
+		
+		if(!vm.permissions.read.Site){
+			$location.path('/accessdenied');
+		}
+		
 		
 		function isInArrayNgForeach(field, arr) {
 			var result = false;

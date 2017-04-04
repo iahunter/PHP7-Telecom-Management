@@ -1,186 +1,187 @@
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-				
-					
-				<div class="panel  panel-default" style="box-shadow: 1px 1px 5px grey;">
-					<div class="panel-heading" role="tab" id="CUPIHeading" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+<div ng-if="vm.permissions.create.Cucmclass" || ng-if="vm.permissions.create.Cupi">
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	
+		<div class="panel  panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="panel-heading" role="tab" id="CUPIHeading" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+	
+				<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cupi" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cupi">
+					<h4><b><i class="fa fa-server"></i> Systems Provisioning <i class="fa fa-caret-down"></i></b></h4>
+				</a>
 			
-						<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_cupi" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_cupi">
-							<h4><b><i class="fa fa-server"></i> Systems Provisioning <i class="fa fa-caret-down"></i></b></h4>
-						</a>
-					
-					</div>
-					<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cupi" aria-labelledby="CUPIHeading"  style="min-height: 1000px;background-color:#F8F8F8;">
-					
-						<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
-						
-						<ul class="nav nav-tabs nav-justified">
-						  <li><a data-toggle="tab" ng-href="" data-target="#activedirectory"><i class="fa fa-address-card"></i> 1. Active Directory</a></li>
-						  <li><a data-toggle="tab" ng-href="" data-target="#cucm"><i class="fa fa-phone-square"></i> 2. Cisco Call Manager</a></li>
-						  <li><a data-toggle="tab" ng-href="" data-target="#unity"><i class="fa fa-envelope"></i> 3. Cisco Unity Connection</a></li>
-						</ul>
+			</div>
+			<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_cupi" aria-labelledby="CUPIHeading"  style="min-height: 1000px;background-color:#F8F8F8;">
+			
+				<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
+				
+				<ul class="nav nav-tabs nav-justified">
+				  <li><a data-toggle="tab" ng-href="" data-target="#activedirectory"><i class="fa fa-address-card"></i> 1. Active Directory</a></li>
+				  <li><a data-toggle="tab" ng-href="" data-target="#cucm"><i class="fa fa-phone-square"></i> 2. Cisco Call Manager</a></li>
+				  <li><a data-toggle="tab" ng-href="" data-target="#unity"><i class="fa fa-envelope"></i> 3. Cisco Unity Connection</a></li>
+				</ul>
 
-						<!-- Tab Content -->
-						<div class="tab-content">
+				<!-- Tab Content -->
+				<div class="tab-content">
+				
+					<!-- Tab 1 - Active Directory -->
+					<div id="activedirectory" class="tab-pane fade">
+						<h3>Active Directory</h3>
 						
-							<!-- Tab 1 - Active Directory -->
-							<div id="activedirectory" class="tab-pane fade">
-								<h3>Active Directory</h3>
-								
-								<p><b style="color:red;">Note! </b>The User IP Phone Field in Active Directory must be populated for the user to be imported via LDAP into CUCM and Unity Connection</p>
-								
-								<div style="margin:50px">
-									<!-- AD Tabs -->
-									<ul class="nav nav-tabs">
-									  <li class="active"><a data-toggle="tab" ng-href="" data-target="#getusernames"><i class="fa fa-address-card"></i> Step 1. View Users</a></li>
-									  <li><a data-toggle="tab" ng-href="" data-target="#updateusers"><i class="fa fa-address-card"></i> Step 2. Update Users</a></li>
-									</ul>
-								
-									<!-- Tab Content -->
-									<div class="tab-content">
-									
-										<!-- Check AD User Accounts Tab Content-->
-										<div id="getusernames" class="tab-pane fade in active">
-											<h3>Check existing Users</h3>
-											<p>Check User Accounts</p>
-											
-											<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusernames(vm.phones)">Verify Users Exist in AD</button>
-												
-												<div style="margin-top:25px; margin-bottom:25px">
-													<!--User Lookup Table-->
-													<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-aduserlookuptable.html'"></ng-include>
-												</div>
-										</div>
-									
-										<!-- Update AD User Accounts Tab Content -->
-										<div id="updateusers" class="tab-pane fade">
-											<h3>Update Users</h3>
-											<p>Update IP Phone Field for user</p>
-											
-											<button ng-if="vm.phones.length > 0" class="btn btn-danger"  ng-click="vm.updateadipphones(vm.phones)">Update AD Users IPPhone</button>
-											
-											<div style="margin-top:25px; margin-bottom:25px">
-												<!--User AD Updates Table-->
-												<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-useradupdatestable.html'"></ng-include>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								
-							</div>
+						<p><b style="color:red;">Note! </b>The User IP Phone Field in Active Directory must be populated for the user to be imported via LDAP into CUCM and Unity Connection</p>
 						
+						<div style="margin:50px">
+							<!-- AD Tabs -->
+							<ul class="nav nav-tabs">
+							  <li class="active"><a data-toggle="tab" ng-href="" data-target="#getusernames"><i class="fa fa-address-card"></i> Step 1. View Users</a></li>
+							  <li><a data-toggle="tab" ng-href="" data-target="#updateusers"><i class="fa fa-address-card"></i> Step 2. Update Users</a></li>
+							</ul>
 						
-							<!-- Tab 2 - CUCM Content -->
-							<div id="cucm" class="tab-pane fade">
-								<h3>Cisco Call Manager</h3>
-								<p>Verify, Resolve Conflics, and Provision Devices in the System</p>
-								
-								<div style="margin:50px">
-									<!-- AD Tabs -->
-									<ul class="nav nav-tabs">
-									  <li class="active"><a data-toggle="tab" ng-href="" data-target="#getphones"><i class="fa fa-phone-square"></i> Step 1. Check Conflics </a></li>
-									  <li><a data-toggle="tab" ng-href="" data-target="#deployphones"><i class="fa fa-phone-square"></i> Step 2. Deploy Phones </a></li>
-									</ul>
-								
-									<!-- Tab Content -->
-									<div class="tab-content">
-									
-										<!-- Check AD User Accounts Tab Content-->
-										<div id="getphones" class="tab-pane fade in active">
-											<h3>Check Phone Conflics</h3>
-											<p>Check if phones exist in the system matching a device name in our phone plan</p>
-											<p>Resolve Conflics prior to Deploying New Phone Configuration</p>
-											
-											<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">Check System Conflics</button>
-												<div style="margin-top:25px; margin-bottom:25px">
-													<!--User Lookup Table-->
-													<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-cucmphonesfoundtable.html'"></ng-include>
-												</div>
-										</div>
-									
-										<!-- Update AD User Accounts Tab Content -->
-										<div id="deployphones" class="tab-pane fade">
-											<h3>Deploy Phones</h3>
-
-											<p>Deploy Phone Plan to the System</p>
-											
-											<div style="margin-top:25px; margin-bottom:25px">
-											<!--<div class="panel panel-primary panel-body" style="max-width:40%">-->
-												<label for="checkbox" class="control-label"> Do you want to ignore existing Phones in CUCM? </label><br>
-												<input type="checkbox" ng-model="vm.ignoreexistingphones">
-												<label for="checkbox" class="control-label"> Yes</label>
-											</div>
-											
-											
-											<button ng-if="vm.phones.length > 0" class="btn btn-danger" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplan-modal">Deploy Phones</button>
-											
-											<div style="margin-top:25px; margin-bottom:25px">
-												<!--User AD Updates Table-->
-												<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phone-deploy-modal.html'"></ng-include>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								
-							</div>
+							<!-- Tab Content -->
+							<div class="tab-content">
 							
-							<!-- Tab 3 - Unity Content -->
-							<div id="unity" class="tab-pane fade">
-								
-								<h3>Cisco Unity Connection</h3>
-								<p>Provisioning Voicemail Boxes into the system for users</p>
-								
-								<hr>
-								<span><b style="color:red;">Note! </b>
-									Unity Users may be delayed up to 6 hours for LDAP Sync process to run. 
-									</br>
-									You can log into the Unity Connection Administration page and run the LDAP Sync process manually to expedite the process. 
-								</span>
-								
-								<div style="margin:50px">
-									<!-- AD Tabs -->
-									<ul class="nav nav-tabs">
-									  <li class="active"><a data-toggle="tab" ng-href="" data-target="#getmailboxes"><i class="fa fa-envelope"></i> Step 1. Check Unity Users </a></li>
-									  <li><a data-toggle="tab" ng-href="" data-target="#deploymailboxes"><i class="fa fa-envelope"></i> Step 2. Deploy Voicemail Boxes </a></li>
-									</ul>
-								
-									<!-- Tab Content -->
-									<div class="tab-content">
+								<!-- Check AD User Accounts Tab Content-->
+								<div id="getusernames" class="tab-pane fade in active">
+									<h3>Check existing Users</h3>
+									<p>Check User Accounts</p>
 									
-										<!-- Check AD User Accounts Tab Content-->
-										<div id="getmailboxes" class="tab-pane fade in active">
-											<h3>Check Unity Connection Users</h3>
-											<p>Check if users and/or mailboxes exist in the system matching users or extensions in our phone plan</p>
-											
-											<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusersfromcupi(vm.phones)">Check Unity Users</button>
-											<a ng-href="" data-toggle="um-tooltip" data-placement="right" title="Only Press after users are populated." tooltip >
-												<button  ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusers_um_fromcupi(vm.phones)">Get UM Info</button>
-											</a>
-											
-												<div style="margin-top:25px; margin-bottom:25px">
-													<!--User Lookup Table-->
-													<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-cupiuserssfoundtable.html'"></ng-include>
-												</div>
+									<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusernames(vm.phones)">Verify Users Exist in AD</button>
+										
+										<div style="margin-top:25px; margin-bottom:25px">
+											<!--User Lookup Table-->
+											<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-aduserlookuptable.html'"></ng-include>
 										</div>
+								</div>
+							
+								<!-- Update AD User Accounts Tab Content -->
+								<div id="updateusers" class="tab-pane fade">
+									<h3>Update Users</h3>
+									<p>Update IP Phone Field for user</p>
 									
-										<!-- Update AD User Accounts Tab Content -->
-										<div id="deploymailboxes" class="tab-pane fade">
-											<h3>Deploy Mailboxes</h3>
-											<p>Deploy User Mailboxes in Phone Plan to the System</p>
-
-											<button ng-if="vm.phones.length > 0" class="btn btn-danger" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplancupi-modal">Deploy Mailboxes</button>
-											
-											<div style="margin-top:25px; margin-bottom:25px">
-												<!--User AD Updates Table-->
-												<ng-include src="'siteplanning/phoneplans/phoneplan-includes/mailbox-deploy-modal.html'"></ng-include>
-											</div>
-											
-										</div>
+									<button ng-if="vm.phones.length > 0" class="btn btn-danger"  ng-click="vm.updateadipphones(vm.phones)">Update AD Users IPPhone</button>
+									
+									<div style="margin-top:25px; margin-bottom:25px">
+										<!--User AD Updates Table-->
+										<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-useradupdatestable.html'"></ng-include>
 									</div>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				
+				
+					<!-- Tab 2 - CUCM Content -->
+					<div id="cucm" class="tab-pane fade">
+						<h3>Cisco Call Manager</h3>
+						<p>Verify, Resolve Conflics, and Provision Devices in the System</p>
+						
+						<div style="margin:50px">
+							<!-- AD Tabs -->
+							<ul class="nav nav-tabs">
+							  <li class="active"><a data-toggle="tab" ng-href="" data-target="#getphones"><i class="fa fa-phone-square"></i> Step 1. Check Conflics </a></li>
+							  <li><a data-toggle="tab" ng-href="" data-target="#deployphones"><i class="fa fa-phone-square"></i> Step 2. Deploy Phones </a></li>
+							</ul>
+						
+							<!-- Tab Content -->
+							<div class="tab-content">
+							
+								<!-- Check AD User Accounts Tab Content-->
+								<div id="getphones" class="tab-pane fade in active">
+									<h3>Check Phone Conflics</h3>
+									<p>Check if phones exist in the system matching a device name in our phone plan</p>
+									<p>Resolve Conflics prior to Deploying New Phone Configuration</p>
+									
+									<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getphonesfromcucm(vm.phones)">Check System Conflics</button>
+										<div style="margin-top:25px; margin-bottom:25px">
+											<!--User Lookup Table-->
+											<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-cucmphonesfoundtable.html'"></ng-include>
+										</div>
+								</div>
+							
+								<!-- Update AD User Accounts Tab Content -->
+								<div id="deployphones" class="tab-pane fade">
+									<h3>Deploy Phones</h3>
+
+									<p>Deploy Phone Plan to the System</p>
+									
+									<div style="margin-top:25px; margin-bottom:25px">
+									<!--<div class="panel panel-primary panel-body" style="max-width:40%">-->
+										<label for="checkbox" class="control-label"> Do you want to ignore existing Phones in CUCM? </label><br>
+										<input type="checkbox" ng-model="vm.ignoreexistingphones">
+										<label for="checkbox" class="control-label"> Yes</label>
+									</div>
+									
+									
+									<button ng-if="vm.phones.length > 0" class="btn btn-danger" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplan-modal">Deploy Phones</button>
+									
+									<div style="margin-top:25px; margin-bottom:25px">
+										<!--User AD Updates Table-->
+										<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phone-deploy-modal.html'"></ng-include>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					<!-- Tab 3 - Unity Content -->
+					<div id="unity" class="tab-pane fade">
+						
+						<h3>Cisco Unity Connection</h3>
+						<p>Provisioning Voicemail Boxes into the system for users</p>
+						
+						<hr>
+						<span><b style="color:red;">Note! </b>
+							Unity Users may be delayed up to 6 hours for LDAP Sync process to run. 
+							</br>
+							You can log into the Unity Connection Administration page and run the LDAP Sync process manually to expedite the process. 
+						</span>
+						
+						<div style="margin:50px">
+							<!-- AD Tabs -->
+							<ul class="nav nav-tabs">
+							  <li class="active"><a data-toggle="tab" ng-href="" data-target="#getmailboxes"><i class="fa fa-envelope"></i> Step 1. Check Unity Users </a></li>
+							  <li><a data-toggle="tab" ng-href="" data-target="#deploymailboxes"><i class="fa fa-envelope"></i> Step 2. Deploy Voicemail Boxes </a></li>
+							</ul>
+						
+							<!-- Tab Content -->
+							<div class="tab-content">
+							
+								<!-- Check AD User Accounts Tab Content-->
+								<div id="getmailboxes" class="tab-pane fade in active">
+									<h3>Check Unity Connection Users</h3>
+									<p>Check if users and/or mailboxes exist in the system matching users or extensions in our phone plan</p>
+									
+									<button ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusersfromcupi(vm.phones)">Check Unity Users</button>
+									<a ng-href="" data-toggle="um-tooltip" data-placement="right" title="Only Press after users are populated." tooltip >
+										<button  ng-if="vm.phones.length > 0" class="btn btn-default"  ng-click="vm.getusers_um_fromcupi(vm.phones)">Get UM Info</button>
+									</a>
+									
+										<div style="margin-top:25px; margin-bottom:25px">
+											<!--User Lookup Table-->
+											<ng-include src="'siteplanning/phoneplans/phoneplan-includes/phoneplan-system-provisioning-cupiuserssfoundtable.html'"></ng-include>
+										</div>
+								</div>
+							
+								<!-- Update AD User Accounts Tab Content -->
+								<div id="deploymailboxes" class="tab-pane fade">
+									<h3>Deploy Mailboxes</h3>
+									<p>Deploy User Mailboxes in Phone Plan to the System</p>
+
+									<button ng-if="vm.phones.length > 0" class="btn btn-danger" data-toggle="modal" data-target="#{{vm.phoneplan.id}}-phoneplancupi-modal">Deploy Mailboxes</button>
+									
+									<div style="margin-top:25px; margin-bottom:25px">
+										<!--User AD Updates Table-->
+										<ng-include src="'siteplanning/phoneplans/phoneplan-includes/mailbox-deploy-modal.html'"></ng-include>
+									</div>
+									
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>

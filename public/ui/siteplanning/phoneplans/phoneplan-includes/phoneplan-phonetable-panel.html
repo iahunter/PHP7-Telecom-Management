@@ -25,9 +25,9 @@
 		<div style="margin:25px"></div>
 
 			<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
-			<button class="btn btn-primary btn-sm" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+			<button class="btn btn-primary btn-sm" ng-if="vm.permissions.create.Phone" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
 			<!--<button class="btn btn-primary btn-sm" ng-click="vm.phonebulkaddtoggle(vm.showbulkaddrows)"><i class="glyphicon glyphicon-plus"></i> Bulk Add - Needs work</button>-->
-			<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
+			<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" ng-if="vm.permissions.create.Phone" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
 			
 			<div style="margin-top:10px; margin-botton:10px">
 				<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
@@ -154,7 +154,7 @@
 										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<th>Actions</th>
+							<th ng-if="vm.permissions.update.Phone || vm.permissions.delete.Phone">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -194,13 +194,13 @@
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
 
 						
-						<td   ng-show="!vm.edit[phone.id]">
-							<button class="btn btn-xs btn-primary"  ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
+						<td  ng-if="vm.permissions.update.Phone || vm.permissions.delete.Phone" ng-show="!vm.edit[phone.id]">
+							<button class="btn btn-xs btn-primary" ng-if="vm.permissions.update.Phone" ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
 
 							<!-- Function moved ot modal...
 							<button class="btn btn-danger btn-xs " ng-click="vm.delete(phone)"> Delete </button>-->
 							
-							<button class="btn btn-danger btn-xs " data-toggle="modal" data-target="#{{phone.id}}-modal"> Delete </button>
+							<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.Phone" data-toggle="modal" data-target="#{{phone.id}}-modal"> Delete </button>
 						
 							<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
 							<div class="modal fade" id="{{phone.id}}-modal" role="dialog">
@@ -278,7 +278,7 @@
 		
 			<div style="margin:25px"></div>
 			<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
-			<button ng-if="vm.deleteall" class="btn btn-danger btn-sm"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
+			<button ng-if="vm.deleteall && vm.permissions.delete.Phone" class="btn btn-danger btn-sm"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
 			<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 			
 			<div style="margin:50px"></div>

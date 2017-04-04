@@ -23,6 +23,7 @@
 				if(result.message){
 					vm.message = result.message;
 					console.log(vm.message);
+					vm.loading = false;
 				} else if(result.token){
 					//console.log('TOKEN')
 					//console.log(result)
@@ -33,7 +34,7 @@
 					
 					$timeout(routetohome,1000); 
 					//$location.path('/');
-					
+					vm.loading = false;
 				} else {
 					vm.error = 'Automatic certificate authentication failed, please login with LDAP credentials';
 					vm.loading = false;
@@ -50,6 +51,7 @@
 			if(result.message){
 				vm.message = result.message;
 				console.log(vm.message);
+				vm.loading = false;
 			} else if(result.token){
 
 			
@@ -59,7 +61,7 @@
 				
 				$timeout(routetohome,1000); 
 				//$location.path('/');
-
+				vm.loading = false;
 			} else {
 				vm.error = 'Automatic certificate authentication failed, please login with LDAP credentials';
 				vm.loading = false;

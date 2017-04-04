@@ -52,17 +52,18 @@
 				<p><i style="color:red"><b>Note! </b></i>For System Performance Reasons, <b>Please limit 100 phones per Phone Plan.</b> <br><br>
 				Please Split your phone list up into multiple phone plans if greater than 100 phones and users.</p>
 				
-				
-				
+
 				<!-- Only show the Add buttons here if there are no phones in the plan. -->
 				<div ng-if="!vm.phones.length > 0">
 				
 					<div style="margin:25px"></div>
 
 					<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
-					<button class="btn btn-primary btn-sm" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+					<button class="btn btn-primary btn-sm" ng-if="vm.permissions.create.Phone" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
 					<!--<button class="btn btn-primary btn-sm" ng-click="vm.phonebulkaddtoggle(vm.showbulkaddrows)"><i class="glyphicon glyphicon-plus"></i> Bulk Add - Needs work</button>-->
-					<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
+					<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" ng-if="vm.permissions.create.Phone" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
+					
+					
 					
 					<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
 					

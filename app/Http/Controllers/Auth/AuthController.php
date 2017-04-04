@@ -90,7 +90,7 @@ class AuthController extends Controller
         //activity()->withProperties($request)->log("All authentication methods available have failed, ".$error);
         activity('authlog')->withProperties(['username' => $request->username])->log('All authentication methods available have failed, '.$error);
 
-        abort(401, "Authentication failed. ".$error);
+        abort(401, 'Authentication failed. '.$error);
     }
 
     /*

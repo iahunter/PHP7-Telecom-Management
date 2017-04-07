@@ -221,7 +221,7 @@
 
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.timezone.$touched && addsiteForm.timezone.$invalid, 'has-success': addsiteForm.timezone.$touched && addsiteForm.eventCategory.$valid }">
-									<label for="timezone"  class="control-label">CUCM Data Time Group</label>
+									<label for="timezone"  class="control-label">CUCM Date & Time Group</label>
 									<select class="form-control" required ng-model='vm.siteForm.timezone' ng-options="timezone as timezone for timezone in vm.datetimegrps" data-width="100%" name="timezone">
 									</select>
 									<div ng-messages="addsiteForm.timezone.$dirty && addsiteForm.timezone.$error">

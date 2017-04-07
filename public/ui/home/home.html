@@ -29,18 +29,23 @@
 		<div style="margin-top: 75px"></div>
 		
 			<!--Include Company Splash Page Content Here-->
+			
 			<ng-include src="'company-content/splashpage.html'"></ng-include>
 			
-			<div style="margin:50px"></div>
-			
-			<!--Include the SBC Summary Section on Home Page. -->
-			<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
 			
 			
-			<ng-include src="'calls/1day_calls.graph.html'"></ng-include>
+			<div ng-if="vm.permissions.read.Sonus5k">
+				<div style="margin:50px"></div>
+				<!--Include the SBC Summary Section on Home Page. -->
+				<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
+			</div>
+			
+			<div ng-if="vm.permissions.read.Calls">
+				<ng-include src="'calls/1day_calls.graph.html'"></ng-include>
 
-			<ng-include src="'calls/7day_calls.graph.html'"></ng-include>
-		
+				<ng-include src="'calls/7day_calls.graph.html'"></ng-include>
+			</div>
+			
 		<div style="margin-top: 50px"></div>
 		
 

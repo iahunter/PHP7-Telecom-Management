@@ -259,7 +259,7 @@ angular
 				//alert('Saved')
 			  //return $state.reload();
 			}, function(error) {
-				alert('An error occurred while updating the event')
+				alert('An error occurred while updating Number Block')
 			});
 			//$state.reload();
 		}

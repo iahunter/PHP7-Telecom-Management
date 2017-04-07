@@ -100,10 +100,10 @@ return [
     |
     */
 
-    //'ttl' => env('JWT_TTL', 60),
+    'ttl' => env('JWT_TTL', 60),
 
     // Increasing JWT TTL to 12 hrs
-    'ttl' => env('JWT_TTL', 720),
+    //'ttl' => env('JWT_TTL', 720),
 
     /*
     |--------------------------------------------------------------------------

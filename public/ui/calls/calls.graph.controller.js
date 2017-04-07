@@ -10,6 +10,13 @@ angular
 
 		vm.error = false;
 		
+		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
+		vm.permissions = window.telecom_mgmt_permissions;
+
+		if(!vm.permissions.read.Calls){
+			$location.path('/accessdenied');
+		}
+		
 		dayscallstats();
 		weekscallstats();
 		
@@ -19,9 +26,9 @@ angular
 					
 					// Check for errors and if token has expired. 
 					if(res.data.message){
-						console.log(res);
+						//console.log(res);
 						vm.message = res.data.message;
-						console.log(vm.message);
+						//console.log(vm.message);
 						
 						if(vm.message == "Token has expired"){
 							// Send user to login page if token expired. 
@@ -86,7 +93,7 @@ angular
 		var pulldayscallstats = $interval(dayscallstats,600000); 
 		
 		$scope.$on('$destroy', function() {
-			console.log($scope);
+			//console.log($scope);
             $interval.cancel(pulldayscallstats);
 		});
 			
@@ -96,9 +103,9 @@ angular
 					
 					// Check for errors and if token has expired. 
 					if(res.data.message){
-						console.log(res);
+						//console.log(res);
 						vm.message = res.data.message;
-						console.log(vm.message);
+						//console.log(vm.message);
 						
 						if(vm.message == "Token has expired"){
 							// Send user to login page if token expired. 
@@ -163,7 +170,7 @@ angular
 		var pullweekscallstats = $interval(weekscallstats,600000); 
 		
 		$scope.$on('$destroy', function() {
-			console.log($scope);
+			//console.log($scope);
             $interval.cancel(pullweekscallstats);
 		});
 

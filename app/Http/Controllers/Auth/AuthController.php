@@ -93,12 +93,7 @@ class AuthController extends Controller
         abort(401, 'Authentication failed. '.$error);
     }
 
-    /*
-    public function renew()
-    {
-        $user = JWTAuth::parseToken()->authenticate();
-    }
-    */
+	
     public function renew(Request $request)
     {
         $response = [];

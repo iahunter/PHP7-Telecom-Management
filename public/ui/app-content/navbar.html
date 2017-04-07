@@ -22,7 +22,7 @@
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Number Tracking</a>
 				  <ul class="dropdown-menu">
-					<li><a href="#/didblock/create">Add Number Block</a></li>
+					<li><a href="#/didblock/create" ng-if="vm.permissions.create.Didblock == true">Add Number Block</a></li>
 					<li><a href="#/didblock">List Number Blocks</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a href="#/checkdidusage">Check DID Usage</a></li>
@@ -42,7 +42,7 @@
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Provisioning</a>
 				  <ul class="dropdown-menu">
-					<li><a href="#/site/create">Add Site</a></li>
+					<li><a href="#/site/create" ng-if="vm.permissions.create.Site == true">Add Site</a></li>
 					<li><a href="#/site">List Sites</a></li>
 					
 					<!--

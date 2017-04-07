@@ -93,7 +93,6 @@ class AuthController extends Controller
         abort(401, 'Authentication failed. '.$error);
     }
 
-	
     public function renew(Request $request)
     {
         $response = [];

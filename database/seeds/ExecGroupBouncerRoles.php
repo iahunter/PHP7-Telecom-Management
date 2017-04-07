@@ -40,6 +40,5 @@ class ExecGroupBouncerRoles extends Seeder
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-
     }
 }

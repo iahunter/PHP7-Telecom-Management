@@ -24,7 +24,7 @@ class FieldTechsBouncerRoles extends Seeder
             App\Did::class,
             App\Phone::class,
             App\Phoneplan::class,
-			App\Calls::class,
+            App\Calls::class,
         ];
 
         foreach ($types as $type) {

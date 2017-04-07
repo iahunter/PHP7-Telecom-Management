@@ -40,6 +40,5 @@ class AdminGroupBouncerRoles extends Seeder
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-
     }
 }

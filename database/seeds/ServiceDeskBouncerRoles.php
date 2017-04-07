@@ -38,12 +38,12 @@ class ServiceDeskBouncerRoles extends Seeder
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		$tasks = [
+
+        $tasks = [
             'update',
         ];
-		
-		$types = [
+
+        $types = [
             App\Didblock::class,
             App\Did::class,
             App\Phone::class,
@@ -51,27 +51,26 @@ class ServiceDeskBouncerRoles extends Seeder
             App\Cucmclass::class,
             App\Cupi::class,
         ];
-		
-		foreach ($types as $type) {
+
+        foreach ($types as $type) {
             foreach ($tasks as $task) {
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		$tasks = [
+
+        $tasks = [
             'create',
         ];
-		
-		$types = [
+
+        $types = [
             App\Phone::class,
             App\Phoneplan::class,
         ];
-		
-		foreach ($types as $type) {
+
+        foreach ($types as $type) {
             foreach ($tasks as $task) {
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
     }
 }

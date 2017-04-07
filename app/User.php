@@ -145,8 +145,8 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', Cucmclass::class)) {
             $claims['permissions']['delete']['Cucmclass'] = true;
         }
-		
-		// Calls Graph Permissions
+
+        // Calls Graph Permissions
 
         if ($this->can('read', Calls::class)) {
             $claims['permissions']['read']['Calls'] = true;

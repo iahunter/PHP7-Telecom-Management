@@ -146,9 +146,8 @@
      * )
      **/
     $api->post('cucm/ctiroutepoint', 'App\Http\Controllers\CucmCtiRoutePoint@createCtiRoutePoint');
-	
-	
-	/**
+
+    /**
      * @SWG\Put(
      *     path="/telephony/api/cucm/ctiroutepoint",
      *     tags={"Management - CUCM - Line CFA - Provisioning"},
@@ -196,4 +195,3 @@
      * )
      **/
     $api->put('cucm/ctiroutepoint', 'App\Http\Controllers\CucmCtiRoutePoint@updateLineCFWAbyPattern');
-	

@@ -47,7 +47,7 @@ $api->version('v1', function ($api) {
     require __DIR__.'/api.cucm.php';
     require __DIR__.'/api.cucm.site.php';
     require __DIR__.'/api.cucm.phone.php';
-	require __DIR__.'/api.cucm.ctiroutepoint.php';
+    require __DIR__.'/api.cucm.ctiroutepoint.php';
 
     // Unity Connection routes
     require __DIR__.'/api.cupi.php';

@@ -41,18 +41,8 @@
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};
 		
-		vm.getpage = PageService.getpage('home');
+		vm.getpage = PageService.getpage('oncallapp-home');
 		
-		vm.gettest = PageService.gettest()
-			.then(function(res){
-				// Check for errors and if token has expired. 
-				console.log(res)
-				vm.test = res;
-
-			}, function(err){
-				console.log(err)
-			});
-			
 
 		initController();
 		

@@ -107,6 +107,12 @@
                 templateUrl: 'home/accessdenied.html',
                 controller: 'AccessDenied.IndexController',
                 controllerAs: 'vm'
+            })
+			.state('teams', {
+                url: '/teams/edit/{id}',
+                templateUrl: 'siteplanning/editsite.html',
+                controller: 'Site.IndexController',
+                controllerAs: 'vm'
             });
 
     }

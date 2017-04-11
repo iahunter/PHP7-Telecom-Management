@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>Telecom Management</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!--Add meta tag to enable scaling for mobile devices.-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Font-Awesome -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+    <!-- bootstrap css -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css"
+          rel="stylesheet" />
+		  
+	
+		  
+	<!--<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/spacelab/bootstrap.min.css" rel="stylesheet"> -->
+
+	
+	<!-- Bootstrap and jQuery scripts for Navbar and such... -->
+	<script   src="https://code.jquery.com/jquery-1.12.4.js"   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="   crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	
+	
+	
+
+    <!-- application css -->
+    <link href="app-content/app.css" rel="stylesheet" />
+	<link rel="shortcut icon" href="app-content/images/favicon.ico">
+	
+	<!-- Android Icon -->
+	<link rel="icon" sizes="128x128" href="app-content/images/phone.png" />
+
+	<!-- iPhone  Icons -->
+	<!--<link rel="apple-touch-icon" href="//b.dryicons.com/images/icon_sets/architecture_blueprint_icons_set/png/128x128/phone.png">-->	
+	<link rel="apple-touch-icon" href="app-content/images/phone.png">
+	
+	<link rel="apple-touch-startup-image" href="app-content/images/phone.png"> 
+	
+</head>
+<body>
+
+	
+	<!-- main app container -->
+		<ui-view></ui-view>
+
+	
+
+	<!-- Add all Javascript sources at bottom. -->
+    <!-- angular and other JavaScript dependencies -->
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-messages/angular-messages.js"></script>
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="bower_components/ngstorage/ngStorage.js"></script>
+	<script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+	
+	<!-- Node Module for ChartJs dependencies -->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>-->
+	<!--<script src="//cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>-->
+	
+	<script src="bower_components/chart.js/dist/Chart.min.js "></script>
+	<script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.js"></script>
+	
+    <!-- Numbers scripts -->
+    <script src="app.js"></script>
+    <script src="app-services/authentication.service.js"></script>
+    <script src="app-services/user.service.js"></script>
+	<script src="app-services/page.service.js"></script>
+	
+	<script src="home/home.controller.js"></script>
+	<script src="home/accessdenied.controller.js"></script>
+    <script src="login/login.controller.js"></script>
+	<script src="logout/logout.controller.js"></script>
+	
+	<!-- CUCM and Site Planning -->
+	<script src="app-services/ldap.service.js"></script>
+	
+	
+</body>
+</html>

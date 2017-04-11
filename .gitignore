@@ -10,9 +10,12 @@
 /public/old
 
 public/ui/app-content/images/
-
 public/ui/company-content/
 public/ui/bower_components
+
+public/oncallapp/app-content/images/
+public/oncallapp/company-content/
+public/oncallapp/bower_components
 
 
 Homestead.yaml

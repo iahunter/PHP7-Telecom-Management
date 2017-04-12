@@ -104,13 +104,34 @@ angular
 				id: 2,
 				name: 'private'
 			}];
+			
+		// Edit state for DID block Edit button. 
+		vm.edit = {};
+		
+		// Update DID Block service called by the save button. 
+		vm.update = function(didblock) {
+			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
+			var didblock_update = {};
+			didblock_update.name = didblock.name;
+			didblock_update.carrier = didblock.carrier;
+			didblock_update.comment = didblock.comment;
+			
+			// Send Block ID and the updated variables to the update service. 
+			telephonyService.updateDidblock(didblock.id, didblock_update).then(function(data) {
+				//alert('Saved')
+			  //return $state.reload();
+			}, function(error) {
+				alert('An error occurred while updating Number Block')
+			});
+			//$state.reload();
+		}
 		
 		
 		// Edit state for DID block Edit button.
-		vm.edit = {};
+		vm.editdid = {};
 		
 		// Update DID Block service called by the save button.
-		vm.update = function(did) {
+		vm.updatedid = function(did) {
 			// Put the variable that we need into an array to send. We only want to send name, carrier and comment for updates. 
 			var did_update = {};
 			did_update.name = did.name;

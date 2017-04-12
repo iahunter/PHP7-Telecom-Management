@@ -9,7 +9,9 @@
 		<div class="well" style="background-color: #f1f3f3;">
 			<div style="margin:50px"></div>
 		
-			<legend>Number Block Details<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+			<legend>Number Block Details<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
+			<a href="#/didblock"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Block List</button> </a>
+			<br> <div style="margin:10px"></div></legend>
 		
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">    
@@ -127,11 +129,12 @@
 										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<!--<th>Actions</th>-->
+							<th ng-if="vm.permissions.update.Didblock || vm.permissions.delete.Didblock">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-
+					
+					<!--
 					<tr>
 							<td>{{ vm.didblock.id}}</a></td>
 							<td>{{ vm.didblock.name}}</td>
@@ -148,6 +151,103 @@
 							<td>{{ vm.didblock.created_at}}</td>
 							<td>{{ vm.didblock.updated_at}}</td>
 					</tr>
+					-->
+					
+					
+					<!--List View-->
+					<tr>
+						<td><a ui-sref="getdidblock({id: vm.didblock.id})"><button class="btn btn-xs btn-default btn-block">{{ vm.didblock.id}}</button></a></td>
+						<!--<td>{{ vm.didblock.id}}</a></td>-->
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.name}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.carrier}}</a></td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.country_code}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.start}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.end}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]" ng-init="vm.didblock.size = vm.didblock.end - vm.didblock.start + 1">{{vm.didblock.size}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.stats.available}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.stats.inuse}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]" ng-init="vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100">{{vm.didblock.capacity | number:0}}%</td>
+						
+						<!-- Chart Removed. Too intensive and takes to long to load. 
+						
+						<td   ng-show="!vm.edit[vm.didblock.id]">
+							<canvas id="base" class="chart-horizontal-bar"
+								chart-data="vm.didblock.chartdata" chart-labels="vm.didblock.chartlabels" >
+							</canvas> 
+						</td>
+						-->
+						
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.comment}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}}</td>
+							<td ng-if="vm.permissions.update.Didblock || vm.permissions.delete.Didblock" ng-show="!vm.edit[vm.didblock.id]">
+								<button class="btn btn-primary btn-xs "  ng-if="vm.permissions.update.Didblock" ng-click="vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit </button>
+								
+								<!-- Function moved ot modal...
+								<button class="btn btn-danger btn-xs " ng-click="vm.delete(didblock)"> Delete </button>-->
+								
+								<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.Didblock" data-toggle="modal" data-target="#{{vm.didblock.id}}-modal"> Delete </button>
+							
+								<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
+								<div class="modal fade" id="{{vm.didblock.id}}-modal" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4>Are you sure? <h4>
+											</div>
+											<div class="modal-body">
+												<p>You are about to delete Bloock ID: {{ vm.didblock.id}}</p>
+												<table class="table table-striped table-condensed table-bordered table-hover">
+													<tr>
+														<th>Name</th>
+														<th>Start</th>
+														<th>End</th>
+													</tr>
+													<tr>
+														<td>{{ vm.didblock.name}}</td>
+														<td>{{ vm.didblock.start}}</td>
+														<td>{{ vm.didblock.end}}</td>
+													</tr>
+												</table>
+												<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
+											</div>
+											<div class="modal-footer">
+
+											<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+											<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(didblock)">Delete</a>
+											<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+
+												
+											</div>
+										</div>
+									</div>
+								</div> <!-- End of Modal -->
+								
+								
+							</td>
+						<!--Edit View-->
+						<td   ng-show="vm.edit[vm.didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="vm.didblock.name"></td>
+						<td   ng-show="vm.edit[vm.didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="vm.didblock.carrier"></td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.country_code}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.start}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.end}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]" ng-init="vm.didblock.size = vm.didblock.end - vm.didblock.start + 1;">{{vm.didblock.size}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.available}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.inuse}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]" ng-init="vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100">{{vm.didblock.capacity | number:0}}%</td>
+						
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]"><textarea class="form-control form-control-sm" ng-model="vm.didblock.comment"></textarea></td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}}</td>
+						
+						<td  ng-show="vm.edit[vm.didblock.id]">
+							<button class="btn btn-xs btn-primary"  ng-click="vm.update(vm.didblock);vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"> Save </button>
+							<button class="btn btn-xs btn-warning"  ng-click="vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"> Undo </button>
+						</td>
+					</tr>
+					
 					</tbody>
 				</table>
 			</div>
@@ -362,7 +462,7 @@
 						<td   ng-show="vm.edit[did.id]">{{ did.updated_at}}</td>
 						
 						<td  ng-show="vm.edit[did.id]">
-							<button class="btn btn-xs btn-primary"  ng-click="vm.update(did);vm.edit[did.id] = !vm.edit[did.id]"> Save </button>
+							<button class="btn btn-xs btn-primary"  ng-click="vm.updatedid(did);vm.edit[did.id] = !vm.edit[did.id]"> Save </button>
 							<button class="btn btn-xs btn-warning"  ng-click="vm.edit[did.id] = !vm.edit[did.id]"> Undo </button>
 						</td>
 					</tr>

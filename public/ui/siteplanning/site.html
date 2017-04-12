@@ -211,7 +211,7 @@
 						<td   ng-show="!vm.edit[site.id]">{{ site.npa}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.nxx}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.didrange}}</td>
-						<td  style="max-width:200px" ng-show="!vm.edit[site.id]"><span ng-repeat="didblock in site.didblocks">{{ didblock}} </span> </td>
+						<td  style="max-width:200px" ng-show="!vm.edit[site.id]"><span ng-repeat="didblock in site.didblocks"><b><a ng-if="vm.permissions.read.Didblock" href="#/didblock/{{ didblock}}">{{ didblock}} </a> </b></span> </td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.operator}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.trunking}}</td>
 						<td   ng-show="!vm.edit[site.id]">{{ site.e911}}</td>

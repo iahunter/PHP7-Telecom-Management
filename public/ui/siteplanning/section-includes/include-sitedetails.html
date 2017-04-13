@@ -178,8 +178,8 @@
 							<td>{{ vm.site.trunking}}</td>
 							<td>{{ vm.site.e911}}</td>
 							<td> <span ng-repeat="language in vm.site.languages">{{ language}} </span> </td>
-							<td>{{ vm.site.created_at}}</td>
-							<td>{{ vm.site.updated_at}}</td>
+							<td>{{ vm.site.created_at}} by {{ vm.site.created_by}}</td>
+							<td>{{ vm.site.updated_at}} by {{ vm.site.updated_by}}</td>
 					</tr>
 					</tbody>
 				</table>

@@ -217,8 +217,8 @@
 						<td   ng-show="!vm.edit[site.id]">{{ site.e911}}</td>
 						<td   ng-show="!vm.edit[site.id]"><span ng-repeat="language in site.languages">{{ language}} </span> </td>
 						
-						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}}</td>
-						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}}</td>
+						<td   ng-show="!vm.edit[site.id]">{{ site.created_at}} by {{site.created_by}}</td>
+						<td   ng-show="!vm.edit[site.id]">{{ site.updated_at}} by {{site.updated_by}}</td>
 						<td   ng-if="vm.permissions.update.Site || vm.permissions.delete.Site" ng-show="!vm.edit[site.id]">
 							<!--<button class="btn btn-primary btn-xs "  ng-click="vm.edit[site.id] = !vm.edit[site.id]"> Edit </button>-->
 							<a href="#/site/edit/{{site.id}}" ng-if="vm.permissions.update.Site" ><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
@@ -281,13 +281,15 @@
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.e911"></td>
 						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.languages"></td>
 						
-						<td   ng-show="vm.edit[site.id]">{{ site.created_at}}</td>
-						<td   ng-show="vm.edit[site.id]">{{ site.updated_at}}</td>
+						<td   ng-show="vm.edit[site.id]">{{ site.created_at}} by {{site.created_by}}</td>
+						<td   ng-show="vm.edit[site.id]">{{ site.updated_at}} by {{site.updated_by}}</td>
 						
 						<td  ng-show="vm.edit[site.id]">
 							<button class="btn btn-xs btn-primary"  ng-click="vm.update(site);vm.edit[site.id] = !vm.edit[site.id]"> Save </button>
 							<button class="btn btn-xs btn-warning"  ng-click="vm.edit[site.id] = !vm.edit[site.id]"> Undo </button>
 						</td>
+						
+						
 						
 
 							
@@ -302,6 +304,7 @@
 			
 			<a href="#/site/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
 			-->
+
 			<div style="margin:100px"></div>
 		</div>
 	</div>

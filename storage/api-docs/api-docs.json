@@ -192,58 +192,6 @@
             }
         },
         "/telephony/api/cucm/ctiroutepoint": {
-            "put": {
-                "tags": [
-                    "Management - CUCM - Line CFA - Provisioning"
-                ],
-                "summary": "Create New CTI Route Point in CUCM",
-                "description": "",
-                "operationId": "createSite",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "pattern",
-                        "in": "formData",
-                        "description": "10 Digit Number",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "partition",
-                        "in": "formData",
-                        "description": "Example: Global-All-Lines - Default for all Lines",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "sitecode",
-                        "in": "formData",
-                        "description": "Sitecode being used",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "cfa_destination",
-                        "in": "formData",
-                        "description": "Call Forward Destination - 10 Digit number only",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            },
             "post": {
                 "tags": [
                     "Management - CUCM - CTI Route Point Provisioning"
@@ -338,6 +286,60 @@
                         "name": "notes",
                         "in": "formData",
                         "description": "Notes",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/line": {
+            "put": {
+                "tags": [
+                    "Management - CUCM - Line CFA - Provisioning"
+                ],
+                "summary": "Update Line CFA in CUCM",
+                "description": "",
+                "operationId": "createSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "pattern",
+                        "in": "formData",
+                        "description": "10 Digit Number",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "partition",
+                        "in": "formData",
+                        "description": "Example: Global-All-Lines - Default for all Lines",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "Sitecode being used",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cfa_destination",
+                        "in": "formData",
+                        "description": "Call Forward Destination - 10 Digit number only",
                         "required": false,
                         "type": "string"
                     }

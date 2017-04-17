@@ -114,9 +114,5 @@
                 controller: 'Site.IndexController',
                 controllerAs: 'vm'
             });
-
     }
-	
-
-    
 })();

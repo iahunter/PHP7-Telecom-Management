@@ -6,7 +6,7 @@
      *     tags={"Management - CUCM - Line CFA - Provisioning"},
      *     summary="Update Line CFA in CUCM",
      *     description="",
-     *     operationId="createSite",
+     *     operationId="updateLineCFWA",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(

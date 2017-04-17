@@ -137,7 +137,7 @@
                 ],
                 "summary": "Get CTI Route Point Details by Name",
                 "description": "",
-                "operationId": "getPhone",
+                "operationId": "getCTIRoutePoint",
                 "consumes": [
                     "application/json"
                 ],
@@ -168,7 +168,7 @@
                 ],
                 "summary": "Remove CTI Route Point by Name",
                 "description": "",
-                "operationId": "deletePhone",
+                "operationId": "deleteCTIRoutePoint",
                 "consumes": [
                     "application/json"
                 ],
@@ -198,7 +198,7 @@
                 ],
                 "summary": "Create New CTI Route Point in CUCM",
                 "description": "",
-                "operationId": "createSite",
+                "operationId": "createCTIRoutePoint",
                 "consumes": [
                     "application/json"
                 ],
@@ -307,7 +307,7 @@
                 ],
                 "summary": "Update Line CFA in CUCM",
                 "description": "",
-                "operationId": "createSite",
+                "operationId": "updateLineCFWA",
                 "consumes": [
                     "application/json"
                 ],

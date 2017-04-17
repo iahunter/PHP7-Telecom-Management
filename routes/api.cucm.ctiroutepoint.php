@@ -6,7 +6,7 @@
      *     tags={"Management - CUCM - CTI Route Point Provisioning"},
      *     summary="Get CTI Route Point Details by Name",
      *     description="",
-     *     operationId="getPhone",
+     *     operationId="getCTIRoutePoint",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -34,7 +34,7 @@
      *     tags={"Management - CUCM - CTI Route Point Provisioning"},
      *     summary="Remove CTI Route Point by Name",
      *     description="",
-     *     operationId="deletePhone",
+     *     operationId="deleteCTIRoutePoint",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -59,7 +59,7 @@
      *     tags={"Management - CUCM - CTI Route Point Provisioning"},
      *     summary="Create New CTI Route Point in CUCM",
      *     description="",
-     *     operationId="createSite",
+     *     operationId="createCTIRoutePoint",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -146,3 +146,4 @@
      * )
      **/
     $api->post('cucm/ctiroutepoint', 'App\Http\Controllers\CucmCtiRoutePoint@createCtiRoutePoint');
+

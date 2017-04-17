@@ -1,19 +1,33 @@
 
 <div ng-if="vm.ipphoneupdates">
 
-<div class="alert alert-warning alert-dismissible" role="alert">
+<div class="alert alert-warning alert-dismissible" role="alert" ng-if="vm.ldapsyncstatus != 'Sync is performed successfully'">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Please wait 5 minutes after AD Updates before doing phone updates. CUCM is now performing a full LDAP Sync. </strong>
-  <strong></strong>
+  <strong>Please wait... CUCM is now performing a full LDAP Sync. This can take a few minutes. </strong>
   
+  <br><br>
+  <!--
+  You can check the sync status by clicking the button below. <br><br>
   <button class="btn btn-default"  ng-click="vm.getldapsyncstatus()"> Get LDAP Sync Status</button>
+  -->
   
-  {{vm.ldapsyncstatus}}
-  
+  <div ng-if="vm.ldapsyncstatus">
+	<br>
+	<strong>{{vm.ldapsyncstatus}}</strong>
+	<hr> 
+	This message will be dismissed when sync is complete.
+	
+  </div>
+</div>
+
+<div class="alert alert-success alert-dismissible" role="alert" ng-if="vm.ldapsyncstatus == 'Sync is performed successfully'">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<b>LDAP Sync Complete</b>
 </div>
 
 <legend>Active Directory Users Updated</legend>
 	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+	<div class="table-responsive">
 		<table class="table table-striped table-condensed table-bordered table-hover">
 			<thead>
 				<tr class="warning">
@@ -49,6 +63,6 @@
 				</tr>
 			</tbody>
 		</table>
-		
+	</div>
 	</div>
 </div>

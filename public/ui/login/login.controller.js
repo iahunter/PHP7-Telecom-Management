@@ -32,7 +32,7 @@
 					var tokenPayload = jwtHelper.decodeToken(result.token);
 					window.telecom_mgmt_permissions = tokenPayload.permissions;
 					
-					$timeout(routetohome,1000); 
+					$timeout(routetohome,10); 
 					//$location.path('/');
 					vm.loading = false;
 				} else {
@@ -59,7 +59,7 @@
 				var tokenPayload = jwtHelper.decodeToken(result.token);
 				window.telecom_mgmt_permissions = tokenPayload.permissions;
 				
-				$timeout(routetohome,1000); 
+				$timeout(routetohome,10); 
 				//$location.path('/');
 				vm.loading = false;
 			} else {

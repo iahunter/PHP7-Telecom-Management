@@ -525,7 +525,7 @@ angular
 						
 						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 						vm.ipphoneupdates.push(result);
-
+						
 					}, function(err){
 						// Error
 					});
@@ -534,22 +534,44 @@ angular
 			
 			//console.log(vm.ipphoneupdates);
 			
-			// Tell CUCM to do a LDAP Sync to retrieve the updates after AD account change
+			
+			$timeout(function(){
+				// Tell CUCM to do a LDAP Sync to retrieve the updates after AD account change
+				cucmService.initiate_cucm_ldap_sync()
+					.then(function(res){
+						result = res.data;
+						//console.log(result);
+						
+						vm.getldapsyncstatus();
+					}, function(err){
+						// Error
+					});
+			}, 5000);
+			/*
 			cucmService.initiate_cucm_ldap_sync()
 					.then(function(res){
 						result = res.data;
 						//console.log(result);
 					}, function(err){
 						// Error
-					});
+					});*/
+			//vm.getldapsyncstatus();
 		}
 		
 		
 		vm.getldapsyncstatus = function() {
 			cucmService.get_cucm_ldap_sync_status()
 					.then(function(res){
-						vm.ldapsyncstatus = res.data;
+						var ldapsyncstatus = res.data;
+						vm.ldapsyncstatus = ldapsyncstatus.trim();
 						console.log(vm.ldapsyncstatus);
+						if(vm.ldapsyncstatus == "" || vm.ldapsyncstatus == "Sync is currently under process" || vm.ldapsyncstatus == "Sync is initiated"){
+							
+							$timeout(function(){
+								vm.getldapsyncstatus();
+							}, 5000);
+						}
+							
 					}, function(err){
 						// Error
 					});

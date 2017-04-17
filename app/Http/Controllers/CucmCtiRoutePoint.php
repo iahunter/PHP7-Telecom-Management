@@ -469,5 +469,4 @@ class CucmCtiRoutePoint extends Cucm
 
         return json_decode(json_encode($this->results), true);
     }
-
 }

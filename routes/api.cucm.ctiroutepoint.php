@@ -146,4 +146,3 @@
      * )
      **/
     $api->post('cucm/ctiroutepoint', 'App\Http\Controllers\CucmCtiRoutePoint@createCtiRoutePoint');
-

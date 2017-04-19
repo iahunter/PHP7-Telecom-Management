@@ -1,6 +1,6 @@
 <?php
 
-	/**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/line/{partition}/{pattern}",
      *     tags={"Management - CUCM - Line - Provisioning"},
@@ -16,7 +16,7 @@
      *         required=true,
      *         type="string"
      *     ),
-	 *     @SWG\Parameter(
+     *     @SWG\Parameter(
      *         name="pattern",
      *         in="path",
      *         description="Pattern name - Example 10 Digit number",
@@ -34,7 +34,7 @@
      * )
      **/
     $api->get('cucm/line/{partition}/{pattern}', 'App\Http\Controllers\CucmLine@getLineCFWAbyPattern');
-	
+
     /**
      * @SWG\Put(
      *     path="/telephony/api/cucm/line",

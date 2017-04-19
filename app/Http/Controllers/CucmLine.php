@@ -41,18 +41,17 @@ class CucmLine extends Cucm
             $DN = $request->pattern;
         }
 
-		$regex = "/^\+1(.*)/";
+        $regex = "/^\+1(.*)/";
 
         if (! isset($request->cfa_destination) || ! $request->cfa_destination) {
             //abort(401, 'No CFA Destination');
             $CFA_DESTINATION = '';
         } else {
-			$CFA_DESTINATION = $request->cfa_destination;
-			if(!preg_match($regex, $CFA_DESTINATION)){
-				$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
-				
-			}
-			//$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+            $CFA_DESTINATION = $request->cfa_destination;
+            if (! preg_match($regex, $CFA_DESTINATION)) {
+                $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+            }
+            //$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
         }
 
         $line = '';
@@ -113,10 +112,8 @@ class CucmLine extends Cucm
 
         return response()->json($response);
     }
-	
-	
-	
-	public function getLineCFWAbyPattern(Request $request)
+
+    public function getLineCFWAbyPattern(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -134,7 +131,7 @@ class CucmLine extends Cucm
         }
         */
 
-        if (isset($request->partition) && !$request->partition == '') {
+        if (isset($request->partition) && ! $request->partition == '') {
             $PARTITION = $request->partition;
         } else {
             $PARTITION = 'Global-All-Lines';
@@ -145,7 +142,7 @@ class CucmLine extends Cucm
         } else {
             $DN = $request->pattern;
         }
-		//return $request;
+        //return $request;
         $line = '';
         try {
             $line = $this->cucm->get_object_type_by_pattern_and_partition($DN, $PARTITION, 'Line');

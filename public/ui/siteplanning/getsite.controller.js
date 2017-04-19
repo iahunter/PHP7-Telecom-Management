@@ -133,6 +133,8 @@ angular
 			phoneplan_update.name = phoneplan.name;
 			phoneplan_update.description = phoneplan.description;
 			phoneplan_update.language = phoneplan.language;
+			phoneplan_update.employee_vm_user_template = phoneplan.employee_vm_user_template;
+			phoneplan_update.nonemployee_vm_user_template = phoneplan.nonemployee_vm_user_template;
 			
 			// Send Block ID and the updated variables to the update service. 
 			sitePhonePlanService.updatephoneplan(phoneplan.id, phoneplan_update).then(function(data) {

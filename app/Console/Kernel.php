@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmSiteScan::class,
         Commands\CallManager\CucmPhoneScan::class,
         Commands\Sonus\SonusCalls::class,
-		Commands\Sonus\GetSonusConfig::class,
+        Commands\Sonus\GetSonusConfig::class,
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

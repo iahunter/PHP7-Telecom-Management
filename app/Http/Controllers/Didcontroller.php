@@ -436,23 +436,21 @@ class Didcontroller extends Controller
         if (! $user->can('read', Did::class)) {
             abort(401, 'You are not authorized to view didblock '.$did);
         }
-		
-		// column must be one that we have assigned to proceed. 
-		if ($column != 'id' && 
-			$column != 'name' && 
-			$column != 'country_code' && 
-			$column != 'number' &&
-			$column != 'status' && 
-			$column != 'system_id' && 
-			$column != 'assignments' && 
-			$column != 'created_by' && 
-			$column != 'updated_by' && 
-			$column != 'updated_at'
-			)
-		{
-			abort(401, 'column not found');
-		}
-		
+
+        // column must be one that we have assigned to proceed.
+        if ($column != 'id' &&
+            $column != 'name' &&
+            $column != 'country_code' &&
+            $column != 'number' &&
+            $column != 'status' &&
+            $column != 'system_id' &&
+            $column != 'assignments' &&
+            $column != 'created_by' &&
+            $column != 'updated_by' &&
+            $column != 'updated_at'
+            ) {
+            abort(401, 'column not found');
+        }
 
         // Search for DID by numberCheck if there are any matches.
         if (! Did::where([['parent', '=', $parentid], [$column, 'like', $search.'%']])->count()) {

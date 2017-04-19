@@ -1,0 +1,14 @@
+#!/bin/bash
+
+php artisan sonus:getconfig
+
+
+# Checkout your SVN Repo in this directory
+cd storage/sonus/company-sonus-svnrepo/
+
+svn add group/* 2>&1 | grep -v already | grep -v Illegal
+svn add user/* 2>&1 | grep -v already | grep -v Illegal
+svn status
+svn add *
+svn commit --username admin --password pass -m "autoupdated"
+

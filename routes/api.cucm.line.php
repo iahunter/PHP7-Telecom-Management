@@ -1,9 +1,44 @@
 <?php
 
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/line/{partition}/{pattern}",
+     *     tags={"Management - CUCM - Line - Provisioning"},
+     *     summary="Get Line Details by Partition and Pattern",
+     *     description="",
+     *     operationId="getLine",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="partition",
+     *         in="path",
+     *         description="Partition name",
+     *         required=true,
+     *         type="string"
+     *     ),
+	 *     @SWG\Parameter(
+     *         name="pattern",
+     *         in="path",
+     *         description="Pattern name - Example 10 Digit number",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/line/{partition}/{pattern}', 'App\Http\Controllers\CucmLine@getLineCFWAbyPattern');
+	
     /**
      * @SWG\Put(
      *     path="/telephony/api/cucm/line",
-     *     tags={"Management - CUCM - Line CFA - Provisioning"},
+     *     tags={"Management - CUCM - Line - Provisioning"},
      *     summary="Update Line CFA in CUCM",
      *     description="",
      *     operationId="updateLineCFWA",

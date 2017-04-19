@@ -300,10 +300,50 @@
                 }
             }
         },
+        "/telephony/api/cucm/line/{partition}/{pattern}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM - Line - Provisioning"
+                ],
+                "summary": "Get Line Details by Partition and Pattern",
+                "description": "",
+                "operationId": "getLine",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "partition",
+                        "in": "path",
+                        "description": "Partition name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pattern",
+                        "in": "path",
+                        "description": "Pattern name - Example 10 Digit number",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/line": {
             "put": {
                 "tags": [
-                    "Management - CUCM - Line CFA - Provisioning"
+                    "Management - CUCM - Line - Provisioning"
                 ],
                 "summary": "Update Line CFA in CUCM",
                 "description": "",

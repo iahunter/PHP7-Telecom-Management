@@ -110,8 +110,8 @@
             })
 			.state('teams', {
                 url: '/teams/edit/{id}',
-                templateUrl: 'siteplanning/editsite.html',
-                controller: 'Site.IndexController',
+                templateUrl: 'oncall/oncall.html',
+                controller: 'Oncall.IndexController',
                 controllerAs: 'vm'
             });
     }

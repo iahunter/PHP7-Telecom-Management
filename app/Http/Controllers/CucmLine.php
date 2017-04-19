@@ -41,11 +41,18 @@ class CucmLine extends Cucm
             $DN = $request->pattern;
         }
 
+		$regex = "/^\+1(.*)/";
+
         if (! isset($request->cfa_destination) || ! $request->cfa_destination) {
             //abort(401, 'No CFA Destination');
             $CFA_DESTINATION = '';
         } else {
-            $CFA_DESTINATION = $request->cfa_destination;
+			$CFA_DESTINATION = $request->cfa_destination;
+			if(!preg_match($regex, $CFA_DESTINATION)){
+				$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+				
+			}
+			//$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
         }
 
         $line = '';
@@ -71,7 +78,7 @@ class CucmLine extends Cucm
         if ($CFA_DESTINATION == '') {
             $callForwardAll['destination'] = '';
         } else {
-            $callForwardAll['destination'] = "+1{$CFA_DESTINATION}";
+            $callForwardAll['destination'] = "{$CFA_DESTINATION}";
         }
 
         $LINECSS = 'CSS_LINEONLY_L3_LD';
@@ -102,6 +109,68 @@ class CucmLine extends Cucm
                     'success'        => true,
                     'message'        => '',
                     'response'       => $RESULT,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	
+	
+	public function getLineCFWAbyPattern(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            if (! $user->can('read', self::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+
+        /*
+        if (! isset($request->sitecode) || ! $request->sitecode) {
+            abort(401, 'No Sitecode');
+        } else {
+            $SITE = $request->sitecode;
+        }
+        */
+
+        if (isset($request->partition) && !$request->partition == '') {
+            $PARTITION = $request->partition;
+        } else {
+            $PARTITION = 'Global-All-Lines';
+        }
+
+        if (! isset($request->pattern) || ! $request->pattern) {
+            abort(401, 'No Pattern');
+        } else {
+            $DN = $request->pattern;
+        }
+		//return $request;
+        $line = '';
+        try {
+            $line = $this->cucm->get_object_type_by_pattern_and_partition($DN, $PARTITION, 'Line');
+
+            if (! count($line)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            $exception = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+        }
+
+        if (! $line) {
+            $line = 'Not Found';
+            abort(404, 'No Line Found');
+        } else {
+            $uuid = $line['uuid'];
+            $callForwardAll = $line['callForwardAll'];
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $line,
                     ];
 
         return response()->json($response);

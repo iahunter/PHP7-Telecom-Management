@@ -1,13 +1,18 @@
 #!/bin/bash
 
+echo "grap-sonus-configs.sh Started..."
+
+cd /PATH_TO_APP/telephony/
+
 php artisan sonus:getconfig
 
-
 # Checkout your SVN Repo in this directory
-cd storage/sonus/company-sonus-svnrepo/
+cd /PATH_TO_APP/telephony/storage/sonus/company-sonus-svnrepo/
+
+echo "Commiting Configs to Subversion..."
 
 svn add * 2>&1 | grep -v already | grep -v Illegal
 svn status
 svn commit --username admin --password pass -m "autoupdated"
 
-
+echo "grap-sonus-configs.sh Completed... Ending Task."

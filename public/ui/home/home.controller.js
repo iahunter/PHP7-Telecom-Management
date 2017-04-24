@@ -1,6 +1,6 @@
 ﻿angular
 	.module('app')
-	.controller('Home.IndexController', ['UserService', 'PageService', '$location', '$state', '$timeout', '$http', '$localStorage', 'jwtHelper', 'AuthenticationService', function(UserService, PageService, $location, $state, $timeout, $http, $localStorage, jwtHelper, AuthenticationService) {
+	.controller('Home.IndexController', ['UserService', 'PageService', 'CompanyService','$location', '$state', '$timeout', '$http', '$localStorage', 'jwtHelper', 'AuthenticationService', function(UserService, PageService, CompanyService, $location, $state, $timeout, $http, $localStorage, jwtHelper, AuthenticationService) {
 		var vm = this;
 		
 		// Attempt to renew token on page click - FYI - this gets called on every page for navbar. 
@@ -74,6 +74,35 @@
 				
 			});
 		}
+		
+		
+		// Get located of SBC Config SVN Repo for Navbar
+		vm.getcompanycontent = CompanyService.getcompanycontent()
+			.then(function(res){
+				// Check for errors and if token has expired. 
+				if(res.data.message){
+					console.log(res);
+					vm.message = res.data.message;
+					console.log(vm.message);
+					
+					if(vm.message == "Token has expired"){
+						// Send user to login page if token expired. 
+						alert(vm.message);
+						$state.go('logout');
+					}
+
+					return vm.message;
+				}
+				vm.sbcrepo = res.data.sbcconfigs;
+				//console.log(vm.sbcrepo);
+
+				vm.loading = false;
+				return vm.sbcrepo
+				
+				
+			}, function(err){
+				vm.loading = false;
+			});
 		
 
 	}]);

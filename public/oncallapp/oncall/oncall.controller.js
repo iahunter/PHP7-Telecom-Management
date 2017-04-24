@@ -11,7 +11,7 @@
 		
 		vm.getpage = PageService.getpage('oncallapp-home');
 		
-		var pattern = $stateParams.id; //angular module that stores shit
+		var pattern = $stateParams.id; //angular module that stores shit, it's just the value of pattern. in our case, it's going to a phone number
 		
 		var partition = 'Global-All-Lines';
 		
@@ -34,6 +34,7 @@
 				console.log(res);
 				vm.teamnumber = res.data.response;
 				
+				vm.teamnumber.currentoncallnum = angular.copy(vm.teamnumber.callForwardAll.destination);
 
 				vm.loading = false;
 				return vm.teamnumber

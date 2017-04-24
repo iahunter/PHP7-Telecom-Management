@@ -23,39 +23,34 @@
 		
 		
 		<!--<h1><img alt="Brand" style="max-height: 70px" src="//b.dryicons.com/images/icon_sets/architecture_blueprint_icons_set/png/128x128/phone.png"> Telecom Management</h1>-->
-		<h1><img alt="Brand" style="max-height: 70px; margin-bottom:10px" src="app-content/images/phone.png"> Oncall App</h1>
-		
-		
+		<h2> {{vm.teamnumber.alertingName}}</h2>
+		<h4> Phone Number: {{vm.teamnumber.pattern}}</h4>
 		<hr>
-		<div style="margin-top: 75px"></div>
-		
-			<!--Include Company Splash Page Content Here-->
-			
-			<ng-include src="'company-content/splashpage.html'"></ng-include>
-			
-		<div style="margin-top: 50px"></div>
-		
 
-	</div>
-	
-	
-	<div class="control-group">
-		<label class="control-label"><a id="A1" rel="popover" title="On-Call" data-content="">Current On-Call Number</a></label>
-		<div class="controls">
-			<input type="hidden" name="PhoneNumber" id="PhoneNumber" value="PHONE_NUMBER_GOES_HERE" />
-			<span id="on_call_destination" class="input-xlarge uneditable-input" style="width:195px"> {{vm.teamnumber.callForwardAll.destination}}</span>
-		</div>
-	</div>
+		<div class="well" style="margin-top: 50px">
 		
-	<div class="control-group">
-		<label class="control-label"><a id="onCallTooltip" rel="popover" title="On-Call" data-content="Enter your 10-digit cell number.">New On-Call Number</a></label>
-			<div class="controls">
-			<div class="input-append">
-				<input name="on_call_input" type="text" id="on_call_input" class="span2" size="16" ng-model="vm.teamnumber.callForwardAll.destination"/>
-				<button class="btn btn-sm btn-primary" ng-click="vm.updateline(vm.teamnumber)" name="on_call_button" value="Update" id="on_call_button">Update</button>
+			<div class="control-group">
+				<label class="control-label">Current On-Call Number</label>
+				<div class="controls">
+					<input type="hidden" name="PhoneNumber" id="PhoneNumber" value="PHONE_NUMBER_GOES_HERE" />
+					<span id="on_call_destination" class="input-xlarge uneditable-input" style="width:195px"> {{vm.teamnumber.currentoncallnum}}</span>
+				</div>
+			</div>
+			<hr>
+			<div class="control-group">
+				<label class="control-label">New On-Call Number</label>
+					<div class="controls">
+					<div class="input-append">
+						<input name="on_call_input" type="text" id="on_call_input" class="span2" size="16" ng-model="vm.teamnumber.callForwardAll.destination"/><br><br>
+						<button class="btn btn-sm btn-primary" ng-click="vm.updateline(vm.teamnumber)" name="on_call_button" value="Update" id="on_call_button">Update</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+	
 	
 </div>
 

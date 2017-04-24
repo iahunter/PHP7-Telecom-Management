@@ -78,7 +78,6 @@
 .navbar-slate-inverse .btn-link:hover,.navbar-slate-inverse .btn-link:focus{color:#ffffff}
 .navbar-slate-inverse .btn-link[disabled]:hover,fieldset[disabled] .navbar-slate-inverse .btn-link:hover,.navbar-slate-inverse .btn-link[disabled]:focus,fieldset[disabled] .navbar-slate-inverse .btn-link:focus{color:#cccccc}
 
-
 /* Slate Dropdown Menu 
 
 .dropdown-menu {
@@ -103,8 +102,6 @@
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
 }
-
-
 
 .dropdown-menu > li > a {
     display: block;

@@ -15,6 +15,12 @@ angular
 					// Must return the promise to the controller. 
 					return defer.promise;
 					
+					/* Example: company.json
+						{
+							"sbcconfigs": "//servername/websvn/listing.php?repname=Sonus+Repository"
+						}
+					*/
+					
 			  }, function errorCallback(response) {
 					defer.resolve(response);
 					return defer.promise;

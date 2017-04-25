@@ -76,7 +76,14 @@
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.numberstable" >
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
-						<tr class="info">							
+						<tr class="info">	
+							<th>
+								<a href="" ng-click="sortType = 'parent'; sortReverse = !sortReverse" style="color:black">
+									Parent Block ID
+										<span ng-show="sortType == 'parent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'parent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 							<th>
 								<a href="" ng-click="sortType = 'number'; sortReverse = !sortReverse" style="color:black">
 									Number
@@ -105,6 +112,7 @@
 			
 				<tbody>
 					<tr ng-repeat="number in vm.numberstable | orderBy:sortType:sortReverse | filter:vm.search: strict">
+						<td><a href="#/didblock/{{number.details.parent}}"><b>{{number.details.parent}}</b></td>
 						<td>{{number.number}}</td> 
 						<td>{{number.details.status}}</td> 
 						<td ng-if="vm.showassignments">
@@ -129,7 +137,9 @@
 				</tbody>
 				
 			</table>
-				<!--{{vm.numberstable}}-->
+				<!--
+				{{vm.numberstable}}
+				-->
 		</div>
 	</div>
 	<div class="row">

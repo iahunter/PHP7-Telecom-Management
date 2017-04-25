@@ -25,7 +25,7 @@ angular
 					//console.log(block.stats);
 					vm.didblock['chartlabels'] = [];
 					vm.didblock['chartdata'] = [];
-					vm.didblock['chartseries'] = [];
+					//vm.didblock['chartseries'] = [];
 					
 					for(var key in vm.didblock.stats){
 						//console.log(key);
@@ -33,13 +33,14 @@ angular
 						
 						vm.didblock['chartlabels'].push(key);
 						vm.didblock['chartdata'].push(vm.didblock.stats[key]);
-						vm.didblock['chartseries'].push(key);
+						//vm.didblock['chartseries'].push(key);
 						
 					}
 					
 					
 					// Enable the Options to be generated for the chart. 
-					vm.didblock.chartoptions = { responsive: true, legend: { display: true}, title: {display:true, text:'Number Block Usage'}};
+					//vm.didblock.chartoptions = { responsive: true, legend: { display: true}, title: {display:true, text:'Number Block Usage'}};
+					vm.didblock.chartoptions = { responsive: true,};
 					
 					//console.log(vm.didblock.chartoptions);
 					

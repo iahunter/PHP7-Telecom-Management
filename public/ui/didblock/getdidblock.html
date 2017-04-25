@@ -91,6 +91,14 @@
 							</th>
 							
 							<th>
+								<a href="" ng-click="sortType = 'stats.inuse'; sortReverse = !sortReverse" style="color:black">
+									Reserved
+										<span ng-show="sortType == 'stats.inuse' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'stats.inuse' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'capacity'; sortReverse = !sortReverse" style="color:black">
 									Capacity
 										<span ng-show="sortType == 'capacity' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -166,6 +174,7 @@
 						<td   ng-show="!vm.edit[vm.didblock.id]" ng-init="vm.didblock.size = vm.didblock.end - vm.didblock.start + 1">{{vm.didblock.size}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.stats.available}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.stats.inuse}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.stats.reserved}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]" ng-init="vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100">{{vm.didblock.capacity | number:0}}%</td>
 						
 						<!-- Chart Removed. Too intensive and takes to long to load. 
@@ -235,6 +244,7 @@
 						<td   ng-show="vm.edit[vm.didblock.id]" ng-init="vm.didblock.size = vm.didblock.end - vm.didblock.start + 1;">{{vm.didblock.size}}</td>
 						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.available}}</td>
 						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.inuse}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.reserved}}</td>
 						<td   ng-show="vm.edit[vm.didblock.id]" ng-init="vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100">{{vm.didblock.capacity | number:0}}%</td>
 						
 						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
@@ -255,13 +265,30 @@
 
 			<div style="margin:25px"></div>
 			
-			<!--Print Chart-->
+			
+			<!--Print Chart
 			<div class="container" style="display: block; max-width: 550px; max-height: 250px;">
 				<canvas id="pie" class="chart chart-pie chart-xs"
 					chart-data="vm.didblock.chartdata" 
 					chart-labels="vm.didblock.chartlabels"
 					chart-options="vm.didblock.chartoptions">
 				</canvas> 
+			</div>
+			-->
+			<!--Line Horizontal Chart-->
+			<div class="container" style="max-width: 700px; max-height: 250px;">
+				<div class="panel panel-default">
+			  
+				<div class="panel-heading"><b>Number Block Usage:  {{vm.didblock.capacity | number:0}}%</b></div>
+					<div >
+						<canvas id="pie" class="chart chart-horizontal-bar chart-xs"
+							chart-data="vm.didblock.chartdata" 
+							chart-labels="vm.didblock.chartlabels"
+							chart-options="vm.didblock.chartoptions"
+							width="523" height="150" style="display: block; width: 523px; height: 261px;">
+						</canvas> 
+					</div>
+				</div>
 			</div>
 			
 			<div style="margin:25px"></div>

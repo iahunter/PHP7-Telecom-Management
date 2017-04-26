@@ -11,7 +11,7 @@
 		
         // keep user logged in after page refresh
         if ($localStorage.currentUser) {
-			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
+			//console.log('Found local storage login token: ' + $localStorage.currentUser.token);
 			
 
 			//Permissions Checker/
@@ -25,12 +25,12 @@
 			console.log(date);
 			
 			if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
-				console.log('Cached token is expired, logging out');
+				//console.log('Cached token is expired, logging out');
 				delete $localStorage.currentUser;
 				$http.defaults.headers.common.Authorization = '';
 				$location.path('/logout');
 			}else{
-				console.log('app.js Cached token is still valid');
+				//console.log('app.js Cached token is still valid');
 				$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
 				
 				// Attempt to Renew Token
@@ -49,12 +49,12 @@
 						//console.log(date);
 						
 						if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
-							console.log('Cached token is expired, logging out');
+							//console.log('Cached token is expired, logging out');
 							delete $localStorage.currentUser;
 							$http.defaults.headers.common.Authorization = '';
 							$location.path('/logout');
 						}else{
-							console.log('Cached token is still valid');
+							//console.log('Cached token is still valid');
 							$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
 						}
 					}

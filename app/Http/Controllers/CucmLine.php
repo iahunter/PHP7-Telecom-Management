@@ -15,11 +15,14 @@ class CucmLine extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('read', Cucmclass::class)) {
+        /*
+		if (! $user->can('read', Cucmclass::class)) {
             if (! $user->can('read', self::class)) {
                 abort(401, 'You are not authorized');
             }
         }
+		*/
+		
 
         /*
         if (! isset($request->sitecode) || ! $request->sitecode) {
@@ -79,6 +82,21 @@ class CucmLine extends Cucm
         } else {
             $callForwardAll['destination'] = "{$CFA_DESTINATION}";
         }
+		
+		
+		// Check user permissions
+        if (! $user->can('update', Cucmclass::class)) {
+            //Testing with Permissions
+			$line_instance = new Cucmclass();
+			$line_instance->uuid = $line['uuid'];
+			$line_instance->exists = true;
+			// if the user can NOT update the line, throw an error
+			if(!$user->can('update', $line_instance)){
+				// Do something to allow or deny.
+				 abort(401, 'You are not authorized');
+			}
+        }
+
 
         $LINECSS = 'CSS_LINEONLY_L3_LD';
 
@@ -116,12 +134,7 @@ class CucmLine extends Cucm
     public function getLineCFWAbyPattern(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
-        if (! $user->can('read', Cucmclass::class)) {
-            if (! $user->can('read', self::class)) {
-                abort(401, 'You are not authorized');
-            }
-        }
+        
 
         /*
         if (! isset($request->sitecode) || ! $request->sitecode) {
@@ -144,7 +157,9 @@ class CucmLine extends Cucm
         }
         //return $request;
         $line = '';
+		
         try {
+			
             $line = $this->cucm->get_object_type_by_pattern_and_partition($DN, $PARTITION, 'Line');
 
             if (! count($line)) {
@@ -154,6 +169,30 @@ class CucmLine extends Cucm
             $exception = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             //dd($e->getTrace());
         }
+		
+		// Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            //Testing with Permissions
+			$line_instance = new Cucmclass();
+			$line_instance->uuid = $line['uuid'];
+			$line_instance->exists = true;
+			// if the user can NOT update the line, throw an error
+			if(!$user->can('read', $line_instance)){
+				//print $line_instance;
+				// Do something to allow or deny.
+				 abort(401, 'You are not authorized');
+			}
+        }
+		/*
+		//Testing with Permissions
+		$line_instance = new Cucmclass();
+		$line_instance->uuid = $line['uuid'];
+		$line_instance->exists = true;
+		// if the user can NOT update the line, throw an error
+		if(!$user->can('read', $line_instance)){
+			// Do something to allow or deny.
+			 abort(401, 'You are not authorized');
+		}*/
 
         if (! $line) {
             $line = 'Not Found';

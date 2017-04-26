@@ -28,7 +28,8 @@
         "owen-it/laravel-auditing": "^3.0",
         "spatie/laravel-backup": "^4.0.0",
         "spatie/laravel-activitylog": "^1.12",
-        "metaclassing/php7-sshwrapper": "dev-master"
+        "metaclassing/php7-sshwrapper": "dev-master",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

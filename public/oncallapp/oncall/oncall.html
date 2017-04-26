@@ -17,38 +17,97 @@
 		
 		<p><a href="#/logout">Logout</a></p>
 -->
-	<div class="jumbotron">
 
-		<!--<h1 style="-webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.05)));}"><img alt="Brand" style="max-height: 70px" src="app-content/images/phone-planning.png"> Telecom Management</h1>-->
-		
-		
-		<!--<h1><img alt="Brand" style="max-height: 70px" src="//b.dryicons.com/images/icon_sets/architecture_blueprint_icons_set/png/128x128/phone.png"> Telecom Management</h1>-->
-		<h2> {{vm.teamnumber.alertingName}}</h2>
-		<h4> Phone Number: {{vm.teamnumber.pattern}}</h4>
-		<hr>
-
-		<div class="well" style="margin-top: 50px">
-		
-			<div class="control-group">
-				<label class="control-label">Current On-Call Number</label>
-				<div class="controls">
-					<input type="hidden" name="PhoneNumber" id="PhoneNumber" value="PHONE_NUMBER_GOES_HERE" />
-					<span id="on_call_destination" class="input-xlarge uneditable-input" style="width:195px"> {{vm.teamnumber.currentoncallnum}}</span>
+		<div ng-if="!vm.teamnumber">
+			
+			<div class="jumbotron">
+				<div class="row">
+					<h2>Loading Number. Please be patient...</h2>
+					<hr>
+					<div class="container loader"></div>
 				</div>
-			</div>
-			<hr>
-			<div class="control-group">
-				<label class="control-label">New On-Call Number</label>
-					<div class="controls">
-					<div class="input-append">
-						<input name="on_call_input" type="text" id="on_call_input" class="span2" size="16" ng-model="vm.teamnumber.callForwardAll.destination"/><br><br>
-						<button class="btn btn-sm btn-primary" ng-click="vm.updateline(vm.teamnumber)" name="on_call_button" value="Update" id="on_call_button">Update</button>
-					</div>
-				</div>
+				<div style="margin:25px"></div>
 			</div>
 		</div>
+		
+	<div class="jumbotron" ng-if="vm.teamnumber">
+
+		<!--<h1 style="-webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.05)));}"><img alt="Brand" style="max-height: 70px" src="app-content/images/phone-planning.png"> Telecom Management</h1>-->
+
+		<!--<h1><img alt="Brand" style="max-height: 70px" src="//b.dryicons.com/images/icon_sets/architecture_blueprint_icons_set/png/128x128/phone.png"> Telecom Management</h1>-->
+
+		<h2>{{vm.teamnumber.alertingName}}</h2>
+		<h4>Phone Number: {{vm.teamnumber.pattern}}</h4>
+		<hr>
+
+
+		
+		<div class="container">
+		<div class="well">
+
+			<div class="row">
+				<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1">
+					<script type="text/ng-template" id="error-messages">
+									<div ng-message='required'> This Field is required </div>
+									<div ng-message='minlength'> Too short </div>
+									<div ng-message='maxlength'> Too long </div>
+					</script>
+					<legend><h2>Edit Forwarding Number</h2></legend>
+					<form class="form" role="form" id="changeOncallForm" ng-submit='changeOncallForm.$valid && vm.updateline(vm.teamnumber)' novalidate name="changeOncallForm">
+					
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group">
+									<label for="current"  class="control-label">Current OnCall Number</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" readonly ng-model='vm.teamnumber.currentoncallnum' required class="form-control"  name="current">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+					
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': changeOncallForm.name.$touched && changeOncallForm.name.$invalid, 'has-success': changeOncallForm.name.$touched && changeOncallForm.name.$valid }">
+									<label for="name" class="control-label">New OnCall Number</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" required ng-pattern='/^d{10}+/' ng-model='vm.teamnumber.callForwardAll.newoncallnum' required class="form-control"  name="name" placeholder="" ng-minlength='10' ng-maxlength='12'>
+										</div>
+										<div ng-messages="changeOncallForm.name.$dirty && changeOncallForm.name.$error">
+											<div ng-message='required'> Name is required </div>
+											<div ng-message="pattern">Please enter the start in the numberic format</div>
+											<div ng-message='minlength'>Please enter a Name at least 10 chars long</div>
+											<div ng-message='maxlength'>Name entered cannot be longer than 10 chars</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group">
+									<button  type="submit" ng-disabled="vm.teamnumber.callForwardAll.destination.$invalid" class="btn btn-primary">Update</button>
+									
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div style="margin:25px"></div>
+			</div>
+		</div>
+		</div>
 	</div>
-	
+
+
 	
 	
 	

@@ -14,9 +14,9 @@ class AbilitiesExtendEntityid extends Migration
     public function up()
     {
         //
-		Schema::table('abilities', function (Blueprint $table) {
-			$table->string('entity_id', 255)->nullable()->change();
-		});
+        Schema::table('abilities', function (Blueprint $table) {
+            $table->string('entity_id', 255)->nullable()->change();
+        });
     }
 
     /**
@@ -27,7 +27,7 @@ class AbilitiesExtendEntityid extends Migration
     public function down()
     {
         Schema::table('abilities', function (Blueprint $table) {
-			$table->integer('entity_id')->unsigned()->nullable()->change();
-		});
+            $table->integer('entity_id')->unsigned()->nullable()->change();
+        });
     }
 }

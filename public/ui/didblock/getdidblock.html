@@ -276,7 +276,7 @@
 			</div>
 			-->
 			<!--Line Horizontal Chart-->
-			<div class="container" style="max-width: 700px; max-height: 250px;">
+			<div class="container" ng-if="vm.dids" style="max-width: 700px; max-height: 250px;">
 				<div class="panel panel-default">
 			  
 				<div class="panel-heading"><b>Number Block Usage:  {{vm.didblock.capacity | number:0}}%</b></div>
@@ -449,7 +449,7 @@
 						</td>
 						
 						<td   ng-show="!vm.edit[did.id]">{{ did.created_at}}</td>
-						<td   ng-show="!vm.edit[did.id]">{{ did.updated_at}}</td>
+						<td   ng-show="!vm.edit[did.id]">{{ did.updated_at}} {{ did.updated_by}}</td>
 						<td  ng-if="vm.permissions.update.Did" ng-show="!vm.edit[did.id]">
 							<button class="btn btn-xs btn-primary" ng-click="vm.edit[did.id] = !vm.edit[did.id]"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit </button>
 						</td>

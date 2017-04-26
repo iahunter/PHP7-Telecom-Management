@@ -203,11 +203,9 @@ angular
 				//console.log(template)
 				
 				cupiService.createusertemplatesforsite(template).then(function(data) {
-					
-					
+
 					// Do something here to pring out results for user. 
-					
-					
+
 				}, function(error) {
 					alert('An error occurred creating the user templates')
 				});
@@ -215,9 +213,6 @@ angular
 				return $state.reload();
 			});
 
-			
-			
-			
 			/*
 			angular.forEach(vm.site.languages, function(k,v) {
 									

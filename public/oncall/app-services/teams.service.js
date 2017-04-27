@@ -7,7 +7,7 @@ angular
 		// Get Current Team name and oncall numbers from json file
 		self.getteamsnavbardata = function() {
 			var defer = $q.defer();
-			return $http.get('../oncallapp/company-content/teams.json')
+			return $http.get('../oncall/company-content/teams.json')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					
@@ -24,7 +24,7 @@ angular
 		// Get Current Team name and oncall numbers from json file
 		self.getteamnumbers = function() {
 			var defer = $q.defer();
-			return $http.get('../oncallapp/company-content/numbers.json')
+			return $http.get('../oncall/company-content/numbers.json')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					

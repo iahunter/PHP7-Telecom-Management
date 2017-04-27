@@ -21,14 +21,20 @@
 		<div ng-if="!vm.teamnumber">
 			
 			<div class="jumbotron">
-				<div class="row">
-					<h2>Loading Number. Please be patient...</h2>
-					<hr>
-					<div class="container loader"></div>
+				<legend><h2>Loading Number...</h2></legend>
+				<div style="margin:50px"></div>
+				<div class="well">
+					<div class="row">
+						<div class="container loader"  style="margin-top:100px; margin-bottom:100px">
+						
+						</div>
+						<div style="margin:25px"></div>
+					</div>
 				</div>
 				<div style="margin:25px"></div>
 			</div>
 		</div>
+		
 		
 	<div class="jumbotron" ng-if="vm.teamnumber">
 
@@ -42,7 +48,7 @@
 
 
 		
-		<div class="container">
+		
 		<div class="well">
 
 			<div class="row">
@@ -76,13 +82,13 @@
 									<div class="inputGroupContainer">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-											<input type="text" required ng-pattern='/^d{10}+/' ng-model='vm.teamnumber.callForwardAll.newoncallnum' required class="form-control"  name="name" placeholder="" ng-minlength='10' ng-maxlength='12'>
+											<input type="text" required ng-pattern='/^[+0-9]+/' ng-model='vm.teamnumber.callForwardAll.newoncallnum' required class="form-control"  name="name" placeholder="" ng-minlength='10' ng-maxlength='12'>
 										</div>
 										<div ng-messages="changeOncallForm.name.$dirty && changeOncallForm.name.$error">
-											<div ng-message='required'> Name is required </div>
-											<div ng-message="pattern">Please enter the start in the numberic format</div>
-											<div ng-message='minlength'>Please enter a Name at least 10 chars long</div>
-											<div ng-message='maxlength'>Name entered cannot be longer than 10 chars</div>
+											<div ng-message='required'>New Number is required </div>
+											<div ng-message="pattern">Please enter the new 10 digit phone number in the numberic format</div>
+											<div ng-message='minlength'>Number must be 10 digits</div>
+											<div ng-message='maxlength'>Number must not be more than +1 and 10 digit number</div>
 										</div>
 										
 									</div>
@@ -92,7 +98,7 @@
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group">
-									<button  type="submit" ng-disabled="vm.teamnumber.callForwardAll.destination.$invalid" class="btn btn-primary">Update</button>
+									<button  type="submit" ng-disabled="changeOncallForm.name.$invalid" class="btn btn-primary">Update</button>
 									
 								</div>
 							</div>
@@ -104,7 +110,7 @@
 				<div style="margin:25px"></div>
 			</div>
 		</div>
-		</div>
+		
 	</div>
 
 

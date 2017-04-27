@@ -14,9 +14,9 @@ public/ui/app-content/images/
 public/ui/company-content/
 public/ui/bower_components
 
-public/oncallapp/app-content/images/
-public/oncallapp/company-content/
-public/oncallapp/bower_components
+public/oncall/app-content/images/
+public/oncall/company-content/
+public/oncall/bower_components
 
 
 Homestead.yaml

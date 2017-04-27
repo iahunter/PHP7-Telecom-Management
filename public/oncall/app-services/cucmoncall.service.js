@@ -48,10 +48,12 @@ angular
         
 			return $http.put('../api/cucm/line', update).then(function(response) {
 
-				var data = response.data;
-				return data;
+				return response;
 
-			 }, function(error) {return false;});
+			}, function(error) {
+					return error;
+			
+			});
 		}
 		
 		return self

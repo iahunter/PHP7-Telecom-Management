@@ -67,9 +67,10 @@
 								// Send user to access denied page if they do not have permissions. 
 									$location.path('/accessdenied');
 								}
+								
 								return vm.message;
 							}
-							console.log(res);
+							//console.log(res);
 							vm.teamnumber = res.data.response;
 							
 							vm.teamnumber.currentoncallnum = angular.copy(vm.teamnumber.callForwardAll.destination);
@@ -110,8 +111,17 @@
 
 			//  and the updated x to the update service. 
 			CUCMOncallService.updateline(line_update)
-				.then(function(data) {
-					return $state.reload();
+				.then(function(res) {
+					//console.log(res)
+					vm.message = res.data.message;
+					
+					if(vm.message != ""){
+						// Send user to login page if token expired. 
+						//console.log(vm.message)
+						alert(vm.message);
+					}else{
+						return $state.reload();
+					}
 				}, function(error) {
 					alert('An error occurred while updating the event')
 				});

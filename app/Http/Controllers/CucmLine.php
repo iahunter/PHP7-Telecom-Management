@@ -117,7 +117,11 @@ class CucmLine extends Cucm
         // Update Line E164 Alternative Number Mask - workaround for Cisco Bug when adding Line
         $RESULT = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, 'Line');
         //$RESULT = $this->cucm->update_object_type_by_uuid($uuid, 'Line');
-
+		
+		// Create log entry
+		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'return' => $line])->log('get object');
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'update' => $PHONELINE_UPDATE, 'return' => $RESULT])->log('update object');
+		
         $response = [
                     'status_code'    => 200,
                     'success'        => true,

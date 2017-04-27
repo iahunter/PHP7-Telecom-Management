@@ -18,23 +18,21 @@
 		<p><a href="#/logout">Logout</a></p>
 -->
 
-		<div ng-if="!vm.teamnumber">
-			
-			<div class="jumbotron">
-				<legend><h2>Loading Number...</h2></legend>
-				<div style="margin:50px"></div>
-				<div class="well">
-					<div class="row">
-						<div class="container loader"  style="margin-top:100px; margin-bottom:100px">
-						
-						</div>
-						<div style="margin:25px"></div>
+	<div ng-if="!vm.teamnumber">
+		<div class="jumbotron">
+			<legend><h2>Loading Number...</h2></legend>
+			<div style="margin:50px"></div>
+			<div class="well">
+				<div class="row">
+					<div class="container loader"  style="margin-top:100px; margin-bottom:100px">
+					
 					</div>
+					<div style="margin:25px"></div>
 				</div>
-				<div style="margin:25px"></div>
 			</div>
+			<div style="margin:25px"></div>
 		</div>
-		
+	</div>	
 		
 	<div class="jumbotron" ng-if="vm.teamnumber">
 
@@ -46,11 +44,7 @@
 		<h4>Phone Number: {{vm.teamnumber.pattern}}</h4>
 		<hr>
 
-
-		
-		
 		<div class="well">
-
 			<div class="row">
 				<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1">
 					<script type="text/ng-template" id="error-messages">
@@ -110,15 +104,5 @@
 				<div style="margin:25px"></div>
 			</div>
 		</div>
-		
 	</div>
-
-
-	
-	
-	
 </div>
-
-
-
-

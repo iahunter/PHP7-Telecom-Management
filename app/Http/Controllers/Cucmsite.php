@@ -127,7 +127,8 @@ class Cucmsite extends Cucm
 
         // If the SRST IP is set, has contents, and validates as an IP address
         if (isset($request->srstip) && ! filter_var($request->srstip, FILTER_VALIDATE_IP)) {
-            return 'Error: SRST invalid';
+            throw new \Exception('Error: SRST invalid');
+			//return 'Error: SRST invalid';
         } elseif (isset($request->srstip)) {
             $SRSTIP = $request->srstip;
         } else {
@@ -153,26 +154,30 @@ class Cucmsite extends Cucm
             }
             // If the line has content but is NOT an ip address, abort
             if (! filter_var($H323IP, FILTER_VALIDATE_IP)) {
-                return "Error, one of the H323 IPs provided is not valid: {$H323IP}";
+                throw new \Exception("Error, one of the H323 IPs provided is not valid: {$H323IP}");
+				//return "Error, one of the H323 IPs provided is not valid: {$H323IP}";
             }
         }
         $H323LIST = array_values($H323LIST);
 
         // Check their timezone
         if (! isset($request->timezone) || ! $request->timezone) {
-            return 'Error, no timezone selected';
+			throw new \Exception("Error, no timezone selected");
+            //return 'Error, no timezone selected';
         }
         $TIMEZONE = $request->timezone;
 
         // Check their NPA
         if (! isset($request->npa) || ! $request->npa) {
-            return 'Error, no npa selected';
+			throw new \Exception("Error, no npa selected");
+            //return 'Error, no npa selected';
         }
         $NPA = $request->npa;
 
         // Check their NXX
         if (! isset($request->nxx) || ! $request->nxx) {
-            return 'Error, no nxx selected';
+			throw new \Exception("Error, no nxx selected");
+            //return 'Error, no nxx selected';
         }
         $NXX = $request->nxx;
 
@@ -181,12 +186,14 @@ class Cucmsite extends Cucm
         if (isset($request->didrange) && $request->didrange) {
             $DIDTEXT = $request->didrange;
         } else {
-            return 'No DID ranges provided';
+			throw new \Exception("No DID ranges provided");
+            //return 'No DID ranges provided';
         }
         //$DIDLIST = preg_split('/\r\n|\r|\n/', $DIDTEXT);
         $DIDLIST = explode(',', $DIDTEXT);
         if (! count($DIDLIST)) {
-            return 'No DID ranges found';
+			throw new \Exception("No DID ranges found");
+            //return 'No DID ranges found';
         }
         // Loop through translation pattern DID sections and validate them against callmanagers data dictionary
         foreach ($DIDLIST as $KEY => $DID) {
@@ -201,7 +208,8 @@ class Cucmsite extends Cucm
             // If the line has content but is NOT a valid DID thing, then abort
             $REGEX = '/^[]0-9X[-]{4,14}$/'; // This is from CUCM 10.5's data dictionary... and modified
             if (! preg_match($REGEX, $DID)) {
-                return "Error, one of the DID ranges provided is not valid: {$DID}";
+				throw new \Exception("Error, one of the DID ranges provided is not valid: {$DID}");
+                //return "Error, one of the DID ranges provided is not valid: {$DID}";
             }
         }
         $DIDLIST = array_values($DIDLIST);

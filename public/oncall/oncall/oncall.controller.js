@@ -7,8 +7,9 @@
 		vm.permissions = window.telecom_mgmt_permissions;
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};
-		vm.getpage = PageService.getpage('oncallapp-home');
 		var pattern = $stateParams.id; //angular module that stores shit, it's just the value of pattern. in our case, it's going to a phone number
+		
+		vm.getpage = PageService.getpage('oncall - ' + pattern);
 
 		function isInArrayNgForeach(field, arr) {
 			var result = false;

@@ -64,7 +64,7 @@ class AuthController extends Controller
     // Added by 3, try to cert auth, if that fails try to post ldap username/password auth, if that fails go away.
     public function authenticate(Request $request)
     {
-        // Testing
+		// Testing
         //activity()->withProperties($request)->log("User attempting to Authenticate");
 
         $error = '';
@@ -80,6 +80,7 @@ class AuthController extends Controller
         if (env('LDAP_AUTH')) {
             // Attempt to authenticate all users based on LDAP username and password in the request
             try {
+				//return $this->ldapauth($request);
                 return $this->goodauth($this->ldapauth($request));
             } catch (\Exception $e) {
                 $error .= "\tError with LDAP authentication. {$e->getMessage()}\n";
@@ -88,7 +89,7 @@ class AuthController extends Controller
 
         // Log activity
         //activity()->withProperties($request)->log("All authentication methods available have failed, ".$error);
-        activity('authlog')->withProperties(['username' => $request->username])->log('All authentication methods available have failed, '.$error);
+        //activity('authlog')->withProperties(['username' => $request->username])->log('All authentication methods available have failed, '.$error);
 
         abort(401, 'Authentication failed. '.$error);
     }
@@ -182,6 +183,7 @@ class AuthController extends Controller
         return [
                 'username' => $ldapuser['cn'][0],
                 'dn'       => $ldapuser['dn'],
+				'samaccountname' => $ldapuser['samaccountname'][0]
                 ];
     }
 
@@ -191,6 +193,10 @@ class AuthController extends Controller
         // If a user does NOT exist, create them
         if (User::where('dn', '=', $data['dn'])->exists()) {
             $user = User::where('dn', '=', $data['dn'])->first();
+			if ($user->samaccountname == null) {
+				$user->samaccountname = $data['samaccountname'];
+				$user->save();
+			}
         } else {
             $user = $this->create($data);
         }
@@ -211,7 +217,23 @@ class AuthController extends Controller
                     // Do i need to do any other validation here? Make sure group name is CN=...?
                     $user->assign($group);
                 }
-            }
+            } else {
+				$userldapinfo = $this->getLdapUserByName($user->samaccountname);
+				if (isset($userldapinfo['memberof'])) {
+					// remove the users existing database roles before assigning new ones
+					$userroles = $user->roles()->get();
+					foreach ($userroles as $role) {
+						$user->retract($role);
+					}
+					$groups = $userldapinfo['memberof'];
+					unset($groups['count']);
+					// now go through groups and assign them as new roles.
+					foreach ($groups as $group) {
+						// Do i need to do any other validation here? Make sure group name is CN=...?
+						$user->assign($group);
+					}
+				}
+			}
         }
 
         // We maintain a user table for permissions building and group lookup, NOT authentication and credentials
@@ -390,11 +412,14 @@ class AuthController extends Controller
     public function userinfo()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        if (env('LDAP_AUTH')) {
-            $user = $this->getLdapUserByName($user->username);
+        //print_r($user);
+		if (env('LDAP_AUTH')) {
+            $userinfo = $this->getLdapUserByName($user->username);
         }
-
-        return response()->json($user);
+		if(!$userinfo){
+			$userinfo = $this->getLdapUserByName($user->samaccountname);
+		}
+        return response()->json($userinfo);
     }
 
     /**
@@ -426,6 +451,7 @@ class AuthController extends Controller
         return User::create([
             'username' => $data['username'],
             'dn'       => $data['dn'],
+			'samaccountname' => $data['samaccountname'],
             'password' => bcrypt(''),
         ]);
     }

@@ -2,6 +2,8 @@ angular
 	.module('app')
 	.controller('importphones.IndexController', ['telephonyService', 'sitePhonePlanService', 'PageService', '$location', '$timeout', '$state', '$stateParams', function(telephonyService, sitePhonePlanService, PageService, $location, $timeout, $state, $stateParams) {
 		
+		// This controller is used to insert phones into the Planning Database only. Not used for systems integration. 
+		
 		var vm = this;
 		
 		vm.refresh = function (){

@@ -76,7 +76,7 @@
 									<div class="inputGroupContainer">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-											<input type="text" required ng-pattern='/^[+0-9]+/' ng-model='vm.teamnumber.callForwardAll.newoncallnum' required class="form-control"  name="name" placeholder="" ng-minlength='10' ng-maxlength='12'>
+											<input type="text" required ng-pattern='/^[+0-9]+/' ng-model='vm.teamnumber.callForwardAll.newoncallnum' required class="form-control"  name="name" placeholder="10 Digit Phone # - no spaces or dashes" ng-minlength='10' ng-maxlength='12'>
 										</div>
 										<div ng-messages="changeOncallForm.name.$dirty && changeOncallForm.name.$error">
 											<div ng-message='required'>New Number is required </div>

@@ -2,6 +2,8 @@ angular
 	.module('app')
 	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, $timeout, $location, $state, $stateParams) {
 		
+		// This controller does planning and systems provisioning. 
+		
 		var vm = this;
 		
 		vm.refresh = function (){
@@ -724,23 +726,7 @@ angular
             vm.getphonesfromcucm(vm.phones)
         }, 500);
 		
-		/*
-		vm.deployphonescucm = function() {
-			angular.forEach(vm.phones, function(phone) {
-				phone.sitecode = vm.site.sitecode;
-				phone.extlength = vm.site.extlen;
-				console.log(phone);
-				cucmService.createphone(phone)
-				.then(function(res) {
-					
-
-					console.log(res)
-				}, function(error) {
-					alert('An error occurred');
-				});
-			  
-			});
-		*/
+		
 		
 		
 		// Show Failures for Deploy Mailboxes to Unity Connection
@@ -778,8 +764,28 @@ angular
 		}
 		
 		
+		/*
+		Old function that executed in parralel. Had issues with locking on cucm db. see new function below to execute in series using service. 
+		vm.deployphonescucm = function() {
+			angular.forEach(vm.phones, function(phone) {
+				phone.sitecode = vm.site.sitecode;
+				phone.extlength = vm.site.extlen;
+				console.log(phone);
+				cucmService.createphone(phone)
+				.then(function(res) {
+					
+
+					console.log(res)
+				}, function(error) {
+					alert('An error occurred');
+				});
+			  
+			});
+		*/
 		
+		// default variable to false. 
 		vm.ignoreexistingphones = false;
+		
 		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
 		vm.deployphonescucm = function() {
 			vm.newphones = "";

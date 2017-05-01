@@ -64,9 +64,13 @@
 							}
 							//console.log(res);
 							vm.teamnumber = res.data.response;
-							vm.teamnumber.currentoncallnum = angular.copy(vm.teamnumber.callForwardAll.destination);
 							
-							// Strip +1
+							// Formatting for team number. 
+							vm.teamnumber.formattedpattern = angular.copy(vm.teamnumber.pattern);
+							vm.teamnumber.formattedpattern = vm.teamnumber.formattedpattern.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
+							
+							// Get Team number and strip +1
+							vm.teamnumber.currentoncallnum = angular.copy(vm.teamnumber.callForwardAll.destination);
 							vm.teamnumber.currentoncallnum = vm.teamnumber.currentoncallnum.replace(/^\+1/,"")
 							
 							vm.loading = false;

@@ -213,8 +213,8 @@ class AuthController extends Controller
         // If a user does NOT exist, create them
         if (User::where('dn', '=', $data['dn'])->exists()) {
             $user = User::where('dn', '=', $data['dn'])->first();
-            /* Deprecated samaccountname usage. 
-			if ($user->samaccountname == null) {
+            /* Deprecated samaccountname usage.
+            if ($user->samaccountname == null) {
                 $user->samaccountname = $data['samaccountname'];
                 $user->save();
             }*/

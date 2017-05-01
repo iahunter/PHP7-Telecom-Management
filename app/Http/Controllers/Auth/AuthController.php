@@ -138,24 +138,24 @@ class AuthController extends Controller
             throw new \Exception('Authentication failure, could not extract CN from TLS client certificate');
         }
         $dnparts = $x509->getDN();
-		
-		//print_r($dnparts);
-		
-		$extensions = $cert['tbsCertificate']['extensions'];
-		
-		foreach($extensions as $extension){
-			if ($extension['extnId'] == "id-ce-subjectAltName"){
-				$ext = $extension['extnValue'];
-				foreach($ext as $i){
-					//print_r($i['otherName']);
-					if($i['otherName']['type-id'] == "1.3.6.1.4.1.311.20.2.3"){
-						// reset returns the first value of the array without specifying the key
-						$upn = reset($i['otherName']['value']);
-						//print_r($upn);
-					}
-				}
-			}
-		}
+
+        //print_r($dnparts);
+
+        $extensions = $cert['tbsCertificate']['extensions'];
+
+        foreach ($extensions as $extension) {
+            if ($extension['extnId'] == 'id-ce-subjectAltName') {
+                $ext = $extension['extnValue'];
+                foreach ($ext as $i) {
+                    //print_r($i['otherName']);
+                    if ($i['otherName']['type-id'] == '1.3.6.1.4.1.311.20.2.3') {
+                        // reset returns the first value of the array without specifying the key
+                        $upn = reset($i['otherName']['value']);
+                        //print_r($upn);
+                    }
+                }
+            }
+        }
         $parts = [];
         foreach ($dnparts['rdnSequence'] as $part) {
             $part = reset($part);
@@ -178,9 +178,9 @@ class AuthController extends Controller
         // TODO write some checking to make sure the cert DN matches the user DN in AD
 
         return [
-                'username' => $cn,
-                'dn'       => $dnstring,
-				'userprincipalname'	=> $upn
+                'username'             => $cn,
+                'dn'                   => $dnstring,
+                'userprincipalname'    => $upn,
                 ];
     }
 
@@ -242,7 +242,7 @@ class AuthController extends Controller
                     $user->assign($group);
                 }
             } else {
-				/* Old samaccountname name lookup - deprecating
+                /* Old samaccountname name lookup - deprecating
                 $userldapinfo = $this->getLdapUserByName($user->samaccountname);
                 if (isset($userldapinfo['memberof'])) {
                     // remove the users existing database roles before assigning new ones
@@ -259,7 +259,7 @@ class AuthController extends Controller
                     }
                 }
                 */
-				// Use userprincipalname going forward
+                // Use userprincipalname going forward
                 $userldapinfo = $this->getLdapUserByName($user->userprincipalname);
                 if (isset($userldapinfo['memberof'])) {
                     // remove the users existing database roles before assigning new ones
@@ -275,7 +275,6 @@ class AuthController extends Controller
                         $user->assign($group);
                     }
                 }
-                
             }
         }
 

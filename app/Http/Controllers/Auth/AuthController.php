@@ -138,6 +138,24 @@ class AuthController extends Controller
             throw new \Exception('Authentication failure, could not extract CN from TLS client certificate');
         }
         $dnparts = $x509->getDN();
+		
+		//print_r($dnparts);
+		
+		$extensions = $cert['tbsCertificate']['extensions'];
+		
+		foreach($extensions as $extension){
+			if ($extension['extnId'] == "id-ce-subjectAltName"){
+				$ext = $extension['extnValue'];
+				foreach($ext as $i){
+					//print_r($i['otherName']);
+					if($i['otherName']['type-id'] == "1.3.6.1.4.1.311.20.2.3"){
+						// reset returns the first value of the array without specifying the key
+						$upn = reset($i['otherName']['value']);
+						//print_r($upn);
+					}
+				}
+			}
+		}
         $parts = [];
         foreach ($dnparts['rdnSequence'] as $part) {
             $part = reset($part);
@@ -162,6 +180,7 @@ class AuthController extends Controller
         return [
                 'username' => $cn,
                 'dn'       => $dnstring,
+				'userprincipalname'	=> $upn
                 ];
     }
 

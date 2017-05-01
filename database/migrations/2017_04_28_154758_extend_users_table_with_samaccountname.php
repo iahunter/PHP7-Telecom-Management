@@ -16,6 +16,7 @@ class ExtendUsersTableWithSamaccountname extends Migration
         //
         Schema::table('users', function (Blueprint $table) {
             $table->string('samaccountname', 255)->nullable();
+			$table->string('userprincipalname', 255)->nullable();
         });
     }
 
@@ -28,6 +29,7 @@ class ExtendUsersTableWithSamaccountname extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('samaccountname');
+			$table->dropColumn('userprincipalname');
         });
     }
 }

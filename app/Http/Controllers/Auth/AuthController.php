@@ -184,6 +184,7 @@ class AuthController extends Controller
                 'username'       => $ldapuser['cn'][0],
                 'dn'             => $ldapuser['dn'],
                 'samaccountname' => $ldapuser['samaccountname'][0],
+				'userprincipalname' => $ldapuser['userprincipalname'][0],
                 ];
     }
 
@@ -195,6 +196,10 @@ class AuthController extends Controller
             $user = User::where('dn', '=', $data['dn'])->first();
             if ($user->samaccountname == null) {
                 $user->samaccountname = $data['samaccountname'];
+                $user->save();
+            }
+			if ($user->userprincipalname == null) {
+                $user->userprincipalname = $data['userprincipalname'];
                 $user->save();
             }
         } else {
@@ -233,6 +238,23 @@ class AuthController extends Controller
                         $user->assign($group);
                     }
                 }
+				/*
+				$userldapinfo = $this->getLdapUserByName($user->userprincipalname);
+                if (isset($userldapinfo['memberof'])) {
+                    // remove the users existing database roles before assigning new ones
+                    $userroles = $user->roles()->get();
+                    foreach ($userroles as $role) {
+                        $user->retract($role);
+                    }
+                    $groups = $userldapinfo['memberof'];
+                    unset($groups['count']);
+                    // now go through groups and assign them as new roles.
+                    foreach ($groups as $group) {
+                        // Do i need to do any other validation here? Make sure group name is CN=...?
+                        $user->assign($group);
+                    }
+                }
+				*/
             }
         }
 
@@ -415,9 +437,18 @@ class AuthController extends Controller
         //print_r($user);
         if (env('LDAP_AUTH')) {
             $userinfo = $this->getLdapUserByName($user->username);
+			
         }
+		
+		/* For legacy... 
         if (! $userinfo) {
             $userinfo = $this->getLdapUserByName($user->samaccountname);
+        }
+		*/
+		
+		// Use User Pricipal Name instead of samaccountname
+		if (! $userinfo) {
+            $userinfo = $this->getLdapUserByName($user->userprincipalname);
         }
 
         return response()->json($userinfo);
@@ -450,9 +481,10 @@ class AuthController extends Controller
     {
         // Again, users we track are for LDAP linkage, NOT authentication.
         return User::create([
-            'username'       => $data['username'],
-            'dn'             => $data['dn'],
-            'samaccountname' => $data['samaccountname'],
+            'username'       	=> $data['username'],
+            'dn'            	=> $data['dn'],
+            'samaccountname' 	=> $data['samaccountname'],
+			'userprincipalname' => $data['userprincipalname'],
             'password'       => bcrypt(''),
         ]);
     }

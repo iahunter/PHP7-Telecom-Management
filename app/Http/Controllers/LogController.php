@@ -16,7 +16,7 @@ class LogController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         // Log activity in request
-        activity('pagelog')->causedBy($user)->withProperties($name)->log('Page Request');
+        activity('pagelog')->causedBy($user)->withProperties(['page' => $name])->log('Page Request');
 
         // Return Nothing
     }

@@ -213,10 +213,11 @@ class AuthController extends Controller
         // If a user does NOT exist, create them
         if (User::where('dn', '=', $data['dn'])->exists()) {
             $user = User::where('dn', '=', $data['dn'])->first();
-            if ($user->samaccountname == null) {
+            /* Deprecated samaccountname usage. 
+			if ($user->samaccountname == null) {
                 $user->samaccountname = $data['samaccountname'];
                 $user->save();
-            }
+            }*/
             if ($user->userprincipalname == null) {
                 $user->userprincipalname = $data['userprincipalname'];
                 $user->save();
@@ -290,7 +291,7 @@ class AuthController extends Controller
         }
 
         // Log successfull Login by User
-        activity('authlog')->causedBy($user)->log('Authenticated');
+        activity('authlog')->causedBy($user)->withProperties(['username' => $user->username])->log('Authenticated');
 
         return response()->json(compact('token'));
     }
@@ -502,7 +503,7 @@ class AuthController extends Controller
         return User::create([
             'username'           => $data['username'],
             'dn'                 => $data['dn'],
-            'samaccountname'     => $data['samaccountname'],
+            //'samaccountname'     => $data['samaccountname'],
             'userprincipalname'  => $data['userprincipalname'],
             'password'           => bcrypt(''),
         ]);

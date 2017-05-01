@@ -223,6 +223,7 @@ class AuthController extends Controller
                     $user->assign($group);
                 }
             } else {
+				/* Old samaccountname name lookup - depricating
                 $userldapinfo = $this->getLdapUserByName($user->samaccountname);
                 if (isset($userldapinfo['memberof'])) {
                     // remove the users existing database roles before assigning new ones
@@ -238,7 +239,8 @@ class AuthController extends Controller
                         $user->assign($group);
                     }
                 }
-                /*
+                */
+				// Use userprincipalname going forward
                 $userldapinfo = $this->getLdapUserByName($user->userprincipalname);
                 if (isset($userldapinfo['memberof'])) {
                     // remove the users existing database roles before assigning new ones
@@ -254,7 +256,7 @@ class AuthController extends Controller
                         $user->assign($group);
                     }
                 }
-                */
+                
             }
         }
 

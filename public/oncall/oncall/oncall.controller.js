@@ -42,6 +42,7 @@
 				vm.numbers = res.data.numbers;
 				//console.log(vm.numbers);
 
+				// Check if hte number exists inside the available team numbers to change. 
 				if(isInArrayNgForeach(pattern, vm.numbers)){
 					vm.getline = CUCMOncallService.getline(partition,pattern)
 						.then(function(res){
@@ -64,6 +65,10 @@
 							//console.log(res);
 							vm.teamnumber = res.data.response;
 							vm.teamnumber.currentoncallnum = angular.copy(vm.teamnumber.callForwardAll.destination);
+							
+							// Strip +1
+							vm.teamnumber.currentoncallnum = vm.teamnumber.currentoncallnum.replace(/^\+1/,"")
+							
 							vm.loading = false;
 							return vm.teamnumber
 						}, function(err){

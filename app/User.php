@@ -15,7 +15,7 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
      * @var array
      */
     protected $fillable = [
-        'username', 'dn', 'password', 'samaccountname',
+        'username', 'dn', 'password', 'userprincipalname',
     ];
 
     /**

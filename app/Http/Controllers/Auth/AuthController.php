@@ -137,10 +137,8 @@ class AuthController extends Controller
         if (! $cn) {
             throw new \Exception('Authentication failure, could not extract CN from TLS client certificate');
         }
-        $dnparts = $x509->getDN();
-
-        //print_r($dnparts);
-
+        
+		// Get UPN
         $extensions = $cert['tbsCertificate']['extensions'];
 
         foreach ($extensions as $extension) {
@@ -156,6 +154,11 @@ class AuthController extends Controller
                 }
             }
         }
+		
+		// Get DN
+		$dnparts = $x509->getDN();
+
+        //print_r($dnparts);
         $parts = [];
         foreach ($dnparts['rdnSequence'] as $part) {
             $part = reset($part);
@@ -499,6 +502,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+		 activity('usercreate')->withProperties(['username' => $data['username'], 'dn' => $data['dn'], 'userprincipalname'  => $data['userprincipalname']])->log('Creating User');
         // Again, users we track are for LDAP linkage, NOT authentication.
         return User::create([
             'username'           => $data['username'],

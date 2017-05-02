@@ -51,6 +51,124 @@ class Sonus5kcontroller extends Controller
         }
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
+        $time = Carbon::now()->addSeconds(7);
+        Cache::put($key, $CALLS, $time);
+
+        return $CALLS;
+    }
+	
+	public function listcallDetailStatus(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Sonus5k::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        // Name of Cache key.
+        $key = 'listcallDetailStatus';
+
+        // Check if calls exist in cache. If not then move on.
+        if (Cache::has($key)) {
+            //Log::info(__METHOD__.' Used Cache');
+            return Cache::get($key);
+        }
+        //Log::info(__METHOD__.' Did not Use Cache');
+        $CALLS = [];
+        foreach ($this->SBCS as $SBC) {
+            $CALLS[$SBC] = Sonus5k::listcallDetailStatus($SBC);
+        }
+
+        // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
+        $time = Carbon::now()->addSeconds(7);
+        Cache::put($key, $CALLS, $time);
+
+        return $CALLS;
+    }
+	
+	public function indexAssocByKey($stuff, $key)
+	{
+		$result = [];
+		foreach($stuff as $thing) {
+			$index = $thing[$key];
+			if (!$index) {
+				throw new \Exception('error sorting arrya by key, key was missing from thing');
+			}
+			$result[$index] = $thing;
+		}
+		return $result;
+	}
+	
+	public function listcallDetailStatus_Media(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Sonus5k::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        // Name of Cache key.
+        $key = 'listcallDetailStatus_Media';
+
+        // Check if calls exist in cache. If not then move on.
+        if (Cache::has($key) && !$request->get('nocache')) {
+            //Log::info(__METHOD__.' Used Cache');
+            return Cache::get($key);
+        }
+		
+        //Log::info(__METHOD__.' Did not Use Cache');
+        $RETURN = [];
+        foreach ($this->SBCS as $SBC) {
+			$callsMedia = [];
+            $calls = Sonus5k::listcallDetailStatus($SBC);
+			$media = Sonus5k::listcallMediaStatus($SBC);
+			
+			$calls = (array) $calls['sonusActiveCall:callDetailStatus'];
+			$media = (array) $media['sonusActiveCall:callMediaStatus'];
+			
+			$indexedCalls = $this->indexAssocByKey($calls, 'GCID');
+			$indexedMedia = $this->indexAssocByKey($media, 'GCID');
+			//return $indexedMedia;
+			foreach($indexedCalls as $key => $value){
+				
+				// Merge our Call Details and our Media Details into a single array for each GCID. 
+				$callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
+
+			}
+			// Add the original key back on so the UI doesn't get jacked up. 
+			$RETURN[$SBC]['sonusActiveCall:callSummaryStatus'] = $callsMedia;
+        }
+
+        // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
+        $time = Carbon::now()->addSeconds(15);
+        Cache::put($key, $RETURN, $time);
+
+        return $RETURN;
+    }
+	
+	public function listcallMediaStatus(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Sonus5k::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        // Name of Cache key.
+        $key = 'listcallMediaStatus';
+
+        // Check if calls exist in cache. If not then move on.
+        if (Cache::has($key)) {
+            //Log::info(__METHOD__.' Used Cache');
+            return Cache::get($key);
+        }
+        //Log::info(__METHOD__.' Did not Use Cache');
+        $CALLS = [];
+        foreach ($this->SBCS as $SBC) {
+            $CALLS[$SBC] = Sonus5k::listcallMediaStatus($SBC);
+        }
+
+        // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
         $time = Carbon::now()->addSeconds(5);
         Cache::put($key, $CALLS, $time);
 

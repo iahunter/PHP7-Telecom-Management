@@ -93,6 +93,7 @@ class CucmReportsController extends Controller
         $models = DB::table('cucmphone')
             ->select('cucmphone.model', DB::raw('count(cucmphone.model) as count'))
             ->groupBy('model')
+			->orderBy('count')
             ->get();
 
 

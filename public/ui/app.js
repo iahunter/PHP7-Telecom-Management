@@ -216,6 +216,12 @@
                 controller: 'Sonus.CallController',
                 controllerAs: 'vm'
             })
+			.state('sonus/activecalldetails', {
+                url: "/sonus/activecalldetails",
+                templateUrl: 'sonus/sonus.activecalldetails.html',
+                controller: 'Sonus.CallDetailsController',
+                controllerAs: 'vm'
+            })
 			.state('sonus/activealarms', {
                 url: "/sonus/activealarms",
                 templateUrl: 'sonus/sonus.activealarms.html',

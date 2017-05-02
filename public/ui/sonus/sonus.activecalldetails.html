@@ -1,0 +1,230 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+
+
+<div style="margin-left:5%; margin-right:5%;">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	<!--Include the SBC Summary Section on Home Page. -->
+	<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
+	
+	<div style="margin:50px"></div>
+	
+	<legend>Sonus SBC Call Summary<div style="margin:10px"></div></legend>
+		
+		
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		
+		
+		<div style="margin:25px"></div>
+
+		<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> 
+			
+		<div style="margin:25px"></div>
+		
+
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		<div ng-if="vm.noactivecalls;" class="well">
+			<div class="row">
+				<h4>No Active Calls Found</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+
+		
+		<div ng-if="!vm.loading && !vm.noactivecalls">
+			
+			<h3>Found {{vm.callcount}} Active Calls </h3>
+			
+			
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">  
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr style="background-color: #cce6ff;">
+							<th>
+								<a href="" ng-click="sortType = 'sbc'; sortReverse = !sortReverse" style="color:black">
+									SBC
+										<span ng-show="sortType == 'sbc' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'callDuration'; sortReverse = !sortReverse" style="color:black">
+									callDuration
+										<span ng-show="sortType == 'callDuration' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'callDuration' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+
+							<th>
+								<a href="" ng-click="sortType = 'callingNumber'; sortReverse = !sortReverse" style="color:black">
+									Calling Number
+										<span ng-show="sortType == 'callingNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'callingNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'calledNumber'; sortReverse = !sortReverse" style="color:black">
+									Called Number
+										<span ng-show="sortType == 'calledNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'calledNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
+									Ingress Pkt Loss In
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'ingressMediaStream1RemoteIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									ingressMediaStream1RemoteIpSockAddr
+										<span ng-show="sortType == 'ingressMediaStream1RemoteIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressMediaStream1RemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>								
+							<th>
+								<a href="" ng-click="sortType = 'ingressMediaStream1LocalIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									ingressMediaStream1LocalIpSockAddr
+										<span ng-show="sortType == 'ingressMediaStream1LocalIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressMediaStream1LocalIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							
+							<th>
+								<a href="" ng-click="sortType = 'egressMediaStream1LocalIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									egressMediaStream1LocalIpSockAddr
+										<span ng-show="sortType == 'egressMediaStream1LocalIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egressMediaStream1LocalIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							<th>
+								<a href="" ng-click="sortType = 'egressMediaStream1RemoteIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									egressMediaStream1RemoteIpSockAddr
+										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
+									Egress Pkt Loss In
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>							
+							<th>
+								<a href="" ng-click="sortType = 'ingressRFactorInbound'; sortReverse = !sortReverse" style="color:black">
+									ingressRFactorIn
+										<span ng-show="sortType == 'ingressRFactorInbound' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressRFactorInbound' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>								
+							<th>
+								<a href="" ng-click="sortType = 'ingressRFactorOutbound'; sortReverse = !sortReverse" style="color:black">
+									ingressRFactorOut
+										<span ng-show="sortType == 'ingressRFactorOutbound' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressRFactorOutbound' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'egressMediaStream1LocalIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									egressRFactorIn
+										<span ng-show="sortType == 'egressMediaStream1LocalIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egressMediaStream1LocalIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							<th>
+								<a href="" ng-click="sortType = 'egressMediaStream1RemoteIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									egressRFactorOut
+										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							
+							<th>
+								<a href="" ng-click="sortType = 'state'; sortReverse = !sortReverse" style="color:black">
+									State
+										<span ng-show="sortType == 'state' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'state' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'GCID'; sortReverse = !sortReverse" style="color:black">
+									GCID
+										<span ng-show="sortType == 'GCID' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'GCID' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+						</tr>
+					</thead>
+					<tbody>
+
+					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
+
+						<td>{{ call.SBC}}</td>
+						<td>{{ call.callDuration}}</td>
+						<td>{{ call.callingNumber}}</td>
+						<td>{{ call.calledNumber}}</td>
+						
+						<!-- Media Statistics -->
+						
+						<td>{{ call.ingressMediaStream1PacketsLost}} <i ng-if="call.ingressMediaStream1PacketsLost > 0" class="fa fa-exclamation-triangle"></i></td>
+						<td>{{ call.ingressMediaStream1RemoteIpSockAddr}}</td>
+						<td>{{ call.ingressMediaStream1LocalIpSockAddr}}</td>
+						<td>{{ call.egressMediaStream1LocalIpSockAddr}}</td>
+						<td>{{ call.egressMediaStream1RemoteIpSockAddr}}</td>
+						<td>{{ call.egressMediaStream1PacketsLost}} <i ng-if="call.egressMediaStream1PacketsLost > 0" class="fa fa-exclamation-triangle"></i></td>
+						
+						<!-- Media Statistics RFactor doesn't seem to be changing much. May phase this out.-->
+						<td>{{ call.ingressRFactorInbound}}</td>
+						<td>{{ call.ingressRFactorOutbound}}</td>
+						<td>{{ call.egressRFactorInbound}}</td>
+						<td>{{ call.egressRFactorOutbound}}</td>
+						
+						<td>{{ call.state}}</td>
+						<td>{{ call.GCID}}</td>
+						
+
+					</tr>
+							
+					</tbody>
+				</table>
+			</div> 
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+

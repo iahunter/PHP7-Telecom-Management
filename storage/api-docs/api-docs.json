@@ -3546,6 +3546,78 @@
                 }
             }
         },
+        "/telephony/api/sonus/listcallDetailStatus": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Monitoring"
+                ],
+                "summary": "List Active Call Details",
+                "description": "",
+                "operationId": "getcallDetailStatus",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/listcallMediaStatus": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Monitoring"
+                ],
+                "summary": "List Active Call Media Details",
+                "description": "",
+                "operationId": "listcallMediaStatus",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/listcallDetailStatus_Media": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Monitoring"
+                ],
+                "summary": "List Active Call Media Details",
+                "description": "",
+                "operationId": "listcallMediaStatus",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/sonus/activealarms": {
             "get": {
                 "tags": [

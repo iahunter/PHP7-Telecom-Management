@@ -56,8 +56,8 @@ class Sonus5kcontroller extends Controller
 
         return $CALLS;
     }
-	
-	public function listcallDetailStatus(Request $request)
+
+    public function listcallDetailStatus(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -85,21 +85,22 @@ class Sonus5kcontroller extends Controller
 
         return $CALLS;
     }
-	
-	public function indexAssocByKey($stuff, $key)
-	{
-		$result = [];
-		foreach($stuff as $thing) {
-			$index = $thing[$key];
-			if (!$index) {
-				throw new \Exception('error sorting arrya by key, key was missing from thing');
-			}
-			$result[$index] = $thing;
-		}
-		return $result;
-	}
-	
-	public function listcallDetailStatus_Media(Request $request)
+
+    public function indexAssocByKey($stuff, $key)
+    {
+        $result = [];
+        foreach ($stuff as $thing) {
+            $index = $thing[$key];
+            if (! $index) {
+                throw new \Exception('error sorting arrya by key, key was missing from thing');
+            }
+            $result[$index] = $thing;
+        }
+
+        return $result;
+    }
+
+    public function listcallDetailStatus_Media(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -111,32 +112,31 @@ class Sonus5kcontroller extends Controller
         $key = 'listcallDetailStatus_Media';
 
         // Check if calls exist in cache. If not then move on.
-        if (Cache::has($key) && !$request->get('nocache')) {
+        if (Cache::has($key) && ! $request->get('nocache')) {
             //Log::info(__METHOD__.' Used Cache');
             return Cache::get($key);
         }
-		
+
         //Log::info(__METHOD__.' Did not Use Cache');
         $RETURN = [];
         foreach ($this->SBCS as $SBC) {
-			$callsMedia = [];
+            $callsMedia = [];
             $calls = Sonus5k::listcallDetailStatus($SBC);
-			$media = Sonus5k::listcallMediaStatus($SBC);
-			
-			$calls = (array) $calls['sonusActiveCall:callDetailStatus'];
-			$media = (array) $media['sonusActiveCall:callMediaStatus'];
-			
-			$indexedCalls = $this->indexAssocByKey($calls, 'GCID');
-			$indexedMedia = $this->indexAssocByKey($media, 'GCID');
-			//return $indexedMedia;
-			foreach($indexedCalls as $key => $value){
-				
-				// Merge our Call Details and our Media Details into a single array for each GCID. 
-				$callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
+            $media = Sonus5k::listcallMediaStatus($SBC);
 
-			}
-			// Add the original key back on so the UI doesn't get jacked up. 
-			$RETURN[$SBC]['sonusActiveCall:callSummaryStatus'] = $callsMedia;
+            $calls = (array) $calls['sonusActiveCall:callDetailStatus'];
+            $media = (array) $media['sonusActiveCall:callMediaStatus'];
+
+            $indexedCalls = $this->indexAssocByKey($calls, 'GCID');
+            $indexedMedia = $this->indexAssocByKey($media, 'GCID');
+            //return $indexedMedia;
+            foreach ($indexedCalls as $key => $value) {
+
+                // Merge our Call Details and our Media Details into a single array for each GCID.
+                $callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
+            }
+            // Add the original key back on so the UI doesn't get jacked up.
+            $RETURN[$SBC]['sonusActiveCall:callSummaryStatus'] = $callsMedia;
         }
 
         // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
@@ -145,8 +145,8 @@ class Sonus5kcontroller extends Controller
 
         return $RETURN;
     }
-	
-	public function listcallMediaStatus(Request $request)
+
+    public function listcallMediaStatus(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions

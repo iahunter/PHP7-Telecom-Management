@@ -86,22 +86,22 @@ class Sonus5k extends Model
 
         return self::wrapapi($verb, $apiurl);
     }
-	
-	public static function listcallDetailStatus($SBC)
+
+    public static function listcallDetailStatus($SBC)
     {
         $verb = 'GET';
         $apiurl = "https://{$SBC}/api/operational/global/callDetailStatus";
 
         return self::wrapapi($verb, $apiurl);
     }
-	
-	public static function listcallMediaStatus($SBC)
+
+    public static function listcallMediaStatus($SBC)
     {
         $verb = 'GET';
         $apiurl = "https://{$SBC}/api/operational/global/callMediaStatus";
-		
-		// Example Call by GCID
-		// $apiurl = https://{$SBC}/api/operational/global/callMediaStatus/34782
+
+        // Example Call by GCID
+        // $apiurl = https://{$SBC}/api/operational/global/callMediaStatus/34782
 
         return self::wrapapi($verb, $apiurl);
     }

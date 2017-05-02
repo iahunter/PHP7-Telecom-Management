@@ -40,8 +40,8 @@
      * )
      **/
     $api->get('/reports/siteE911TrunkingReport', 'App\Http\Controllers\CucmReportsController@siteE911TrunkingReport');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/get_phone_models_inuse",
      *     tags={"CUCM Reports"},
@@ -58,8 +58,8 @@
      * )
      **/
     $api->get('/reports/get_phone_models_inuse', 'App\Http\Controllers\CucmReportsController@get_phone_models_inuse');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/get_count_phone_models_inuse",
      *     tags={"CUCM Reports"},

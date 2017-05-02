@@ -9,7 +9,7 @@
 			<th>Firstname</th>							
 			<th>Lastname</th>
 			<th>Username</th>
-			<th>Name</th>
+			<th>Device Name</th>
 			<th>Device Type</th>
 			<th>Directory Number</th>
 			<th>Language</th>
@@ -29,11 +29,16 @@
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.lastname"></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.username"></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.name"></td>
-		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.device"></td>
+		<!--<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.device"></td>-->
+		<td   ng-show="vm.showaddrow">
+			<!--<input type="text" class="form-control form-control-sm" ng-model="newphone.language">-->
+			<select class="form-control" ng-model='newphone.device' ng-options="model as model for model in vm.phonemodels" data-width="100%" name="model">
+			</select>
+		</td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.dn"></td>
 		<td   ng-show="vm.showaddrow">
 			<!--<input type="text" class="form-control form-control-sm" ng-model="newphone.language">-->
-			<select class="form-control" ng-model='newphone.language' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="didblocks">
+			<select class="form-control" ng-model='newphone.language' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="language">
 			</select>
 		</td>
 		<td   ng-show="vm.showaddrow">

@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, $timeout, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
 		
 		// This controller does planning and systems provisioning. 
 		
@@ -82,6 +82,25 @@ angular
 			});
 			
 		
+		vm.getphonemodels = cucmReportService.phone_model_report()
+			.then(function(res){
+				// Check if Token has expired. If so then direct them to login screen. 
+				if(res.message == "Token has expired"){
+					vm.tokenexpired = true;
+					//alert("Token has expired, Please relogin");
+					//alert(res.message);
+					$state.go('logout');
+				}
+
+				vm.phonemodels = res.data.response;
+				
+				
+				console.log(vm.phonemodels);
+				
+				
+			}, function(err){
+				//Error
+			});
 		
 		
 		vm.getphoneplanphones = sitePhonePlanService.getphoneplanphones(id)

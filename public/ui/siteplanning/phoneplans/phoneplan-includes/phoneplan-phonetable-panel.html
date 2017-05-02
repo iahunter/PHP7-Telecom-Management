@@ -249,7 +249,12 @@
 						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.lastname"></td>
 						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.username"></td>
 						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.name"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.device"></td>
+						<!--<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.device"></td>-->
+						<td   ng-show="vm.edit[phone.id]">
+							<!--<input type="text" class="form-control form-control-sm" ng-model="newphone.language">-->
+							<select class="form-control" ng-model='phone.device' ng-options="model as model for model in vm.phonemodels" data-width="100%" name="model">
+							</select>
+						</td>
 						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.dn"></td>
 						<td   ng-show="vm.edit[phone.id]">
 							<!--<input type="text" class="form-control form-control-sm" ng-model="phone.language">-->

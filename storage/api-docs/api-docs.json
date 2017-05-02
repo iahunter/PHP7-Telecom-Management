@@ -1155,6 +1155,48 @@
                 }
             }
         },
+        "/telephony/api/reports/get_phone_models_inuse": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List of Phone Models in Use",
+                "description": "",
+                "operationId": "listPhoneModels",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/reports/get_count_phone_models_inuse": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List Count of Phone Models in Use",
+                "description": "",
+                "operationId": "listPhoneModels",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cupi/user/search/{alias}": {
             "get": {
                 "tags": [

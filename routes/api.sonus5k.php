@@ -20,9 +20,8 @@
      * )
      **/
     $api->get('sonus/activecalls', 'App\Http\Controllers\Sonus5kcontroller@listactivecalls');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/listcallDetailStatus",
      *     tags={"Management - Sonus - Monitoring"},
@@ -42,8 +41,8 @@
      * )
      **/
     $api->get('sonus/listcallDetailStatus', 'App\Http\Controllers\Sonus5kcontroller@listcallDetailStatus');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/listcallMediaStatus",
      *     tags={"Management - Sonus - Monitoring"},
@@ -63,8 +62,8 @@
      * )
      **/
     $api->get('sonus/listcallMediaStatus', 'App\Http\Controllers\Sonus5kcontroller@listcallMediaStatus');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/listcallDetailStatus_Media",
      *     tags={"Management - Sonus - Monitoring"},
@@ -85,7 +84,6 @@
      **/
     $api->get('sonus/listcallDetailStatus_Media', 'App\Http\Controllers\Sonus5kcontroller@listcallDetailStatus_Media');
 
-	
     /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/activealarms",

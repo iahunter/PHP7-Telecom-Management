@@ -1,16 +1,21 @@
 <!--Print Chart-->
 
-<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" ng-controller="CallGraph.IndexController as vm">
-<h4 ng-if="vm.dayscallgraph">1 Day - SBC Call Summary</h4>
-	<canvas id="daycalls" class="chart chart-line chart-xs"
-		chart-series="vm.dayscallgraph.chartseries" 
-		chart-data="vm.dayscallgraph.chartdata" 
-		chart-labels="vm.dayscallgraph.chartlabels"
-		chart-options="vm.dayscallgraph.chartoptions">
-	</canvas> 
+<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" div ng-controller="CallGraph.IndexController as vm">
+	<div class="panel panel-default" ng-if="vm.dayscallgraph">
+		<div class="panel-heading"><h4><b>1 Day - SBC Call Summary</b></h4></div>
+		
+		<div >
+			<canvas id="daycalls" class="chart chart-line chart-xs"
+				chart-series="vm.dayscallgraph.chartseries" 
+				chart-data="vm.dayscallgraph.chartdata" 
+				chart-labels="vm.dayscallgraph.chartlabels"
+				chart-options="vm.dayscallgraph.chartoptions">
+			</canvas> 
+		</div>
+	</div>
 </div>
 
-
+<div style="margin:25px"></div>
 
 <!---
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error">

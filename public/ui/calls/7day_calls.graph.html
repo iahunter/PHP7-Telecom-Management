@@ -1,13 +1,19 @@
+
 <!--Print Chart-->
 
 <div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" div ng-controller="CallGraph.IndexController as vm">
-<h4 ng-if="vm.weekscallgraph">7 Day - SBC Call Summary</h4>
-	<canvas id="weekcalls" class="chart chart-line chart-xs"
-		chart-series="vm.weekscallgraph.chartseries" 
-		chart-data="vm.weekscallgraph.chartdata" 
-		chart-labels="vm.weekscallgraph.chartlabels"
-		chart-options="vm.weekscallgraph.chartoptions">
-	</canvas> 
+	<div class="panel panel-default" ng-if="vm.weekscallgraph">
+		<div class="panel-heading"><h4><b>7 Day - SBC Call Summary</b></h4></div>
+		
+		<div >
+			<canvas id="weekcalls" class="chart chart-line chart-xs"
+				chart-series="vm.weekscallgraph.chartseries" 
+				chart-data="vm.weekscallgraph.chartdata" 
+				chart-labels="vm.weekscallgraph.chartlabels"
+				chart-options="vm.weekscallgraph.chartoptions">
+			</canvas>
+		</div>
+	</div>
 </div>
 
 <div style="margin:25px"></div>

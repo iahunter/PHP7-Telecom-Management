@@ -94,7 +94,7 @@ angular
 				});
 		}
 		
-		var pull = $interval(initController,5000); 
+		var pull = $interval(initController,10000); 
 		
 		$scope.$on('$destroy', function() {
 			//console.log($scope);

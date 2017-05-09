@@ -125,3 +125,91 @@
      * )
      **/
     $api->get('sonus/backups', 'App\Http\Controllers\Sonus5kcontroller@compareconfigs');
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/cdrs",
+     *     tags={"Management - Sonus - Monitoring"},
+     *     summary="Get CDRs",
+     *     description="",
+     *     operationId="backups",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/cdrs', 'App\Http\Controllers\Sonus5kcontroller@getcdrs');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/2day_call_summary",
+     *     tags={"Management - Sonus - Monitoring"},
+     *     summary="Get CDRs for last two days in travis view format",
+     *     description="",
+     *     operationId="backups",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/2day_call_summary', 'App\Http\Controllers\Sonus5kcontroller@get_last_two_days_cdr_summary');
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/2day_completed_call_summary",
+     *     tags={"Management - Sonus - Monitoring"},
+     *     summary="Get CDRs for last 2 days",
+     *     description="",
+     *     operationId="backups",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/2day_completed_call_summary', 'App\Http\Controllers\Sonus5kcontroller@get_last_two_days_cdr_completed_call_summary');
+	
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/2day_completed_call_summary_bad_calls",
+     *     tags={"Management - Sonus - Monitoring"},
+     *     summary="Get CDRs for last two days in travis view format",
+     *     description="",
+     *     operationId="backups",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/2day_completed_call_summary_bad_calls', 'App\Http\Controllers\Sonus5kcontroller@get_last_two_days_cdr_completed_call_summary_packetloss');
+
+

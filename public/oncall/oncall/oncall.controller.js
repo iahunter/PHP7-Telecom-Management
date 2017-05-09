@@ -3,21 +3,16 @@
 	.controller('Oncall.IndexController', ['TeamService', 'CUCMOncallService', 'UserService', 'PageService', '$location', '$state', '$timeout', '$http', '$localStorage', '$stateParams', 'jwtHelper', 'AuthenticationService', function(TeamService, CUCMOncallService, UserService, PageService, $location, $state, $timeout, $http, $localStorage, $stateParams, jwtHelper, AuthenticationService) {
 		var vm = this;
 
-		// Match the window permission set in login.js and app.js - may want to use a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};
-		var pattern = $stateParams.id; //angular module that stores shit, it's just the value of pattern. in our case, it's going to a phone number
+		var pattern = $stateParams.id;
 		
 		vm.getpage = PageService.getpage('oncall - ' + pattern);
 
 		function isInArrayNgForeach(field, arr) {
 			var result = false;
-			//console.log("HERRE")
-			//console.log(field);
-			//console.log(arr);
 			angular.forEach(arr, function(value, key) {
-				//console.log(value);
 				if(field == value)
 					result = true;
 			});
@@ -80,7 +75,6 @@
 						});
 				}else{
 					//SEND TO PERMISSION DENIED PAGE
-					//console.log(key);
 					$location.path('/accessdenied');
 				}
 				vm.loading = false;
@@ -99,16 +93,11 @@
 			line_update.cfa_destination = line.callForwardAll.newoncallnum;
 			line_update.pattern = line.pattern;
 
-			//console.log(line_update)
-			//  and the updated x to the update service. 
 			CUCMOncallService.updateline(line_update)
 			.then(function(res) {
 				//console.log(res)
 				vm.message = res.data.message;
 				if(vm.message != ""){
-					//Fetch message from Call Manager if not blank and alerts user
-					// "DN entered is not valid. It shoudl blah blah blah" is what Call Manager is sending back to us.
-					//console.log(vm.message)
 					alert(vm.message);
 				}else{
 					return $state.reload();

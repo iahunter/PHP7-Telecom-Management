@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmPhoneScan::class,
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
+		Commands\Sonus\GetSonusCDRs::class,
         Commands\OnCall\OnCallPermissions::class,
 
         // Commented out one time scripts - Uncomment if needed.

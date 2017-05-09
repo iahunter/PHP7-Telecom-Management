@@ -74,6 +74,20 @@
 								</a>
 							</th>
 							<th>
+								<a href="" ng-click="sortType = 'GCID'; sortReverse = !sortReverse" style="color:black">
+									GCID
+										<span ng-show="sortType == 'GCID' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'GCID' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'state'; sortReverse = !sortReverse" style="color:black">
+									State
+										<span ng-show="sortType == 'state' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'state' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
 								<a href="" ng-click="sortType = 'callDuration'; sortReverse = !sortReverse" style="color:black">
 									callDuration
 										<span ng-show="sortType == 'callDuration' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -100,6 +114,13 @@
 							<th>
 								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
 									Ingress Pkt Loss In
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
+									Egress Pkt Loss In
 										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
@@ -133,13 +154,7 @@
 										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							<th>
-								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
-									Egress Pkt Loss In
-										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>							
+														
 							<th>
 								<a href="" ng-click="sortType = 'ingressRFactorInbound'; sortReverse = !sortReverse" style="color:black">
 									ingressRFactorIn
@@ -170,21 +185,9 @@
 								</a>
 							</th>	
 							
-							<th>
-								<a href="" ng-click="sortType = 'state'; sortReverse = !sortReverse" style="color:black">
-									State
-										<span ng-show="sortType == 'state' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'state' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
 							
-							<th>
-								<a href="" ng-click="sortType = 'GCID'; sortReverse = !sortReverse" style="color:black">
-									GCID
-										<span ng-show="sortType == 'GCID' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'GCID' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+							
+							
 
 						</tr>
 					</thead>
@@ -193,18 +196,21 @@
 					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
 
 						<td>{{ call.SBC}}</td>
+						<td>{{ call.GCID}}</td>
+						<td>{{ call.state}}</td>
 						<td>{{ call.callDuration}}</td>
 						<td>{{ call.callingNumber}}</td>
 						<td>{{ call.calledNumber}}</td>
 						
 						<!-- Media Statistics -->
 						
-						<td>{{ call.ingressMediaStream1PacketsLost}} <i ng-if="call.ingressMediaStream1PacketsLost > 0" class="fa fa-exclamation-triangle"></i></td>
+						<td> {{ call.ingressMediaStream1PacketsLost}} <i class="fa fa-exclamation-triangle" ng-if="call.ingressMediaStream1PacketsLost > 0"></i></td>
+						<td>{{ call.egressMediaStream1PacketsLost}} <i ng-if="call.egressMediaStream1PacketsLost > 0" class="fa fa-exclamation-triangle"></i></td>
 						<td>{{ call.ingressMediaStream1RemoteIpSockAddr}}</td>
 						<td>{{ call.ingressMediaStream1LocalIpSockAddr}}</td>
 						<td>{{ call.egressMediaStream1LocalIpSockAddr}}</td>
 						<td>{{ call.egressMediaStream1RemoteIpSockAddr}}</td>
-						<td>{{ call.egressMediaStream1PacketsLost}} <i ng-if="call.egressMediaStream1PacketsLost > 0" class="fa fa-exclamation-triangle"></i></td>
+						
 						
 						<!-- Media Statistics RFactor doesn't seem to be changing much. May phase this out.-->
 						<td>{{ call.ingressRFactorInbound}}</td>
@@ -212,8 +218,8 @@
 						<td>{{ call.egressRFactorInbound}}</td>
 						<td>{{ call.egressRFactorOutbound}}</td>
 						
-						<td>{{ call.state}}</td>
-						<td>{{ call.GCID}}</td>
+						
+						
 						
 
 					</tr>

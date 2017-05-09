@@ -37,7 +37,9 @@
 			<div ng-if="vm.permissions.read.Sonus5k">
 				<div style="margin:50px"></div>
 				<!--Include the SBC Summary Section on Home Page. -->
-				<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
+				<div ng-controller="Sonus.CallController as vm">
+					<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
+				</div>
 			</div>
 			
 			<div ng-if="vm.permissions.read.Calls">

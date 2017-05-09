@@ -138,6 +138,12 @@
                 controller: 'getDidblock.IndexController',
                 controllerAs: 'vm'
             })
+			.state('importdidblock', {
+                url: "/importdidblock",
+                templateUrl: 'didblock/bulkdidblock.html',
+                controller: 'bulkdidblock.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('checkdidusage', {
                 url: "/checkdidusage",
                 templateUrl: 'didblock/usage/checkdidusage.html',

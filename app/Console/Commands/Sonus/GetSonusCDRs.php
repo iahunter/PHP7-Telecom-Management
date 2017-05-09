@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Sonus;
 
+use Carbon\Carbon;
 use App\Sonus5kCDR;
 use Illuminate\Console\Command;
-use Carbon\Carbon;
 use phpseclib\Net\SFTP as Net_SFTP;
 
 class GetSonusCDRs extends Command
@@ -46,69 +46,65 @@ class GetSonusCDRs extends Command
      */
     public function handle()
     {
-
         foreach ($this->SBCS as $SBC) {
-        
-			// Get latest CDR File. 
-			$locations = Sonus5kCDR::get_cdr_log_names($SBC);
-		
-			// Trim off the two most recent files and set them to the locations. 
-			// $locations = array_slice($locations, 0, 1);
-			
-			foreach($locations as $location){
-				$cdrs = $this->get_cdrs_from_file($SBC, $location);
-				$cdr_array = Sonus5kCDR::parse_cdr($cdrs);
-				//print_r($cdr_array);
-				foreach($cdr_array as $cdr){
-					$RECORD = [];
-					$RECORD["gw_name"]  =  $cdr["Gateway Name"];
-					$RECORD["type"]  =  $cdr["Record Type"];
-					$RECORD["accounting_id"]  =  $cdr["Accounting ID"];
-					$RECORD["gcid"]  =  $cdr["Global Call ID (GCID)"];
-					$RECORD["start_date"]  =  $cdr["Start Time (MM/DD/YYYY)"];
-					$RECORD["start_time"]  =  $cdr["Start Time (HH/MM/SS.s)"];
-					
-					$RECORD["disconnect_date"]  =  $cdr["Disconnect Time (MM/DD/YYYY)"];
-					$RECORD["disconnect_time"]  =  $cdr["Disconnect Time (HH:MM:SS.s)"];
-					
-					$RECORD["disconnect_initiator"]  =  $cdr["Disconnect Initiator"];
-					$RECORD["disconnect_reason"]  =  $cdr["Call Disconnect Reason"];
-					
-					$RECORD["calling_name"]  =  $cdr["Calling Name"];
-					$RECORD["calling_number"]  =  $cdr["Calling Number"];
-					$RECORD["dialed_number"]  =  $cdr["Dialed Number"];
-					$RECORD["called_number"]  =  $cdr["Called Number"];
-					
-					$RECORD["route_label"]  =  $cdr["Route Label"];
-					$RECORD["ingress_trunkgrp"]  =  $cdr["Ingress Trunk Group Name"];
-					$RECORD["ingress_media"]  =  $cdr["Ingress IP Circuit End Point"];
 
-					$RECORD["egress_trunkgrp"]  =  $cdr["Egress Trunk Group Name"];
-					$RECORD["egress_media"]  =  $cdr["Egress IP Circuit End Point"];
+            // Get latest CDR File.
+            $locations = Sonus5kCDR::get_cdr_log_names($SBC);
 
-					
-					
-					if($RECORD["type"] == "STOP"){
-						$RECORD["call_duration"]  =  $cdr["Call Service Duration"];
-						
-						if(isset($cdr["Media Stream Stats"]) && $cdr["Media Stream Stats"]){
-							$RECORD["ingress_lost_ptks"]  =  $cdr["Media Stream Stats"][7];
-							$RECORD["egress_lost_ptks"]  =  $cdr["Media Stream Stats"][13];
-						}
-					}
-					
-					$RECORD['cdr_json'] = $cdr;
+            // Trim off the two most recent files and set them to the locations.
+            // $locations = array_slice($locations, 0, 1);
 
-					print_r($RECORD);
-					
-					//App\Flight::firstOrCreate(['name' => 'Flight 10']);
-				}
-			}
-			
+            foreach ($locations as $location) {
+                $cdrs = $this->get_cdrs_from_file($SBC, $location);
+                $cdr_array = Sonus5kCDR::parse_cdr($cdrs);
+                //print_r($cdr_array);
+                foreach ($cdr_array as $cdr) {
+                    $RECORD = [];
+                    $RECORD['gw_name'] = $cdr['Gateway Name'];
+                    $RECORD['type'] = $cdr['Record Type'];
+                    $RECORD['accounting_id'] = $cdr['Accounting ID'];
+                    $RECORD['gcid'] = $cdr['Global Call ID (GCID)'];
+                    $RECORD['start_date'] = $cdr['Start Time (MM/DD/YYYY)'];
+                    $RECORD['start_time'] = $cdr['Start Time (HH/MM/SS.s)'];
+
+                    $RECORD['disconnect_date'] = $cdr['Disconnect Time (MM/DD/YYYY)'];
+                    $RECORD['disconnect_time'] = $cdr['Disconnect Time (HH:MM:SS.s)'];
+
+                    $RECORD['disconnect_initiator'] = $cdr['Disconnect Initiator'];
+                    $RECORD['disconnect_reason'] = $cdr['Call Disconnect Reason'];
+
+                    $RECORD['calling_name'] = $cdr['Calling Name'];
+                    $RECORD['calling_number'] = $cdr['Calling Number'];
+                    $RECORD['dialed_number'] = $cdr['Dialed Number'];
+                    $RECORD['called_number'] = $cdr['Called Number'];
+
+                    $RECORD['route_label'] = $cdr['Route Label'];
+                    $RECORD['ingress_trunkgrp'] = $cdr['Ingress Trunk Group Name'];
+                    $RECORD['ingress_media'] = $cdr['Ingress IP Circuit End Point'];
+
+                    $RECORD['egress_trunkgrp'] = $cdr['Egress Trunk Group Name'];
+                    $RECORD['egress_media'] = $cdr['Egress IP Circuit End Point'];
+
+                    if ($RECORD['type'] == 'STOP') {
+                        $RECORD['call_duration'] = $cdr['Call Service Duration'];
+
+                        if (isset($cdr['Media Stream Stats']) && $cdr['Media Stream Stats']) {
+                            $RECORD['ingress_lost_ptks'] = $cdr['Media Stream Stats'][7];
+                            $RECORD['egress_lost_ptks'] = $cdr['Media Stream Stats'][13];
+                        }
+                    }
+
+                    $RECORD['cdr_json'] = $cdr;
+
+                    print_r($RECORD);
+
+                    //App\Flight::firstOrCreate(['name' => 'Flight 10']);
+                }
+            }
         }
-		
-		/*
-		$INSERT['totalCalls'] = $totalCalls;
+
+        /*
+        $INSERT['totalCalls'] = $totalCalls;
         $INSERT['stats'] = json_encode($STATS, true);
         print_r($INSERT);
         //return $STATS;
@@ -116,47 +112,44 @@ class GetSonusCDRs extends Command
         $result = Sonus5kCDR::create($INSERT);
 
         print_r($result);
-		
-		*/
-    }
-	
-		
-	public static function get_cdrs_from_file($SBC, $location)
-    {
-		$lasttwodays_calls = [];
-		
-		$sftp = new Net_SFTP($SBC, 2024);
-		if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
-			exit('Login Failed');
-		}
-		
-		$currentfile = $sftp->get($location);
-		
-		$currentfile = explode(PHP_EOL, $currentfile);
-		array_shift($currentfile);
 
-		$today = Sonus5kCDR::get_today_in_sonus_format();
-		$yesterday = Sonus5kCDR::get_yesterday_in_sonus_format();
-		
-		foreach($currentfile as $callrecord){
-			
-			// Parse record to the the record type. 
-			$callrecord = explode(",", $callrecord);
-			if ($callrecord[0] == "STOP" || $callrecord[0] == "ATTEMPT"){
-				
-				// Only Return entries that are in the last two days. 
-				if($callrecord[5] == $today || $callrecord[5] == $yesterday){
-					$callrecord = implode(",", $callrecord);
-					$lasttwodays_calls[] = $callrecord;
-				}
-			}
-			
-			// Pop off the first member of the array to reduce memory usage. 
-			array_shift($currentfile);
-			
-		}
-		// Return the raw comma seperated Log entries not an array. 
-		return implode(PHP_EOL, $lasttwodays_calls);
-	}
-		
+        */
+    }
+
+    public static function get_cdrs_from_file($SBC, $location)
+    {
+        $lasttwodays_calls = [];
+
+        $sftp = new Net_SFTP($SBC, 2024);
+        if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
+            exit('Login Failed');
+        }
+
+        $currentfile = $sftp->get($location);
+
+        $currentfile = explode(PHP_EOL, $currentfile);
+        array_shift($currentfile);
+
+        $today = Sonus5kCDR::get_today_in_sonus_format();
+        $yesterday = Sonus5kCDR::get_yesterday_in_sonus_format();
+
+        foreach ($currentfile as $callrecord) {
+
+            // Parse record to the the record type.
+            $callrecord = explode(',', $callrecord);
+            if ($callrecord[0] == 'STOP' || $callrecord[0] == 'ATTEMPT') {
+
+                // Only Return entries that are in the last two days.
+                if ($callrecord[5] == $today || $callrecord[5] == $yesterday) {
+                    $callrecord = implode(',', $callrecord);
+                    $lasttwodays_calls[] = $callrecord;
+                }
+            }
+
+            // Pop off the first member of the array to reduce memory usage.
+            array_shift($currentfile);
+        }
+        // Return the raw comma seperated Log entries not an array.
+        return implode(PHP_EOL, $lasttwodays_calls);
+    }
 }

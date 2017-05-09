@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Sonus5k;
-use App\Sonus5kCDR;
 use Carbon\Carbon;
+use App\Sonus5kCDR;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Log;
@@ -100,54 +100,53 @@ class Sonus5kcontroller extends Controller
 
         return $result;
     }
-	
-	public function merge_calldetails_with_mediadetails($request)
-	{
-		
-		 // Name of Cache key.
-		$cache_key = 'merge_calldetails_with_mediadetails';
 
-		// Check if calls exist in cache. If not then move on.
-		if (Cache::has($cache_key) && ! $request->get('nocache')) {
-			//Log::info(__METHOD__.' Used Cache');
-			//print "returned cache".PHP_EOL;
-			return Cache::get($cache_key);
-		}else{
-			//Log::info(__METHOD__.' Did not Use Cache');
-			$RETURN = [];
-			foreach ($this->SBCS as $SBC) {
-				$RETURN[$SBC] = null;
-				$callsMedia = [];
-				$calls = Sonus5k::listcallDetailStatus($SBC);
-				$media = Sonus5k::listcallMediaStatus($SBC);
+    public function merge_calldetails_with_mediadetails($request)
+    {
 
-				$calls = (array) $calls['sonusActiveCall:callDetailStatus'];
-				$media = (array) $media['sonusActiveCall:callMediaStatus'];
+         // Name of Cache key.
+        $cache_key = 'merge_calldetails_with_mediadetails';
 
-				$indexedCalls = $this->indexAssocByKey($calls, 'GCID');
-				$indexedMedia = $this->indexAssocByKey($media, 'GCID');
-				//return $indexedMedia;
-				foreach ($indexedCalls as $key => $value) {
+        // Check if calls exist in cache. If not then move on.
+        if (Cache::has($cache_key) && ! $request->get('nocache')) {
+            //Log::info(__METHOD__.' Used Cache');
+            //print "returned cache".PHP_EOL;
+            return Cache::get($cache_key);
+        } else {
+            //Log::info(__METHOD__.' Did not Use Cache');
+            $RETURN = [];
+            foreach ($this->SBCS as $SBC) {
+                $RETURN[$SBC] = null;
+                $callsMedia = [];
+                $calls = Sonus5k::listcallDetailStatus($SBC);
+                $media = Sonus5k::listcallMediaStatus($SBC);
 
-					// Merge our Call Details and our Media Details into a single array for each GCID.
-					$callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
-				}
-				// Add the original key back on so the UI doesn't get jacked up.
-				if($callsMedia){
-					$RETURN[$SBC]['sonusActiveCall:callSummaryStatus_Media'] = $callsMedia;
-				}
-				
-			}
+                $calls = (array) $calls['sonusActiveCall:callDetailStatus'];
+                $media = (array) $media['sonusActiveCall:callMediaStatus'];
 
-			// Cache Calls for 15 seconds - Put the $CALLS as value of cache.
-			$time = Carbon::now()->addSeconds(10);
-			Cache::put($cache_key, $RETURN, $time);
+                $indexedCalls = $this->indexAssocByKey($calls, 'GCID');
+                $indexedMedia = $this->indexAssocByKey($media, 'GCID');
+                //return $indexedMedia;
+                foreach ($indexedCalls as $key => $value) {
 
-			return $RETURN;
-		}
-	}
+                    // Merge our Call Details and our Media Details into a single array for each GCID.
+                    $callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
+                }
+                // Add the original key back on so the UI doesn't get jacked up.
+                if ($callsMedia) {
+                    $RETURN[$SBC]['sonusActiveCall:callSummaryStatus_Media'] = $callsMedia;
+                }
+            }
 
-	/*
+            // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
+            $time = Carbon::now()->addSeconds(10);
+            Cache::put($cache_key, $RETURN, $time);
+
+            return $RETURN;
+        }
+    }
+
+    /*
     public function listcallDetailStatus_Media(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -162,47 +161,46 @@ class Sonus5kcontroller extends Controller
         // Check if calls exist in cache. If not then move on.
         if (Cache::has($cache_key) && ! $request->get('nocache')) {
             //Log::info(__METHOD__.' Used Cache');
-			//print "returned cache".PHP_EOL;
+            //print "returned cache".PHP_EOL;
             return Cache::get($cache_key);
         }else{
-			//Log::info(__METHOD__.' Did not Use Cache');
-			$RETURN = [];
-			foreach ($this->SBCS as $SBC) {
-				$RETURN[$SBC] = null;
-				$callsMedia = [];
-				$calls = Sonus5k::listcallDetailStatus($SBC);
-				$media = Sonus5k::listcallMediaStatus($SBC);
+            //Log::info(__METHOD__.' Did not Use Cache');
+            $RETURN = [];
+            foreach ($this->SBCS as $SBC) {
+                $RETURN[$SBC] = null;
+                $callsMedia = [];
+                $calls = Sonus5k::listcallDetailStatus($SBC);
+                $media = Sonus5k::listcallMediaStatus($SBC);
 
-				$calls = (array) $calls['sonusActiveCall:callDetailStatus'];
-				$media = (array) $media['sonusActiveCall:callMediaStatus'];
+                $calls = (array) $calls['sonusActiveCall:callDetailStatus'];
+                $media = (array) $media['sonusActiveCall:callMediaStatus'];
 
-				$indexedCalls = $this->indexAssocByKey($calls, 'GCID');
-				$indexedMedia = $this->indexAssocByKey($media, 'GCID');
-				//return $indexedMedia;
-				foreach ($indexedCalls as $key => $value) {
+                $indexedCalls = $this->indexAssocByKey($calls, 'GCID');
+                $indexedMedia = $this->indexAssocByKey($media, 'GCID');
+                //return $indexedMedia;
+                foreach ($indexedCalls as $key => $value) {
 
-					// Merge our Call Details and our Media Details into a single array for each GCID.
-					$callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
-				}
-				// Add the original key back on so the UI doesn't get jacked up.
-				if($callsMedia){
-					$RETURN[$SBC]['sonusActiveCall:callSummaryStatus_Media'] = $callsMedia;
-				}
-				
-			}
+                    // Merge our Call Details and our Media Details into a single array for each GCID.
+                    $callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
+                }
+                // Add the original key back on so the UI doesn't get jacked up.
+                if($callsMedia){
+                    $RETURN[$SBC]['sonusActiveCall:callSummaryStatus_Media'] = $callsMedia;
+                }
 
-			// Cache Calls for 15 seconds - Put the $CALLS as value of cache.
-			$time = Carbon::now()->addSeconds(10);
-			Cache::put($cache_key, $RETURN, $time);
+            }
 
-			return $RETURN;
-		}
+            // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
+            $time = Carbon::now()->addSeconds(10);
+            Cache::put($cache_key, $RETURN, $time);
+
+            return $RETURN;
+        }
 
     }
-	*/
-	
-	
-	public function listcallDetailStatus_Media(Request $request)
+    */
+
+    public function listcallDetailStatus_Media(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -210,11 +208,10 @@ class Sonus5kcontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-		$RETURN = $this->merge_calldetails_with_mediadetails($request);
+        $RETURN = $this->merge_calldetails_with_mediadetails($request);
 
-		return $RETURN;
+        return $RETURN;
     }
-	
 
     public function listcallMediaStatus(Request $request)
     {
@@ -325,103 +322,98 @@ class Sonus5kcontroller extends Controller
         print_r($files);
     }
 
-	
-	public function get_last_two_days_cdr_completed_call_summary(Request $request)
-	{
-		$RETURN = [];
-		foreach ($this->SBCS as $SBC) {
-			$RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdr_completed_calls($SBC)));
-		}
-		return $RETURN;
-	}
-	
-	public function get_last_two_days_cdr_completed_call_summary_packetloss(Request $request)
-	{
-		$RETURN = [];
-		foreach ($this->SBCS as $SBC) {
-			$RETURN[$SBC] = [];
-			$RECORDS = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdr_completed_calls($SBC)));
-			foreach($RECORDS as $RECORD){
-				
-				if($RECORD["Media Stream Stats"]["Ingress Packet Lost 1"] > 100 || $RECORD["Media Stream Stats"]["Egress Packet Lost 1"] > 100){
-					$RETURN[$SBC][] = $RECORD;
-				}
-			}
-		}
-		return $RETURN;
-	}
-	
-	public function get_last_two_days_cdr_summary(Request $request)
-	{
-		$RETURN = [];
-		foreach ($this->SBCS as $SBC) {
-			$RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdrs($SBC)));
-		}
-		return $RETURN;
-	}
-
-	
-	public function getcdrs(Request $request)
+    public function get_last_two_days_cdr_completed_call_summary(Request $request)
     {
-		foreach ($this->SBCS as $SBC) {
-			
-			// Get latest CDR File. 
-			$location = Sonus5kCDR::get_cdr_log_names($SBC);
-			
-			$location = $location[0];
-			//print_r($location);
-			
-			$sftp = new Net_SFTP($SBC, 2024);
-			if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
-				exit('Login Failed');
-			}
-			
-			$currentfile = $sftp->get($location);
-			
-			$currentfile = explode(PHP_EOL, $currentfile);
-			array_shift($currentfile);
-			//return $currentfilelines;
-			
-			//return count($currentfile);
-			
-			$lastcall = count($currentfile);
-			$last500call = $lastcall - 500;
-			
-			
-			
-			$last500calls = array_slice($currentfile, $last500call, $lastcall);
-			array_pop($last500calls);
-			//return $last500calls;
-			
-			$callrecords = [];
-			$last500calls = implode(PHP_EOL, $last500calls);
-			
-			$last500calls = Sonus5kCDR::parse_cdr($last500calls);
-			
-			$return = [];
-			foreach($last500calls as $line){
-				//$line = explode(",", $line);
-				$record = array_pop($last500calls);
-				//return $record;
-				//return $line;
-				
-				//array_shift($currentfile);
-				
-				$callrecords[] = $record;
-			}
-			
-			
-			//return $callrecords;
-			
-			return Sonus5kCDR::get_travis_view($callrecords);
-			
-			// copies filename.remote to filename.local from the SFTP server
-			$sftp->get($location, $localdir."/".$filename);
+        $RETURN = [];
+        foreach ($this->SBCS as $SBC) {
+            $RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdr_completed_calls($SBC)));
+        }
 
-			$files = scandir($localdir);
-			print_r($files);
-		}
-		
-		
+        return $RETURN;
+    }
+
+    public function get_last_two_days_cdr_completed_call_summary_packetloss(Request $request)
+    {
+        $RETURN = [];
+        foreach ($this->SBCS as $SBC) {
+            $RETURN[$SBC] = [];
+            $RECORDS = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdr_completed_calls($SBC)));
+            foreach ($RECORDS as $RECORD) {
+                if ($RECORD['Media Stream Stats']['Ingress Packet Lost 1'] > 100 || $RECORD['Media Stream Stats']['Egress Packet Lost 1'] > 100) {
+                    $RETURN[$SBC][] = $RECORD;
+                }
+            }
+        }
+
+        return $RETURN;
+    }
+
+    public function get_last_two_days_cdr_summary(Request $request)
+    {
+        $RETURN = [];
+        foreach ($this->SBCS as $SBC) {
+            $RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdrs($SBC)));
+        }
+
+        return $RETURN;
+    }
+
+    public function getcdrs(Request $request)
+    {
+        foreach ($this->SBCS as $SBC) {
+
+            // Get latest CDR File.
+            $location = Sonus5kCDR::get_cdr_log_names($SBC);
+
+            $location = $location[0];
+            //print_r($location);
+
+            $sftp = new Net_SFTP($SBC, 2024);
+            if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
+                exit('Login Failed');
+            }
+
+            $currentfile = $sftp->get($location);
+
+            $currentfile = explode(PHP_EOL, $currentfile);
+            array_shift($currentfile);
+            //return $currentfilelines;
+
+            //return count($currentfile);
+
+            $lastcall = count($currentfile);
+            $last500call = $lastcall - 500;
+
+            $last500calls = array_slice($currentfile, $last500call, $lastcall);
+            array_pop($last500calls);
+            //return $last500calls;
+
+            $callrecords = [];
+            $last500calls = implode(PHP_EOL, $last500calls);
+
+            $last500calls = Sonus5kCDR::parse_cdr($last500calls);
+
+            $return = [];
+            foreach ($last500calls as $line) {
+                //$line = explode(",", $line);
+                $record = array_pop($last500calls);
+                //return $record;
+                //return $line;
+
+                //array_shift($currentfile);
+
+                $callrecords[] = $record;
+            }
+
+            //return $callrecords;
+
+            return Sonus5kCDR::get_travis_view($callrecords);
+
+            // copies filename.remote to filename.local from the SFTP server
+            $sftp->get($location, $localdir.'/'.$filename);
+
+            $files = scandir($localdir);
+            print_r($files);
+        }
     }
 }

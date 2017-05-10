@@ -104,4 +104,3 @@
      * )
      **/
     $api->get('sonus/activealarms', 'App\Http\Controllers\Sonus5kcontroller@listactivealarms');
-

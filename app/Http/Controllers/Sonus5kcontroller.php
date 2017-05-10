@@ -218,7 +218,6 @@ class Sonus5kcontroller extends Controller
         return $CALLS;
     }
 
-
     public function sftpdownload($server, $location)
     {
         $localdir = __DIR__.'/tmp';
@@ -241,7 +240,7 @@ class Sonus5kcontroller extends Controller
 
     public function get_last_two_days_cdr_completed_call_summary(Request $request)
     {
-		// Real time from SBC
+        // Real time from SBC
         $RETURN = [];
         foreach ($this->SBCS as $SBC) {
             $RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdr_completed_calls($SBC)));
@@ -252,7 +251,7 @@ class Sonus5kcontroller extends Controller
 
     public function get_last_two_days_cdr_completed_call_summary_packetloss(Request $request)
     {
-		// Real time from SBC
+        // Real time from SBC
         $RETURN = [];
         foreach ($this->SBCS as $SBC) {
             $RETURN[$SBC] = [];
@@ -269,7 +268,7 @@ class Sonus5kcontroller extends Controller
 
     public function get_last_two_days_cdr_summary(Request $request)
     {
-		// Real time from SBC
+        // Real time from SBC
         $RETURN = [];
         foreach ($this->SBCS as $SBC) {
             $RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdrs($SBC)));
@@ -278,7 +277,7 @@ class Sonus5kcontroller extends Controller
         return $RETURN;
     }
 
-	// Real time from SBC
+    // Real time from SBC
     public function getcdrs(Request $request)
     {
         foreach ($this->SBCS as $SBC) {

@@ -38,13 +38,13 @@ class Sonus5kCDR extends Model
     protected $casts = [
             'cdr_json' => 'array',
         ];
-		
-		
-	public static function convert_sonus_date_format_to_carbon($mm_dd_yyyy)
+
+    public static function convert_sonus_date_format_to_carbon($mm_dd_yyyy)
     {
-		// This returns Y-m-d format.
-		$date = Carbon::createFromFormat('m/d/Y', $mm_dd_yyyy)->format('Y-m-d');
-		return $date;
+        // This returns Y-m-d format.
+        $date = Carbon::createFromFormat('m/d/Y', $mm_dd_yyyy)->format('Y-m-d');
+
+        return $date;
     }
 
     public static function get_yesterday_in_sonus_format()
@@ -346,7 +346,6 @@ class Sonus5kCDR extends Model
                 */
 
                 $RETURN[] = $RECORD;
-
             }
 
             array_shift($CDRS);
@@ -357,8 +356,8 @@ class Sonus5kCDR extends Model
 
     public static function parse_cdr($LOG)
     {
-		// This function parses the comman seperated data and maps each record to a key, value array. 
-		
+        // This function parses the comman seperated data and maps each record to a key, value array.
+
         $LOGLINES = explode("\n", $LOG);                    // Split the lines into individual records
         $LOGPARSED = [];                                // Make a destination to populate with parsed CSV arrays
         foreach ($LOGLINES as $LINE) {                        // Loop through the raw CDR text lines

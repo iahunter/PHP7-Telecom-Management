@@ -64,20 +64,20 @@ class GetSonusCDRs extends Command
                     $RECORD['type'] = $cdr['Record Type'];
                     $RECORD['accounting_id'] = $cdr['Accounting ID'];
                     $RECORD['gcid'] = $cdr['Global Call ID (GCID)'];
-					
-					// Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier. 
-					//$RECORD['start_date'] = $cdr['Start Time (MM/DD/YYYY)'];
+
+                    // Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
+                    //$RECORD['start_date'] = $cdr['Start Time (MM/DD/YYYY)'];
                     //$RECORD['start_time'] = $cdr['Start Time (HH/MM/SS.s)'];
-					$date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
-                    $RECORD['start_time'] = $date." ".$cdr['Start Time (HH/MM/SS.s)'];
-					
-					// Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier. 
-					//$RECORD['disconnect_date'] = $cdr['Disconnect Time (MM/DD/YYYY)'];
+                    $date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
+                    $RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'];
+
+                    // Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
+                    //$RECORD['disconnect_date'] = $cdr['Disconnect Time (MM/DD/YYYY)'];
                     //$RECORD['disconnect_time'] = $cdr['Disconnect Time (HH:MM:SS.s)'];
-					//$date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
-					$date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
-					$RECORD['disconnect_time'] = $date." ".$cdr['Disconnect Time (HH:MM:SS.s)'];
-					
+                    //$date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
+                    $date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
+                    $RECORD['disconnect_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
+
                     $RECORD['disconnect_initiator'] = $cdr['Disconnect Initiator'];
                     $RECORD['disconnect_reason'] = $cdr['Call Disconnect Reason'];
 
@@ -105,14 +105,14 @@ class GetSonusCDRs extends Command
                     $RECORD['cdr_json'] = $cdr;
 
                     //print_r($RECORD);
-					///if(\App\Sonus5kCDR::where('accounting_id', $RECORD['accounting_id'])->count()){
-					if(\App\Sonus5kCDR::where([['accounting_id', $RECORD['accounting_id']], ['gw_name', $RECORD['gw_name']]])->count()){
-						//print "Found Record Matching Accounting ID:".$RECORD['accounting_id']." | ".$RECORD['start_time'].PHP_EOL;
-					}else{
-						print "Creating New Record: ".$RECORD['accounting_id'].PHP_EOL;
-						\App\Sonus5kCDR::firstOrCreate($RECORD);
-						//print_r($RECORD);
-					}
+                    ///if(\App\Sonus5kCDR::where('accounting_id', $RECORD['accounting_id'])->count()){
+                    if (\App\Sonus5kCDR::where([['accounting_id', $RECORD['accounting_id']], ['gw_name', $RECORD['gw_name']]])->count()) {
+                        //print "Found Record Matching Accounting ID:".$RECORD['accounting_id']." | ".$RECORD['start_time'].PHP_EOL;
+                    } else {
+                        echo 'Creating New Record: '.$RECORD['accounting_id'].PHP_EOL;
+                        \App\Sonus5kCDR::firstOrCreate($RECORD);
+                        //print_r($RECORD);
+                    }
                 }
             }
         }
@@ -163,8 +163,8 @@ class GetSonusCDRs extends Command
             // Pop off the first member of the array to reduce memory usage.
             array_shift($currentfile);
         }
-		
-        // Return the raw comma seperated Log entries not an array for the last 2 days. 
+
+        // Return the raw comma seperated Log entries not an array for the last 2 days.
         return implode(PHP_EOL, $lasttwodays_calls);
     }
 }

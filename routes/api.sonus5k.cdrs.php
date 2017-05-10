@@ -1,6 +1,6 @@
 <?php
 
-	/**
+    /**
      * @SWG\Post(
      *     path="/telephony/api/sonus5kcdrs/callsbydaterange",
      *     tags={"CDR - Sonus History"},
@@ -30,8 +30,8 @@
      * )
      **/
     $api->post('sonus5kcdrs/callsbydaterange', 'App\Http\Controllers\Sonus5kCDRcontroller@list_calls_by_date_range');
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/sonus5kcdrs/calls_with_loss_by_daterange",
      *     tags={"CDR - Sonus History"},

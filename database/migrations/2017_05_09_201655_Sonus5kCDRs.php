@@ -20,9 +20,9 @@ class Sonus5kCDRs extends Migration
             $table->string('accounting_id');
             $table->string('gcid')->nullable();                         // Global Call ID
             $table->string('start_time')->nullable();
-			$table->string('disconnect_time')->nullable();
-			$table->integer('call_duration')->nullable();
-			
+            $table->string('disconnect_time')->nullable();
+            $table->integer('call_duration')->nullable();
+
             $table->string('calling_name')->nullable();
             $table->string('calling_number')->nullable();
             $table->string('called_number')->nullable();

@@ -47,11 +47,11 @@ class Sonus5kCDRcontroller extends Controller
 		//$end = Carbon::createFromDate($request->end);
 		$end = Carbon::parse($request->end)->format('Y-m-d');
 		
-		if(!\App\Sonus5kCDR::whereBetween('start_time', [$start." 00:00:00.0", $end." 24:00:00.0"])->count()){
+		if(!\App\Sonus5kCDR::whereBetween('start_time', [$start." 00:00:00.0", $end." 24:59:59.0"])->count()){
 		//if(!\App\Sonus5kCDR::all()->count()){
 			abort(404, 'No records found');
 		}else{
-			$calls = \App\Sonus5kCDR::whereBetween('start_time', [$start." 00:00:00.0", $end." 24:59:59.0"])->orderby()->get();
+			$calls = \App\Sonus5kCDR::whereBetween('start_time', [$start." 00:00:00.0", $end." 24:59:59.0"])->orderby('start_time')->get();
 		}
 
         $response = [

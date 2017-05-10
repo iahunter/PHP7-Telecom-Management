@@ -38,6 +38,14 @@ class Sonus5kCDR extends Model
     protected $casts = [
             'cdr_json' => 'array',
         ];
+		
+		
+	public static function convert_sonus_date_format_to_carbon($mm_dd_yyyy)
+    {
+		// This returns Y-m-d format.
+		$date = Carbon::createFromFormat('m/d/Y', $mm_dd_yyyy)->format('Y-m-d');
+		return $date;
+    }
 
     public static function get_yesterday_in_sonus_format()
     {
@@ -116,15 +124,6 @@ class Sonus5kCDR extends Model
             $locations[] = "/var/log/sonus/sbx/evlog/{$file['filename']}";
         }
 
-        /*
-        $latest = array_shift($cdr_files);
-        $nextlatest = array_shift($cdr_files);
-
-        $locations = [
-                        "latest" 		=>  "/var/log/sonus/sbx/evlog/{$latest['filename']}",
-                        "second_latest"	=> "/var/log/sonus/sbx/evlog/{$nextlatest['filename']}"
-                    ];
-        */
         return $locations;
     }
 
@@ -335,9 +334,6 @@ class Sonus5kCDR extends Model
                 $RECORD['Egress Remote Signaling IP Address'] = $CDR['Egress Remote Signaling IP Address'];
                 $RECORD['Egress IP Circuit End Point'] = $CDR['Egress IP Circuit End Point'];
 
-                //$RECORD["Media Stream Stats"]["Ingress Packet Lost 1"] = $CDR["Media Stream Stats"][7];
-                //$RECORD["Media Stream Stats"]["Egress Packet Lost 1"] = $CDR["Media Stream Stats"][13];
-
                 /*
                 $RECORD[""] = $CDR[""];
                 $RECORD[""] = $CDR[""];
@@ -351,11 +347,6 @@ class Sonus5kCDR extends Model
 
                 $RETURN[] = $RECORD;
 
-                /*
-                if($RECORD["Media Stream Stats"]["Ingress Packet Lost 1"] > 100 || $RECORD["Media Stream Stats"]["Egress Packet Lost 1"] > 100){
-                    $RETURN[] = $RECORD;
-                }
-                */
             }
 
             array_shift($CDRS);
@@ -366,6 +357,8 @@ class Sonus5kCDR extends Model
 
     public static function parse_cdr($LOG)
     {
+		// This function parses the comman seperated data and maps each record to a key, value array. 
+		
         $LOGLINES = explode("\n", $LOG);                    // Split the lines into individual records
         $LOGPARSED = [];                                // Make a destination to populate with parsed CSV arrays
         foreach ($LOGLINES as $LINE) {                        // Loop through the raw CDR text lines

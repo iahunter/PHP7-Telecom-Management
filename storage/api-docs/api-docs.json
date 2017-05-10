@@ -3522,6 +3522,176 @@
                 }
             }
         },
+        "/telephony/api/sonus5kcdrs/callsbydaterange": {
+            "post": {
+                "tags": [
+                    "CDR - Sonus History"
+                ],
+                "summary": "List CDR Records by Date Range",
+                "description": "",
+                "operationId": "list_calls_by_date_range",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "start",
+                        "in": "formData",
+                        "description": "Example: 5/10/2017",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "end",
+                        "in": "formData",
+                        "description": "Example: 5/10/2017",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus5kcdrs/calls_with_loss_by_daterange": {
+            "post": {
+                "tags": [
+                    "CDR - Sonus History"
+                ],
+                "summary": "List CDR Records by Date Range",
+                "description": "",
+                "operationId": "list_calls_by_date_range",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "start",
+                        "in": "formData",
+                        "description": "Example: 5/10/2017",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "end",
+                        "in": "formData",
+                        "description": "Example: 5/10/2017",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/cdrs": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Onbox CDRs"
+                ],
+                "summary": "Get CDRs",
+                "description": "",
+                "operationId": "backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/2day_call_summary": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Onbox CDRs"
+                ],
+                "summary": "Get CDRs for last two days in travis view format",
+                "description": "",
+                "operationId": "backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/2day_completed_call_summary": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Onbox CDRs"
+                ],
+                "summary": "Get CDRs for last 2 days",
+                "description": "",
+                "operationId": "backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/2day_completed_call_summary_bad_calls": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Onbox CDRs"
+                ],
+                "summary": "Get CDRs for last two days in travis view format",
+                "description": "",
+                "operationId": "backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/sonus/activecalls": {
             "get": {
                 "tags": [
@@ -3626,126 +3796,6 @@
                 "summary": "List Active Alarms",
                 "description": "",
                 "operationId": "getActiveCalls",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/sonus/backups": {
-            "get": {
-                "tags": [
-                    "Management - Sonus - Monitoring"
-                ],
-                "summary": "Backup Configs",
-                "description": "",
-                "operationId": "backups",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/sonus/cdrs": {
-            "get": {
-                "tags": [
-                    "Management - Sonus - Monitoring"
-                ],
-                "summary": "Get CDRs",
-                "description": "",
-                "operationId": "backups",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/sonus/2day_call_summary": {
-            "get": {
-                "tags": [
-                    "Management - Sonus - Monitoring"
-                ],
-                "summary": "Get CDRs for last two days in travis view format",
-                "description": "",
-                "operationId": "backups",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/sonus/2day_completed_call_summary": {
-            "get": {
-                "tags": [
-                    "Management - Sonus - Monitoring"
-                ],
-                "summary": "Get CDRs for today",
-                "description": "",
-                "operationId": "backups",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/sonus/2day_completed_call_summary_bad_calls": {
-            "get": {
-                "tags": [
-                    "Management - Sonus - Monitoring"
-                ],
-                "summary": "Get CDRs for last two days in travis view format",
-                "description": "",
-                "operationId": "backups",
                 "consumes": [
                     "application/json"
                 ],

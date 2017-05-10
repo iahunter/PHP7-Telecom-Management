@@ -58,6 +58,7 @@ $api->version('v1', function ($api) {
 
     // Sonus routes
     require __DIR__.'/api.sonus5k.php';
+	require __DIR__.'/api.sonus5k.cdrs.php';
 
     // SBC Call History
     require __DIR__.'/api.calls.php';

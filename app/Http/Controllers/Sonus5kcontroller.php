@@ -146,60 +146,6 @@ class Sonus5kcontroller extends Controller
         }
     }
 
-    /*
-    public function listcallDetailStatus_Media(Request $request)
-    {
-        $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
-        if (! $user->can('read', Sonus5k::class)) {
-            abort(401, 'You are not authorized');
-        }
-
-        // Name of Cache key.
-        $cache_key = 'listcallDetailStatus_Media';
-
-        // Check if calls exist in cache. If not then move on.
-        if (Cache::has($cache_key) && ! $request->get('nocache')) {
-            //Log::info(__METHOD__.' Used Cache');
-            //print "returned cache".PHP_EOL;
-            return Cache::get($cache_key);
-        }else{
-            //Log::info(__METHOD__.' Did not Use Cache');
-            $RETURN = [];
-            foreach ($this->SBCS as $SBC) {
-                $RETURN[$SBC] = null;
-                $callsMedia = [];
-                $calls = Sonus5k::listcallDetailStatus($SBC);
-                $media = Sonus5k::listcallMediaStatus($SBC);
-
-                $calls = (array) $calls['sonusActiveCall:callDetailStatus'];
-                $media = (array) $media['sonusActiveCall:callMediaStatus'];
-
-                $indexedCalls = $this->indexAssocByKey($calls, 'GCID');
-                $indexedMedia = $this->indexAssocByKey($media, 'GCID');
-                //return $indexedMedia;
-                foreach ($indexedCalls as $key => $value) {
-
-                    // Merge our Call Details and our Media Details into a single array for each GCID.
-                    $callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
-                }
-                // Add the original key back on so the UI doesn't get jacked up.
-                if($callsMedia){
-                    $RETURN[$SBC]['sonusActiveCall:callSummaryStatus_Media'] = $callsMedia;
-                }
-
-            }
-
-            // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
-            $time = Carbon::now()->addSeconds(10);
-            Cache::put($cache_key, $RETURN, $time);
-
-            return $RETURN;
-        }
-
-    }
-    */
-
     public function listcallDetailStatus_Media(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -272,35 +218,6 @@ class Sonus5kcontroller extends Controller
         return $CALLS;
     }
 
-    public function compareconfigs()
-    {
-        die();
-        $user = JWTAuth::parseToken()->authenticate();
-
-        // Check user permissions
-        if (! $user->can('read', Sonus5k::class)) {
-            abort(401, 'You are not authorized');
-        }
-
-        $CALLS = [];
-        foreach ($this->SBCS as $SBC) {
-            $backup = Sonus5k::configbackup($SBC);
-            //print_r($backup);
-            $location = $backup['output']['reason'];
-            $location = explode('Configuration Saved as ', $location);
-            //return $location;
-            $location = $location[1];
-
-            // Download backup
-            $server = $SBC;
-            $file = $this->sftpdownload($server, $location);
-            print_r($file);
-
-            print_r(Sonus5k::removeconfigbackup($SBC, $location));
-
-        //return Sonus5k::listactivecalls();
-        }
-    }
 
     public function sftpdownload($server, $location)
     {
@@ -324,6 +241,7 @@ class Sonus5kcontroller extends Controller
 
     public function get_last_two_days_cdr_completed_call_summary(Request $request)
     {
+		// Real time from SBC
         $RETURN = [];
         foreach ($this->SBCS as $SBC) {
             $RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdr_completed_calls($SBC)));
@@ -334,6 +252,7 @@ class Sonus5kcontroller extends Controller
 
     public function get_last_two_days_cdr_completed_call_summary_packetloss(Request $request)
     {
+		// Real time from SBC
         $RETURN = [];
         foreach ($this->SBCS as $SBC) {
             $RETURN[$SBC] = [];
@@ -350,6 +269,7 @@ class Sonus5kcontroller extends Controller
 
     public function get_last_two_days_cdr_summary(Request $request)
     {
+		// Real time from SBC
         $RETURN = [];
         foreach ($this->SBCS as $SBC) {
             $RETURN[$SBC] = Sonus5kCDR::get_travis_view(Sonus5kCDR::parse_cdr(Sonus5kCDR::get_last_two_days_cdrs($SBC)));
@@ -358,6 +278,7 @@ class Sonus5kcontroller extends Controller
         return $RETURN;
     }
 
+	// Real time from SBC
     public function getcdrs(Request $request)
     {
         foreach ($this->SBCS as $SBC) {

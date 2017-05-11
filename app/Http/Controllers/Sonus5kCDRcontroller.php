@@ -34,7 +34,7 @@ class Sonus5kCDRcontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
-        if (!$user->can('read', Sonus5kCDR::class)) {
+        if (! $user->can('read', Sonus5kCDR::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -48,46 +48,44 @@ class Sonus5kCDRcontroller extends Controller
         }
 
         $response = [
-                    'status_code'      	=> 200,
-                    'success'          	=> true,
-                    'message'          	=> '',
-					'count'			  	=> count($calls),
-                    'request'          	=> $request->all(),
-                    'result'           	=> $calls,
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'count'                => count($calls),
+                    'request'              => $request->all(),
+                    'result'               => $calls,
                     ];
 
         return response()->json($response);
     }
-	
-	public function list_todays_calls_with_loss(Request $request)
+
+    public function list_todays_calls_with_loss(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
-        if (!$user->can('read', Sonus5kCDR::class)) {
+        if (! $user->can('read', Sonus5kCDR::class)) {
             abort(401, 'You are not authorized');
         }
 
-		
-		// Add 6 hrs to compensate for the timestamps in 
-		$start = Carbon::today()->addHours(6)->toDateTimeString();
-		$end = Carbon::tomorrow()->addHours(6)->toDateTimeString();
-		
+        // Add 6 hrs to compensate for the timestamps in
+        $start = Carbon::today()->addHours(6)->toDateTimeString();
+        $end = Carbon::tomorrow()->addHours(6)->toDateTimeString();
+
         if (! \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
-			->where(function ($query) {
-				$query->where('ingress_lost_ptks', '>', 100)
-				->orWhere('egress_lost_ptks', '>', 100)
-				->count();
-				})
-			)
-		{
-				abort(404, 'No records found');
+            ->where(function ($query) {
+                $query->where('ingress_lost_ptks', '>', 100)
+                ->orWhere('egress_lost_ptks', '>', 100)
+                ->count();
+            })
+            ) {
+            abort(404, 'No records found');
         } else {
             $calls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
 
                 ->where(function ($query) {
                     $query->where('ingress_lost_ptks', '>', 100)
-					->orWhere('egress_lost_ptks', '>', 100);
+                    ->orWhere('egress_lost_ptks', '>', 100);
                 })
                 ->orderby('start_time')
                 ->get();
@@ -104,18 +102,17 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
 
     public function list_calls_by_date_range_with_loss(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
-        if (!$user->can('read', Sonus5kCDR::class)) {
+        if (! $user->can('read', Sonus5kCDR::class)) {
             abort(401, 'You are not authorized');
         }
-        
-		$start = Carbon::parse($request->start);
+
+        $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end)->addDay()->addHours(6);
 
         if (

@@ -33,9 +33,9 @@ class Sonus5kCDRs extends Migration
 
             $table->string('route_label')->nullable();
 
-			$table->string('ingress_callid')->nullable();
-			$table->string('egress_callid')->nullable();
-			
+            $table->string('ingress_callid')->nullable();
+            $table->string('egress_callid')->nullable();
+
             $table->string('ingress_media')->nullable();
             $table->string('egress_media')->nullable();
 

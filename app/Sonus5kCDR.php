@@ -25,8 +25,8 @@ class Sonus5kCDR extends Model
                             'disconnect_initiator',
                             'disconnect_reason',
                             'route_label',
-							'ingress_callid',
-							'egress_callid',
+                            'ingress_callid',
+                            'egress_callid',
                             'ingress_media',
                             'egress_media',
                             'ingress_trunkgrp',
@@ -49,7 +49,6 @@ class Sonus5kCDR extends Model
         return $date;
     }
 
-
     public static function get_today_in_sonus_format()
     {
         //return \Carbon\Carbon::now();
@@ -65,8 +64,8 @@ class Sonus5kCDR extends Model
 
         return Carbon::parse($currenttime)->format('m/d/Y');
     }
-	
-	public static function get_yesterday_in_sonus_format()
+
+    public static function get_yesterday_in_sonus_format()
     {
         //return \Carbon\Carbon::now();
         //2017-05-08 22:55:59
@@ -81,8 +80,8 @@ class Sonus5kCDR extends Model
 
         return Carbon::parse($yesterday)->format('m/d/Y');
     }
-	
-	public static function get_daybeforelast_in_sonus_format()
+
+    public static function get_daybeforelast_in_sonus_format()
     {
         //return \Carbon\Carbon::now();
         //2017-05-08 22:55:59
@@ -97,7 +96,6 @@ class Sonus5kCDR extends Model
 
         return Carbon::parse($yesterday)->format('m/d/Y');
     }
-
 
     public static function get_cdr_log_names($SBC)
     {

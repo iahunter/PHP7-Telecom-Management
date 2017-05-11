@@ -239,6 +239,12 @@
                 templateUrl: 'calls/calls.graph.html',
                 controller: 'CallGraph.IndexController',
                 controllerAs: 'vm'
+            })
+			.state('sonus/cdr/todays_bad_calls', {
+                url: "/sonus/cdr/todays_bad_calls",
+                templateUrl: 'sonus-cdrs/sonus.cdr.html',
+                controller: 'Sonus.CDRController',
+                controllerAs: 'vm'
             });
 
     }

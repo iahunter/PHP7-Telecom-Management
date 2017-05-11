@@ -163,6 +163,10 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('read', Sonus5k::class)) {
             $claims['permissions']['read']['Sonus5k'] = true;
         }
+		
+		if ($this->can('read', Sonus5kCDR::class)) {
+            $claims['permissions']['read']['Sonus5kCDR'] = true;
+        }
 
         return $claims;
     }

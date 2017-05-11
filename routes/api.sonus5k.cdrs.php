@@ -61,6 +61,29 @@
      * )
      **/
     $api->post('sonus5kcdrs/calls_with_loss_by_daterange', 'App\Http\Controllers\Sonus5kCDRcontroller@list_calls_by_date_range_with_loss');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/list_todays_calls_with_loss",
+     *     tags={"CDR - Sonus History"},
+     *     summary="Get Todays CDRs with Packet Loss",
+     *     description="",
+     *     operationId="backups",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/list_todays_calls_with_loss', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_calls_with_loss');
+
 
     /**
      * @SWG\Get(

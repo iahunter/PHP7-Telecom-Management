@@ -28,6 +28,7 @@ class ExecGroupBouncerRoles extends Seeder
             App\Phone::class,
             App\Phoneplan::class,
             App\Sonus5k::class,
+			//App\Sonus5kCDR::class,
             App\Cupi::class,
             App\Cucmclass::class,
             App\Calls::class,

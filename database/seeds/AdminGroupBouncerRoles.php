@@ -13,7 +13,7 @@ class AdminGroupBouncerRoles extends Seeder
     {
         // Assign Network Engineer to Admin.
         $group = env('ADMIN_GRP');
-		$group ="CN=IMNetworkEngineering,OU=Groups,OU=Kiewit,DC=KIEWITPLAZA,DC=com";
+        $group = 'CN=IMNetworkEngineering,OU=Groups,OU=Kiewit,DC=KIEWITPLAZA,DC=com';
         $tasks = [
             'create',
             'read',
@@ -28,7 +28,7 @@ class AdminGroupBouncerRoles extends Seeder
             App\Phone::class,
             App\Phoneplan::class,
             App\Sonus5k::class,
-			App\Sonus5kCDR::class,
+            App\Sonus5kCDR::class,
             App\Cupi::class,
             App\Cucmclass::class,
             App\Calls::class,

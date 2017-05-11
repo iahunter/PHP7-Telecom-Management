@@ -100,12 +100,12 @@ class GetSonusCDRs extends Command
                             $RECORD['ingress_lost_ptks'] = $cdr['Media Stream Stats'][7];
                             $RECORD['egress_lost_ptks'] = $cdr['Media Stream Stats'][13];
                         }
-						if (isset($cdr['Ingress Protocol Variant Specific Data']) && $cdr['Ingress Protocol Variant Specific Data']) {
-							$RECORD['ingress_callid'] = $cdr['Ingress Protocol Variant Specific Data'][1];
-						}
-						if (isset($cdr['Egress Protocol Variant Specific Data']) && $cdr['Egress Protocol Variant Specific Data']) {
-							$RECORD['egress_callid'] = $cdr['Egress Protocol Variant Specific Data'][1];
-						}
+                        if (isset($cdr['Ingress Protocol Variant Specific Data']) && $cdr['Ingress Protocol Variant Specific Data']) {
+                            $RECORD['ingress_callid'] = $cdr['Ingress Protocol Variant Specific Data'][1];
+                        }
+                        if (isset($cdr['Egress Protocol Variant Specific Data']) && $cdr['Egress Protocol Variant Specific Data']) {
+                            $RECORD['egress_callid'] = $cdr['Egress Protocol Variant Specific Data'][1];
+                        }
                     }
 
                     $RECORD['cdr_json'] = $cdr;
@@ -152,7 +152,7 @@ class GetSonusCDRs extends Command
 
         $today = Sonus5kCDR::get_today_in_sonus_format();
         $yesterday = Sonus5kCDR::get_yesterday_in_sonus_format();
-		$daybefore = Sonus5kCDR::get_daybeforelast_in_sonus_format();
+        $daybefore = Sonus5kCDR::get_daybeforelast_in_sonus_format();
         foreach ($currentfile as $callrecord) {
 
             // Parse record to the the record type.
@@ -161,7 +161,7 @@ class GetSonusCDRs extends Command
 
                 // Only Return entries that are in the last two days.
                 //if ($callrecord[5] == $today || $callrecord[5] == $yesterday || $callrecord[5] == $daybefore) {
-				if ($callrecord[5] == $today || $callrecord[5] == $yesterday) {
+                if ($callrecord[5] == $today || $callrecord[5] == $yesterday) {
                     $callrecord = implode(',', $callrecord);
                     $lasttwodays_calls[] = $callrecord;
                 }

@@ -4,6 +4,7 @@ angular
 	
 		var vm = this;
 		
+		getdatetime();
 		initController();
 		
 		vm.siteForm = {};
@@ -41,6 +42,7 @@ angular
 						return vm.message;
 					}
 					
+
 					var callarray = res.data.result;
 					vm.callarray = callarray
 					//console.log(vm.callarray)
@@ -74,10 +76,20 @@ angular
 		
 		var pull = $interval(initController,60000); 
 		
+		// Get current local Date and Time to display on page
+		function getdatetime(){
+			date = new Date();
+			vm.datetime = date.toLocaleString()
+		}	
+		
+		// Update the date and time every second. 
+		var updatetime = $interval(getdatetime,1000); 
+		
 		// Stop polling when you leave the page. 
 		$scope.$on('$destroy', function() {
 			//console.log($scope);
             $interval.cancel(pull);
+			$interval.cancel(updatetime);
 		});
 
 	}])

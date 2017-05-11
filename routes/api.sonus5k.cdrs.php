@@ -166,12 +166,13 @@
      * )
      **/
     $api->get('sonus/2day_completed_call_summary_bad_calls', 'App\Http\Controllers\Sonus5kCDRcontroller@get_last_two_days_cdr_completed_call_summary_packetloss');
-
+	
+	
     /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/call_termination_code/{code}",
      *     tags={"Management - Sonus - Onbox CDRs"},
-     *     summary="Get DID Block by ID",
+     *     summary="Lookup Sonus Call Termination Reason Codes by ID",
      *     description="",
      *     operationId="getterminationcode",
      *     consumes={"application/json"},

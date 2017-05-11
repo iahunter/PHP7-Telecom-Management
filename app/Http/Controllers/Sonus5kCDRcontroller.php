@@ -142,8 +142,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function get_call_termination_code(Request $request, $code)
+
+    public function get_call_termination_code(Request $request, $code)
     {
         return Sonus5kCDR::get_call_termination_code($code);
     }

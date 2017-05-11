@@ -3716,6 +3716,36 @@
                 }
             }
         },
+        "/telephony/api/sonus/call_termination_code/{code}": {
+            "get": {
+                "tags": [
+                    "Management - Sonus - Onbox CDRs"
+                ],
+                "summary": "Get DID Block by ID",
+                "description": "",
+                "operationId": "getterminationcode",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Call Termination Code ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/sonus/activecalls": {
             "get": {
                 "tags": [

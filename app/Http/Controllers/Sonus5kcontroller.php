@@ -78,21 +78,19 @@ class Sonus5kcontroller extends Controller
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
             $calls = Sonus5k::listcallDetailStatus($SBC);
-			
-			$return = [];
-			$calls = (array) $calls['sonusActiveCall:callDetailStatus'];
-			//return $calls;
-			foreach($calls as $call){
-				
-				// Convert seconds into readable format Hours, minutes, seconds. 
-				$call['callDuration'] = gmdate("H:i:s", ($call['callDuration']));
-				$return[] = $call;
-			}
-			
-			$CALLS[$SBC] = $return;
+
+            $return = [];
+            $calls = (array) $calls['sonusActiveCall:callDetailStatus'];
+            //return $calls;
+            foreach ($calls as $call) {
+
+                // Convert seconds into readable format Hours, minutes, seconds.
+                $call['callDuration'] = gmdate('H:i:s', ($call['callDuration']));
+                $return[] = $call;
+            }
+
+            $CALLS[$SBC] = $return;
         }
-		
-		
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
         $time = Carbon::now()->addSeconds(7);
@@ -148,31 +146,29 @@ class Sonus5kcontroller extends Controller
                 }
                 // Add the original key back on so the UI doesn't get jacked up.
                 if ($callsMedia) {
-					$calls = [];
-                    foreach($callsMedia as $call){
-						
-						// Convert seconds into readable format Hours, minutes, seconds. 
-						$call['callDuration'] = gmdate("H:i:s", ($call['callDuration']));
-						
-						$ingress_pkt_loss = $call["ingressMediaStream1PacketsLost"];
-						$ingress_pkts_recieved = $call["ingressMediaStream1PacketsReceived"];
-						$ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
-						$ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-						$call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
+                    $calls = [];
+                    foreach ($callsMedia as $call) {
 
-						$egress_pkts_recieved = $call["egressMediaStream1PacketsReceived"];
-						$egress_pkt_loss = $call["egressMediaStream1PacketsLost"];
-						$egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
-						$egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-						$call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
+                        // Convert seconds into readable format Hours, minutes, seconds.
+                        $call['callDuration'] = gmdate('H:i:s', ($call['callDuration']));
 
-						
-						$calls[] = $call;
-					}
-					
-					$RETURN[$SBC]['sonusActiveCall:callSummaryStatus_Media'] = $calls;
+                        $ingress_pkt_loss = $call['ingressMediaStream1PacketsLost'];
+                        $ingress_pkts_recieved = $call['ingressMediaStream1PacketsReceived'];
+                        $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
+                        $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+                        $call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
+
+                        $egress_pkts_recieved = $call['egressMediaStream1PacketsReceived'];
+                        $egress_pkt_loss = $call['egressMediaStream1PacketsLost'];
+                        $egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
+                        $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+                        $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
+
+                        $calls[] = $call;
+                    }
+
+                    $RETURN[$SBC]['sonusActiveCall:callSummaryStatus_Media'] = $calls;
                 }
-				
             }
 
             // Cache Calls for 15 seconds - Put the $CALLS as value of cache.

@@ -140,12 +140,10 @@ class Sonus5kCDRcontroller extends Controller
         $return = [];
 
         foreach ($calls as $call) {
-			
-			if($call['call_duration']){
-				$call['call_duration'] = gmdate("H:i:s", ($call['call_duration'] * 10) / 1000);
-			}
-			
-			
+            if ($call['call_duration']) {
+                $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
+            }
+
             $call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
             $call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
 

@@ -120,11 +120,27 @@
 							</th>
 							<th>
 								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
+									Ingress Pkt Loss In %
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
 									Egress Pkt Loss In
 										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'ingressMediaStream1PacketsLost'; sortReverse = !sortReverse" style="color:black">
+									Egress Pkt Loss In %
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressMediaStream1PacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
 							<th>
 								<a href="" ng-click="sortType = 'ingressMediaStream1RemoteIpSockAddr'; sortReverse = !sortReverse" style="color:black">
 									ingressMediaStream1RemoteIpSockAddr
@@ -204,8 +220,10 @@
 						
 						<!-- Media Statistics -->
 						
-						<td> {{ call.ingressMediaStream1PacketsLost}} <i class="fa fa-exclamation-triangle" ng-if="call.ingressMediaStream1PacketsLost > 0"></i></td>
-						<td>{{ call.egressMediaStream1PacketsLost}} <i ng-if="call.egressMediaStream1PacketsLost > 0" class="fa fa-exclamation-triangle"></i></td>
+						<td> {{ call.ingressMediaStream1PacketsLost}} <i class="fa fa-exclamation-triangle" ng-if="call.ingressMediaStream1PacketsLost > 100"></i></td>
+						<td> {{ call.ingress_pkt_loss_percent}} %<i class="fa fa-exclamation-triangle" ng-if="call.ingress_pkt_loss_percent > 1"></i></td>
+						<td>{{ call.egressMediaStream1PacketsLost}} <i ng-if="call.egressMediaStream1PacketsLost > 100" class="fa fa-exclamation-triangle"></i></td>
+						<td>{{ call.egress_pkt_loss_percent}} %<i ng-if="call.egress_pkt_loss_percent > 1" class="fa fa-exclamation-triangle"></i></td>
 						<td>{{ call.ingressMediaStream1RemoteIpSockAddr}}</td>
 						<td>{{ call.ingressMediaStream1LocalIpSockAddr}}</td>
 						<td>{{ call.egressMediaStream1LocalIpSockAddr}}</td>

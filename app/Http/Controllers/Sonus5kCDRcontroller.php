@@ -112,7 +112,7 @@ class Sonus5kCDRcontroller extends Controller
         }
 
         // Add 6 hrs to compensate for the timestamps in
-        $start = Carbon::now()->subHours(24)->toDateTimeString();
+        $start = Carbon::now()->subHours(72)->toDateTimeString();
         //$end = Carbon::tomorrow()->addHours(6)->toDateTimeString();
         $end = Carbon::now()->toDateTimeString();
         //return $start;
@@ -140,6 +140,12 @@ class Sonus5kCDRcontroller extends Controller
         $return = [];
 
         foreach ($calls as $call) {
+			
+			if($call['call_duration']){
+				$call['call_duration'] = gmdate("H:i:s", ($call['call_duration'] * 10) / 1000);
+			}
+			
+			
             $call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
             $call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
 

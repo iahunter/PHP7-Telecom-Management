@@ -51,21 +51,27 @@ angular
 					angular.forEach(callarray, function(call) {
 						console.log(call.start_time)
 						
+						//call.call_duration = moment.duration(call.call_duration * 10).humanize();
+						
 						var dateString = call.start_time;
 						
 						// Change space to a T for iOS device support
-						var date = new Date(dateString.replace(' ', 'T'));
+						var date_start = new Date(dateString.replace(' ', 'T'));
 						
 						//var date = new Date(call.start_time + " UTC");
 						//var date = moment(call.start_time + " UTC");
 						//date = date.toLocaleString()
-						call.start_time = date.toLocaleString()
+						call.start_time = date_start.toLocaleString()
 						
 						var dateString = call.disconnect_time;
 						//var date = new Date(call.disconnect_time + " UTC");
-						var date = new Date(dateString.replace(' ', 'T'));
+						
+						// Change space to a T for iOS device support
+						var date_disconnect = new Date(dateString.replace(' ', 'T'));
 						//date = date.toLocaleString()
-						call.disconnect_time = date.toLocaleString()
+						call.disconnect_time = date_disconnect.toLocaleString()
+						
+						
 					});
 					
 

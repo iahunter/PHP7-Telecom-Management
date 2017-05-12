@@ -26,7 +26,7 @@ angular
 		function initController() {
 			vm.getactivecalls = SonusService.listcallDetailStatus_Media()
 				.then(function(res){
-					
+					vm.message = "";
 					// Check for errors and if token has expired. 
 					if(res.data.message){
 						console.log(res);

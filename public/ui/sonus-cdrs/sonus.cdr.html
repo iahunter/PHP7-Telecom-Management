@@ -84,10 +84,10 @@
 							</th>
 							
 							<th>
-								<a href="" ng-click="sortType = 'call_duration_local'; sortReverse = !sortReverse" style="color:black">
-									call_duration_local
-										<span ng-show="sortType == 'call_duration_local' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'call_duration_local' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'call_duration'; sortReverse = !sortReverse" style="color:black">
+									call_duration
+										<span ng-show="sortType == 'call_duration' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'call_duration' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							
@@ -194,6 +194,15 @@
 								</a>
 							</th>
 							
+
+							<th>
+								<a href="" ng-click="sortType = 'calling_number'; sortReverse = !sortReverse" style="color:black">
+									calling_number
+										<span ng-show="sortType == 'calling_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'calling_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
 							<th>
 								<a href="" ng-click="sortType = 'dialed_number'; sortReverse = !sortReverse" style="color:black">
 									dialed_number
@@ -263,8 +272,9 @@
 						
 						<td>{{ call.calling_name}}</td>
 						
+						<!--Added calling party party here also for better view-->
+						<td>{{ call.calling_number}}</td>
 						<td>{{ call.dialed_number}}</td>
-
 						
 						<td>{{ call.disconnect_initiator}} - {{ call.disconnect_initiator_desc}}</td>
 						<td>{{ call.disconnect_reason}} - {{call.disconnect_reason_desc}}</td>

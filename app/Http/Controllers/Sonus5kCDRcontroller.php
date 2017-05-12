@@ -31,7 +31,7 @@ class Sonus5kCDRcontroller extends Controller
 
     public function list_calls_by_date_range(Request $request)
     {
-		// Historical Log Query
+        // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
@@ -62,7 +62,7 @@ class Sonus5kCDRcontroller extends Controller
 
     public function list_calls_by_date_range_with_loss(Request $request)
     {
-		// Historical Log Query
+        // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
@@ -89,7 +89,6 @@ class Sonus5kCDRcontroller extends Controller
                 ->get();
         }
 
-
         $response = [
                     'status_code'          => 200,
                     'success'              => true,
@@ -101,10 +100,10 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_todays_calls_with_loss(Request $request)
+
+    public function list_todays_calls_with_loss(Request $request)
     {
-		// Historical Log Query
+        // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
@@ -115,8 +114,8 @@ class Sonus5kCDRcontroller extends Controller
         // Add 6 hrs to compensate for the timestamps in
         $start = Carbon::now()->subHours(24)->toDateTimeString();
         //$end = Carbon::tomorrow()->addHours(6)->toDateTimeString();
-		$end = Carbon::now()->toDateTimeString();
-		//return $start;
+        $end = Carbon::now()->toDateTimeString();
+        //return $start;
         if (! \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
             ->where(function ($query) {
                 $query->where('ingress_lost_ptks', '>', 100)
@@ -135,38 +134,34 @@ class Sonus5kCDRcontroller extends Controller
                 ->orderby('start_time')
                 ->get();
         }
-		
-		//"Ingress Number of Packets Recorded as Lost" / "Ingress Number of Audio Packets Received"
-		//"Egress Number of Packets Recorded as Lost" / "Egress Number of Audio Packets Received"
-		$return = [];
-		
-		foreach($calls as $call){
-			
-			$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
-			$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-			
-			$ingress_pkt_loss = $call["cdr_json"]["Ingress Number of Packets Recorded as Lost"];
-			$ingress_pkts_recieved = $call["cdr_json"]["Ingress Number of Audio Packets Received"];
-			$ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
-			$ingress_pkt_loss_percent = round($ingress_pkt_loss_percent,2, PHP_ROUND_HALF_UP);
-			$call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
-			
-			$egress_pkt_loss = $call["cdr_json"]["Egress Number of Packets Recorded as Lost"];
-			$egress_pkts_recieved = $call["cdr_json"]["Egress Number of Audio Packets Received"];
-			$egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
-			$egress_pkt_loss_percent = round($egress_pkt_loss_percent,2, PHP_ROUND_HALF_UP);
-			$call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
-			
-			//return $call;
-			if($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1){
-				$return[] = $call;
-			}
-			
-			
-			
-		}
-		
-		$calls = $return;
+
+        //"Ingress Number of Packets Recorded as Lost" / "Ingress Number of Audio Packets Received"
+        //"Egress Number of Packets Recorded as Lost" / "Egress Number of Audio Packets Received"
+        $return = [];
+
+        foreach ($calls as $call) {
+            $call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
+            $call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
+
+            $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
+            $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
+            $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
+            $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+            $call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
+
+            $egress_pkt_loss = $call['cdr_json']['Egress Number of Packets Recorded as Lost'];
+            $egress_pkts_recieved = $call['cdr_json']['Egress Number of Audio Packets Received'];
+            $egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
+            $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+            $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
+
+            //return $call;
+            if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
+                $return[] = $call;
+            }
+        }
+
+        $calls = $return;
 
         $response = [
                     'status_code'          => 200,
@@ -179,16 +174,16 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function get_call_termination_code(Request $request, $code)
+
+    public function get_call_termination_code(Request $request, $code)
     {
-		// Resolve the Code to Description
+        // Resolve the Code to Description
         return Sonus5kCDR::get_call_termination_code($code);
     }
-	
-	public function get_disconnect_initiator_code(Request $request, $code)
+
+    public function get_disconnect_initiator_code(Request $request, $code)
     {
-		// Resolve the Code to Description
+        // Resolve the Code to Description
         return Sonus5kCDR::get_disconnect_initiator_code($code);
     }
 

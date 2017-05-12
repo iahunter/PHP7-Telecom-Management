@@ -59,7 +59,7 @@
 		
 		<div ng-if="!vm.loading && !vm.noactivecalls">
 			
-			<h4>Found {{vm.callarray.length}} calls with Loss of 100 packets or greater</h4>
+			<h4>Found {{vm.callarray.length}} calls with packet loss greater than 1%</h4>
 			
 			
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -85,6 +85,23 @@
 							</th>
 							
 							<th>
+								<a href="" ng-click="sortType = 'calling_number'; sortReverse = !sortReverse" style="color:black">
+									calling_number
+										<span ng-show="sortType == 'calling_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'calling_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							
+							<th>
+								<a href="" ng-click="sortType = 'called_number'; sortReverse = !sortReverse" style="color:black">
+									called_number
+										<span ng-show="sortType == 'called_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'called_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'ingress_lost_ptks'; sortReverse = !sortReverse" style="color:black">
 									ingress_lost_ptks
 										<span ng-show="sortType == 'ingress_lost_ptks' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -93,18 +110,10 @@
 							</th>
 							
 							<th>
-								<a href="" ng-click="sortType = 'ingress_media'; sortReverse = !sortReverse" style="color:black">
-									ingress_media
-										<span ng-show="sortType == 'ingress_media' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'ingress_media' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'ingress_callid'; sortReverse = !sortReverse" style="color:black">
-									ingress_callid
-										<span ng-show="sortType == 'ingress_callid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'ingress_callid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'ingress_pkt_loss_percent'; sortReverse = !sortReverse" style="color:black">
+									ingress_pkt_loss_percent
+										<span ng-show="sortType == 'ingress_pkt_loss_percent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingress_pkt_loss_percent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							
@@ -117,10 +126,34 @@
 								</a>
 							</th>
 							<th>
+								<a href="" ng-click="sortType = 'egress_pkt_loss_percent'; sortReverse = !sortReverse" style="color:black">
+									egress_pkt_loss_percent
+										<span ng-show="sortType == 'egress_pkt_loss_percent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egress_pkt_loss_percent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'ingress_media'; sortReverse = !sortReverse" style="color:black">
+									ingress_media
+										<span ng-show="sortType == 'ingress_media' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingress_media' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'egress_media'; sortReverse = !sortReverse" style="color:black">
 									egress_media
 										<span ng-show="sortType == 'egress_media' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'egress_media' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'ingress_callid'; sortReverse = !sortReverse" style="color:black">
+									ingress_callid
+										<span ng-show="sortType == 'ingress_callid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingress_callid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
@@ -148,44 +181,6 @@
 										<span ng-show="sortType == 'start_time' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'calling_name'; sortReverse = !sortReverse" style="color:black">
-									calling_name
-										<span ng-show="sortType == 'calling_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'calling_name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'calling_number'; sortReverse = !sortReverse" style="color:black">
-									calling_number
-										<span ng-show="sortType == 'calling_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'calling_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							
-							<th>
-								<a href="" ng-click="sortType = 'called_number'; sortReverse = !sortReverse" style="color:black">
-									called_number
-										<span ng-show="sortType == 'called_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'called_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							<th>
-								<a href="" ng-click="sortType = 'dialed_number'; sortReverse = !sortReverse" style="color:black">
-									dialed_number
-										<span ng-show="sortType == 'dialed_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'dialed_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-
-						
-							
-
-							
-							
 							<th>
 								<a href="" ng-click="sortType = 'disconnect_time'; sortReverse = !sortReverse" style="color:black">
 									disconnect_time
@@ -200,6 +195,46 @@
 										<span ng-show="sortType == 'call_duration' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'calling_name'; sortReverse = !sortReverse" style="color:black">
+									calling_name
+										<span ng-show="sortType == 'calling_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'calling_name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							
+							<th>
+								<a href="" ng-click="sortType = 'dialed_number'; sortReverse = !sortReverse" style="color:black">
+									dialed_number
+										<span ng-show="sortType == 'dialed_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'dialed_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+						
+							
+
+							
+							
+							
+							
+							<th>
+								<a href="" ng-click="sortType = 'disconnect_initiator'; sortReverse = !sortReverse" style="color:black">
+									disconnect_initiator
+										<span ng-show="sortType == 'disconnect_initiator' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'disconnect_initiator' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'disconnect_reason'; sortReverse = !sortReverse" style="color:black">
+									disconnect_reason
+										<span ng-show="sortType == 'disconnect_reason' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'disconnect_reason' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
 							<th>
 								<a href="" ng-click="sortType = 'ingress_trunkgrp'; sortReverse = !sortReverse" style="color:black">
 									ingress_trunkgrp
@@ -230,23 +265,33 @@
 						<td>{{ call.gw_name}}</td>
 						<td>{{ call.type}}</td>
 						
+						<td>{{ call.calling_number}}</td>
+						<td>{{ call.called_number}}</td>
+						
 						<td>{{ call.ingress_lost_ptks}} <i class="fa fa-exclamation-triangle" ng-if="call.ingress_lost_ptks > 100"></i></td>
-						<td>{{ call.ingress_media}}</td>
-						<td>{{ call.ingress_callid}}</td>
+						<td>{{ call.ingress_pkt_loss_percent}} % <i class="fa fa-exclamation-triangle" ng-if="call.ingress_pkt_loss_percent > 1"></i></td>
 						
 						<td>{{ call.egress_lost_ptks}} <i class="fa fa-exclamation-triangle" ng-if="call.egress_lost_ptks > 100"></i></td>
+						<td>{{ call.egress_pkt_loss_percent}} % <i class="fa fa-exclamation-triangle" ng-if="call.egress_pkt_loss_percent > 1"></i></td>
+						
+						<td>{{ call.ingress_media}}</td>
 						<td>{{ call.egress_media}}</td>
+						
+						<td>{{ call.ingress_callid}}</td>
 						<td>{{ call.egress_callid}}</td>
 						
 						<td>{{ call.accounting_id}}</td>
 						<td>{{ call.start_time}}</td>
-						<td>{{ call.calling_name}}</td>
-						<td>{{ call.calling_number}}</td>
-						<td>{{ call.called_number}}</td>
-						<td>{{ call.dialed_number}}</td>
-
 						<td>{{ call.disconnect_time}}</td>
 						<td>{{ call.call_duration}}</td>
+						<td>{{ call.calling_name}}</td>
+						
+						<td>{{ call.dialed_number}}</td>
+
+						
+						<td>{{ call.disconnect_initiator}} - {{ call.disconnect_initiator_desc}}</td>
+						<td>{{ call.disconnect_reason}} - {{call.disconnect_reason_desc}}</td>
+						
 						
 						<td>{{ call.ingress_trunkgrp}}</td>
 						<td>{{ call.egress_trunkgrp}}</td>

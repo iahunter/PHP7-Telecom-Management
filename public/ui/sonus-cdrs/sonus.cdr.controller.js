@@ -49,13 +49,23 @@ angular
 
 					// Convert DB Timestamp to local PC Time. 
 					angular.forEach(callarray, function(call) {
-						var date = new Date(call.start_time + " UTC");
-						date = date.toLocaleString()
-						call.start_time = date;
+						console.log(call.start_time)
 						
-						var date = new Date(call.disconnect_time + " UTC");
-						date = date.toLocaleString()
-						call.disconnect_time = date;
+						var dateString = call.start_time;
+						
+						// Change space to a T for iOS device support
+						var date = new Date(dateString.replace(' ', 'T'));
+						
+						//var date = new Date(call.start_time + " UTC");
+						//var date = moment(call.start_time + " UTC");
+						//date = date.toLocaleString()
+						call.start_time = date.toLocaleString()
+						
+						var dateString = call.disconnect_time;
+						//var date = new Date(call.disconnect_time + " UTC");
+						var date = new Date(dateString.replace(' ', 'T'));
+						//date = date.toLocaleString()
+						call.disconnect_time = date.toLocaleString()
 					});
 					
 

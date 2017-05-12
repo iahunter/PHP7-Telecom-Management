@@ -191,3 +191,27 @@
      * )
      **/
     $api->get('sonus/call_termination_code/{code}', 'App\Http\Controllers\Sonus5kCDRcontroller@get_call_termination_code');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/disconnect_initiator_code/{code}",
+     *     tags={"Management - Sonus - Onbox CDRs"},
+     *     summary="Lookup Sonus Disconnect Initiator Code by ID",
+     *     description="",
+     *     operationId="getterminationcode",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="code",
+     *         in="path",
+     *         description="Call Termination Code ID",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('sonus/disconnect_initiator_code/{code}', 'App\Http\Controllers\Sonus5kCDRcontroller@get_disconnect_initiator_code');

@@ -62,3 +62,35 @@
      * )
      **/
     $api->get('/calls/weekscallstats', 'App\Http\Controllers\Callcontroller@list_last_7days_callstats');
+	
+	
+	/**
+     * @SWG\Post(
+     *     path="/telephony/api/calls/callsbydaterange",
+     *     tags={"Calls"},
+     *     summary="List CDR Records by Date Range",
+     *     description="",
+     *     operationId="list_callstats_by_date_range",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *	   @SWG\Parameter(
+     *         name="start",
+     *         in="formData",
+     *         description="Example: 5/10/2017",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *	   @SWG\Parameter(
+     *         name="end",
+     *         in="formData",
+     *         description="Example: 5/10/2017",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->post('/calls/callsbydaterange', 'App\Http\Controllers\Callcontroller@list_callstats_by_date_range');

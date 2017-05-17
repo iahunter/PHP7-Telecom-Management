@@ -130,6 +130,43 @@
                 }
             }
         },
+        "/telephony/api/calls/callsbydaterange": {
+            "post": {
+                "tags": [
+                    "Calls"
+                ],
+                "summary": "List CDR Records by Date Range",
+                "description": "",
+                "operationId": "list_callstats_by_date_range",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "start",
+                        "in": "formData",
+                        "description": "Example: 5/10/2017",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "end",
+                        "in": "formData",
+                        "description": "Example: 5/10/2017",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/ctiroutepoint/{name}": {
             "get": {
                 "tags": [

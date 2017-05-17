@@ -1,8 +1,8 @@
 {
-  "name": "telephonyangularui",
-  "homepage": "https://github.com/iahunter/PHP7-Telephone-Numbers",
+  "name": "telephonyui",
+  "homepage": "https://github.com/iahunter/PHP7-Telecom-Management",
   "authors": [
-    "Metaclassing <metaclassing@secureobscure.com>"
+    "iahunter"
   ],
   "description": "test angular ui",
   "main": "app.js",

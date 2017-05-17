@@ -95,4 +95,35 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	 public function list_callstats_by_date_range(Request $request)
+    {
+        // Historical Log Query
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('read', Calls::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $start = Carbon::parse($request->start);
+        $end = Carbon::parse($request->end)->addDay()->addHours(6);
+
+        if (! \App\Calls::whereBetween('created_at', [$start, $end])->count()) {
+            abort(404, 'No records found');
+        } else {
+            $calls = \App\Calls::whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
+        }
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'count'                => count($calls),
+                    'request'              => $request->all(),
+                    'result'               => $calls,
+                    ];
+
+        return response()->json($response);
+    }
 }

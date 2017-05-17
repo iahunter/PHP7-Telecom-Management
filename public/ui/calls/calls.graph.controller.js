@@ -65,6 +65,12 @@ angular
 							}
 						});
 						
+						// Change time to local time. 
+						var dateString = key.created_at;
+						var created_at = moment().utc().format(dateString);
+						created_at = moment.utc(created_at).toDate();
+						key.created_at = created_at.toLocaleString()
+						
 						// Push date and time onto callgraph array for x axis labels. 
 						vm.dayscallgraph['chartlabels'].push(key.created_at);
 					});
@@ -141,6 +147,12 @@ angular
 								vm.sbcs[v].push(k.totalCalls);
 							}
 						});
+						
+						// Change time to local time. 
+						var dateString = key.created_at;
+						var created_at = moment().utc().format(dateString);
+						created_at = moment.utc(created_at).toDate();
+						key.created_at = created_at.toLocaleString()
 						
 						// Push date and time onto callgraph array for x axis labels. 
 						vm.weekscallgraph['chartlabels'].push(key.created_at);
@@ -219,6 +231,12 @@ angular
 							vm.sbcs[v].push(k.totalCalls);
 						}
 					});
+					
+					// Change time to local time. 
+					var dateString = key.created_at;
+					var created_at = moment().utc().format(dateString);
+					created_at = moment.utc(created_at).toDate();
+					key.created_at = created_at.toLocaleString();
 					
 					// Push date and time onto callgraph array for x axis labels. 
 					vm.callgraph['chartlabels'].push(key.created_at);

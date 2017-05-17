@@ -95,8 +95,8 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	 public function list_callstats_by_date_range(Request $request)
+
+    public function list_callstats_by_date_range(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();

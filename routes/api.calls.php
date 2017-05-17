@@ -62,9 +62,8 @@
      * )
      **/
     $api->get('/calls/weekscallstats', 'App\Http\Controllers\Callcontroller@list_last_7days_callstats');
-	
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/calls/callsbydaterange",
      *     tags={"Calls"},

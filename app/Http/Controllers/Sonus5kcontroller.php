@@ -154,25 +154,24 @@ class Sonus5kcontroller extends Controller
 
                         $ingress_pkt_loss = $call['ingressMediaStream1PacketsLost'];
                         $ingress_pkts_recieved = $call['ingressMediaStream1PacketsReceived'];
-						if($ingress_pkts_recieved + $ingress_pkt_loss){
-							$ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
-							$ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-							$call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
-						}else{
-							$call['ingress_pkt_loss_percent'] = 0;
-						}
-                        
+                        if ($ingress_pkts_recieved + $ingress_pkt_loss) {
+                            $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
+                            $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+                            $call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
+                        } else {
+                            $call['ingress_pkt_loss_percent'] = 0;
+                        }
 
                         $egress_pkts_recieved = $call['egressMediaStream1PacketsReceived'];
                         $egress_pkt_loss = $call['egressMediaStream1PacketsLost'];
-						if($egress_pkts_recieved + $egress_pkt_loss){
-							$egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
-							$egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-							$call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
-						}else{
-							$call['egress_pkt_loss_percent'] = 0;
-						}
-                        
+                        if ($egress_pkts_recieved + $egress_pkt_loss) {
+                            $egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
+                            $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+                            $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
+                        } else {
+                            $call['egress_pkt_loss_percent'] = 0;
+                        }
+
                         $calls[] = $call;
                     }
 

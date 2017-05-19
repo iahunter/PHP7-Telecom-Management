@@ -82,6 +82,31 @@
      * )
      **/
     $api->get('sonus/list_todays_calls_with_loss', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_calls_with_loss');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/list_todays_attempts",
+     *     tags={"CDR - Sonus History"},
+     *     summary="Get Todays CDR Attmetps",
+     *     description="",
+     *     operationId="attempts",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/list_todays_attempts', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_attempts');
+	
+	
+
 
     /**
      * @SWG\Get(

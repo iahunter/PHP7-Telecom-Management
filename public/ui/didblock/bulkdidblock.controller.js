@@ -24,7 +24,7 @@ angular
 								
 			$location.path('/accessdenied');
 		}*/
-		if(!vm.permissions.create.DIDBlock){
+		if(!vm.permissions.create.Didblock){
 								//change Phone to BulkDID?
 								
 			$location.path('/accessdenied');
@@ -96,7 +96,7 @@ angular
 			
 			
 			console.log(numbers);
-			phones = [];
+			blocks = [];
 			for (key in numbers.blocks){
 				
 				value = numbers.blocks[key];
@@ -116,63 +116,28 @@ angular
 				
 				
 				//console.log(phone);
-				phones.push(phone);
+				blocks.push(phone);
 			}
 			
 			//console.log(phones);
 
 			vm.count = 0;
 			
-			//This was commented out already
-			//vm.numberstable = phones;
-			//vm.didblocktable = blocks;
-			
-			// make phonesarray didblockarray, modify variables accordingly
-			
-			/*var phonesarray = [];
-			for (phone in phones){
-				phonearray = {};
-				phonearray['phoneplan'] = id;
-				phonearray['firstname'] = phones[phone][0];
-				phonearray['lastname'] = phones[phone][1];
-				phonearray['username'] = phones[phone][2];
-				phonearray['name'] = phones[phone][3];
-				phonearray['device'] = phones[phone][4];
-				phonearray['dn'] = phones[phone][5];
-				phonearray['language'] = phones[phone][6];
-				phonearray['language'] = phonearray['language'].trim()
-				
-				if(phonearray['language']){
-					phonearray['language'] = phonearray['language'].toLowerCase();
-					if(phonearray['language'] == "e" || phonearray['language'] == "en" || phonearray['language'] == "eng"){
-						phonearray['language'] = 'english';
-					}
-					if(phonearray['language'] == "f" || phonearray['language'] == "fr" || phonearray['language'] == "fre"){
-						phonearray['language'] = 'french';
-					}
-				}else{
-					phonearray['language'] = 'english';
-				}
-				
-				phonearray['vmpass'] = phones[phone][7];
-				phonearray['voicemail'] = phones[phone][8];
-				phonearray['notes'] = phones[phone][9];
-				phonesarray.push(phonearray);
-				//console.log(phonearray);
-			}*/
 			var didblocksarray = [];
 			for (block in blocks){
 				didblockarray = {};
 				//didblockarray['phoneplan'] = id; probably not needed since we're not tieing to an ID
-				didblockarray['firstname'] = blocks[block][0];
-				didblockarray['lastname'] = blocks[block][1];
-				didblockarray['username'] = blocks[block][2];
-				didblockarray['name'] = blocks[block][3];
-				didblockarray['device'] = blocks[block][4];
-				didblockarray['dn'] = blocks[block][5];
-				didblockarray['language'] = blocks[block][6];
-				didblockarray['language'] = didblockarray['language'].trim()
+				didblockarray['name'] = blocks[block][0];
+				didblockarray['carrier'] = blocks[block][1];
+				didblockarray['comment'] = blocks[block][2];
+				didblockarray['country_code'] = blocks[block][3];
+				didblockarray['start'] = blocks[block][4];
+				didblockarray['end'] = blocks[block][5];
+				didblockarray['type'] = blocks[block][6];
+				didblockarray['reserved'] = blocks[block][7]
+				//didblockarray['reserved'] = didblockarray['language'].trim()
 				
+				/*
 				if(didblockarray['language']){
 					didblockarray['language'] = didblockarray['language'].toLowerCase();
 					if(didblockarray['language'] == "e" || didblockarray['language'] == "en" || didblockarray['language'] == "eng"){
@@ -184,10 +149,7 @@ angular
 				}else{
 					didblockarray['language'] = 'english';
 				}
-				
-				didblockarray['vmpass'] = blocks[block][7];
-				didblockarray['voicemail'] = blocks[block][8];
-				didblockarray['notes'] = blocks[block][9];
+				*/
 				didblocksarray.push(didblockarray);
 				//console.log(didblockarray);
 			}			
@@ -195,43 +157,28 @@ angular
 			//console.log(phonesarray);
 			console.log(didblocksarray);
 			//vm.numberstable = phonesarray;
-			vm.didblocktable = phonesarray;
+			vm.didblocktable = didblocksarray;
 
 		}
 		
-		
-		// Create Phone 
-		/*vm.createphone = function(phone) {
-			phone.phoneplan = id;
-			phone.site = vm.site.site;
-			
-			console.log(phone);
-			
-			sitePhonePlanService.createphone(phone).then(function(data) {
-			  //alert('phone was added successfully');
-			  //return $state.reload();
-			}, function(error) {
-				alert('An error occurred while adding phone' + error.data.message)
-				console.log(error)
-			});
-			//$state.reload();
-		}*/
+
 		// Create DID Blocks
 		vm.createdidblock = function(didbock) {
-			didbock.phoneplan = id;
-			didbock.site = vm.site.site;
-			
+			console.log('Creating DIDBlock:')
 			console.log(didbock);
 			
+			
 			//sitePhonePlanService.createphone(phone).then(function(data) {
-			telephonyService.createdidblock(phone).then(function(data) {
-			  //alert('phone was added successfully');
-			  //return $state.reload();
-			}, function(error) {
-				alert('An error occurred while adding phone' + error.data.message)
-				console.log(error)
-			});
+			telephonyService.createDidblock(didbock)
+				.then(function(data) {
+					//alert('phone was added successfully');
+					//return $state.reload();
+				}, function(error) {
+					alert('An error occurred while adding phone' + error.data.message)
+					console.log(error)
+				});
 			//$state.reload();
+			
 		}
 		
 		
@@ -250,20 +197,21 @@ angular
 			//return $state.go('getphoneplan/{id}');
 			
 		} */
-		vm.insertdidblocks = function(phones){
-			
+		vm.insertdidblocks = function(blocks){
+			console.log("Blocks")
+			console.log(blocks);
 			for (block in blocks){
-				block = blocks[block];
-				console.log(block);
-				vm.createdidblock(block);
+				//block = blocks[block];
+				//console.log(block);
+				vm.createdidblock(blocks[block]);
 			}
 			
-			$timeout(function(){
-				$location.path('phoneplan/'+id);
-			}, 2500);
-			//$location.path('phoneplan/'+id);
-			//return $state.go('getphoneplan/{id}');
 			
+			$timeout(function(){
+				$location.path('didblock');
+			}, 2500);
+			
+		
 		}
 		
 		
@@ -277,7 +225,7 @@ angular
 			console.log(number)
 		}*/
 		// Update DID Block in List with save button. 
-		vm.update = function(number) { //what should number be?
+		vm.update = function(number) { 
 			console.log(number)
 		}		
 		

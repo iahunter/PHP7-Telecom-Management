@@ -3657,6 +3657,30 @@
                 }
             }
         },
+        "/telephony/api/sonus/list_todays_attempts": {
+            "get": {
+                "tags": [
+                    "CDR - Sonus History"
+                ],
+                "summary": "Get Todays CDRs with Packet Loss",
+                "description": "",
+                "operationId": "backups",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/sonus/cdrs": {
             "get": {
                 "tags": [

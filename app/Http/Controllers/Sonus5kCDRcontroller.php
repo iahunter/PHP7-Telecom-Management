@@ -178,6 +178,62 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	public function list_todays_attempts(Request $request)
+    {
+        // Historical Log Query
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('read', Sonus5kCDR::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        // Add 6 hrs to compensate for the timestamps in
+        $start = Carbon::now()->subHours(24)->toDateTimeString();
+        //$end = Carbon::tomorrow()->addHours(6)->toDateTimeString();
+        $end = Carbon::now()->toDateTimeString();
+        //return $start;
+        if (! \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
+            ->where(function ($query) {
+                $query->where('type', "ATTEMPT")
+                ->count();
+            })
+            ) {
+            abort(404, 'No records found');
+        } else {
+            $calls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
+
+                ->where(function ($query) {
+                    $query->where('type', "ATTEMPT");
+                })
+                ->orderby('start_time')
+                ->get();
+        }
+
+        $return = [];
+
+		
+        foreach ($calls as $call) {
+			$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
+            $call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
+			$return[] = $call;
+        }
+		
+        $calls = array_reverse($return);
+		
+        
+		$response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'count'                => count($calls),
+                    'result'               => $calls,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function get_call_termination_code(Request $request, $code)
     {

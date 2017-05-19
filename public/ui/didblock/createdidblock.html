@@ -16,6 +16,11 @@
 							<div ng-message='maxlength'> Too long </div>
 			</script>
 					<legend><h2><i class="fa fa-pencil fa-fw"></i> Create New DID Block</h2></legend>
+					
+					<a href="#/importdidblock" ng-if="vm.permissions.create.Didblock" class="btn btn-primary btn-sm ng-scope"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
+					
+					<hr>
+					
 					<form class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">

@@ -240,10 +240,16 @@
                 controller: 'CallGraph.IndexController',
                 controllerAs: 'vm'
             })
-			.state('sonus/cdr/todays_bad_calls', {
-                url: "/sonus/cdr/todays_bad_calls",
-                templateUrl: 'sonus-cdrs/sonus.cdr.html',
-                controller: 'Sonus.CDRController',
+			.state('sonus/cdr/todays_calls_attempts', {
+                url: "/sonus/cdr/todays_calls_attempts",
+                templateUrl: 'sonus-cdrs/sonus.todays.attempts.cdr.html',
+                controller: 'Sonus.Attempts.CDR.Controller',
+                controllerAs: 'vm'
+            })
+			.state('sonus/cdr/todays_calls_with_pkt_loss', {
+                url: "/sonus/cdr/todays_calls_with_pkt_loss",
+                templateUrl: 'sonus-cdrs/sonus.today.pktloss.cdr.html',
+                controller: 'Sonus.Pktloss.CDR.Controller',
                 controllerAs: 'vm'
             });
 

@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Sonus.CDRController', ['SonusCDRService', '$location', '$timeout', '$interval', '$state', '$scope', function(SonusCDRService, $location, $timeout, $interval, $state, $scope) {
+	.controller('Sonus.Pktloss.CDR.Controller', ['SonusCDRService', '$location', '$timeout', '$interval', '$state', '$scope', function(SonusCDRService, $location, $timeout, $interval, $state, $scope) {
 	
 		var vm = this;
 		

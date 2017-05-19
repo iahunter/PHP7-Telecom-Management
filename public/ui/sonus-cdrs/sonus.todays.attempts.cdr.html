@@ -1,0 +1,254 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+
+
+<div style="margin-left:5%; margin-right:5%;">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	<!--Include the SBC Summary Section on Home Page. -->
+	<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
+	
+	<div style="margin:50px"></div>
+	
+	<legend>Sonus SBC Report - Today's Call ATTEMPTs <div class="pull-right">{{vm.datetime}}</div><div style="margin:10px"></div>
+		
+	</legend>
+		
+		
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		
+		
+		<div style="margin:25px"></div>
+
+		<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> 
+			
+		<div style="margin:25px"></div>
+		
+
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		<div ng-if="vm.noactivecalls;" class="well">
+			<div class="row">
+				<h4>No Calls Found</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		
+		<div ng-if="!vm.loading && !vm.noactivecalls">
+			
+			<h4>Found {{vm.callarray.length}} ATTEMPT Records</h4>
+			
+			<p>This will auto update every 10 mins</p>
+			
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">  
+				<table class="table table-striped table-condensed table-bordered table-hover" >
+					<thead>
+						<tr style="background-color: #cce6ff;">
+						
+							<th>
+								<a href="" ng-click="sortType = 'gw_name'; sortReverse = !sortReverse" style="color:black">
+									gw_name
+										<span ng-show="sortType == 'gw_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'gw_name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'start_time'; sortReverse = !sortReverse" style="color:black">
+									start_time
+										<span ng-show="sortType == 'start_time' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'start_time' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'disconnect_time'; sortReverse = !sortReverse" style="color:black">
+									disconnect_time
+										<span ng-show="sortType == 'disconnect_time' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'disconnect_time' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'ingress_trunkgrp'; sortReverse = !sortReverse" style="color:black">
+									ingress_trunkgrp
+										<span ng-show="sortType == 'ingress_trunkgrp' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingress_trunkgrp' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'egress_trunkgrp'; sortReverse = !sortReverse" style="color:black">
+									egress_trunkgrp
+										<span ng-show="sortType == 'egress_trunkgrp' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egress_trunkgrp' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							
+							<th>
+								<a href="" ng-click="sortType = 'calling_name'; sortReverse = !sortReverse" style="color:black">
+									calling_name
+										<span ng-show="sortType == 'calling_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'calling_name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'calling_number'; sortReverse = !sortReverse" style="color:black">
+									calling_number
+										<span ng-show="sortType == 'calling_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'calling_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'called_number'; sortReverse = !sortReverse" style="color:black">
+									called_number
+										<span ng-show="sortType == 'called_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'called_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'dialed_number'; sortReverse = !sortReverse" style="color:black">
+									dialed_number
+										<span ng-show="sortType == 'dialed_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'dialed_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'disconnect_initiator'; sortReverse = !sortReverse" style="color:black">
+									disconnect_initiator
+										<span ng-show="sortType == 'disconnect_initiator' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'disconnect_initiator' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'disconnect_reason'; sortReverse = !sortReverse" style="color:black">
+									disconnect_reason
+										<span ng-show="sortType == 'disconnect_reason' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'disconnect_reason' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'disconnect_ingress_sip_response'; sortReverse = !sortReverse" style="color:black">
+									sip_ingress
+										<span ng-show="sortType == 'disconnect_ingress_sip_response' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'disconnect_ingress_sip_response' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'disconnect_egress_sip_response'; sortReverse = !sortReverse" style="color:black">
+									sip_egress
+										<span ng-show="sortType == 'disconnect_egress_sip_response' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'disconnect_egress_sip_response' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+							
+							<th>
+								<a href="" ng-click="sortType = 'ingress_callid'; sortReverse = !sortReverse" style="color:black">
+									ingress_callid
+										<span ng-show="sortType == 'ingress_callid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingress_callid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'egress_callid'; sortReverse = !sortReverse" style="color:black">
+									egress_callid
+										<span ng-show="sortType == 'egress_callid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egress_callid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'accounting_id'; sortReverse = !sortReverse" style="color:black">
+									accounting_id
+										<span ng-show="sortType == 'accounting_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'accounting_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							
+							
+							
+
+							
+
+														
+
+						</tr>
+					</thead>
+					<tbody style="font-size: 12px;">
+					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
+						<!--<td>{{call}}</td>-->
+						<td>{{ call.gw_name}}</td>
+						<td>{{ call.start_time}}</td>
+						<td>{{ call.disconnect_time}}</td>
+						<td>{{ call.ingress_trunkgrp}}</td>
+						<td>{{ call.egress_trunkgrp}}</td>
+						<td>{{ call.calling_name}}</td>
+						<td>{{ call.calling_number}}</td>
+						
+						<td>{{ call.called_number}}</td>
+						<td>{{ call.dialed_number}}</td>
+						
+						
+						
+						<td>{{ call.disconnect_initiator}} - {{ call.disconnect_initiator_desc}}</td>
+						<td>{{ call.disconnect_reason}} - {{call.disconnect_reason_desc}}<i class="fa fa-exclamation-triangle" ng-if="call.disconnect_reason != 16"></i></td>
+						
+						<td>{{ call.disconnect_ingress_sip_response}}</td>
+						<td>{{ call.disconnect_egress_sip_response}}</td>
+						
+						<td>{{ call.ingress_callid}}</td>
+						<td>{{ call.egress_callid}}</td>
+						
+						<td>{{ call.accounting_id}}</td>
+						
+						
+						
+						
+						
+						
+						
+						
+
+					</tr>
+					</tbody>
+				</table>
+			</div> 
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+

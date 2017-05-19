@@ -82,9 +82,8 @@
      * )
      **/
     $api->get('sonus/list_todays_calls_with_loss', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_calls_with_loss');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/list_todays_attempts",
      *     tags={"CDR - Sonus History"},
@@ -104,9 +103,6 @@
      * )
      **/
     $api->get('sonus/list_todays_attempts', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_attempts');
-	
-	
-
 
     /**
      * @SWG\Get(

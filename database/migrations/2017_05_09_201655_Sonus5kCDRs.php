@@ -30,8 +30,8 @@ class Sonus5kCDRs extends Migration
 
             $table->integer('disconnect_initiator')->nullable();
             $table->integer('disconnect_reason')->nullable();
-			$table->integer('disconnect_ingress_sip_response')->nullable();
-			$table->integer('disconnect_egress_sip_response')->nullable();
+            $table->integer('disconnect_ingress_sip_response')->nullable();
+            $table->integer('disconnect_egress_sip_response')->nullable();
 
             $table->string('route_label')->nullable();
 

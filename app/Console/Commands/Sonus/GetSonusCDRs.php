@@ -100,19 +100,17 @@ class GetSonusCDRs extends Command
                             $RECORD['ingress_lost_ptks'] = $cdr['Media Stream Stats'][7];
                             $RECORD['egress_lost_ptks'] = $cdr['Media Stream Stats'][13];
                         }
-                        
                     }
-					
-					if (isset($cdr['Ingress Protocol Variant Specific Data']) && $cdr['Ingress Protocol Variant Specific Data']) {
-						$RECORD['ingress_callid'] = $cdr['Ingress Protocol Variant Specific Data'][1];
-						$RECORD['disconnect_ingress_sip_response'] = $cdr["Ingress Protocol Variant Specific Data"]['18'];
-						
-					}
-					if (isset($cdr['Egress Protocol Variant Specific Data']) && $cdr['Egress Protocol Variant Specific Data']) {
-						$RECORD['egress_callid'] = $cdr['Egress Protocol Variant Specific Data'][1];
-						$RECORD['disconnect_egress_sip_response'] = $cdr["Egress Protocol Variant Specific Data"]["18"];
-					}
-					
+
+                    if (isset($cdr['Ingress Protocol Variant Specific Data']) && $cdr['Ingress Protocol Variant Specific Data']) {
+                        $RECORD['ingress_callid'] = $cdr['Ingress Protocol Variant Specific Data'][1];
+                        $RECORD['disconnect_ingress_sip_response'] = $cdr['Ingress Protocol Variant Specific Data']['18'];
+                    }
+                    if (isset($cdr['Egress Protocol Variant Specific Data']) && $cdr['Egress Protocol Variant Specific Data']) {
+                        $RECORD['egress_callid'] = $cdr['Egress Protocol Variant Specific Data'][1];
+                        $RECORD['disconnect_egress_sip_response'] = $cdr['Egress Protocol Variant Specific Data']['18'];
+                    }
+
                     $RECORD['cdr_json'] = $cdr;
 
                     //print_r($RECORD);

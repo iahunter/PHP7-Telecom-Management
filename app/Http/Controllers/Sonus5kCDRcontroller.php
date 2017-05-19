@@ -178,8 +178,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_todays_attempts(Request $request)
+
+    public function list_todays_attempts(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
@@ -196,7 +196,7 @@ class Sonus5kCDRcontroller extends Controller
         //return $start;
         if (! \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
             ->where(function ($query) {
-                $query->where('type', "ATTEMPT")
+                $query->where('type', 'ATTEMPT')
                 ->count();
             })
             ) {
@@ -205,7 +205,7 @@ class Sonus5kCDRcontroller extends Controller
             $calls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
 
                 ->where(function ($query) {
-                    $query->where('type', "ATTEMPT");
+                    $query->where('type', 'ATTEMPT');
                 })
                 ->orderby('start_time')
                 ->get();
@@ -213,17 +213,15 @@ class Sonus5kCDRcontroller extends Controller
 
         $return = [];
 
-		
         foreach ($calls as $call) {
-			$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
+            $call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
             $call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-			$return[] = $call;
+            $return[] = $call;
         }
-		
+
         $calls = array_reverse($return);
-		
-        
-		$response = [
+
+        $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',

@@ -28,7 +28,7 @@ class Didcontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-        $didblocks = Didblock::all();
+        $didblocks = Didblock::orderBy('start')->get();
 
         $stats = $this->getDidblockUtilization();
 

@@ -31,7 +31,7 @@ class SitePlanController extends Controller
             abort(401, 'You are not authorized');
         }
 
-        $sites = Site::all();
+        $sites = Site::orderBy('sitecode')->get();
 
         $show = [];
         foreach ($sites as $site) {

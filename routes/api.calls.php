@@ -62,6 +62,28 @@
      * )
      **/
     $api->get('/calls/weekscallstats', 'App\Http\Controllers\Callcontroller@list_last_7days_callstats');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/calls/monthcallstats",
+     *     tags={"Calls"},
+     *     summary="List Month Call Stats",
+     *     description="",
+     *     operationId="listmonthscallstats",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('/calls/monthcallstats', 'App\Http\Controllers\Callcontroller@list_last_month_callstats');
 
     /**
      * @SWG\Post(
@@ -93,3 +115,5 @@
      * )
      **/
     $api->post('/calls/callsbydaterange', 'App\Http\Controllers\Callcontroller@list_callstats_by_date_range');
+	
+	

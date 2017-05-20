@@ -95,6 +95,35 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	
+	public function list_last_month_callstats()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if (! $user->can('read', Calls::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $currentDate = \Carbon\Carbon::now();
+        $end = $currentDate->toDateTimeString();
+        $start = $currentDate->subMonth()->toDateTimeString();
+
+        $calls = Calls::whereBetween('created_at', [$start, $end])->get();
+
+        $stats = [];
+        foreach ($calls as $call) {
+            $call['stats'] = json_decode($call['stats']);
+            $stats[] = $call;
+        }
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'result'         => $stats,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function list_callstats_by_date_range(Request $request)
     {

@@ -188,7 +188,7 @@ angular
 
 		// Overall Call stats. Can get large and unmanageable. May want to make this into a selectable time graph and do some type of summarization on backend. 
 		
-		CallService.listcallstats()
+		CallService.monthcallstats()
 			.then(function(res){
 				
 				// Check for errors and if token has expired. 

@@ -183,7 +183,7 @@
 						<!--List View-->
 						<td><a ui-sref="getdidblock({id: didblock.id})"><button class="btn btn-xs btn-default btn-block">{{ didblock.id}}</button></a></td>
 						<!--<td>{{ didblock.id}}</a></td>-->
-						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.name}}</td>
+						<td   ng-show="!vm.edit[didblock.id]"><a ui-sref="getdidblock({id: didblock.id})"><b>{{ didblock.name}}</b></a></td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.carrier}}</a></td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.country_code}}</td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.start}}</td>

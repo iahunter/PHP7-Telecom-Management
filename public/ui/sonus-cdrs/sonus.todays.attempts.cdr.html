@@ -14,7 +14,7 @@
 	
 	<div style="margin:50px"></div>
 	
-	<legend>Sonus SBC Report - Today's Call ATTEMPTs <div class="pull-right">{{vm.datetime}}</div><div style="margin:10px"></div>
+	<legend>Sonus SBC Report - Last 24hrs - Call ATTEMPTs <div class="pull-right">{{vm.datetime}}</div><div style="margin:10px"></div>
 		
 	</legend>
 		
@@ -210,8 +210,8 @@
 					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
 						<!--<td>{{call}}</td>-->
 						<td>{{ call.gw_name}}</td>
-						<td>{{ call.start_time}}</td>
-						<td>{{ call.disconnect_time}}</td>
+						<td>{{ call.start_time_local}}</td>
+						<td>{{ call.disconnect_time_local}}</td>
 						<td>{{ call.ingress_trunkgrp}}</td>
 						<td>{{ call.egress_trunkgrp}}</td>
 						<td>{{ call.calling_name}}</td>

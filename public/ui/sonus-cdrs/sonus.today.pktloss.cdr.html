@@ -14,7 +14,7 @@
 	
 	<div style="margin:50px"></div>
 	
-	<legend>Sonus SBC Report - Today's Calls with Packet Loss <div class="pull-right">{{vm.datetime}}</div><div style="margin:10px"></div>
+	<legend>Sonus SBC Report - Last 24hrs - Calls with Packet Loss <div class="pull-right">{{vm.datetime}}</div><div style="margin:10px"></div>
 		
 	</legend>
 		
@@ -61,6 +61,7 @@
 			
 			<h4>Found {{vm.callarray.length}} calls with packet loss greater than 1%</h4>
 			
+			<p>This will auto update every 10 mins</p>
 			
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">  
@@ -248,8 +249,8 @@
 					<tbody style="font-size: 12px;">
 					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
 						<!--<td>{{call}}</td>-->
-						<td>{{ call.start_time}}</td>
-						<td>{{ call.disconnect_time}}</td>
+						<td>{{ call.start_time_local}}</td>
+						<td>{{ call.disconnect_time_local}}</td>
 						<td>{{ call.call_duration}}</td>
 						
 						<td>{{ call.calling_number}}</td>

@@ -23,7 +23,7 @@
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Number Tracking</a>
 				  <ul class="dropdown-menu">
 					<li><a href="#/didblock/create" ng-if="vm.permissions.create.Didblock == true">Add Number Block</a></li>
-					<li><a href="#/importdidblock" ng-if="vm.permissions.create.Didblock == true">Bulk Import Number Blocks</a></li>
+					<!--<li><a href="#/importdidblock" ng-if="vm.permissions.create.Didblock == true">Bulk Import Number Blocks</a></li>-->
 					<li><a href="#/didblock">List Number Blocks</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a href="#/checkdidusage">Check DID Usage</a></li>
@@ -84,8 +84,8 @@
 					<li><a href="#/sonus/activecalls">Active Call Summary</a></li>
 					<li><a href="#/sonus/activecalldetails">Active Call Media Details</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="#/sonus/cdr/todays_calls_with_pkt_loss"  ng-show="vm.permissions.read.Sonus5kCDR == true">Sonus - Today's Bad Call Report</a></li>
-					<li><a href="#/sonus/cdr/todays_calls_attempts"  ng-show="vm.permissions.read.Sonus5kCDR == true">Sonus - Today's Call Attempts</a></li>
+					<li><a href="#/sonus/cdr/todays_calls_with_pkt_loss"  ng-show="vm.permissions.read.Sonus5kCDR == true">24hr Call Packet Loss Report</a></li>
+					<li><a href="#/sonus/cdr/todays_calls_attempts"  ng-show="vm.permissions.read.Sonus5kCDR == true">24hr Call Attempts Report</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a href="#/sonus/activealarms">Active Alarms</a></li>
 					<li role="separator" class="divider"></li>

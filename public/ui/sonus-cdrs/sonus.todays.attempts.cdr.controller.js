@@ -54,14 +54,14 @@ angular
 						var dateString = call.start_time;
 						date_start = moment().utc().format(dateString);
 						date_start = moment.utc(date_start).toDate();
-						call.start_time = date_start.toLocaleString()
+						call.start_time_local = date_start.toLocaleString()
 
 						
 						// Convert UTC to local time
 						var dateString = call.disconnect_time;
 						date_disconnect = moment().utc().format(dateString);
 						date_disconnect = moment.utc(date_disconnect).toDate();
-						call.disconnect_time = date_disconnect.toLocaleString()
+						call.disconnect_time_local = date_disconnect.toLocaleString()
 						
 						
 					});

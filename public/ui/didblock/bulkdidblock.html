@@ -18,15 +18,15 @@
 								<div ng-message='maxlength'> Too long </div>
 				</script>
 					
-					<legend>Import Did Blocks
-					<a href="#/didblock"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Didblock List</button> </a> <!-- What to put here...-->
+					<legend>Import Number Blocks
+					<a href="#/didblock"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Number List</button> </a> <!-- What to put here...-->
 					<br> <div style="margin:15px"></div>
 					</legend>
 					
 					<!--<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of phones from the Excel Phone Template into the text box for import.<br><br><h5><b>Phone Template </b><a href="/telephony/storage/PhoneImportTemplate.xlsx"><button class="btn btn-danger btn-xs">Download</button></a></pre>-->
-					<pre ng-if="!vm.numberstable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of DID Blocks from the Excel Bulk DID Template into the text box for import.<br><br><h5><b>DID Block Template </b><a href="/telephony/storage/DIDBlockImportTemplate.xlsx"><button class="btn btn-danger btn-xs">Download</button></a></pre>
+					<pre ng-if="!vm.didblocktable" class="col-lg-12"><b><h5>1 row per line</b><br><br>Paste Rows of Number Blocks from the Excel Template into the text box for import.<br><br><h5><b>Number Block Template </b><a href="/telephony/storage/DIDBlockImportTemplate.xlsx"><button class="btn btn-danger btn-xs">Download</button></a></pre>
 
-						<form ng-if="!vm.numberstable" class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
+						<form ng-if="!vm.didblocktable" class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">
 							
 							<div class="row">
 							
@@ -45,13 +45,13 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-group" ng-class="{'has-error': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$invalid, 'has-success': addDidblockForm.blocks.$touched && addDidblockForm.blocks.$valid }">
-										<label for="blocks" class="control-label">Phones<small> (Do not include headers) </small></label>
+										<label for="blocks" class="control-label">Number Ranges<small> (Do not include headers) </small></label>
 										<textarea ng-model='vm.didblockForm.blocks' class="form-control" placeholder=" Name	Carrier	Comment	Country Code	Start	End	Type	Reserved"
  "
 											rows="10" id="blocks" name="blocks" required></textarea>
 										<!--<input textarea" ng-model='vm.didblockForm.name' required class="form-control"  rows="10" name="name" placeholder="Name">-->
 										<div ng-messages="addDidblockForm.blocks.$dirty && addDidblockForm.blocks.$error">
-											<div ng-message='required'> Phone rows are required </div>
+											<div ng-message='required'> Number rows are required </div>
 										</div>
 									</div>
 								</div>
@@ -91,7 +91,7 @@
 				</div>
 				
 				<ul ng-if="vm.didblocktable">
-					<li><h4><i><b>Please review your DID Blocks before you insert them.</b></i></h4></li>
+					<li><h4><i><b>Please review your Number Blocks before you insert them.</b></i></h4></li>
 				</ul>
 				<br>
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.didblocktable" >

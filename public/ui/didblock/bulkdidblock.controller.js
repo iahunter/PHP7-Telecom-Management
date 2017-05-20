@@ -171,6 +171,7 @@ angular
 			//sitePhonePlanService.createphone(phone).then(function(data) {
 			telephonyService.createDidblock(didbock)
 				.then(function(data) {
+					return data
 					//alert('phone was added successfully');
 					//return $state.reload();
 				}, function(error) {

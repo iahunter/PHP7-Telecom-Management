@@ -165,7 +165,7 @@ class Sonus5kCDRcontroller extends Controller
             }
         }
 
-        $calls = $return;
+        $calls = array_reverse($return);
 
         $response = [
                     'status_code'          => 200,

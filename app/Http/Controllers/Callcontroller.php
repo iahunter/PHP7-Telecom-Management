@@ -95,9 +95,8 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function list_last_month_callstats()
+
+    public function list_last_month_callstats()
     {
         $user = JWTAuth::parseToken()->authenticate();
         if (! $user->can('read', Calls::class)) {

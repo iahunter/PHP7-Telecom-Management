@@ -50,38 +50,38 @@ class CucmReportsController extends Controller
 
         //$sites = Cucmsiteconfigs::find(array('sitecode', 'trunking', 'e911'));
         $sites = DB::table('cucmsite')->where('deleted_at', '=', null)->select('sitecode', 'trunking', 'e911')->orderBy('sitecode')->get();
-		
-		$trunking = DB::table('cucmsite')
+
+        $trunking = DB::table('cucmsite')
             ->select('cucmsite.trunking', (DB::raw('count(cucmsite.trunking) as count')))
-			->groupBy('trunking')
-			->get();
+            ->groupBy('trunking')
+            ->get();
 
-		$trunkcount = [];
-		foreach($trunking as $i){
-			$trunkcount[$i->trunking] = $i->count;
-		}
-		
-		$e911 = DB::table('cucmsite')
+        $trunkcount = [];
+        foreach ($trunking as $i) {
+            $trunkcount[$i->trunking] = $i->count;
+        }
+
+        $e911 = DB::table('cucmsite')
             ->select('cucmsite.e911', (DB::raw('count(cucmsite.e911) as count')))
-			->groupBy('e911')
-			->get();
+            ->groupBy('e911')
+            ->get();
 
-		$e911count = [];
-		foreach($e911 as $i){
-			$e911count[$i->e911] = $i->count;
-		}
-		
-		//return $e911count;
-		//return $sites;
-		
+        $e911count = [];
+        foreach ($e911 as $i) {
+            $e911count[$i->e911] = $i->count;
+        }
+
+        //return $e911count;
+        //return $sites;
+
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-					'trunkingstats'		=> $trunkcount,
-					'e911stats'			=> $e911count,
-                    'response'          => $sites,
-					
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'trunkingstats'        => $trunkcount,
+                    'e911stats'            => $e911count,
+                    'response'             => $sites,
+
                     ];
 
         return response()->json($response);

@@ -12,7 +12,49 @@
 	
 	<legend>SIP Trunking and E911 Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
-		
+		<div style="margin:25px"></div>
+			
+			
+			<!--Line Horizontal Chart-->
+			<div class="container" ng-if="vm.e911" style="margin-left:5%;margin-right:5%">
+				<div class="row">
+				<div class="col-lg-5 col-sm-offset-0">
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>E911</b></div>
+						<div >
+							<canvas id="pie" class="chart chart-horizontal-bar chart-xs"
+								chart-data="vm.e911.chartdata" 
+								chart-labels="vm.e911.chartlabels"
+								chart-options="vm.e911.chartoptions"
+								width="400" height="100" style="display: block; width: 261px; height: 261px;">
+							</canvas> 
+						</div>
+					</div>
+					</div>
+					<div class="col-lg-5">
+						<div class="panel panel-default">
+							<div class="panel-heading"><b>Trunking</b></div>
+							<div >
+								<canvas id="trunking" class="chart chart-horizontal-bar chart-xs"
+									chart-data="vm.trunking.chartdata" 
+									chart-labels="vm.trunking.chartlabels"
+									chart-options="vm.trunking.chartoptions"
+									width="400" height="100" style="display: block; width: 261px; height: 261px;">
+								</canvas> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+			
+			<!--Line Horizontal Chart-->
+			<div class="container" ng-if="vm.e911" style="max-width: 500px; max-height: 250px;">
+				
+			</div>
+			
+			<div style="margin:25px"></div>
 		
 		<div class="input-group col-md-3 ">
 			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">

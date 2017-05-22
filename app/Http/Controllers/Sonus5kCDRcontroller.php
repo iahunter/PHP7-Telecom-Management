@@ -233,9 +233,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function list_todays_attempts_summary_report(Request $request)
+
+    public function list_todays_attempts_summary_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
@@ -244,66 +243,65 @@ class Sonus5kCDRcontroller extends Controller
         if (! $user->can('read', Sonus5kCDR::class)) {
             abort(401, 'You are not authorized');
         }
-		$return = [];
-		
-		$hours = 24;
-		
-		$now = Carbon::now()->setTimezone('UTC');
-		$start = $now->subHours($hours);
-		$end = Carbon::now()->setTimezone('UTC');
+        $return = [];
 
-		// Get all the active attempt disconnet reasons in use in last 24s. 
-		$codes = \App\Sonus5kCDR::groupBy('disconnect_reason')
-				->select('disconnect_reason', DB::raw('count(*) as total'))
-				->whereBetween('start_time', [$start, $end])
+        $hours = 24;
+
+        $now = Carbon::now()->setTimezone('UTC');
+        $start = $now->subHours($hours);
+        $end = Carbon::now()->setTimezone('UTC');
+
+        // Get all the active attempt disconnet reasons in use in last 24s.
+        $codes = \App\Sonus5kCDR::groupBy('disconnect_reason')
+                ->select('disconnect_reason', DB::raw('count(*) as total'))
+                ->whereBetween('start_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
                 ->get();
 
-		$x = 0;
-		
-		// get all the records for every hour in for the specified number of hours. 
-		while($x != $hours){
-			
-			$now = Carbon::now()->setTimezone('UTC');
-			$starthour = $now->subHours($hours);
-			$copystart = clone $starthour;
-			$subhour = $copystart->addHours(1)->toDateTimeString();
-			$starthour = $starthour->toDateTimeString();
-			$start = $starthour;
-			$end = $subhour; 
-			$hours--; // Subtract an hour from hours when looping. 
+        $x = 0;
 
-			$calls = \App\Sonus5kCDR::groupBy('disconnect_reason')
-				->select('disconnect_reason', DB::raw('count(*) as total'))
-				->whereBetween('start_time', [$start, $end])
+        // get all the records for every hour in for the specified number of hours.
+        while ($x != $hours) {
+            $now = Carbon::now()->setTimezone('UTC');
+            $starthour = $now->subHours($hours);
+            $copystart = clone $starthour;
+            $subhour = $copystart->addHours(1)->toDateTimeString();
+            $starthour = $starthour->toDateTimeString();
+            $start = $starthour;
+            $end = $subhour;
+            $hours--; // Subtract an hour from hours when looping.
+
+            $calls = \App\Sonus5kCDR::groupBy('disconnect_reason')
+                ->select('disconnect_reason', DB::raw('count(*) as total'))
+                ->whereBetween('start_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
                 ->get();
-        
-			$totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
 
-			$codes_inuse = [];
-			
-			foreach($codes as $code){
-				// Resolve the code to description. 
-				$code = $code['disconnect_reason']." - ".Sonus5kCDR::get_call_termination_code($code['disconnect_reason']);
-				
-				// Set default value of 0 for all inuse code for each interval. 
-				$codes_inuse[$code] = 0;
-				$codes_inuse['totalCalls'] = 0;
-			}
-		
-			$attempt_count = $codes_inuse;
-			
-			// set the value for each disconnect type in time window. 
-			foreach ($calls as $i) {
-				$attempt_count['totalCalls'] = $totalcalls;
-				$attempt_count[$i->disconnect_reason." - ".Sonus5kCDR::get_call_termination_code($i->disconnect_reason)] = $i->total;
-			}
-			
-			// Append to the return array with the end time as the key. 
-			$return[$end] = $attempt_count;
-		}
-		
+            $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
+
+            $codes_inuse = [];
+
+            foreach ($codes as $code) {
+                // Resolve the code to description.
+                $code = $code['disconnect_reason'].' - '.Sonus5kCDR::get_call_termination_code($code['disconnect_reason']);
+
+                // Set default value of 0 for all inuse code for each interval.
+                $codes_inuse[$code] = 0;
+                $codes_inuse['totalCalls'] = 0;
+            }
+
+            $attempt_count = $codes_inuse;
+
+            // set the value for each disconnect type in time window.
+            foreach ($calls as $i) {
+                $attempt_count['totalCalls'] = $totalcalls;
+                $attempt_count[$i->disconnect_reason.' - '.Sonus5kCDR::get_call_termination_code($i->disconnect_reason)] = $i->total;
+            }
+
+            // Append to the return array with the end time as the key.
+            $return[$end] = $attempt_count;
+        }
+
         $response = [
                     'status_code'          => 200,
                     'success'              => true,
@@ -315,7 +313,6 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
 
     public function get_call_termination_code(Request $request, $code)
     {

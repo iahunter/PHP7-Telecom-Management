@@ -103,7 +103,7 @@
      * )
      **/
     $api->get('sonus/list_todays_attempts', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_attempts');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/list_todays_attempts_summary_report",

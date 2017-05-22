@@ -17,6 +17,8 @@
 	<legend>Sonus SBC Report - Last 24hrs - Call ATTEMPTs <div class="pull-right">{{vm.datetime}}</div><div style="margin:10px"></div>
 		
 	</legend>
+	
+		<ng-include src="'sonus-cdrs/attemptsummary.graph.html'"></ng-include>
 		
 		
 		<div class="input-group col-md-3 ">
@@ -32,6 +34,7 @@
 		<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> 
 			
 		<div style="margin:25px"></div>
+		
 		
 
 		<!-- Loading -->

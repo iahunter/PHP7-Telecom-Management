@@ -130,6 +130,30 @@
                 }
             }
         },
+        "/telephony/api/calls/monthcallstats": {
+            "get": {
+                "tags": [
+                    "Calls"
+                ],
+                "summary": "List Month Call Stats",
+                "description": "",
+                "operationId": "listmonthscallstats",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/calls/callsbydaterange": {
             "post": {
                 "tags": [
@@ -3662,9 +3686,33 @@
                 "tags": [
                     "CDR - Sonus History"
                 ],
-                "summary": "Get Todays CDRs with Packet Loss",
+                "summary": "Get Todays CDR Attmetps",
                 "description": "",
-                "operationId": "backups",
+                "operationId": "attempts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/list_todays_attempts_summary_report": {
+            "get": {
+                "tags": [
+                    "CDR - Sonus History"
+                ],
+                "summary": "Get Todays CDR Attmetps",
+                "description": "",
+                "operationId": "attempts",
                 "consumes": [
                     "application/json"
                 ],

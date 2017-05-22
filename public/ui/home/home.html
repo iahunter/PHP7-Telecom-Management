@@ -1,39 +1,21 @@
 ﻿<!-- Include Navbar -->
 <ng-include src="'app-content/navbar.html'"></ng-include>
 
-
-<div class="container">
-<!--
-		<div ng-if="vm.username">
-		 Populate User info if avaible 
-			<h3 >Welcome {{vm.username}}<br>  
-			<h5>{{vm.title}}</h5>
-			<div ng-show="vm.photo">
-				<img style="background-repeat: no-repeat; background-position: 50%; border-radius: 50%; width: 80px; height: 95px;" class="pull-right"src=data:image/png;base64,{{vm.photo}}></h3>
-			</div>
-		</div>
-		
-		<div style="margin-top: 10px"></div>
-		
-		<p><a href="#/logout">Logout</a></p>
--->
+<div style="margin-left:5%; margin-right:5%;">
 	<div class="jumbotron">
+		<div class="container">
 
-		<!--<h1 style="-webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.05)));}"><img alt="Brand" style="max-height: 70px" src="app-content/images/phone-planning.png"> Telecom Management</h1>-->
-		
-		
-		<!--<h1><img alt="Brand" style="max-height: 70px" src="//b.dryicons.com/images/icon_sets/architecture_blueprint_icons_set/png/128x128/phone.png"> Telecom Management</h1>-->
-		<h1><img alt="Brand" style="max-height: 70px; margin-bottom:10px" src="app-content/images/phone.png"> Telecom Management</h1>
-		
-		<hr>
-		<div style="margin-top: 75px"></div>
-		
-			<!--Include Company Splash Page Content Here-->
+			<!--<h1><img alt="Brand" style="max-height: 70px" src="//b.dryicons.com/images/icon_sets/architecture_blueprint_icons_set/png/128x128/phone.png"> Telecom Management</h1>-->
+			<h1><img alt="Brand" style="max-height: 70px; margin-bottom:10px" src="app-content/images/phone.png"> Telecom Management</h1>
 			
-			<ng-include src="'company-content/splashpage.html'"></ng-include>
+			<hr>
+			<div style="margin-top: 75px"></div>
 			
-			
-			
+				<!--Include Company Splash Page Content Here-->
+				
+				<ng-include src="'company-content/splashpage.html'"></ng-include>
+				
+			<div style="margin-top: 50px"></div>
 			<div ng-if="vm.permissions.read.Sonus5k">
 				<div style="margin:50px"></div>
 				<!--Include the SBC Summary Section on Home Page. -->
@@ -41,24 +23,30 @@
 					<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
 				</div>
 			</div>
+		</div>
 			
-			<div ng-if="vm.permissions.read.Calls">
-				<ng-include src="'calls/1day_calls.graph.html'"></ng-include>
 
-				<ng-include src="'calls/7day_calls.graph.html'"></ng-include>
-				
-				<ng-include src="'calls/calls.graph.html'"></ng-include>
+		<div ng-if="vm.permissions.read.Calls">
+			<div class="row">
+				<div class="col-sm-5 col-lg-offset-1">
+					<ng-include src="'calls/1day_calls.graph.html'"></ng-include>
+				</div>
+				<div class="col-lg-5 col-sm-offset-0">
+					<ng-include src="'sonus-cdrs/attemptsummary.graph.html'"></ng-include>
+				</div>
 			</div>
-			
-		<div style="margin-top: 50px"></div>
-		
-
+			<div class="row">
+				<div class="col-lg-5 col-sm-offset-1">
+					<ng-include src="'calls/7day_calls.graph.html'"></ng-include>
+				</div>
+				<div class="col-lg-5 col-sm-offset-0">
+					<ng-include src="'calls/calls.graph.html'"></ng-include>
+				</div>
+			</div>
+		</div>
 	</div>
-	
-
-	
+		
 </div>
-
 
 
 

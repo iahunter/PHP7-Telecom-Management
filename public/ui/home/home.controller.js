@@ -1,6 +1,6 @@
 ﻿angular
 	.module('app')
-	.controller('Home.IndexController', ['UserService', 'PageService', 'CompanyService','$location', '$state', '$timeout', '$http', '$localStorage', 'jwtHelper', 'AuthenticationService', function(UserService, PageService, CompanyService, $location, $state, $timeout, $http, $localStorage, jwtHelper, AuthenticationService) {
+	.controller('Home.IndexController', ['UserService', 'PageService', 'CompanyService','$location', '$state', '$scope', '$interval', '$timeout', '$http', '$localStorage', 'jwtHelper', 'AuthenticationService', function(UserService, PageService, CompanyService, $location, $state, $scope, $interval, $timeout, $http, $localStorage, jwtHelper, AuthenticationService) {
 		var vm = this;
 		
 		// Attempt to renew token on page click - FYI - this gets called on every page for navbar. 
@@ -93,6 +93,21 @@
 			}, function(err){
 				vm.loading = false;
 			});
+			
+		// Get current local Date and Time to display on page
+		function getdatetime(){
+			date = new Date();
+			vm.datetime = date.toLocaleString()
+		}
+		
+		// Update the date and time every second. 
+		var updatetime = $interval(getdatetime,1000); 
+		
+		// Stop polling when you leave the page. 
+		$scope.$on('$destroy', function() {
+			//console.log($scope);
+			$interval.cancel(updatetime);
+		});
 		
 
 	}]);

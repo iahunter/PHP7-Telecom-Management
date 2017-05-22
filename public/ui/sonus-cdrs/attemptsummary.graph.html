@@ -1,0 +1,18 @@
+<!--Print Chart-->
+
+<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" div ng-controller="Sonus.AttemptSummary.CDR.Controller as vm">
+	<div class="panel panel-default"  style="box-shadow: 1px 1px 5px grey;">
+		<div class="panel-heading"><h4><b><a href="#/sonus/cdr/todays_calls_attempts" style="color:black;">24hr - SBC Call Completion Summary</a></b></h4></div>
+		
+		<div >
+			<canvas id="weekcalls" class="chart chart-line chart-xs"
+				chart-series="vm.dayscallgraph.chartseries" 
+				chart-data="vm.dayscallgraph.chartdata" 
+				chart-labels="vm.dayscallgraph.chartlabels"
+				chart-options="vm.dayscallgraph.chartoptions">
+			</canvas>
+		</div>
+	</div>
+</div>
+
+<div style="margin:25px"></div>

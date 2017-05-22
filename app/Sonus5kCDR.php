@@ -1026,11 +1026,12 @@ class Sonus5kCDR extends Model
 
         return $disconnect_initiator_code[$code];
     }
-	
-	public static function get_call_termination_codes(){
-		// Search for reason code and return the description.
-		// https://support.sonus.net/display/SBXDOC50/Call+Termination+Reason+Codes
-		$termination_reason_codes = [
+
+    public static function get_call_termination_codes()
+    {
+        // Search for reason code and return the description.
+        // https://support.sonus.net/display/SBXDOC50/Call+Termination+Reason+Codes
+        $termination_reason_codes = [
                                         '0'   => 'INVALID DISCONNECT REASON',
                                         '1'   => 'UNALLOCATED NUMBER ',
                                         '2'   => 'NO ROUTE TO SPECIFIED NETWORK',
@@ -1148,13 +1149,14 @@ class Sonus5kCDR extends Model
                                         '177' => 'CPC_DISC_TG_AUTH_FAIL_401_407',
 
                                 ];
-		return  $termination_reason_codes;
-	}
+
+        return  $termination_reason_codes;
+    }
 
     public static function get_call_termination_code($reason_code_number)
     {
-        $termination_reason_codes = Sonus5kCDR::get_call_termination_codes();
+        $termination_reason_codes = self::get_call_termination_codes();
+
         return $termination_reason_codes[$reason_code_number];
     }
-	
 }

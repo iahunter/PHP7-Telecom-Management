@@ -53,7 +53,7 @@ class CucmReportsController extends Controller
 
         $trunking = DB::table('cucmsite')
             ->select('cucmsite.trunking', (DB::raw('count(cucmsite.trunking) as count')))
-			->where('deleted_at', '=', null)
+            ->where('deleted_at', '=', null)
             ->groupBy('trunking')
             ->get();
 
@@ -64,7 +64,7 @@ class CucmReportsController extends Controller
 
         $e911 = DB::table('cucmsite')
             ->select('cucmsite.e911', (DB::raw('count(cucmsite.e911) as count')))
-			->where('deleted_at', '=', null)
+            ->where('deleted_at', '=', null)
             ->groupBy('e911')
             ->get();
 

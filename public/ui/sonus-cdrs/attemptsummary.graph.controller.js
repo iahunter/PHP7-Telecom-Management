@@ -98,7 +98,7 @@ angular
 				});
 		}
 		
-		var pulldayscallstats = $interval(list_todays_attempts_summary_report,600000); 
+		var pulldayscallstats = $interval(list_todays_attempts_summary_report,60000); 
 		
 		$scope.$on('$destroy', function() {
 			//console.log($scope);

@@ -167,8 +167,8 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('read', Sonus5kCDR::class)) {
             $claims['permissions']['read']['Sonus5kCDR'] = true;
         }
-		
-		// Cucm Permissions
+
+        // Cucm Permissions
 
         if ($this->can('read', TelecomInfrastructure::class)) {
             $claims['permissions']['read']['TelecomInfrastructure'] = true;
@@ -185,7 +185,6 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', TelecomInfrastructure::class)) {
             $claims['permissions']['delete']['TelecomInfrastructure'] = true;
         }
-		
 
         return $claims;
     }

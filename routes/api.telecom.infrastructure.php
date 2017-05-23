@@ -50,8 +50,7 @@
      **/
     $api->get('telecom_infrastructure/id/{id}', 'App\Http\Controllers\TelecomInfrastructureController@getDevice');
 
-
-	/**
+    /**
      * @SWG\Post(
      *     path="/telephony/api/telecom_infrastructure",
      *     tags={"Telecom Infrastructure"},
@@ -141,9 +140,8 @@
      * )
      **/
     $api->post('telecom_infrastructure', 'App\Http\Controllers\TelecomInfrastructureController@createDevice');
-	
-	
-	 /**
+
+    /**
      * @SWG\Put(
      *     path="/telephony/api/telecom_infrastructure/id/{id}",
      *     tags={"Telecom Infrastructure"},

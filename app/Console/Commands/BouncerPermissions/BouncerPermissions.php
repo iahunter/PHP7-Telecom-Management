@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\BouncerPermissions;
 
-use Illuminate\Console\Command;
-use Bouncer;
 use App;
+use Bouncer;
+use Illuminate\Console\Command;
 
 class BouncerPermissions extends Command
 {
@@ -40,8 +40,8 @@ class BouncerPermissions extends Command
     public function handle()
     {
         //
-		print "Starting Assigning Permissions to ".env('ADMIN_GRP').PHP_EOL;
-		// Assign Network Engineer to Admin.
+        echo 'Starting Assigning Permissions to '.env('ADMIN_GRP').PHP_EOL;
+        // Assign Network Engineer to Admin.
         $group = env('ADMIN_GRP');
         $tasks = [
             'create',
@@ -63,7 +63,7 @@ class BouncerPermissions extends Command
             App\Calls::class,
             App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
-			App\TelecomInfrastructure::class,
+            App\TelecomInfrastructure::class,
         ];
 
         foreach ($types as $type) {
@@ -71,7 +71,7 @@ class BouncerPermissions extends Command
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		print "Finished Assigning Permissions".PHP_EOL;
+
+        echo 'Finished Assigning Permissions'.PHP_EOL;
     }
 }

@@ -216,6 +216,24 @@
                 controller: 'Admin.IndexController',
                 controllerAs: 'vm'
             })
+			.state('infrastructure', {
+                url: '/infrastructure',
+                templateUrl: 'telecom-infrastructure/infrastructure.html',
+                controller: 'Telecom.Infrastructure.Controller',
+                controllerAs: 'vm'
+            })
+			.state('infrastructurecreate', {
+                url: '/infrastructure/create',
+                templateUrl: 'telecom-infrastructure/createdevice.html',
+                controller: 'Telecom.Infrastructure.Controller',
+                controllerAs: 'vm'
+            })
+			.state('infrastructureedit', {
+                url: '/infrastructure/edit/{id}',
+                templateUrl: 'telecom-infrastructure/editdevice.html',
+                controller: 'Telecom.Infrastructure.Controller',
+                controllerAs: 'vm'
+            })
 			.state('sonus/activecalls', {
                 url: "/sonus/activecalls",
                 templateUrl: 'sonus/sonus.activecalls.html',

@@ -140,7 +140,7 @@
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="alarms in vm.alarmss | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
 					<tr ng-repeat="alarm in vm.alarmarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
-						<td>{{ alarm.SBC}}</td>
+						<td><a href="//{{ alarm.SBC}}" target="blank"><b>{{ alarm.SBC}}</b></a></td>
 						<td>{{ alarm.severity}}</td>
 						<td>{{ alarm.reporter}}</td>
 						<td>{{ alarm.initialTimestamp}}</td>

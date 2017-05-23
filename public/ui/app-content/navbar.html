@@ -75,6 +75,26 @@
 				</li>
 			  </ul>
 			  
+			  <ul class="nav navbar-nav" ng-show="vm.permissions.read.TelecomInfrastructure == true">
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Telecom Infrastructure</a>
+				  <ul class="dropdown-menu">
+					
+					
+					<li><a href="#/infrastructure/create" ng-if="vm.permissions.create.Didblock == true">Add Device</a></li>
+					<!--<li><a href="#/importdidblock" ng-if="vm.permissions.create.Didblock == true">Bulk Import Number Blocks</a></li>-->
+					<li><a href="#/infrastructure">Telecom Inventory</a></li>
+
+					<!--
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">Separated link</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">One more separated link</a></li>
+					-->
+				  </ul>
+				</li>
+			  </ul>
+			  
 			  <ul class="nav navbar-nav" ng-show="vm.permissions.read.Sonus5k == true">
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SBC</a>

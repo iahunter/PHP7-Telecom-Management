@@ -167,6 +167,25 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('read', Sonus5kCDR::class)) {
             $claims['permissions']['read']['Sonus5kCDR'] = true;
         }
+		
+		// Cucm Permissions
+
+        if ($this->can('read', TelecomInfrastructure::class)) {
+            $claims['permissions']['read']['TelecomInfrastructure'] = true;
+        }
+
+        if ($this->can('create', TelecomInfrastructure::class)) {
+            $claims['permissions']['create']['TelecomInfrastructure'] = true;
+        }
+
+        if ($this->can('update', TelecomInfrastructure::class)) {
+            $claims['permissions']['update']['TelecomInfrastructure'] = true;
+        }
+
+        if ($this->can('delete', TelecomInfrastructure::class)) {
+            $claims['permissions']['delete']['TelecomInfrastructure'] = true;
+        }
+		
 
         return $claims;
     }

@@ -4028,6 +4028,288 @@
                     }
                 }
             }
+        },
+        "/telephony/api/telecom_infrastructure": {
+            "get": {
+                "tags": [
+                    "Telecom Infrastructure"
+                ],
+                "summary": "Get List of Telecom Infrastructure Devices",
+                "description": "",
+                "operationId": "listDevices",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Telecom Infrastructure"
+                ],
+                "summary": "Create Telecom Device",
+                "description": "",
+                "operationId": "createDevice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "hostname",
+                        "in": "formData",
+                        "description": "Name of Device",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Comment",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role",
+                        "in": "formData",
+                        "description": "Role Information",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "manufacture",
+                        "in": "formData",
+                        "description": "manufacture",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "model",
+                        "in": "formData",
+                        "description": "model",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "software_version",
+                        "in": "formData",
+                        "description": "software_version",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "ip_address",
+                        "in": "formData",
+                        "description": "ip_address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mgmt_url",
+                        "in": "formData",
+                        "description": "Management URL",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "location",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "json",
+                        "in": "formData",
+                        "description": "json",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "H323 Gateways",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/telecom_infrastructure/id/{id}": {
+            "get": {
+                "tags": [
+                    "Telecom Infrastructure"
+                ],
+                "summary": "Get List of Telecom Infrastructure Devices",
+                "description": "",
+                "operationId": "getSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Device",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Telecom Infrastructure"
+                ],
+                "summary": "Update Telecom Device by ID for authorized user",
+                "description": "updateDevice",
+                "operationId": "updateDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "hostname",
+                        "in": "formData",
+                        "description": "Name of Device",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Comment",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role",
+                        "in": "formData",
+                        "description": "Role Information",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "manufacture",
+                        "in": "formData",
+                        "description": "manufacture",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "model",
+                        "in": "formData",
+                        "description": "model",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "software_version",
+                        "in": "formData",
+                        "description": "software_version",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "ip_address",
+                        "in": "formData",
+                        "description": "ip_address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mgmt_url",
+                        "in": "formData",
+                        "description": "Management URL",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "location",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "json",
+                        "in": "formData",
+                        "description": "json",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "H323 Gateways",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Telecom Infrastructure"
+                ],
+                "summary": "Delete Device by ID for authorized user",
+                "description": "This deletes the block and its child Dids",
+                "operationId": "deleteDevice",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block to Delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
         }
     },
     "definitions": {}

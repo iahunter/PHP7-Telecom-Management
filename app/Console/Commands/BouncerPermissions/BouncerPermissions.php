@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\BouncerPermissions;
 
 use Illuminate\Console\Command;
+use Bouncer;
+use App;
 
 class BouncerPermissions extends Command
 {
@@ -11,14 +13,14 @@ class BouncerPermissions extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'bouncer:admin_permissions';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'bouncer assign permissions';
 
     /**
      * Create a new command instance.
@@ -38,5 +40,38 @@ class BouncerPermissions extends Command
     public function handle()
     {
         //
+		print "Starting Assigning Permissions to ".env('ADMIN_GRP').PHP_EOL;
+		// Assign Network Engineer to Admin.
+        $group = env('ADMIN_GRP');
+        $tasks = [
+            'create',
+            'read',
+            'update',
+            'delete',
+        ];
+
+        $types = [
+            App\Didblock::class,
+            App\Did::class,
+            App\Site::class,
+            App\Phone::class,
+            App\Phoneplan::class,
+            App\Sonus5k::class,
+            App\Sonus5kCDR::class,
+            App\Cupi::class,
+            App\Cucmclass::class,
+            App\Calls::class,
+            App\Cucmsiteconfigs::class,
+            App\Cucmphoneconfigs::class,
+			App\TelecomInfrastructure::class,
+        ];
+
+        foreach ($types as $type) {
+            foreach ($tasks as $task) {
+                Bouncer::allow($group)->to($task, $type);
+            }
+        }
+		
+		print "Finished Assigning Permissions".PHP_EOL;
     }
 }

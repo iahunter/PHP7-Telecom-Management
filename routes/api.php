@@ -65,4 +65,8 @@ $api->version('v1', function ($api) {
 
     // CUCM Reports
     require __DIR__.'/api.cucmreports.php';
+	
+	// Telecom Infrastructure
+    require __DIR__.'/api.telecom.infrastructure.php';
+
 });

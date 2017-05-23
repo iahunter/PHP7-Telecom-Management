@@ -31,6 +31,7 @@ class ServiceDeskBouncerRoles extends Seeder
             //App\Sonus5k::class,
             App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
+			App\TelecomInfrastructure::class,
         ];
 
         foreach ($types as $type) {

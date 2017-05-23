@@ -356,9 +356,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function list_todays_pkt_loss_summary_report(Request $request)
+
+    public function list_todays_pkt_loss_summary_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
@@ -430,14 +429,14 @@ class Sonus5kCDRcontroller extends Controller
 
             $pktlosscalls = array_reverse($losscalls);
             $pktlosscalls = count($pktlosscalls);
-			
-			// Set default value of 0 for all inuse code for each interval.
-			$call_count['totalCalls'] = 0;
-			$call_count['packetLoss'] = 0;
+
+            // Set default value of 0 for all inuse code for each interval.
+            $call_count['totalCalls'] = 0;
+            $call_count['packetLoss'] = 0;
 
             // set the value for each disconnect type in time window.
-			$call_count['totalCalls'] = $totalcalls;
-			$call_count['packetLoss'] = $pktlosscalls;
+            $call_count['totalCalls'] = $totalcalls;
+            $call_count['packetLoss'] = $pktlosscalls;
 
             // Append to the return array with the end time as the key.
             $return[$end] = $call_count;

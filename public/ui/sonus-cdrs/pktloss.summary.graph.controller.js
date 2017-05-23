@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Sonus.AttemptSummary.CDR.Controller', ['SonusCDRService', '$interval', '$location', '$state', '$stateParams', '$scope', function(SonusCDRService, $interval, $location, $state, $stateParams, $scope) {
+	.controller('Sonus.PktLossSummary.CDR.Controller', ['SonusCDRService', '$interval', '$location', '$state', '$stateParams', '$scope', function(SonusCDRService, $interval, $location, $state, $stateParams, $scope) {
 		
 		var vm = this;
 		
@@ -17,10 +17,10 @@ angular
 			$location.path('/accessdenied');
 		}
 		
-		list_todays_attempts_summary_report();
+		list_todays_pkt_loss_summary_report();
 		
-		function list_todays_attempts_summary_report() {
-			SonusCDRService.list_todays_attempts_summary_report()
+		function list_todays_pkt_loss_summary_report() {
+			SonusCDRService.list_todays_pkt_loss_summary_report()
 				.then(function(res){
 					
 					// Check for errors and if token has expired. 
@@ -98,7 +98,7 @@ angular
 				});
 		}
 		
-		var pulldayscallstats = $interval(list_todays_attempts_summary_report,300000); 
+		var pulldayscallstats = $interval(list_todays_pkt_loss_summary_report,300000); 
 		
 		$scope.$on('$destroy', function() {
 			//console.log($scope);

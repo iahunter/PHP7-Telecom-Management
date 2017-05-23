@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\Sonus\GetSonusConfig::class,
         Commands\Sonus\GetSonusCDRs::class,
         Commands\OnCall\OnCallPermissions::class,
-		Commands\BouncerPermissions\BouncerPermissions::class,
+        Commands\BouncerPermissions\BouncerPermissions::class,
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

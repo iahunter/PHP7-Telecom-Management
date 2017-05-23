@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\TelecomInfrastructure;
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
+use App\TelecomInfrastructure;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -24,12 +24,11 @@ class TelecomInfrastructureController extends Controller
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'result'      => $device,
+                    'result'         => $device,
                     ];
 
         return response()->json($response);
     }
-
 
     public function getDevice(Request $request, $id)
     {
@@ -41,16 +40,15 @@ class TelecomInfrastructureController extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'result'       	 => $device,
+                    'status_code'       => 200,
+                    'success'           => true,
+                    'message'           => '',
+                    'request'           => $request->all(),
+                    'result'            => $device,
                     ];
 
         return response()->json($response);
     }
-
 
     public function createDevice(Request $request)
     {
@@ -70,7 +68,7 @@ class TelecomInfrastructureController extends Controller
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'result'       => $device,
+                    'result'         => $device,
                     ];
 
         return response()->json($response);
@@ -94,11 +92,11 @@ class TelecomInfrastructureController extends Controller
         $device->save();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'result'      	 => $device,
+                    'status_code'      => 200,
+                    'success'          => true,
+                    'message'          => '',
+                    'request'          => $request->all(),
+                    'result'           => $device,
                     ];
 
         return response()->json($response);

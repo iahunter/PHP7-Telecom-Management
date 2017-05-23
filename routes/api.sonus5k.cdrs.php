@@ -124,8 +124,8 @@
      * )
      **/
     $api->get('sonus/list_todays_attempts_summary_report', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_attempts_summary_report');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/list_todays_pkt_loss_summary_report",
      *     tags={"CDR - Sonus History"},

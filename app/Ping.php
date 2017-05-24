@@ -7,24 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ping extends Model
 {
-	public static function pinghost($host)
+    public static function pinghost($host)
     {
-		$ttl = 128;
-		$timeout = 5;
-		
+        $ttl = 128;
+        $timeout = 5;
+
         $ping = new \JJG\Ping($host, $ttl, $timeout);
-		$latency = $ping->ping();
-		
-		if ($latency !== false) {
-		  $return = 'echo reply';
-		}
-		else {
-		  $return = 'Request timed out.';
-		}
-		
-		return 	[ 	
-					'result' 		=> $return,
-					'latency'		=> $latency,
-				];
+        $latency = $ping->ping();
+
+        if ($latency !== false) {
+            $return = 'echo reply';
+        } else {
+            $return = 'Request timed out.';
+        }
+
+        return    [
+                    'result'         => $return,
+                    'latency'        => $latency,
+                ];
     }
 }

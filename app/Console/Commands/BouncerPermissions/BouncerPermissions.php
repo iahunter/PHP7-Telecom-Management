@@ -64,7 +64,7 @@ class BouncerPermissions extends Command
             App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
             App\TelecomInfrastructure::class,
-			App\Ping::class,
+            App\Ping::class,
         ];
 
         foreach ($types as $type) {

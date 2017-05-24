@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
         Commands\Sonus\GetSonusCDRs::class,
         Commands\OnCall\OnCallPermissions::class,
         Commands\BouncerPermissions\BouncerPermissions::class,
-		Commands\Monitoring\PingScanInfrastructure::class,
+        Commands\Monitoring\PingScanInfrastructure::class,
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

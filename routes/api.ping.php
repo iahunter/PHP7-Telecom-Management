@@ -28,4 +28,3 @@
      * )
      **/
     $api->get('/pinghost/{host}', 'App\Http\Controllers\PingController@pinghost');
-

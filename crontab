@@ -5,8 +5,14 @@
 ####################################################################################
 # Telecom Management Scheduled Tasks
 
+# Ping Monitor Voice Infrastructure Status
+*/1 * * * * /PATH_TO_APP/telephony/artisan monitoring:pingscan_infrastructure >> /PATH_TO_APP/telephony/storage/logs/ping-scan-infrastructure.log 2>&1
+
 # Get SBC Call stats every 10 mins
 */10 * * * * /PATH_TO_APP/telephony/artisan sonus:write-callsummary-db > /dev/null 2>&1
+
+# Get SBC CDRs every 5 mins
+*/5 * * * * /PATH_TO_APP/telephony/artisan sonus:write-cdrs-to-db > /dev/null 2>&1
 
 # Update Number Database with CUCM scan every hour
 0 * * * * /PATH_TO_APP/telephony/artisan didscan:callmanager > /dev/null 2>&1

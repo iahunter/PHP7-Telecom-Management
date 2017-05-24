@@ -68,7 +68,7 @@ $api->version('v1', function ($api) {
 
     // Telecom Infrastructure
     require __DIR__.'/api.telecom.infrastructure.php';
-	
-	// Monitoring
-	require __DIR__.'/api.ping.php';
+
+    // Monitoring
+    require __DIR__.'/api.ping.php';
 });

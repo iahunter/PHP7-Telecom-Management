@@ -10,7 +10,7 @@
 	
 	<div style="margin:50px"></div>
 	
-	<legend>Telecom Infrastructure Tracking Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+	<legend>Infrastructure Tracking Inventory <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
 		
 		<div class="input-group col-md-3 ">
@@ -58,6 +58,7 @@
 										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
 							<th>
 								<a href="" ng-click="sortType = 'hostname'; sortReverse = !sortReverse" style="color:black">
 									Hostname
@@ -66,10 +67,25 @@
 								</a>
 							</th>
 							<th>
+								<a href="" ng-click="sortType = 'ip_reachable'; sortReverse = !sortReverse" style="color:black">
+									IP Reachable
+										<span ng-show="sortType == 'ip_reachable' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ip_reachable' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
 								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
 									Comment
 										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'function'; sortReverse = !sortReverse" style="color:black">
+									Function
+										<span ng-show="sortType == 'function' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'function' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 
@@ -84,18 +100,18 @@
 							
 							
 							<th>
-								<a href="" ng-click="sortType = 'manufacture'; sortReverse = !sortReverse" style="color:black">
-									Manufacture
-										<span ng-show="sortType == 'manufacture' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'manufacture' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'manufacturer'; sortReverse = !sortReverse" style="color:black">
+									Manufacturer
+										<span ng-show="sortType == 'manufacturer' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'manufacturer' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>	
 							
 							<th>
-								<a href="" ng-click="sortType = 'model'; sortReverse = !sortReverse" style="color:black">
-									Model
-										<span ng-show="sortType == 'model' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'model' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'application'; sortReverse = !sortReverse" style="color:black">
+									Application
+										<span ng-show="sortType == 'application' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'application' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 
@@ -105,7 +121,15 @@
 										<span ng-show="sortType == 'software_version' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'software_version' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
-							</th>	
+							</th>
+
+							<th>
+								<a href="" ng-click="sortType = 'os'; sortReverse = !sortReverse" style="color:black">
+									Operating System
+										<span ng-show="sortType == 'os' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'os' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>							
 							
 							<th>
 								<a href="" ng-click="sortType = 'ip_address'; sortReverse = !sortReverse" style="color:black">
@@ -130,6 +154,8 @@
 										<span ng-show="sortType == 'location' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							
 							
 							<th>
 								<a href="" ng-click="sortType = 'json'; sortReverse = !sortReverse" style="color:black">
@@ -167,14 +193,18 @@
 						<td><a href='{{ device.mgmt_url}}' target="blank"><b style="color:#337ab7">{{ device.id}}</b></a></td>
 
 						<td   ng-show="!vm.edit[device.id]"><a href='{{ device.mgmt_url}}' target="blank"><b style="color:#337ab7">{{ device.hostname}}</b></a></td>
+						<td   ng-show="!vm.edit[device.id]"><button type="button" class="btn btn-xs btn-danger" ng-if="device.ip_reachable == 0">Down</button> <button type="button" class="btn btn-xs btn-success" ng-if="device.ip_reachable == 1">Up</button></td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.comment}}</td>
+						<td   ng-show="!vm.edit[device.id]">{{ device.function}}</td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.role}}</a></td>
-						<td   ng-show="!vm.edit[device.id]">{{ device.manufacture}}</td>
-						<td   ng-show="!vm.edit[device.id]">{{ device.model}}</td>
+						<td   ng-show="!vm.edit[device.id]">{{ device.manufacturer}}</td>
+						<td   ng-show="!vm.edit[device.id]">{{ device.application}}</td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.software_version}}</td>
+						<td   ng-show="!vm.edit[device.id]">{{ device.os}}</td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.ip_address}}</td>
 						<td   ng-show="!vm.edit[device.id]"><a href='{{ device.mgmt_url}}' target="blank"><b style="color:#337ab7">{{ device.mgmt_url}}</b></a></td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.location}}</td>
+						
 						<td   ng-show="!vm.edit[device.id]"><span ng-repeat="stuff in device.json">{{ stuff}} </span> </td>
 						
 						<td   ng-show="!vm.edit[device.id]">{{ device.created_at}} by {{device.created_by}}</td>
@@ -215,48 +245,12 @@
 										<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
 										<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(device)">Delete</a>
 										<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
-
-											
 										</div>
 									</div>
 								</div>
 							</div> <!-- npa of Modal -->
-							
-							
 						</td>
-
-						<!--Edit View-->
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.devicecode"></td>
-						<td   ng-show="vm.edit[device.id]">{{ device.cucmprovisioned }}</td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.comment"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.srstip"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.h323ip"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.timezone"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.npa"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.nxx"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.didrange"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.didblocks"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.operator"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.trunking"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.e911"></td>
-						<td   ng-show="vm.edit[device.id]"><input type="text" class="form-control form-control-sm" ng-model="device.languages"></td>
-						
-						<td   ng-show="vm.edit[device.id]">{{ device.created_at}} by {{device.created_by}}</td>
-						<td   ng-show="vm.edit[device.id]">{{ device.updated_at}} by {{device.updated_by}}</td>
-						
-						<td  ng-show="vm.edit[device.id]">
-							<button class="btn btn-xs btn-primary"  ng-click="vm.update(device);vm.edit[device.id] = !vm.edit[device.id]"> Save </button>
-							<button class="btn btn-xs btn-warning"  ng-click="vm.edit[device.id] = !vm.edit[device.id]"> Undo </button>
-						</td>
-						
-						
-						
-
-							
-						
-						
 					</tr>
-							
 					</tbody>
 				</table>
 			</div>

@@ -17,14 +17,17 @@ class CreateTelecomInfrastructureTable extends Migration
             $table->increments('id');
             $table->string('hostname');
             $table->text('comment')->nullable();
+			$table->text('function')->nullable();
             $table->string('role')->nullable();
-            $table->string('manufacture')->nullable();
-            $table->string('model')->nullable();
+            $table->string('manufacturer')->nullable();
+            $table->string('application')->nullable();
             $table->integer('software_version')->nullable();
+			$table->string('os')->nullable();
             $table->string('ip_address')->nullable();
             $table->string('mgmt_url')->nullable();
             $table->string('location')->nullable();
             $table->json('json')->nullable();                       // JSON Custom Field Data
+			$table->boolean('ip_reachable')->nullable();          
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
             $table->string('deleted_by')->nullable();              // simple name to reference the account by

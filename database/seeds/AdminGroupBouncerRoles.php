@@ -34,6 +34,7 @@ class AdminGroupBouncerRoles extends Seeder
             App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
             App\TelecomInfrastructure::class,
+			App\Ping::class,
         ];
 
         foreach ($types as $type) {

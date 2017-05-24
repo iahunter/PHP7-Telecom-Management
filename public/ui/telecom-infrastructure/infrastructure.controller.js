@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Telecom.Infrastructure.Controller', ['telecomInfrastructureService', 'cucmService', 'PageService', '$location', '$state', '$stateParams', function(telecomInfrastructureService, cucmService, PageService, $location, $state, $stateParams) {
+	.controller('Telecom.Infrastructure.Controller', ['telecomInfrastructureService', 'cucmService', 'PageService', '$location', '$state', '$scope', '$interval','$stateParams', function(telecomInfrastructureService, cucmService, PageService, $location, $state, $scope, $interval, $stateParams) {
 	
 		var vm = this;
 		
@@ -49,36 +49,47 @@ angular
 			return result;
 		}
 		
-		vm.getdevices = telecomInfrastructureService.getDevices()
-		
-			.then(function(res){
-				
-				//console.log(res)
-				// Check for errors and if token has expired. 
-				if(res.data.message){
-					//console.log(res);
-					vm.message = res.data.message;
-					console.log(vm.message);
+		function getdevices() {
+			telecomInfrastructureService.getDevices()
+			
+				.then(function(res){
 					
-					if(vm.message == "Token has expired"){
-						// Send user to login page if token expired. 
-						//alert("Token has expired, Please relogin");
-						$state.go('logout');
-					}
+					//console.log(res)
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							//alert("Token has expired, Please relogin");
+							$state.go('logout');
+						}
 
-					return vm.message;
-				}else{
+						return vm.message;
+					}else{
+						
+						vm.devices = res.data.result;
+										
+						vm.loading = false;
+						
+					}
 					
-					vm.devices = res.data.result;
-									
-					vm.loading = false;
-					
-				}
-				
-			}, function(err){
-				console.log(err)
-				alert(err);
-			});
+				}, function(err){
+					console.log(err)
+					alert(err);
+				});
+		}
+		
+		getdevices();
+			
+		var pulldevices = $interval(getdevices,30000); 
+		
+		$scope.$on('$destroy', function() {
+			//console.log($scope);
+            $interval.cancel(pulldevices);
+		});
 			
 		
 		var id = $stateParams.id;

@@ -18,7 +18,7 @@ class TelecomInfrastructureController extends Controller
             abort(401, 'You are not authorized');
         }
 
-        $device = TelecomInfrastructure::orderBy('model', 'role')->get();
+        $device = TelecomInfrastructure::orderBy('application', 'role')->get();
 
         $response = [
                     'status_code'    => 200,

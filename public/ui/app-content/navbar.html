@@ -57,33 +57,17 @@
 			  </ul>
 			  
 			  
-			  <!-- Collect the nav links, forms, and other content for toggling -->
-			  <ul class="nav navbar-nav">
-				<li class="dropdown">
-				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
-				  <ul class="dropdown-menu">
-					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">SIP & E911 Report</a></li>
-					
-					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
-					<!--
-					<li role="separator" class="divider"></li>
-					<li><a href="#/didblock">Separated link</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#/didblock">One more separated link</a></li>
-					-->
-				  </ul>
-				</li>
-			  </ul>
+			  
 			  
 			  <ul class="nav navbar-nav" ng-show="vm.permissions.read.TelecomInfrastructure == true">
 				<li class="dropdown">
-				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Telecom Infrastructure</a>
+				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Infrastructure Tracking</a>
 				  <ul class="dropdown-menu">
 					
 					
 					<li><a href="#/infrastructure/create" ng-if="vm.permissions.create.Didblock == true">Add Device</a></li>
 					<!--<li><a href="#/importdidblock" ng-if="vm.permissions.create.Didblock == true">Bulk Import Number Blocks</a></li>-->
-					<li><a href="#/infrastructure">Telecom Inventory</a></li>
+					<li><a href="#/infrastructure">List Inventory</a></li>
 
 					<!--
 					<li role="separator" class="divider"></li>
@@ -111,6 +95,24 @@
 					<li role="separator" class="divider"></li>
 					<li><a href="{{vm.sbcrepo}}" target="_blank">SBC Config Repo</a></li>
 					
+					<!--
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">Separated link</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">One more separated link</a></li>
+					-->
+				  </ul>
+				</li>
+			  </ul>
+			  
+			  <!-- Collect the nav links, forms, and other content for toggling -->
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
+				  <ul class="dropdown-menu">
+					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">SIP & E911 Report</a></li>
+					
+					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
 					<!--
 					<li role="separator" class="divider"></li>
 					<li><a href="#/didblock">Separated link</a></li>

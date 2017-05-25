@@ -44,10 +44,13 @@ class PingScanInfrastructure extends Command
         $hosts = TelecomInfrastructure::all();
 
         foreach ($hosts as $host) {
+			
+			$device = TelecomInfrastructure::find($host['id']);
+			
             $hostname = $host['hostname'];
-            $id = $host['id'];
             $ip = $host['ip_address'];
             $host_status = Ping::pinghost($ip);
+			
             if ($host_status['result'] == 'echo reply') {
                 $device_status = true;
                 $friendly_status = 'up';
@@ -55,13 +58,65 @@ class PingScanInfrastructure extends Command
                 $device_status = false;
                 $friendly_status = 'down';
             }
+			
+			if(!$device->json){
+				// Build Monitoring Ping Counter if it doesn't exist. 
+				$json = ['ping' => [
+										'state' => true,
+										'counter' => 0
+									]
+						];
+			
+				$device->json = $json;
+				
+				$device->updated_by = 'Monitoring Change';
+				$device->save();
+			}
 
-             // Find record by id
-            $device = TelecomInfrastructure::find($id);
-
+			
+			$json = $device->json;
+			
             // If the Status change does not match what is currently set in the Database. Update the Database with the new status.
             if ($device->ip_reachable != $device_status) {
-                $device->ip_reachable = $device_status;
+               
+				if($device_status == true){
+					if($json['ping']['state'] != true){
+						$json['ping']['state'] = true;
+						$json['ping']['counter'] = 1;
+					}else{
+						$json['ping']['state'] = true;
+						$json['ping']['counter'] = $json['ping']['counter'] + 1;
+					}
+					if($json['ping']['counter'] >= 5){
+						$json['ping']['counter'] = 0;
+						$device->ip_reachable = $device_status;
+					}
+					else{
+						$device->json = $json;
+						$device->save();
+						continue;
+					}
+				}
+				if($device_status == false){
+					if($json['ping']['state'] != false){
+						$json['ping']['state'] = false;
+						$json['ping']['counter'] = 1;
+					}else{
+						$json['ping']['state'] = false;
+						$json['ping']['counter'] = $json['ping']['counter'] + 1;
+					}
+					if($json['ping']['counter'] >= 5){
+						$json['ping']['counter'] = 0;
+						$device->ip_reachable = $device_status;
+					}
+					else{
+						$device->json = $json;
+						$device->save();
+						continue;
+					}
+				}
+				
+				$device->json = $json;
 
                 $time = Carbon::now().PHP_EOL;
                 $hostdata = $hostname.' | '.$ip.PHP_EOL;
@@ -75,19 +130,34 @@ class PingScanInfrastructure extends Command
                         'status'      => $friendly_status,
                         ];
 
-                Mail::send(['html'=>'email'], $data, function ($message) {
-                    $message->subject('Telecom Management Alert - Device Status Change!')
-                                ->from([env('MAIL_FROM_ADDRESS')])
-                                ->to([env('ONCALL_EMAIL_TO'), env('ONCALL_EMAIL_TO')])
-                                ->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
-                });
-
-                echo 'Email sent to '.env('ONCALL_EMAIL_TO').PHP_EOL;
-                echo 'Email sent to '.env('BACKUP_EMAIL_TO').PHP_EOL;
-
+						
+				$this->sendemail($data);
+				
                 $device->updated_by = 'Monitoring Change';
                 $device->save();
-            }
+			}elseif($json['ping']['state'] != $device_status){
+				// Reset counters. 
+				$json['ping']['state'] = $device_status;
+				$json['ping']['counter'] = 0;
+				
+				// Save to device. 
+				$device->json = $json;
+				$device->save();
+			}
+			
         }
     }
+	
+	public function sendemail($data){
+		// Send email to the Oncall when status changes occur. 
+		Mail::send(['html'=>'email'], $data, function ($message) {
+			$message->subject('Telecom Management Alert - Device Status Change!')
+						->from([env('MAIL_FROM_ADDRESS')])
+						->to([env('ONCALL_EMAIL_TO'), env('ONCALL_EMAIL_TO')])
+						->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
+		});
+
+		echo 'Email sent to '.env('ONCALL_EMAIL_TO').PHP_EOL;
+		echo 'Email sent to '.env('BACKUP_EMAIL_TO').PHP_EOL;
+	}
 }

@@ -49,7 +49,13 @@ class PingScanInfrastructure extends Command
             $hostname = $host['hostname'];
             $ip = $host['ip_address'];
             $host_status = Ping::pinghost($ip);
-
+			
+			$i = 1;
+			while($host_status['result'] != 'echo reply' && $i < 5){
+				$i++;
+				$host_status = Ping::pinghost($ip);
+			}
+			
             if ($host_status['result'] == 'echo reply') {
                 $device_status = true;
                 $friendly_status = 'up';

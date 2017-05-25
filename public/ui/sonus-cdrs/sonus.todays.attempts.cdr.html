@@ -219,10 +219,11 @@
 						
 						
 						<td>{{ call.disconnect_initiator}} - {{ call.disconnect_initiator_desc}}</td>
-						<td>{{ call.disconnect_reason}} - {{call.disconnect_reason_desc}}<i class="fa fa-exclamation-triangle" ng-if="call.disconnect_reason != 16"></i></td>
+						<td>{{ call.disconnect_reason}} - {{call.disconnect_reason_desc}}</td>
+						<!--<td>{{ call.disconnect_reason}} - {{call.disconnect_reason_desc}}<i class="fa fa-exclamation-triangle" ng-if="call.disconnect_reason != 16"></i></td>-->
 						
-						<td>{{ call.disconnect_ingress_sip_response}}</td>
-						<td>{{ call.disconnect_egress_sip_response}}</td>
+						<td>{{ call.disconnect_ingress_sip_response}} <i class="fa fa-exclamation-triangle" ng-if="call.disconnect_ingress_sip_response > 500"></i></td>
+						<td>{{ call.disconnect_egress_sip_response}} <i class="fa fa-exclamation-triangle" ng-if="call.disconnect_egress_sip_response > 500"></i></td>
 						
 						<td>{{ call.ingress_callid}}</td>
 						<td>{{ call.egress_callid}}</td>

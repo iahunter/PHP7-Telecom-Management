@@ -10,7 +10,7 @@ class Ping extends Model
     public static function pinghost($host)
     {
         $ttl = 128;
-        $timeout = 5;
+        $timeout = 1;
 
         $ping = new \JJG\Ping($host, $ttl, $timeout);
         $latency = $ping->ping();

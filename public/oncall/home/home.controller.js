@@ -15,7 +15,10 @@
 					//Permissions Checker/
 					var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
 					window.telecom_mgmt_permissions = tokenPayload.permissions;
-
+					
+					// Custom token Claim variable set in App\User
+					window.telecom_user = tokenPayload.user;
+					
 					// Look at checking date expire and renew automatically. 
 					var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
 

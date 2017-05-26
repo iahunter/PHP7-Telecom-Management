@@ -15,7 +15,9 @@
 					//Permissions Checker/
 					var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
 					window.telecom_mgmt_permissions = tokenPayload.permissions;
-
+					
+					// Custom token Claim variable set in App\User
+					window.telecom_user = tokenPayload.user;
 					
 					// Look at checking date expire and renew automatically. 
 					var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
@@ -23,7 +25,7 @@
 					//console.log(date);
 					
 					if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
-						console.log('home.controller.js Cached token is expired, logging out');
+						//console.log('home.controller.js Cached token is expired, logging out');
 						delete $localStorage.currentUser;
 						$http.defaults.headers.common.Authorization = '';
 						$location.path('/logout');
@@ -69,20 +71,6 @@
 		// Get located of SBC Config SVN Repo for Navbar
 		vm.getcompanycontent = CompanyService.getcompanycontent()
 			.then(function(res){
-				// Check for errors and if token has expired. 
-				if(res.data.message){
-					console.log(res);
-					vm.message = res.data.message;
-					console.log(vm.message);
-					
-					if(vm.message == "Token has expired"){
-						// Send user to login page if token expired. 
-						alert(vm.message);
-						$state.go('logout');
-					}
-
-					return vm.message;
-				}
 				vm.sbcrepo = res.data.sbcconfigs;
 				//console.log(vm.sbcrepo);
 

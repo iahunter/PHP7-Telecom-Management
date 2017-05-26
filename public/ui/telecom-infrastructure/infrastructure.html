@@ -194,8 +194,9 @@
 
 						<td   ng-show="!vm.edit[device.id]"><a href='{{ device.mgmt_url}}' target="blank"><b style="color:#337ab7">{{ device.hostname}}</b></a></td>
 						<td   ng-show="!vm.edit[device.id]">
-							<button type="button" class="btn btn-xs btn-danger" ng-if="device.ip_reachable == 0">Down</button> 
-							<button type="button" class="btn btn-xs btn-success" ng-if="device.ip_reachable == 1">Up</button>
+							<button type="button" class="btn btn-xs btn-danger" ng-if="device.ip_reachable == 0 && device.monitor == 1">Down</button> 
+							<button type="button" class="btn btn-xs btn-success" ng-if="device.ip_reachable == 1 && device.monitor == 1">Up</button>
+							<button type="button" class="btn btn-xs btn-info" ng-if="device.monitor == 0">Unmonitored</button>
 						</td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.comment}}</td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.function}}</td>

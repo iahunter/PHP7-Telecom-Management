@@ -28,6 +28,7 @@ class CreateTelecomInfrastructureTable extends Migration
             $table->string('location')->nullable();
             $table->json('json')->nullable();                       // JSON Custom Field Data
             $table->boolean('ip_reachable')->nullable();
+			$table->boolean('monitor')->nullable();
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
             $table->string('deleted_by')->nullable();              // simple name to reference the account by

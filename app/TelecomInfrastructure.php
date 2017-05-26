@@ -25,6 +25,7 @@ class TelecomInfrastructure extends Model
                             'location',
                             'json',
                             'ip_reachable',
+							'monitor',
                             'created_by',
                             'updated_by',
                             'deleted_by',

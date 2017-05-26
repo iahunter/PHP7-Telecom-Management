@@ -45,9 +45,16 @@ class PingScanInfrastructure extends Command
 
         foreach ($hosts as $host) {
             $device = TelecomInfrastructure::find($host['id']);
-
-            $hostname = $host['hostname'];
+			
+			$hostname = $host['hostname'];
             $ip = $host['ip_address'];
+			
+			
+			if(!$device->monitor){
+				print "Unmonitored Device Found. Skipping: ".$hostname." | ".$ip.PHP_EOL;
+				continue;
+			}
+            
             $host_status = Ping::pinghost($ip);
 
             $i = 1;

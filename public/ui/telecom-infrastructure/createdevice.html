@@ -50,23 +50,34 @@
 									</div>
 								</div>
 							</div>
-						</div>
+							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-							<div class="form-group" ng-class="{'has-error': addDeviceForm.role.$touched && addDeviceForm.role.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
-								<label for="role" class="control-label">Role</label>
-								<div class="inputGroupContainer">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-server"></i></span>
-										<input type="text" ng-model='vm.deviceForm.role' required class="form-control"  name="role" placeholder="Publisher, Subscriber, Primary, Secondary">
-									</div>
-									<div ng-messages="addDeviceForm.role.$dirty && addDeviceForm.role.$error">
-											<div ng-message='required'> role is required </div>
-											<div ng-message='minlength'>Please enter a role at least 8 chars long</div>
-											<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.role.$touched && addDeviceForm.role.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
+									<label for="role" class="control-label">Role</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-server"></i></span>
+											<input type="text" ng-model='vm.deviceForm.role' required class="form-control"  name="role" placeholder="Publisher, Subscriber, Primary, Secondary">
+										</div>
+										<div ng-messages="addDeviceForm.role.$dirty && addDeviceForm.role.$error">
+												<div ng-message='required'> role is required </div>
+												<div ng-message='minlength'>Please enter a role at least 8 chars long</div>
+												<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group"  ng-class="{'has-error': addDidblockForm.monitor.$touched && addDidblockForm.monitor.$invalid, 'has-success': addDidblockForm.monitor.$touched && addDidblockForm.monitor.$valid }">
+										<label for="monitor" class="control-label">Monitoring & Alerting</label>
+										<br>
+										<input type="checkbox"  ng-model='vm.deviceForm.monitor' name="monitor" >
+
+										<div ng-messages="addDidblockForm.monitor.$dirty && addDidblockForm.monitor.$error">
+											<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+							</div>
 						
 						</div>
 						

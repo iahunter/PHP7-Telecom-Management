@@ -100,6 +100,9 @@ angular
 			.then(function(res){
 
 				vm.deviceForm = res.data.result;
+				if(vm.deviceForm.monitor == 1){
+					vm.deviceForm.monitor = true;
+				}
 			
 			}, function(err){
 							//Error

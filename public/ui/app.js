@@ -7,8 +7,7 @@
         .run(run);
 
 		
-	function run($rootScope, $http, $location, $localStorage, jwtHelper, AuthenticationService) {
-		
+	function run(CompanyService, $rootScope, $window, $http, $location, $localStorage, jwtHelper, AuthenticationService) {
         // keep user logged in after page refresh
         if ($localStorage.currentUser) {
 			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
@@ -17,6 +16,7 @@
 			//Permissions Checker/
 			var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
 			window.telecom_mgmt_permissions = tokenPayload.permissions;
+			window.telecom_user = tokenPayload.user;
 
 			
 			// Look at checking date expire and renew automatically. 
@@ -63,6 +63,8 @@
 				
 			}
         }
+		
+		
 
         // redirect to login page if not logged in and trying to access a restricted page
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
@@ -72,6 +74,36 @@
                 $location.path('/login');
             }
         });
+		
+		
+		// Get Google Analytics ID from Company Content Folder
+		var getcompanycontent = CompanyService.getgoogleanalyticsid()
+			.then(function(res){
+				
+				var google = res.data.id;
+				
+				// Get user info
+				var dimensionValue = window.telecom_user;
+				dimensionValue = dimensionValue.toString();
+				
+				//console.log('User: ' + dimensionValue)
+				
+					
+
+				// Set our google analytics id
+				$window.ga('create', google, {'userId': dimensionValue});
+				
+				$rootScope.$on('$stateChangeSuccess', function (event) {
+					//console.log("Send Google Analytics")
+					$window.ga('set', 'dimension1', dimensionValue);
+					$window.ga('send', 'pageview', $location.path());
+					//console.log($location.path())
+				});
+
+			}, function(err){
+				vm.loading = false;
+			});
+
     }
 	
     function config($stateProvider, $urlRouterProvider) {

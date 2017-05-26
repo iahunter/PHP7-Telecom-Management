@@ -1,8 +1,8 @@
 ﻿angular
 	.module('app')
-	.controller('Home.IndexController', ['UserService', 'PageService', 'CompanyService','$location', '$state', '$scope', '$interval', '$timeout', '$http', '$localStorage', 'jwtHelper', 'AuthenticationService', function(UserService, PageService, CompanyService, $location, $state, $scope, $interval, $timeout, $http, $localStorage, jwtHelper, AuthenticationService) {
+	.controller('Home.IndexController', ['UserService', 'PageService', 'CompanyService','$location', '$window', '$rootScope', '$state', '$scope', '$interval', '$timeout', '$http', '$localStorage', 'jwtHelper', 'AuthenticationService', function(UserService, PageService, CompanyService, $location, $window, $rootScope, $state, $scope, $interval, $timeout, $http, $localStorage, jwtHelper, AuthenticationService) {
 		var vm = this;
-		
+
 		// Attempt to renew token on page click - FYI - this gets called on every page for navbar. 
         if ($localStorage.currentUser) {
 			//console.log('Found local storage login token: ' + $localStorage.currentUser.token);

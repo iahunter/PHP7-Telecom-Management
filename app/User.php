@@ -36,6 +36,7 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
     {
         // Add custom properties to the token here. This can be used to send the browser its permissions.
         $claims = [];
+		$claims['user'] = $this->id;
         $claims['permissions'] = [];
         $claims['permissions']['read'] = [];
         $claims['permissions']['create'] = [];

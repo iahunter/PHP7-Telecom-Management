@@ -67,7 +67,7 @@
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addDidblockForm.countrycode.$touched && addDidblockForm.countrycode.$invalid, 'has-success': addDidblockForm.countrycode.$touched && addDidblockForm.countrycode.$valid }">
 									<label for="countrycode" required class=" control-label">Country Code</label>
-									<input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.didblockForm.country_code' class="form-control" name="countrycode" placeholder="1">
+									<input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.didblockForm.country_code' class="form-control" name="countrycode" placeholder="1 for North America">
 									<div ng-messages="addDidblockForm.countrycode.$dirty && addDidblockForm.countrycode.$error">
 										<div ng-message="pattern">Please enter a valid country code</div>
 										<div ng-messages-include="error-messages"></div>
@@ -116,7 +116,7 @@
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group"  ng-class="{'has-error': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$invalid, 'has-success': addDidblockForm.reserved.$touched && addDidblockForm.reserved.$valid }">
-									<label for="reserved" class="control-label">Automation Only</label>
+									<label for="reserved" class="control-label">Automation Only <small>Developers Only</small></label>
 									<br>
 									<input type="checkbox"  ng-model='vm.didblockForm.reserved' name="reserved" >
 

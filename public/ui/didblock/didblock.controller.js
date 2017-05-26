@@ -208,6 +208,9 @@ angular
 		}
 		*/
 		
+		// Default form Country Code
+		//vm.didblockForm.country_code = 1;
+		
 		// Drop down values to use in Add form. 
 		vm.states = [{
 				id: 1,

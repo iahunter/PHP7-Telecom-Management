@@ -65,6 +65,7 @@ class BouncerPermissions extends Command
             App\Cucmphoneconfigs::class,
             App\TelecomInfrastructure::class,
             App\Ping::class,
+			\Spatie\Activitylog\Models\Activity::class, // Activity Log Permissions
         ];
 
         foreach ($types as $type) {

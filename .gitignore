@@ -18,6 +18,9 @@ public/oncall/app-content/images/
 public/oncall/company-content/
 public/oncall/bower_components
 
+public/admin/app-content/images/
+public/admin/company-content/
+public/admin/bower_components
 
 Homestead.yaml
 Homestead.json

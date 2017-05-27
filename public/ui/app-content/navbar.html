@@ -87,13 +87,15 @@
 					
 					<li><a href="#/sonus/activecalls">Active Call Summary</a></li>
 					<li><a href="#/sonus/activecalldetails">Active Call Media Details</a></li>
-					<li role="separator" class="divider"></li>
+					<li role="separator" class="divider" ng-show="vm.permissions.read.Sonus5kCDR == true"></li>
 					<li><a href="#/sonus/cdr/todays_calls_with_pkt_loss"  ng-show="vm.permissions.read.Sonus5kCDR == true">24hr Call Packet Loss Report</a></li>
 					<li><a href="#/sonus/cdr/todays_calls_attempts"  ng-show="vm.permissions.read.Sonus5kCDR == true">24hr Call Attempts Report</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a href="#/sonus/activealarms">Active Alarms</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="{{vm.sbcrepo}}" target="_blank">SBC Config Repo</a></li>
+					<li><a href="#/sonus/configrepo">SBC Config Repo</a></li>
+					
+					<!--<li><a href="{{vm.sbcrepo}}" target="_blank">SBC Config Repo</a></li>-->
 					
 					<!--
 					<li role="separator" class="divider"></li>

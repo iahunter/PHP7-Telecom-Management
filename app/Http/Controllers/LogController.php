@@ -14,9 +14,16 @@ class LogController extends Controller
     public function log_page_name(Request $request, $name)
     {
         $user = JWTAuth::parseToken()->authenticate();
-
+		
+		// Look for the page log syntax that we replace / with in the UI. Put the / back in. 
+		$name = explode("&",$name);
+		
+		$namearray = str_replace("~~~","/",$name);
+		$app = $namearray[0];
+		$url = $namearray[1];
+		//return $name;
         // Log activity in request
-        activity('pagelog')->causedBy($user)->withProperties(['page' => $name])->log('Page Request');
+        activity('pagelog')->causedBy($user)->withProperties(['app' => $app, 'url' => $url])->log('Page Request');
 
         // Return Nothing
     }
@@ -42,4 +49,6 @@ class LogController extends Controller
 
         return $abilities;
     }
+	
+	
 }

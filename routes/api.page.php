@@ -10,6 +10,13 @@
      *     operationId="",
      *     consumes={"application/json"},
      *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Hostname or IP Address",
+     *         required=true,
+     *         type="integer"
+     *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",

@@ -39,7 +39,7 @@ angular
 					}
 
 					vm.calls = res.data.result;
-					console.log(vm.calls)
+					//console.log(vm.calls)
 					vm.dayscallgraph = {};
 					
 					//console.log(block.stats);
@@ -56,7 +56,7 @@ angular
 						//vm.sbcs['totalCalls'].push(key.totalCalls);
 						//console.log(key.stats);
 						angular.forEach(key, function(k, v) {
-							console.log(v)
+							//console.log(v)
 							// Create the SBC arrays for individual call counts. 
 							if (vm.sbcs[v]){
 								vm.sbcs[v].push(k);
@@ -68,7 +68,7 @@ angular
 						
 						// Change time to local time. 
 						var dateString = value;
-						console.log(dateString)
+						//console.log(dateString)
 						var created_at = moment().utc().format(dateString);
 						created_at = moment.utc(created_at).toDate();
 						key.created_at = created_at.toLocaleString()

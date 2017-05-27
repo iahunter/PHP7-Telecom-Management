@@ -190,13 +190,15 @@
 					<tr ng-repeat="device in vm.devices | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
-						<td><a href='{{ device.mgmt_url}}' target="blank"><b style="color:#337ab7">{{ device.id}}</b></a></td>
+						<td>{{ device.id}}</td>
 
-						<td   ng-show="!vm.edit[device.id]"><a href='{{ device.mgmt_url}}' target="blank"><b style="color:#337ab7">{{ device.hostname}}</b></a></td>
+						<td   ng-show="!vm.edit[device.id]">
+							<b><a href="#/infrastructure/edit/{{device.id}}" ng-if="vm.permissions.update.TelecomInfrastructure" >{{ device.hostname}}</a>
+							<span ng-if="!vm.permissions.update.TelecomInfrastructure" >{{ device.hostname}}<span></b></td>
 						<td   ng-show="!vm.edit[device.id]">
 							<button type="button" class="btn btn-xs btn-danger" ng-if="device.ip_reachable == 0 && device.monitor == 1">Down</button> 
-							<button type="button" class="btn btn-xs btn-success" ng-if="device.ip_reachable == 1 && device.monitor == 1">Up</button>
-							<button type="button" class="btn btn-xs btn-info" ng-if="device.monitor == 0">Unmonitored</button>
+							<a href='{{ device.mgmt_url}}' target="blank"><button type="button" class="btn btn-xs btn-success" ng-if="device.ip_reachable == 1 && device.monitor == 1">Up</button></a>
+							<a href='{{ device.mgmt_url}}' target="blank"><button type="button" class="btn btn-xs btn-info" ng-if="device.monitor == 0">Unmonitored</button></a>
 						</td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.comment}}</td>
 						<td   ng-show="!vm.edit[device.id]">{{ device.function}}</td>

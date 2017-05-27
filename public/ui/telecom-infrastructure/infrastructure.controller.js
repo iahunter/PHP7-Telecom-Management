@@ -26,8 +26,9 @@ angular
 		
 		vm.loading = true;
 		
+
 		// Page Request
-		vm.getpage = PageService.getpage('listdevices')
+		//vm.getpage = PageService.getpage('infrastructure')
 		
 		if(!vm.permissions.read.Site){
 			$location.path('/accessdenied');

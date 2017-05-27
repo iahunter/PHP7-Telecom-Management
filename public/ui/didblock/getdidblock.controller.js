@@ -15,7 +15,7 @@ angular
 		
 		var id = $stateParams.id;
 		
-		vm.getpage = PageService.getpage('getdidblock-' + id)
+		//vm.getpage = PageService.getpage('getdidblock-' + id)
 		
 		vm.getdidblock = telephonyService.getDidblock(id)
 			.then(function(res){

@@ -16,6 +16,7 @@ angular
 		if(!vm.permissions.read.Calls){
 			$location.path('/accessdenied');
 		}
+
 		
 		list_todays_attempts_summary_report();
 		

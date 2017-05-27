@@ -43,7 +43,7 @@
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};
 		
-		vm.getpage = PageService.getpage('home');
+		//vm.getpage = PageService.getpage('home');
 
 
 		initController();

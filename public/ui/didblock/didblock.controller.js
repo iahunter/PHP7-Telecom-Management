@@ -82,7 +82,7 @@ angular
 		}
 		
 		
-		vm.getpage = PageService.getpage('listdidblocks')
+		//vm.getpage = PageService.getpage('listdidblocks')
 		
 		
 		vm.getdidblocks = telephonyService.didblocks()

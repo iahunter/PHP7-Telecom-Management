@@ -7,7 +7,7 @@
         .run(run);
 
 		
-	function run(CompanyService, $rootScope, $window, $http, $location, $localStorage, jwtHelper, AuthenticationService) {
+	function run(PageService, CompanyService, $rootScope, $window, $http, $location, $localStorage, jwtHelper, AuthenticationService) {
         // keep user logged in after page refresh
         if ($localStorage.currentUser) {
 			console.log('Found local storage login token: ' + $localStorage.currentUser.token);
@@ -94,10 +94,17 @@
 				$window.ga('create', google, {'userId': dimensionValue});
 				
 				$rootScope.$on('$stateChangeSuccess', function (event) {
+					
 					//console.log("Send Google Analytics")
 					$window.ga('set', 'dimension1', dimensionValue);
 					$window.ga('send', 'pageview', $location.path());
-					//console.log($location.path())
+					
+					// Log our Page Requests to our database
+					var application_name = "ui";
+					var location = $location.path()
+					location = location.split('/').join('~~~')	// replace / with ~~~ so we can send in url
+					//console.log(location)
+					PageService.getpage(application_name + "&" + location)
 				});
 
 			}, function(err){
@@ -210,6 +217,12 @@
                 url: '/site/{id}',
                 templateUrl: 'siteplanning/getsite.html',
                 controller: 'getSite.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('sonusconfigs', {
+                url: '/sonus/configrepo',
+                templateUrl: 'company-content/sonusconfigrepo.html',
+                //controller: 'siteTrunking911Report.IndexController',
                 controllerAs: 'vm'
             })
 			.state('reportshome', {

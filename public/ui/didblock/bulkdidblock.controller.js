@@ -13,7 +13,7 @@ angular
 		
 		var id = $stateParams.id;
 		
-		vm.getpage = PageService.getpage('importIntoPhonePlan-' + id)
+		//vm.getpage = PageService.getpage('importIntoPhonePlan-' + id)
 										//what should this be?
 
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 

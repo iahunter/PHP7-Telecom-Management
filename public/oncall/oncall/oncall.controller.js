@@ -8,7 +8,7 @@
 		vm.userinfo = {};
 		var pattern = $stateParams.id;
 		
-		vm.getpage = PageService.getpage('oncall - ' + pattern);
+		//vm.getpage = PageService.getpage('oncall - ' + pattern);
 
 		function isInArrayNgForeach(field, arr) {
 			var result = false;

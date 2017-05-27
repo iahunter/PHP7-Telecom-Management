@@ -84,7 +84,7 @@ class LogController extends Controller
         $end = Carbon::now()->toDateTimeString();
 
         $calls = Activity::whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
-		
+
         return $calls;
     }
 
@@ -102,7 +102,6 @@ class LogController extends Controller
 
         $calls = Activity::where('log_name', 'pagelog')
                 ->whereBetween('created_at', [$start, $end])->orderby('created_at', 'desc')->get();
-
 
         return $calls;
     }

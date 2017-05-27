@@ -16,14 +16,14 @@ class LogController extends Controller
     public function log_page_name(Request $request, $name)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Look for the page log syntax that we replace / with in the UI. Put the / back in. 
-		$name = explode("&",$name);
-		
-		$namearray = str_replace("~~~","/",$name);
-		$app = $namearray[0];
-		$url = $namearray[1];
-		//return $name;
+
+        // Look for the page log syntax that we replace / with in the UI. Put the / back in.
+        $name = explode('&', $name);
+
+        $namearray = str_replace('~~~', '/', $name);
+        $app = $namearray[0];
+        $url = $namearray[1];
+        //return $name;
         // Log activity in request
         activity('pagelog')->causedBy($user)->withProperties(['app' => $app, 'url' => $url])->log('Page Request');
 
@@ -45,8 +45,8 @@ class LogController extends Controller
     public function permissions(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+
+        // Check Role of user
         if (! $user->can('read', Activity::class)) {
             abort(401, 'You are not authorized');
         }
@@ -56,56 +56,53 @@ class LogController extends Controller
 
         return $abilities;
     }
-	
-	public function get_logs_by_date_range(Request $request)
+
+    public function get_logs_by_date_range(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+
+        // Check Role of user
         if (! $user->can('read', Activity::class)) {
             abort(401, 'You are not authorized');
         }
 
-		$calls = Activity::whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
-		
-		return $calls;
+        $calls = Activity::whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
+
+        return $calls;
     }
-	
-	public function get_last24hrs_logs(Request $request)
+
+    public function get_last24hrs_logs(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+
+        // Check Role of user
         if (! $user->can('read', Activity::class)) {
             abort(401, 'You are not authorized');
         }
-		
+
         $start = Carbon::now()->subHours(24)->toDateTimeString();
         $end = Carbon::now()->toDateTimeString();
 
-		$calls = Activity::whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
-		
-		return $calls;
+        $calls = Activity::whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
+
+        return $calls;
     }
-	
-	public function get_last24hrs_page_logs(Request $request)
+
+    public function get_last24hrs_page_logs(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check Role of user
+
+        // Check Role of user
         if (! $user->can('read', Activity::class)) {
             abort(401, 'You are not authorized');
         }
-		
+
         $start = Carbon::now()->subHours(24)->toDateTimeString();
         $end = Carbon::now()->toDateTimeString();
 
-		$calls = Activity::where('log_name', 'pagelog')
-				->whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
-		
-		return $calls;
+        $calls = Activity::where('log_name', 'pagelog')
+                ->whereBetween('created_at', [$start, $end])->orderby('created_at')->get();
+
+        return $calls;
     }
-	
-	
-	
 }

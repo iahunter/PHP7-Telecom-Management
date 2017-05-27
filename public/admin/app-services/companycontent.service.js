@@ -7,7 +7,7 @@ angular
 		// Get Current Team name and oncall numbers from json file
 		self.getcompanycontent = function() {
 			var defer = $q.defer();
-			return $http.get('../ui/company-content/company.json')
+			return $http.get('../admin/company-content/company.json')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					
@@ -30,7 +30,7 @@ angular
 		// Get Current Team name and oncall numbers from json file
 		self.getgoogleanalyticsid = function() {
 			var defer = $q.defer();
-			return $http.get('../ui/company-content/analytics.json')
+			return $http.get('../admin/company-content/analytics.json')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					

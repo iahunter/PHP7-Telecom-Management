@@ -26,6 +26,7 @@ angular
 			$location.path('/accessdenied');
 		}
 
+		pagelogs();
 
 		function pagelogs(){
 			LogService.getlast24hrpagelogs()
@@ -36,9 +37,10 @@ angular
 						vm.message = res.data.message;
 						//console.log(vm.message);
 					}else{
-						console.log(res)
+						//console.log(res)
 						vm.logs = res.data.activity_logs;
 						
+						vm.loading = false;
 						/*
 						// Use this to change chart colors. 
 						//Chart.defaults.global.colors = ['#FD1F5E','#1EF9A1','#7FFD1F','#68F000'];
@@ -102,7 +104,7 @@ angular
 																				}};
 					*/	
 						//console.log(vm.trunking)
-						vm.loading = false;
+						
 						
 					}
 					

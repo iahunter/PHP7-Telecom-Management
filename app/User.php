@@ -186,12 +186,10 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', TelecomInfrastructure::class)) {
             $claims['permissions']['delete']['TelecomInfrastructure'] = true;
         }
-		
-		
-		if ($this->can('read', \Spatie\Activitylog\Models\Activity::class)) {
+
+        if ($this->can('read', \Spatie\Activitylog\Models\Activity::class)) {
             $claims['permissions']['read']['ActivityLog'] = true;
         }
-		
 
         return $claims;
     }

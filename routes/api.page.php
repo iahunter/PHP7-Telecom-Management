@@ -70,9 +70,8 @@
      * )
      **/
     $api->get('/page/permissions', 'App\Http\Controllers\LogController@permissions');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/activitylogs/last24hrs",
      *     tags={"Logging and Permissions"},
@@ -92,8 +91,8 @@
      * )
      **/
     $api->get('/activitylogs/last24hrs', 'App\Http\Controllers\LogController@get_last24hrs_logs');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/activitylogs/pagelogs/last24hrs",
      *     tags={"Logging and Permissions"},
@@ -113,8 +112,8 @@
      * )
      **/
     $api->get('/activitylogs/pagelogs/last24hrs', 'App\Http\Controllers\LogController@get_last24hrs_page_logs');
-	
-	 /**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/activitylogs/bydates",
      *     tags={"Logging and Permissions"},

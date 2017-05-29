@@ -101,6 +101,7 @@ class LogController extends Controller
         $end = Carbon::now()->toDateTimeString();
 
         $calls = Activity::where('log_name', 'pagelog')
+				//->where('causer_id', '!=',  1) // Exclude developer user Id
                 ->whereBetween('created_at', [$start, $end])->orderby('created_at', 'desc')->get();
 
         return $calls;

@@ -97,7 +97,7 @@
 					var application_name = "ui";
 					var location = $location.path()
 					location = location.split('/').join('~~~')	// replace / with ~~~ so we can send in url
-					console.log(location)
+					//console.log(location)
 					PageService.getpage(application_name + "&" + location)
 					
 					//console.log("Send Google Analytics")

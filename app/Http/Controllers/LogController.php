@@ -100,44 +100,48 @@ class LogController extends Controller
         $start = Carbon::now()->subHours(24)->toDateTimeString();
         $end = Carbon::now()->toDateTimeString();
 
-        /*
+		/*
         $calls = Activity::where('log_name', 'pagelog')
                 //->where('causer_id', '!=',  1) // Exclude developer user Id
                 ->whereBetween('created_at', [$start, $end])->orderby('created_at', 'desc')
-                ->get();
-        */
-
-        $calls = DB::table('activity_log')
-                ->where('log_name', 'pagelog')
-                ->where('causer_id', '!=', 1) // Exclude developer user Id
+				->get();
+		*/
+		
+		// Using the DB table returns a bunch of weird stuff and doesn't parse the data in json columns so we have to clean up the result below. 
+		$calls = DB::table('activity_log')
+				->where('log_name', 'pagelog')
+                ->where('causer_id', '!=',  1) // Exclude developer user Id
                 ->whereBetween('activity_log.created_at', [$start, $end])->orderby('activity_log.created_at', 'desc')
-                // Get the Username of the causerid
-                ->leftJoin('users', 'activity_log.causer_id', '=', 'users.id')
-                //->join('users', 'activity_log.causer_id', '=', 'users.id')
-                ->select('users.username as username', 'activity_log.*')
-                ->get();
+				// Get the Username of the causerid by doing a table join. 
+				->leftJoin('users', 'activity_log.causer_id', '=', 'users.id')
+				//->join('users', 'activity_log.causer_id', '=', 'users.id')
+				->select('users.username as username', 'activity_log.*')
+				->get();
+		
+		// Clean up this crappy array
+		$calls = json_decode(json_encode($calls), true);
+		
+		$calls_array = [];
+		$calls = (array) $calls;
+		
+		// loop thru and parse our json table and set them to new array key values.  
+		foreach($calls as $call){
+			$json = json_decode($call['properties'], true);
+			$call['app'] = $json['app'];
+			$call['url'] = $json['url'];
+			$calls_array[] = $call;
+		}
+		
 
-        // Clean up this crap
-        $calls = json_decode(json_encode($calls), true);
-
-        $calls_array = [];
-        $calls = (array) $calls;
-
-        foreach ($calls as $call) {
-            $json = json_decode($call['properties'], true);
-            $call['app'] = $json['app'];
-            $call['url'] = $json['url'];
-            $calls_array[] = $call;
-        }
-
-        $response = [
+		$response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
                     'result'               => $calls_array,
                     ];
 
-        return $response;
-        //return response()->json($response);
+        return $response; 
+		//return response()->json($response); // This doesn't seem to affect the response. 
+		
     }
 }

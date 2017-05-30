@@ -100,46 +100,44 @@ class LogController extends Controller
         $start = Carbon::now()->subHours(24)->toDateTimeString();
         $end = Carbon::now()->toDateTimeString();
 
-		/*
+        /*
         $calls = Activity::where('log_name', 'pagelog')
                 //->where('causer_id', '!=',  1) // Exclude developer user Id
                 ->whereBetween('created_at', [$start, $end])->orderby('created_at', 'desc')
-				->get();
-		*/
-		
-		$calls = DB::table('activity_log')
-				->where('log_name', 'pagelog')
-                ->where('causer_id', '!=',  1) // Exclude developer user Id
-                ->whereBetween('activity_log.created_at', [$start, $end])->orderby('activity_log.created_at', 'desc')
-				// Get the Username of the causerid
-				->leftJoin('users', 'activity_log.causer_id', '=', 'users.id')
-				//->join('users', 'activity_log.causer_id', '=', 'users.id')
-				->select('users.username as username', 'activity_log.*')
-				->get();
-		
-		// Clean up this crap
-		$calls = json_decode(json_encode($calls), true);
-		
-		$calls_array = [];
-		$calls = (array) $calls;
-		
-		foreach($calls as $call){
-			$json = json_decode($call['properties'], true);
-			$call['app'] = $json['app'];
-			$call['url'] = $json['url'];
-			$calls_array[] = $call;
-		}
-		
+                ->get();
+        */
 
-		$response = [
+        $calls = DB::table('activity_log')
+                ->where('log_name', 'pagelog')
+                ->where('causer_id', '!=', 1) // Exclude developer user Id
+                ->whereBetween('activity_log.created_at', [$start, $end])->orderby('activity_log.created_at', 'desc')
+                // Get the Username of the causerid
+                ->leftJoin('users', 'activity_log.causer_id', '=', 'users.id')
+                //->join('users', 'activity_log.causer_id', '=', 'users.id')
+                ->select('users.username as username', 'activity_log.*')
+                ->get();
+
+        // Clean up this crap
+        $calls = json_decode(json_encode($calls), true);
+
+        $calls_array = [];
+        $calls = (array) $calls;
+
+        foreach ($calls as $call) {
+            $json = json_decode($call['properties'], true);
+            $call['app'] = $json['app'];
+            $call['url'] = $json['url'];
+            $calls_array[] = $call;
+        }
+
+        $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
                     'result'               => $calls_array,
                     ];
 
-        return $response; 
-		//return response()->json($response);
-		
+        return $response;
+        //return response()->json($response);
     }
 }

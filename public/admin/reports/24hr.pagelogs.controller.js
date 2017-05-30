@@ -50,7 +50,7 @@ angular
 							created_at = moment().utc().format(dateString);
 							created_at = moment.utc(created_at).toDate();
 							log.created_at_local = created_at.toLocaleString()
-							console.log(log.created_at_local)
+							//console.log(log.created_at_local)
 
 						});
 						
@@ -129,9 +129,20 @@ angular
 
 		var pulllogactivity = $interval(pagelogs,5000); 
 		
+		// Get current local Date and Time to display on page
+		function getdatetime(){
+			date = new Date();
+			vm.datetime = date.toLocaleString()
+		}	
+		
+		// Update the date and time every second. 
+		var updatetime = $interval(getdatetime,1000); 
+		
+		// Stop polling when you leave the page. 
 		$scope.$on('$destroy', function() {
 			//console.log($scope);
             $interval.cancel(pulllogactivity);
+			$interval.cancel(updatetime);
 		});
 		
 

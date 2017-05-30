@@ -26,6 +26,9 @@
 # Telecom Managment Backup at 0400
 0 4 * * * /PATH_TO_APP/telephony/artisan backup:run > /dev/null 2>&1
 
+# Cleanup backups every week
+5 8 * * 7 /PATH_TO_APP/telephony/artisan backup:clean > /dev/null 2>&1
+
 # Sonus - Get Conifgs - Scheduled Jobs every hour
 0 * * * * /PATH_TO_APP/telephony/grab-sonus-configs.sh > /PATH_TO_APP/telephony/storage/logs/grab-sonus-configs.log 2>&1
 

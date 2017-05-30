@@ -103,7 +103,7 @@
 					var application_name = "admin";
 					var location = $location.path()
 					location = location.split('/').join('~~~')	// replace / with ~~~ so we can send in url
-					console.log(location)
+					//console.log(location)
 					PageService.getpage(application_name + "&" + location)
 				});
 

@@ -41,7 +41,7 @@
 		vm.permissions = window.telecom_mgmt_permissions;
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};
-		vm.getpage = PageService.getpage('oncallapp-home');
+		//vm.getpage = PageService.getpage('oncallapp-home');
 
 		initController();
 

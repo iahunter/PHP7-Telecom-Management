@@ -31,6 +31,7 @@
 					// Permissions Checker	
 					var tokenPayload = jwtHelper.decodeToken(result.token);
 					window.telecom_mgmt_permissions = tokenPayload.permissions;
+					window.telecom_user = tokenPayload.user;
 					
 					$timeout(routetohome,10); 
 					//$location.path('/');
@@ -58,6 +59,7 @@
 				// Permissions Checker		
 				var tokenPayload = jwtHelper.decodeToken(result.token);
 				window.telecom_mgmt_permissions = tokenPayload.permissions;
+				window.telecom_user = tokenPayload.user;
 				
 				$timeout(routetohome,10); 
 				//$location.path('/');

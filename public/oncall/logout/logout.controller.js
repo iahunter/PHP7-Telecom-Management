@@ -13,6 +13,9 @@
         function initController() {
             // reset login status
 			window.telecom_mgmt_permissions = {};
+			
+			// Custom token Claim variable set in App\User
+			window.telecom_user = {};
             AuthenticationService.Logout();
         };
 

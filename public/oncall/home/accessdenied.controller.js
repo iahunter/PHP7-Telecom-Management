@@ -5,7 +5,7 @@
 
 		vm.messages = 'Loading Userinfo...';
 		
-		vm.getpage = PageService.getpage('accessdenied');
+		//vm.getpage = PageService.getpage('accessdenied');
 	
 
 	}]);

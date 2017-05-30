@@ -9,8 +9,6 @@
 		
 	function run(PageService, CompanyService, $rootScope, $window, $http, $location, $localStorage, jwtHelper, AuthenticationService) {
         
-		var application_name = "oncall";
-		
 		// keep user logged in after page refresh
         if ($localStorage.currentUser) {
 			//console.log('Found local storage login token: ' + $localStorage.currentUser.token);
@@ -43,7 +41,7 @@
 						//Permissions Checker/
 						var tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
 						window.telecom_mgmt_permissions = tokenPayload.permissions;
-
+						window.telecom_user = tokenPayload.user;
 						
 						// Look at checking date expire and renew automatically. 
 						var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
@@ -83,20 +81,14 @@
 				
 				// Get user info
 				var dimensionValue = window.telecom_user;
-				dimensionValue = dimensionValue.toString();
-				
-				//console.log('User: ' + dimensionValue)
-				
-					
+				if(dimensionValue){
+					dimensionValue = dimensionValue.toString();
+					// Set our google analytics id
+					$window.ga('create', google, {'userId': dimensionValue});
+				}
 
-				// Set our google analytics id
-				$window.ga('create', google, {'userId': dimensionValue});
 				
 				$rootScope.$on('$stateChangeSuccess', function (event) {
-					//console.log("Send Google Analytics")
-					$window.ga('set', 'dimension1', dimensionValue);
-					$window.ga('send', 'pageview', $location.path());
-					//console.log($location.path())
 					
 					// Log our Page Requests to our database
 					var application_name = "oncall";
@@ -104,6 +96,15 @@
 					location = location.split('/').join('~~~')	// replace / with ~~~ so we can send in url
 					//console.log(location)
 					PageService.getpage(application_name + "&" + location);
+										
+					//console.log("Send Google Analytics")
+					if(dimensionValue){
+						$window.ga('set', 'dimension1', dimensionValue);
+					}
+					
+					$window.ga('send', 'pageview', $location.path());
+
+					
 				});
 
 			}, function(err){

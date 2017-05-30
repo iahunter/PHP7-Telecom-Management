@@ -95,45 +95,45 @@
 					<thead>
 						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 							<th>
-								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
-									created_at
-										<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'created_at_local'; sortReverse = !sortReverse" style="color:black">
+									Time
+										<span ng-show="sortType == 'created_at_local' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'created_at_local' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
-								<a href="" ng-click="sortType = 'causer_id'; sortReverse = !sortReverse" style="color:black">
-									causer_id
-										<span ng-show="sortType == 'causer_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'causer_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+									User
+										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
 								<a href="" ng-click="sortType = 'description'; sortReverse = !sortReverse" style="color:black">
-									description
+									Description
 										<span ng-show="sortType == 'description' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'description' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
 								<a href="" ng-click="sortType = 'log_name'; sortReverse = !sortReverse" style="color:black">
-									log_name
+									Log Name
 										<span ng-show="sortType == 'log_name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'log_name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
-								<a href="" ng-click="sortType = 'properties.app'; sortReverse = !sortReverse" style="color:black">
-									properties.app
-										<span ng-show="sortType == 'properties.app' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'properties.app' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'app'; sortReverse = !sortReverse" style="color:black">
+									App
+										<span ng-show="sortType == 'app' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'app' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
-								<a href="" ng-click="sortType = 'properties.url'; sortReverse = !sortReverse" style="color:black">
-									properties.url
-										<span ng-show="sortType == 'properties.url' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'properties.url' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								<a href="" ng-click="sortType = 'url'; sortReverse = !sortReverse" style="color:black">
+									URL
+										<span ng-show="sortType == 'url' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'url' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							
@@ -145,12 +145,12 @@
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
 					<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">
-							<td>{{log.created_at}}</td>
-							<td>{{log.causer_id}}</td>
+							<td>{{log.created_at_local}}</td>
+							<td>{{log.username}}</td>
 							<td>{{log.description}}</td>
 							<td>{{log.log_name}}</td>
-							<td>{{log.properties.app}}</td>
-							<td>{{log.properties.url}}</td>
+							<td>{{log.app}}</td>
+							<td>{{log.url}}</td>
 					</tr>
 							
 					</tbody>

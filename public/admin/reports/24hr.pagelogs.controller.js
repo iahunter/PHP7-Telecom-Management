@@ -38,7 +38,21 @@ angular
 						//console.log(vm.message);
 					}else{
 						//console.log(res)
-						vm.logs = res.data.activity_logs;
+						vm.logs = res.data.result;
+						//console.log(vm.logs)
+						
+						// Convert DB Timestamp to local PC Time. 
+						angular.forEach(vm.logs, function(log) {
+
+							// Convert UTC to local time
+							var dateString = log.created_at;
+							//console.log(dateString)
+							created_at = moment().utc().format(dateString);
+							created_at = moment.utc(created_at).toDate();
+							log.created_at_local = created_at.toLocaleString()
+							console.log(log.created_at_local)
+
+						});
 						
 						vm.loading = false;
 						/*

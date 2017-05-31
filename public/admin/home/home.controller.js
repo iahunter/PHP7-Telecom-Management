@@ -39,6 +39,7 @@
 
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
+		vm.userid = window.telecom_user;
 
 		vm.messages = 'Loading Userinfo...';
 		vm.userinfo = {};

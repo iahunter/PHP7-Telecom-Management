@@ -16,7 +16,7 @@ class TelecomInfrastructure extends Model
                             'comment',
                             'role',
                             'function',
-                            'manufacture',
+                            'manufacturer',
                             'application',
                             'software_version',
                             'os',

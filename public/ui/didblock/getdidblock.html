@@ -188,8 +188,8 @@
 						
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.comment}}</td>
-						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}}</td>
-						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}} {{ vm.didblock.created_by}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>
 							<td ng-if="vm.permissions.update.Didblock || vm.permissions.delete.Didblock" ng-show="!vm.edit[vm.didblock.id]">
 								<button class="btn btn-primary btn-xs "  ng-if="vm.permissions.update.Didblock" ng-click="vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit </button>
 								
@@ -249,8 +249,8 @@
 						
 						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
 						<td   ng-show="vm.edit[vm.didblock.id]"><textarea class="form-control form-control-sm" ng-model="vm.didblock.comment"></textarea></td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}} {{ vm.didblock.created_by}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>
 						
 						<td  ng-show="vm.edit[vm.didblock.id]">
 							<button class="btn btn-xs btn-primary"  ng-click="vm.update(vm.didblock);vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"> Save </button>

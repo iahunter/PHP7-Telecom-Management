@@ -107,8 +107,10 @@ class SonusAlarmMonitor extends Command
             if ($change) {
                 // If we had a change update send an update.
                 $time = Carbon::now().PHP_EOL;
+				echo $time;
                 $data = [
                         'time'        => $time,
+						'host'		  => $device,
                         'hostname'    => $SBC,
                         'alarms'      => $json['sonusalarms'],
                         'status'      => $change,
@@ -125,7 +127,7 @@ class SonusAlarmMonitor extends Command
     {
         // Send email to the Oncall when status changes occur.
         Mail::send(['html'=>'sonusalarm'], $data, function ($message) {
-            $message->subject('Telecom Management Alert - Sonus Alarm Update!')
+            $message->subject('Telecom Management Alert - Sonus SBC Alarm Update!')
                         ->from([env('MAIL_FROM_ADDRESS')])
                         ->to([env('ONCALL_EMAIL_TO'), env('ONCALL_EMAIL_TO')])
                         ->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);

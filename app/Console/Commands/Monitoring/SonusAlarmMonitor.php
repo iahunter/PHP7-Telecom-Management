@@ -107,13 +107,13 @@ class SonusAlarmMonitor extends Command
             if ($change) {
                 // If we had a change update send an update.
                 $time = Carbon::now().PHP_EOL;
-				echo $time;
+                echo $time;
                 $data = [
-                        'time'        => $time,
-						'host'		  => $device,
-                        'hostname'    => $SBC,
-                        'alarms'      => $json['sonusalarms'],
-                        'status'      => $change,
+                        'time'          => $time,
+                        'host'          => $device,
+                        'hostname'      => $SBC,
+                        'alarms'        => $json['sonusalarms'],
+                        'status'        => $change,
                         ];
 
                 $this->sendemail($data);

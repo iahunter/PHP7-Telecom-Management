@@ -28,18 +28,18 @@
 
 		<div ng-if="vm.permissions.read.Calls">
 			<div class="row">
-				<div class="col-lg-5 col-lg-offset-1">
+				<div class="col-lg-6 col-lg-offset-0" ng-if="vm.permissions.read.Sonus5k == true">
 					<ng-include src="'calls/1day_calls.graph.html'"></ng-include>
 				</div>
-				<div class="col-lg-5 col-lg-offset-0">
+				<div class="col-lg-6 col-lg-offset-0" ng-if="vm.permissions.read.Sonus5kCDR == true">
 					<ng-include src="'sonus-cdrs/attemptsummary.graph.html'"></ng-include>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-5 col-lg-offset-1">
+			
+			
+				<div class="col-lg-6 col-lg-offset-0" ng-if="vm.permissions.read.Sonus5k == true">
 					<ng-include src="'calls/7day_calls.graph.html'"></ng-include>
 				</div>
-				<div class="col-lg-5 col-lg-offset-0">
+				<div class="col-lg-6 col-lg-offset-0" ng-if="vm.permissions.read.Sonus5k == true">
 					<ng-include src="'calls/calls.graph.html'"></ng-include>
 				</div>
 			</div>

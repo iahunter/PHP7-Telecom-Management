@@ -94,8 +94,11 @@
 					var application_name = "oncall";
 					var location = $location.path()
 					location = location.split('/').join('~~~')	// replace / with ~~~ so we can send in url
-					//console.log(location)
-					PageService.getpage(application_name + "&" + location);
+					
+					if($location.path() != '/login' && $location.path() != '/logout'){
+						PageService.getpage(application_name + "&" + location)
+					}
+					
 										
 					//console.log("Send Google Analytics")
 					if(dimensionValue){

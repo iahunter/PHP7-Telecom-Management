@@ -50,7 +50,7 @@ class PingScanInfrastructure extends Command
             $ip = $host['ip_address'];
 
             if (! $device->monitor) {
-                echo 'Unmonitored Device Found. Skipping: '.$hostname.' | '.$ip.PHP_EOL;
+                //echo 'Unmonitored Device Found. Skipping: '.$hostname.' | '.$ip.PHP_EOL;
                 continue;
             }
 

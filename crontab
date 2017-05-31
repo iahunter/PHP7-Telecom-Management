@@ -8,6 +8,9 @@
 # Ping Monitor Voice Infrastructure Status
 */1 * * * * /PATH_TO_APP/telephony/artisan monitoring:pingscan_infrastructure >> /PATH_TO_APP/telephony/storage/logs/ping-scan-infrastructure.log 2>&1
 
+# SBC Alarm Monitor                       
+*/1 * * * * /PATH_TO_APP/telephony/artisan monitoring:sonus_alarm_monitor >> /PATH_TO_APP/telephony/storage/logs/sonus_alarm_monitor.log 2>&1       
+
 # Get SBC Call stats every 10 mins
 */10 * * * * /PATH_TO_APP/telephony/artisan sonus:write-callsummary-db > /dev/null 2>&1
 

@@ -94,11 +94,14 @@ class SitePlanController extends Controller
 
                 $didblock = Didblock::find($didblock);
 
-                // Get stats
-                $stats = $this->getDidblockUtilization();
+				if($didblock ){
+					// Get stats
+					$stats = $this->getDidblockUtilization();
 
-                $didblock->stats = $stats[$didblock->id];
-                $didblocks[] = $didblock;
+					$didblock->stats = $stats[$didblock->id];
+					$didblocks[] = $didblock;
+				}
+                
             }
             $site['didblocksdetails'] = $didblocks;
         }

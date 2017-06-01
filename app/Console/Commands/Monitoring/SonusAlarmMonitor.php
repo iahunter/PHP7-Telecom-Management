@@ -31,12 +31,12 @@ class SonusAlarmMonitor extends Command
      * @return void
      */
     public $SBCS;
-	
-	// Discard these Sonus alarms from alerting emails. 
-	public $ALARMDISCARDS = [
-								"System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.",
-								"System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level Minor Alarm.",
-							];
+
+    // Discard these Sonus alarms from alerting emails.
+    public $ALARMDISCARDS = [
+                                'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.',
+                                'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level Minor Alarm.',
+                            ];
 
     public function __construct()
     {
@@ -69,17 +69,16 @@ class SonusAlarmMonitor extends Command
             //print_r($device->json);
 
             $alarms = Sonus5k::listactivealarms($SBC);
-			//$alarms = null;
+            //$alarms = null;
 
             if ($alarms['currentStatus']) {
                 // Alarms exist
                 $current_alarms = [];
                 // index our alarms array by id
                 foreach ($alarms['currentStatus'] as $alarm) {
-					
-					if(in_array($alarm['desc'], $this->ALARMDISCARDS)){
-						continue;
-					}
+                    if (in_array($alarm['desc'], $this->ALARMDISCARDS)) {
+                        continue;
+                    }
                     $current_alarms[$alarm['alarmId']] = $alarm;
                 }
 

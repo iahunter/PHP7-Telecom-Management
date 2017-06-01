@@ -22,11 +22,11 @@ class Site extends Model
             'details'     => 'array',
             'languages'   => 'array',
         ];
-		
-	public function didblocks()
-	{
-		return $this->belongsToMany('App\Didblock');
-	}
+
+    public function didblocks()
+    {
+        return $this->belongsToMany('App\Didblock');
+    }
 
     protected static function boot()
     {

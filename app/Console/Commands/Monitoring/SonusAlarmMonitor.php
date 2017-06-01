@@ -126,8 +126,8 @@ class SonusAlarmMonitor extends Command
     public function sendemail($data)
     {
         // Send email to the Oncall when status changes occur.
-		
-		// The HTML View is in resources/views/sonusalarm.blade.php
+
+        // The HTML View is in resources/views/sonusalarm.blade.php
         Mail::send(['html'=>'sonusalarm'], $data, function ($message) {
             $message->subject('Telecom Management Alert - Sonus SBC Alarm Update!')
                         //->from([env('MAIL_FROM_ADDRESS')])

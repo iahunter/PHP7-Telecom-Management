@@ -82,7 +82,7 @@ class SonusAlarmMonitor extends Command
                     print_r($json['sonusalarms']);
                     print_r($current_alarms);
                     $json['sonusalarms'] = $current_alarms;
-                    $change = 'alarm';
+                    $change = 'Alarm';
                 }
             } else {
                 // No alarms exist
@@ -100,7 +100,7 @@ class SonusAlarmMonitor extends Command
                     print_r($alarms);
 
                     $json['sonusalarms'] = $alarms;
-                    $change = 'alarm cleared';
+                    $change = 'Alarm Cleared';
                 }
             }
 
@@ -126,9 +126,11 @@ class SonusAlarmMonitor extends Command
     public function sendemail($data)
     {
         // Send email to the Oncall when status changes occur.
+		
+		// The HTML View is in resources/views/sonusalarm.blade.php
         Mail::send(['html'=>'sonusalarm'], $data, function ($message) {
             $message->subject('Telecom Management Alert - Sonus SBC Alarm Update!')
-                        ->from([env('MAIL_FROM_ADDRESS')])
+                        //->from([env('MAIL_FROM_ADDRESS')])
                         ->to([env('ONCALL_EMAIL_TO'), env('ONCALL_EMAIL_TO')])
                         ->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
         });

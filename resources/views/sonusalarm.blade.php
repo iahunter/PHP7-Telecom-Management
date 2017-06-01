@@ -15,11 +15,18 @@
     </head>
     <body>
 		<div class="container">
-			<legend>
-				<h1>Telecom Management - Sonus SBC Alarm Update!</h1>
-				<h3>{{ $hostname}} status: {{$status}}</h3>
-			</legend>
+		
 			<div class="jumbotron">
+			
+				<legend>
+					<h1>Sonus SBC Alarm Update!</h1>
+					@if($status === "Alarm")
+						<h3>{{ $hostname}} Status: <span style="color:red"><b>{{$status}}</b></span></h3>
+					@elseif($status === "Alarm Cleared")
+						<h3>{{ $hostname}} Status: <span style="color:green"><b>{{$status}}</b></span></h3>
+					@endif
+				</legend>
+			
 			
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 					<div class="table-responsive">    
@@ -43,31 +50,47 @@
 						</table>
 					</div>
 				</div>
-			</div>
 			
-				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-					<div class="table-responsive">    
-						<table class="table table-striped table-condensed table-bordered table-hover">
-							<tbody style="font-size: 12px;">
-								<!--List View-->
+			
 
-								@foreach ($alarms as $alarm)
-									<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-										<div class="table-responsive">   
-											<table class="table table-striped table-condensed table-bordered table-hover">
-												<tbody style="font-size: 12px;">
-													@foreach ($alarm as $key => $value)
-														<tr><td><b>{{$key}}: </b> {{ $value}}</b></td></tr>
-													@endforeach
-													
-												</tbody>
-											</table>
-										</div>
-									</div>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
+					@foreach ($alarms as $alarm)
+						@if($alarm)
+							<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+								<div class="table-responsive">   
+									<table class="table table-striped table-condensed table-bordered table-hover">
+										<thead>
+											<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+											@if ($alarm['severity'] === "Minor")
+												<th>Alarm: <span style="color:green">{{$alarm['severity']}}</span></th>
+											@elseif ($alarm['severity'] === "Major")
+												<th>Alarm: <span style="color:orange">{{$alarm['severity']}}</span></th>
+											@elseif ($alarm['severity'] === "Critical")
+												<th>Alarm: <span style="color:red">{{$alarm['severity']}}</span></th>
+											@else
+												<th>Alarm: {{$alarm['severity']}}</span></th>
+											@endif
+											</tr>
+										</thead>
+										<tbody style="font-size: 12px;">
+											@foreach ($alarm as $key => $value)
+												<!--Check Criticality of Alarm and color code-->
+												@if ($value === "Minor")
+												<tr><td><b>{{$key}}: <span style="color:green">{{ $value}}</span></b></td></tr>
+												@elseif ($value === "Major")
+												<tr><td><b>{{$key}}:  <span style="color:orange">{{ $value}}</span></b></td></tr>
+												@elseif ($value === "Critical")
+												<tr><td><b>{{$key}}:  <span style="color:red">{{ $value}}</span></b></td></tr>
+												@else
+												<tr><td><b>{{$key}}: {{ $value}}</b></td></tr>
+												@endif
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+							</div>
+						@endif
+					@endforeach
+
 				</div>
 			</div>
 		</div>

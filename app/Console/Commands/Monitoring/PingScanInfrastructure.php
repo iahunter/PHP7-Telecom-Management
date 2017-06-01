@@ -156,9 +156,11 @@ class PingScanInfrastructure extends Command
     public function sendemail($data)
     {
         // Send email to the Oncall when status changes occur.
+		
+		// The HTML View is in resources/views/email.blade.php
         Mail::send(['html'=>'email'], $data, function ($message) {
             $message->subject('Telecom Management Alert - Device Status Change!')
-                        ->from([env('MAIL_FROM_ADDRESS')])
+                        //->from([env('MAIL_FROM_ADDRESS')])
                         ->to([env('ONCALL_EMAIL_TO'), env('ONCALL_EMAIL_TO')])
                         ->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
         });

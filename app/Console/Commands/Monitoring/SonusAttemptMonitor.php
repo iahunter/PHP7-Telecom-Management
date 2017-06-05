@@ -33,6 +33,8 @@ class SonusAttemptMonitor extends Command
      * @return void
      */
     public $THRESHOLD_PERCENT = 30;
+	
+	public $ONCALL_EMAIL;
 
     // Discard these Sonus alarms from alerting emails.
     public $DISCARD_ATTEMPT_TYPES = [
@@ -43,6 +45,12 @@ class SonusAttemptMonitor extends Command
     public function __construct()
     {
         parent::__construct();
+		// Construct new cucm object
+        $this->cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
     }
 
     /**
@@ -52,7 +60,6 @@ class SonusAttemptMonitor extends Command
      */
     public function handle()
     {
-        $sendemailalert = false;
 
         $thresholds = [];
         $stats = $this->list_todays_attempts_summary_report();
@@ -104,7 +111,71 @@ class SonusAttemptMonitor extends Command
             // If we have some alerts that have met the threshold, send an email alert.
             print_r($data);
             $this->sendemail($data);
+			$this->send_text_to_oncall($data);
         }
+    }
+	
+	 public function sendemail($data)
+    {
+        // Send email to the Oncall threshold met. 
+		
+        // The HTML View is in resources/views/sonuscdralarm.blade.php
+        Mail::send(['html'=>'sonuscdralarm'], $data, function ($message) {
+            $message->subject('Telecom Management Alert - Sonus SBC Attempt Threshold Alert!')
+                        //->from([env('MAIL_FROM_ADDRESS')])
+                        ->to([env('ONCALL_EMAIL_TO')])
+                        ->bcc([env('BACKUP_EMAIL_TO')]);
+        });
+		
+		echo 'Email sent to '.env('ONCALL_EMAIL_TO').PHP_EOL;
+        echo 'Email sent to '.env('BACKUP_EMAIL_TO').PHP_EOL;
+    }
+	
+	public function send_text_to_oncall($data)
+    {
+		// Custom Oncall Number - Comment out if not needed. 
+		if(env('ONCALL_PHONE_NUMBER')){
+			$oncall = $this->getoncallphonenumber(env('ONCALL_PHONE_NUMBER'));
+			
+			// If we are able to resolve the oncall number to email then do so and send a text message to oncall.
+			$oncall_text = $this->getoncallphonenumber(env('ONCALL_PHONE_NUMBER'));
+			//print $oncall_text;
+			if($oncall_text){
+				
+				// This is currently only setup as verizon phones. If it uses other carrier cusomtization is needed. 
+				$this->ONCALL_EMAIL = $oncall_text."@vtext.com";
+				
+				//print $this->ONCALL_EMAIL;
+				
+				Mail::send(['html'=>'sonuscdralarm'], $data, function ($message) {
+					$message->subject('Telecom Management Alert - Sonus SBC Attempt Threshold Alert!')
+						->to($this->ONCALL_EMAIL);
+                        //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
+				});
+				
+				echo 'Email sent to '.$this->ONCALL_EMAIL.PHP_EOL;
+			}
+		}
+	}
+	
+	public function getoncallphonenumber($DN)
+    {
+		
+		// this function gets the callforward all from the Oncall number from CUCM. This is optional. 
+        $number = $this->cucm->get_object_type_by_pattern_and_partition($DN, 'Global-All-Lines', 'Line');
+		$forward_number = $number['callForwardAll']['destination'];
+		$pattern = '/^\+/';
+		$replacement = "";
+		$forward_number = preg_replace($pattern,$replacement,$forward_number);
+		
+		$pattern = '/^1+/';
+		$replacement = "";
+		$forward_number = preg_replace($pattern,$replacement,$forward_number);
+		
+		//print_r($forward_number);
+		
+		return $forward_number;
+		
     }
 
     public function list_todays_attempts_summary_report()
@@ -214,19 +285,4 @@ class SonusAttemptMonitor extends Command
         return $return;
     }
 
-    public function sendemail($data)
-    {
-        // Send email to the Oncall when status changes occur.
-
-        // The HTML View is in resources/views/sonusalarm.blade.php
-        Mail::send(['html'=>'sonuscdralarm'], $data, function ($message) {
-            $message->subject('Telecom Management Alert - Sonus SBC Attempt Threshold Alert!')
-                        //->from([env('MAIL_FROM_ADDRESS')])
-                        ->to([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
-                        //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
-        });
-
-       // echo 'Email sent to '.env('ONCALL_EMAIL_TO').PHP_EOL;
-        echo 'Email sent to '.env('BACKUP_EMAIL_TO').PHP_EOL;
-    }
 }

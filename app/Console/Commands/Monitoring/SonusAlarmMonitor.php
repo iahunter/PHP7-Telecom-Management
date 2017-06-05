@@ -47,6 +47,13 @@ class SonusAlarmMonitor extends Command
                         env('SONUS1'),
                         env('SONUS2'),
                         ];
+	
+		// Construct new cucm object
+        $this->cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
     }
 
     /**
@@ -127,6 +134,7 @@ class SonusAlarmMonitor extends Command
                         ];
 
                 $this->sendemail($data);
+				$this->send_text_to_oncall($data);
                 $device->json = $json;
                 $device->save();
             }
@@ -147,5 +155,52 @@ class SonusAlarmMonitor extends Command
 
         echo 'Email sent to '.env('ONCALL_EMAIL_TO').PHP_EOL;
         echo 'Email sent to '.env('BACKUP_EMAIL_TO').PHP_EOL;
+    }
+	
+	public function send_text_to_oncall($data)
+    {
+		// Custom Oncall Number - Comment out if not needed. 
+		if(env('ONCALL_PHONE_NUMBER')){
+			$oncall = $this->getoncallphonenumber(env('ONCALL_PHONE_NUMBER'));
+			
+			// If we are able to resolve the oncall number to email then do so and send a text message to oncall.
+			$oncall_text = $this->getoncallphonenumber(env('ONCALL_PHONE_NUMBER'));
+			//print $oncall_text;
+			if($oncall_text){
+				
+				// This is currently only setup as verizon phones. If it uses other carrier cusomtization is needed. 
+				$this->ONCALL_EMAIL = $oncall_text."@vtext.com";
+				
+				//print $this->ONCALL_EMAIL;
+				
+				Mail::send(['html'=>'sonusalarm'], $data, function ($message) {
+					$message->subject('Telecom Management Alert - Sonus SBC Alarm Update!')
+						->to($this->ONCALL_EMAIL);
+                        //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
+				});
+				
+				echo 'Email sent to '.$this->ONCALL_EMAIL.PHP_EOL;
+			}
+		}
+	}
+	
+	public function getoncallphonenumber($DN)
+    {
+		
+		// this function gets the callforward all from the Oncall number from CUCM. This is optional. 
+        $number = $this->cucm->get_object_type_by_pattern_and_partition($DN, 'Global-All-Lines', 'Line');
+		$forward_number = $number['callForwardAll']['destination'];
+		$pattern = '/^\+/';
+		$replacement = "";
+		$forward_number = preg_replace($pattern,$replacement,$forward_number);
+		
+		$pattern = '/^1+/';
+		$replacement = "";
+		$forward_number = preg_replace($pattern,$replacement,$forward_number);
+		
+		//print_r($forward_number);
+		
+		return $forward_number;
+		
     }
 }

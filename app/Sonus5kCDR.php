@@ -1033,7 +1033,7 @@ class Sonus5kCDR extends Model
         // https://support.sonus.net/display/SBXDOC50/Call+Termination+Reason+Codes
         $termination_reason_codes = [
                                         '0'   => 'INVALID DISCONNECT REASON',
-                                        '1'   => 'UNALLOCATED NUMBER ',
+                                        '1'   => 'UNALLOCATED NUMBER',
                                         '2'   => 'NO ROUTE TO SPECIFIED NETWORK',
                                         '3'   => 'NO ROUTE TO DESTINATION',
                                         '4'   => 'SEND SPECIAL INFO TONE',

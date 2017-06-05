@@ -17,7 +17,7 @@
 			</script>
 				<legend><h2><i class="glyphicon glyphicon-check"></i> Check DID Block Usage </h2></legend>
 				
-				<pre class="col-lg-12"><b><h5>1 number per line</b><br><br>Paste Rows of Numbers from Excel into the text box to check if number is in use.<h5></pre>
+				<pre class="col-lg-12"><b><h5>1 number per line</b><br><br>Paste Rows of Numbers from Excel into the text box to check if number is in use. <br><br><b style="color:red;">Note! </b>This does not query CUCM Directly. This only checks the Telecom Management Database if the block exists. <h5></pre>
 				
 				<div class="panel-body">
 					<form class="form" role="form" id="addDidblockForm" ng-submit='addDidblockForm.$valid && vm.submitDidblock(vm.didblockForm)' novalidate name="addDidblockForm">

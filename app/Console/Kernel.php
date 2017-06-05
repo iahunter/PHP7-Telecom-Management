@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
         Commands\BouncerPermissions\BouncerPermissions::class,
         Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
-		Commands\Monitoring\SonusAttemptMonitor::class,
+        Commands\Monitoring\SonusAttemptMonitor::class,
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

@@ -2,14 +2,14 @@
 
 namespace App\Console\Commands\Monitoring;
 
+use DB;
 use Mail;
 use App\Ping;
 use App\Sonus5k;
 use Carbon\Carbon;
+use App\Sonus5kCDR;
 use App\TelecomInfrastructure;
 use Illuminate\Console\Command;
-use DB;
-use App\Sonus5kCDR;
 
 class SonusAttemptMonitor extends Command
 {
@@ -31,15 +31,14 @@ class SonusAttemptMonitor extends Command
      * Create a new command instance.
      *
      * @return void
-    */
-	
-	public $THRESHOLD_PERCENT = 30;
-	 
+     */
+    public $THRESHOLD_PERCENT = 30;
+
     // Discard these Sonus alarms from alerting emails.
     public $DISCARD_ATTEMPT_TYPES = [
-									'16 - NORMAL ROUTE CLEARING',
-									'1 - UNALLOCATED NUMBER',
-									];
+                                    '16 - NORMAL ROUTE CLEARING',
+                                    '1 - UNALLOCATED NUMBER',
+                                    ];
 
     public function __construct()
     {
@@ -53,67 +52,62 @@ class SonusAttemptMonitor extends Command
      */
     public function handle()
     {
-		$sendemailalert = false;
-		
-		$thresholds = [];
+        $sendemailalert = false;
+
+        $thresholds = [];
         $stats = $this->list_todays_attempts_summary_report();
-		//print_r($stats);
-		foreach($stats as $key => $value){
-			$time = $key;
-			//print PHP_EOL;
-			//print_r($value);
-			
-			
-			
-			foreach($value as $key => $stat){
-				
-				if($key == 'totalCalls'){
-					$totalcalls = $stat;
-					//print "Total: ".$totalcalls.PHP_EOL;
-					continue;
-				}
-				if(in_array($key, $this->DISCARD_ATTEMPT_TYPES)){
-					// We dont care about these so don't alert on them. 
-					continue;
-				}
-				
-				//print $key." | ".$stat. " | ";
-				
-				$percentage = round($stat / $totalcalls * 100, 0);
-				
-				//print $percentage." %".PHP_EOL;
-				if($totalcalls > 30){
-					if($percentage > $this->THRESHOLD_PERCENT){
-						$thresholds[$key] = [];
-						$thresholds[$key]['percentage'] = $percentage;
-						$thresholds[$key]['calls'] = $stat;
-					}
-				}
-				
-				
-			}
-		}
-		
-		$count = count($thresholds);
-		
-		$data = [
-					'time'          			=> $time,
-					'alarms_count' 				=> $count,
-					'thresholds'   				=> $thresholds,
-					'configured_threshold'   	=> $this->THRESHOLD_PERCENT,
-					'stats'						=> $stats,
-					];
-					
-		//print_r($data);	
-		
-		if($count){
-			// If we have some alerts that have met the threshold, send an email alert. 
-			print_r($data);	
-			$this->sendemail($data);
-		}		
+        //print_r($stats);
+        foreach ($stats as $key => $value) {
+            $time = $key;
+            //print PHP_EOL;
+            //print_r($value);
+
+            foreach ($value as $key => $stat) {
+                if ($key == 'totalCalls') {
+                    $totalcalls = $stat;
+                    //print "Total: ".$totalcalls.PHP_EOL;
+                    continue;
+                }
+                if (in_array($key, $this->DISCARD_ATTEMPT_TYPES)) {
+                    // We dont care about these so don't alert on them.
+                    continue;
+                }
+
+                //print $key." | ".$stat. " | ";
+
+                $percentage = round($stat / $totalcalls * 100, 0);
+
+                //print $percentage." %".PHP_EOL;
+                if ($totalcalls > 30) {
+                    if ($percentage > $this->THRESHOLD_PERCENT) {
+                        $thresholds[$key] = [];
+                        $thresholds[$key]['percentage'] = $percentage;
+                        $thresholds[$key]['calls'] = $stat;
+                    }
+                }
+            }
+        }
+
+        $count = count($thresholds);
+
+        $data = [
+                    'time'                         => $time,
+                    'alarms_count'                 => $count,
+                    'thresholds'                   => $thresholds,
+                    'configured_threshold'         => $this->THRESHOLD_PERCENT,
+                    'stats'                        => $stats,
+                    ];
+
+        //print_r($data);
+
+        if ($count) {
+            // If we have some alerts that have met the threshold, send an email alert.
+            print_r($data);
+            $this->sendemail($data);
+        }
     }
-	
-	public function list_todays_attempts_summary_report()
+
+    public function list_todays_attempts_summary_report()
     {
         $return = [];
 

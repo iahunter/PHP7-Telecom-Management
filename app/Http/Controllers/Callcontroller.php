@@ -96,7 +96,6 @@ class Callcontroller extends Controller
         return response()->json($response);
     }
 
-    
     public function list_last_month_callstats()
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -136,17 +135,16 @@ class Callcontroller extends Controller
         $currentDate = \Carbon\Carbon::now();
         $end = $currentDate->toDateTimeString();
         $start = $currentDate->subMonth(3)->toDateTimeString();
-		
-		$stats = [];
-		/*
+
+        $stats = [];
+        /*
         $calls = Calls::whereBetween('created_at', [$start, $end])->get();
-		
-		foreach ($calls as $call) {
-		*/
-		
-		// Use cursor to conserve memory and iterate our database records in foreach loop. 
+
+        foreach ($calls as $call) {
+        */
+
+        // Use cursor to conserve memory and iterate our database records in foreach loop.
         foreach (Calls::whereBetween('created_at', [$start, $end])->cursor() as $call) {
-		
             $date = $call['created_at'];
             $date = Carbon::parse($call['created_at']);
             $date = $date->toDateString();
@@ -170,9 +168,8 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function list_3_month_daily_call_peak_stats()
+
+    public function list_3_month_daily_call_peak_stats()
     {
         // This is a new version of returning the peak of each date so make our graph a little smoother.
         $user = JWTAuth::parseToken()->authenticate();
@@ -183,12 +180,11 @@ class Callcontroller extends Controller
         $currentDate = \Carbon\Carbon::now();
         $end = $currentDate->toDateTimeString();
         $start = $currentDate->subMonth(3)->toDateTimeString();
-		
-		$stats = [];
-		
-		// Use cursor to conserve memory and iterate our database records in foreach loop. slower than sql query because we need to iterate thur all records. 
+
+        $stats = [];
+
+        // Use cursor to conserve memory and iterate our database records in foreach loop. slower than sql query because we need to iterate thur all records.
         foreach (Calls::whereBetween('created_at', [$start, $end])->cursor() as $call) {
-		
             $date = $call['created_at'];
             $date = Carbon::parse($call['created_at']);
             $date = $date->toDateString();
@@ -212,12 +208,11 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function list_3_month_daily_call_peak_stats_sql()
+
+    public function list_3_month_daily_call_peak_stats_sql()
     {
         // This is a new version of returning the peak of each date so make our graph a little smoother.
-		// Doing this entire function in one SQL query instead of using curser like above. 
+        // Doing this entire function in one SQL query instead of using curser like above.
         $user = JWTAuth::parseToken()->authenticate();
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
@@ -226,19 +221,18 @@ class Callcontroller extends Controller
         $currentDate = \Carbon\Carbon::now();
         $end = $currentDate->toDateTimeString();
         $start = $currentDate->subMonth(3)->toDateTimeString();
-		
 
-		/* Trying to get this query to work. 
-		SELECT DATE(created_at) as created_at, MAX(totalCalls) as totalCalls
-		FROM sbc_calls
-		WHERE created_at > NOW() - INTERVAL 3 MONTH
-		GROUP BY DATE(created_at)
-		*/
-		
-		// this could use some work to make better. 
-		$stats = DB::table('sbc_calls')
-				->select(DB::raw('DATE(created_at) as created_at'), DB::raw('MAX(totalCalls) as totalCalls'))
-				->groupBy(DB::raw('DATE(created_at)'))
+        /* Trying to get this query to work.
+        SELECT DATE(created_at) as created_at, MAX(totalCalls) as totalCalls
+        FROM sbc_calls
+        WHERE created_at > NOW() - INTERVAL 3 MONTH
+        GROUP BY DATE(created_at)
+        */
+
+        // this could use some work to make better.
+        $stats = DB::table('sbc_calls')
+                ->select(DB::raw('DATE(created_at) as created_at'), DB::raw('MAX(totalCalls) as totalCalls'))
+                ->groupBy(DB::raw('DATE(created_at)'))
                 ->whereBetween('created_at', [$start, $end])->orderby('created_at')
                 ->get();
 
@@ -251,11 +245,11 @@ class Callcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_one_year_daily_call_peak_stats_sql()
+
+    public function list_one_year_daily_call_peak_stats_sql()
     {
         // This is a new version of returning the peak of each date so make our graph a little smoother.
-		// Doing this entire function in one SQL query instead of using curser like above. 
+        // Doing this entire function in one SQL query instead of using curser like above.
         $user = JWTAuth::parseToken()->authenticate();
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
@@ -264,19 +258,18 @@ class Callcontroller extends Controller
         $currentDate = \Carbon\Carbon::now();
         $end = $currentDate->toDateTimeString();
         $start = $currentDate->subYear()->toDateTimeString();
-		
 
-		/* Trying to get this query to work. 
-		SELECT DATE(created_at) as created_at, MAX(totalCalls) as totalCalls
-		FROM sbc_calls
-		WHERE created_at > NOW() - INTERVAL 3 MONTH
-		GROUP BY DATE(created_at)
-		*/
-		
-		// this could use some work to make better. 
+        /* Trying to get this query to work.
+        SELECT DATE(created_at) as created_at, MAX(totalCalls) as totalCalls
+        FROM sbc_calls
+        WHERE created_at > NOW() - INTERVAL 3 MONTH
+        GROUP BY DATE(created_at)
+        */
+
+        // this could use some work to make better.
         $stats = DB::table('sbc_calls')
-				->select(DB::raw('DATE(created_at) as created_at'), DB::raw('MAX(totalCalls) as totalCalls'))
-				->groupBy(DB::raw('DATE(created_at)'))
+                ->select(DB::raw('DATE(created_at) as created_at'), DB::raw('MAX(totalCalls) as totalCalls'))
+                ->groupBy(DB::raw('DATE(created_at)'))
                 ->whereBetween('created_at', [$start, $end])->orderby('created_at')
                 ->get();
 

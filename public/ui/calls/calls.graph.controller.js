@@ -188,7 +188,7 @@ angular
 
 		// Overall Call stats. Can get large and unmanageable. May want to make this into a selectable time graph and do some type of summarization on backend. 
 		
-		CallService.monthcallstats()
+		CallService.threemonthdailypeakcallstats()
 			.then(function(res){
 				
 				// Check for errors and if token has expired. 
@@ -232,11 +232,13 @@ angular
 						}
 					});
 					
+					
 					// Change time to local time. 
 					var dateString = key.created_at;
 					var created_at = moment().utc().format(dateString);
 					created_at = moment.utc(created_at).toDate();
 					key.created_at = created_at.toLocaleString();
+					
 					
 					// Push date and time onto callgraph array for x axis labels. 
 					vm.callgraph['chartlabels'].push(key.created_at);

@@ -73,6 +73,58 @@ angular
 					return defer.promise;
 			  });
 		}
+		
+		
+		// Get Call Stats from the DB
+		self.monthdailypeakcallstats = function() {
+			var defer = $q.defer();
+			return $http.get('../api/calls/monthdailypeakcallstats')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					//console.log(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
+		
+		// Get Call Stats from the DB
+		self.threemonthdailypeakcallstats = function() {
+			var defer = $q.defer();
+			return $http.get('../api/calls/threemonthdailypeakcallstats')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					//console.log(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
+		
+		// Get Call Stats from the DB - Fast but doesn't give sbc stats for each. 
+		self.threemonthdailypeakcallstats_sql = function() {
+			var defer = $q.defer();
+			return $http.get('../api/calls/threemonthdailypeakcallstats_sql')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					//console.log(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
 
 		return self
 

@@ -154,6 +154,102 @@
                 }
             }
         },
+        "/telephony/api/calls/monthdailypeakcallstats": {
+            "get": {
+                "tags": [
+                    "Calls"
+                ],
+                "summary": "List 1 Month Daily Call Peak Stats",
+                "description": "",
+                "operationId": "listmonthscallstats",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/calls/threemonthdailypeakcallstats": {
+            "get": {
+                "tags": [
+                    "Calls"
+                ],
+                "summary": "List 3 Month Daily Call Peak Stats",
+                "description": "",
+                "operationId": "listmonthscallstats",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/calls/threemonthdailypeakcallstats_sql": {
+            "get": {
+                "tags": [
+                    "Calls"
+                ],
+                "summary": "List 3 Month Daily Call Peak Stats - Single SQL Query",
+                "description": "",
+                "operationId": "listmonthscallstats",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/calls/oneyeardailypeakcallstats_sql": {
+            "get": {
+                "tags": [
+                    "Calls"
+                ],
+                "summary": "List 1 Year Daily Call Peak Stats - Single SQL Query",
+                "description": "",
+                "operationId": "listmonthscallstats",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/calls/callsbydaterange": {
             "post": {
                 "tags": [
@@ -2537,7 +2633,7 @@
                 "tags": [
                     "Logging and Permissions"
                 ],
-                "summary": "Loge Page Log by Dates",
+                "summary": "Get Logs from last 24hrs",
                 "description": "",
                 "operationId": "",
                 "consumes": [
@@ -2561,7 +2657,7 @@
                 "tags": [
                     "Logging and Permissions"
                 ],
-                "summary": "Loge Page Log by Dates",
+                "summary": "Get Page Logs from last 24hrs",
                 "description": "",
                 "operationId": "",
                 "consumes": [
@@ -2585,7 +2681,7 @@
                 "tags": [
                     "Logging and Permissions"
                 ],
-                "summary": "Loge Page Log by Dates",
+                "summary": "Get Logs from Dates",
                 "description": "",
                 "operationId": "list_calls_by_date_range",
                 "consumes": [

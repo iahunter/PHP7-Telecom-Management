@@ -19,10 +19,11 @@
 			<div class="jumbotron">
 			
 				<legend>
-					<h1>Sonus SBC CDR Alert - {{$alarms_count}} Attempt Threshold of {{$configured_threshold}} % Met!</h1>
+					<h1>Sonus SBC - CDR Alert - {{$alarms_count}} Attempt Threshold of {{$configured_threshold}} % Met!</h1>
 				</legend>
 				
-					<a href="{{ url('/telephony/ui/#/sonus/cdr/todays_calls_attempts') }}">View Report</a>
+					Please click below to review the last 60 minutes of the Call Attempt Report.<br>
+					<a href="{{ url('/telephony/ui/#/sonus/cdr/todays_calls_attempts') }}"><b>View Report</b></a>
 				
 					<h3>Thesholds Met</h3>
 			
@@ -33,7 +34,7 @@
 									<table class="table table-striped table-condensed table-bordered table-hover">
 										<thead>
 											<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
-												<th>Time: {{$key}}</span></th>
+												<th>{{$key}}</span></th>
 											</tr>
 										</thead>
 										<tbody style="font-size: 12px;">

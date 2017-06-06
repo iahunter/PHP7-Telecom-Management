@@ -83,8 +83,8 @@
      * )
      **/
     $api->get('/calls/monthcallstats', 'App\Http\Controllers\Callcontroller@list_last_month_callstats');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/calls/monthdailypeakcallstats",
      *     tags={"Calls"},
@@ -104,9 +104,8 @@
      * )
      **/
     $api->get('/calls/monthdailypeakcallstats', 'App\Http\Controllers\Callcontroller@list_last_month_daily_call_peak_stats');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/calls/threemonthdailypeakcallstats",
      *     tags={"Calls"},
@@ -126,8 +125,8 @@
      * )
      **/
     $api->get('/calls/threemonthdailypeakcallstats', 'App\Http\Controllers\Callcontroller@list_3_month_daily_call_peak_stats');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/calls/threemonthdailypeakcallstats_sql",
      *     tags={"Calls"},
@@ -147,8 +146,8 @@
      * )
      **/
     $api->get('/calls/threemonthdailypeakcallstats_sql', 'App\Http\Controllers\Callcontroller@list_3_month_daily_call_peak_stats_sql');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/calls/oneyeardailypeakcallstats_sql",
      *     tags={"Calls"},

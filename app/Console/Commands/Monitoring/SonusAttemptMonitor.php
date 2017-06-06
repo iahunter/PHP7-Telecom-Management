@@ -40,7 +40,7 @@ class SonusAttemptMonitor extends Command
     public $DISCARD_ATTEMPT_TYPES = [
                                     '16 - NORMAL ROUTE CLEARING',
                                     '1 - UNALLOCATED NUMBER',
-									'17 - USER BUSY',
+                                    '17 - USER BUSY',
                                     ];
 
     public function __construct()

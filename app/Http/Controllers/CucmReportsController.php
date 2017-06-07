@@ -39,8 +39,8 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	public function siteSummary(Request $request)
+
+    public function siteSummary(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -59,27 +59,26 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	public function sitePhones(Request $request)
-    {	
+
+    public function sitePhones(Request $request)
+    {
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Cucmsiteconfigs::class)) {
             abort(401, 'You are not authorized');
         }
 
-		
         $count = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
-		
-		if($count){
-			$phones = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->get();
-		}
+
+        if ($count) {
+            $phones = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->get();
+        }
 
         $response = [
                     'status_code'       => 200,
                     'success'           => true,
                     'message'           => '',
-					'count'         	=> $count,
+                    'count'             => $count,
                     'response'          => $phones,
                     ];
 
@@ -95,20 +94,20 @@ class CucmReportsController extends Controller
         }
 
         //$sites = Cucmsiteconfigs::find(array('sitecode', 'trunking', 'e911'));
-		
-		// Get Site Phone Count and append it to the site object for report. 
-		
-		//$sites = DB::table('cucmsite')->where('deleted_at', '=', null)->select('sitecode', 'trunking', 'e911')->orderBy('sitecode')->get();
-		
-		$sites = [];
-		
-		foreach(DB::table('cucmsite')->where('deleted_at', '=', null)->select('sitecode', 'trunking', 'e911')->orderBy('sitecode')->cursor() as $site){
-			$phones = Cucmphoneconfigs::where('devicepool', 'like', '%'.$site->sitecode.'%')->count();
-			$site->phonecount = $phones;
-			$sites[] = $site;
-		}
-		// End of Site Phone Counts. 
-		
+
+        // Get Site Phone Count and append it to the site object for report.
+
+        //$sites = DB::table('cucmsite')->where('deleted_at', '=', null)->select('sitecode', 'trunking', 'e911')->orderBy('sitecode')->get();
+
+        $sites = [];
+
+        foreach (DB::table('cucmsite')->where('deleted_at', '=', null)->select('sitecode', 'trunking', 'e911')->orderBy('sitecode')->cursor() as $site) {
+            $phones = Cucmphoneconfigs::where('devicepool', 'like', '%'.$site->sitecode.'%')->count();
+            $site->phonecount = $phones;
+            $sites[] = $site;
+        }
+        // End of Site Phone Counts.
+
         $trunking = DB::table('cucmsite')
             ->select('cucmsite.trunking', (DB::raw('count(cucmsite.trunking) as count')))
             ->where('deleted_at', '=', null)

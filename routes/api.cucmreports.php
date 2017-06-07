@@ -22,8 +22,8 @@
      * )
      **/
     $api->get('/reports/sites', 'App\Http\Controllers\CucmReportsController@sitesSummary');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/site/{sitecode}",
      *     tags={"CUCM Reports"},
@@ -47,9 +47,8 @@
      * )
      **/
     $api->get('/reports/site/{sitecode}', 'App\Http\Controllers\CucmReportsController@siteSummary');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phones/{sitecode}",
      *     tags={"CUCM Reports"},
@@ -73,7 +72,6 @@
      * )
      **/
     $api->get('/reports/phones/{sitecode}', 'App\Http\Controllers\CucmReportsController@sitePhones');
-	
 
     /**
      * @SWG\Get(

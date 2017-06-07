@@ -1,0 +1,10 @@
+<div>
+	<!-- Popover for CUCM Configuration -->
+	
+	<!-- removed data-trigger="focus" inside href so it does not close popover when you click somewhere else on the screen. This requires you to click back on object to close it. -->
+	<!--<a href="" rel="popover" data-trigger="focus" data-title="<b>{{objkey}}</b>" data-content='<pre>{{objvalue}}</pre>'>-->
+	
+	<a href="" rel="popover" data-title="<b>{{objkey}}</b>" data-content='<pre>{{objvalue}}</pre>'>
+	 <b>{{value}}</b>
+	</a> 
+</div>

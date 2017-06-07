@@ -1,9 +1,13 @@
 angular
 	.module('app')
-	.controller('getSite.IndexController', ['siteService', 'sitePhonePlanService', 'cucmService', 'cupiService', 'PageService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(siteService, sitePhonePlanService, cucmService, cupiService, PageService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
+	.controller('getSite.Objects.Controller', ['cucmReportService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(cucmReportService, cucmService, cupiService, PageService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
 		
 		var vm = this;
 		
+		
+		// STUPID!!! $stateParams.id would not work... Had to use $state.id... i don't know why... :(
+		var id = $state.id;
+		console.log($state.id)
 		
 		vm.refresh = function (){
 			
@@ -15,9 +19,7 @@ angular
 			// End of Hack */
 			$state.reload();
 		};
-		
-		
-		
+
 		
 		vm.isArray = angular.isArray;
 		
@@ -25,8 +27,6 @@ angular
 
 		vm.messages = 'Loading sites...';
 		
-		var id = $stateParams.id;
-
 		
 		// Page Request
 	
@@ -35,12 +35,15 @@ angular
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
 		
+		console.log(vm.permissions)
+		
 		if(!vm.permissions.read.Site){
 			$location.path('/accessdenied');
 		}
 		
 		vm.deploybutton = false;
 		
+		/*
 		vm.getsitephoneplans = sitePhonePlanService.getsitephoneplans(id)
 			.then(function(res){
 				// Check for errors and if token has expired. 
@@ -87,7 +90,7 @@ angular
 				name: 'private'
 			}];
 		
-		/*
+		
 		vm.getcupitimezones = cupiService.listtimezones()
 			.then(function(res) {
 				
@@ -96,7 +99,7 @@ angular
 			}, function(error) {
 				alert('An error occurred while updating the event')
 			});
-		*/
+		
 		
 		vm.getvmusertemplates = cupiService.listusertemplatesnames()
 			.then(function(res) {
@@ -156,7 +159,7 @@ angular
 					$('body').removeClass("modal-open");
 					$('body').removeClass("modal-open");
 					$('body').removeAttr( 'style' );
-				// End of Hack */
+				// End of Hack 
 			
 				return $state.reload();
           }, function(error) {
@@ -250,16 +253,16 @@ angular
 				alert('An error occurred while creating phone plan')
 			});
 			//$state.reload();
-			*/
+			
 		}
 
-		
+		*/
 		vm.getsitesummary = function (id) {
 			
-			vm.site = "";
-			vm.sitecode = "";
+			console.log(id)
+			vm.sitecode = id;
 			
-			vm.getsite = siteService.getsite(id)
+			vm.getsite = cucmReportService.getsitesummary(id)
 				.then(function(res){
 					
 					// Check for errors and if token has expired. 
@@ -277,8 +280,15 @@ angular
 						return vm.message;
 					}
 
-					vm.site = res.data.result;
-					vm.sitecode = res.data.result.sitecode;
+					var response = res.data.response;
+					vm.cucmsite = response[0];
+					//console.log(vm.cucmsite)
+					
+					console.log(vm.cucmsite.sitesummary)
+					vm.cucmsite.summary = vm.cucmsite.sitesummary
+					vm.cucmsite.details = vm.cucmsite.sitedetails
+					console.log(vm.cucmsite)
+					vm.sitecode = id;
 					//console.log(vm.sitecode);
 					
 						// Check CUCM for Site Config After we have the sitecode from the database. 
@@ -363,7 +373,7 @@ angular
 								//Error
 							});
 							
-							
+						
 						cupiService.listusertemplatesbysite(vm.sitecode)
 							.then(function(res) {
 								
@@ -392,34 +402,11 @@ angular
 
 		};
 		
-		vm.cucm_object_details = {};
-		vm.get_cucm_object_type_by_name = function (name, type) {
-
-				//console.log("Mouse Over");
-				
-				cucmService.get_object_type_by_name(name, type)
-					.then(function(res) {
-						var object = res.data.response;
-						//console.log(object)
-						
-						return $scope.object = object
-
-					}, function(error) {
-						alert('An error occurred while getting object')
-					});
-					
-				$timeout(function() {
-					//console.log($scope.object)
-					//return $scope.object
-				}, 1000);
-				
-				return $scope.object
-				//console.log($scope.object)
-			
-		}
 		
+		
+
 		var getsitesummary = vm.getsitesummary(id)
-		
+		console.log(id)
 
 		vm.languages = [{
 				id: 1,
@@ -490,6 +477,5 @@ angular
 		};
 
 	}])
-
-
+	
 	

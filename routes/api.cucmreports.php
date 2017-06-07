@@ -22,6 +22,58 @@
      * )
      **/
     $api->get('/reports/sites', 'App\Http\Controllers\CucmReportsController@sitesSummary');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/reports/site/{sitecode}",
+     *     tags={"CUCM Reports"},
+     *     summary="List of DID Blocks for authorized user",
+     *     description="",
+     *     operationId="listSites",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="sitecode",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('/reports/site/{sitecode}', 'App\Http\Controllers\CucmReportsController@siteSummary');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/reports/phones/{sitecode}",
+     *     tags={"CUCM Reports"},
+     *     summary="List of DID Blocks for authorized user",
+     *     description="",
+     *     operationId="listSites",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="sitecode",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('/reports/phones/{sitecode}', 'App\Http\Controllers\CucmReportsController@sitePhones');
+	
 
     /**
      * @SWG\Get(

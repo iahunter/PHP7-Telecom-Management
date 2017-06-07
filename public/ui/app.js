@@ -223,6 +223,12 @@
                 controller: 'getSite.IndexController',
                 controllerAs: 'vm'
             })
+			.state('getsitereport', {
+                url: '/sitemigrations/sitestatusreports/{id}',
+                templateUrl: 'site-migrations/site-status-reports/getsite.objects.html',
+                controller: 'getSite.Objects.Controller',
+                controllerAs: 'vm'
+            })
 			.state('sonusconfigs', {
                 url: '/sonus/configrepo',
                 templateUrl: 'company-content/sonusconfigrepo.html',

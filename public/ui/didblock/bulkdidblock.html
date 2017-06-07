@@ -147,6 +147,14 @@
 									</a>
 								</th>
 								
+								<th>
+									<a href="" ng-click="sortType = 'end'; sortReverse = !sortReverse" style="color:black">
+										Block Size
+											<span ng-show="sortType == 'end' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'end' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
 								
 								
 								<th>
@@ -181,6 +189,7 @@
 							<td ng-show="!vm.edit[number.start]">{{number.country_code}}</td> 
 							<td ng-show="!vm.edit[number.start]">{{number.start}}</td> 
 							<td ng-show="!vm.edit[number.start]">{{number.end}}</td> 
+							<td ng-show="!vm.edit[number.start]">{{number.end - number.start + 1}}</td> 
 							<td ng-show="!vm.edit[number.start]">{{number.type}}</td> 
 							<td ng-show="!vm.edit[number.start]">{{number.reserved}}</td> 
 							
@@ -196,12 +205,13 @@
 							<td ng-show="vm.edit[number.start]"><input type="text" class="form-control form-control-sm" ng-model="number.country_code"></td>
 							<td ng-show="vm.edit[number.start]"><input type="text" class="form-control form-control-sm" ng-model="number.start"></td>
 							<td ng-show="vm.edit[number.start]"><input type="text" class="form-control form-control-sm" ng-model="number.end"></td>
+							<td ng-show="vm.edit[number.start]">{{number.end - number.start + 1}}</td> 
 							<td ng-show="vm.edit[number.start]"><input type="text" class="form-control form-control-sm" ng-model="number.type"></td>
 							<td ng-show="vm.edit[number.start]"><input type="text" class="form-control form-control-sm" ng-model="number.reserved"></td>
 							
 							<td  ng-show="vm.edit[number.start]">
 								<button class="btn btn-xs btn-primary"  ng-click="vm.update(number);vm.edit[number.start] = !vm.edit[number.start]"> Save </button>
-								<button class="btn btn-xs btn-warning"  ng-click="vm.edit[number.start] = !vm.edit[number.start]"> Undo </button>
+								<!--<button class="btn btn-xs btn-warning"  ng-click="vm.edit[number.start] = !vm.edit[number.start]"> Undo </button>-->
 							</td>
 						</tr>
 					</tbody>
@@ -216,10 +226,10 @@
 				
 			
 				<div class="col-md-6 col-sm-6 col-xs-12 col-lg-12">
-				<h3>Found {{vm.didblocktable.length}} Phones</h3>
+				<h3>Found {{vm.didblocktable.length}} Number Blocks</h3>
 				<hr>
 					<div class="form-group">
-						<button class="btn btn-danger"  ng-click="vm.insertdidblocks(vm.didblocktable)"> Add <b>{{vm.didblocktable.length}}</b> Phones to Plan </button>
+						<button class="btn btn-danger"  ng-click="vm.insertdidblocks(vm.didblocktable)"> Add Blocks</button>
 						<button class="btn btn-primary" ng-click="vm.refresh()">Reset</button>
 					</div>
 				</div>

@@ -43,7 +43,7 @@
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Provisioning</a>
 				  <ul class="dropdown-menu">
-					<li><a href="#/site/create" ng-if="vm.permissions.create.Site == true">Add Site</a></li>
+					<li><a href="#/site/create" ng-if="vm.permissions.create.Site == true">Add New Site</a></li>
 					<li><a href="#/site">List Sites</a></li>
 					
 					<!--
@@ -112,7 +112,7 @@
 				<li class="dropdown">
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
 				  <ul class="dropdown-menu">
-					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">SIP & E911 Report</a></li>
+					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">Site Telecom Report</a></li>
 					
 					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
 					<!--

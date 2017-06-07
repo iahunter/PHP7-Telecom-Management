@@ -1291,6 +1291,66 @@
                 }
             }
         },
+        "/telephony/api/reports/site/{sitecode}": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List of DID Blocks for authorized user",
+                "description": "",
+                "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "sitecode",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/reports/phones/{sitecode}": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List of DID Blocks for authorized user",
+                "description": "",
+                "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "sitecode",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/reports/siteE911TrunkingReport": {
             "get": {
                 "tags": [

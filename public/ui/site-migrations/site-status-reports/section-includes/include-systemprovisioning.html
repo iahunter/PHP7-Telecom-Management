@@ -1,13 +1,14 @@
 <div ng-if="vm.permissions.create.Cucmclass">
-	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-if="vm.site">
+
+	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 		<div class="panel-heading" role="tab" id="siteprovision" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 
 			<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#collapse_provision" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="collapse_provision">
-				<h4><b><i class="fa fa-server"></i> Systems Provisioning - Site Standard Objects <i class="fa fa-caret-down"></i></b></h4>
+				<h4><b><i class="fa fa-server"></i> Site Objects <i class="fa fa-caret-down"></i></b></h4>
 			</a>
 		</div>
-		<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_provision"  aria-labelledby="siteprovision">
-				
+		<div class="panel-body panel-collapse collapse collapse in" role="tabpanel" id="collapse_provision"  aria-labelledby="siteprovision">
+				<legend> Site: {{vm.sitecode}}</legend>
 				<div style="margin:25px"></div>
 				
 				<div ng-if="vm.deploybutton">
@@ -120,9 +121,9 @@
 												<td>
 													<div ng-repeat="(objkey,objvalue) in vm.cucmsite.details" >
 														<!--Watch the ng-if-->
-														
+													
 														<div ng-if="objkey == value" pop-over>
-															<!-- This links to the app-directives/sitepopover.html directive template-->
+															<!-- This links to the sitepopover.html directive template-->
 														</div>
 
 													</div>

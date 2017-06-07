@@ -180,7 +180,6 @@ class PingScanInfrastructure extends Command
     {
         // Custom Oncall Number - Comment out if not needed.
         if (env('ONCALL_PHONE_NUMBER')) {
-            $oncall = $this->getoncallphonenumber(env('ONCALL_PHONE_NUMBER'));
 
             // If we are able to resolve the oncall number to email then do so and send a text message to oncall.
             $oncall_text = $this->getoncallphonenumber(env('ONCALL_PHONE_NUMBER'));

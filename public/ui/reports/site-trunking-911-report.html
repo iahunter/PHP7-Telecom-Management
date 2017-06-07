@@ -10,7 +10,7 @@
 	
 	<div style="margin:50px"></div>
 	
-	<legend>SIP Trunking and E911 Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+	<legend>Site Telecom Summary Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
 		<div style="margin:25px"></div>
 			
@@ -114,6 +114,16 @@
 										<span ng-show="sortType == 'trunking' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							<th>
+								<a href="" ng-click="sortType = 'phonecount'; sortReverse = !sortReverse" style="color:black">
+									Phone Count
+										<span ng-show="sortType == 'phonecount' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'phonecount' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								Site Details
+							</th>
 							
 						</tr>
 					</thead>
@@ -136,6 +146,8 @@
 								<i ng-if="!site.trunking" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
 								{{site.trunking}}
 							</td>
+							<td>{{site.phonecount}}</td>
+							<td><a href="#/sitemigrations/sitestatusreports/{{site.sitecode}}"><button class="btn btn-primary btn-xs">View</button></a></td>
 					</tr>
 							
 					</tbody>

@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getSite.Objects.Controller', ['cucmReportService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(cucmReportService, cucmService, cupiService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
+	.controller('getSite.Objects.Controller', ['cucmReportService', 'cucmService', 'telephonyService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(cucmReportService, cucmService, telephonyService, cupiService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
 		
 		var vm = this;
 		
@@ -280,13 +280,11 @@ angular
 					}
 
 					var response = res.data.response;
-					vm.cucmsite = response[0];
+					vm.site = response[0];
 					//console.log(vm.cucmsite)
 					
-					console.log(vm.cucmsite.sitesummary)
-					vm.cucmsite.summary = vm.cucmsite.sitesummary
-					vm.cucmsite.details = vm.cucmsite.sitedetails
-					console.log(vm.cucmsite)
+					console.log(vm.site)
+
 					vm.sitecode = id;
 					//console.log(vm.sitecode);
 					
@@ -396,13 +394,33 @@ angular
 					//Error
 				});
 				
-				
+				vm.loading = false;
 				
 
 		};
 		
 		
-		
+		telephonyService.getDidblockbySitecode(id)
+						.then(function(res) {
+							console.log(res)
+							vm.didblocks = res.data.didblocks;
+							console.log(vm.didblocks);
+							
+
+						}, function(error) {
+							alert('An error occurred while getting user templates from unity connection')
+						});
+
+		cucmReportService.getsitephones(id)
+						.then(function(res) {
+							console.log(res)
+							vm.phones = res.data.response;
+							console.log(vm.phones);
+							
+
+						}, function(error) {
+							alert('An error occurred while getting user templates from unity connection')
+						});
 
 		var getsitesummary = vm.getsitesummary(id)
 		console.log(id)

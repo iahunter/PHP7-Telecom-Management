@@ -48,6 +48,41 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	public function listDidblockbySite(Request $request, $sitecode)
+    {
+		
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user->can('read', Didblock::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $didblocks = Didblock::where('name', 'like', "%{$request->sitecode}%")
+				->where('reserved', '=', null)
+				->orderBy('start')
+				->get();
+		
+		//return $didblocks;
+		
+        $stats = $this->getDidblockUtilization();
+
+        $show = [];
+        foreach ($didblocks as $didblock) {
+            if ($user->can('read', $didblock)) {
+                $didblock->stats = $stats[$didblock->id];
+                $show[] = $didblock;
+            }
+        }
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'didblocks'      => $show,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function getDidblockUtilization()
     {

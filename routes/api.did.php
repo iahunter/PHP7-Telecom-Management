@@ -101,6 +101,31 @@
      * )
      **/
     $api->get('didblock/{id}', 'App\Http\Controllers\Didcontroller@getDidblock');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/didblock/sitecode/{sitecode}",
+     *     tags={"Did Block"},
+     *     summary="Get DID Block by ID",
+     *     description="",
+     *     operationId="getDidblock",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('didblock/sitecode/{sitecode}', 'App\Http\Controllers\Didcontroller@listDidblockbySite');
 
     /**
      * @SWG\Get(

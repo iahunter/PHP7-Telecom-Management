@@ -1,13 +1,12 @@
 angular
 	.module('app')
-	.controller('getSite.Objects.Controller', ['cucmReportService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(cucmReportService, cucmService, cupiService, PageService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
+	.controller('getSite.Objects.Controller', ['cucmReportService', 'cucmService', 'cupiService', '$location', '$state', '$stateParams', '$scope', '$timeout', '$compile', '$templateCache', function(cucmReportService, cucmService, cupiService, $location, $state, $stateParams, $scope, $timeout, $compile, $templateCache) {
 		
 		var vm = this;
 		
 		
-		// STUPID!!! $stateParams.id would not work... Had to use $state.id... i don't know why... :(
-		var id = $state.id;
-		console.log($state.id)
+		var id = $stateParams.id;
+		console.log($stateParams.id)
 		
 		vm.refresh = function (){
 			

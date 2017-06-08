@@ -49,9 +49,9 @@ class CucmReportsController extends Controller
         }
 
         $site = Cucmsiteconfigs::where('sitecode', $request->sitecode)->get();
-		$phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
-		
-		$site->phonecount = $phonecount;
+        $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
+
+        $site->phonecount = $phonecount;
 
         $response = [
                     'status_code'       => 200,
@@ -87,30 +87,28 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function siteE911TrunkingReport()
+
+    public function siteE911TrunkingReport()
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Cucmsiteconfigs::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		/* 
-		// Custom SQL Query for Report
-        SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, COUNT(cucmphone.id) as phonecount, cucmsite.deleted_at
-		FROM cucmsite
-		LEFT JOIN cucmphone on SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode
-		WHERE cucmsite.deleted_at is NULL
-		GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.deleted_at
-		ORDER BY cucmsite.sitecode
-		*/
-		
-		$sites = DB::select(DB::raw('SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, COUNT(cucmphone.id) as phonecount, cucmsite.deleted_at FROM cucmsite LEFT JOIN cucmphone on SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode WHERE cucmsite.deleted_at is NULL GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.deleted_at ORDER BY cucmsite.sitecode'));
-        
 
-		// Get Trunking for Graph
+        /*
+        // Custom SQL Query for Report
+        SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, COUNT(cucmphone.id) as phonecount, cucmsite.deleted_at
+        FROM cucmsite
+        LEFT JOIN cucmphone on SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode
+        WHERE cucmsite.deleted_at is NULL
+        GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.deleted_at
+        ORDER BY cucmsite.sitecode
+        */
+
+        $sites = DB::select(DB::raw('SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, COUNT(cucmphone.id) as phonecount, cucmsite.deleted_at FROM cucmsite LEFT JOIN cucmphone on SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode WHERE cucmsite.deleted_at is NULL GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.deleted_at ORDER BY cucmsite.sitecode'));
+
+        // Get Trunking for Graph
         $trunking = DB::table('cucmsite')
             ->select('cucmsite.trunking', (DB::raw('count(cucmsite.trunking) as count')))
             ->where('deleted_at', '=', null)
@@ -122,7 +120,7 @@ class CucmReportsController extends Controller
             $trunkcount[$i->trunking] = $i->count;
         }
 
-		// Get E911 for Graph
+        // Get E911 for Graph
         $e911 = DB::table('cucmsite')
             ->select('cucmsite.e911', (DB::raw('count(cucmsite.e911) as count')))
             ->where('deleted_at', '=', null)
@@ -133,9 +131,8 @@ class CucmReportsController extends Controller
         foreach ($e911 as $i) {
             $e911count[$i->e911] = $i->count;
         }
-		
 
-		$response = [
+        $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
@@ -148,10 +145,9 @@ class CucmReportsController extends Controller
         return response()->json($response);
     }
 
-	
     public function siteE911TrunkingReport_oldandslow()
     {
-		// No longer used but keeping around for some reference. 
+        // No longer used but keeping around for some reference.
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Cucmsiteconfigs::class)) {
@@ -210,7 +206,6 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-
 
     public function get_phone_models_inuse()
     {

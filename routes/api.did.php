@@ -101,9 +101,8 @@
      * )
      **/
     $api->get('didblock/{id}', 'App\Http\Controllers\Didcontroller@getDidblock');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/didblock/sitecode/{sitecode}",
      *     tags={"Did Block"},

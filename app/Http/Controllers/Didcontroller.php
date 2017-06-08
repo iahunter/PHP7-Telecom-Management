@@ -48,10 +48,9 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function listDidblockbySite(Request $request, $sitecode)
+
+    public function listDidblockbySite(Request $request, $sitecode)
     {
-		
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Didblock::class)) {
@@ -59,12 +58,12 @@ class Didcontroller extends Controller
         }
 
         $didblocks = Didblock::where('name', 'like', "%{$request->sitecode}%")
-				->where('reserved', '=', null)
-				->orderBy('start')
-				->get();
-		
-		//return $didblocks;
-		
+                ->where('reserved', '=', null)
+                ->orderBy('start')
+                ->get();
+
+        //return $didblocks;
+
         $stats = $this->getDidblockUtilization();
 
         $show = [];

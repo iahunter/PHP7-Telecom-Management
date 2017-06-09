@@ -217,9 +217,9 @@ class Sonus5kCDRcontroller extends Controller
         foreach ($calls as $call) {
             $call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
             $call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-			$call['egress_remote_signalling_ip'] = $call['cdr_json']['Egress Remote Signaling IP Address'];
-			$call['ingress_remote_signalling_ip'] = $call['cdr_json']['Ingress Remote Signaling IP Address'];
-			$call['cdr_json'] = null; // Null out the json so we don't send all that info to the UI and bog down memory. 
+            $call['egress_remote_signalling_ip'] = $call['cdr_json']['Egress Remote Signaling IP Address'];
+            $call['ingress_remote_signalling_ip'] = $call['cdr_json']['Ingress Remote Signaling IP Address'];
+            $call['cdr_json'] = null; // Null out the json so we don't send all that info to the UI and bog down memory.
             $return[] = $call;
         }
 

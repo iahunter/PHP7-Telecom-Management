@@ -40,15 +40,7 @@
 										<span ng-show="sortType == 'sitecode' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
-									Description
-										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
+
 							<th>
 								<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
 									Srst IP
@@ -73,49 +65,7 @@
 								</a>
 							</th>
 							
-							<th>
-								<a href="" ng-click="sortType = 'npa'; sortReverse = !sortReverse" style="color:black">
-									NPA
-										<span ng-show="sortType == 'npa' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'npa' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'nxx'; sortReverse = !sortReverse" style="color:black">
-									NXX
-										<span ng-show="sortType == 'nxx' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'nxx' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							
-							<th>
-								<a href="" ng-click="sortType = 'didrange'; sortReverse = !sortReverse" style="color:black">
-									Did Range Regex
-										<span ng-show="sortType == 'didrange' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'didrange' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<!--
-							<th>
-								<a href="" ng-click="sortType = 'didblocks'; sortReverse = !sortReverse" style="color:black">
-									Did Block IDs
-										<span ng-show="sortType == 'didblocks' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'didblocks' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							-->
-							
-							<th>
-								<a href="" ng-click="sortType = 'operator'; sortReverse = !sortReverse" style="color:black">
-									Operator
-										<span ng-show="sortType == 'operator' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'operator' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
+
 							<th>
 								<a href="" ng-click="sortType = 'trunking'; sortReverse = !sortReverse" style="color:black">
 									Trunking
@@ -129,14 +79,6 @@
 									911
 										<span ng-show="sortType == 'e911' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'e911' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'languages'; sortReverse = !sortReverse" style="color:black">
-									Languages
-										<span ng-show="sortType == 'languages' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'languages' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 
@@ -165,19 +107,25 @@
 					<tr>
 							<td>{{ vm.site.id}}</a></td>
 							<td>{{ vm.site.sitecode}}</td>
-							<td>{{ vm.site.comment}}</td>
-							<td>{{ vm.site.srstip}}</a></td>
-							<td>{{ vm.site.h323ip}}</td>
-							<td>{{ vm.site.timezone}}</td>
-							<td>{{ vm.site.npa}}</td>
-							<td>{{ vm.site.nxx}}</td>
-							<td>{{ vm.site.didrange}}</td>
-							<!--<td>{{ vm.site.didblocks}}</td>-->
 							
-							<td>{{ vm.site.operator}}</td>
-							<td>{{ vm.site.trunking}}</td>
-							<td>{{ vm.site.e911}}</td>
-							<td> <span ng-repeat="language in vm.site.languages">{{ language}} </span> </td>
+							<td> <span ng-repeat="srst in vm.site.sitesummary.Srst">{{ srst}} </span> </td>
+							<td> <span ng-repeat="gateway in vm.site.sitesummary.H323Gateway">{{ gateway}} </span> </td>
+							<td><span ng-repeat="devicepool in vm.site.sitedetails.DevicePool">{{ devicepool.dateTimeSettingName._}} </span> </td>
+
+							<td>
+								<i ng-if="vm.site.trunking == 'sip'" class="fa fa-check-square-o" aria-hidden="true"></i>
+								<i ng-if="vm.site.trunking == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
+								<i ng-if="!vm.site.trunking" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
+								{{vm.site.trunking}}
+							</td>
+							<td>
+								<i ng-if="vm.site.e911 == '911enable'" class="fa fa-check-square-o" aria-hidden="true"></i>
+								<i ng-if="vm.site.e911 == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
+								<i ng-if="!vm.site.e911" class="fa fa-spinner fa-pulse fa-1x fa-fw margin-bottom" aria-hidden="true"></i>
+								
+								{{vm.site.e911}}
+							</td>
+							
 							<td>{{ vm.site.created_at}} by {{ vm.site.created_by}}</td>
 							<td>{{ vm.site.updated_at}} by {{ vm.site.updated_by}}</td>
 					</tr>
@@ -186,8 +134,6 @@
 				</div>
 		</div>
 		
-		<div style="margin:25px"></div>
-		<a href="#/site/edit/{{vm.site.id}}" ng-if="vm.permissions.update.Site"><button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
 		<div style="margin:25px"></div>
 	
 	

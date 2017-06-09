@@ -175,6 +175,22 @@
 								</a>
 							</th>
 
+							<th>
+								<a href="" ng-click="sortType = 'ingress_remote_signalling_ip'; sortReverse = !sortReverse" style="color:black">
+									ingress_remote_signalling_ip
+										<span ng-show="sortType == 'ingress_remote_signalling_ip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingress_remote_signalling_ip' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'egress_remote_signalling_ip'; sortReverse = !sortReverse" style="color:black">
+									egress_remote_signalling_ip
+										<span ng-show="sortType == 'egress_remote_signalling_ip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egress_remote_signalling_ip' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
 							
 							<th>
 								<a href="" ng-click="sortType = 'ingress_callid'; sortReverse = !sortReverse" style="color:black">
@@ -210,6 +226,7 @@
 						<td>{{ call.disconnect_time_local}}</td>
 						<td>{{ call.ingress_trunkgrp}}</td>
 						<td>{{ call.egress_trunkgrp}}</td>
+						
 						<td>{{ call.calling_name}}</td>
 						<td>{{ call.calling_number}}</td>
 						
@@ -224,20 +241,13 @@
 						
 						<td>{{ call.disconnect_ingress_sip_response}} <i class="fa fa-exclamation-triangle" ng-if="call.disconnect_ingress_sip_response > 500"></i></td>
 						<td>{{ call.disconnect_egress_sip_response}} <i class="fa fa-exclamation-triangle" ng-if="call.disconnect_egress_sip_response > 500"></i></td>
-						
+						<td>{{ call.ingress_remote_signalling_ip}} </td>
+						<td>{{ call.egress_remote_signalling_ip}}</td>
 						<td>{{ call.ingress_callid}}</td>
 						<td>{{ call.egress_callid}}</td>
 						
 						<td>{{ call.accounting_id}}</td>
 						
-						
-						
-						
-						
-						
-						
-						
-
 					</tr>
 					</tbody>
 				</table>

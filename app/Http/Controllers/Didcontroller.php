@@ -58,7 +58,12 @@ class Didcontroller extends Controller
         }
 
         $didblocks = Didblock::where('name', 'like', "%{$request->sitecode}%")
-                ->where('reserved', '=', null)
+                //->where('reserved', '=', null)
+				->where(function ($query) {
+                    $query->where('reserved', '=', null)
+                              ->orWhere('reserved', '=', 0);
+                })
+				
                 ->orderBy('start')
                 ->get();
 
@@ -163,12 +168,17 @@ class Didcontroller extends Controller
 
     public function createDidblock(Request $request)
     {
+		
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
         if (! $user->can('create', Didblock::class)) {
             abort(401, 'You are not authorized to create new did blocks');
         }
+		
+		if(!$request->reserved == true){
+			$request->merge(['reserved' => null]);
+		}
 
         $request->merge(['created_by' => $user->username]);
 

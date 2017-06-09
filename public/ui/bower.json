@@ -1,10 +1,10 @@
 {
-  "name": "telephonyui",
+  "name": "ui",
   "homepage": "https://github.com/iahunter/PHP7-Telecom-Management",
   "authors": [
     "iahunter"
   ],
-  "description": "test angular ui",
+  "description": "Telecom Management System User Interface",
   "main": "app.js",
   "keywords": [
     "testing"
@@ -24,6 +24,7 @@
     "angular-ui-router": "^0.3.1",
     "ngstorage": "^0.3.10",
     "angular-jwt": "^0.0.9",
-    "angular-chart.js": "^1.0.3"
+    "angular-chart.js": "^1.0.3",
+    "angular-motion": "^0.4.4"
   }
 }

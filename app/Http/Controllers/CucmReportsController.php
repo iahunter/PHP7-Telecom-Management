@@ -13,6 +13,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CucmReportsController extends Controller
 {
+	public $phones = []; 
+	
     //use Helpers;
     public function __construct()
     {
@@ -72,17 +74,50 @@ class CucmReportsController extends Controller
         }
 
         $count = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
+		
+		$phone_array = [];
+		
+		if ($count) {
+			$phone_array[] = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->chunk(300, function ($phones) {
+				$return = [];
+				foreach ($phones as $phone) {
+					//print_r($phone);
+					$lines = [];
+					foreach($phone['lines'] as $line){
+						$ln = [];
+						$ln['uuid'] = $line['uuid'];
+						$ln['pattern'] = $line['pattern'];
+						$ln['description'] = $line['description'];
+						$ln['callForwardAll'] = [];
+						$ln['callForwardAll']['destination'] = $line['callForwardAll']['destination'];
+						$ln['css'] = $line['shareLineAppearanceCssName']['_'];
+						$lines[$ln['uuid']] = $ln;
+					}
+					$phone->lines = $lines;		// replace the lines with only the fields we need for our UI. 
+					$phone->config = "";		// Scrap the config, we dont' need it. 
 
+					$this->phones[] = $phone;	// Append the phone to the array to return. 
+
+				}
+				
+			});
+		}
+		
+		//return ($this->phones);
+
+		/*
         if ($count) {
             $phones = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->get();
         }
+		*/
 
         $response = [
                     'status_code'       => 200,
                     'success'           => true,
                     'message'           => '',
                     'count'             => $count,
-                    'response'          => $phones,
+                    //'response'          => $phones,
+					'response'          => $this->phones,
                     ];
 
         return response()->json($response);

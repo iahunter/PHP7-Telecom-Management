@@ -2,7 +2,7 @@
 
 <!--<div class="container" style="display: block; max-width: 750px;" ng-if="!vm.error" div ng-controller="Sonus.AttemptSummary.CDR.Controller as vm">-->
 	<div class="container" ng-if="!vm.error" ng-controller="Sonus.AttemptSummary.CDR.Controller as vm">
-	<div class="panel panel-default"  style="box-shadow: 1px 1px 5px grey;" ng-if="vm.dayscallgraph">
+	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;" ng-show="vm.dayscallgraph">
 		<div class="panel-heading"><h4><b><a href="#/sonus/cdr/todays_calls_attempts" style="color:black;">24hr - SBC - Hourly Call Completion Summary</a></b></h4></div>
 		
 		<div >

@@ -54,7 +54,7 @@ class CucmReportsController extends Controller
         $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
 
         $site->phonecount = $phonecount;
-		//print_r($site);
+        //print_r($site);
 
         $response = [
                     'status_code'       => 200,

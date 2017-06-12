@@ -142,31 +142,30 @@ class LogController extends Controller
         return $response;
         //return response()->json($response); // This doesn't seem to affect the response.
     }
-	
-	public function get_user_page_hit_count(Request $request)
+
+    public function get_user_page_hit_count(Request $request)
     {
-		// This needs work!
+        // This needs work!
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
         if (! $user->can('read', Activity::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		/*
-		SELECT causer_id, users.username AS username, COUNT(*) AS "Views"
-		FROM activity_log
-		LEFT JOIN users ON activity_log.causer_id = users.id
-		WHERE log_name = "pagelog"
-		GROUP BY causer_id, users.username
-		ORDER BY Views DESC
-		*/
+
+        /*
+        SELECT causer_id, users.username AS username, COUNT(*) AS "Views"
+        FROM activity_log
+        LEFT JOIN users ON activity_log.causer_id = users.id
+        WHERE log_name = "pagelog"
+        GROUP BY causer_id, users.username
+        ORDER BY Views DESC
+        */
 
         // Using the DB table returns a bunch of weird stuff and doesn't parse the data in json columns so we have to clean up the result below.
         $calls = DB::select(DB::raw(DB::raw('SELECT causer_id, users.username AS username, COUNT(*) AS "Views" FROM activity_log LEFT JOIN users ON activity_log.causer_id = users.id WHERE log_name = "pagelog" GROUP BY causer_id, users.username ORDER BY Views DESC')));
-				
-		//print_r($calls);
 
+        //print_r($calls);
 
         $response = [
                     'status_code'          => 200,

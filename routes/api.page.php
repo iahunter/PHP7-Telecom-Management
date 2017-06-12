@@ -112,8 +112,8 @@
      * )
      **/
     $api->get('/activitylogs/pagelogs/last24hrs', 'App\Http\Controllers\LogController@get_last24hrs_page_logs');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/activitylogs/pagelogs/usercount",
      *     tags={"Logging and Permissions"},

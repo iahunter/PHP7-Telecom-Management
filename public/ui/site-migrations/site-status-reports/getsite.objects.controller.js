@@ -280,7 +280,7 @@ angular
 					}
 
 					var response = res.data.response;
-					vm.site = response[0];
+					vm.site = response;
 					//console.log(vm.cucmsite)
 					
 					console.log(vm.site)

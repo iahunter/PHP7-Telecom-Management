@@ -112,6 +112,27 @@
      * )
      **/
     $api->get('/activitylogs/pagelogs/last24hrs', 'App\Http\Controllers\LogController@get_last24hrs_page_logs');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/activitylogs/pagelogs/usercount",
+     *     tags={"Logging and Permissions"},
+     *     summary="Get Page View Hit Count per User",
+     *     description="",
+     *     operationId="",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('/activitylogs/pagelogs/usercount', 'App\Http\Controllers\LogController@get_user_page_hit_count');
 
     /**
      * @SWG\Post(

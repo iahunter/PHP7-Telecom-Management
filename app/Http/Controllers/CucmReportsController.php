@@ -50,10 +50,11 @@ class CucmReportsController extends Controller
             abort(401, 'You are not authorized');
         }
 
-        $site = Cucmsiteconfigs::where('sitecode', $request->sitecode)->get();
+        $site = Cucmsiteconfigs::where('sitecode', $request->sitecode)->first();
         $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
 
         $site->phonecount = $phonecount;
+		//print_r($site);
 
         $response = [
                     'status_code'       => 200,
@@ -139,7 +140,7 @@ class CucmReportsController extends Controller
         ORDER BY cucmsite.sitecode
         */
 
-        $sites = DB::select(DB::raw('SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, COUNT(cucmphone.id) as phonecount, cucmsite.deleted_at FROM cucmsite LEFT JOIN cucmphone on SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode WHERE cucmsite.deleted_at is NULL GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.deleted_at ORDER BY cucmsite.sitecode'));
+        $sites = DB::select(DB::raw('SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, COUNT(cucmphone.id) as phonecount FROM cucmsite  LEFT JOIN cucmphone ON SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode AND cucmphone.deleted_at is NULL WHERE cucmsite.deleted_at is NULL GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911 ORDER BY cucmsite.sitecode'));
 
         // Get Trunking for Graph
         $trunking = DB::table('cucmsite')

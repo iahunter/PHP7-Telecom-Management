@@ -81,6 +81,14 @@
 										<span ng-show="sortType == 'e911' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'phonecount'; sortReverse = !sortReverse" style="color:black">
+									Phone Count
+										<span ng-show="sortType == 'phonecount' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'phonecount' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
 							
 
@@ -126,8 +134,10 @@
 								{{vm.site.e911}}
 							</td>
 							
-							<td>{{ vm.site.created_at}} by {{ vm.site.created_by}}</td>
-							<td>{{ vm.site.updated_at}} by {{ vm.site.updated_by}}</td>
+							<td>{{ vm.site.phonecount}}</td>
+							
+							<td>{{ vm.site.created_at}}</td>
+							<td>{{ vm.site.updated_at}}</td>
 					</tr>
 					</tbody>
 				</table>

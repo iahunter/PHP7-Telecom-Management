@@ -86,7 +86,6 @@
      **/
     $api->post('site_migration', 'App\Http\Controllers\SiteMigrationController@create_site_migration');
 
-
     /**
      * @SWG\Get(
      *     path="/telephony/api/site_migration",
@@ -104,7 +103,7 @@
      * )
      **/
     $api->get('site_migration', 'App\Http\Controllers\SiteMigrationController@list_site_migrations');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/site_migration/{id}",
@@ -128,9 +127,8 @@
      * )
      **/
     $api->get('site_migration/{id}', 'App\Http\Controllers\SiteMigrationController@get_site_migration');
-	
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/site_migrations/{sitecode}",
      *     tags={"Site Migration - Site"},
@@ -153,7 +151,6 @@
      * )
      **/
     $api->get('site_migrations/{sitecode}', 'App\Http\Controllers\SiteMigrationController@get_site_migration_by_sitecode');
-
 
     /**
      * @SWG\Put(

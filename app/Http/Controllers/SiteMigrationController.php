@@ -11,7 +11,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class SiteMigrationController extends Controller
 {
     //
-	public function list_site_migrations()
+    public function list_site_migrations()
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -37,8 +37,8 @@ class SiteMigrationController extends Controller
 
         return response()->json($response);
     }
-	
-	public function get_site_migration(Request $request, $id)
+
+    public function get_site_migration(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -63,8 +63,8 @@ class SiteMigrationController extends Controller
 
         return response()->json($response);
     }
-	
-	public function get_site_migration_by_sitecode(Request $request, $sitecode)
+
+    public function get_site_migration_by_sitecode(Request $request, $sitecode)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -85,8 +85,8 @@ class SiteMigrationController extends Controller
 
         return response()->json($response);
     }
-	
-	public function create_site_migration(Request $request)
+
+    public function create_site_migration(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -112,8 +112,8 @@ class SiteMigrationController extends Controller
 
         return response()->json($response);
     }
-	
-	public function update_site_migration(Request $request, $id)
+
+    public function update_site_migration(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -139,8 +139,8 @@ class SiteMigrationController extends Controller
 
         return response()->json($response);
     }
-	
-	public function delete_site_migration(Request $request, $id)
+
+    public function delete_site_migration(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 

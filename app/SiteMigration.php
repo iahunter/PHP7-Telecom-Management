@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SiteMigration extends Model
 {
-
     use Auditable;
     use SoftDeletes;
     protected $table = 'site_migration';
@@ -17,6 +16,6 @@ class SiteMigration extends Model
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
             'h323ip'      => 'array',
-            'backups'    => 'array',
+            'backups'     => 'array',
         ];
 }

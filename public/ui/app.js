@@ -229,6 +229,12 @@
                 controller: 'getSite.Objects.Controller',
                 controllerAs: 'vm'
             })
+			.state('getsitemigrations', {
+                url: '/sitemigrations/migrations/{id}',
+                templateUrl: 'site-migrations/migrations/migration.html',
+                controller: 'Site.Migration.Controller',
+                controllerAs: 'vm'
+            })
 			.state('sonusconfigs', {
                 url: '/sonus/configrepo',
                 templateUrl: 'company-content/sonusconfigrepo.html',

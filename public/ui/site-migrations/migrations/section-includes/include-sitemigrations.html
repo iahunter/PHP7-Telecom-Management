@@ -1,0 +1,201 @@
+
+
+<div style="margin:10px"></div>
+
+<div style="margin-left:5%; margin-right:5%;">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	
+	<div style="margin:50px"></div>
+	
+	<legend>Site Object Standard Migration <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+		
+		
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		
+		
+		<div style="margin:25px"></div>
+		
+		<a ng-if="!vm.message && vm.permissions.create.SiteMigration" href="#/infrastructure/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+		
+		<div style="margin:25px"></div>
+		
+
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		
+		<div ng-if="vm.migrations.length > 0">
+		
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">    
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+							<th>
+								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+									ID
+										<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'sitecode'; sortReverse = !sortReverse" style="color:black">
+									sitecode
+										<span ng-show="sortType == 'sitecode' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'sitecode' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+							<th>
+								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
+									Comment
+										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'trunking'; sortReverse = !sortReverse" style="color:black">
+									Trunking
+										<span ng-show="sortType == 'trunking' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'trunking' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+							<th>
+								<a href="" ng-click="sortType = 'e911'; sortReverse = !sortReverse" style="color:black">
+									E911
+										<span ng-show="sortType == 'e911' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'e911' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							
+							
+							<th>
+								<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
+									SRST IP 
+										<span ng-show="sortType == 'srstip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'srstip' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							
+							<th>
+								<a href="" ng-click="sortType = 'h323ip'; sortReverse = !sortReverse" style="color:black">
+									h323ip
+										<span ng-show="sortType == 'h323ip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'h323ip' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+							<th>
+								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+									Created At
+										<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
+									Updated At
+										<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th ng-if="vm.permissions.update.SiteMigration || vm.permissions.delete.SiteMigration">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					<!-- Allow you to edit and delete Blocks with new buttons -->
+					<!--<tr ng-repeat="device in vm.devices | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
+					<tr ng-repeat="device in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">
+					
+						<!--List View-->
+						<td>{{ device.id}}</td>
+						<td>{{ device.sitecode}}</td>
+						<td>{{ device.comment}}</td>
+						<td>{{ device.trunking}}</td>
+						<td>{{ device.e911}}</td>
+						<td>{{ device.srstip}}</td>
+						<td>{{ device.h323ip}}</td>
+
+						<td>{{ device.created_at}} by {{device.created_by}}</td>
+						<td>{{ device.updated_at}} by {{device.updated_by}}</td>
+						<td   ng-if="vm.permissions.update.SiteMigration || vm.permissions.delete.SiteMigration">
+							<!--<button class="btn btn-primary btn-xs "  ng-click="vm.edit[device.id] = !vm.edit[device.id]"> Edit </button>-->
+							<a href="#/infrastructure/edit/{{device.id}}" ng-if="vm.permissions.update.SiteMigration" ><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
+							
+							<!-- Function moved ot modal...
+							<button class="btn btn-danger btn-xs " ng-click="vm.delete(device)"> Delete </button>-->
+							
+							<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.SiteMigration" data-toggle="modal" data-target="#{{device.id}}-modal"> Delete </button>
+						
+							<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
+							<div class="modal fade" id="{{device.id}}-modal" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4>Are you sure? <h4>
+										</div>
+										<div class="modal-body">
+											<p>You are about to delete device: {{ device.devicecode}}</p>
+											<table class="table table-striped table-condensed table-bordered table-hover">
+												<tr>
+													<th>ID</th>
+													<th>Hostname</th>
+
+												</tr>
+												<tr>
+													<td>{{ device.id}}</td>
+													<td>{{ device.hostname}}</td>
+												</tr>
+											</table>
+											<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
+										</div>
+										<div class="modal-footer">
+
+										<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+										<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(device)">Delete</a>
+										<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div> <!-- npa of Modal -->
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			</div> <!--npa of Panel
+			
+			<a href="#/device/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+			-->
+
+			<div style="margin:100px"></div>
+		</div>
+	</div>
+</div>
+
+	
+

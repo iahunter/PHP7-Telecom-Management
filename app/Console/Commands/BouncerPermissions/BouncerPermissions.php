@@ -63,7 +63,8 @@ class BouncerPermissions extends Command
             App\Calls::class,
             App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
-            App\TelecomInfrastructure::class,
+			App\TelecomInfrastructure::class,
+            App\SiteMigration::class,
             App\Ping::class,
             \Spatie\Activitylog\Models\Activity::class, // Activity Log Permissions
         ];

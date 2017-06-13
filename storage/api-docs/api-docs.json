@@ -2637,6 +2637,289 @@
                 }
             }
         },
+        "/telephony/api/site_migration": {
+            "get": {
+                "tags": [
+                    "Site Migration - Site"
+                ],
+                "summary": "List of Site Plans for authorized user",
+                "description": "",
+                "operationId": "listsite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Site Migration - Site"
+                ],
+                "summary": "Create Site Plan",
+                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "operationId": "createSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "comment",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "trunking",
+                        "in": "formData",
+                        "description": "Trunking",
+                        "required": true,
+                        "type": "integer",
+                        "enum": [
+                            "sip",
+                            "local"
+                        ]
+                    },
+                    {
+                        "name": "e911",
+                        "in": "formData",
+                        "description": "E911 Type",
+                        "required": true,
+                        "type": "integer",
+                        "enum": [
+                            "911enable",
+                            "local"
+                        ]
+                    },
+                    {
+                        "name": "srstip",
+                        "in": "formData",
+                        "description": "SRST IP Address - Not required for Type 1 Designs. Recommended but not required for Type 2,3, and 4",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "h323ip",
+                        "in": "formData",
+                        "description": "These are required for Design Type 2,3,and 4. If multiple H323 Gateways, enter each one on new line. These will get added to the site route group. ",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "H323 Gateways",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Comment",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/site_migration/{id}": {
+            "get": {
+                "tags": [
+                    "Site Migration - Site"
+                ],
+                "summary": "Get Site Plan by ID",
+                "description": "",
+                "operationId": "getsite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Site Migration - Site"
+                ],
+                "summary": "Update Site Plan by ID for authorized user",
+                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "operationId": "createSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Number of Site",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "comment",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "trunking",
+                        "in": "formData",
+                        "description": "Trunking",
+                        "required": false,
+                        "type": "integer",
+                        "enum": [
+                            "sip",
+                            "local"
+                        ]
+                    },
+                    {
+                        "name": "e911",
+                        "in": "formData",
+                        "description": "E911 Type",
+                        "required": false,
+                        "type": "integer",
+                        "enum": [
+                            "911enable",
+                            "local"
+                        ]
+                    },
+                    {
+                        "name": "srstip",
+                        "in": "formData",
+                        "description": "SRST IP Address - Not required for Type 1 Designs. Recommended but not required for Type 2,3, and 4",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "h323ip",
+                        "in": "formData",
+                        "description": "These are required for Design Type 2,3,and 4. If multiple H323 Gateways, enter each one on new line. These will get added to the site route group. ",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "description": "H323 Gateways",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Comment",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Site Migration - Site"
+                ],
+                "summary": "Delete Site Plan by ID for authorized user",
+                "description": "This deletes the block and its child phones",
+                "operationId": "deletesite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of block to Delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/site_migrations/{sitecode}": {
+            "get": {
+                "tags": [
+                    "Site Migration - Site"
+                ],
+                "summary": "Get Site Plan by ID",
+                "description": "",
+                "operationId": "getsite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/page/request/{name}": {
             "get": {
                 "tags": [
@@ -2771,7 +3054,7 @@
                 "tags": [
                     "Logging and Permissions"
                 ],
-                "summary": "THIS NEEDS WORk",
+                "summary": "Get Page View Hit Count per User",
                 "description": "",
                 "operationId": "",
                 "consumes": [

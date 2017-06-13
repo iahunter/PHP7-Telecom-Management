@@ -17,6 +17,7 @@
 			<a href="#/reports/site-trunking-911-report"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site List</button> </a>
 			<br> <div style="margin:10px"></div></legend>
 		
+			
 		</div>	
 		
 		<div style="margin:25px">
@@ -27,6 +28,10 @@
 			
 			<div style="margin:50px"></div>
 
+			<p><b><i class="fa fa-info-circle" aria-hidden="true"></i> If needed, You can use the Migration Tool below to analyze the current config and standardize the site. <br></p>
+			<a href="#/sitemigrations/migrations/{{vm.sitecode}}"><button class="btn btn-primary btn-sm"><b><i class="fa fa-wrench"></i> Migration Tool</b></button> </a>
+			
+			<hr>
 			<!-- Include Site System Provisioning -->
 			<ng-include src="'site-migrations/site-status-reports/section-includes/include-systemprovisioning.html'"></ng-include>
 			<hr>

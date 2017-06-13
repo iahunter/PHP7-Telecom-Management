@@ -6,7 +6,7 @@ angular
 		
 		
 		var id = $stateParams.id;
-		console.log($stateParams.id)
+		//console.log($stateParams.id)
 		
 		vm.refresh = function (){
 			
@@ -34,7 +34,7 @@ angular
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
 		
-		console.log(vm.permissions)
+		//console.log(vm.permissions)
 		
 		if(!vm.permissions.read.Site){
 			$location.path('/accessdenied');
@@ -258,7 +258,7 @@ angular
 		*/
 		vm.getsitesummary = function (id) {
 			
-			console.log(id)
+			//console.log(id)
 			vm.sitecode = id;
 			
 			vm.getsite = cucmReportService.getsitesummary(id)
@@ -266,9 +266,9 @@ angular
 					
 					// Check for errors and if token has expired. 
 					if(res.data.message){
-						console.log(res);
+						//console.log(res);
 						vm.message = res.data.message;
-						console.log(vm.message);
+						//console.log(vm.message);
 						
 						if(vm.message == "Token has expired"){
 							// Send user to login page if token expired. 
@@ -283,7 +283,7 @@ angular
 					vm.site = response;
 					//console.log(vm.cucmsite)
 					
-					console.log(vm.site)
+					//console.log(vm.site)
 
 					vm.sitecode = id;
 					//console.log(vm.sitecode);
@@ -303,7 +303,7 @@ angular
 								}else{
 									cucmsitesummary = res.data.response;
 								}
-								console.log(cucmsitesummary);
+								//console.log(cucmsitesummary);
 								
 								vm.cucmsite = {};
 								vm.cucmsite.summary = {};
@@ -331,7 +331,7 @@ angular
 													}
 													
 												}
-												console.log(object)
+												//console.log(object)
 												
 												// Get object details for popover
 												cucmService.get_object_type_by_uuid(object, v)
@@ -360,12 +360,12 @@ angular
 								});
 								
 								if(vm.cucmsite.summary == 0){
-									console.log("Does not exist in CUCM");
+									//console.log("Does not exist in CUCM");
 									vm.cucmsite.summary = false;
 								}
 								
 								//console.log(vm.cucmsite.details)
-								console.log(vm.cucmsite.summary)
+								//console.log(vm.cucmsite.summary)
 							}, function(err){
 								//Error
 							});
@@ -402,9 +402,9 @@ angular
 		
 		telephonyService.getDidblockbySitecode(id)
 						.then(function(res) {
-							console.log(res)
+							//console.log(res)
 							vm.didblocks = res.data.didblocks;
-							console.log(vm.didblocks);
+							//console.log(vm.didblocks);
 							
 
 						}, function(error) {
@@ -413,9 +413,9 @@ angular
 
 		cucmReportService.getsitephones(id)
 						.then(function(res) {
-							console.log(res)
+							//console.log(res)
 							vm.phones = res.data.response;
-							console.log(vm.phones);
+							//console.log(vm.phones);
 							
 
 						}, function(error) {
@@ -423,7 +423,7 @@ angular
 						});
 
 		var getsitesummary = vm.getsitesummary(id)
-		console.log(id)
+		//console.log(id)
 
 		vm.languages = [{
 				id: 1,

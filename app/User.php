@@ -186,6 +186,26 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', TelecomInfrastructure::class)) {
             $claims['permissions']['delete']['TelecomInfrastructure'] = true;
         }
+		
+		// Telecom Infrastructure Permissions
+
+        if ($this->can('read', SiteMigration::class)) {
+            $claims['permissions']['read']['SiteMigration'] = true;
+        }
+
+        if ($this->can('create', SiteMigration::class)) {
+            $claims['permissions']['create']['SiteMigration'] = true;
+        }
+
+        if ($this->can('update', SiteMigration::class)) {
+            $claims['permissions']['update']['SiteMigration'] = true;
+        }
+
+        if ($this->can('delete', SiteMigration::class)) {
+            $claims['permissions']['delete']['SiteMigration'] = true;
+        }
+		
+		// Activity Log Permissions
 
         if ($this->can('read', \Spatie\Activitylog\Models\Activity::class)) {
             $claims['permissions']['read']['ActivityLog'] = true;

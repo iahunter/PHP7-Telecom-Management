@@ -42,10 +42,9 @@ $api->version('v1', function ($api) {
     require __DIR__.'/api.planning.site.php';
     require __DIR__.'/api.planning.site.phoneplan.php';
     require __DIR__.'/api.planning.site.phones.php';
-	
-	// Site Migraiton Routes
-	require __DIR__.'/api.migration.site.php';
-	
+
+    // Site Migraiton Routes
+    require __DIR__.'/api.migration.site.php';
 
     // CUCM routes
     require __DIR__.'/api.cucm.php';

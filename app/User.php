@@ -186,8 +186,8 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', TelecomInfrastructure::class)) {
             $claims['permissions']['delete']['TelecomInfrastructure'] = true;
         }
-		
-		// Telecom Infrastructure Permissions
+
+        // Telecom Infrastructure Permissions
 
         if ($this->can('read', SiteMigration::class)) {
             $claims['permissions']['read']['SiteMigration'] = true;
@@ -204,8 +204,8 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', SiteMigration::class)) {
             $claims['permissions']['delete']['SiteMigration'] = true;
         }
-		
-		// Activity Log Permissions
+
+        // Activity Log Permissions
 
         if ($this->can('read', \Spatie\Activitylog\Models\Activity::class)) {
             $claims['permissions']['read']['ActivityLog'] = true;

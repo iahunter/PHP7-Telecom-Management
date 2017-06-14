@@ -54,16 +54,16 @@
 		
 
 		// Create Block
-		self.createSiteMigrations = function(migration) {
+		self.createSiteMigration = function(migration) {
 			
-			return $http.post('../api/site_migrations',migration);
+			return $http.post('../api/site_migration',migration);
 		}
 		
 		
 		// Update Block by ID
-		self.updateSiteMigrations = function(id, update) {
+		self.updateSiteMigration = function(id, update) {
         
-			return $http.put('../api/site_migrations/'+id, update).then(function(response) {
+			return $http.put('../api/site_migration/'+id, update).then(function(response) {
 
 				var data = response.data;
 				return data;
@@ -73,9 +73,9 @@
 
 		
 		// Delete Block by ID
-		self.deleteSiteMigrations = function(id) {
+		self.deleteSiteMigration = function(id) {
 			console.log('Service - Deleting ID: '+ id);
-			return $http.delete('../api/site_migrations/'+id, id).then(function(response) {
+			return $http.delete('../api/site_migration/'+id, id).then(function(response) {
 
 				var data = response.data;
 				return data;

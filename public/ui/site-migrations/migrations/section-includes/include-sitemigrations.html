@@ -1,14 +1,7 @@
 
 
-<div style="margin:10px"></div>
 
-<div style="margin-left:5%; margin-right:5%;">
-
-	<div class="well form-horizontal" style="margin-top:10px;" >
-	
-	<div style="margin:50px"></div>
-	
-	<legend>Site Object Standard Migration <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+	<h3>Site Standard Migrations </h3>
 		
 		
 		<div class="input-group col-md-3 ">
@@ -21,7 +14,7 @@
 		
 		<div style="margin:25px"></div>
 		
-		<a ng-if="!vm.message && vm.permissions.create.SiteMigration" href="#/infrastructure/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+		<a ng-if="!vm.message && vm.permissions.create.SiteMigration" href="#/sitemigrations/migration/{{vm.sitecode}}/sitemigration/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add Site Migration</a>
 		
 		<div style="margin:25px"></div>
 		
@@ -128,55 +121,54 @@
 					<tbody>
 
 					<!-- Allow you to edit and delete Blocks with new buttons -->
-					<!--<tr ng-repeat="device in vm.devices | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
-					<tr ng-repeat="device in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">
+					<!--<tr ng-repeat="migration in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
+					<tr ng-repeat="migration in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
-						<td>{{ device.id}}</td>
-						<td>{{ device.sitecode}}</td>
-						<td>{{ device.comment}}</td>
-						<td>{{ device.trunking}}</td>
-						<td>{{ device.e911}}</td>
-						<td>{{ device.srstip}}</td>
-						<td>{{ device.h323ip}}</td>
+						<td>{{ migration.id}}</td>
+						<td>{{ migration.sitecode}}</td>
+						<td>{{ migration.comment}}</td>
+						<td>{{ migration.trunking}}</td>
+						<td>{{ migration.e911}}</td>
+						<td>{{ migration.srstip}}</td>
+						<td>{{ migration.h323ip}}</td>
 
-						<td>{{ device.created_at}} by {{device.created_by}}</td>
-						<td>{{ device.updated_at}} by {{device.updated_by}}</td>
+						<td>{{ migration.created_at}} by {{migration.created_by}}</td>
+						<td>{{ migration.updated_at}} by {{migration.updated_by}}</td>
 						<td   ng-if="vm.permissions.update.SiteMigration || vm.permissions.delete.SiteMigration">
-							<!--<button class="btn btn-primary btn-xs "  ng-click="vm.edit[device.id] = !vm.edit[device.id]"> Edit </button>-->
-							<a href="#/infrastructure/edit/{{device.id}}" ng-if="vm.permissions.update.SiteMigration" ><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
+							<!--<button class="btn btn-primary btn-xs "  ng-click="vm.edit[migration.id] = !vm.edit[migration.id]"> Edit </button>-->
+							<a href="#/sitemigrations/migration/sitemigration/edit/{{migration.id}}" ng-if="vm.permissions.update.SiteMigration" ><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
 							
-							<!-- Function moved ot modal...
-							<button class="btn btn-danger btn-xs " ng-click="vm.delete(device)"> Delete </button>-->
-							
-							<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.SiteMigration" data-toggle="modal" data-target="#{{device.id}}-modal"> Delete </button>
+							<button class="btn btn-danger btn-xs " ng-if="vm.permissions.delete.SiteMigration" data-toggle="modal" data-target="#{{migration.id}}-modal"> Delete </button>
 						
 							<!-- Are you sure Modal - Hidden Unless Delete button is Pressed -->
-							<div class="modal fade" id="{{device.id}}-modal" role="dialog">
+							<div class="modal fade" id="{{migration.id}}-modal" role="dialog">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h4>Are you sure? <h4>
 										</div>
 										<div class="modal-body">
-											<p>You are about to delete device: {{ device.devicecode}}</p>
+											<p>You are about to delete migration: {{ migration.migrationcode}}</p>
 											<table class="table table-striped table-condensed table-bordered table-hover">
 												<tr>
 													<th>ID</th>
-													<th>Hostname</th>
+													<th>Sitecode</th>
+													<th>Description</th>
 
 												</tr>
 												<tr>
-													<td>{{ device.id}}</td>
-													<td>{{ device.hostname}}</td>
+													<td>{{ migration.id}}</td>
+													<td>{{ migration.sitecode}}</td>
+													<td>{{ migration.comment}}</td>
 												</tr>
 											</table>
-											<p>All provisioned information will be lost. Are you sure you want to proceed?</p>
+											<p>All migration information will be lost. Are you sure you want to proceed?</p>
 										</div>
 										<div class="modal-footer">
 
 										<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
-										<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(device)">Delete</a>
+										<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete(migration)">Delete</a>
 										<a class="btn btn-primary" data-dismiss="modal">Cancel</a>
 										</div>
 									</div>
@@ -189,13 +181,18 @@
 			</div>
 			</div> <!--npa of Panel
 			
-			<a href="#/device/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+			<a href="#/migration/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
 			-->
 
-			<div style="margin:100px"></div>
+			
 		</div>
-	</div>
-</div>
+		
+		<div style="margin:25px"></div>
+		
+		<a ng-if="!vm.message && vm.permissions.create.SiteMigration" href="#/sitemigrations/migrations/{{vm.sitecode}}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Future Migration</a>
+		
+		<div style="margin:25px"></div>
 
+		<div style="margin:100px"></div>
 	
 

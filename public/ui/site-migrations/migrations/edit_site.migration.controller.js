@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Site.Migration.Controller', ['siteMigrationService', 'siteService', 'cucmService', '$location', '$state', '$stateParams', function(siteMigrationService, siteService, cucmService, $location, $state, $stateParams) {
+	.controller('EditSite.Migration.Controller', ['siteMigrationService', 'siteService', 'cucmService', '$location', '$state', '$stateParams', function(siteMigrationService, siteService, cucmService, $location, $state, $stateParams) {
 	
 		var vm = this;
 		
@@ -50,17 +50,9 @@ angular
 		}
 		
 
-		var sitecode = $stateParams.id;
-		vm.sitecode = $stateParams.id;
-		console.log(sitecode)
-
-		vm.siteForm = {}
-		vm.siteForm.sitecode = ""
-		vm.siteForm.sitecode = $stateParams.id;
+		var id = $stateParams.id;
 		
-		function get_site_migrations(sitecode) {
-			siteMigrationService.listSiteMigrationsBySitecode(sitecode)
-			
+		get_site_migration = siteMigrationService.getSiteMigration(id)
 				.then(function(res){
 					
 					//console.log(res)
@@ -79,8 +71,10 @@ angular
 						return vm.message;
 					}else{
 						
-						vm.migrations = res.data.result;
-						console.log(vm.migrations)
+						vm.migration = res.data.result;
+						
+						vm.sitecode = vm.migration.sitecode
+										
 						vm.loading = false;
 						
 					}
@@ -89,12 +83,8 @@ angular
 					console.log(err)
 					alert(err);
 				});
-			}
-			
-		// Call the function 
-		get_site_migrations(sitecode);
 
-		
+
 		
 		// Create DID Block 
 		vm.submitsite = function(form) {
@@ -103,7 +93,7 @@ angular
 
 			console.log(form);
 			
-			siteMigrationService.createSiteMigration(angular.copy(form))
+			siteMigrationService.createSiteMigrations(angular.copy(form))
 				.then(function(data) {
 					alert("Migration Added Succesfully" + data);
 					$location.path('/sitemigrations/migrations/' + vm.sitecode);

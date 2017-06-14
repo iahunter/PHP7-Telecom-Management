@@ -235,6 +235,18 @@
                 controller: 'Site.Migration.Controller',
                 controllerAs: 'vm'
             })
+			.state('createsitemigration', {
+                url: '/sitemigrations/migration/{id}/sitemigration/create',
+                templateUrl: 'site-migrations/migrations/create_site_migration.html',
+                controller: 'Site.Migration.Controller',
+                controllerAs: 'vm'
+            })
+			.state('editsitemigration', {
+                url: '/sitemigrations/migration/sitemigration/edit/{id}',
+                templateUrl: 'site-migrations/migrations/edit_site_migration.html',
+                controller: 'EditSite.Migration.Controller',
+                controllerAs: 'vm'
+            })
 			.state('sonusconfigs', {
                 url: '/sonus/configrepo',
                 templateUrl: 'company-content/sonusconfigrepo.html',

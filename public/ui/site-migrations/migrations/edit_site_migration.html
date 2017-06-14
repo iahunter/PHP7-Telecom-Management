@@ -1,0 +1,185 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+<div class="container">
+<div class="well">
+<div style="margin:50px"></div>
+
+	<div class="row">
+		<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1">
+			<script type="text/ng-template" id="error-messages">
+							<div ng-message='required'> This Field is required </div>
+							<div ng-message='minlength'> Too short </div>
+							<div ng-message='maxlength'> Too long </div>
+			</script>
+				<legend><h2><i class="fa fa-pencil fa-fw"></i> Edit Site Migration Plan</h2></legend>
+					<p><b><i class="fa fa-info-circle" aria-hidden="true"></i> This plan will be used to determine the new required object settings that will be used during your migration.<br><br></p>
+					
+					<hr>
+					<form class="form" role="form" id="migrateSiteForm" ng-submit='migrateSiteForm.$valid && vm.update(vm.migration)' novalidate name="migrateSiteForm">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.sitecode.$touched && migrateSiteForm.sitecode.$invalid, 'has-success': migrateSiteForm.name.$touched && migrateSiteForm.name.$valid }">
+									<label for="sitecode" class="control-label">Sitecode</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+											<input type="text" readonly ng-model='vm.migration.sitecode' required class="form-control"  name="sitecode" placeholder="Sitecode" ng-minlength='8' ng-maxlength='8'>
+										</div>
+										<div ng-messages="migrateSiteForm.sitecode.$dirty && migrateSiteForm.sitecode.$error">
+												<div ng-message='required'> Sitecode is required </div>
+												<div ng-message='minlength'>Please enter a Sitecode at least 8 chars long</div>
+												<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">	
+							
+							<!--
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.carrier.$touched && migrateSiteForm.carrier.$invalid, 'has-success': migrateSiteForm.carrier.$touched && migrateSiteForm.carrier.$valid }">
+									<label for="carrier" class="control-label">Carrier</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<input type="text" ng-model='vm.migration.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
+										</div>
+										<div ng-messages="migrateSiteForm.carrier.$dirty && migrateSiteForm.carrier.$error">
+										</div>
+									</div>
+								</div>
+							</div>
+							-->
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.comment.$touched && migrateSiteForm.comment.$invalid, 'has-success': migrateSiteForm.comment.$touched && migrateSiteForm.comment.$valid }">
+									<label for="comment" class="control-label">Description</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+											<input type="textarea" ng-model='vm.migration.comment' class="form-control" name="comment" placeholder="Comment">	
+										</div>
+										<div ng-messages="migrateSiteForm.comment.$dirty && migrateSiteForm.comment.$error">
+												<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.countrycode.$touched && migrateSiteForm.countrycode.$invalid, 'has-success': migrateSiteForm.countrycode.$touched && migrateSiteForm.countrycode.$valid }">
+									<label for="countrycode" required class=" control-label">Country Code</label>
+									<input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.migration.country_code' class="form-control" name="countrycode" placeholder="1">
+									<div ng-messages="migrateSiteForm.countrycode.$dirty && migrateSiteForm.countrycode.$error">
+										<div ng-message="pattern">Please enter a valid country code</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							-->
+						</div>
+						<hr>
+						
+						
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.trunking.$touched && migrateSiteForm.trunking.$invalid, 'has-success': migrateSiteForm.trunking.$touched && migrateSiteForm.trunking.$valid }">
+									<label for="trunking"  class="control-label">Trunking</label><br>
+										<div class="panel panel-default panel-body">
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.migration.trunking' value="sip" data-width="100%" name="trunking">
+												SIP
+											</label>
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.migration.trunking' value="local" data-width="100%" name="trunking">
+												Local PRI
+											</label>
+											<div ng-messages="migrateSiteForm.trunking.$dirty && migrateSiteForm.trunking.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.e911.$touched && migrateSiteForm.e911.$invalid, 'has-success': migrateSiteForm.e911.$touched && migrateSiteForm.e911.$valid }">
+									<label for="e911"  class="control-label">E911</label><br>
+										<div class="panel panel-default panel-body">
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.migration.e911' value="911enable" data-width="100%" name="e911">
+												911Enable
+											</label>
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='vm.migration.e911' value="local" data-width="100%" name="e911">
+												Local 911
+											</label>
+											<div ng-messages="migrateSiteForm.e911.$dirty && migrateSiteForm.e911.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+								</div>
+							</div>
+							
+						</div>
+						
+						
+						<div class="row" ng-show="vm.migration.trunking == 'local'|| vm.migration.e911 == 'local'">
+						
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.srstip.$touched && migrateSiteForm.srstip.$invalid, 'has-success': migrateSiteForm.srstip.$touched && migrateSiteForm.srstip.$valid }">
+									<label for="srstip" class=" control-label">SRST IP Address <br><i>(optional)</i></label>
+									<input type="textarea" ng-pattern='/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/' ng-model='vm.migration.srstip' class="form-control" name="srstip" placeholder="10.0.0.1" ng-minlength='6'>
+									<div ng-messages="migrateSiteForm.srstip.$dirty && migrateSiteForm.srstip.$error">
+										<div ng-message="pattern">Please enter the srstip in IP Address Format</div>
+										<div ng-message='minlength'>Please enter the srstip in IP Address Format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.h323ip.$touched && migrateSiteForm.h323ip.$invalid, 'has-success': migrateSiteForm.h323ip.$touched && migrateSiteForm.h323ip.$valid }">
+									<label for="h323ip" class=" control-label">H323 Gateway IP Addresses <br><i>(optional, comma delimited)</i></label>
+									<input type="textarea" ng-pattern='/((25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)(,\n|,?$))/' ng-model='vm.migration.h323ip' class="form-control" name="h323ip" placeholder="10.0.0.1,10.1.1.1" ng-minlength='6'>
+									<div ng-messages="migrateSiteForm.h323ip.$dirty && migrateSiteForm.h323ip.$error">
+										<div ng-message="pattern">Please enter the h323ip in IP Address Format</div>
+										<div ng-message='minlength'>Please enter the h323ip in IP Address Format</div>
+										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<!-- Print Form JSON-->
+						<!--
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+								{{vm.migration}}
+								
+							</div>
+						</div>
+						
+						-->
+						
+						<hr />
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group">
+									<button  type="submit" ng-disabled="migrateSiteForm.$invalid" class="btn btn-primary">Submit</button>
+									
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div style="margin:25px"></div>
+	</div>
+</div>
+</div>

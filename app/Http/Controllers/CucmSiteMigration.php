@@ -10,10 +10,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CucmSiteMigration extends Cucm
 {
-	public $SKIP_OBJECTS = [];
-	public $ADD_OBJECTS = [];
-	public $UPDATE_OBJECTS = [];
-	public $DELETE_OBJECTS = [];
+    public $SKIP_OBJECTS = [];
+    public $ADD_OBJECTS = [];
+    public $UPDATE_OBJECTS = [];
+    public $DELETE_OBJECTS = [];
 
     public function migrationSiteSummary(Request $request)
     {
@@ -74,16 +74,16 @@ class CucmSiteMigration extends Cucm
             }
         }
         $H323LIST = array_values($H323LIST);
-		
-		if(!$SITE_TYPE == 1){
-			// Check their NPA
-			if (! isset($request->npa) || ! $request->npa) {
-				throw new \Exception('Error, no npa selected');
-				//return 'Error, no npa selected';
-			}
-		}
-		$NPA = $request->npa;
-		
+
+        if (! $SITE_TYPE == 1) {
+            // Check their NPA
+            if (! isset($request->npa) || ! $request->npa) {
+                throw new \Exception('Error, no npa selected');
+                //return 'Error, no npa selected';
+            }
+        }
+        $NPA = $request->npa;
+
         // If the users site code is KHO, dump them on our subscribers
         $SITECODE = strtoupper($request->sitecode);
 
@@ -92,8 +92,8 @@ class CucmSiteMigration extends Cucm
                                                 $SITECODE,
                                                 $SITE_TYPE,
                                                 $SRSTIP,
-                                                $H323LIST, 
-												$NPA
+                                                $H323LIST,
+                                                $NPA
                                                 );
 
         $response = [
@@ -110,17 +110,17 @@ class CucmSiteMigration extends Cucm
     }
 
     // Build all the elements needed for the site.
-	/****************************************************/
-	
+    /****************************************************/
+
     private function get_cucm_site_migration_summary(
                                                 $SITE,
                                                 $SITE_TYPE,
                                                 $SRSTIP,
-                                                $H323LIST, 
-												$NPA
+                                                $H323LIST,
+                                                $NPA
                                             ) {
-												
-		/***************************************************************************************************
+
+        /***************************************************************************************************
             We have 4 Differnet Site Designs that are supported. The Design Types are outlined below.
 
             Type 1	Centralized SIP and 911 Enable							SIP Trunking - E911
@@ -135,8 +135,8 @@ class CucmSiteMigration extends Cucm
                 * You will need to set this to whatever is used for your global Voicemail Ports are assigned to.
         ***************************************************************************************************/
 
-		// Get Site Summary from CUCM
-		try {
+        // Get Site Summary from CUCM
+        try {
             $site_array = $this->cucm->get_all_object_types_by_site($SITE);
             if (! count($site_array)) {
                 throw new \Exception('Indexed results from call mangler is empty');
@@ -145,9 +145,9 @@ class CucmSiteMigration extends Cucm
             echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
-		
+
         // Get Site Details from CUCM
-		try {
+        try {
             $site_details = $this->cucm->get_all_object_type_details_by_site($SITE);
             if (! count($site_details)) {
                 throw new \Exception('Indexed results from call mangler is empty');
@@ -157,38 +157,36 @@ class CucmSiteMigration extends Cucm
             dd($e->getTrace());
         }
 
-		
-		if($SITE_TYPE == 1){
-			$TYPE = 'Srst';
-			foreach($site_array[$TYPE] as $SRST){
-				$this->DELETE_OBJECTS[$TYPE][] = $SRST;
-			}
-		}else{
-			if ($SRSTIP) {
-				// 1 - Add a SRST router
-				// Calculated data structure
-				$TYPE = 'Srst';
-				$DATA = [
-						'name'         => "SRST_{$SITE}",
-						'ipAddress'    => $SRSTIP,
-						'port'         => 2000,
-						'SipPort'      => 5060,
-						];
+        if ($SITE_TYPE == 1) {
+            $TYPE = 'Srst';
+            foreach ($site_array[$TYPE] as $SRST) {
+                $this->DELETE_OBJECTS[$TYPE][] = $SRST;
+            }
+        } else {
+            if ($SRSTIP) {
+                // 1 - Add a SRST router
+                // Calculated data structure
+                $TYPE = 'Srst';
+                $DATA = [
+                        'name'         => "SRST_{$SITE}",
+                        'ipAddress'    => $SRSTIP,
+                        'port'         => 2000,
+                        'SipPort'      => 5060,
+                        ];
 
-				// Check if the object already exists. If it isn't then add it.
-				if (! empty($site_array[$TYPE])) {
-					if (in_array($DATA['name'], $site_array[$TYPE])) {
-						$this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
-					} else {
-						$this->ADD_OBJECTS[$TYPE][] = $DATA;
-					}
-				} else {
-					$this->ADD_OBJECTS[$TYPE][] = $DATA;
-				}
-			}
-		}
-        
-		
+                // Check if the object already exists. If it isn't then add it.
+                if (! empty($site_array[$TYPE])) {
+                    if (in_array($DATA['name'], $site_array[$TYPE])) {
+                        $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                    } else {
+                        $this->ADD_OBJECTS[$TYPE][] = $DATA;
+                    }
+                } else {
+                    $this->ADD_OBJECTS[$TYPE][] = $DATA;
+                }
+            }
+        }
+
         // 2 - Add a route partition
         // Calculated variables
         $TYPE = 'RoutePartition';
@@ -553,7 +551,7 @@ class CucmSiteMigration extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
-               $this->ADD_OBJECTS[$TYPE][] = $DATA;
+                $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
         } else {
             $this->ADD_OBJECTS[$TYPE][] = $DATA;
@@ -851,10 +849,10 @@ class CucmSiteMigration extends Cucm
                                             'name'         => 'Standard Local Route Group',
                                             'value'        => "RG_{$SITE}",
                                             ],
-				
+
                 ];
-				
-		if ((isset($SRSTIP)) && (! empty($SRSTIP))) {
+
+        if ((isset($SRSTIP)) && (! empty($SRSTIP))) {
             // If there is a SRST Set then you can add it to the Device Pool
             $DATA['srstName'] = "SRST_{$SITE}";
         }
@@ -863,29 +861,29 @@ class CucmSiteMigration extends Cucm
         if (($SITE_TYPE == 1) || ($SITE_TYPE == 3)) {
             $DATA['localRouteGroup']['value'] = 'RG_CENTRAL_SBC_GRP';
         }
-		
+
         $this->UPDATE_OBJECTS[$TYPE][] = $DATA;
 
-        // 16 - Update our translation patterns for the site. 
+        // 16 - Update our translation patterns for the site.
 
         // Calculated variables
         $TYPE = 'TransPattern';
 
         // Prepare and add datastructures
         foreach ($site_details[$TYPE] as $TRANS) {
-			// Update Transpattern Partitions and Device Pools
-			$PATTERN = $TRANS['pattern'];
-			
-			if($TRANS['routePartitionName']['_'] != "PT_{$SITE}_XLATE" || $TRANS['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE"){
-				$DATA = [
+            // Update Transpattern Partitions and Device Pools
+            $PATTERN = $TRANS['pattern'];
+
+            if ($TRANS['routePartitionName']['_'] != "PT_{$SITE}_XLATE" || $TRANS['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
+                $DATA = [
                     'routePartitionName'               => "PT_{$SITE}_XLATE",
                     'pattern'                          => $PATTERN,
                     'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
                     'usage'                            => 'Translation',
                     ];
-				$this->UPDATE_OBJECTS[$TYPE][] = $DATA;
-			}
-		}
+                $this->UPDATE_OBJECTS[$TYPE][] = $DATA;
+            }
+        }
 
         // 17 - Create Called Party Transformations.
 
@@ -912,7 +910,6 @@ class CucmSiteMigration extends Cucm
             $TYPE = 'CalledPartyTransformationPattern';
 
             foreach ($DATA as $OBJECT) {
-
                 if (! empty($site_array[$TYPE])) {
                     if (in_array($OBJECT['pattern'], $site_array[$TYPE])) {
                         $result[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
@@ -1050,19 +1047,19 @@ class CucmSiteMigration extends Cucm
                 }
             }
         }
-		
-		/*
-		public $SKIP_OBJECTS = [];
-		public $ADD_OBJECTS = [];
-		public $UPDATE_OBJECTS = [];
-		public $DELETE_OBJECTS = [];
-		*/
-			
-		$this->results = [	'Add' 		=> $this->ADD_OBJECTS,
-							'Update'	=> $this->UPDATE_OBJECTS,
-							'Delete'	=> $this->DELETE_OBJECTS,
-							'Skip'		=> $this->SKIP_OBJECTS,
-						];
+
+        /*
+        public $SKIP_OBJECTS = [];
+        public $ADD_OBJECTS = [];
+        public $UPDATE_OBJECTS = [];
+        public $DELETE_OBJECTS = [];
+        */
+
+        $this->results = ['Add'           => $this->ADD_OBJECTS,
+                            'Update'      => $this->UPDATE_OBJECTS,
+                            'Delete'      => $this->DELETE_OBJECTS,
+                            'Skip'        => $this->SKIP_OBJECTS,
+                        ];
 
         return $this->results;
     }

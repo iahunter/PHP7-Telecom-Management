@@ -22,7 +22,7 @@ class SiteMigration extends Migration
             $table->text('e911')->nullable();               // Comment
             $table->text('srstip')->nullable();             // Comment
             $table->json('h323ip')->nullable();
-			$table->text('npa')->nullable();               // Comment
+            $table->text('npa')->nullable();               // Comment
             $table->json('backups')->nullable();           // JSON Details Custom Field Data
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by

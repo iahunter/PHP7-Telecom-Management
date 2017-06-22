@@ -92,6 +92,8 @@
 								</a>
 							</th>	
 							
+							
+							
 							<th>
 								<a href="" ng-click="sortType = 'h323ip'; sortReverse = !sortReverse" style="color:black">
 									h323ip
@@ -99,7 +101,15 @@
 										<span ng-show="sortType == 'h323ip' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-
+							
+							<th>
+								<a href="" ng-click="sortType = 'npa'; sortReverse = !sortReverse" style="color:black">
+									npa
+										<span ng-show="sortType == 'npa' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'npa' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
 							<th>
 								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
 									Created At
@@ -132,6 +142,7 @@
 						<td>{{ migration.e911}}</td>
 						<td>{{ migration.srstip}}</td>
 						<td>{{ migration.h323ip}}</td>
+						<td>{{ migration.npa}}</td>
 
 						<td>{{ migration.created_at}} by {{migration.created_by}}</td>
 						<td>{{ migration.updated_at}} by {{migration.updated_by}}</td>

@@ -126,7 +126,10 @@
 						</div>
 						
 						
+						
 						<div class="row" ng-show="vm.migration.trunking == 'local'|| vm.migration.e911 == 'local'">
+						
+						<hr>
 						
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': migrateSiteForm.srstip.$touched && migrateSiteForm.srstip.$invalid, 'has-success': migrateSiteForm.srstip.$touched && migrateSiteForm.srstip.$valid }">
@@ -147,6 +150,27 @@
 										<div ng-message="pattern">Please enter the h323ip in IP Address Format</div>
 										<div ng-message='minlength'>Please enter the h323ip in IP Address Format</div>
 										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row" ng-show="vm.migration.trunking == 'local'|| vm.migration.e911 == 'local'">
+											
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': migrateSiteForm.npa.$touched && migrateSiteForm.npa.$invalid, 'has-success': migrateSiteForm.npa.$touched && migrateSiteForm.npa.$valid }">
+									<label for="npa" required class=" control-label">NPA (Area Code)</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.migration.npa' class="form-control" name="npa" placeholder="Area Code" ng-minlength='3' ng-maxlength='3'>
+										</div>
+										<div ng-messages="migrateSiteForm.npa.$dirty && migrateSiteForm.npa.$error">
+												<div ng-message="pattern">Please enter the npa in the numberic format</div>
+												<div ng-message='minlength'>Please enter 3 digits</div>
+												<div ng-message='maxlength'>Please enter 3 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
 									</div>
 								</div>
 							</div>

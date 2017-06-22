@@ -69,6 +69,8 @@
 									</div>
 								</div>
 							</div>
+							
+
 							<!--
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': migrateSiteForm.countrycode.$touched && migrateSiteForm.countrycode.$invalid, 'has-success': migrateSiteForm.countrycode.$touched && migrateSiteForm.countrycode.$valid }">
@@ -126,7 +128,11 @@
 						</div>
 						
 						
+						
+						
 						<div class="row" ng-show="vm.siteForm.trunking == 'local'|| vm.siteForm.e911 == 'local'">
+						
+						<hr>
 						
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': migrateSiteForm.srstip.$touched && migrateSiteForm.srstip.$invalid, 'has-success': migrateSiteForm.srstip.$touched && migrateSiteForm.srstip.$valid }">
@@ -147,6 +153,27 @@
 										<div ng-message="pattern">Please enter the h323ip in IP Address Format</div>
 										<div ng-message='minlength'>Please enter the h323ip in IP Address Format</div>
 										<div ng-messages-include="error-messages"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row" ng-show="vm.siteForm.trunking == 'local'|| vm.siteForm.e911 == 'local'">
+											
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addsiteForm.npa.$touched && addsiteForm.npa.$invalid, 'has-success': addsiteForm.npa.$touched && addsiteForm.npa.$valid }">
+									<label for="npa" required class=" control-label">NPA (Area Code)</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+											<input type="text" ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.npa' class="form-control" name="npa" placeholder="Area Code" ng-minlength='3' ng-maxlength='3'>
+										</div>
+										<div ng-messages="addsiteForm.npa.$dirty && addsiteForm.npa.$error">
+												<div ng-message="pattern">Please enter the npa in the numberic format</div>
+												<div ng-message='minlength'>Please enter 3 digits</div>
+												<div ng-message='maxlength'>Please enter 3 digits</div>
+												<div ng-messages-include="error-messages"></div>
+										</div>
 									</div>
 								</div>
 							</div>

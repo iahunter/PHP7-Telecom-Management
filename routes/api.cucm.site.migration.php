@@ -51,7 +51,7 @@
      *         name="npa",
      *         in="formData",
      *         description="NPA (###) - Area Code",
-     *         required=true,
+     *         required=false,
      *         type="integer"
      *     ),
      *     @SWG\Response(

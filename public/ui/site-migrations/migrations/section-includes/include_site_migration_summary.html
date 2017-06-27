@@ -135,7 +135,7 @@
 					<tr ng-repeat="migration in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
-						<td><a href='#/sitemigrations/migration/{{migration.id}}'>{{ migration.id}}</a></td>
+						<td>{{ migration.id}}</td>
 						<td>{{ migration.sitecode}}</td>
 						<td>{{ migration.comment}}</td>
 						<td>{{ migration.trunking}}</td>

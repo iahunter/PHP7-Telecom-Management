@@ -1120,6 +1120,13 @@
                             "description": "H323 Gateways",
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "npa",
+                        "in": "formData",
+                        "description": "NPA (###) - Area Code",
+                        "required": false,
+                        "type": "integer"
                     }
                 ],
                 "responses": {

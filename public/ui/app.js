@@ -229,9 +229,15 @@
                 controller: 'getSite.Objects.Controller',
                 controllerAs: 'vm'
             })
-			.state('getsitemigrations', {
+			.state('getsitemigration', {
+                url: '/sitemigrations/migration/{id}',
+                templateUrl: 'site-migrations/migrations/site_migration_summary.html',
+                controller: 'Site.Migration.Summary.Controller',
+                controllerAs: 'vm'
+            })
+			.state('listsitemigrations', {
                 url: '/sitemigrations/migrations/{id}',
-                templateUrl: 'site-migrations/migrations/migration.html',
+                templateUrl: 'site-migrations/migrations/site_migrations.html',
                 controller: 'Site.Migration.Controller',
                 controllerAs: 'vm'
             })

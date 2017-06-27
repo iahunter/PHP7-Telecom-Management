@@ -14,6 +14,7 @@ class CucmSiteMigration extends Cucm
     public $ADD_OBJECTS = [];
     public $UPDATE_OBJECTS = [];
     public $DELETE_OBJECTS = [];
+	
 
     public function migrationSiteSummary(Request $request)
     {
@@ -109,8 +110,6 @@ class CucmSiteMigration extends Cucm
         return response()->json($response);
     }
 
-    // Build all the elements needed for the site.
-    /****************************************************/
 
     private function get_cucm_site_migration_summary(
                                                 $SITE,
@@ -177,7 +176,7 @@ class CucmSiteMigration extends Cucm
                 // Check if the object already exists. If it isn't then add it.
                 if (! empty($site_array[$TYPE])) {
                     if (in_array($DATA['name'], $site_array[$TYPE])) {
-                        $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                        $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                     } else {
                         $this->ADD_OBJECTS[$TYPE][] = $DATA;
                     }
@@ -233,13 +232,34 @@ class CucmSiteMigration extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                    $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
+        }
+		
+		$PARTITIONS = [
+                        // Delete old Partition Name
+                        [
+                        'name'                            => 'PT_'.$SITE,
+                        'description'                     => $SITE,
+                        'useOriginatingDeviceTimeZone'    => 'true',
+                        ],
+                    ];
+		
+		foreach ($PARTITIONS as $DATA) {
+            // Check if the object already exists. If it isn't then add it.
+            if (! empty($site_array[$TYPE])) {
+                if (in_array($DATA['name'], $site_array[$TYPE])) {
+                    //$this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+					// Delete old Partition Name
+					
+					$this->DELETE_OBJECTS[$TYPE][] = $DATA;
+                }
+			}
         }
 
         // 3 - Add a CSS
@@ -370,7 +390,13 @@ class CucmSiteMigration extends Cucm
 
             // Append the CSS to the $CSS Array
             $CSS[] = $DATA;
-        }
+        
+		
+		
+		
+		
+		
+		}
 
         // For Site Types 2 and 4 add GW CALLED TRANFORMATIONS
         if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
@@ -446,7 +472,7 @@ class CucmSiteMigration extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                    $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
@@ -454,7 +480,73 @@ class CucmSiteMigration extends Cucm
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
         }
-
+		
+		$CSS = [
+					[
+					'name'            => "CSS_{$SITE}",
+					],
+					[
+					'name'            => "CSS_{$SITE}_CFA",
+					]
+				];
+		
+		// Now Delete old CSS Names
+        foreach ($CSS as $DATA) {
+            //print_r($DATA);
+            // Check if the object already exists. If it isn't then add it.
+            if (! empty($site_array[$TYPE])) {
+                if (in_array($DATA['name'], $site_array[$TYPE])) {
+					//return $site_details[$TYPE];
+					foreach($site_array[$TYPE] as $key => $value) ;
+                    //$this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+					$CSS_DETAILS = $site_details[$TYPE][$key];
+					//return $CSS_DETAILS;
+					$this->DELETE_OBJECTS[$TYPE][] = $CSS_DETAILS;
+                }
+			}
+        }
+		
+		// Update CSS if moving from one design type to another and already has new naming.
+		
+		// Build Array of CSS adding new Partition with index of 15.
+		
+		
+		/************************ WORKING ON THIS ********************************/
+		// Need to figure out how to remove the 911 partition on sites converting from Local to Central 911. Not a big deal but should be done. 
+		
+		/*
+		if($SITE_TYPE <= 3){
+			
+			$DATA = [
+                    'name'           		 => "CSS_{$SITE}_DEVICE",
+                    'removeMembers'          => [
+                                                'member' => [
+                                                            'routePartitionName'       => "PT_{$SITE}_911",
+                                                            //'index'                    => $CSS_NEXT_INDEX,
+                                                            ],
+                                            ],
+                ];
+			
+			if (! empty($site_array[$TYPE])) {
+                if (in_array($DATA['name'], $site_array[$TYPE])) {
+					//return $site_details[$TYPE];
+					foreach($site_array[$TYPE] as $key => $value) ;
+                    //$this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+					$CSS_DETAILS = $site_details[$TYPE][$key];
+					return $CSS_DETAILS;
+					$this->DELETE_OBJECTS[$TYPE][] = $DATA;
+                }
+			}
+			
+			
+		
+			$this->UPDATE_OBJECTS[$TYPE][] = $DATA;
+		}
+		*/
+		
+		
+        
+		
         // 4 - Add a location
 
         // Calculated variables
@@ -470,7 +562,7 @@ class CucmSiteMigration extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -549,7 +641,7 @@ class CucmSiteMigration extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -572,7 +664,7 @@ class CucmSiteMigration extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -595,7 +687,7 @@ class CucmSiteMigration extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -618,7 +710,7 @@ class CucmSiteMigration extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -652,7 +744,7 @@ class CucmSiteMigration extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -722,7 +814,9 @@ class CucmSiteMigration extends Cucm
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
-                $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                //$this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+				
+				 $this->UPDATE_OBJECTS[$TYPE][] = $DATA;
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -768,7 +862,7 @@ class CucmSiteMigration extends Cucm
                     // Check if the object already exists. If it isn't then add it.
                     if (! empty($site_array[$TYPE])) {
                         if (in_array($DATA['name'], $site_array[$TYPE])) {
-                            $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                            $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                         } else {
                             $this->ADD_OBJECTS[$TYPE][] = $DATA;
                         }
@@ -828,7 +922,7 @@ class CucmSiteMigration extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                    $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
@@ -912,12 +1006,12 @@ class CucmSiteMigration extends Cucm
             foreach ($DATA as $OBJECT) {
                 if (! empty($site_array[$TYPE])) {
                     if (in_array($OBJECT['pattern'], $site_array[$TYPE])) {
-                        $result[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
+                        $this->SKIP_OBJECTS[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
                     } else {
-                        $this->ADD_OBJECTS[$TYPE][] = $DATA;
+                        $this->ADD_OBJECTS[$TYPE][] = $OBJECT;
                     }
                 } else {
-                    $this->ADD_OBJECTS[$TYPE][] = $DATA;
+                    $this->ADD_OBJECTS[$TYPE][] = $OBJECT;
                 }
             }
         }
@@ -950,7 +1044,7 @@ class CucmSiteMigration extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    $this->results[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
+                    $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['name']} already exists.";
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
@@ -1037,7 +1131,7 @@ class CucmSiteMigration extends Cucm
                 // Check if the object already exists. If it isn't then add it.
                 if (! empty($site_array[$TYPE])) {
                     if (in_array($DATA['pattern'], $site_array['RoutePattern'])) {
-                        $this->results[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
+                        $this->SKIP_OBJECTS[$TYPE][] = "Skipping... {$DATA['pattern']} already exists.";
                         continue;
                     } else {
                         $this->ADD_OBJECTS[$TYPE][] = $DATA;
@@ -1055,12 +1149,12 @@ class CucmSiteMigration extends Cucm
         public $DELETE_OBJECTS = [];
         */
 
-        $this->results = ['Add'           => $this->ADD_OBJECTS,
+        $this->SKIP_OBJECTS = ['Add'           => $this->ADD_OBJECTS,
                             'Update'      => $this->UPDATE_OBJECTS,
                             'Delete'      => $this->DELETE_OBJECTS,
                             'Skip'        => $this->SKIP_OBJECTS,
                         ];
 
-        return $this->results;
+        return $this->SKIP_OBJECTS;
     }
 }

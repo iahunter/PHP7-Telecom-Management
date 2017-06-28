@@ -74,13 +74,31 @@ class SiteMigrationController extends Controller
         }
 
         $migrations = SiteMigration::where('sitecode', $sitecode)->get();
+		
+		$migrations_array = [];
+		foreach($migrations as $migration){
+			// Change Site type based on site design user chooses. This will determine the site type. 
+			if($migration['trunking'] == 'sip' && $migration['e911'] == '911enable' ){
+				$migration['type'] = 1;
+			}
+			elseif($migration['trunking'] == 'local' && $migration['e911'] == '911enable' ){
+				$migration['type'] = 2;
+			}
+			elseif($migration['trunking'] == 'sip' && $migration['e911'] == 'local' ){
+				$migration['type'] = 3;
+			}
+			elseif($migration['trunking'] == 'local' && $migration['e911'] == 'local' ){
+				$migration['type'] = 4;
+			}
+			$migrations_array[] = $migration;
+		}
 
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
                     'request'        => $request->all(),
-                    'result'         => $migrations,
+                    'result'         => $migrations_array,
                     ];
 
         return response()->json($response);

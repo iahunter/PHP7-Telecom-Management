@@ -1,7 +1,5 @@
 
-
-
-	<h3>Site Standard Migrations </h3>
+	<h4>Site Migrations </h4>
 		
 		
 		<div class="input-group col-md-3 ">
@@ -63,6 +61,14 @@
 									Comment
 										<span ng-show="sortType == 'comment' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'comment' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
+									Type
+										<span ng-show="sortType == 'type' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'type' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							
@@ -135,9 +141,10 @@
 					<tr ng-repeat="migration in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">
 					
 						<!--List View-->
-						<td><a href='#/sitemigrations/migration/{{migration.id}}'>{{ migration.id}}</a></td>
+						<td><a href='#/sitemigrations/migration/{{migration.id}}'><button class="btn btn-default btn-xs">{{ migration.id}}</button></a></td>
 						<td>{{ migration.sitecode}}</td>
 						<td>{{ migration.comment}}</td>
+						<td>{{ migration.type}}</td>
 						<td>{{ migration.trunking}}</td>
 						<td>{{ migration.e911}}</td>
 						<td>{{ migration.srstip}}</td>

@@ -11,38 +11,92 @@
 		<div> 
 			<div style="margin:50px"></div>
 		
-			<legend>Configuration Migration Summary - Sitecode: {{vm.sitecode}}
-			
-			<h1>Under Construction - DO NOT USE</h1>
-			<hr>
-			<h3>Need to Build the Summary of the Migration Settings here. </h3>
-			
-			<hr>
-			<h4>List Adds</h4>
-			
-			<hr>
-			<h4>List Updates</h4>
-			<hr>
-			<h4>List Deletes</h4>
-			
+			<legend>Configuration Migration Summary - Sitecode: {{vm.sitecode}} 
 			<button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 			<a href="#/sitemigrations/sitestatusreports/{{vm.sitecode}}"><button class="btn btn-default btn-sm pull-right"><i class="glyphicon glyphicon-chevron-left"></i>Back to Site</button> </a>
 			<br> <div style="margin:10px"></div></legend>
-		
-		</div>	
-		
-		<div style="margin:25px">
-			<!-- Include Site Migrations Section -->
-			<ng-include src="'site-migrations/migrations/section-includes/include-sitemigrations.html'"></ng-include>
+
+			
+			<h1>Under Construction - DO NOT USE</h1>
+			<hr>
+			<div style="margin:25px">
+				<!-- Include Site Migrations Section -->
+				<ng-include src="'site-migrations/migrations/section-includes/include_site_migration_summary.html'"></ng-include>
+				
+				<hr>
+
+				<!-- Include Phone Migrations Section
+				<ng-include src="'site-migrations/migrations/section-includes/include-phonemigrations.html'"></ng-include>
+				<hr> -->
+				<!-- Include Phone Planning Section 
+				<ng-include src="'site-migrations/migrations/section-includes/include-phoneplanning.html'"></ng-include>
+				-->
+			</div>	
+			
+			
+			<h3 ng-if="vm.migration.type"> {{vm.sitecode}} - Migration to Type {{vm.migration.type}}</h3>
 			
 			<hr>
+			<p><h4>Tasks:</h4>
+				<ul>
+					<li>Need to figure out how to update the CSSs and remove the 911 Partition for CSS_Site_DEVICE CSS. </li>
+					<li>Review Excel Naming and make sure each object type is being add,update,delete</li>
+					<li>Add Deletes</li>
+				</ul>
+			</p>
+			<hr>
+			<!--<hr>
+			<h4>Object Adds</h4>-->
+			<div class="panel-group" id="accordion">
+				<div ng-repeat="(changekey,changevalues) in vm.migration.change_summary">
+					<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+						<div class="panel-heading" role="tab" id="{{changekey}}" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 
-			<!-- Include Phone Migrations Section
-			<ng-include src="'site-migrations/migrations/section-includes/include-phonemigrations.html'"></ng-include>
-			<hr> -->
-			<!-- Include Phone Planning Section 
-			<ng-include src="'site-migrations/migrations/section-includes/include-phoneplanning.html'"></ng-include>
-			-->
-		</div>		
+							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#{{changekey}}_collapse" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="{{changekey}}_collapse">
+								<h4><b><i class="fa fa-server"></i> {{changekey}} Objects<i class="fa fa-caret-down"></i></b></h4>
+							</a>
+						</div>
+						<div class="panel-body panel-collapse collapse collapse" role="tabpanel" id="{{changekey}}_collapse" aria-labelledby="{{changekey}}">
+							<legend class="ng-binding"> Site: {{vm.sitecode}} - {{changekey}} Objects</legend>
+							<div class="table-responsive">
+							<table style="background-color:white" ng-show="changevalues" class="table table-striped table-condensed table-bordered table-hover">
+								<tr ng-repeat="(key,values) in changevalues">
+									<td><b>{{values.length}} - {{ key}}</b></td>
+									<td>
+										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+											<tr ng-repeat="value in values">
+												<td>
+													<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+														<tr ng-repeat="(k,v) in value track by $index">
+															<td><b>{{k}}</b></td>
+															<td ng-if="k == 'name'" style="color:blue"><b>{{v}}</b></td>
+															<td ng-if="k == 'pattern'" style="color:blue"><b>{{v}}</b></td>
+															<td ng-if="k != 'name' && k != 'pattern'">{{v}}</td>
+														</tr>	
+													</table>
+												</td>
+												
+											</tr>	
+										</table>
+									</td>
+								</tr>
+							</table>
+							</div>
+							<hr>
+							<p><b style="color:red">Warning!</b> Running this migration will <b>{{changekey}}</b> objects in the CUCM Production System realtime.</p>
+							<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
+							<button class="btn btn-success btn-sm" ng-if="changekey == 'Add'" ng-click="vm.runmigration(changekey)"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}</button>
+							<button class="btn btn-primary btn-sm" ng-if="changekey == 'Update'" ng-click="vm.runmigration(changekey)"><i class="glyphicon glyphicon-save"></i> Run Migration {{changekey}}</button>
+							<button class="btn btn-danger btn-sm" ng-if="changekey == 'Delete'" ng-click="vm.runmigration(changekey)"><i class="glyphicon glyphicon-remove"></i> Run Migration {{changekey}}</button>
+							<div style="margin:25px"></div>
+						</div>
+					</div>
+				</div>	
+				
+				<hr>
+				
+				
+			</div>
+		</div>
 	</div>
 </div>

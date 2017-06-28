@@ -75,17 +75,54 @@ angular
 						vm.migration = res.data.result;
 						vm.sitecode = vm.migration.sitecode
 						console.log(vm.migration)
-						vm.loading = false;
 						
+						/*
+						// Change Site type based on site design user chooses. This is needed for the Laravel Controller
+						if(vm.migration.trunking == 'sip' && vm.migration.e911 == '911enable' ){
+							vm.migration.type = 1;
+						}
+						else if(vm.migration.trunking == 'local' && vm.migration.e911 == '911enable' ){
+							vm.migration.type = 2;
+						}
+						else if(vm.migration.trunking == 'sip' && vm.migration.e911 == 'local' ){
+							vm.migration.type = 3;
+						}
+						else if(vm.migration.trunking == 'local' && vm.migration.e911 == 'local' ){
+							vm.migration.type = 4;
+						}
+						*/
+						
+						summary = siteMigrationService.getSiteMigrationSummary(vm.migration)
+						.then(function(res){
+					
+							//console.log(res)
+							// Check for errors and if token has expired. 
+							if(res.data.message){
+								//console.log(res);
+								vm.message = res.data.message;
+								console.log(vm.message);
+
+								return vm.message;
+							}else{
+								vm.migration.change_summary = [];
+								vm.migration.change_summary = res.data.response.changes;
+								vm.migration.type = res.data.response.type;
+								//vm.migration.change_summary.Add = Object.keys(vm.migration.change_summary.Add).map(key => vm.migration.change_summary.Add[key]);
+								console.log(vm.migration.change_summary)
+								vm.loading = false;
+
+								
+								console.log(vm.migration)
+								
+							}
+						
+						}, function(err){
+							console.log(err)
+							alert(err);
+						});
 					}
-					
-					//siteMigrationService.getSiteMigrationSummary(id)
-					
-				}, function(err){
-					console.log(err)
-					alert(err);
-				});
-			}
+			});
+		}
 			
 		// Call the function 
 		get_migration_summary(id);

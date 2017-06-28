@@ -1,23 +1,7 @@
 
 
 
-	<h3>Site Standard Migrations </h3>
-		
-		
-		<div class="input-group col-md-3 ">
-			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
-			<div class="input-group-btn">
-				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
-			</div>
-		</div>
-		
-		
-		<div style="margin:25px"></div>
-		
-		<a ng-if="!vm.message && vm.permissions.create.SiteMigration" href="#/sitemigrations/migration/{{vm.sitecode}}/sitemigration/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add Site Migration</a>
-		
-		<div style="margin:25px"></div>
-		
+	<h3>Site Standard Migration - Type {{vm.migration.type}} </h3>
 
 		<!-- Loading -->
 		<div ng-if="vm.loading && !vm.message" class="well">
@@ -34,8 +18,7 @@
 			<div style="margin:65px"></div>
 		</div>
 		
-		
-		<div ng-if="vm.migrations.length > 0">
+		<div ng-if="!vm.loading && vm.migration">
 		
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">    
@@ -129,23 +112,23 @@
 						</tr>
 					</thead>
 					<tbody>
-
+					
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="migration in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
-					<tr ng-repeat="migration in vm.migrations | orderBy:sortType:sortReverse | filter:vm.search: strict">
+					<tr>
 					
 						<!--List View-->
-						<td>{{ migration.id}}</td>
-						<td>{{ migration.sitecode}}</td>
-						<td>{{ migration.comment}}</td>
-						<td>{{ migration.trunking}}</td>
-						<td>{{ migration.e911}}</td>
-						<td>{{ migration.srstip}}</td>
-						<td>{{ migration.h323ip}}</td>
-						<td>{{ migration.npa}}</td>
+						<td>{{ vm.migration.id}}</td>
+						<td>{{ vm.migration.sitecode}}</td>
+						<td>{{ vm.migration.comment}}</td>
+						<td>{{ vm.migration.trunking}}</td>
+						<td>{{ vm.migration.e911}}</td>
+						<td>{{ vm.migration.srstip}}</td>
+						<td>{{ vm.migration.h323ip}}</td>
+						<td>{{ vm.migration.npa}}</td>
 
-						<td>{{ migration.created_at}} by {{migration.created_by}}</td>
-						<td>{{ migration.updated_at}} by {{migration.updated_by}}</td>
+						<td>{{ vm.migration.created_at}} by {{vm.migration.created_by}}</td>
+						<td>{{ vm.migration.updated_at}} by {{vm.migration.updated_by}}</td>
 						<td   ng-if="vm.permissions.update.SiteMigration || vm.permissions.delete.SiteMigration">
 							<!--<button class="btn btn-primary btn-xs "  ng-click="vm.edit[migration.id] = !vm.edit[migration.id]"> Edit </button>-->
 							<a href="#/sitemigrations/migration/sitemigration/edit/{{migration.id}}" ng-if="vm.permissions.update.SiteMigration" ><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit</button> </a>
@@ -199,9 +182,7 @@
 		</div>
 		
 		<div style="margin:25px"></div>
-		
-		<a ng-if="!vm.message && vm.permissions.create.SiteMigration" href="#/sitemigrations/migrations/{{vm.sitecode}}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Future Migration</a>
-		
+
 		<div style="margin:25px"></div>
 
 		<div style="margin:100px"></div>

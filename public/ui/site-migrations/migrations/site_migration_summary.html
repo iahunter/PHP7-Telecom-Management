@@ -36,6 +36,8 @@
 			
 			<h3 ng-if="vm.migration.type"> {{vm.sitecode}} - Migration to Type {{vm.migration.type}}</h3>
 			
+			
+			
 			<hr>
 			<p><h4>Tasks:</h4>
 				<ul>
@@ -52,36 +54,72 @@
 					<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 						<div class="panel-heading" role="tab" id="{{changekey}}" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 
-							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" data-target="#{{changekey}}_collapse" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="{{changekey}}_collapse">
+							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" ng-click="vm.accordianclose()" data-target="#{{changekey}}_collapse" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="{{changekey}}_collapse">
 								<h4><b><i class="fa fa-server"></i> {{changekey}} Objects<i class="fa fa-caret-down"></i></b></h4>
 							</a>
 						</div>
-						<div class="panel-body panel-collapse collapse collapse" role="tabpanel" id="{{changekey}}_collapse" aria-labelledby="{{changekey}}">
+						<div class="panel-body panel-collapse collapse" role="tabpanel" id="{{changekey}}_collapse" aria-labelledby="{{changekey}}">
 							<legend class="ng-binding"> Site: {{vm.sitecode}} - {{changekey}} Objects</legend>
-							<div class="table-responsive">
+							<!--<div class="table-responsive">
 							<table style="background-color:white" ng-show="changevalues" class="table table-striped table-condensed table-bordered table-hover">
 								<tr ng-repeat="(key,values) in changevalues">
 									<td><b>{{values.length}} - {{ key}}</b></td>
-									<td>
-										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+									<td>-->
+									
+									<!-- Tab Content -->
+									
+									<ul class="nav nav-tabs" >
+										<li class="active"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_test_tab">Home</a></li>
+										<li ng-repeat="(key,values) in changevalues"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_{{ key}}_tab">{{ key}}</a></li>
+									</ul>
+									
+									
+									<div class="tab-content">
+									
+										<!-- Tab -->
+										<div id="{{changekey}}_test_tab" class="tab-pane fade in active">
+										<h3>Click each tab to review the objects that the migration will {{changekey}}</h3>
+										</div>
+										
+									</div>
+
+									<!-- Tab Content -->
+									<div id="{{changekey}}_tab_content"class="tab-content" ng-repeat="(key,values) in changevalues">
+									
+										<!-- Tab -->
+										<div id="{{changekey}}_{{ key}}_tab" class="tab-pane fade">
+										
+										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;" ng-if="changekey != 'CurrentSummary'">
 											<tr ng-repeat="value in values">
 												<td>
 													<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
 														<tr ng-repeat="(k,v) in value track by $index">
 															<td><b>{{k}}</b></td>
-															<td ng-if="k == 'name'" style="color:blue"><b>{{v}}</b></td>
-															<td ng-if="k == 'pattern'" style="color:blue"><b>{{v}}</b></td>
+															<td ng-if="k == 'name'" style="color:#20bc56"><b>{{v}}</b></td>
+															<td ng-if="k == 'pattern'" style="color:#20bc56"><b>{{v}}</b></td>
 															<td ng-if="k != 'name' && k != 'pattern'">{{v}}</td>
 														</tr>	
 													</table>
 												</td>
-												
 											</tr>	
 										</table>
-									</td>
+											
+										<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;" ng-if="changekey == 'CurrentSummary'">
+											<tr ng-repeat="(k,v) in values track by $index">
+												<td><b>{{k}}</b></td>
+												<td ng-if="k == 'name'" style="color:#20bc56"><b>{{v}}</b></td>
+												<td ng-if="k == 'pattern'" style="color:#20bc56"><b>{{v}}</b></td>
+												<td ng-if="k != 'name' && k != 'pattern'">{{v}}</td>
+											</tr>	
+										</table>
+											
+										</div>
+										
+									</div>
+									<!--</td>
 								</tr>
 							</table>
-							</div>
+							</div>-->
 							<hr>
 							<p><b style="color:red">Warning!</b> Running this migration will <b>{{changekey}}</b> objects in the CUCM Production System realtime.</p>
 							<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>

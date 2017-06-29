@@ -21,6 +21,20 @@ angular
 				// End of Hack */
 			$state.reload();
 		};
+		
+		// Had to add jquery hack to close the active tab when another one is opened. 
+		vm.tabclose = function (id){
+			// jQuery Hack to fix body from the Model. 
+					$(".tab-pane").removeClass("active in");
+				// End of Hack */
+		};
+		
+		// Had to add jquery hack to close the active accordian when another one is opened. 
+		vm.accordianclose = function (){
+			// jQuery Hack to fix body from the Model. 
+					//$(".panel-body").removeClass("in");
+				// End of Hack */
+		};
 
 		vm.messages = 'Loading sites...';
 		

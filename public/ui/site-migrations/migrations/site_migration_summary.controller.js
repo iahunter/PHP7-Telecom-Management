@@ -32,9 +32,22 @@ angular
 		// Had to add jquery hack to close the active accordian when another one is opened. 
 		vm.accordianclose = function (){
 			// jQuery Hack to fix body from the Model. 
-					//$(".panel-body").removeClass("in");
+					$(".panel-body").removeClass("in");
 				// End of Hack */
 		};
+		
+		vm.jsonPrettyprint = function(input) {
+			return JSON.stringify(input, undefined, 2);
+		}
+		
+		vm.isJson = function (input) {
+			try {
+				JSON.parse(input);
+			} catch (e) {
+				return false;
+			}
+			return true;
+		}
 
 		vm.messages = 'Loading sites...';
 		

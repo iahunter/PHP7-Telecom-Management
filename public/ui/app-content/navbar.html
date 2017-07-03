@@ -41,11 +41,29 @@
 			  <!-- Collect the nav links, forms, and other content for toggling -->
 			  <ul class="nav navbar-nav" ng-show="vm.permissions.read.Site == true">
 				<li class="dropdown">
-				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Provisioning</a>
+				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Deployment</a>
 				  <ul class="dropdown-menu">
-					<li><a href="#/site/create" ng-if="vm.permissions.create.Site == true">Add New Site</a></li>
-					<li><a href="#/site">List Sites</a></li>
+					<li><a href="#/site/create" ng-if="vm.permissions.create.Site == true">New Site Plan</a></li>
+					<li><a href="#/site">List Plans</a></li>
 					
+					<!--
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">Separated link</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">One more separated link</a></li>
+					-->
+				  </ul>
+				</li>
+			  </ul>
+			  
+			   <!-- Collect the nav links, forms, and other content for toggling -->
+			  <ul class="nav navbar-nav">
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Management</a>
+				  <ul class="dropdown-menu">
+					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">List Sites</a></li>
+					
+					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
 					<!--
 					<li role="separator" class="divider"></li>
 					<li><a href="#/didblock">Separated link</a></li>
@@ -107,23 +125,7 @@
 				</li>
 			  </ul>
 			  
-			  <!-- Collect the nav links, forms, and other content for toggling -->
-			  <ul class="nav navbar-nav">
-				<li class="dropdown">
-				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
-				  <ul class="dropdown-menu">
-					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">Site Telecom Report</a></li>
-					
-					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
-					<!--
-					<li role="separator" class="divider"></li>
-					<li><a href="#/didblock">Separated link</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#/didblock">One more separated link</a></li>
-					-->
-				  </ul>
-				</li>
-			  </ul>
+			 
 			  
 			  <!--
 			  <ul class="nav navbar-nav">

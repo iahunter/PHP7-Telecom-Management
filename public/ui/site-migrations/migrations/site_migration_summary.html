@@ -99,8 +99,9 @@
 																<td ng-if="k == 'name'" style="color:#20bc56"><b>{{v}}</b></td>
 																<td ng-if="k == 'pattern'" style="color:#20bc56"><b>{{v}}</b></td>
 																<td ng-if="k == 'members'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
+																<td ng-if="k == 'relatedRegions'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
 																<td ng-if="k == 'partitionUsage' && v == 'Intercom'" style="color:red"><b>{{v}}</b></td>
-																<td ng-if="k != 'name' && k != 'pattern' && k != 'members'">{{v}}</td>
+																<td ng-if="k != 'name' && k != 'pattern' && k != 'members' && k != 'relatedRegions'">{{v}}</td>
 															</tr>	
 														</tbody>
 													</table>

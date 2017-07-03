@@ -359,4 +359,397 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
+	
+	// Get a list of Sites by device pools.
+    protected function getSites()
+    {
+        echo 'Getting sites from CUCM...'.PHP_EOL;
+        try {
+            $sites = $this->cucm->get_site_names();
+            //$sites = ["KHONEOMA"];
+
+            // Array of DP we don't want to include.
+            $discard = ['TEST', 'Self_Provisioning', 'ECD', '911Enable', 'ATT_SIP', 'Travis', 'CENCOLIT', 'TEMPLATE'];
+
+            if (! $sites) {
+                // Return blank array if no results in $didinfo.
+                echo 'didinfo is blank!';
+
+                return $sites;
+            }
+            foreach ($sites as $key => $site) {
+                // Get rid of the crap we don't want.
+                if (in_array($site, $discard)) {
+                    echo 'Discarding: '.$site.PHP_EOL;
+                    unset($sites[$key]);
+                }
+            }
+
+            if (! count($sites)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+
+            return $sites;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+    }
+
+    /*
+    protected function getPartitions()
+    {
+        $TYPE = 'RoutePartition';
+        $SITE = '';
+        echo 'Getting partitions from CUCM...'.PHP_EOL;
+        try {
+
+            $partitions = $this->cucm->get_object_type_by_site($SITE, $TYPE);
+            unset($cucm);
+
+            return $partitions;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+    }
+
+
+    protected function getCss($SITE)
+    {
+        $TYPE = 'Css';
+        $SITE = '';
+        echo 'Getting Css from CUCM...'.PHP_EOL;
+        try {
+
+            $css = $this->cucm->get_object_type_by_site($SITE, $TYPE);
+            unset($cucm);
+
+            return $css;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+    }
+    */
+
+    protected function getCssDetails($css)
+    {
+        $TYPE = 'Css';
+
+        $RESULTS = [];
+        foreach ($css as $key => $value) {
+            echo "Getting CSS Details for {$value} from CUCM...".PHP_EOL;
+            try {
+                $UUID = $key;
+                //print "UUID: ".$UUID;
+
+                $css_details = $this->cucm->get_object_type_by_uuid($UUID, $TYPE);
+
+                //print_r($css_details);
+                $RESULTS[] = $css_details;
+            } catch (\Exception $e) {
+                echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+                dd($e->getTrace());
+            }
+        }
+
+        return $RESULTS;
+
+        unset($cucm);
+    }
+
+    // Get a summary of all types supported by site.
+     protected function getSiteDetailsbySite($SITE)
+     {
+         try {
+             $site_details = $this->cucm->get_all_object_types_by_site($SITE);
+         } catch (\Exception $e) {
+             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+         }
+
+         return $site_details;
+     }
+
+    //
+    protected function getCssMembers($css_details)
+    {
+        $RESULTS = [];
+        foreach ($css_details as $css) {
+            // Exract Member Partitions for each Css
+            $CSS = [];
+            //$CSS[$css['name']] = $css['name'];
+            foreach ($css['members'] as $member) {
+                //print "Member: ".PHP_EOL;
+                //print_r($member);
+                $MEMBERS = [];
+                if (is_array($member)) {
+                    foreach ($member as $partition) {
+                        //print_r($partition);
+                        $MEMBER = [];
+                        //print_r($partition['routePartitionName']['_']);
+
+                        if (isset($partition['routePartitionName'])) {
+                            $MEMBER['name'] = $partition['routePartitionName']['_'];
+                            $MEMBER['index'] = $partition['index'];
+                        }
+
+                        // Append Member to Members with the key as the index number.
+                        $MEMBERS[$MEMBER['index']] = $MEMBER;
+                    }
+                }
+            }
+
+            // Append CSS Members to Results with Name as Key.
+            $RESULTS[$css['name']] = $MEMBERS;
+        }
+
+        return $RESULTS;
+    }
+
+    protected function getCssMembersbyCSS($css)
+    {
+        $RESULTS = [];
+
+        if ($css['partitionUsage'] == 'Intercom') {
+            return $RESULTS;
+        }
+
+        if ($css['partitionUsage'] == 'General') {
+            foreach ($css['members'] as $member) {
+                //print "Member: ".PHP_EOL;
+                    //print_r($member);
+                    $MEMBERS = [];
+                if (is_array($member)) {
+                    foreach ($member as $partition) {
+                        //print_r($partition);
+                        $MEMBER = [];
+
+                        if (isset($partition['routePartitionName'])) {
+                            $MEMBER['name'] = $partition['routePartitionName']['_'];
+                            $MEMBER['index'] = $partition['index'];
+
+                            //echo $partition['routePartitionName']['_'];
+                        } else {
+                            return $RESULTS;
+                        }
+
+                            // Append Member to Members with the key as the index number.
+                            $MEMBERS[$MEMBER['index']] = $MEMBER;
+                    }
+                }
+            }
+
+                // Append CSS Members to Results with Name as Key.
+                //print_r($MEMBERS);
+            if (! empty($MEMBERS)) {
+                $RESULTS[$css['name']] = $MEMBERS;
+            }
+        }
+
+        return $RESULTS;
+    }
+	
+	 protected function getCssMemberNamesbyCSS($css)
+    {
+        $RESULTS = [];
+
+        if ($css['partitionUsage'] == 'Intercom') {
+            return $RESULTS;
+        }
+
+        if ($css['partitionUsage'] == 'General') {
+            foreach ($css['members'] as $member) {
+                //print "Member: ".PHP_EOL;
+                    //print_r($member);
+                    $MEMBERS = [];
+                if (is_array($member)) {
+                    foreach ($member as $partition) {
+                        //print_r($partition);
+
+                        if (isset($partition['routePartitionName'])) {
+                            $MEMBER = $partition['routePartitionName']['_'];
+
+                            //echo $partition['routePartitionName']['_'];
+                        } else {
+                            return $RESULTS;
+                        }
+
+                            // Append Member to Members with the key as the index number.
+                            $MEMBERS[$partition['index']] = $MEMBER;
+                    }
+                }
+            }
+
+                // Append CSS Members to Results with Name as Key.
+                //print_r($MEMBERS);
+            if (! empty($MEMBERS)) {
+                $RESULTS = $MEMBERS;
+            }
+        }
+
+        return $RESULTS;
+    }
+
+    protected function compare_changes($array1, $array2)
+    {
+        $RESULTS = [];
+
+        // Do a compare of the start and end of the site array after the changes.
+            foreach ($array1 as $key => $value) {
+                //print_r($value);
+
+                $RESULTS[$key] = array_diff_assoc($value, $site_details_after[$key]);
+            }
+        //print_r($RESULTS);
+
+        return $RESULTS;
+    }
+
+    // Guild Route List with SLRG as the member.
+    protected function add_new_911_routelist_for_site($SITE, $SLRG)
+    {
+        $TYPE = 'routeList';
+
+        $DATA = [
+            'name'                            => "RL_{$SITE}_911",
+            'description'                     => "{$SITE} 911 Route List",
+            'callManagerGroupName'            => "CMG_{$SITE}",
+            'routeListEnabled'                => 'true',
+            'members'                         => ['member' => ['routeGroupName'     => $SLRG,
+                                                                'selectionOrder'    => 1,
+                                                            ],
+                                                ],
+
+            ];
+
+        echo "Building Site 911 Route List with {$SLRG} in CUCM...".PHP_EOL;
+        try {
+            // Add Partion
+            $partitions = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
+            //print_r($partitions);
+
+            return $partitions;
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+
+        unset($cucm);
+    }
+
+    // Add Route Patterns
+    protected function build_new_partitions_for_site($SITE)
+    {
+        echo 'Building Site partitions Array...'.PHP_EOL;
+
+        // Build Array of Patitions
+        $DATA = [
+                    [
+                        'name'                            => 'PT_'.$SITE.'_911',
+                        'description'                     => $SITE.' 911 Calling',
+                        'useOriginatingDeviceTimeZone'    => 'true',
+                    ],
+                ];
+
+        return $DATA;
+    }
+	
+	protected function add_partition_index_number($PARTITION, $CSS_NEXT_INDEX)
+    {
+        // Build Array of CSS adding new Partition with index of 15.
+        $DATA = [
+					'routePartitionName'       => $PARTITION,
+					'index'                    => $CSS_NEXT_INDEX,
+					];
+                    
+
+        return $DATA;
+    }
+
+    // Add Route Patterns
+    protected function add_partition_to_end_of_css_array($CSS, $PARTITION, $CSS_NEXT_INDEX)
+    {
+        echo 'Building Site partitions Array...'.PHP_EOL;
+
+        // Build Array of CSS adding new Partition with index of 15.
+        $DATA = [
+                    'name'                => $CSS,
+                    'addMembers'          => [
+                                                'member' => [
+                                                            'routePartitionName'       => $PARTITION,
+                                                            'index'                    => $CSS_NEXT_INDEX,
+                                                            ],
+                                            ],
+                ];
+
+        return $DATA;
+    }
+
+    // Add 911 Route List
+    protected function build_new_911_routelist_array($SITE, $CCMGRP, $SLRG)
+    {
+        echo "Building {$SITE} 911 Route List Array...".PHP_EOL;
+
+        // Build Array of Route List
+        $DATA = [
+                    'name'                        => "RL_{$SITE}_911",
+                    'description'                 => "{$SITE} - 911 Calling Route List",
+                    'callManagerGroupName'        => $CCMGRP,
+                    'routeListEnabled'            => true,
+                    'runOnEveryNode'              => true,
+
+                    'members'                    => [
+                                                        'member' => [
+                                                                    'routeGroupName'                         => $SLRG,
+                                                                    'selectionOrder'                         => 1,
+                                                                    'useFullyQualifiedCallingPartyNumber'    => 'Default',
+                                                                    ],
+                                                    ],
+                ];
+
+        return $DATA;
+    }
+
+    // Add 911 Route Patterns
+    protected function build_new_911_routepatterns_array($SITE)
+    {
+        echo 'Building Site 911 Route Patterns Array...'.PHP_EOL;
+
+        $DATA = [
+                    [
+                        'pattern'                     => '911',
+                        'description'                 => "{$SITE} 911 - Emergency Services",
+                        'routePartitionName'          => "PT_{$SITE}_911",
+                        'blockEnable'                 => 'false',
+                        'useCallingPartyPhoneMask'    => 'Default',
+                        'networkLocation'             => 'OffNet',
+                        //"routeFilterName"			=> "",
+                        'patternUrgency'            => 'false',
+
+                        'destination'                    => [
+                                                            'routeListName' => "RL_{$SITE}_911",
+
+                                                        ],
+                    ],
+                    [
+                        'pattern'                     => '9.911',
+                        'description'                 => "{$SITE} 911 - Emergency Services",
+                        'routePartitionName'          => "PT_{$SITE}_911",
+                        'blockEnable'                 => 'false',
+                        'useCallingPartyPhoneMask'    => 'Default',
+                        'networkLocation'             => 'OffNet',
+                        //"routeFilterName"			=> "",
+                        'patternUrgency'            => 'false',
+
+                        'destination'                    => [
+                                                            'routeListName' => "RL_{$SITE}_911",
+
+                                                        ],
+                    ],
+                ];
+
+        return $DATA;
+    }
+	
 }

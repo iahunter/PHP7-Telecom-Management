@@ -359,8 +359,8 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
-	
-	// Get a list of Sites by device pools.
+
+    // Get a list of Sites by device pools.
     protected function getSites()
     {
         echo 'Getting sites from CUCM...'.PHP_EOL;
@@ -549,8 +549,8 @@ class Cucm extends Controller
 
         return $RESULTS;
     }
-	
-	 protected function getCssMemberNamesbyCSS($css)
+
+    protected function getCssMemberNamesbyCSS($css)
     {
         $RESULTS = [];
 
@@ -654,15 +654,14 @@ class Cucm extends Controller
 
         return $DATA;
     }
-	
-	protected function add_partition_index_number($PARTITION, $CSS_NEXT_INDEX)
+
+    protected function add_partition_index_number($PARTITION, $CSS_NEXT_INDEX)
     {
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
-					'routePartitionName'       => $PARTITION,
-					'index'                    => $CSS_NEXT_INDEX,
-					];
-                    
+                    'routePartitionName'       => $PARTITION,
+                    'index'                    => $CSS_NEXT_INDEX,
+                    ];
 
         return $DATA;
     }
@@ -751,5 +750,4 @@ class Cucm extends Controller
 
         return $DATA;
     }
-	
 }

@@ -61,7 +61,7 @@
 				
 				
 				<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
-				<button ng-show="!vm.deploysiteresult" class="btn btn-danger btn-sm" ng-click="vm.runmigration('Add')"><i class="glyphicon glyphicon-save"></i>  Deploy to CUCM</button>
+				<button ng-show="!vm.deploysiteresult" class="btn btn-danger btn-sm" ng-click="vm.runmigration(changekey)"><i class="glyphicon glyphicon-save"></i>  Deploy to CUCM</button>
 				<a class="btn btn-primary btn-sm" ng-show="vm.deploysiteresult" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
 				<a class="btn btn-primary btn-sm" ng-show="!vm.deploysiteresult" data-dismiss="modal">Cancel</a>
 					

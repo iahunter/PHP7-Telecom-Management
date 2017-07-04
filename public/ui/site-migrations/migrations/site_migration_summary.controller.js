@@ -154,15 +154,42 @@ angular
 		// Call the function 
 		get_migration_summary(id);
 
+		
+		// Run the migration
 		vm.runmigration = function(type) {
+			vm.deploysiteresult = {}
+			var migration = {}
+			migration.type = type;
 			vm.deploycucmsiteloading = true;
+			
 			console.log(type);
+			
 			if(type == 'Add'){
-				console.log(vm.migration.change_summary.Add)
+				migration.migration = vm.migration.change_summary.Add;
 			}
+			else if(type == 'Update'){
+				migration.migration = vm.migration.change_summary.Update;
+			}
+			else if(type == 'Delete'){
+				migration.migration = vm.migration.change_summary.Delete;
+			}
+			
+			// Run Migration
+			siteMigrationService.runMigration(migration)
+				.then(function(res) {
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						return vm.message;
+					}else{
+						vm.deploysiteresult = res.data.response
+					}
+				});
 			// placeholder for results
+
 			vm.deploycucmsiteloading = false;
-			vm.deploysiteresult = true
 		}
 		
 		// Delete Migration

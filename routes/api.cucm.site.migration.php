@@ -65,3 +65,46 @@
      * )
      **/
     $api->post('cucm/site/migration/summary', 'App\Http\Controllers\CucmSiteMigration@migrationSiteSummary');
+	
+	
+	/********************************
+       Run Migration routes
+    ********************************/
+    /**
+     * @SWG\Post(
+     *     path="/telephony/api/cucm/site/migration/run",
+     *     tags={"Management - CUCM - Site Migration"},
+     *     summary="Run Migration Plan",
+     *     description="Run Migration",
+     *     operationId="createSite",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="type",
+     *         in="formData",
+     *         description="Add, Update, Delete",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="migration",
+     *         in="formData",
+     *         description="Array of Migration Ojbects",
+     *         required=true,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="cucm objects",
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->post('cucm/site/migration/run', 'App\Http\Controllers\CucmSiteMigration@run_migration');

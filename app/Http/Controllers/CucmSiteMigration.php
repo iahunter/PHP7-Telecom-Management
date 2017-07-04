@@ -38,26 +38,33 @@ class CucmSiteMigration extends Cucm
             abort(401, 'You are not authorized');
         }
 
-        if (isset($request->type) && $request->type) {
-            // Check if the user sent us the Site Design Type.
-             $SITE_TYPE = $request->type;
-        } elseif (isset($request->trunking) && $request->trunking && isset($request->e911) && $request->e911) {
-            // Change Site type based on site design user chooses. This will determine the site type.
-            if ($request->trunking == 'sip' && $request->e911 == '911enable') {
-                $SITE_TYPE = 1;
-            } elseif ($request->trunking == 'local' && $request->e911 == '911enable') {
-                $SITE_TYPE = 2;
-            } elseif ($request->trunking == 'sip' && $request->e911 == 'local') {
-                $SITE_TYPE = 3;
-            } elseif ($request->trunking == 'local' && $request->e911 == 'local') {
-                $SITE_TYPE = 4;
-            }
-        }
-
-        //return $request;
+		if(isset($request->type) && $request->type){
+			// Check if the user sent us the Site Design Type. 
+			 $SITE_TYPE = $request->type;
+		}elseif(isset($request->trunking) && $request->trunking && isset($request->e911) && $request->e911){
+			// Change Site type based on site design user chooses. This will determine the site type. 
+			if($request->trunking == 'sip' && $request->e911 == '911enable' ){
+				$SITE_TYPE = 1;
+			}
+			elseif($request->trunking == 'local' && $request->e911 == '911enable' ){
+				$SITE_TYPE = 2;
+			}
+			elseif($request->trunking == 'sip' && $request->e911 == 'local' ){
+				$SITE_TYPE = 3;
+			}
+			elseif($request->trunking == 'local' && $request->e911 == 'local' ){
+				$SITE_TYPE = 4;
+			}
+		}
+       
+		
+		
+		
+		
+		//return $request;
         // If the SRST IP is set, has contents, and validates as an IP address
 
-        if (isset($request->srstip) && $request->srstip && ! filter_var($request->srstip, FILTER_VALIDATE_IP)) {
+		if (isset($request->srstip) && $request->srstip && ! filter_var($request->srstip, FILTER_VALIDATE_IP)) {
             throw new \Exception('Error: SRST invalid');
             //return 'Error: SRST invalid';
         } elseif (isset($request->srstip) && $request->srstip) {
@@ -95,12 +102,16 @@ class CucmSiteMigration extends Cucm
             // Check their NPA
             if (! isset($request->npa) || ! $request->npa) {
                 throw new \Exception('Error, no npa selected');
-            } else {
-                $NPA = $request->npa;
-            }
-        } else {
-            $NPA = 8675309;
-        }
+                
+            }else{
+				$NPA = $request->npa;
+			}
+			
+        }else{
+			$NPA = 8675309;
+		}
+		
+        
 
         // If the users site code is KHO, dump them on our subscribers
         $SITECODE = strtoupper($request->sitecode);
@@ -174,8 +185,9 @@ class CucmSiteMigration extends Cucm
 
         if ($SITE_TYPE == 1) {
             $TYPE = 'Srst';
-            foreach ($site_array[$TYPE] as $SRST) {
-                $this->DELETE_OBJECTS[$TYPE][] = $SRST;
+            foreach ($site_array[$TYPE] as $key => $value) {
+                // Delete unused objects
+				$this->DELETE_OBJECTS[$TYPE][] = $site_details[$TYPE][$key];
             }
         } else {
             if ($SRSTIP) {
@@ -192,7 +204,15 @@ class CucmSiteMigration extends Cucm
                 // Check if the object already exists. If it isn't then add it.
                 if (! empty($site_array[$TYPE])) {
                     if (in_array($DATA['name'], $site_array[$TYPE])) {
-                        $this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
+                        //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
+						foreach($site_array[$TYPE] as $key => $value){
+							if($value == $DATA['name']){
+								$UUID = $key;
+							}
+						}
+						$OBJECT = $site_details[$TYPE][$UUID];
+						//$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => $OBJECT];
+						$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                     } else {
                         $this->ADD_OBJECTS[$TYPE][] = $DATA;
                     }
@@ -218,7 +238,8 @@ class CucmSiteMigration extends Cucm
                         'useOriginatingDeviceTimeZone'    => 'true',
                         ],
                         /* We may no longer be using this Partition
-                        [
+            
+            [
                         'name'                            => 'PT_'.$SITE,
                         'description'                     => $SITE,
                         'useOriginatingDeviceTimeZone'    => 'true',
@@ -248,15 +269,15 @@ class CucmSiteMigration extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
-                    }
-                    $OBJECT = $site_details[$TYPE][$UUID];
+					//$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
+					foreach($site_array[$TYPE] as $key => $value){
+						if($value == $DATA['name']){
+							$UUID = $key;
+						}
+					}
+					$OBJECT = $site_details[$TYPE][$UUID];
                     //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => $OBJECT];
-                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+					$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
@@ -265,26 +286,24 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        $PARTITIONS = [
-                        // Delete old Partition Name
-                        [
-                        'name'                            => 'PT_'.$SITE,
-                        'description'                     => $SITE,
-                        'useOriginatingDeviceTimeZone'    => 'true',
-                        ],
-                    ];
-
-        foreach ($PARTITIONS as $DATA) {
-            // Check if the object already exists. If it isn't then add it.
-            if (! empty($site_array[$TYPE])) {
-                if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    // Delete old Partition Name
-
-                    $this->DELETE_OBJECTS[$TYPE][] = $DATA;
-                }
-            }
-        }
+        
+		// Check if the object already exists. If it isn't then add it.
+		
+		if (! empty($site_array[$TYPE])) {
+			
+			foreach ($site_array[$TYPE] as $key => $value) {
+				//print_r($value);
+				$delete = true;
+				foreach ($PARTITIONS as $DATA) {
+					if ($value == $DATA['name']) {
+						$delete = false;
+					}
+				}
+				if($delete){
+					$this->DELETE_OBJECTS[$TYPE][] = $site_details[$TYPE][$key];
+				}
+			}
+		}
 
         // 3 - Add a CSS
 
@@ -294,6 +313,7 @@ class CucmSiteMigration extends Cucm
 
         // For Site Types 1 and 2 add CSS
         if ($SITE_TYPE <= 2) {
+			
             $DATA = [
                 'name'            => "CSS_{$SITE}_DEVICE",
                 'description'     => "CSS for {$SITE} Device Assignment",
@@ -362,6 +382,7 @@ class CucmSiteMigration extends Cucm
 
         // For Site Types 3 and 4 add site specific 911 CSS and other CSSs
         if ($SITE_TYPE >= 3) {
+			
             $DATA = [
                 'name'            => "CSS_{$SITE}_DEVICE",
                 'description'     => "CSS for {$SITE} Device Assignment",
@@ -490,53 +511,56 @@ class CucmSiteMigration extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
-                    }
-                    $OBJECT = $site_details[$TYPE][$UUID];
 
-                    $members = $this->getCssMemberNamesbyCSS($OBJECT);
-                    if ($OBJECT['name'] == "CSS_{$SITE}_DEVICE") {
-                        //Check if this CSS needs updated if they Site type is changing.
-
-                        $index = 0;
-                        $update = false;
-                        $members_array = [];
-                        foreach ($members as $member) {
-                            //print_r($member);
-
-                            $index++;
-                            if ($SITE_TYPE <= 2) {
-                                if ($member == "PT_{$SITE}_911") {
-                                    $member = 'PT_911Enable';
-                                    $update = true;
-                                }
-                            }
-                            if ($SITE_TYPE >= 3) {
-                                if ($member == 'PT_911Enable') {
-                                    $member = "PT_{$SITE}_911";
-                                    $update = true;
-                                }
-                            }
-                            $members_array[] = $this->add_partition_index_number($member, $index);
-                        }
-                        //print_r($members_array);
-                        // If change is needed.
-                        if ($update) {
-                            $OBJECT['members']['member'] = $members_array;
-                            unset($OBJECT['clause']);
-                            unset($OBJECT['uuid']);
-                            unset($OBJECT['dialPlanWizardGenId']);
-                            unset($OBJECT['partitionUsage']);
-                            $this->UPDATE_OBJECTS[$TYPE][] = $OBJECT;
-                        } else {
-                            $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
-                        }
-                    }
-
-                    //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => $OBJECT];
+					
+					foreach($site_array[$TYPE] as $key => $value){
+						if($value == $DATA['name']){
+							$UUID = $key;
+						}
+					}
+					$OBJECT = $site_details[$TYPE][$UUID];
+                    
+					$members = $this->getCssMemberNamesbyCSS($OBJECT);
+					if($OBJECT['name'] == "CSS_{$SITE}_DEVICE"){
+						//Check if this CSS needs updated if they Site type is changing. 
+						
+						$index = 0;
+						$update = false;
+						$members_array = [];
+						foreach($members as $member){
+							//print_r($member);
+							
+							$index++;
+							if ($SITE_TYPE <= 2) {
+								if($member == "PT_{$SITE}_911"){
+									$member = "PT_911Enable";
+									$update = true;
+								}
+							}
+							if ($SITE_TYPE >= 3) {
+								if($member == "PT_911Enable"){
+									$member = "PT_{$SITE}_911";
+									$update = true;
+								}
+							}
+							$members_array[] = $this->add_partition_index_number($member, $index);
+						}
+						//print_r($members_array);
+						// If change is needed. 
+						if($update){
+							$OBJECT['members']['member'] = $members_array;
+							unset($OBJECT['clause']);
+							unset($OBJECT['uuid']);
+							unset($OBJECT['dialPlanWizardGenId']);
+							unset($OBJECT['partitionUsage']);
+							$this->UPDATE_OBJECTS[$TYPE][] = $OBJECT;
+						}else{
+							$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+						}
+						
+					}
+					
+					//$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => $OBJECT];
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
@@ -570,42 +594,6 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // Update CSS if moving from one design type to another and already has new naming.
-
-        // Build Array of CSS adding new Partition with index of 15.
-
-        /************************ WORKING ON THIS ********************************/
-        // Need to figure out how to remove the 911 partition on sites converting from Local to Central 911.
-
-        /*
-        if($SITE_TYPE <= 3){
-
-            $DATA = [
-                    'name'           		 => "CSS_{$SITE}_DEVICE",
-                    'removeMembers'          => [
-                                                'member' => [
-                                                            'routePartitionName'       => "PT_{$SITE}_911",
-                                                            //'index'                    => $CSS_NEXT_INDEX,
-                                                            ],
-                                            ],
-                ];
-
-            if (! empty($site_array[$TYPE])) {
-                if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    //return $site_details[$TYPE];
-                    foreach($site_array[$TYPE] as $key => $value) ;
-                    //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    $CSS_DETAILS = $site_details[$TYPE][$key];
-                    return $CSS_DETAILS;
-                    $this->DELETE_OBJECTS[$TYPE][] = $DATA;
-                }
-            }
-
-
-
-            $this->UPDATE_OBJECTS[$TYPE][] = $DATA;
-        }
-        */
 
         // 4 - Add a location
 
@@ -623,14 +611,14 @@ class CucmSiteMigration extends Cucm
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
-                    }
-                $OBJECT = $site_details[$TYPE][$UUID];
-                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+				//$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
+					foreach($site_array[$TYPE] as $key => $value){
+						if($value == $DATA['name']){
+							$UUID = $key;
+						}
+					}
+					$OBJECT = $site_details[$TYPE][$UUID];
+                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -710,13 +698,13 @@ class CucmSiteMigration extends Cucm
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
-                    }
-                $OBJECT = $site_details[$TYPE][$UUID];
-                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+					foreach($site_array[$TYPE] as $key => $value){
+						if($value == $DATA['name']){
+							$UUID = $key;
+						}
+					}
+					$OBJECT = $site_details[$TYPE][$UUID];
+                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -740,13 +728,13 @@ class CucmSiteMigration extends Cucm
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                foreach ($site_array[$TYPE] as $key => $value) {
-                    if ($value == $DATA['name']) {
-                        $UUID = $key;
-                    }
-                }
-                $OBJECT = $site_details[$TYPE][$UUID];
-                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+				foreach($site_array[$TYPE] as $key => $value){
+						if($value == $DATA['name']){
+							$UUID = $key;
+						}
+					}
+					$OBJECT = $site_details[$TYPE][$UUID];
+                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -770,13 +758,13 @@ class CucmSiteMigration extends Cucm
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                foreach ($site_array[$TYPE] as $key => $value) {
-                    if ($value == $DATA['name']) {
-                        $UUID = $key;
-                    }
-                }
-                $OBJECT = $site_details[$TYPE][$UUID];
-                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+				foreach($site_array[$TYPE] as $key => $value){
+					if($value == $DATA['name']){
+						$UUID = $key;
+					}
+				}
+				$OBJECT = $site_details[$TYPE][$UUID];
+				$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -800,13 +788,13 @@ class CucmSiteMigration extends Cucm
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                foreach ($site_array[$TYPE] as $key => $value) {
-                    if ($value == $DATA['name']) {
-                        $UUID = $key;
-                    }
-                }
-                $OBJECT = $site_details[$TYPE][$UUID];
-                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+				foreach($site_array[$TYPE] as $key => $value){
+					if($value == $DATA['name']){
+						$UUID = $key;
+					}
+				}
+				$OBJECT = $site_details[$TYPE][$UUID];
+				$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -841,13 +829,13 @@ class CucmSiteMigration extends Cucm
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                foreach ($site_array[$TYPE] as $key => $value) {
-                    if ($value == $DATA['name']) {
-                        $UUID = $key;
-                    }
-                }
-                $OBJECT = $site_details[$TYPE][$UUID];
-                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+				foreach($site_array[$TYPE] as $key => $value){
+					if($value == $DATA['name']){
+						$UUID = $key;
+					}
+				}
+				$OBJECT = $site_details[$TYPE][$UUID];
+				$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
             }
@@ -966,13 +954,21 @@ class CucmSiteMigration extends Cucm
                     if (! empty($site_array[$TYPE])) {
                         if (in_array($DATA['name'], $site_array[$TYPE])) {
                             //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                            foreach ($site_array[$TYPE] as $key => $value) {
-                                if ($value == $DATA['name']) {
-                                    $UUID = $key;
-                                }
-                            }
-                            $OBJECT = $site_details[$TYPE][$UUID];
-                            $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+							foreach($site_array[$TYPE] as $key => $value){
+								if($value == $DATA['name']){
+									$UUID = $key;
+								}
+							}
+							$OBJECT = $site_details[$TYPE][$UUID];
+							$UPDATE = [];
+							if($OBJECT["callingSearchSpaceName"]["_"] != "CSS_{$SITE}_INCOMING_GW"){
+								//$UPDATE["uuid"] = $OBJECT["uuid"];
+								$UPDATE["name"] = $OBJECT["name"];
+								$UPDATE["callingSearchSpaceName"] = "CSS_{$SITE}_INCOMING_GW";
+								$this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+							}
+							
+							$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                         } else {
                             $this->ADD_OBJECTS[$TYPE][] = $DATA;
                         }
@@ -1032,14 +1028,14 @@ class CucmSiteMigration extends Cucm
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    $this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
-                    }
-                    $OBJECT = $site_details[$TYPE][$UUID];
-                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                    
+					foreach($site_array[$TYPE] as $key => $value){
+						if($value == $DATA['name']){
+							$UUID = $key;
+						}
+					}
+					$OBJECT = $site_details[$TYPE][$UUID];
+					$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
@@ -1053,6 +1049,7 @@ class CucmSiteMigration extends Cucm
         // Calculated variables
         $TYPE = 'DevicePool';
         // Update these fields in the device pool object for this site
+		
         $DATA = [
                 'name'                     => "DP_{$SITE}",
                 'mediaResourceListName'    => "MRGL_{$SITE}",
@@ -1063,17 +1060,35 @@ class CucmSiteMigration extends Cucm
 
                 ];
 
-        if ((isset($SRSTIP)) && (! empty($SRSTIP))) {
-            // If there is a SRST Set then you can add it to the Device Pool
-            $DATA['srstName'] = "SRST_{$SITE}";
-        }
-
+		
+		if ($SITE_TYPE != 1) {
+            if ((isset($SRSTIP)) && (! empty($SRSTIP))) {
+				// If there is a SRST Set then you can add it to the Device Pool
+				$DATA['srstName'] = "SRST_{$SITE}";
+			}
+        }else{
+			$DATA['srstName'] = "Disable";
+		}
         // If the site type is 1  or 3 then we need to override the SLRG to be our Centralized SIP Route Group for SIP Trunking
         if (($SITE_TYPE == 1) || ($SITE_TYPE == 3)) {
             $DATA['localRouteGroup']['value'] = 'RG_CENTRAL_SBC_GRP';
         }
-
-        $this->UPDATE_OBJECTS[$TYPE][] = $DATA;
+		
+        if (! empty($site_array[$TYPE])) {
+			if (in_array($DATA['name'], $site_array[$TYPE])) {
+				
+				foreach($site_array[$TYPE] as $key => $value){
+					if($value == $DATA['name']){
+						$UUID = $key;
+					}
+				}
+				$OBJECT = $site_details[$TYPE][$UUID];
+				
+				if($OBJECT['localRouteGroup']['value'] != $DATA['localRouteGroup']['value'] || $OBJECT['srstName']["_"] != $DATA['srstName']){
+					$this->UPDATE_OBJECTS[$TYPE][] = $DATA;
+				}
+			}
+		}
 
         // 16 - Update our translation patterns for the site.
 
@@ -1124,14 +1139,14 @@ class CucmSiteMigration extends Cucm
                 if (! empty($site_array[$TYPE])) {
                     if (in_array($OBJECT['pattern'], $site_array[$TYPE])) {
                         //$this->SKIP_OBJECTS[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
-                        //$this->SKIP_OBJECTS[$TYPE][] = [$OBJECT['pattern'] => "Skipping... {$OBJECT['pattern']} already exists."];
-                        foreach ($site_array[$TYPE] as $key => $value) {
-                            if ($value == $DATA['pattern']) {
-                                $UUID = $key;
-                            }
-                        }
-                        $OBJECT = $site_details[$TYPE][$UUID];
-                        $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+						//$this->SKIP_OBJECTS[$TYPE][] = [$OBJECT['pattern'] => "Skipping... {$OBJECT['pattern']} already exists."];
+						foreach($site_array[$TYPE] as $key => $value){
+							if($value == $DATA['pattern']){
+								$UUID = $key;
+							}
+						}
+						$OBJECT = $site_details[$TYPE][$UUID];
+						$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                     } else {
                         $this->ADD_OBJECTS[$TYPE][] = $OBJECT;
                     }
@@ -1170,13 +1185,13 @@ class CucmSiteMigration extends Cucm
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
                     //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
-                    }
-                    $OBJECT = $site_details[$TYPE][$UUID];
-                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+					foreach($site_array[$TYPE] as $key => $value){
+						if($value == $DATA['name']){
+							$UUID = $key;
+						}
+					}
+					$OBJECT = $site_details[$TYPE][$UUID];
+					$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                 } else {
                     $this->ADD_OBJECTS[$TYPE][] = $DATA;
                 }
@@ -1264,13 +1279,13 @@ class CucmSiteMigration extends Cucm
                 if (! empty($site_array[$TYPE])) {
                     if (in_array($DATA['pattern'], $site_array['RoutePattern'])) {
                         //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                        foreach ($site_array[$TYPE] as $key => $value) {
-                            if ($value == $DATA['name']) {
-                                $UUID = $key;
-                            }
-                        }
-                        $OBJECT = $site_details[$TYPE][$UUID];
-                        $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                        foreach($site_array[$TYPE] as $key => $value){
+							if($value == $DATA['name']){
+								$UUID = $key;
+							}
+						}
+						$OBJECT = $site_details[$TYPE][$UUID];
+						$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                     } else {
                         $this->ADD_OBJECTS[$TYPE][] = $DATA;
                     }
@@ -1279,6 +1294,29 @@ class CucmSiteMigration extends Cucm
                 }
             }
         }
+		
+		// 18 - Create our 911 Route Patterns
+
+		// Calculated variables
+		$TYPE = 'CtiRoutePoint';
+
+		// Check if the object already exists. If it isn't then add it.
+		if (! empty($site_array[$TYPE])) {
+			$UPDATE = [];
+			foreach($site_array[$TYPE] as $key => $value){
+				$UUID = $key;
+				$OBJECT = $site_details[$TYPE][$UUID];
+				
+				// Update the CTI Route Point CSS
+				if($OBJECT["callingSearchSpaceName"]["_"] != "CSS_{$SITE}_DEVICE"){
+					
+					$UPDATE['name'] = $OBJECT['name'];
+					$UPDATE['description'] = $OBJECT['description'];
+					$UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+					$this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+				}
+			}
+		}
 
         /*
         public $SKIP_OBJECTS = [];
@@ -1287,16 +1325,18 @@ class CucmSiteMigration extends Cucm
         public $DELETE_OBJECTS = [];
         */
 
-        $return = ['type'        => $SITE_TYPE,
-                    'changes'    => [
-                                        'Add'                   => $this->ADD_OBJECTS,
-                                        'Update'                => $this->UPDATE_OBJECTS,
-                                        'Delete'                => $this->DELETE_OBJECTS,
-                                        'Skip'                  => $this->SKIP_OBJECTS,
-                                        'CurrentDetails'        => $site_details,
-                                        'CurrentSummary'        => $site_array,
-                                    ],
-                    ];
+		
+        $return = [	'type' 		=> $SITE_TYPE,
+					'changes' 	=> [	
+										'Add'          	=> $this->ADD_OBJECTS,
+										'Update'   		=> $this->UPDATE_OBJECTS,
+										'Delete'    	=> $this->DELETE_OBJECTS,
+										'Skip'      	=> $this->SKIP_OBJECTS,
+										'CurrentDetails'		=> $site_details,
+										'CurrentSummary'		=> $site_array,
+									],
+					];
+						
 
         return $return;
     }

@@ -154,8 +154,37 @@ angular
 		// Call the function 
 		get_migration_summary(id);
 
+		vm.runmigration = function(type) {
+			vm.deploycucmsiteloading = true;
+			console.log(type);
+			if(type == 'Add'){
+				console.log(vm.migration.change_summary.Add)
+			}
+			// placeholder for results
+			vm.deploycucmsiteloading = false;
+			vm.deploysiteresult = true
+		}
 		
-		
+		// Delete Migration
+		vm.delete = function(migration) {
+			siteMigrationService.deleteSiteMigration(migration.id).then(function(data) {
+
+			
+				// jQuery Hack to fix body from the Model. 
+					$(".modal-backdrop").hide();
+					$('body').removeClass("modal-open");
+					$('body').removeClass("modal-open");
+					$('body').removeAttr( 'style' );
+				// End of Hack */
+			
+				$location.path('/sitemigrations/migrations/' + vm.sitecode);
+				//return $state.reload();
+          }, function(error) {
+				alert('An error occurred');
+          });
+
+		}
+
 	}]);
 	
 

@@ -140,7 +140,7 @@ angular
 		}
 		
 		
-		// Delete DID Block 
+		// Delete Migration
 		vm.delete = function(migration) {
 			siteMigrationService.deleteSiteMigration(migration.id).then(function(data) {
 
@@ -152,7 +152,8 @@ angular
 					$('body').removeAttr( 'style' );
 				// End of Hack */
 			
-				return $state.reload();
+				$location.path('/sitemigrations/migrations/' + vm.sitecode);
+				//return $state.reload();
           }, function(error) {
 				alert('An error occurred');
           });

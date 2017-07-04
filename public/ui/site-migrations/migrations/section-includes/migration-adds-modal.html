@@ -1,0 +1,71 @@
+						
+	<!-- Phone Deployment Modal -->
+	<div class="modal fade " id="{{changekey}}-modal" role="dialog">
+		<div class="modal-dialog" style="width: 90%;">
+			<div style="background-color:white" class="modal-content">
+				<div class="modal-header">
+					<h3>{{changekey}} Objects for Type {{vm.migration.type}} to CUCM</h3>
+				</div>
+				
+				<div class="modal-body">
+					<p ng-hide="vm.deploysiteresult"><b style="color:red" >Warning!</b> You are about to {{changekey}} objects on the Production System.</p>
+					<legend ng-show="vm.deploysiteresult">Summary Report</legend>
+				
+					<div ng-if="vm.deploycucmsiteloading">
+						<legend >Deploying Site. Please Wait... </legend>
+						<div class="well">
+							<div class="row">
+								<div class="container loader"></div>
+							</div>
+							<div style="margin:25px"></div>
+						</div>
+					</div>
+				
+					<div class="table-responsive">
+					<div style="margin:25px"></div>
+					<table style="background-color:white" ng-show="vm.deploysiteresult" class="table table-striped table-condensed table-bordered table-hover">
+						
+						<!--
+						<tr>
+							<th>Key</th>
+							<th>Values</th>
+						</tr>
+						-->
+						<tr ng-repeat="(key,values) in vm.deploysiteresult">
+							<td><b>{{ key}}</b> <br> {{values.length}}</td>
+							<td>
+								<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+									<tr ng-repeat="value in values">
+										<td ng-if="value.status">
+											<table class="table table-bordered table-hover table-responsive" style="background-color: transparent;">
+												<tr ng-repeat="(k,v) in value">
+													<td>{{k}}</td>
+													<td><i ng-if="k == 'status' && v == 'error'" class="fa fa-exclamation-triangle"></i><i ng-if="k == 'status' && v == 'success'" class="fa fa-check-square-o" aria-hidden="true"></i> {{v}}</td>
+												</tr>	
+											</table>
+										</td>
+										<td ng-if="!value.status">
+											<i class="fa fa-exclamation-triangle"></i> {{value}}
+										</td>
+									</tr>	
+								</table>
+							</td>
+						</tr>
+					</table>
+					
+					</div>
+				</div>
+				<div class="modal-footer">
+
+				
+				
+				
+				<!--  dismiss modal not working with ng-click... Added jQuery Hack in Controller delete function.-->
+				<button ng-show="!vm.deploysiteresult" class="btn btn-danger btn-sm" ng-click="vm.runmigration('Add')"><i class="glyphicon glyphicon-save"></i>  Deploy to CUCM</button>
+				<a class="btn btn-primary btn-sm" ng-show="vm.deploysiteresult" data-dismiss="modal" ng-click="vm.refresh()">Finish</a>
+				<a class="btn btn-primary btn-sm" ng-show="!vm.deploysiteresult" data-dismiss="modal">Cancel</a>
+					
+				</div>
+			</div>
+		</div>
+	</div> <!-- end of Modal -->

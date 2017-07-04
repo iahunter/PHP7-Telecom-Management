@@ -130,10 +130,21 @@
 							<hr>
 							<p><b style="color:red">Warning!</b> Running this migration will <b>{{changekey}}</b> objects in the CUCM Production System realtime.</p>
 							<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-							<button class="btn btn-success btn-sm" ng-if="changekey == 'Add'" ng-click="vm.runmigration({{changekey}})"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}</button>
-							<button class="btn btn-primary btn-sm" ng-if="changekey == 'Update'" ng-click="vm.runmigration({{changekey}})"><i class="glyphicon glyphicon-save"></i> Run Migration {{changekey}}</button>
-							<button class="btn btn-danger btn-sm" ng-if="changekey == 'Delete'" ng-click="vm.runmigration({{changekey}})"><i class="glyphicon glyphicon-remove"></i> Run Migration {{changekey}}</button>
+							<!--
+							<button class="btn btn-success btn-sm" ng-if="changekey == 'Add'" ng-click="vm.runmigration('Add')"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-primary btn-sm" ng-if="changekey == 'Update'" ng-click="vm.runmigration('Update')"><i class="glyphicon glyphicon-save"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-danger btn-sm" ng-if="changekey == 'Delete'" ng-click="vm.runmigration('Delete')"><i class="glyphicon glyphicon-remove"></i> Run Migration {{changekey}}s</button>
+							-->
+
+							<button class="btn btn-success btn-sm " ng-if="changekey == 'Add'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-primary btn-sm " ng-if="changekey == 'Update'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-danger btn-sm " ng-if="changekey == 'Delete'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							
 							<div style="margin:25px"></div>
+							<div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete'">
+								<ng-include src="'site-migrations/migrations/section-includes/migration-adds-modal.html'"></ng-include>
+							</div>
+							
 						</div>
 					</div>
 				</div>	

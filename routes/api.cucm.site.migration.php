@@ -65,9 +65,8 @@
      * )
      **/
     $api->post('cucm/site/migration/summary', 'App\Http\Controllers\CucmSiteMigration@migrationSiteSummary');
-	
-	
-	/********************************
+
+    /********************************
        Run Migration routes
     ********************************/
     /**

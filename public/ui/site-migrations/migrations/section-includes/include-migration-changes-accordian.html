@@ -1,0 +1,106 @@
+<h3 ng-if="vm.migration.type">Migration Actions - Convert to Design Type {{vm.migration.type}}</h3>
+			
+			<!--<hr>
+			<h4>Object Adds</h4>-->
+			<div class="panel-group" id="accordion">
+				<div ng-repeat="(changekey,changevalues) in vm.migration.change_summary">
+					<!--<div ng-hide="changekey == 'CurrentDetails' || changekey == 'CurrentSummary'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					--><div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete' || changekey == 'Skip'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					<!--<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					-->	<div class="panel-heading" role="tab" id="{{changekey}}" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+
+							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" ng-click="vm.accordianclose()" data-target="#{{changekey}}_collapse" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="{{changekey}}_collapse">
+								<h4><b><i class="fa fa-server"></i> {{changekey}} Objects<i class="fa fa-caret-down"></i></b></h4>
+							</a>
+						</div>
+						<div class="panel-body panel-collapse collapse" role="tabpanel" id="{{changekey}}_collapse" aria-labelledby="{{changekey}}">
+							<legend class="ng-binding"> Site: {{vm.sitecode}} - {{changekey}} Objects</legend>
+							<!--<div class="table-responsive">
+							<table style="background-color:white" ng-show="changevalues" class="table table-striped table-condensed table-bordered table-hover">
+								<tr ng-repeat="(key,values) in changevalues">
+									<td><b>{{values.length}} - {{ key}}</b></td>
+									<td>-->
+									
+									<!-- Tab Content -->
+									
+									<ul class="nav nav-tabs" >
+										<li class="active"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_test_tab">Home</a></li>
+										<li ng-repeat="(key,values) in changevalues"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_{{ key}}_tab">{{ key}}</a></li>
+									</ul>
+									
+									
+									<div class="tab-content">
+									
+										<!-- Tab -->
+										<div id="{{changekey}}_test_tab" class="tab-pane fade in active">
+											<br>
+											<p><span style="color:#337ab7;"><b>Note! </b></span>Click each tab to review the objects that will be {{changekey}}ed.</p>
+										</div>
+										
+									</div>
+
+									<!-- Tab Content -->
+									<div id="{{changekey}}_tab_content"class="tab-content" ng-repeat="(key,values) in changevalues">
+									
+										<!-- Tab -->
+										<div id="{{changekey}}_{{ key}}_tab" class="tab-pane fade">
+										
+										<table class="table table-bordered table-hover table-responsive table-condensed" style="background-color: transparent;" ng-if="changekey != 'CurrentSummary'">
+											<tr ng-repeat="value in values">
+												<td>
+													<table class="table table-bordered table-hover table-responsive table-condensed" style="background-color: transparent;">
+														<tbody style="font-size:12px">
+															<tr ng-repeat="(k,v) in value track by $index">
+																<td><b>{{k}}</b></td>
+																<td ng-if="k == 'name'" style="color:#20bc56"><b>{{v}}</b></td>
+																<td ng-if="k == 'pattern'" style="color:#20bc56"><b>{{v}}</b></td>
+																<td ng-if="k == 'members'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
+																<td ng-if="k == 'relatedRegions'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
+																<td ng-if="k == 'partitionUsage' && v == 'Intercom'" style="color:red"><b>{{v}}</b></td>
+																<td ng-if="k != 'name' && k != 'pattern' && k != 'members' && k != 'relatedRegions'">{{v}}</td>
+															</tr>	
+														</tbody>
+													</table>
+												</td>
+											</tr>	
+										</table>
+											
+										<table class="table table-bordered table-hover table-responsive table-condensed" style="background-color: transparent;" ng-if="changekey == 'CurrentSummary'">
+											<tbody style="font-size:12px">
+												<tr ng-repeat="(k,v) in values track by $index">
+													<td><b>{{k}}</b></td>
+													<td ng-if="k == 'name'" style="color:#20bc56"><b>{{v}}</b></td>
+													<td ng-if="k == 'pattern'" style="color:#20bc56"><b>{{v}}</b></td>
+													<td ng-if="k != 'name' && k != 'pattern'">{{v}}</td>
+												</tr>	
+											</tbody>
+										</table>
+											
+										</div>
+										
+									</div>
+									<!--</td>
+								</tr>
+							</table>
+							</div>-->
+							<hr>
+							<p><b style="color:red">Warning!</b> Running this migration will <b>{{changekey}}</b> objects in the CUCM Production System realtime.</p>
+							<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
+							<!--
+							<button class="btn btn-success btn-sm" ng-if="changekey == 'Add'" ng-click="vm.runmigration('Add')"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-primary btn-sm" ng-if="changekey == 'Update'" ng-click="vm.runmigration('Update')"><i class="glyphicon glyphicon-save"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-danger btn-sm" ng-if="changekey == 'Delete'" ng-click="vm.runmigration('Delete')"><i class="glyphicon glyphicon-remove"></i> Run Migration {{changekey}}s</button>
+							-->
+
+							<button class="btn btn-success btn-sm " ng-if="changekey == 'Add'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-primary btn-sm " ng-if="changekey == 'Update'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							<button class="btn btn-danger btn-sm " ng-if="changekey == 'Delete'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							
+							<div style="margin:25px"></div>
+							<div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete'">
+								<ng-include src="'site-migrations/migrations/section-includes/include-migration-modal.html'"></ng-include>
+							</div>
+							
+						</div>
+					</div>
+				</div>	

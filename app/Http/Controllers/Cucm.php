@@ -655,7 +655,7 @@ class Cucm extends Controller
 
             ];
 
-        echo "Building Site 911 Route List with {$SLRG} in CUCM...".PHP_EOL;
+        //echo "Building Site 911 Route List with {$SLRG} in CUCM...".PHP_EOL;
         try {
             // Add Partion
             $partitions = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
@@ -673,7 +673,7 @@ class Cucm extends Controller
     // Add Route Patterns
     protected function build_new_partitions_for_site($SITE)
     {
-        echo 'Building Site partitions Array...'.PHP_EOL;
+        //echo 'Building Site partitions Array...'.PHP_EOL;
 
         // Build Array of Patitions
         $DATA = [
@@ -701,7 +701,7 @@ class Cucm extends Controller
     // Add Route Patterns
     protected function add_partition_member_to_css($CSS, $PARTITION, $INDEX)
     {
-        echo 'Building Site partitions Array...'.PHP_EOL;
+        //echo 'Building Site partitions Array...'.PHP_EOL;
 
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
@@ -720,7 +720,7 @@ class Cucm extends Controller
     // Add Route Patterns
     protected function remove_partition_member_to_css($CSS, $PARTITION, $INDEX)
     {
-        echo 'Building Site partitions Array...'.PHP_EOL;
+        //echo 'Building Site partitions Array...'.PHP_EOL;
 
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
@@ -739,7 +739,7 @@ class Cucm extends Controller
     // Add 911 Route List
     protected function build_new_911_routelist_array($SITE, $CCMGRP, $SLRG)
     {
-        echo "Building {$SITE} 911 Route List Array...".PHP_EOL;
+        //echo "Building {$SITE} 911 Route List Array...".PHP_EOL;
 
         // Build Array of Route List
         $DATA = [
@@ -764,7 +764,7 @@ class Cucm extends Controller
     // Add 911 Route Patterns
     protected function build_new_911_routepatterns_array($SITE)
     {
-        echo 'Building Site 911 Route Patterns Array...'.PHP_EOL;
+        //echo 'Building Site 911 Route Patterns Array...'.PHP_EOL;
 
         $DATA = [
                     [

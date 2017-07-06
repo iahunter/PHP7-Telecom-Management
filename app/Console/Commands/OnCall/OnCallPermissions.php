@@ -50,7 +50,7 @@ class OnCallPermissions extends Command
             echo $number.PHP_EOL;
             $line = $a->cucm->get_object_type_by_pattern_and_partition($number, 'Global-All-Lines', 'Line');
             $line_instance = new Cucmclass();
-            $line_instance->uuid = $line['uuid'];
+            $line_instance->uuid = strtolower($line['uuid']);
             echo $line_instance->uuid;
             echo PHP_EOL;
             $line_instance->exists = true;

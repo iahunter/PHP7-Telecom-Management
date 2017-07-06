@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Site.Migration.Summary.Controller', ['siteMigrationService', 'siteService', 'cucmService', '$location', '$state', '$stateParams', function(siteMigrationService, siteService, cucmService, $location, $state, $stateParams) {
+	.controller('Site.Migration.Summary.Controller', ['siteMigrationService', 'cucmReportService', 'siteService', 'cucmService', '$location', '$state', '$stateParams', function(siteMigrationService, cucmReportService, siteService, cucmService, $location, $state, $stateParams) {
 	
 		var vm = this;
 		
@@ -78,6 +78,8 @@ angular
 		
 		var id = $stateParams.id;
 		
+		
+		
 		function get_migration_summary(id) {
 			siteMigrationService.getSiteMigration(id)
 			
@@ -142,6 +144,34 @@ angular
 								console.log(vm.migration)
 								
 							}
+							
+						
+							var getsite = cucmReportService.getsitesummary(vm.migration.sitecode)
+								.then(function(res){
+									
+									// Check for errors and if token has expired. 
+									if(res.data.message){
+										//console.log(res);
+										vm.message = res.data.message;
+										//console.log(vm.message);
+										
+										if(vm.message == "Token has expired"){
+											// Send user to login page if token expired. 
+											alert(vm.message);
+											$state.go('logout');
+										}
+
+										return vm.message;
+									}
+
+									var response = res.data.response;
+									vm.site = response;
+									//console.log(vm.cucmsite)
+								}, function(err){
+									console.log(err)
+									alert(err);
+								});
+						
 						
 						}, function(err){
 							console.log(err)
@@ -156,21 +186,21 @@ angular
 
 		
 		// Run the migration
-		vm.runmigration = function(type) {
+		vm.runmigration = function(verb) {
 			vm.deploysiteresult = {}
 			var migration = {}
-			migration.type = type;
+			migration.verb = verb;
 			vm.deploycucmsiteloading = true;
 			
-			console.log(type);
+			console.log(verb);
 			
-			if(type == 'Add'){
+			if(verb == 'Add'){
 				migration.migration = vm.migration.change_summary.Add;
 			}
-			else if(type == 'Update'){
+			else if(verb == 'Update'){
 				migration.migration = vm.migration.change_summary.Update;
 			}
-			else if(type == 'Delete'){
+			else if(verb == 'Delete'){
 				migration.migration = vm.migration.change_summary.Delete;
 			}
 			

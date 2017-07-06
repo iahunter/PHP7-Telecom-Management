@@ -867,51 +867,30 @@ class Cucmsite extends Cucm
         $TYPE = 'MediaResourceList';
         // Prepared datastructure
 
-        if ($SITE_TYPE == 4) {
-            $DATA = [
-                'name'            => "MRGL_{$SITE}",
-                'members'         => [
-                                    'member'    => [
-                                                        [
-                                                        'mediaResourceGroupName'       => "MRG_{$SITE}",
-                                                        //'order'                        => '0',
-                                                        ],
-                                                        [
-                                                        'mediaResourceGroupName'       => 'MRG_Sub1_Resources',
-                                                        //'order'                        => '1',
-                                                        ],
-                                                        [
-                                                        'mediaResourceGroupName'       => 'MRG_Pub_Resources',
-                                                        //'order'                        => '2',
-                                                        ],
-                                                    ],
-                                    ],
-                ];
-        } else {
-            $DATA = [
-                    'name'            => "MRGL_{$SITE}",
-                    'members'         => [
-                                        'member'    => [
-                                                            [
-                                                            'mediaResourceGroupName'       => "MRG_{$SITE}",
-                                                            //'order'                        => '0',
-                                                            ],
-                                                            [
-                                                            'mediaResourceGroupName'       => env('DSPFARM_MRG'),
-                                                            //'order'                        => '0',
-                                                            ],
-                                                            [
-                                                            'mediaResourceGroupName'       => 'MRG_Sub1_Resources',
-                                                            //'order'                        => '1',
-                                                            ],
-                                                            [
-                                                            'mediaResourceGroupName'       => 'MRG_Pub_Resources',
-                                                            //'order'                        => '2',
-                                                            ],
-                                                        ],
-                                        ],
-                    ];
-        }
+		$DATA = [
+				'name'            => "MRGL_{$SITE}",
+				'members'         => [
+									'member'    => [
+														[
+														'mediaResourceGroupName'       => "MRG_{$SITE}",
+														//'order'                        => '0',
+														],
+														[
+														'mediaResourceGroupName'       => env('DSPFARM_MRG'),
+														//'order'                        => '0',
+														],
+														[
+														'mediaResourceGroupName'       => 'MRG_Sub1_Resources',
+														//'order'                        => '1',
+														],
+														[
+														'mediaResourceGroupName'       => 'MRG_Pub_Resources',
+														//'order'                        => '2',
+														],
+													],
+									],
+				];
+
 
         // Add the index to each member in order.
         $i = 1;

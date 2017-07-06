@@ -53,6 +53,20 @@ class CucmReportsController extends Controller
         $site = Cucmsiteconfigs::where('sitecode', $request->sitecode)->first();
         $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
 
+		// Change Site type based on site design user chooses. This will determine the site type. 
+		if($site->trunking == 'sip' && $site->e911 == '911enable' ){
+			$site->type = 1;
+		}
+		elseif($site->trunking == 'local' && $site->e911 == '911enable' ){
+			$site->type = 2;
+		}
+		elseif($site->trunking == 'sip' && $site->e911 == 'local' ){
+			$site->type= 3;
+		}
+		elseif($site->trunking == 'local' && $site->e911 == 'local' ){
+			$site->type = 4;
+		}
+		
         $site->phonecount = $phonecount;
         //print_r($site);
 

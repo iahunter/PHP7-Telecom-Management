@@ -552,6 +552,7 @@ class Cucm extends Controller
 
     protected function getCssMemberNamesbyCSS($css)
     {
+
         $RESULTS = [];
 
         if ($css['partitionUsage'] == 'Intercom') {
@@ -561,23 +562,21 @@ class Cucm extends Controller
         if ($css['partitionUsage'] == 'General') {
             foreach ($css['members'] as $member) {
                 //print "Member: ".PHP_EOL;
-                    //print_r($member);
-                    $MEMBERS = [];
+                //print_r($member);
+                $MEMBERS = [];
                 if (is_array($member)) {
                     foreach ($member as $partition) {
                         //print_r($partition);
-
-                        if (isset($partition['routePartitionName'])) {
+						if(isset($partition['_'])){
+							
+							$MEMBER = $partition['_'];
+							$MEMBERS[$partition['index']] = $MEMBER;
+						}elseif (isset($partition['routePartitionName'])) {
                             $MEMBER = $partition['routePartitionName']['_'];
-
-                            //echo $partition['routePartitionName']['_'];
-                        } else {
-                            return $RESULTS;
+							
+							$MEMBERS[$partition['index']] = $MEMBER;					// Append Member to Members with the key as the index number.
                         }
-
-                            // Append Member to Members with the key as the index number.
-                            $MEMBERS[$partition['index']] = $MEMBER;
-                    }
+					}
                 }
             }
 
@@ -587,6 +586,40 @@ class Cucm extends Controller
                 $RESULTS = $MEMBERS;
             }
         }
+        return $RESULTS;
+    }
+	
+	protected function getMRGLMemberNames($mrgl)
+    {
+        $RESULTS = [];
+
+		foreach ($mrgl['members'] as $member) {
+			//print "Member: ".PHP_EOL;
+				//print_r($member);
+				$MEMBERS = [];
+			if (is_array($member)) {
+				foreach ($member as $mrg) {
+					//print_r($mrg);
+
+					if (isset($mrg['mediaResourceGroupName'])) {
+						$MEMBER = $mrg['mediaResourceGroupName']['_'];
+
+						//echo $mrg['mediaResourceGroupName']['_'];
+					} else {
+						return $RESULTS;
+					}
+
+						// Append Member to Members with the key as the index number.
+						$MEMBERS[$mrg['order']] = $MEMBER;
+				}
+			}
+		}
+
+			// Append mrgl Members to Results with Name as Key.
+			//print_r($MEMBERS);
+		if (! empty($MEMBERS)) {
+			$RESULTS = $MEMBERS;
+		}
 
         return $RESULTS;
     }
@@ -659,15 +692,15 @@ class Cucm extends Controller
     {
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
-                    'routePartitionName'       => $PARTITION,
-                    'index'                    => $CSS_NEXT_INDEX,
-                    ];
+							'routePartitionName'       => $PARTITION,
+							'index'                    => $CSS_NEXT_INDEX,
+				];
 
         return $DATA;
     }
 
     // Add Route Patterns
-    protected function add_partition_to_end_of_css_array($CSS, $PARTITION, $CSS_NEXT_INDEX)
+    protected function add_partition_member_to_css($CSS, $PARTITION, $INDEX)
     {
         echo 'Building Site partitions Array...'.PHP_EOL;
 
@@ -677,7 +710,26 @@ class Cucm extends Controller
                     'addMembers'          => [
                                                 'member' => [
                                                             'routePartitionName'       => $PARTITION,
-                                                            'index'                    => $CSS_NEXT_INDEX,
+                                                            'index'                    => $INDEX,
+                                                            ],
+                                            ],
+                ];
+
+        return $DATA;
+    }
+	
+	// Add Route Patterns
+    protected function remove_partition_member_to_css($CSS, $PARTITION, $INDEX)
+    {
+        echo 'Building Site partitions Array...'.PHP_EOL;
+
+        // Build Array of CSS adding new Partition with index of 15.
+        $DATA = [
+                    'name'                => $CSS,
+                    'removeMembers'          => [
+                                                'member' => [
+                                                            'routePartitionName'       => $PARTITION,
+                                                            'index'                    => $INDEX,
                                                             ],
                                             ],
                 ];

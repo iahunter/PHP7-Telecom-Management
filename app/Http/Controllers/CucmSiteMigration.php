@@ -607,15 +607,14 @@ class CucmSiteMigration extends Cucm
                 }
             }
         }
-		
 
-		foreach ($site_array[$TYPE] as $key => $value) {
-			if ($value == "CSS_{$SITE}"){
-				$UUID = $key;
-				$OBJECT = $site_details[$TYPE][$UUID];
-				$this->DELETE_OBJECTS[$TYPE][] = $OBJECT;                                        // Delete the CSS if type 1 and "CSS_{$SITE}_INCOMING_GW"
-			}
-		}
+        foreach ($site_array[$TYPE] as $key => $value) {
+            if ($value == "CSS_{$SITE}") {
+                $UUID = $key;
+                $OBJECT = $site_details[$TYPE][$UUID];
+                $this->DELETE_OBJECTS[$TYPE][] = $OBJECT;                                        // Delete the CSS if type 1 and "CSS_{$SITE}_INCOMING_GW"
+            }
+        }
 
         // 4 - Add a location
 
@@ -918,31 +917,30 @@ class CucmSiteMigration extends Cucm
                 if (in_array(env('DSPFARM_MRG'), $members)) {
                     $this->SKIP_OBJECTS[$TYPE][] = $DATA;
                 } else {
+                    foreach ($members as $key => $value) {
 
-					foreach ($members as $key => $value) {
-						
-						// Build Array to remove each partition from the CSS. - We will need to rebuild all members after this.
-						$REMOVE = $this->remove_mrg_member_to_mrgl($DATA['name'], $value, $key);
-						$this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
-					}
+                        // Build Array to remove each partition from the CSS. - We will need to rebuild all members after this.
+                        $REMOVE = $this->remove_mrg_member_to_mrgl($DATA['name'], $value, $key);
+                        $this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
+                    }
 
-					// Build Array to add partition to beginning of CSS.
-					$ADD = $this->add_mrg_member_to_mrgl($DATA['name'], "MRG_{$SITE}", $index = 1);
-					$this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
-					
-					// Build Array to add partition to beginning of CSS.
-					$ADD = $this->add_mrg_member_to_mrgl($DATA['name'], env('DSPFARM_MRG'), $index = 2);
-					$this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+                    // Build Array to add partition to beginning of CSS.
+                    $ADD = $this->add_mrg_member_to_mrgl($DATA['name'], "MRG_{$SITE}", $index = 1);
+                    $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
 
-					foreach ($members as $key => $value) {
-						if($value == "MRG_{$SITE}"){
-							unset($members[$key]);
-							continue;
-						}
-						// Build Array to add partition to beginning of CSS.
-						$ADD = $this->add_mrg_member_to_mrgl($DATA['name'], $value, $index = $index + 1);
-						$this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
-					}
+                    // Build Array to add partition to beginning of CSS.
+                    $ADD = $this->add_mrg_member_to_mrgl($DATA['name'], env('DSPFARM_MRG'), $index = 2);
+                    $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+
+                    foreach ($members as $key => $value) {
+                        if ($value == "MRG_{$SITE}") {
+                            unset($members[$key]);
+                            continue;
+                        }
+                        // Build Array to add partition to beginning of CSS.
+                        $ADD = $this->add_mrg_member_to_mrgl($DATA['name'], $value, $index = $index + 1);
+                        $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+                    }
                 }
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
@@ -1462,10 +1460,10 @@ class CucmSiteMigration extends Cucm
         $result = [];
         foreach ($migrations as $TYPE => $ARRAY) {
             if ($TYPE == 'CssremoveMembers' || $TYPE == 'CssaddMembers') {
-                $TYPE = 'Css';                                                								// Update the Type to an acutal type for the updates of CSS members.
+                $TYPE = 'Css';                                                                                // Update the Type to an acutal type for the updates of CSS members.
             }
-			if ($TYPE == 'MediaResourceListremoveMembers' || $TYPE == 'MediaResourceListaddMembers') {
-                $TYPE = 'MediaResourceList';                                                				// Update the Type to an actual type for the updates of MRGL members.
+            if ($TYPE == 'MediaResourceListremoveMembers' || $TYPE == 'MediaResourceListaddMembers') {
+                $TYPE = 'MediaResourceList';                                                                // Update the Type to an actual type for the updates of MRGL members.
             }
             foreach ($ARRAY as $DATA) {
                 if ($verb == 'Add') {

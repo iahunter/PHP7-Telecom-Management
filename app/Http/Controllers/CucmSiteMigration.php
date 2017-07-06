@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 // Add Dummy CUCM class for permissions use for now.
+use App\Cucmsiteconfigs;
 use App\Cucmclass;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
@@ -16,6 +17,65 @@ class CucmSiteMigration extends Cucm
     public $ADD_OBJECTS = [];
     public $UPDATE_OBJECTS = [];
     public $DELETE_OBJECTS = [];
+	
+	
+	private function update_cucmsite_db($sitecode, $site_summary, $site_details){
+		
+		// Try to update our DB with current Site config. 
+		
+		$devicepools = $site_details['DevicePool'];
+
+		//print_r($devicepool);
+		foreach ($devicepools as $devicepool) {
+			$localRouteGroup = $devicepool['localRouteGroup']['value'];
+			if ($localRouteGroup == 'RG_CENTRAL_SBC_GRP') {
+				$trunking = 'sip';
+			} else {
+				$trunking = 'local';
+			}
+		}
+
+		
+
+		$listcss = $site_details['Css'];
+		$e911 = 'local';
+		foreach ($listcss as $css) {
+			foreach ($css['members']['member'] as $partition) {
+				//print_r($partition);
+				if (isset($partition['routePartitionName']['_'])) {
+					if ($partition['routePartitionName']['_'] == 'PT_911Enable') {
+						$e911 = '911enable';
+					}
+				}
+			}
+		}
+
+
+		$INSERT['sitecode'] = $sitecode;
+        $INSERT['sitesummary'] = $site_summary;
+        $INSERT['sitedetails'] = $site_details;
+        $INSERT['e911'] = $e911;
+        $INSERT['trunking'] = $trunking;
+
+        // Check if Site exists in the database
+        if (Cucmsiteconfigs::where([['sitecode', $sitecode]])->count()) {
+            $site = Cucmsiteconfigs::where([['sitecode', $sitecode]])->first();
+
+            //print_r($site);
+           
+
+            // Update Site with Current settings
+            $site->sitesummary = $INSERT['sitesummary'];
+            $site->sitedetails = $INSERT['sitedetails'];
+            $site->e911 = $INSERT['e911'];
+            $site->trunking = $INSERT['trunking'];
+
+            
+            $site->save();
+            
+        }
+	}
+	
 
     public function migrationSiteSummary(Request $request)
     {
@@ -173,6 +233,14 @@ class CucmSiteMigration extends Cucm
             echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
+		
+		
+		// Update our Site DB with the Sites current config. 
+		$this->update_cucmsite_db($SITE, $site_array, $site_details);
+
+		
+		
+		
 
         if ($SITE_TYPE == 1) {
             $TYPE = 'Srst';
@@ -607,14 +675,15 @@ class CucmSiteMigration extends Cucm
                 }
             }
         }
+		
 
-        foreach ($site_array[$TYPE] as $key => $value) {
-            if ($value == "CSS_{$SITE}") {
-                $UUID = $key;
-                $OBJECT = $site_details[$TYPE][$UUID];
-                $this->DELETE_OBJECTS[$TYPE][] = $OBJECT;                                        // Delete the CSS if type 1 and "CSS_{$SITE}_INCOMING_GW"
-            }
-        }
+		foreach ($site_array[$TYPE] as $key => $value) {
+			if ($value == "CSS_{$SITE}" || $value == "CSS_{$SITE}_CFA"){
+				$UUID = $key;
+				$OBJECT = $site_details[$TYPE][$UUID];
+				$this->DELETE_OBJECTS[$TYPE][] = $OBJECT;                                        // Delete the CSS if type 1 and "CSS_{$SITE}_INCOMING_GW"
+			}
+		}
 
         // 4 - Add a location
 
@@ -917,30 +986,31 @@ class CucmSiteMigration extends Cucm
                 if (in_array(env('DSPFARM_MRG'), $members)) {
                     $this->SKIP_OBJECTS[$TYPE][] = $DATA;
                 } else {
-                    foreach ($members as $key => $value) {
 
-                        // Build Array to remove each partition from the CSS. - We will need to rebuild all members after this.
-                        $REMOVE = $this->remove_mrg_member_to_mrgl($DATA['name'], $value, $key);
-                        $this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
-                    }
+					foreach ($members as $key => $value) {
+						
+						// Build Array to remove each partition from the CSS. - We will need to rebuild all members after this.
+						$REMOVE = $this->remove_mrg_member_to_mrgl($DATA['name'], $value, $key);
+						$this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
+					}
 
-                    // Build Array to add partition to beginning of CSS.
-                    $ADD = $this->add_mrg_member_to_mrgl($DATA['name'], "MRG_{$SITE}", $index = 1);
-                    $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+					// Build Array to add partition to beginning of CSS.
+					$ADD = $this->add_mrg_member_to_mrgl($DATA['name'], "MRG_{$SITE}", $index = 1);
+					$this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+					
+					// Build Array to add partition to beginning of CSS.
+					$ADD = $this->add_mrg_member_to_mrgl($DATA['name'], env('DSPFARM_MRG'), $index = 2);
+					$this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
 
-                    // Build Array to add partition to beginning of CSS.
-                    $ADD = $this->add_mrg_member_to_mrgl($DATA['name'], env('DSPFARM_MRG'), $index = 2);
-                    $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
-
-                    foreach ($members as $key => $value) {
-                        if ($value == "MRG_{$SITE}") {
-                            unset($members[$key]);
-                            continue;
-                        }
-                        // Build Array to add partition to beginning of CSS.
-                        $ADD = $this->add_mrg_member_to_mrgl($DATA['name'], $value, $index = $index + 1);
-                        $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
-                    }
+					foreach ($members as $key => $value) {
+						if($value == "MRG_{$SITE}"){
+							unset($members[$key]);
+							continue;
+						}
+						// Build Array to add partition to beginning of CSS.
+						$ADD = $this->add_mrg_member_to_mrgl($DATA['name'], $value, $index = $index + 1);
+						$this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+					}
                 }
             } else {
                 $this->ADD_OBJECTS[$TYPE][] = $DATA;
@@ -1460,10 +1530,10 @@ class CucmSiteMigration extends Cucm
         $result = [];
         foreach ($migrations as $TYPE => $ARRAY) {
             if ($TYPE == 'CssremoveMembers' || $TYPE == 'CssaddMembers') {
-                $TYPE = 'Css';                                                                                // Update the Type to an acutal type for the updates of CSS members.
+                $TYPE = 'Css';                                                								// Update the Type to an acutal type for the updates of CSS members.
             }
-            if ($TYPE == 'MediaResourceListremoveMembers' || $TYPE == 'MediaResourceListaddMembers') {
-                $TYPE = 'MediaResourceList';                                                                // Update the Type to an actual type for the updates of MRGL members.
+			if ($TYPE == 'MediaResourceListremoveMembers' || $TYPE == 'MediaResourceListaddMembers') {
+                $TYPE = 'MediaResourceList';                                                				// Update the Type to an actual type for the updates of MRGL members.
             }
             foreach ($ARRAY as $DATA) {
                 if ($verb == 'Add') {

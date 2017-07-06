@@ -54,10 +54,16 @@
 																<td><b>{{k}}</b></td>
 																<td ng-if="k == 'name'" style="color:#20bc56"><b>{{v}}</b></td>
 																<td ng-if="k == 'pattern'" style="color:#20bc56"><b>{{v}}</b></td>
+																<td ng-if="k == 'addMembers'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
+																<td ng-if="k == 'removeMembers'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
+																
 																<td ng-if="k == 'members'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
+																<td ng-if="k == 'localRouteGroup'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
 																<td ng-if="k == 'relatedRegions'"><pre>{{vm.jsonPrettyprint(v)}}</pre></td>
 																<td ng-if="k == 'partitionUsage' && v == 'Intercom'" style="color:red"><b>{{v}}</b></td>
-																<td ng-if="k != 'name' && k != 'pattern' && k != 'members' && k != 'relatedRegions'">{{v}}</td>
+																<td ng-if="k != 'name' && k != 'pattern' && k != 'members' && 
+																	k != 'addMembers' && k != 'removeMembers' && k != 'relatedRegions' && k != 'localRouteGroup'">
+																{{v}}</td>
 															</tr>	
 														</tbody>
 													</table>
@@ -84,6 +90,7 @@
 							</table>
 							</div>-->
 							<hr>
+							<p ng-if="changekey == 'Delete'" ><b><span style="color:red">WARNING! </span>DO NOT RUN THIS PIECE UNTIL YOU ARE ABSOLUTELY CERTAIN ALL IS WORKING AFTER MIGRATION.</b><br><br></p>
 							<p><b style="color:red">Warning!</b> Running this migration will <b>{{changekey}}</b> objects in the CUCM Production System realtime.</p>
 							<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 							<!--

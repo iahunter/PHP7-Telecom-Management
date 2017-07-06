@@ -158,7 +158,7 @@
 							</div>
 						</div>
 						
-						<div class="row" ng-show="vm.siteForm.trunking == 'local'|| vm.siteForm.e911 == 'local'">
+						<div class="row" ng-if="vm.siteForm.trunking == 'local'|| vm.siteForm.e911 == 'local'">
 											
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addsiteForm.npa.$touched && addsiteForm.npa.$invalid, 'has-success': addsiteForm.npa.$touched && addsiteForm.npa.$valid }">
@@ -166,7 +166,7 @@
 									<div class="inputGroupContainer">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-											<input type="text" ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.npa' class="form-control" name="npa" placeholder="Area Code" ng-minlength='3' ng-maxlength='3'>
+											<input type="text" required ng-pattern='/^[0-9]+/' ng-model='vm.siteForm.npa' class="form-control" name="npa" placeholder="Area Code" ng-minlength='3' ng-maxlength='3'>
 										</div>
 										<div ng-messages="addsiteForm.npa.$dirty && addsiteForm.npa.$error">
 												<div ng-message="pattern">Please enter the npa in the numberic format</div>

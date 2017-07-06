@@ -493,10 +493,12 @@ class CucmSiteMigration extends Cucm
         }
 		
 		// Now add each CSS that is in the $CSS array for the site.
+
         foreach ($CSS as $DATA) {
 
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
+				
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
                     if ($DATA['name'] == "CSS_{$SITE}_DEVICE") {					// Check if this is the Device CSS and if it is, check if it needs to update partition members. 
                         $UUID = '';
@@ -588,17 +590,28 @@ class CucmSiteMigration extends Cucm
 								$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
 							}
 						}
-					} else {
+					}else {
 						$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
 					}
-				} else {
+				}else {
 					$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
 				}
 			} else {
 				$this->ADD_OBJECTS[$TYPE][] = $DATA;
 			}
 		}
-
+		
+		if($SITE_TYPE == 1) {
+			//print "Cleanup CSS";
+			//print_r($site_array[$TYPE]);
+			foreach($site_array[$TYPE] as $key => $value){
+				if ($value == "CSS_{$SITE}_INCOMING_GW" || $value == "CSS_{$SITE}_GW_CALLED_XFORM") {
+					$UUID = $key;
+					$OBJECT = $site_details[$TYPE][$UUID];
+					$this->DELETE_OBJECTS[$TYPE][] = $OBJECT;										// Delete the CSS if type 1 and "CSS_{$SITE}_INCOMING_GW"
+				}
+			}
+		}
 
         // 4 - Add a location
 

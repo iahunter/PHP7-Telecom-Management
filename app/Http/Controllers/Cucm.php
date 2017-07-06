@@ -598,18 +598,17 @@ class Cucm extends Controller
                 $MEMBERS = [];
             if (is_array($member)) {
                 foreach ($member as $mrg) {
-                    //print_r($mrg);
-
-                    if (isset($mrg['mediaResourceGroupName'])) {
+                    if (isset($mrg['_'])) {
+                        $MEMBER = $mrg['_'];
+						$MEMBERS[$mrg['order']] = $MEMBER;
+						
+					} elseif (isset($mrg['mediaResourceGroupName'])) {
                         $MEMBER = $mrg['mediaResourceGroupName']['_'];
-
-                        //echo $mrg['mediaResourceGroupName']['_'];
+						$MEMBERS[$mrg['order']] = $MEMBER;
+						
                     } else {
                         return $RESULTS;
                     }
-
-                        // Append Member to Members with the key as the index number.
-                        $MEMBERS[$mrg['order']] = $MEMBER;
                 }
             }
         }
@@ -729,6 +728,39 @@ class Cucm extends Controller
                                                 'member' => [
                                                             'routePartitionName'       => $PARTITION,
                                                             'index'                    => $INDEX,
+                                                            ],
+                                            ],
+                ];
+
+        return $DATA;
+    }
+	
+
+    protected function add_mrg_member_to_mrgl($MRGL, $MRG, $ORDER)
+    {
+        // Build Array of MRGL adding new MRG.
+        $DATA = [
+                    'name'                => $MRGL,
+                    'addMembers'          => [
+                                                'member' => [
+                                                            'mediaResourceGroupName'       	=> $MRG,
+                                                            'order'                    		=> $ORDER,
+                                                            ],
+                                            ],
+                ];
+
+        return $DATA;
+    }
+
+    protected function remove_mrg_member_to_mrgl($MRGL, $MRG, $ORDER)
+    {
+        // Build Array of MRGL adding new MRG.
+        $DATA = [
+                    'name'                   => $MRGL,
+                    'removeMembers'          => [
+                                                'member' => [
+                                                            'mediaResourceGroupName'       	=> $MRG,
+                                                            'order'                   		=> $ORDER,
                                                             ],
                                             ],
                 ];

@@ -491,70 +491,66 @@ class CucmSiteMigration extends Cucm
             // Append the CSS to the $CSS Array
             $CSS[] = $DATA;
         }
-		
-		// Now add each CSS that is in the $CSS array for the site.
+
+        // Now add each CSS that is in the $CSS array for the site.
 
         foreach ($CSS as $DATA) {
 
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
-				
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
-                    if ($DATA['name'] == "CSS_{$SITE}_DEVICE") {					// Check if this is the Device CSS and if it is, check if it needs to update partition members. 
+                    if ($DATA['name'] == "CSS_{$SITE}_DEVICE") {                    // Check if this is the Device CSS and if it is, check if it needs to update partition members.
                         $UUID = '';
                         foreach ($site_array[$TYPE] as $key => $value) {
                             if ($value == $DATA['name']) {
                                 $UUID = $key;
                             }
                         }
-						
-						$OBJECT = $site_details[$TYPE][$UUID];
 
-                        
-                        $members = $this->getCssMemberNamesbyCSS($OBJECT);			// Get Member names from CSS.
-                        ksort($members);											// Sort the members by index key. 
+                        $OBJECT = $site_details[$TYPE][$UUID];
+
+                        $members = $this->getCssMemberNamesbyCSS($OBJECT);            // Get Member names from CSS.
+                        ksort($members);                                            // Sort the members by index key.
 
                         //Check if this CSS needs updated if they Site type is changing.
 
                         $index = 0;
                         $update = false;
                         $members_array = [];
-						
-						//////////////////////////////////////////////////////////////////////////////////////////////////////
-						// BUG!!! To update CSS Members we have to remove all of them and rebuild.
-						// PHP doesn't like member keys with same name so we need to remove all and add all back in.
-						// 	 Paying attention to the order by index. WE add our new 911 partitions to the begining of the list
-						// 	 followed by the rest in order. 
-						//////////////////////////////////////////////////////////////////////////////////////////////////////
-						
+
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////
+                        // BUG!!! To update CSS Members we have to remove all of them and rebuild.
+                        // PHP doesn't like member keys with same name so we need to remove all and add all back in.
+                        // 	 Paying attention to the order by index. WE add our new 911 partitions to the begining of the list
+                        // 	 followed by the rest in order.
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
                         if ($SITE_TYPE <= 2) {
                             if (! in_array('PT_911Enable', $members)) {
                                 if (in_array("PT_{$SITE}_911", $members)) {
-                                    foreach ($members as $key => $value) {												 
-                                        if ($value == "PT_{$SITE}_911") {												 
-											$REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
-											$this->UPDATE_OBJECTS[$TYPE."removeMembers"][] = $REMOVE;
-											unset($members[$key]);
-										}
-									}
-									
-								}
-								foreach($members as $key => $value){
-									// Build Array to remove each partition from the CSS. - We will need to rebuild all members after this. 
-									$REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
-									$this->UPDATE_OBJECTS[$TYPE."removeMembers"][] = $REMOVE;
-								}
-								
-								// Build Array to add partition to beginning of CSS.
-								$ADD = $this->add_partition_member_to_css($DATA['name'], 'PT_911Enable', $index = 1);
-								$this->UPDATE_OBJECTS[$TYPE."addMembers"][] = $ADD;
-								
-								foreach($members as $key => $value){
-									// Build Array to add partition to beginning of CSS.
-									$ADD = $this->add_partition_member_to_css($DATA['name'], $value, $index = $index + 1);
-									$this->UPDATE_OBJECTS[$TYPE."addMembers"][] = $ADD;
-								}
-                                
+                                    foreach ($members as $key => $value) {
+                                        if ($value == "PT_{$SITE}_911") {
+                                            $REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
+                                            $this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
+                                            unset($members[$key]);
+                                        }
+                                    }
+                                }
+                                foreach ($members as $key => $value) {
+                                    // Build Array to remove each partition from the CSS. - We will need to rebuild all members after this.
+                                    $REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
+                                    $this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
+                                }
+
+                                // Build Array to add partition to beginning of CSS.
+                                $ADD = $this->add_partition_member_to_css($DATA['name'], 'PT_911Enable', $index = 1);
+                                $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+
+                                foreach ($members as $key => $value) {
+                                    // Build Array to add partition to beginning of CSS.
+                                    $ADD = $this->add_partition_member_to_css($DATA['name'], $value, $index = $index + 1);
+                                    $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+                                }
                             } else {
                                 $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
                             }
@@ -565,53 +561,52 @@ class CucmSiteMigration extends Cucm
                                     foreach ($members as $key => $value) {
                                         if ($value == 'PT_911Enable') {
                                             $REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
-											$this->UPDATE_OBJECTS[$TYPE."removeMembers"][] = $REMOVE;
-											unset($members[$key]);
+                                            $this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
+                                            unset($members[$key]);
                                         }
                                     }
                                 }
-								foreach($members as $key => $value){
-										// Build Array to remove each partition from the CSS. - We will need to rebuild all members after this. 
-										$REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
-										$this->UPDATE_OBJECTS[$TYPE."removeMembers"][] = $REMOVE;
-									}
-									
-								// Build Array to add partition to beginning of CSS.
-								$ADD = $this->add_partition_member_to_css($DATA['name'], "PT_{$SITE}_911", $index = 1);
-								$this->UPDATE_OBJECTS[$TYPE."addMembers"][] = $ADD;
-									
-								foreach($members as $key => $value){
-									// Build Array to add partition to beginning of CSS.
-									$ADD = $this->add_partition_member_to_css($DATA['name'], $value, $index = $index + 1);
-									$this->UPDATE_OBJECTS[$TYPE."addMembers"][] = $ADD;
-								}
-							
-							} else {
-								$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
-							}
-						}
-					}else {
-						$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
-					}
-				}else {
-					$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
-				}
-			} else {
-				$this->ADD_OBJECTS[$TYPE][] = $DATA;
-			}
-		}
-		
-		if($SITE_TYPE == 1) {
-			//print "Cleanup CSS";
-			//print_r($site_array[$TYPE]);
-			foreach($site_array[$TYPE] as $key => $value){
-				if ($value == "CSS_{$SITE}_INCOMING_GW" || $value == "CSS_{$SITE}_GW_CALLED_XFORM") {
-					$UUID = $key;
-					$OBJECT = $site_details[$TYPE][$UUID];
-					$this->DELETE_OBJECTS[$TYPE][] = $OBJECT;										// Delete the CSS if type 1 and "CSS_{$SITE}_INCOMING_GW"
-				}
-			}
-		}
+                                foreach ($members as $key => $value) {
+                                    // Build Array to remove each partition from the CSS. - We will need to rebuild all members after this.
+                                        $REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
+                                    $this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
+                                }
+
+                                // Build Array to add partition to beginning of CSS.
+                                $ADD = $this->add_partition_member_to_css($DATA['name'], "PT_{$SITE}_911", $index = 1);
+                                $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+
+                                foreach ($members as $key => $value) {
+                                    // Build Array to add partition to beginning of CSS.
+                                    $ADD = $this->add_partition_member_to_css($DATA['name'], $value, $index = $index + 1);
+                                    $this->UPDATE_OBJECTS[$TYPE.'addMembers'][] = $ADD;
+                                }
+                            } else {
+                                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                            }
+                        }
+                    } else {
+                        $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                    }
+                } else {
+                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                }
+            } else {
+                $this->ADD_OBJECTS[$TYPE][] = $DATA;
+            }
+        }
+
+        if ($SITE_TYPE == 1) {
+            //print "Cleanup CSS";
+            //print_r($site_array[$TYPE]);
+            foreach ($site_array[$TYPE] as $key => $value) {
+                if ($value == "CSS_{$SITE}_INCOMING_GW" || $value == "CSS_{$SITE}_GW_CALLED_XFORM") {
+                    $UUID = $key;
+                    $OBJECT = $site_details[$TYPE][$UUID];
+                    $this->DELETE_OBJECTS[$TYPE][] = $OBJECT;                                        // Delete the CSS if type 1 and "CSS_{$SITE}_INCOMING_GW"
+                }
+            }
+        }
 
         // 4 - Add a location
 
@@ -1433,9 +1428,9 @@ class CucmSiteMigration extends Cucm
         $migrations = $request->migration;
         $result = [];
         foreach ($migrations as $TYPE => $ARRAY) {
-			if($TYPE == 'CssremoveMembers' || $TYPE == 'CssaddMembers'){
-				$TYPE = "Css";												// Update the Type to an acutal type for the updates of CSS members. 
-			}
+            if ($TYPE == 'CssremoveMembers' || $TYPE == 'CssaddMembers') {
+                $TYPE = 'Css';                                                // Update the Type to an acutal type for the updates of CSS members.
+            }
             foreach ($ARRAY as $DATA) {
                 if ($verb == 'Add') {
                     $this->wrap_add_object($DATA, $TYPE);

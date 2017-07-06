@@ -600,12 +600,10 @@ class Cucm extends Controller
                 foreach ($member as $mrg) {
                     if (isset($mrg['_'])) {
                         $MEMBER = $mrg['_'];
-						$MEMBERS[$mrg['order']] = $MEMBER;
-						
-					} elseif (isset($mrg['mediaResourceGroupName'])) {
+                        $MEMBERS[$mrg['order']] = $MEMBER;
+                    } elseif (isset($mrg['mediaResourceGroupName'])) {
                         $MEMBER = $mrg['mediaResourceGroupName']['_'];
-						$MEMBERS[$mrg['order']] = $MEMBER;
-						
+                        $MEMBERS[$mrg['order']] = $MEMBER;
                     } else {
                         return $RESULTS;
                     }
@@ -734,7 +732,6 @@ class Cucm extends Controller
 
         return $DATA;
     }
-	
 
     protected function add_mrg_member_to_mrgl($MRGL, $MRG, $ORDER)
     {
@@ -743,8 +740,8 @@ class Cucm extends Controller
                     'name'                => $MRGL,
                     'addMembers'          => [
                                                 'member' => [
-                                                            'mediaResourceGroupName'       	=> $MRG,
-                                                            'order'                    		=> $ORDER,
+                                                            'mediaResourceGroupName'           => $MRG,
+                                                            'order'                            => $ORDER,
                                                             ],
                                             ],
                 ];
@@ -759,8 +756,8 @@ class Cucm extends Controller
                     'name'                   => $MRGL,
                     'removeMembers'          => [
                                                 'member' => [
-                                                            'mediaResourceGroupName'       	=> $MRG,
-                                                            'order'                   		=> $ORDER,
+                                                            'mediaResourceGroupName'           => $MRG,
+                                                            'order'                            => $ORDER,
                                                             ],
                                             ],
                 ];

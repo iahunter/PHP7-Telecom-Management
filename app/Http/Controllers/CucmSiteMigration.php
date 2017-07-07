@@ -1487,7 +1487,7 @@ class CucmSiteMigration extends Cucm
             foreach ($site_array[$TYPE] as $key => $value) {
                 $UUID = $key;
                 $OBJECT = $site_details[$TYPE][$UUID];
-				//print_r($OBJECT);
+                //print_r($OBJECT);
                 // Update the CTI Route Point CSS
                 if ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
                     $UPDATE['name'] = $OBJECT['name'];
@@ -1495,64 +1495,63 @@ class CucmSiteMigration extends Cucm
                     $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                     $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
                 }
-				
-				$lines = $this->cucm->get_lines_details_by_phone_name($OBJECT['name']);
-				//print_r($lines);
-				foreach($lines as $line){
-					$DATA = [];
-					$UPDATE = false;
-					$CSS = $line['shareLineAppearanceCssName']["_"];
-					$ARRAY = explode("_", $CSS);
-					
-					$DATA['pattern'] = $line['pattern'];
-					$DATA['routePartitionName'] = $line['routePartitionName']['_'];
-					
-					$DATA['e164AltNum'] = [
-									'numMask'                     => "+1{$line['pattern']}",
-									'isUrgent'                    => 'true',
-									'addLocalRoutePartition'      => 'true',
-									'routePartition'              => 'Global-All-Lines',
-									'active'                      => 'true',
-									'advertiseGloballyIls'        => 'true',
-								];
-					
-					if (!in_array("LINEONLY", $ARRAY)){
-						$DATA['shareLineAppearanceCssName'] = "CSS_LINEONLY_L4_INTL";
-						$UPDATE = true;
-					}
-					if (
-						$line["callForwardAll"]["callingSearchSpaceName"]["_"] 	!= "CSS_LINE_CFWD_LD" ||
-						$line["callForwardBusy"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardBusyInt"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardNoAnswer"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardNoAnswerInt"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardNoCoverage"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardNoCoverageInt"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardOnFailure"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardAlternateParty"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardNotRegistered"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" ||
-						$line["callForwardNotRegisteredInt"]["callingSearchSpaceName"]["_"] != "CSS_LINE_CFWD_LD" 
-					){
-						// Update 
-						$UPDATE = true;
-						$DATA["callForwardAll"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD";
-						$DATA["callForwardBusy"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardBusyInt"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardNoAnswer"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardNoAnswerInt"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardNoCoverage"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardNoCoverageInt"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardOnFailure"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardAlternateParty"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardNotRegistered"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD" ;
-						$DATA["callForwardNotRegisteredInt"]["callingSearchSpaceName"] = "CSS_LINE_CFWD_LD";
-					}
-					
-					if($UPDATE){
-						$this->UPDATE_OBJECTS["Line"][] = $DATA;
-					}
-						
-				}
+
+                $lines = $this->cucm->get_lines_details_by_phone_name($OBJECT['name']);
+                //print_r($lines);
+                foreach ($lines as $line) {
+                    $DATA = [];
+                    $UPDATE = false;
+                    $CSS = $line['shareLineAppearanceCssName']['_'];
+                    $ARRAY = explode('_', $CSS);
+
+                    $DATA['pattern'] = $line['pattern'];
+                    $DATA['routePartitionName'] = $line['routePartitionName']['_'];
+
+                    $DATA['e164AltNum'] = [
+                                    'numMask'                     => "+1{$line['pattern']}",
+                                    'isUrgent'                    => 'true',
+                                    'addLocalRoutePartition'      => 'true',
+                                    'routePartition'              => 'Global-All-Lines',
+                                    'active'                      => 'true',
+                                    'advertiseGloballyIls'        => 'true',
+                                ];
+
+                    if (! in_array('LINEONLY', $ARRAY)) {
+                        $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
+                        $UPDATE = true;
+                    }
+                    if (
+                        $line['callForwardAll']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardBusy']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardBusyInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoAnswer']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoAnswerInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoCoverage']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoCoverageInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardOnFailure']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardAlternateParty']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNotRegistered']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNotRegisteredInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD'
+                    ) {
+                        // Update
+                        $UPDATE = true;
+                        $DATA['callForwardAll']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardBusy']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardBusyInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoAnswer']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoAnswerInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoCoverage']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoCoverageInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardOnFailure']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardAlternateParty']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                    }
+
+                    if ($UPDATE) {
+                        $this->UPDATE_OBJECTS['Line'][] = $DATA;
+                    }
+                }
             }
         }
 
@@ -1628,12 +1627,12 @@ class CucmSiteMigration extends Cucm
                     // Run the update operation
                     try {
                         //print "Attempting to update object type {$TYPE} for {$SITE}:";
-						if($TYPE == "Line" || $TYPE == "TransPattern" || $TYPE == "RoutePattern"){
-							$REPLY = $this->cucm->update_object_type_by_pattern_and_partition($DATA, $TYPE);
-						}else{
-							$REPLY = $this->cucm->update_object_type_by_assoc($DATA, $TYPE);
-						}
-                        
+                        if ($TYPE == 'Line' || $TYPE == 'TransPattern' || $TYPE == 'RoutePattern') {
+                            $REPLY = $this->cucm->update_object_type_by_pattern_and_partition($DATA, $TYPE);
+                        } else {
+                            $REPLY = $this->cucm->update_object_type_by_assoc($DATA, $TYPE);
+                        }
+
                         $NEW = $this->cucm->get_object_type_by_uuid($REPLY, $TYPE);
                         //$this->results['DevicePoolUpdate'] = "{$TYPE} UPDATED: {$REPLY}";
                         $this->results["{$TYPE}_Update"][] = [

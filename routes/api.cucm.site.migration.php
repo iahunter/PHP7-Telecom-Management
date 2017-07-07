@@ -107,3 +107,31 @@
      * )
      **/
     $api->post('cucm/site/migration/run', 'App\Http\Controllers\CucmSiteMigration@run_migration');
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/site/migration/phonescan",
+     *     tags={"Management - CUCM - Site Migration"},
+     *     summary="Rescan Site Phones and update DB",
+     *     description="",
+     *     operationId="scanphones",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="Name of Site",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/site/migration/phonescan', 'App\Http\Controllers\CucmSiteMigration@rescan_site_phones');

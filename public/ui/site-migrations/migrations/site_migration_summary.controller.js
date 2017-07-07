@@ -203,6 +203,9 @@ angular
 			else if(verb == 'Delete'){
 				migration.migration = vm.migration.change_summary.Delete;
 			}
+			else if(verb == 'PhoneUpdate'){
+				migration.migration = vm.migration.change_summary.PhoneUpdate;
+			}
 			
 			// Run Migration
 			siteMigrationService.runMigration(migration)

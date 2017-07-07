@@ -2,14 +2,14 @@
 
 namespace App;
 
-use OwenIt\Auditing\Auditable;
+//use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cucmphoneconfigs extends Model
 {
     //
-    use Auditable;
+    //use Auditable;
     use SoftDeletes;
     protected $table = 'cucmphone';
     protected $fillable = ['name', 'description', 'devicepool', 'css', 'model', 'ownerid', 'ipv4address', 'erl', 'lines', 'config'];

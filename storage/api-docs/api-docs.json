@@ -1183,6 +1183,39 @@
                 }
             }
         },
+        "/telephony/api/cucm/site/migration/phonescan": {
+            "get": {
+                "tags": [
+                    "Management - CUCM - Site Migration"
+                ],
+                "summary": "Rescan Site Phones and update DB",
+                "description": "",
+                "operationId": "scanphones",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "Name of Site",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/sites": {
             "get": {
                 "tags": [

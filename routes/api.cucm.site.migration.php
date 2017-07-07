@@ -107,8 +107,8 @@
      * )
      **/
     $api->post('cucm/site/migration/run', 'App\Http\Controllers\CucmSiteMigration@run_migration');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/site/migration/phonescan",
      *     tags={"Management - CUCM - Site Migration"},

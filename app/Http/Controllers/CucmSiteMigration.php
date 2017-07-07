@@ -1205,55 +1205,52 @@ class CucmSiteMigration extends Cucm
             // Update Transpattern Partitions and Device Pools
             $PATTERN = $TRANS['pattern'];
 
-			$DATA = [
-						'routePartitionName'               => "PT_{$SITE}_XLATE",
-						'pattern'                          => $PATTERN,
-						'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
-						'usage'                            => 'Translation',
-						];
-			
+            $DATA = [
+                        'routePartitionName'               => "PT_{$SITE}_XLATE",
+                        'pattern'                          => $PATTERN,
+                        'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
+                        'usage'                            => 'Translation',
+                        ];
 
             if ($TRANS['routePartitionName']['_'] != "PT_{$SITE}_XLATE" || $TRANS['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
-                
-				if($TRANS['routePartitionName']['_'] != "PT_{$SITE}_XLATE"){
-					//print_r($TRANS);
-					$this->DELETE_OBJECTS[$TYPE][] = $TRANS;
-					
-					if (in_array($TRANS['pattern'], $site_array[$TYPE])) {
+                if ($TRANS['routePartitionName']['_'] != "PT_{$SITE}_XLATE") {
+                    //print_r($TRANS);
+                    $this->DELETE_OBJECTS[$TYPE][] = $TRANS;
+
+                    if (in_array($TRANS['pattern'], $site_array[$TYPE])) {
                         //$this->SKIP_OBJECTS[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
                         //$this->SKIP_OBJECTS[$TYPE][] = [$OBJECT['pattern'] => "Skipping... {$OBJECT['pattern']} already exists."];
-						$FOUND = false;
+                        $FOUND = false;
                         foreach ($site_array[$TYPE] as $key => $value) {
-							
                             $UUID = false;
                             //print_r($key);
                             if ($value == $TRANS['pattern']) {
                                 $UUID = $key;
                                 if ($UUID) {
                                     $OBJECT = $site_details[$TYPE][$UUID];
-									if($OBJECT['routePartitionName']['_'] == "PT_{$SITE}_XLATE"){
-										//$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
-										$FOUND = true;
-									}
+                                    if ($OBJECT['routePartitionName']['_'] == "PT_{$SITE}_XLATE") {
+                                        //$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                                        $FOUND = true;
+                                    }
                                 }
                             }
                         }
-						
-						if(!$FOUND){
-							// If we didn't find a pattern in the new xlate partition, create one. 
-							$TRANS['routePartitionName'] = "PT_{$SITE}_XLATE";
-							$TRANS['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-							unset($TRANS['uuid']);
-							
-							$this->ADD_OBJECTS[$TYPE][] = $TRANS;
-						}
-					}
-				} else {
-					$this->UPDATE_OBJECTS[$TYPE][] = $DATA;
-				}
-			} else {
-				$this->SKIP_OBJECTS[$TYPE][] = $TRANS;
-			}
+
+                        if (! $FOUND) {
+                            // If we didn't find a pattern in the new xlate partition, create one.
+                            $TRANS['routePartitionName'] = "PT_{$SITE}_XLATE";
+                            $TRANS['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            unset($TRANS['uuid']);
+
+                            $this->ADD_OBJECTS[$TYPE][] = $TRANS;
+                        }
+                    }
+                } else {
+                    $this->UPDATE_OBJECTS[$TYPE][] = $DATA;
+                }
+            } else {
+                $this->SKIP_OBJECTS[$TYPE][] = $TRANS;
+            }
         }
 
         // 17 - Create Called Party Transformations.

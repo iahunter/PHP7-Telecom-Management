@@ -4898,6 +4898,13 @@
                         "type": "string"
                     },
                     {
+                        "name": "monitor",
+                        "in": "formData",
+                        "description": "Active Monitoring",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
                         "name": "json",
                         "in": "formData",
                         "description": "json",
@@ -5031,6 +5038,13 @@
                         "description": "Sitecode",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "monitor",
+                        "in": "formData",
+                        "description": "Active Monitoring",
+                        "required": false,
+                        "type": "boolean"
                     },
                     {
                         "name": "json",

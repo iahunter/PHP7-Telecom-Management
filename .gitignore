@@ -40,5 +40,7 @@ app/Console/Commands/CallManager/Imports/
 
 storage/axl/
 storage/sonus/
+storage/cucm/
 grab-sonus-configs.sh
-
+grab-cucm-siteconfigs.sh
+grab-cucm-phoneconfigs.sh

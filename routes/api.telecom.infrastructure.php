@@ -123,6 +123,13 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
+     *         name="monitor",
+     *         in="formData",
+     *         description="Active Monitoring",
+     *         required=false,
+     *         type="boolean"
+     *     ),
+     *     @SWG\Parameter(
      *         name="json",
      *         in="formData",
      *         description="json",
@@ -220,6 +227,13 @@
      *         description="Sitecode",
      *         required=false,
      *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="monitor",
+     *         in="formData",
+     *         description="Active Monitoring",
+     *         required=false,
+     *         type="boolean"
      *     ),
      *     @SWG\Parameter(
      *         name="json",

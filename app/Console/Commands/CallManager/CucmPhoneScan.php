@@ -36,9 +36,12 @@ class CucmPhoneScan extends Command
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
+													
+		$this->svn = env('CUCM_SVN');
 
         parent::__construct();
     }
+	
 
     /**
      * Execute the console command.
@@ -217,6 +220,11 @@ class CucmPhoneScan extends Command
 
     protected function deletephone($name)
     {
+		// Delete File from Subversion directory. 
+		if(file_exists("storage/cucm/{$this->svn}/phones/{$name}")){
+			unlink("storage/cucm/{$this->svn}/phones/{$name}");
+		}
+		
         //echo 'ENTERED deletephone function';
         $record = Cucmphoneconfigs::where('name', $name)->first();
         //print_r($record);
@@ -226,6 +234,14 @@ class CucmPhoneScan extends Command
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     protected function create_update_phone($newphone)
     {
+		
+		// Save Site Config as JSON and upload to subversion for change tracking.
+		$svn_save = json_encode($newphone, JSON_PRETTY_PRINT);
+		//echo "Saving {$newphone['name']} json to file...".PHP_EOL;
+		file_put_contents("storage/cucm/{$this->svn}/phones/{$newphone['name']}", $svn_save);
+		//echo "Saved to file...".PHP_EOL;
+
+		
         // Check if Site exists in the database
         if (Cucmphoneconfigs::where([['name', $newphone['name']]])->count()) {
             $phone = Cucmphoneconfigs::where([['name', $newphone['name']]])->first();

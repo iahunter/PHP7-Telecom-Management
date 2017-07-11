@@ -49,34 +49,32 @@ class CucmPhoneScanOnDemand extends Command
      */
     public function handle()
     {
-		
         $start = Carbon::now();
         echo 'Starting Site Scan at: '.$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
-        
-		print_r($sites);
-		
-		echo "Enter array key or Sitecode: ";
-		$handle = fopen ("php://stdin","r");
-		$line = fgets($handle);
-		$site = trim($line);
-		print $site.PHP_EOL;
-		if(is_numeric($site)){
-			if($sites[$site]){
-				$site = $sites[$site];
-			}
-		}
-		elseif(!in_array($site, $sites)){
-			echo "ABORTING! Sitecode not found in existing site array\n";
-			exit;
-		}
-		fclose($handle);
-		echo "\n"; 
-		echo "Thank you, Scanning sitecode {$site}...\n";
-		$sites = [];
-		$sites[] = $site;
-		//$sites = ['TRAVIS01'];
+
+        print_r($sites);
+
+        echo 'Enter array key or Sitecode: ';
+        $handle = fopen('php://stdin', 'r');
+        $line = fgets($handle);
+        $site = trim($line);
+        echo $site.PHP_EOL;
+        if (is_numeric($site)) {
+            if ($sites[$site]) {
+                $site = $sites[$site];
+            }
+        } elseif (! in_array($site, $sites)) {
+            echo "ABORTING! Sitecode not found in existing site array\n";
+            exit;
+        }
+        fclose($handle);
+        echo "\n";
+        echo "Thank you, Scanning sitecode {$site}...\n";
+        $sites = [];
+        $sites[] = $site;
+        //$sites = ['TRAVIS01'];
         $sitetotalcount = count($sites);
         $sitecount = 0;
         $storephonenames = [];
@@ -135,12 +133,12 @@ class CucmPhoneScanOnDemand extends Command
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL;
 
-		/*
+        /*
         echo '
-		***************************************
-			Cleaning up Deleted Phones
-		****************************************
-		';
+        ***************************************
+            Cleaning up Deleted Phones
+        ****************************************
+        ';
         $start = Carbon::now();
         echo 'Start Time: '.$start.PHP_EOL;
 
@@ -164,7 +162,7 @@ class CucmPhoneScanOnDemand extends Command
         $end = Carbon::now();
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL;
-		*/
+        */
     }
 
     // Get a list of Sites by device pools.

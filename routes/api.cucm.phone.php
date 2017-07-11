@@ -153,8 +153,8 @@
      * )
      **/
     $api->post('cucm/phone', 'App\Http\Controllers\Cucmphone@createPhone');
-	
-	/**
+
+    /**
      * @SWG\Put(
      *     path="/telephony/api/cucm/phone",
      *     tags={"Management - CUCM - Phone Provisioning"},

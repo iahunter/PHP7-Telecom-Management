@@ -163,19 +163,19 @@ class Cucmphone extends Cucm
             //return "{$NAME} Does not exist in CUCM Database.\n";
         }
     }
-	
-	public function updatePhone(Request $request)
+
+    public function updatePhone(Request $request)
     {
-		$user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('delete', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		$TYPE = "Phone";
-		$DATA = $request->phone;
 
-		if (isset($DATA['name'])) {
+        $TYPE = 'Phone';
+        $DATA = $request->phone;
+
+        if (isset($DATA['name'])) {
             $OBJECT = $DATA['name'];
         } elseif (isset($DATA['pattern'])) {
             $OBJECT = $DATA['pattern'];
@@ -196,7 +196,7 @@ class Cucmphone extends Cucm
 
             // Create log entry
             activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $LOG])->log('update object');
-			
+
             return $LOG;
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type: {$TYPE}".

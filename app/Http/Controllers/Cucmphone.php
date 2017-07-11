@@ -145,12 +145,6 @@ class Cucmphone extends Cucm
 
     public function deletePhonebyName($NAME)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
-        if (! $user->can('delete', Cucmclass::class)) {
-            abort(401, 'You are not authorized');
-        }
-
         // Try to remove device from CUCM
         try {
             $RESULT = $this->cucm->get_phone_by_name($NAME);
@@ -167,6 +161,58 @@ class Cucmphone extends Cucm
             }
         } catch (\Exception $E) {
             //return "{$NAME} Does not exist in CUCM Database.\n";
+        }
+    }
+	
+	public function updatePhone(Request $request)
+    {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('delete', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
+		$TYPE = "Phone";
+		$DATA = $request->phone;
+
+		if (isset($DATA['name'])) {
+            $OBJECT = $DATA['name'];
+        } elseif (isset($DATA['pattern'])) {
+            $OBJECT = $DATA['pattern'];
+        } else {
+            $OBJECT = $TYPE;
+        }
+        try {
+            $REPLY = $this->cucm->update_object_type_by_assoc($DATA, $TYPE);
+
+            $LOG = [
+                    'type'       => $TYPE,
+                    'object'     => $OBJECT,
+                    'status'     => 'success',
+                    'reply'      => $REPLY,
+                    'request'    => $DATA,
+
+                ];
+
+            // Create log entry
+            activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $LOG])->log('update object');
+			
+            return $LOG;
+        } catch (\Exception $E) {
+            $EXCEPTION = "Exception adding object type: {$TYPE}".
+                  "{$E->getMessage()}";
+                  /*"Stack trace:\n".
+                  "{$E->getTraceAsString()}".
+                  "Data sent:\n";*/
+            //$delimiter = "Stack trace:";
+            //explode ($delimiter , $EXCEPTION);
+            $this->results[$TYPE] = [
+                                        'type'         => $TYPE,
+                                        'object'       => $OBJECT,
+                                        'status'       => 'error',
+                                        'request'      => $DATA,
+                                        'exception'    => $EXCEPTION,
+                                    ];
         }
     }
 

@@ -5,7 +5,7 @@
 			<div class="panel-group" id="accordion">
 				<div ng-repeat="(changekey,changevalues) in vm.migration.change_summary">
 					<!--<div ng-hide="changekey == 'CurrentDetails' || changekey == 'CurrentSummary'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-					--><div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete' || changekey == 'Skip' || changekey == 'PhoneUpdate'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					--><div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete' || changekey == 'ManualReview' || changekey == 'Skip' || changekey == 'PhoneUpdate'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 					<!--<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 					-->	<div class="panel-heading" role="tab" id="{{changekey}}" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 
@@ -23,7 +23,7 @@
 									
 									<!-- Tab Content -->
 									
-									<ul class="nav nav-tabs" >
+									<ul class="nav nav-pills" >
 										<li class="active"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_test_tab">Home</a></li>
 										<li ng-repeat="(key,values) in changevalues"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_{{ key}}_tab">{{ key}}</a></li>
 									</ul>
@@ -93,19 +93,21 @@
 							<p ng-if="changekey == 'Delete'" ><b><span style="color:red">WARNING! </span>DO NOT RUN THIS PIECE UNTIL YOU ARE ABSOLUTELY CERTAIN ALL IS WORKING AFTER MIGRATION.</b><br><br></p>
 							<p><b style="color:red">Warning!</b> Running this migration will <b>{{changekey}}</b> objects in the CUCM Production System realtime.</p>
 							<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
-							<!--
+							
 							<button class="btn btn-success btn-sm" ng-if="changekey == 'Add'" ng-click="vm.runmigration('Add')"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
 							<button class="btn btn-primary btn-sm" ng-if="changekey == 'Update'" ng-click="vm.runmigration('Update')"><i class="glyphicon glyphicon-save"></i> Run Migration {{changekey}}s</button>
 							<button class="btn btn-danger btn-sm" ng-if="changekey == 'Delete'" ng-click="vm.runmigration('Delete')"><i class="glyphicon glyphicon-remove"></i> Run Migration {{changekey}}s</button>
-							-->
+							
 
 							<button class="btn btn-success btn-sm " ng-if="changekey == 'Add'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
 							<button class="btn btn-primary btn-sm " ng-if="changekey == 'Update'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
 							<button class="btn btn-danger btn-sm " ng-if="changekey == 'Delete'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							<!--<button class="btn btn-danger btn-sm " ng-if="changekey == 'ManualReview'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
+							-->
 							<button class="btn btn-primary btn-sm " ng-if="changekey == 'PhoneUpdate'" data-toggle="modal" data-target="#{{changekey}}-modal"><i class="glyphicon glyphicon-plus"></i> Run Migration {{changekey}}s</button>
 							
 							<div style="margin:25px"></div>
-							<div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete' || changekey == 'PhoneUpdate'">
+							<div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete'  || changekey == 'ManualReview' || changekey == 'PhoneUpdate'">
 								<ng-include src="'site-migrations/migrations/section-includes/include-migration-modal.html'"></ng-include>
 							</div>
 							

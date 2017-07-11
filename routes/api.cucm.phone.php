@@ -153,6 +153,38 @@
      * )
      **/
     $api->post('cucm/phone', 'App\Http\Controllers\Cucmphone@createPhone');
+	
+	/**
+     * @SWG\Put(
+     *     path="/telephony/api/cucm/phone",
+     *     tags={"Management - CUCM - Phone Provisioning"},
+     *     summary="Update Phone in CUCM",
+     *     description="Update Phone",
+     *     operationId="insert phones",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="phone",
+     *         in="formData",
+     *         description="This requires the correct values to be passed.",
+     *         required=true,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="Phone",
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->post('cucm/paste/phones', 'App\Http\Controllers\Cucmphone@pastePhones');
 
     /**
      * @SWG\Post(

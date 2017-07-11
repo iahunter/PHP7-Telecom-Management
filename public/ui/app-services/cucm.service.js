@@ -255,6 +255,37 @@ angular
 		}
 		
 		
+		self.updatephones = function(phones) {
+				if (angular.isArray(phones) && phones.length > 0) {
+					console.log("PHONES")
+					console.log(phones);
+					var postdata = phones[0];
+					
+					//phone.inuse = true
+					$http.put('../api/cucm/phone', postdata)
+					  .then(
+						  function(data) {
+							self.results.push(data.data.response);
+							console.log("Success.");
+							phones.shift();
+							self.updatephones(phones);
+							//console.log('After Shift');
+							//console.log(phones);
+						  },
+						  function(data) {
+							self.results.push(data.data.response);
+							console.log("Failure.");
+							// if you want to continue even if it fails:
+							self.updatephones(phones.shift());
+						  }
+					);
+				}
+			
+			console.log(self.results);
+			return self.results;
+		}
+		
+		
 		
 		return self
 

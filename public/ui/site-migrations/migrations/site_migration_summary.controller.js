@@ -183,6 +183,36 @@ angular
 			
 		// Call the function 
 		get_migration_summary(id);
+		
+		
+		// Run the migration
+		vm.phonemigration = function(migration) {
+			vm.deploysiteresult = {}
+			
+			var Phones = migration.Phone;
+			var Lines = migration.Line;
+			
+			vm.deploycucmsiteloading = true;
+			
+			console.log(migration);
+			
+			// Run Migration
+			siteMigrationService.updatephones(Phones)
+				.then(function(res) {
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						return vm.message;
+					}else{
+						vm.deploysiteresult = res.data.response
+					}
+				});
+			// placeholder for results
+
+			vm.deploycucmsiteloading = false;
+		}
 
 		
 		// Run the migration
@@ -204,7 +234,9 @@ angular
 				migration.migration = vm.migration.change_summary.Delete;
 			}
 			else if(verb == 'PhoneUpdate'){
-				migration.migration = vm.migration.change_summary.PhoneUpdate;
+				migration = vm.migration.change_summary.PhoneUpdate;
+				//return vm.phonemigration(migration);
+				alert('phonemigration - turn on new migration to do in javascript');
 			}
 			
 			// Run Migration

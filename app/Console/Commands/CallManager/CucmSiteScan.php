@@ -36,13 +36,16 @@ class CucmSiteScan extends Command
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-
-        $this->svn = env('CUCM_SVN');
+													
+		$this->svn = env('CUCM_SVN');
 
         parent::__construct();
     }
 
-    /**
+    
+	
+	
+	/**
      * Execute the console command.
      *
      * @return mixed
@@ -105,6 +108,7 @@ class CucmSiteScan extends Command
 
             echo $e911.PHP_EOL;
 
+			
             $this->create_update_site($site, $site_summary, $site_details, $e911, $trunking);
         }
 
@@ -129,9 +133,9 @@ class CucmSiteScan extends Command
 
     protected function deletesitecode($sitecode)
     {
-        if (file_exists("storage/cucm/{$this->svn}/sites/{$sitecode}")) {
-            unlink("storage/cucm/{$this->svn}/sites/{$sitecode}");
-        }
+		if(file_exists("storage/cucm/{$this->svn}/sites/{$sitecode}")){
+			unlink("storage/cucm/{$this->svn}/sites/{$sitecode}");
+		}
         echo 'ENTERED deletesitecode function';
         $record = Cucmsiteconfigs::where('sitecode', $sitecode)->first();
         //print_r($record);
@@ -147,12 +151,13 @@ class CucmSiteScan extends Command
         $INSERT['e911'] = $e911;
         $INSERT['trunking'] = $trunking;
 
-        // Save Site Config as JSON and upload to subversion for change tracking.
-        $svn_save = json_encode($INSERT, JSON_PRETTY_PRINT);
-        echo "Saving {$sitecode} json to file...".PHP_EOL;
-        file_put_contents("storage/cucm/{$this->svn}/sites/{$sitecode}", $svn_save);
-        //echo "Saved to file...".PHP_EOL;
-
+		
+		// Save Site Config as JSON and upload to subversion for change tracking.
+		$svn_save = json_encode($INSERT, JSON_PRETTY_PRINT);
+		echo "Saving {$sitecode} json to file...".PHP_EOL;
+		file_put_contents("storage/cucm/{$this->svn}/sites/{$sitecode}", $svn_save);
+		//echo "Saved to file...".PHP_EOL;
+		
         // Check if Site exists in the database
         if (Cucmsiteconfigs::where([['sitecode', $sitecode]])->count()) {
             $site = Cucmsiteconfigs::where([['sitecode', $sitecode]])->first();
@@ -185,7 +190,7 @@ class CucmSiteScan extends Command
             //$sites = ["TRAVIS01"];
 
             // Array of DP we don't want to include.
-            $discard = ['TEST', 'Self_Provisioning', 'ECD', '911Enable', 'ATT_SIP', 'Travis', 'CENCOLIT', 'TEMPLATE', 'CENTRAL_SBC_SIPTRUNKS', 'TRAVIS01'];
+            $discard = ['TEST', 'Self_Provisioning', 'ECD', '911Enable', 'ATT_SIP', 'Travis', 'CENCOLIT', 'TEMPLATE', 'CENTRAL_SBC_SIPTRUNKS'];
 
             if (! $sites) {
                 // Return blank array if no results in $didinfo.

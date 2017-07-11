@@ -143,17 +143,19 @@ angular
 		// Delete Migration
 		vm.delete = function(migration) {
 			siteMigrationService.deleteSiteMigration(migration.id).then(function(data) {
-
-			
 				// jQuery Hack to fix body from the Model. 
 					$(".modal-backdrop").hide();
 					$('body').removeClass("modal-open");
 					$('body').removeClass("modal-open");
 					$('body').removeAttr( 'style' );
 				// End of Hack */
-			
-				$location.path('/sitemigrations/migrations/' + vm.sitecode);
-				//return $state.reload();
+				
+				if($location.path() != '/sitemigrations/migrations/' + vm.sitecode){
+					return $location.path('/sitemigrations/migrations/' + vm.sitecode);
+				}else{
+					return $state.reload();
+				}
+
           }, function(error) {
 				alert('An error occurred');
           });

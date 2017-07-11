@@ -18,7 +18,8 @@ class CucmSiteMigration extends Cucm
     public $ADD_OBJECTS = [];
     public $UPDATE_OBJECTS = [];
     public $DELETE_OBJECTS = [];
-    public $PHONEUPDATE_OBJECTS = [];
+	public $PHONEUPDATE_OBJECTS = [];
+	public $REVIEW_OBJECTS = [];
 
     private function update_cucmsite_db($sitecode, $site_summary, $site_details)
     {
@@ -1485,17 +1486,28 @@ class CucmSiteMigration extends Cucm
 
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
+            
             foreach ($site_array[$TYPE] as $key => $value) {
+				
                 $UUID = $key;
                 $OBJECT = $site_details[$TYPE][$UUID];
                 //print_r($OBJECT);
                 // Update the CTI Route Point CSS
-                if ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
+				if ($OBJECT['callingSearchSpaceName']['_'] == "CSS_{$SITE}") {
+				
                     $UPDATE = [];
-                    $UPDATE['name'] = $OBJECT['name'];
+					$UPDATE['name'] = $OBJECT['name'];
                     $UPDATE['description'] = $OBJECT['description'];
                     $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                     $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+                }
+                elseif ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
+				
+                    $UPDATE = [];
+					$UPDATE['name'] = $OBJECT['name'];
+                    $UPDATE['description'] = $OBJECT['description'];
+                    $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                    $this->REVIEW_OBJECTS[$TYPE][] = $OBJECT;
                 }
 
                 $lines = $this->cucm->get_lines_details_by_phone_name($OBJECT['name']);
@@ -1505,9 +1517,20 @@ class CucmSiteMigration extends Cucm
                     $UPDATE = false;
                     $CSS = $line['shareLineAppearanceCssName']['_'];
                     $ARRAY = explode('_', $CSS);
+					
+					if($line['routePartitionName']['_'] != "Global-All-Lines"){
+						$this->REVIEW_OBJECTS["Line"][] = $line;
+						continue;
+					}
 
+					// Skip 911 related CTI Route Patterns so we don't break something regarding E911. 
+					if($line['pattern'] == "911" || $line['pattern'] == "9.911" || $line['pattern'] == "*911" || $line['pattern'] == "*912"){
+						//$this->REVIEW_OBJECTS["Line"][] = $line;
+						continue;
+					}
+					
                     $DATA['pattern'] = $line['pattern'];
-                    $DATA['description'] = $line['description'];
+					$DATA['description'] = $line['description'];
                     $DATA['routePartitionName'] = $line['routePartitionName']['_'];
 
                     $DATA['e164AltNum'] = [
@@ -1557,104 +1580,107 @@ class CucmSiteMigration extends Cucm
                 }
             }
         }
-
-        // 19 - Update Phones
+		
+		// 19 - Update Phones
 
         // Calculated variables
-
-        $count = Cucmphoneconfigs::where('devicepool', 'like', '%'.$SITE.'%')->count();
+        
+		
+		$count = Cucmphoneconfigs::where('devicepool', 'like', '%'.$SITE.'%')->count();
 
         $phone_array = [];
 
         if ($count) {
             $phone_array[] = Cucmphoneconfigs::where('devicepool', 'like', '%'.$SITE.'%')->chunk(300, function ($phones) {
                 $return = [];
-                $TYPE = 'Phone';
+				$TYPE = 'Phone';
                 foreach ($phones as $PHONE) {
-                    //print_r($phones);
-                    $DATA = [];
-                    $PHONE_CONFIG = $PHONE['config'];
-                    $DP = explode('_', $PHONE['devicepool']);
-                    $SITE = $DP[1];
+					//print_r($phones);
+					$DATA = [];
+					$PHONE_CONFIG = $PHONE['config'];
+					$DP = explode("_", $PHONE['devicepool']);
+					$SITE = $DP[1];
+					
+					if ($PHONE_CONFIG['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
+						
+						$DATA['name'] 											= $PHONE_CONFIG['name'];
+						$DATA['description'] 									= $PHONE_CONFIG['description'];
+						$DATA['callingSearchSpaceName'] 						= "CSS_{$SITE}_DEVICE";
+						$DATA['subscribeCallingSearchSpaceName'] 				= "CSS_DEVICE_SUBSCRIBE";
+						
+						$this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
+					}
 
-                    if ($PHONE_CONFIG['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
-                        $DATA['name'] = $PHONE_CONFIG['name'];
-                        $DATA['description'] = $PHONE_CONFIG['description'];
-                        $DATA['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-                        $DATA['subscribeCallingSearchSpaceName'] = 'CSS_DEVICE_SUBSCRIBE';
+					$LINES_CONFIG = $PHONE['lines'];
+					
+					foreach ($LINES_CONFIG as $line) {
+						$DATA = [];
+						$UPDATE = false;
+						$CSS = $line['shareLineAppearanceCssName']['_'];
+						$ARRAY = explode('_', $CSS);
 
-                        $this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
-                    }
+						$DATA['pattern'] = $line['pattern'];
+						$DATA['description'] = $line['description'];
+						$DATA['routePartitionName'] = $line['routePartitionName']['_'];
 
-                    $LINES_CONFIG = $PHONE['lines'];
+						//print_r($line['e164AltNum']['routePartition']['_']);
+						//print_r($line['e164AltNum']);
+						
+						if($line['e164AltNum']['routePartition']['_'] != "Global-All-Lines"){
+							// Update
+							$DATA['e164AltNum'] = [
+										'numMask'                     => "+1{$line['pattern']}",
+										'isUrgent'                    => 'true',
+										'addLocalRoutePartition'      => 'true',
+										'routePartition'              => 'Global-All-Lines',
+										'active'                      => 'true',
+										'advertiseGloballyIls'        => 'true',
+									];
+							//$UPDATE = true;
+						}
+						
 
-                    foreach ($LINES_CONFIG as $line) {
-                        $DATA = [];
-                        $UPDATE = false;
-                        $CSS = $line['shareLineAppearanceCssName']['_'];
-                        $ARRAY = explode('_', $CSS);
+						if (! in_array('LINEONLY', $ARRAY)) {
+							// Update
+							$DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
+							$UPDATE = true;
+						}
+						//print_r($line);
+						if (
+							$line['callForwardAll']['callingSearchSpaceName']['_'] 				!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardBusy']['callingSearchSpaceName']['_'] 			!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardBusyInt']['callingSearchSpaceName']['_'] 			!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardNoAnswer']['callingSearchSpaceName']['_'] 		!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardNoAnswerInt']['callingSearchSpaceName']['_'] 		!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardNoCoverage']['callingSearchSpaceName']['_'] 		!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardNoCoverageInt']['callingSearchSpaceName']['_'] 	!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardOnFailure']['callingSearchSpaceName']['_'] 		!= 'CSS_LINE_CFWD_LD' ||
+							//$line['callForwardAlternateParty']['callingSearchSpaceName']['_'] 	!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardNotRegistered']['callingSearchSpaceName']['_'] 	!= 'CSS_LINE_CFWD_LD' ||
+							$line['callForwardNotRegisteredInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD'
+						) {
+							// Update
+							$DATA['callForwardAll']['callingSearchSpaceName'] 					= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardBusy']['callingSearchSpaceName'] 					= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardBusyInt']['callingSearchSpaceName'] 				= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardNoAnswer']['callingSearchSpaceName'] 				= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardNoAnswerInt']['callingSearchSpaceName'] 			= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardNoCoverage']['callingSearchSpaceName'] 			= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardNoCoverageInt']['callingSearchSpaceName'] 		= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardOnFailure']['callingSearchSpaceName'] 			= 'CSS_LINE_CFWD_LD';
+							//$DATA['callForwardAlternateParty']['callingSearchSpaceName']		= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardNotRegistered']['callingSearchSpaceName'] 		= 'CSS_LINE_CFWD_LD';
+							$DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] 		= 'CSS_LINE_CFWD_LD';
+							//$UPDATE = true;
+						}
 
-                        $DATA['pattern'] = $line['pattern'];
-                        $DATA['description'] = $line['description'];
-                        $DATA['routePartitionName'] = $line['routePartitionName']['_'];
-
-                        //print_r($line['e164AltNum']['routePartition']['_']);
-                        //print_r($line['e164AltNum']);
-
-                        if ($line['e164AltNum']['routePartition']['_'] != 'Global-All-Lines') {
-                            // Update
-                            $DATA['e164AltNum'] = [
-                                        'numMask'                     => "+1{$line['pattern']}",
-                                        'isUrgent'                    => 'true',
-                                        'addLocalRoutePartition'      => 'true',
-                                        'routePartition'              => 'Global-All-Lines',
-                                        'active'                      => 'true',
-                                        'advertiseGloballyIls'        => 'true',
-                                    ];
-                            //$UPDATE = true;
-                        }
-
-                        if (! in_array('LINEONLY', $ARRAY)) {
-                            // Update
-                            $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
-                            $UPDATE = true;
-                        }
-                        //print_r($line);
-                        if (
-                            $line['callForwardAll']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardBusy']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardBusyInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardNoAnswer']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardNoAnswerInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardNoCoverage']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardNoCoverageInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardOnFailure']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            //$line['callForwardAlternateParty']['callingSearchSpaceName']['_'] 	!= 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardNotRegistered']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
-                            $line['callForwardNotRegisteredInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD'
-                        ) {
-                            // Update
-                            $DATA['callForwardAll']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardBusy']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardBusyInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardNoAnswer']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardNoAnswerInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardNoCoverage']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardNoCoverageInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardOnFailure']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            //$DATA['callForwardAlternateParty']['callingSearchSpaceName']		= 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            //$UPDATE = true;
-                        }
-
-                        if ($UPDATE == true) {
-                            $this->PHONEUPDATE_OBJECTS['Line'][] = $DATA;
-                        }
-                    }
-                }
-            });
-        }
+						if ($UPDATE == true) {
+							$this->PHONEUPDATE_OBJECTS['Line'][] = $DATA;
+						}
+					}
+				}
+			});
+		}
 
         // Define Delete Order.
         $DELETEORDER = ['CalledPartyTransformationPattern',
@@ -1694,7 +1720,8 @@ class CucmSiteMigration extends Cucm
                                         'Update'                => $this->UPDATE_OBJECTS,
                                         'Delete'                => $this->DELETE_OBJECTS,
                                         'Skip'                  => $this->SKIP_OBJECTS,
-                                        'PhoneUpdate'           => $this->PHONEUPDATE_OBJECTS,
+										'PhoneUpdate'           => $this->PHONEUPDATE_OBJECTS,
+										'ManualReview'			=> $this->REVIEW_OBJECTS,
                                         'CurrentDetails'        => $site_details,
                                         'CurrentSummary'        => $site_array,
                                     ],
@@ -1702,59 +1729,58 @@ class CucmSiteMigration extends Cucm
 
         return $return;
     }
-
-    // THIS NEEDS WORK!!!!
-    public function rescan_site_phones(Request $request)
+	
+	// THIS NEEDS WORK!!!!
+	public function rescan_site_phones(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
+		$user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
+		
+		$site = $request->sitecode;
 
-        $site = $request->sitecode;
+		// Step 1. Phones
+		$phonenames = $this->cucm->get_object_type_by_site($site, 'Phone');
 
-        // Step 1. Phones
-        $phonenames = $this->cucm->get_object_type_by_site($site, 'Phone');
+		//echo 'Found '.count($phonenames).' Phones in '.$site.PHP_EOL;
+		$phonecount = 0;
+		foreach ($phonenames as $key => $phonename) {
+			$storephonenames[] = $phonename;
+			//print $phonename.PHP_EOL;
 
-        //echo 'Found '.count($phonenames).' Phones in '.$site.PHP_EOL;
-        $phonecount = 0;
-        foreach ($phonenames as $key => $phonename) {
-            $storephonenames[] = $phonename;
-            //print $phonename.PHP_EOL;
+			if (preg_match('/'.'^TCT.*$'.'/', $phonename)) {
+				try {
+					$phonedetails = $this->cucm->get_object_type_by_name($phonename, 'Phone');
+				} catch (\Exception $e) {
+					//echo 'Discarding unsupported phone type due to AXL Bug... Name: '.$phonename.PHP_EOL;
+					continue;
+				}
+			} else {
+				$phonedetails = $this->getphone($phonename);
+			}
 
-            if (preg_match('/'.'^TCT.*$'.'/', $phonename)) {
-                try {
-                    $phonedetails = $this->cucm->get_object_type_by_name($phonename, 'Phone');
-                } catch (\Exception $e) {
-                    //echo 'Discarding unsupported phone type due to AXL Bug... Name: '.$phonename.PHP_EOL;
-                    continue;
-                }
-            } else {
-                $phonedetails = $this->getphone($phonename);
-            }
+			$phone['name'] = $phonename;
+			$phone['config'] = $phonedetails;
+			// Set string values for phone db
+			$phone['devicepool'] = $phonedetails['devicePoolName']['_'];
+			$phone['css'] = $devicepool = $phonedetails['callingSearchSpaceName']['_'];
+			$phone['model'] = $devicepool = $phonedetails['model'];
+			$phone['description'] = $devicepool = $phonedetails['description'];
+			$phone['ownerid'] = $phonedetails['ownerUserName']['_'];
 
-            $phone['name'] = $phonename;
-            $phone['config'] = $phonedetails;
-            // Set string values for phone db
-            $phone['devicepool'] = $phonedetails['devicePoolName']['_'];
-            $phone['css'] = $devicepool = $phonedetails['callingSearchSpaceName']['_'];
-            $phone['model'] = $devicepool = $phonedetails['model'];
-            $phone['description'] = $devicepool = $phonedetails['description'];
-            $phone['ownerid'] = $phonedetails['ownerUserName']['_'];
-
-            // Get the Line details
-            $phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
-            //echo $phonecount = $phonecount + 1 .' of '.count($phonenames).' ';
-            $this->create_update_phone($phone);
-
-            //return "Complete";
-        }
-
-        return 'Complete';
-    }
-
-    // Get a list of Sites by device pools.
+			// Get the Line details
+			$phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
+			//echo $phonecount = $phonecount + 1 .' of '.count($phonenames).' ';
+			$this->create_update_phone($phone);
+			
+			//return "Complete";
+		}
+		return "Complete";
+	}
+	
+	// Get a list of Sites by device pools.
     protected function get_lines_details_by_phone_name($NAME)
     {
         // $site = 'TRAVIS01';
@@ -1775,8 +1801,8 @@ class CucmSiteMigration extends Cucm
             dd($e->getTrace());
         }
     }
-
-    // Get a list of Sites by device pools.
+	
+	// Get a list of Sites by device pools.
     protected function getphone($NAME)
     {
         // $site = 'TRAVIS01';
@@ -1797,8 +1823,8 @@ class CucmSiteMigration extends Cucm
             dd($e->getTrace());
         }
     }
-
-    // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
+	
+	// This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     protected function create_update_phone($newphone)
     {
         // Check if Site exists in the database
@@ -1831,12 +1857,12 @@ class CucmSiteMigration extends Cucm
 
     public function run_migration(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
+		$user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-
+		
         $verb = $request->verb;
         $migrations = $request->migration;
         $result = [];
@@ -1852,7 +1878,7 @@ class CucmSiteMigration extends Cucm
                     $this->wrap_add_object($DATA, $TYPE);
                 }
 
-                if ($verb == 'Update' || $verb == 'PhoneUpdate') {
+			if ($verb == 'Update' || $verb == 'PhoneUpdate') {
                     if (isset($DATA['name'])) {
                         $PRIMARYKEY = $DATA['name'];
                     } elseif (isset($DATA['pattern'])) {

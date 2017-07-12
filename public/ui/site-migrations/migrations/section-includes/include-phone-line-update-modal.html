@@ -9,7 +9,9 @@
 
 				<div class="modal-body">
 					<p ng-hide="vm.newphones"><b style="color:red" >Warning!</b> You are about to deploy Phones to the Production System.</p>
-					
+					<br>
+					<p><b>Note! </b>You will need to rescan the site phones via artisan to update the cached devices after phone and line migration or they will not show updated. </p>
+					<br>
 					<div class="table-responsive">
 					
 						<div ng-show="vm.newphones" class="panel panel-default" style="width: 35%;">
@@ -45,8 +47,6 @@
 					
 					<div style="margin:50px"></div>
 
-					<legend ng-show="vm.newphones && !vm.phonefailures">Summary Report</legend>
-					<div style="margin:50px"></div>
 					
 					<legend ng-show="vm.newphones.Phone  && !vm.phonefailures">Phone Report</legend>
 					<div class="table-responsive">

@@ -222,13 +222,12 @@ class CucmLine extends Cucm
             }
         }
         */
-		
-		$TYPE = "Line";
-		
-		
-		$line = $request->line;
-		
-		//return $line; 
+
+        $TYPE = 'Line';
+
+        $line = $request->line;
+
+        //return $line;
 
         if (! isset($line['pattern']) || ! $line['pattern']) {
             abort(401, 'No Pattern');
@@ -284,8 +283,6 @@ class CucmLine extends Cucm
         }
 
         try {
-			
-		
             $line = $this->cucm->get_object_type_by_pattern_and_partition($DN, $PARTITION, $TYPE);
 
             if (! count($line)) {
@@ -313,29 +310,27 @@ class CucmLine extends Cucm
                  abort(401, 'You are not authorized');
             }
         }
-		
-		try {
-			$REPLY = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, $TYPE);
-			$LOG = [
-						'type'       => $TYPE,
-						'object'     => $DN,
-						'status'     => 'success',
-						'reply'      => $REPLY,
-						'request'    => $PHONELINE_UPDATE,
 
-					];
-				
-		} catch (\Exception $e) {
-			$EXCEPTION = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-			$LOG = [
-										'type'         => $TYPE,
-										'object'       => $DN,
-										'status'       => 'error',
-										'request'      => $PHONELINE_UPDATE,
-										'exception'    => $EXCEPTION,
-									];
-		}
-        
+        try {
+            $REPLY = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, $TYPE);
+            $LOG = [
+                        'type'       => $TYPE,
+                        'object'     => $DN,
+                        'status'     => 'success',
+                        'reply'      => $REPLY,
+                        'request'    => $PHONELINE_UPDATE,
+
+                    ];
+        } catch (\Exception $e) {
+            $EXCEPTION = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            $LOG = [
+                                        'type'         => $TYPE,
+                                        'object'       => $DN,
+                                        'status'       => 'error',
+                                        'request'      => $PHONELINE_UPDATE,
+                                        'exception'    => $EXCEPTION,
+                                    ];
+        }
 
         // Create log entry
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'return' => $line])->log('get object');

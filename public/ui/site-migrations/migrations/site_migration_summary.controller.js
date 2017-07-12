@@ -185,19 +185,57 @@ angular
 		get_migration_summary(id);
 		
 		
+		// Show Failures for Deploy Phones to CUCM
+		vm.showfailuresonly = function() {
+			vm.phonefailures = [];
+			vm.phonefailures.Phone = [];
+			
+			angular.forEach(vm.newphones.Phone, function(phone) {
+				if(phone.status == "error" || ""  && phone.status == "error"){
+					//console.log(phone.Line.status);
+					//console.log(phone.Line.status);
+					vm.phonefailures.Phone.push(phone);
+				}
+			})
+			vm.phonefailures.Line = [];
+			angular.forEach(vm.newphones.Line, function(line) {
+				if(line.status == "error" || ""  && line.status == "error"){
+					//console.log(phone.Line.status);
+					//console.log(phone.Line.status);
+					vm.phonefailures.Line.push(phone);
+				}
+			})
+			return vm.phonefailures
+		}
+		
+		
 		// Run the migration
 		vm.phonemigration = function(migration) {
-			vm.deploysiteresult = {}
+			vm.newphones = {};
 			
+			var updated_phones = "";
+			var updated_lines = "";
+			//console.log(migration);
 			var Phones = migration.Phone;
 			var Lines = migration.Line;
 			
 			vm.deploycucmsiteloading = true;
 			
-			console.log(migration);
+			//console.log(Phones);
+			//console.log(Lines);
 			
 			// Run Migration
-			siteMigrationService.updatephones(Phones)
+			
+			var updated_phones = cucmService.updatephones(angular.copy(Phones));
+			vm.newphones.Phone = updated_phones;
+			
+			
+			var updated_lines = cucmService.updatelines(angular.copy(Lines));
+			vm.newphones.Line = updated_lines;
+			
+			console.log(vm.newphones)
+			/*
+			cucmService.updatephones(Phones)
 				.then(function(res) {
 					// Check for errors and if token has expired. 
 					if(res.data.message){
@@ -210,7 +248,8 @@ angular
 					}
 				});
 			// placeholder for results
-
+			*/
+			
 			vm.deploycucmsiteloading = false;
 		}
 
@@ -235,10 +274,13 @@ angular
 			}
 			else if(verb == 'PhoneUpdate'){
 				migration = vm.migration.change_summary.PhoneUpdate;
-				//return vm.phonemigration(migration);
+				vm.phones = vm.migration.change_summary.PhoneUpdate.Phone
+				vm.lines = vm.migration.change_summary.PhoneUpdate.Line
+				return vm.phonemigration(migration);
 				alert('phonemigration - turn on new migration to do in javascript');
 			}
 			
+			console.log("This Ran and it wasn't supposed to")
 			// Run Migration
 			siteMigrationService.runMigration(migration)
 				.then(function(res) {

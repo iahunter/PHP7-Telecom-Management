@@ -497,7 +497,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/line": {
+        "/telephony/api/cucm/line/cfa": {
             "put": {
                 "tags": [
                     "Management - CUCM - Line - Provisioning"
@@ -539,6 +539,43 @@
                         "description": "Call Forward Destination - 10 Digit number only",
                         "required": false,
                         "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/line": {
+            "put": {
+                "tags": [
+                    "Management - CUCM - Line - Provisioning"
+                ],
+                "summary": "Update Line in CUCM",
+                "description": "Update Line",
+                "operationId": "",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "line",
+                        "in": "formData",
+                        "description": "This requires the correct values to be passed.",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "description": "Phone",
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {

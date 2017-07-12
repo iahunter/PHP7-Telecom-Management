@@ -37,7 +37,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/cucm/line",
+     *     path="/telephony/api/cucm/line/cfa",
      *     tags={"Management - CUCM - Line - Provisioning"},
      *     summary="Update Line CFA in CUCM",
      *     description="",
@@ -82,4 +82,36 @@
      *     ),
      * )
      **/
-    $api->put('cucm/line', 'App\Http\Controllers\CucmLine@updateLineCFWAbyPattern');
+    $api->put('cucm/line/cfa', 'App\Http\Controllers\CucmLine@updateLineCFWAbyPattern');
+	
+	/**
+     * @SWG\Put(
+     *     path="/telephony/api/cucm/line",
+     *     tags={"Management - CUCM - Line - Provisioning"},
+     *     summary="Update Line in CUCM",
+     *     description="Update Line",
+     *     operationId="",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="line",
+     *         in="formData",
+     *         description="This requires the correct values to be passed.",
+     *         required=true,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="string",
+     *             description="Phone",
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->put('cucm/line', 'App\Http\Controllers\CucmLine@updateLine');

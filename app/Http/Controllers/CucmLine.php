@@ -222,62 +222,71 @@ class CucmLine extends Cucm
             }
         }
         */
+		
+		$TYPE = "Line";
+		
+		
+		$line = $request->line;
+		
+		//return $line; 
 
-        if (! isset($request->pattern) || ! $request->pattern) {
+        if (! isset($line['pattern']) || ! $line['pattern']) {
             abort(401, 'No Pattern');
         } else {
-            $DN = $request->pattern;
-            $PHONELINE_UPDATE['pattern'] = $request->pattern;
+            $DN = $line['pattern'];
+            $PHONELINE_UPDATE['pattern'] = $line['pattern'];
         }
 
-        if (! isset($request->routePartitionName) || ! $request->routePartitionName) {
+        if (! isset($line['routePartitionName']) || ! $line['routePartitionName']) {
             abort(401, 'No Route Partition');
         } else {
-            $PARTITION = $request->routePartitionName;
-            $PHONELINE_UPDATE['routePartitionName'] = $request->routePartitionName;
+            $PARTITION = $line['routePartitionName'];
+            $PHONELINE_UPDATE['routePartitionName'] = $line['routePartitionName'];
         }
-        if (isset($request->description) && $request->description) {
-            $PHONELINE_UPDATE['description'] = $request->description;
+        if (isset($line['description']) && $line['description']) {
+            $PHONELINE_UPDATE['description'] = $line['description'];
         }
-        if (isset($request->e164AltNum) && $request->e164AltNum) {
-            $PHONELINE_UPDATE['e164AltNum'] = $request->e164AltNum;
+        if (isset($line['e164AltNum']) && $line['e164AltNum']) {
+            $PHONELINE_UPDATE['e164AltNum'] = $line['e164AltNum'];
         }
-        if (isset($request->shareLineAppearanceCssName) && $request->shareLineAppearanceCssName) {
-            $PHONELINE_UPDATE['shareLineAppearanceCssName'] = $request->shareLineAppearanceCssName;
+        if (isset($line['shareLineAppearanceCssName']) && $line['shareLineAppearanceCssName']) {
+            $PHONELINE_UPDATE['shareLineAppearanceCssName'] = $line['shareLineAppearanceCssName'];
         }
-        if (isset($request->callForwardAll) && $request->callForwardAll) {
-            $PHONELINE_UPDATE['callForwardAll'] = $request->callForwardAll;
+        if (isset($line['callForwardAll']) && $line['callForwardAll']) {
+            $PHONELINE_UPDATE['callForwardAll'] = $line['callForwardAll'];
         }
-        if (isset($request->callForwardBusy) && $request->callForwardBusy) {
-            $PHONELINE_UPDATE['callForwardBusy'] = $request->callForwardBusy;
+        if (isset($line['callForwardBusy']) && $line['callForwardBusy']) {
+            $PHONELINE_UPDATE['callForwardBusy'] = $line['callForwardBusy'];
         }
-        if (isset($request->callForwardBusyInt) && $request->callForwardBusyInt) {
-            $PHONELINE_UPDATE['callForwardBusyInt'] = $request->callForwardBusyInt;
+        if (isset($line['callForwardBusyInt']) && $line['callForwardBusyInt']) {
+            $PHONELINE_UPDATE['callForwardBusyInt'] = $line['callForwardBusyInt'];
         }
-        if (isset($request->callForwardNoAnswer) && $request->callForwardNoAnswer) {
-            $PHONELINE_UPDATE['callForwardNoAnswer'] = $request->callForwardNoAnswer;
+        if (isset($line['callForwardNoAnswer']) && $line['callForwardNoAnswer']) {
+            $PHONELINE_UPDATE['callForwardNoAnswer'] = $line['callForwardNoAnswer'];
         }
-        if (isset($request->callForwardNoAnswerInt) && $request->callForwardNoAnswerInt) {
-            $PHONELINE_UPDATE['callForwardNoAnswerInt'] = $request->callForwardNoAnswerInt;
+        if (isset($line['callForwardNoAnswerInt']) && $line['callForwardNoAnswerInt']) {
+            $PHONELINE_UPDATE['callForwardNoAnswerInt'] = $line['callForwardNoAnswerInt'];
         }
-        if (isset($request->callForwardNoCoverage) && $request->callForwardNoCoverage) {
-            $PHONELINE_UPDATE['callForwardNoCoverage'] = $request->callForwardNoCoverage;
+        if (isset($line['callForwardNoCoverage']) && $line['callForwardNoCoverage']) {
+            $PHONELINE_UPDATE['callForwardNoCoverage'] = $line['callForwardNoCoverage'];
         }
-        if (isset($request->callForwardNoCoverageInt) && $request->callForwardNoCoverageInt) {
-            $PHONELINE_UPDATE['callForwardNoCoverageInt'] = $request->callForwardNoCoverageInt;
+        if (isset($line['callForwardNoCoverageInt']) && $line['callForwardNoCoverageInt']) {
+            $PHONELINE_UPDATE['callForwardNoCoverageInt'] = $line['callForwardNoCoverageInt'];
         }
-        if (isset($request->callForwardOnFailure) && $request->callForwardOnFailure) {
-            $PHONELINE_UPDATE['callForwardOnFailure'] = $request->callForwardOnFailure;
+        if (isset($line['callForwardOnFailure']) && $line['callForwardOnFailure']) {
+            $PHONELINE_UPDATE['callForwardOnFailure'] = $line['callForwardOnFailure'];
         }
-        if (isset($request->callForwardNotRegistered) && $request->callForwardNotRegistered) {
-            $PHONELINE_UPDATE['callForwardNotRegistered'] = $request->callForwardNotRegistered;
+        if (isset($line['callForwardNotRegistered']) && $line['callForwardNotRegistered']) {
+            $PHONELINE_UPDATE['callForwardNotRegistered'] = $line['callForwardNotRegistered'];
         }
-        if (isset($request->callForwardNotRegisteredInt) && $request->callForwardNotRegisteredInt) {
-            $PHONELINE_UPDATE['callForwardNotRegisteredInt'] = $request->callForwardNotRegisteredInt;
+        if (isset($line['callForwardNotRegisteredInt']) && $line['callForwardNotRegisteredInt']) {
+            $PHONELINE_UPDATE['callForwardNotRegisteredInt'] = $line['callForwardNotRegisteredInt'];
         }
 
         try {
-            $line = $this->cucm->get_object_type_by_pattern_and_partition($DN, $PARTITION, 'Line');
+			
+		
+            $line = $this->cucm->get_object_type_by_pattern_and_partition($DN, $PARTITION, $TYPE);
 
             if (! count($line)) {
                 throw new \Exception('Indexed results from call mangler is empty');
@@ -304,20 +313,41 @@ class CucmLine extends Cucm
                  abort(401, 'You are not authorized');
             }
         }
+		
+		try {
+			$REPLY = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, $TYPE);
+			$LOG = [
+						'type'       => $TYPE,
+						'object'     => $DN,
+						'status'     => 'success',
+						'reply'      => $REPLY,
+						'request'    => $PHONELINE_UPDATE,
 
-        $RESULT = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, 'Line');
+					];
+				
+		} catch (\Exception $e) {
+			$EXCEPTION = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+			$LOG = [
+										'type'         => $TYPE,
+										'object'       => $DN,
+										'status'       => 'error',
+										'request'      => $PHONELINE_UPDATE,
+										'exception'    => $EXCEPTION,
+									];
+		}
+        
 
         // Create log entry
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'return' => $line])->log('get object');
-        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'update' => $PHONELINE_UPDATE, 'return' => $RESULT])->log('update object');
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'update' => $PHONELINE_UPDATE, 'return' => $LOG])->log('update object');
 
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-                    'response'       => $RESULT,
+                    'response'       => $REPLY,
                     ];
 
-        return response()->json($response);
+        return response()->json($LOG);
     }
 }

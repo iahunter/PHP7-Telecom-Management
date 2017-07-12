@@ -184,7 +184,7 @@
      *     ),
      * )
      **/
-    $api->post('cucm/paste/phones', 'App\Http\Controllers\Cucmphone@pastePhones');
+    $api->put('cucm/phone', 'App\Http\Controllers\Cucmphone@updatePhone');
 
     /**
      * @SWG\Post(

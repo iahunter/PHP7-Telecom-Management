@@ -246,8 +246,6 @@ angular
 							  }
 						);
 					}
-					
-					
 				}
 			
 			console.log(self.results);
@@ -256,37 +254,78 @@ angular
 		
 		
 		self.updatephones = function(phones) {
-				if (angular.isArray(phones) && phones.length > 0) {
-					console.log("PHONES")
-					console.log(phones);
-					var postdata = phones[0];
-					
-					//phone.inuse = true
-					$http.put('../api/cucm/phone', postdata)
-					  .then(
-						  function(data) {
-							self.results.push(data.data.response);
-							console.log("Success.");
-							phones.shift();
-							self.updatephones(phones);
-							//console.log('After Shift');
-							//console.log(phones);
-						  },
-						  function(data) {
-							self.results.push(data.data.response);
-							console.log("Failure.");
-							// if you want to continue even if it fails:
-							self.updatephones(phones.shift());
-						  }
-					);
-				}
+			
+			if (angular.isArray(phones) && phones.length > 0) {
+				console.log("PHONES")
+				console.log(phones);
+				var postdata = {};
+				postdata.phone = phones[0]
+				
+				//phone.inuse = true
+				$http.put('../api/cucm/phone', postdata)
+				  .then(
+					  function(data) {
+						
+						var phone = data.data
+						
+						self.results.push(phone);
+						
+						console.log("Success.");
+						phones.shift();
+						self.updatephones(phones);
+						//console.log('After Shift');
+						//console.log(phones);
+					  },
+					  function(data) {
+						self.results.push(data.data);
+						console.log("Failure.");
+						console.log(data)
+						// if you want to continue even if it fails:
+						self.updatephones(phones.shift());
+					  }
+				);
+			}
 			
 			console.log(self.results);
 			return self.results;
 		}
 		
+		self.lineresults = [];
+		self.updatelines = function(lines) {
+			
+			if (angular.isArray(lines) && lines.length > 0) {
+				console.log("lines")
+				console.log(lines);
+				var postdata = {};
+				postdata.line = lines[0]
+				
+				//phone.inuse = true
+				$http.put('../api/cucm/line', postdata)
+				  .then(
+					  function(data) {
+						self.lineresults.push(data.data);
+						
+						console.log("Success.");
+						lines.shift();
+						self.updatelines(lines);
+						//console.log('After Shift');
+						//console.log(lines);
+					  },
+					  function(data) {
+						self.lineresults.push(data.data);
+						console.log("Failure.");
+						console.log(data)
+						// if you want to continue even if it fails:
+						self.updatelines(lines.shift());
+					  }
+				);
+			}
+			
+			console.log(self.lineresults);
+			return self.lineresults;
+		}
 		
-		
+
 		return self
 
 	}]);

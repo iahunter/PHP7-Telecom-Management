@@ -171,7 +171,7 @@ class Cucmphone extends Cucm
         if (! $user->can('delete', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-		//return $request;
+        //return $request;
 
         $TYPE = 'Phone';
         $DATA = $request->phone;
@@ -194,7 +194,8 @@ class Cucmphone extends Cucm
                     'request'    => $DATA,
 
                 ];
-			return $LOG;
+
+            return $LOG;
             // Create log entry
             activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $LOG])->log('update object');
 
@@ -214,7 +215,8 @@ class Cucmphone extends Cucm
                                         'request'      => $DATA,
                                         'exception'    => $EXCEPTION,
                                     ];
-			return $LOG;
+
+            return $LOG;
         }
     }
 

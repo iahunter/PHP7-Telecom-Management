@@ -83,8 +83,8 @@
      * )
      **/
     $api->put('cucm/line/cfa', 'App\Http\Controllers\CucmLine@updateLineCFWAbyPattern');
-	
-	/**
+
+    /**
      * @SWG\Put(
      *     path="/telephony/api/cucm/line",
      *     tags={"Management - CUCM - Line - Provisioning"},

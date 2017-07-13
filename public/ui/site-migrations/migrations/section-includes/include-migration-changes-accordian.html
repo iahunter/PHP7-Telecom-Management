@@ -76,6 +76,18 @@
 													<li>Testing should be done after these changes are implemented.</li>
 												</ul>
 											</div>
+											<div ng-if="changekey == 'Skip'">
+												<ul>
+													<li>These objects were skipped as they already conform to the new standard for this design type.</li>
+													<li>Review to make see if anything was missed.</li>
+												</ul>
+											</div>
+											<div ng-if="changekey == 'ManualReview'">
+												<ul>
+													<li>No changes are made to these objects but the have been idetified as nonstandard.</li>
+													<li>These should be reviewed and manually updated if changes is desired.</li>
+												</ul>
+											</div>
 										</div>
 										
 									</div>

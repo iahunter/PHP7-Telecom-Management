@@ -1,5 +1,15 @@
-<h3 ng-if="vm.migration.type">Migration Actions - Convert to Design Type {{vm.migration.type}}</h3>
-			
+	<h3 ng-if="vm.migration.type">Migration Actions - Convert to Design Type {{vm.migration.type}}</h3>
+			<br>
+			<div ng-if="vm.migration.change_summary">
+				<p>The following actions are needed in order to convert the site to the new design type.</p>
+				<ol>
+					<li>Add the new required objects. </li>
+					<li>Update Objects. </li>
+					<li>Phone Updates to lines and phones. </li>
+					<li>Review the ManualReview Objects to see if there are any manual changes required. </li>
+					<li>Delete old objects that are no longer required. </li>
+				</ol>
+			</div>
 			<!--<hr>
 			<h4>Object Adds</h4>-->
 			<div class="panel-group" id="accordion">
@@ -39,6 +49,33 @@
 										<div id="{{changekey}}_test_tab" class="tab-pane fade in active">
 											<br>
 											<p><span style="color:#337ab7;"><b>Note! </b></span>Click each tab to review the objects that will be {{changekey}}ed.</p>
+											<div ng-if="changekey == 'Add'">
+												<ul>
+													<li>This can be done at any time.</li>
+													<li>Adds should not affect production</li>
+												</ul>
+											</div>
+											<div ng-if="changekey == 'Update'">
+												<ul>
+													<li>This should be scheduled.</li>
+													<li>Updates affect production call routing and handling. </li>
+													<li>Testing is required after these changes are implemented.</li>
+												</ul>
+											</div>
+											<div ng-if="changekey == 'Delete'">
+												<ul>
+													<li>This removes objects from Prodcution.</li>
+													<li>This should not be done until everything has tested successfully.</li>
+													<li>Testing should be done after these changes are implemented.</li>
+												</ul>
+											</div>
+											<div ng-if="changekey == 'PhoneUpdate'">
+												<ul>
+													<li>This updates all the phones and lines in the site devicepool.</li>
+													<li>This should be done after the Add and Updates are completed.</li>
+													<li>Testing should be done after these changes are implemented.</li>
+												</ul>
+											</div>
 										</div>
 										
 									</div>

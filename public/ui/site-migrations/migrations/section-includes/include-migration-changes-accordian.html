@@ -1,7 +1,7 @@
 	<h3 ng-if="vm.migration.type">Migration Actions - Convert to Design Type {{vm.migration.type}}</h3>
 			<br>
 			<div ng-if="vm.migration.change_summary">
-				<p>The following actions are needed in order to convert the site to the new design type.</p>
+				<p><b>The following actions are needed in order to convert the site to the new design type.</b></p>
 				<ol>
 					<li>Add the new required objects. </li>
 					<li>Update Objects. </li>
@@ -10,15 +10,16 @@
 					<li>Delete old objects that are no longer required. </li>
 				</ol>
 			</div>
+			<br>
 			<!--<hr>
 			<h4>Object Adds</h4>-->
 			<div class="panel-group" id="accordion">
 				<div ng-repeat="(changekey,changevalues) in vm.migration.change_summary">
 					
-					<!--<div ng-hide="changekey == 'CurrentDetails' || changekey == 'CurrentSummary'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-					--><div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete' || changekey == 'ManualReview' || changekey == 'Skip' || changekey == 'PhoneUpdate'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-					<!--<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
-					-->	<div class="panel-heading" role="tab" id="{{changekey}}" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+					<!--Hide the accordian if there is no contents. -->
+					<div ng-show="changevalues.count" ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete' || changekey == 'ManualReview' || changekey == 'Skip' || changekey == 'PhoneUpdate'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+						
+						<div class="panel-heading" role="tab" id="{{changekey}}" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 
 							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" ng-click="vm.accordianclose()" data-target="#{{changekey}}_collapse" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="{{changekey}}_collapse">
 								<h4><b><i class="fa fa-server"></i> {{changekey}} Objects <span class="badge badge-inverse">{{changevalues.count}}</span> <i class="fa fa-caret-down"></i></b></h4>

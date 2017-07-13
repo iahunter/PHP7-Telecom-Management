@@ -1860,6 +1860,9 @@ class CucmSiteMigration extends Cucm
         $migrations = $request->migration;
         $result = [];
         foreach ($migrations as $TYPE => $ARRAY) {
+			if ($TYPE == 'count'){
+				continue;
+			}
             if ($TYPE == 'CssremoveMembers' || $TYPE == 'CssaddMembers') {
                 $TYPE = 'Css';                                                                                // Update the Type to an acutal type for the updates of CSS members.
             }

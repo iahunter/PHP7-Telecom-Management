@@ -4,15 +4,18 @@
 			<h4>Object Adds</h4>-->
 			<div class="panel-group" id="accordion">
 				<div ng-repeat="(changekey,changevalues) in vm.migration.change_summary">
+					
 					<!--<div ng-hide="changekey == 'CurrentDetails' || changekey == 'CurrentSummary'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 					--><div ng-if="changekey == 'Add' || changekey == 'Update' || changekey == 'Delete' || changekey == 'ManualReview' || changekey == 'Skip' || changekey == 'PhoneUpdate'" "class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 					<!--<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 					-->	<div class="panel-heading" role="tab" id="{{changekey}}" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 
 							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-href="" ng-click="vm.accordianclose()" data-target="#{{changekey}}_collapse" style="color:black;cursor: pointer;" aria-expanded="false" aria-controls="{{changekey}}_collapse">
-								<h4><b><i class="fa fa-server"></i> {{changekey}} Objects <i class="fa fa-caret-down"></i></b></h4>
+								<h4><b><i class="fa fa-server"></i> {{changekey}} Objects <span class="badge badge-inverse">{{changevalues.count}}</span> <i class="fa fa-caret-down"></i></b></h4>
+								<!-- Badge example https://codepen.io/MarcosBL/pen/uomCD -->
 							</a>
 						</div>
+						
 						<div class="panel-body panel-collapse collapse" role="tabpanel" id="{{changekey}}_collapse" aria-labelledby="{{changekey}}">
 							<legend class="ng-binding"> Site: {{vm.sitecode}} - {{changekey}} Objects</legend>
 							<!--<div class="table-responsive">
@@ -25,7 +28,7 @@
 									
 									<ul class="nav nav-pills" >
 										<li class="active"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_test_tab">Home</a></li>
-										<li ng-repeat="(key,values) in changevalues"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_{{ key}}_tab">{{ key}}</a></li>
+										<li ng-if="key != 'count'" ng-repeat="(key,values) in changevalues"><a data-toggle="tab" ng-click="vm.tabclose()" ng-href="" data-target="#{{changekey}}_{{ key}}_tab">{{ key}} <span class="badge badge-info">{{values.count}}</span></a></li>
 									</ul>
 
 									<br>
@@ -41,14 +44,15 @@
 									</div>
 
 									<!-- Tab Content -->
-									<div id="{{changekey}}_tab_content"class="tab-content" ng-repeat="(key,values) in changevalues">
-									
+									<div ng-if="key != 'count'" id="{{changekey}}_tab_content"class="tab-content" ng-repeat="(key,values) in changevalues">
+										<div style="display:none" ng-init="changevalues.count = changevalues.count + 1"></div>
 										<!-- Tab -->
-										<div id="{{changekey}}_{{ key}}_tab" class="tab-pane fade">
+										<div ng-if="key != 'count'" id="{{changekey}}_{{ key}}_tab" class="tab-pane fade">
 										
 										<table class="table table-bordered table-hover table-responsive table-condensed" style="background-color: transparent;" ng-if="changekey != 'CurrentSummary'">
 											<tr ng-repeat="value in values">
-												<td>
+												<td style="display:none" ng-init="values.count = values.count + 1"></td>
+												<td ng-if="value != 'count'">
 													<table class="table table-bordered table-hover table-responsive table-condensed" style="background-color: transparent;">
 														<tbody style="font-size:12px">
 															<tr ng-repeat="(k,v) in value track by $index">

@@ -1527,12 +1527,12 @@ class CucmSiteMigration extends Cucm
                     $DATA['pattern'] = $line['pattern'];
                     $DATA['description'] = $line['description'];
                     $DATA['routePartitionName'] = $line['routePartitionName']['_'];
-
-                    // Look at the partition for nonstandard lines.
-                    if ($line['routePartitionName']['_'] != 'Global-All-Lines') {
-                        $this->REVIEW_OBJECTS['Line'][] = $line;
-                        continue;
-                    }
+					
+					// Look at the partition for nonstandard lines. 
+					if($line['routePartitionName']['_'] != 'Global-All-Lines'){
+						$this->REVIEW_OBJECTS['Line'][] = $line;
+						continue;
+					}
 
                     $DATA['e164AltNum'] = [
                                     'numMask'                     => "+1{$line['pattern']}",
@@ -1576,13 +1576,14 @@ class CucmSiteMigration extends Cucm
                     }
 
                     if ($UPDATE) {
-                        $this->UPDATE_OBJECTS['Line'][] = $DATA;
+                        $this->UPDATE_OBJECTS['Line'][$line['pattern']] = $DATA;
                     }
                 }
             }
         }
-
-        // 19 - Update CTI Route Points
+		
+		
+		// 19 - Update CTI Route Points
 
         // Calculated variables
         $TYPE = 'RemoteDestinationProfile';
@@ -1599,19 +1600,19 @@ class CucmSiteMigration extends Cucm
                     $UPDATE['name'] = $OBJECT['name'];
                     $UPDATE['description'] = $OBJECT['description'];
                     $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-                    $UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+					$UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                     $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
                 } elseif ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
                     $UPDATE = [];
                     $UPDATE['name'] = $OBJECT['name'];
                     $UPDATE['description'] = $OBJECT['description'];
                     $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-                    $UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-                    $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+					$UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+					$this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
                     //$this->REVIEW_OBJECTS[$TYPE][] = $OBJECT;
                 }
-
-                /*
+				
+				/*
                 $lines = $this->cucm->get_lines_details_by_phone_name($OBJECT['name']);
                 //print_r($lines);
                 foreach ($lines as $line) {
@@ -1679,9 +1680,9 @@ class CucmSiteMigration extends Cucm
                     if ($UPDATE) {
                         $this->UPDATE_OBJECTS['Line'][] = $DATA;
                     }
-
+					
                 }
-                */
+				*/
             }
         }
 
@@ -1725,10 +1726,10 @@ class CucmSiteMigration extends Cucm
                         $DATA['description'] = $line['description'];
                         $DATA['routePartitionName'] = $line['routePartitionName']['_'];
 
-                        if ($line['routePartitionName']['_'] != 'Global-All-Lines') {
-                            $this->REVIEW_OBJECTS['Line'][] = $line;
-                            continue;
-                        }
+						if($line['routePartitionName']['_'] != 'Global-All-Lines'){
+							$this->REVIEW_OBJECTS['Line'][] = $line;
+							continue;
+						}
                         //print_r($line['e164AltNum']['routePartition']['_']);
                         //print_r($line['e164AltNum']);
 
@@ -1742,7 +1743,7 @@ class CucmSiteMigration extends Cucm
                                         'active'                      => 'true',
                                         'advertiseGloballyIls'        => 'true',
                                     ];
-                            //$UPDATE = true;
+                            $UPDATE = true;
                         }
 
                         if (! in_array('LINEONLY', $ARRAY)) {
@@ -1776,11 +1777,11 @@ class CucmSiteMigration extends Cucm
                             //$DATA['callForwardAlternateParty']['callingSearchSpaceName']		= 'CSS_LINE_CFWD_LD';
                             $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
                             $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
-                            //$UPDATE = true;
+                            $UPDATE = true;
                         }
 
                         if ($UPDATE == true) {
-                            $this->PHONEUPDATE_OBJECTS['Line'][] = $DATA;
+                            $this->PHONEUPDATE_OBJECTS['Line'][$line['pattern']] = $DATA;
                         }
                     }
                 }

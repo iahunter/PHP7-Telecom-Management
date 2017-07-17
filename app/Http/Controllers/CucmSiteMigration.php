@@ -1527,6 +1527,114 @@ class CucmSiteMigration extends Cucm
                     $DATA['pattern'] = $line['pattern'];
                     $DATA['description'] = $line['description'];
                     $DATA['routePartitionName'] = $line['routePartitionName']['_'];
+					
+					// Look at the partition for nonstandard lines. 
+					if($line['routePartitionName']['_'] != 'Global-All-Lines'){
+						$this->REVIEW_OBJECTS['Line'][] = $line;
+						continue;
+					}
+
+                    $DATA['e164AltNum'] = [
+                                    'numMask'                     => "+1{$line['pattern']}",
+                                    'isUrgent'                    => 'true',
+                                    'addLocalRoutePartition'      => 'true',
+                                    'routePartition'              => $DATA['routePartitionName'],
+                                    'active'                      => 'true',
+                                    'advertiseGloballyIls'        => 'true',
+                                ];
+
+                    if (! in_array('LINEONLY', $ARRAY)) {
+                        $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
+                        $UPDATE = true;
+                    }
+                    if (
+                        $line['callForwardAll']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardBusy']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardBusyInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoAnswer']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoAnswerInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoCoverage']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNoCoverageInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardOnFailure']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardAlternateParty']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNotRegistered']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
+                        $line['callForwardNotRegisteredInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD'
+                    ) {
+                        // Update
+                        $UPDATE = true;
+                        $DATA['callForwardAll']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardBusy']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardBusyInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoAnswer']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoAnswerInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoCoverage']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNoCoverageInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardOnFailure']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardAlternateParty']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                        $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                    }
+
+                    if ($UPDATE) {
+                        $this->UPDATE_OBJECTS['Line'][] = $DATA;
+                    }
+                }
+            }
+        }
+		
+		
+		// 19 - Update CTI Route Points
+
+        // Calculated variables
+        $TYPE = 'RemoteDestinationProfile';
+
+        // Check if the object already exists. If it isn't then add it.
+        if (! empty($site_array[$TYPE])) {
+            foreach ($site_array[$TYPE] as $key => $value) {
+                $UUID = $key;
+                $OBJECT = $site_details[$TYPE][$UUID];
+                //print_r($OBJECT);
+                // Update the CTI Route Point CSS
+                if ($OBJECT['callingSearchSpaceName']['_'] == "CSS_{$SITE}" || $OBJECT['rerouteCallingSearchSpaceName']['_'] == "CSS_{$SITE}") {
+                    $UPDATE = [];
+                    $UPDATE['name'] = $OBJECT['name'];
+                    $UPDATE['description'] = $OBJECT['description'];
+                    $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+					$UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                    $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+                } elseif ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
+                    $UPDATE = [];
+                    $UPDATE['name'] = $OBJECT['name'];
+                    $UPDATE['description'] = $OBJECT['description'];
+                    $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+					$UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+					$this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+                    //$this->REVIEW_OBJECTS[$TYPE][] = $OBJECT;
+                }
+				
+				/*
+                $lines = $this->cucm->get_lines_details_by_phone_name($OBJECT['name']);
+                //print_r($lines);
+                foreach ($lines as $line) {
+                    $DATA = [];
+                    $UPDATE = false;
+                    $CSS = $line['shareLineAppearanceCssName']['_'];
+                    $ARRAY = explode('_', $CSS);
+
+                    if ($line['routePartitionName']['_'] != 'Global-All-Lines') {
+                        $this->REVIEW_OBJECTS['Line'][] = $line;
+                        continue;
+                    }
+
+                    // Skip 911 related CTI Route Patterns so we don't break something regarding E911.
+                    if ($line['pattern'] == '911' || $line['pattern'] == '9.911' || $line['pattern'] == '*911' || $line['pattern'] == '*912') {
+                        //$this->REVIEW_OBJECTS["Line"][] = $line;
+                        continue;
+                    }
+
+                    $DATA['pattern'] = $line['pattern'];
+                    $DATA['description'] = $line['description'];
+                    $DATA['routePartitionName'] = $line['routePartitionName']['_'];
 
                     $DATA['e164AltNum'] = [
                                     'numMask'                     => "+1{$line['pattern']}",
@@ -1572,7 +1680,9 @@ class CucmSiteMigration extends Cucm
                     if ($UPDATE) {
                         $this->UPDATE_OBJECTS['Line'][] = $DATA;
                     }
+					
                 }
+				*/
             }
         }
 
@@ -1616,6 +1726,10 @@ class CucmSiteMigration extends Cucm
                         $DATA['description'] = $line['description'];
                         $DATA['routePartitionName'] = $line['routePartitionName']['_'];
 
+						if($line['routePartitionName']['_'] != 'Global-All-Lines'){
+							$this->REVIEW_OBJECTS['Line'][] = $line;
+							continue;
+						}
                         //print_r($line['e164AltNum']['routePartition']['_']);
                         //print_r($line['e164AltNum']);
 
@@ -1625,7 +1739,7 @@ class CucmSiteMigration extends Cucm
                                         'numMask'                     => "+1{$line['pattern']}",
                                         'isUrgent'                    => 'true',
                                         'addLocalRoutePartition'      => 'true',
-                                        'routePartition'              => 'Global-All-Lines',
+                                        'routePartition'              => $DATA['routePartitionName'],
                                         'active'                      => 'true',
                                         'advertiseGloballyIls'        => 'true',
                                     ];

@@ -1007,8 +1007,8 @@ class CucmSiteMigration extends Cucm
         } else {
             $this->ADD_OBJECTS[$TYPE][] = $DATA;
         }
-		
-		// 13 - Create Called Party Transformations.
+
+        // 13 - Create Called Party Transformations.
         $TYPE = 'CalledPartyTransformationPattern';
 
         if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
@@ -1068,7 +1068,7 @@ class CucmSiteMigration extends Cucm
         // 14 - Add H323 Gateways
 
         $TYPE = 'H323Gateway';
-		$UPDATE = false;
+        $UPDATE = false;
         if ($SITE_TYPE >= 2) {
             $ROUTERMODEL = 'Cisco 2951';
             // Calculated variables
@@ -1101,9 +1101,7 @@ class CucmSiteMigration extends Cucm
                                                                 'enable'    => 'false',
                                                             ],
                             ];
-							
-					
-				
+
                     // Check if the object already exists. If it isn't then add it.
                     if (! empty($site_array[$TYPE])) {
                         if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -1115,60 +1113,59 @@ class CucmSiteMigration extends Cucm
                             }
                             $OBJECT = $site_details[$TYPE][$UUID];
                             $UPDATE = [];
-							
-                            if ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_INCOMING_GW") {
-								$UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_INCOMING_GW";
-                            }
-							if ($OBJECT['callingPartyNationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM" ||
-								$OBJECT['callingPartyInternationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM" ||
-								$OBJECT['callingPartyUnknownTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM" ||
-								$OBJECT['callingPartySubscriberTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM"
-							) {
-								$UPDATE['callingPartyNationalTransformationCssName'] 		= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
-								$UPDATE['callingPartyInternationalTransformationCssName']	= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
-								$UPDATE['callingPartyUnknownTransformationCssName']			= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
-								$UPDATE['callingPartySubscriberTransformationCssName']		= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
-								$UPDATE['callingPartyNationalPrefix']						= "+";
-								$UPDATE['callingPartyInternationalPrefix']					= "+";
-								$UPDATE['callingPartyUnknownPrefix']						= "+";
-								$UPDATE['callingPartySubscriberPrefix']						= "+";
-								$UPDATE['callingPartyNationalStripDigits']					= "0";
-								$UPDATE['callingPartyInternationalStripDigits']				= "0";
-								$UPDATE['callingPartyUnknownStripDigits']					= "0";
-								$UPDATE['callingPartySubscriberStripDigits']				= "0";
-								$UPDATE['useDevicePoolCgpnTransformCssNatl']				= 'false';
-								$UPDATE['useDevicePoolCgpnTransformCssIntl']				= 'false';
-								$UPDATE['useDevicePoolCgpnTransformCssUnkn']				= 'false';
-								$UPDATE['useDevicePoolCgpnTransformCssSubs']				= 'false';
-                            }
-							
-							if ($OBJECT['calledPartyNationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM" ||
-								$OBJECT['calledPartyInternationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM" ||
-								$OBJECT['calledPartyUnknownTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM" ||
-								$OBJECT['calledPartySubscriberTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM"
-							) {
-								$UPDATE['calledPartyNationalTransformationCssName'] 		= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
-								$UPDATE['calledPartyInternationalTransformationCssName']	= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
-								$UPDATE['calledPartyUnknownTransformationCssName']			= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
-								$UPDATE['calledPartySubscriberTransformationCssName']		= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
-								$UPDATE['useDevicePoolCalledCssNatl']						= 'false';
-								$UPDATE['useDevicePoolCalledCssIntl']						= 'false';
-								$UPDATE['useDevicePoolCalledCssUnkn']						= 'false';
-								$UPDATE['useDevicePoolCalledCssSubs']						= 'false';
-                            }
-							
-							
-							if ((($SITE_TYPE == 2) || ($SITE_TYPE == 4)) && $OBJECT['cdpnTransformationCssName']['_'] != "CSS_{$SITE}_GW_CALLED_XFORM") {
-								$UPDATE['cdpnTransformationCssName'] = "CSS_{$SITE}_GW_CALLED_XFORM";
-								$UPDATE['useDevicePoolCdpnTransformCss'] = "false";
-							}
 
-							if($UPDATE){
-								$UPDATE['name'] = $OBJECT['name'];
-								$this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
-							}else{
-								$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
-							}
+                            if ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_INCOMING_GW") {
+                                $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_INCOMING_GW";
+                            }
+                            if ($OBJECT['callingPartyNationalTransformationCssName']['_'] != 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM' ||
+                                $OBJECT['callingPartyInternationalTransformationCssName']['_'] != 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM' ||
+                                $OBJECT['callingPartyUnknownTransformationCssName']['_'] != 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM' ||
+                                $OBJECT['callingPartySubscriberTransformationCssName']['_'] != 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM'
+                            ) {
+                                $UPDATE['callingPartyNationalTransformationCssName'] = 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+                                $UPDATE['callingPartyInternationalTransformationCssName'] = 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+                                $UPDATE['callingPartyUnknownTransformationCssName'] = 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+                                $UPDATE['callingPartySubscriberTransformationCssName'] = 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+                                $UPDATE['callingPartyNationalPrefix'] = '+';
+                                $UPDATE['callingPartyInternationalPrefix'] = '+';
+                                $UPDATE['callingPartyUnknownPrefix'] = '+';
+                                $UPDATE['callingPartySubscriberPrefix'] = '+';
+                                $UPDATE['callingPartyNationalStripDigits'] = '0';
+                                $UPDATE['callingPartyInternationalStripDigits'] = '0';
+                                $UPDATE['callingPartyUnknownStripDigits'] = '0';
+                                $UPDATE['callingPartySubscriberStripDigits'] = '0';
+                                $UPDATE['useDevicePoolCgpnTransformCssNatl'] = 'false';
+                                $UPDATE['useDevicePoolCgpnTransformCssIntl'] = 'false';
+                                $UPDATE['useDevicePoolCgpnTransformCssUnkn'] = 'false';
+                                $UPDATE['useDevicePoolCgpnTransformCssSubs'] = 'false';
+                            }
+
+                            if ($OBJECT['calledPartyNationalTransformationCssName']['_'] != 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM' ||
+                                $OBJECT['calledPartyInternationalTransformationCssName']['_'] != 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM' ||
+                                $OBJECT['calledPartyUnknownTransformationCssName']['_'] != 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM' ||
+                                $OBJECT['calledPartySubscriberTransformationCssName']['_'] != 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM'
+                            ) {
+                                $UPDATE['calledPartyNationalTransformationCssName'] = 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+                                $UPDATE['calledPartyInternationalTransformationCssName'] = 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+                                $UPDATE['calledPartyUnknownTransformationCssName'] = 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+                                $UPDATE['calledPartySubscriberTransformationCssName'] = 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+                                $UPDATE['useDevicePoolCalledCssNatl'] = 'false';
+                                $UPDATE['useDevicePoolCalledCssIntl'] = 'false';
+                                $UPDATE['useDevicePoolCalledCssUnkn'] = 'false';
+                                $UPDATE['useDevicePoolCalledCssSubs'] = 'false';
+                            }
+
+                            if ((($SITE_TYPE == 2) || ($SITE_TYPE == 4)) && $OBJECT['cdpnTransformationCssName']['_'] != "CSS_{$SITE}_GW_CALLED_XFORM") {
+                                $UPDATE['cdpnTransformationCssName'] = "CSS_{$SITE}_GW_CALLED_XFORM";
+                                $UPDATE['useDevicePoolCdpnTransformCss'] = 'false';
+                            }
+
+                            if ($UPDATE) {
+                                $UPDATE['name'] = $OBJECT['name'];
+                                $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+                            } else {
+                                $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                            }
                         } else {
                             $this->ADD_OBJECTS[$TYPE][] = $DATA;
                         }
@@ -1361,8 +1358,6 @@ class CucmSiteMigration extends Cucm
                 $this->SKIP_OBJECTS[$TYPE][] = $TRANS;
             }
         }
-
-        
 
         // 18 - Create our Route Lists
         //Create 911 Route Lists
@@ -1868,16 +1863,15 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        
-		if(isset($this->PHONEUPDATE_OBJECTS['Line'])){
-			$lines = [];
-			// Convert this object into an Array 
-			foreach ($this->PHONEUPDATE_OBJECTS['Line'] as $line) {
-				$lines[] = array_shift($this->PHONEUPDATE_OBJECTS['Line']);
-			}
-			 $this->PHONEUPDATE_OBJECTS['Line'] = $lines;
-		}
-        
+        if (isset($this->PHONEUPDATE_OBJECTS['Line'])) {
+            $lines = [];
+            // Convert this object into an Array
+            foreach ($this->PHONEUPDATE_OBJECTS['Line'] as $line) {
+                $lines[] = array_shift($this->PHONEUPDATE_OBJECTS['Line']);
+            }
+            $this->PHONEUPDATE_OBJECTS['Line'] = $lines;
+        }
+
         $this->DELETE_OBJECTS = $REORDER;
 
         $return = ['type'        => $SITE_TYPE,

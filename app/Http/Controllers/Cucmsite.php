@@ -946,8 +946,7 @@ class Cucmsite extends Cucm
                                                                 'enable'    => 'false',
                                                             ],
 															
-							'cdpnTransformationCssName'							=> "CSS_{$SITE}_GW_CALLED_XFORM",
-							
+
 							'callingPartyNationalPrefix'						=> "+",
 							'callingPartyInternationalPrefix'					=> "+",
 							'callingPartyUnknownPrefix'							=> "+",

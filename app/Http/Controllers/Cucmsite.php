@@ -908,6 +908,8 @@ class Cucmsite extends Cucm
         } else {
             $this->wrap_add_object($DATA, $TYPE);
         }
+		
+		
 
         if ($SITE_TYPE >= 2) {
 
@@ -943,7 +945,40 @@ class Cucmsite extends Cucm
                                                                 '_'         => '99',
                                                                 'enable'    => 'false',
                                                             ],
+															
+							'cdpnTransformationCssName'							=> "CSS_{$SITE}_GW_CALLED_XFORM",
+							
+							'callingPartyNationalPrefix'						=> "+",
+							'callingPartyInternationalPrefix'					=> "+",
+							'callingPartyUnknownPrefix'							=> "+",
+							'callingPartySubscriberPrefix'						=> "+",
+							'callingPartyNationalStripDigits'					=> "0",
+							'callingPartyInternationalStripDigits'				=> "0",
+							'callingPartyUnknownStripDigits'					=> "0",
+							'callingPartySubscriberStripDigits'					=> "0",
+
+							'callingPartyNationalTransformationCssName' 		=> 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+							'callingPartyInternationalTransformationCssName'	=> 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+							'callingPartyUnknownTransformationCssName'			=> 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+							'callingPartySubscriberTransformationCssName'		=> 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+							'useDevicePoolCgpnTransformCssNatl'					=> 'false',
+							'useDevicePoolCgpnTransformCssIntl'					=> 'false',
+							'useDevicePoolCgpnTransformCssUnkn'					=> 'false',
+							'useDevicePoolCgpnTransformCssSubs'					=> 'false',
+
+							'calledPartyNationalTransformationCssName' 			=> 'PT_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+							'calledPartyInternationalTransformationCssName'		=> 'PT_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+							'calledPartyUnknownTransformationCssName'			=> 'PT_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+							'calledPartySubscriberTransformationCssName'		=> 'PT_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+							'useDevicePoolCalledCssNatl'						=> 'false',
+							'useDevicePoolCalledCssIntl'						=> 'false',
+							'useDevicePoolCalledCssUnkn'						=> 'false',
+							'useDevicePoolCalledCssSubs'						=> 'false',
+
                             ];
+					if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
+						$DATA['cdpnTransformationCssName'] => "CSS_{$SITE}_GW_CALLED_XFORM";
+					}
                     // Check if the object already exists. If it isn't then add it.
                     if (! empty($site_array[$TYPE])) {
                         if (in_array($DATA['name'], $site_array[$TYPE])) {

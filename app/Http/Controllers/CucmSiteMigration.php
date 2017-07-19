@@ -1007,11 +1007,68 @@ class CucmSiteMigration extends Cucm
         } else {
             $this->ADD_OBJECTS[$TYPE][] = $DATA;
         }
+		
+		// 13 - Create Called Party Transformations.
+        $TYPE = 'CalledPartyTransformationPattern';
 
-        // 13 - Add H323 Gateways
+        if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
+            $DATA = [
+                [
+                    // Local Calling via E.164 dialing. Can add multiple NPAs here if needed but would need to be manual.
+                    'pattern'                           => "\+1.{$NPA}[2-9]XXXXXX",
+                    'description'                       => 'digits sent to gw or session boarder controller',
+                    'routePartitionName'                => "PT_{$SITE}_GW_CALLED_XFORM",
+                    'digitDiscardInstructionName'       => 'predot',
+                    'calledPartyPrefixDigits'           => '9',
+                ],
+                [
+                    // Leveraging a pri and needs to send 91+ 10 digits to h323 gateway
+                    'pattern'                           => '\+.1[2-9]XX[2-9]XXXXXX',
+                    'description'                       => 'digits sent to gw or session boarder controller',
+                    'routePartitionName'                => "PT_{$SITE}_GW_CALLED_XFORM",
+                    'digitDiscardInstructionName'       => 'predot',
+                    'calledPartyPrefixDigits'           => '9',
+                ],
+            ];
+
+            foreach ($DATA as $OBJECT) {
+                if (! empty($site_array[$TYPE])) {
+                    if (in_array($OBJECT['pattern'], $site_array[$TYPE])) {
+                        //$this->SKIP_OBJECTS[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
+                        //$this->SKIP_OBJECTS[$TYPE][] = [$OBJECT['pattern'] => "Skipping... {$OBJECT['pattern']} already exists."];
+                        foreach ($site_array[$TYPE] as $key => $value) {
+                            $UUID = false;
+                            //print_r($key);
+                            if ($value == $OBJECT['pattern']) {
+                                $UUID = $key;
+                                if ($UUID) {
+                                    $OBJECT = $site_details[$TYPE][$UUID];
+                                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+                                }
+                            }
+                        }
+                    } else {
+                        $this->ADD_OBJECTS[$TYPE][] = $OBJECT;
+                    }
+                } else {
+                    $this->ADD_OBJECTS[$TYPE][] = $OBJECT;
+                }
+            }
+        } else {
+            // Delete them.
+            foreach ($site_array[$TYPE] as $key => $value) {
+                $UUID = $key;
+                $OBJECT = $site_details[$TYPE][$UUID];
+                if ($OBJECT['routePartitionName']['_'] == "PT_{$SITE}_GW_CALLED_XFORM") {
+                    $this->DELETE_OBJECTS[$TYPE][] = $OBJECT;
+                }
+            }
+        }
+
+        // 14 - Add H323 Gateways
 
         $TYPE = 'H323Gateway';
-
+		$UPDATE = false;
         if ($SITE_TYPE >= 2) {
             $ROUTERMODEL = 'Cisco 2951';
             // Calculated variables
@@ -1044,6 +1101,9 @@ class CucmSiteMigration extends Cucm
                                                                 'enable'    => 'false',
                                                             ],
                             ];
+							
+					
+				
                     // Check if the object already exists. If it isn't then add it.
                     if (! empty($site_array[$TYPE])) {
                         if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -1055,14 +1115,60 @@ class CucmSiteMigration extends Cucm
                             }
                             $OBJECT = $site_details[$TYPE][$UUID];
                             $UPDATE = [];
+							
                             if ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_INCOMING_GW") {
-                                //$UPDATE["uuid"] = $OBJECT["uuid"];
-                                $UPDATE['name'] = $OBJECT['name'];
-                                $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_INCOMING_GW";
-                                $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+								$UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_INCOMING_GW";
                             }
+							if ($OBJECT['callingPartyNationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM" ||
+								$OBJECT['callingPartyInternationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM" ||
+								$OBJECT['callingPartyUnknownTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM" ||
+								$OBJECT['callingPartySubscriberTransformationCssName']['_'] != "CSS_GLOBAL_GW_INCOMING_CALLING_XFORM"
+							) {
+								$UPDATE['callingPartyNationalTransformationCssName'] 		= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+								$UPDATE['callingPartyInternationalTransformationCssName']	= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+								$UPDATE['callingPartyUnknownTransformationCssName']			= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+								$UPDATE['callingPartySubscriberTransformationCssName']		= 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM';
+								$UPDATE['callingPartyNationalPrefix']						= "+";
+								$UPDATE['callingPartyInternationalPrefix']					= "+";
+								$UPDATE['callingPartyUnknownPrefix']						= "+";
+								$UPDATE['callingPartySubscriberPrefix']						= "+";
+								$UPDATE['callingPartyNationalStripDigits']					= "0";
+								$UPDATE['callingPartyInternationalStripDigits']				= "0";
+								$UPDATE['callingPartyUnknownStripDigits']					= "0";
+								$UPDATE['callingPartySubscriberStripDigits']				= "0";
+								$UPDATE['useDevicePoolCgpnTransformCssNatl']				= 'false';
+								$UPDATE['useDevicePoolCgpnTransformCssIntl']				= 'false';
+								$UPDATE['useDevicePoolCgpnTransformCssUnkn']				= 'false';
+								$UPDATE['useDevicePoolCgpnTransformCssSubs']				= 'false';
+                            }
+							
+							if ($OBJECT['calledPartyNationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM" ||
+								$OBJECT['calledPartyInternationalTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM" ||
+								$OBJECT['calledPartyUnknownTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM" ||
+								$OBJECT['calledPartySubscriberTransformationCssName']['_'] != "CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM"
+							) {
+								$UPDATE['calledPartyNationalTransformationCssName'] 		= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+								$UPDATE['calledPartyInternationalTransformationCssName']	= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+								$UPDATE['calledPartyUnknownTransformationCssName']			= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+								$UPDATE['calledPartySubscriberTransformationCssName']		= 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM';
+								$UPDATE['useDevicePoolCalledCssNatl']						= 'false';
+								$UPDATE['useDevicePoolCalledCssIntl']						= 'false';
+								$UPDATE['useDevicePoolCalledCssUnkn']						= 'false';
+								$UPDATE['useDevicePoolCalledCssSubs']						= 'false';
+                            }
+							
+							
+							if ((($SITE_TYPE == 2) || ($SITE_TYPE == 4)) && $OBJECT['cdpnTransformationCssName']['_'] != "CSS_{$SITE}_GW_CALLED_XFORM") {
+								$UPDATE['cdpnTransformationCssName'] = "CSS_{$SITE}_GW_CALLED_XFORM";
+								$UPDATE['useDevicePoolCdpnTransformCss'] = "false";
+							}
 
-                            $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+							if($UPDATE){
+								$UPDATE['name'] = $OBJECT['name'];
+								$this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
+							}else{
+								$this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
+							}
                         } else {
                             $this->ADD_OBJECTS[$TYPE][] = $DATA;
                         }
@@ -1081,7 +1187,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 14 - Add a route group
+        // 15 - Add a route group
         $TYPE = 'RouteGroup';
         // Calculated variables for Site Types 2 thru 4.
         if ($SITE_TYPE >= 2) {
@@ -1152,7 +1258,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 15 - Update an existing device pool to add the new route group above
+        // 16 - Update an existing device pool to add the new route group above
 
         // Calculated variables
         $TYPE = 'DevicePool';
@@ -1198,7 +1304,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 16 - Update our translation patterns for the site.
+        // 17 - Update our translation patterns for the site.
 
         // Calculated variables
         $TYPE = 'TransPattern';
@@ -1256,62 +1362,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 17 - Create Called Party Transformations.
-        $TYPE = 'CalledPartyTransformationPattern';
-
-        if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
-            $DATA = [
-                [
-                    // Local Calling via E.164 dialing. Can add multiple NPAs here if needed but would need to be manual.
-                    'pattern'                           => "\+1.{$NPA}[2-9]XXXXXX",
-                    'description'                       => 'digits sent to gw or session boarder controller',
-                    'routePartitionName'                => "PT_{$SITE}_GW_CALLED_XFORM",
-                    'digitDiscardInstructionName'       => 'predot',
-                    'calledPartyPrefixDigits'           => '9',
-                ],
-                [
-                    // Leveraging a pri and needs to send 91+ 10 digits to h323 gateway
-                    'pattern'                           => '\+.1[2-9]XX[2-9]XXXXXX',
-                    'description'                       => 'digits sent to gw or session boarder controller',
-                    'routePartitionName'                => "PT_{$SITE}_GW_CALLED_XFORM",
-                    'digitDiscardInstructionName'       => 'predot',
-                    'calledPartyPrefixDigits'           => '9',
-                ],
-            ];
-
-            foreach ($DATA as $OBJECT) {
-                if (! empty($site_array[$TYPE])) {
-                    if (in_array($OBJECT['pattern'], $site_array[$TYPE])) {
-                        //$this->SKIP_OBJECTS[$TYPE][] = "{$TYPE} Skipping... {$OBJECT['pattern']} already exists.";
-                        //$this->SKIP_OBJECTS[$TYPE][] = [$OBJECT['pattern'] => "Skipping... {$OBJECT['pattern']} already exists."];
-                        foreach ($site_array[$TYPE] as $key => $value) {
-                            $UUID = false;
-                            //print_r($key);
-                            if ($value == $OBJECT['pattern']) {
-                                $UUID = $key;
-                                if ($UUID) {
-                                    $OBJECT = $site_details[$TYPE][$UUID];
-                                    $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
-                                }
-                            }
-                        }
-                    } else {
-                        $this->ADD_OBJECTS[$TYPE][] = $OBJECT;
-                    }
-                } else {
-                    $this->ADD_OBJECTS[$TYPE][] = $OBJECT;
-                }
-            }
-        } else {
-            // Delete them.
-            foreach ($site_array[$TYPE] as $key => $value) {
-                $UUID = $key;
-                $OBJECT = $site_details[$TYPE][$UUID];
-                if ($OBJECT['routePartitionName']['_'] == "PT_{$SITE}_GW_CALLED_XFORM") {
-                    $this->DELETE_OBJECTS[$TYPE][] = $OBJECT;
-                }
-            }
-        }
+        
 
         // 18 - Create our Route Lists
         //Create 911 Route Lists
@@ -1365,7 +1416,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 18 - Create our 911 Route Patterns
+        // 19 - Create our 911 Route Patterns
 
         // Calculated variables
         $TYPE = 'RoutePattern';
@@ -1479,7 +1530,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 19 - Update CTI Route Points
+        // 20 - Update CTI Route Points
 
         // Calculated variables
         $TYPE = 'CtiRoutePoint';
@@ -1582,7 +1633,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 19 - Update CTI Route Points
+        // 21 - Update CTI Route Points
 
         // Calculated variables
         $TYPE = 'RemoteDestinationProfile';
@@ -1685,7 +1736,7 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        // 19 - Update Phones
+        // 22 - Update Phones
 
         // Calculated variables
 
@@ -1817,12 +1868,16 @@ class CucmSiteMigration extends Cucm
             }
         }
 
-        $lines = [];
-        foreach ($this->PHONEUPDATE_OBJECTS['Line'] as $line) {
-            $lines[] = array_shift($this->PHONEUPDATE_OBJECTS['Line']);
-        }
-        $this->PHONEUPDATE_OBJECTS['Line'] = $lines;
-
+        
+		if(isset($this->PHONEUPDATE_OBJECTS['Line'])){
+			$lines = [];
+			// Convert this object into an Array 
+			foreach ($this->PHONEUPDATE_OBJECTS['Line'] as $line) {
+				$lines[] = array_shift($this->PHONEUPDATE_OBJECTS['Line']);
+			}
+			 $this->PHONEUPDATE_OBJECTS['Line'] = $lines;
+		}
+        
         $this->DELETE_OBJECTS = $REORDER;
 
         $return = ['type'        => $SITE_TYPE,

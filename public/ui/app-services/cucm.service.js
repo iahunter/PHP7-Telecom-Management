@@ -292,9 +292,10 @@ angular
 		
 		self.lineresults = [];
 		self.updatelines = function(lines) {
-			
-			if (angular.isArray(lines) && lines.length > 0) {
-				console.log("lines")
+			//console.log('service')
+			//console.log(lines);
+			if (angular.isArray(lines) && lines.length > 0 ) {
+				console.log("LINES")
 				console.log(lines);
 				var postdata = {};
 				postdata.line = lines[0]

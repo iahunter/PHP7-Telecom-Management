@@ -197,7 +197,7 @@ class PingScanInfrastructure extends Command
                         //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
                 });
 
-                echo 'Email sent to '.$this->ONCALL_EMAIL.PHP_EOL;
+                echo 'Email sent to '.$this->ONCALL_EMAIL.''.PHP_EOL;
             }
         }
     }

@@ -1816,6 +1816,13 @@ class CucmSiteMigration extends Cucm
                 $REORDER[$STEP] = $this->DELETE_OBJECTS[$STEP];
             }
         }
+		
+		$lines = [];
+		foreach($this->PHONEUPDATE_OBJECTS['Line'] as $line){
+			$lines[] = array_shift($this->PHONEUPDATE_OBJECTS['Line']);
+		}
+		$this->PHONEUPDATE_OBJECTS['Line'] = $lines;
+		
 
         $this->DELETE_OBJECTS = $REORDER;
 

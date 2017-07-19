@@ -213,6 +213,7 @@ angular
 		vm.phonemigration = function(migration) {
 			vm.newphones = {};
 			
+			console.log(migration);
 			var updated_phones = "";
 			var updated_lines = "";
 			//console.log(migration);
@@ -222,16 +223,25 @@ angular
 			vm.deploycucmsiteloading = true;
 			
 			//console.log(Phones);
-			//console.log(Lines);
+			console.log(Lines);
 			
 			// Run Migration
 			
-			var updated_phones = cucmService.updatephones(angular.copy(Phones));
-			vm.newphones.Phone = updated_phones;
+			if(Phones){
+				//delete Phones.count
+				var updated_phones = cucmService.updatephones(angular.copy(Phones));
+				vm.newphones.Phone = updated_phones;
+			}
 			
+			if(Lines){
+				//Lines.length = angular.copy(Lines.count)
+				//delete Lines.count
+				console.log(Lines)
+				console.log("sadfdsafds")
+				var updated_lines = cucmService.updatelines(angular.copy(Lines));
+				vm.newphones.Line = updated_lines;
+			}
 			
-			var updated_lines = cucmService.updatelines(angular.copy(Lines));
-			vm.newphones.Line = updated_lines;
 			
 			console.log(vm.newphones)
 			/*
@@ -274,6 +284,8 @@ angular
 			}
 			else if(verb == 'PhoneUpdate'){
 				migration = vm.migration.change_summary.PhoneUpdate;
+				//console.log(migration)
+				
 				vm.phones = vm.migration.change_summary.PhoneUpdate.Phone
 				vm.lines = vm.migration.change_summary.PhoneUpdate.Line
 				return vm.phonemigration(migration);

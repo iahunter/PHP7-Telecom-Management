@@ -224,8 +224,8 @@
                 controllerAs: 'vm'
             })
 			.state('getsitereport', {
-                url: '/sitemigrations/sitestatusreports/{id}',
-                templateUrl: 'site-migrations/site-status-reports/getsite.objects.html',
+                url: '/sitestatusreports/{id}',
+                templateUrl: 'site-status-reports/getsite.objects.html',
                 controller: 'getSite.Objects.Controller',
                 controllerAs: 'vm'
             })

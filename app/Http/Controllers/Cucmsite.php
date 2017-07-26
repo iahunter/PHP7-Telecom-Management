@@ -976,7 +976,7 @@ class Cucmsite extends Cucm
 
                             ];
 					if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
-						$DATA['cdpnTransformationCssName'] => "CSS_{$SITE}_GW_CALLED_XFORM";
+						$DATA['cdpnTransformationCssName'] = "CSS_{$SITE}_GW_CALLED_XFORM";
 					}
                     // Check if the object already exists. If it isn't then add it.
                     if (! empty($site_array[$TYPE])) {

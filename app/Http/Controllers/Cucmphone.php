@@ -168,7 +168,7 @@ class Cucmphone extends Cucm
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-        if (! $user->can('delete', Cucmclass::class)) {
+        if (! $user->can('update', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
         //return $request;
@@ -477,10 +477,17 @@ class Cucmphone extends Cucm
                                                     ],
 
                     // Call Forward Settings
+					/*
                     'callForwardAll'               => [
                                                         'forwardToVoiceMail'                 => 'false',
                                                         'callingSearchSpaceName'             => $LINECSS,
                                                         'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
+                                                    ],
+					*/
+												
+					'callForwardAll'               => [
+                                                        'forwardToVoiceMail'		=> 'false',
+                                                        'callingSearchSpaceName'	=> 'CSS_LINE_CFWD_LD',
                                                     ],
                     'callForwardBusy'            => [
                                                         'forwardToVoiceMail'     => 'true',
@@ -546,7 +553,8 @@ class Cucmphone extends Cucm
         if (preg_match('/^Cisco 88..$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
-            // Check protocols models that do SIP Only.
+        
+		// Check protocols models that do SIP Only.
         if (preg_match('/^Cisco 78..$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }

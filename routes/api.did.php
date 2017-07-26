@@ -480,9 +480,8 @@
      * )
      **/
     $api->post('did/searchDidblockNumbersinArray', 'App\Http\Controllers\Didcontroller@searchDidblockNumbersinArray');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/dids/available/sitecode/{sitecode}",
      *     tags={"Did"},

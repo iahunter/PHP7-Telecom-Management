@@ -265,8 +265,8 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function listAvailableNumbersbySite(Request $request, $sitecode)
+
+    public function listAvailableNumbersbySite(Request $request, $sitecode)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -287,26 +287,25 @@ class Didcontroller extends Controller
         //return $didblocks;
 
         $stats = $this->getDidblockUtilization();
-		
+
         $show = [];
         foreach ($didblocks as $didblock) {
             if ($user->can('read', $didblock)) {
                 $didblock->stats = $stats[$didblock->id];
-				$dids = \App\Did::where('parent', $didblock->id)
-									->where('status', 'available')
-									->get();
-				foreach($dids as $did){
-					$show[] = $did->number;
-				}
-                
+                $dids = \App\Did::where('parent', $didblock->id)
+                                    ->where('status', 'available')
+                                    ->get();
+                foreach ($dids as $did) {
+                    $show[] = $did->number;
+                }
             }
         }
-		
+
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'      	 => $show,
+                    'status_code'        => 200,
+                    'success'            => true,
+                    'message'            => '',
+                    'response'           => $show,
                     ];
 
         return response()->json($response);

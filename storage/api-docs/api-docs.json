@@ -2760,6 +2760,36 @@
                 }
             }
         },
+        "/telephony/api/dids/available/sitecode/{sitecode}": {
+            "get": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Get Available DIDs by Sitecode",
+                "description": "",
+                "operationId": "getDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/ldap/users": {
             "get": {
                 "tags": [

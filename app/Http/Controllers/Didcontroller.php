@@ -265,6 +265,52 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	public function listAvailableNumbersbySite(Request $request, $sitecode)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user->can('read', Didblock::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $didblocks = Didblock::where('name', 'like', "%{$request->sitecode}%")
+                ->where('type', '=', 'public')
+                ->where(function ($query) {
+                    $query->where('reserved', '=', null)
+                              ->orWhere('reserved', '=', 0);
+                })
+
+                ->orderBy('start')
+                ->get();
+
+        //return $didblocks;
+
+        $stats = $this->getDidblockUtilization();
+		
+        $show = [];
+        foreach ($didblocks as $didblock) {
+            if ($user->can('read', $didblock)) {
+                $didblock->stats = $stats[$didblock->id];
+				$dids = \App\Did::where('parent', $didblock->id)
+									->where('status', 'available')
+									->get();
+				foreach($dids as $did){
+					$show[] = $did->number;
+				}
+                
+            }
+        }
+		
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'      	 => $show,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function getDid(Request $request, $did_id)
     {

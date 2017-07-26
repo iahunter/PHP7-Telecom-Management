@@ -229,6 +229,18 @@
                 controller: 'getSite.Objects.Controller',
                 controllerAs: 'vm'
             })
+			.state('createsitephone', {
+                url: '/sitestatusreports/{id}/phone/create',
+                templateUrl: 'cucm-phone-manager/create_phone_plan.html',
+                controller: 'phoneManagerPlan.Controller',
+                controllerAs: 'vm'
+            })
+			.state('createphone', {
+                url: '/phone/site/{id}/create/{device}&{name}&{dn}',
+                templateUrl: 'cucm-phone-manager/create_phone.html',
+                controller: 'phoneManagerCreate.Controller',
+                controllerAs: 'vm'
+            })
 			.state('getsitemigration', {
                 url: '/sitemigrations/migration/{id}',
                 templateUrl: 'site-migrations/migrations/site_migration_summary.html',

@@ -480,3 +480,28 @@
      * )
      **/
     $api->post('did/searchDidblockNumbersinArray', 'App\Http\Controllers\Didcontroller@searchDidblockNumbersinArray');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/dids/available/sitecode/{sitecode}",
+     *     tags={"Did"},
+     *     summary="Get Available DIDs by Sitecode",
+     *     description="",
+     *     operationId="getDidblock",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('dids/available/sitecode/{sitecode}', 'App\Http\Controllers\Didcontroller@listAvailableNumbersbySite');

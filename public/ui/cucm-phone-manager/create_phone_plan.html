@@ -1,0 +1,323 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+<div class="container">
+<div class="well">
+<div style="margin:50px"></div>
+
+	<div class="row">
+		<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1">
+			<script type="text/ng-template" id="error-messages">
+							<div ng-message='required'> This Field is required </div>
+							<div ng-message='minlength'> Too short </div>
+							<div ng-message='maxlength'> Too long </div>
+			</script>
+				<legend><h2><i class="fa fa-pencil fa-fw"></i> Create New Phone</h2></legend>
+
+					<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.device.$touched && addDeviceForm.device.$invalid, 'has-success': addDeviceForm.device.$touched && addDeviceForm.device.$valid }">
+									<label for="device" class="control-label">Phone Model</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+											
+											<select class="form-control" required ng-model='vm.deviceForm.device' ng-options="model as model for model in vm.phonemodels" data-width="100%" name="model">
+											</select>
+										</div>
+										<div ng-messages="addDeviceForm.device.$dirty && addDeviceForm.device.$error">
+												<div ng-message='required'> device is required </div>
+												<div ng-message='minlength'>Please enter a device at least 8 chars long</div>
+												<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.device && vm.deviceForm.device != 'IP Communicator'">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.name.$touched && addDeviceForm.name.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
+										<label for="name" class="control-label">Phone MAC Address</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.name' required class="form-control"  name="name" placeholder="MAC Address" ng-minlength='12' ng-maxlength='12'>
+											</div>
+											<div ng-messages="addDeviceForm.name.$dirty && addDeviceForm.name.$error">
+													<div ng-message='required'> name is required </div>
+													<div ng-message='minlength'>Please enter a name at least 12 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 12 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.usenumber.$touched && addDeviceForm.usenumber.$invalid, 'has-success': addDeviceForm.usenumber.$touched && addDeviceForm.usenumber.$valid }">
+									<label for="usenumber"  class="control-label"><i class="fa fa-phone"></i> Assign Phone Number</label><br>
+										<div class="panel panel-default panel-body">
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='usenumber' value="new" data-width="100%" name="usenumber">
+												New&nbsp&nbsp&nbsp&nbsp&nbsp
+											</label>
+											<label> 
+												<input type="radio" class="radio-inline" required ng-model='usenumber' value="existing" data-width="100%" name="usenumber">
+												Use Existing
+											</label>
+											<div ng-messages="addDeviceForm.usenumber.$dirty && addDeviceForm.usenumber.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+								</div>
+							</div>
+						</div>
+							<div class="row" ng-if="usenumber == 'existing'">
+							
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.dn.$touched && addDeviceForm.dn.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
+										<label for="dn" class="control-label">Use Existing Phone Number</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" required  ng-model='vm.deviceForm.dn' required class="form-control"  name="dn" placeholder="10 Digit Phone Number" ng-minlength='10'>
+											</div>
+											<div ng-messages="addDeviceForm.dn.$dirty && addDeviceForm.dn.$error">
+													<div ng-message='required'> DN is required </div>
+													<div ng-message='minlength'>Please enter a dn at least 10 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 10 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							<div class="row" ng-if="usenumber == 'new'">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.dn.$touched && addDeviceForm.dn.$invalid, 'has-success': addDeviceForm.dn.$touched && addDeviceForm.dn.$valid }">
+										<label for="dn" class="control-label">Select New Number</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												
+												<select class="form-control" required ng-model='vm.deviceForm.dn' ng-options="did as did for did in vm.availablenumbers" data-width="100%" name="model">
+												</select>
+											</div>
+											<div ng-messages="addDeviceForm.dn.$dirty && addDeviceForm.dn.$error">
+													<div ng-message='required'> DN is required </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+									<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+											<div class="form-group"  ng-class="{'has-error': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$invalid, 'has-success': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$valid }">
+												<label for="voicemail" class="control-label">Voicemail Box</label>
+												<br>
+												<input type="checkbox"  ng-model='vm.deviceForm.voicemail' name="voicemail" >
+
+												<div ng-messages="addDidblockForm.voicemail.$dirty && addDidblockForm.voicemail.$error">
+													<div ng-messages-include="error-messages"></div>
+												</div>
+											</div>
+									</div>
+							</div>
+							<span ng-if="newphone.device">
+							<div class="row">	
+								
+								<!--
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.carrier.$touched && addDeviceForm.carrier.$invalid, 'has-success': addDeviceForm.carrier.$touched && addDeviceForm.carrier.$valid }">
+										<label for="carrier" class="control-label">Carrier</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input type="text" ng-model='vm.deviceForm.carrier' class="form-control"  name="carrier" placeholder="Carrier" ng-minlength='1' ng-maxlength='50'>
+											</div>
+											<div ng-messages="addDeviceForm.carrier.$dirty && addDeviceForm.carrier.$error">
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.comment.$touched && addDeviceForm.comment.$invalid, 'has-success': addDeviceForm.comment.$touched && addDeviceForm.comment.$valid }">
+										<label for="comment" class="control-label">Description</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<textarea ng-model='vm.deviceForm.comment' class="form-control" name="comment" placeholder="Comment"></textarea>
+											</div>
+											<div ng-messages="addDeviceForm.comment.$dirty && addDeviceForm.comment.$error">
+													<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								-->
+							</div>
+							</span>
+								<!--
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.countrycode.$touched && addDeviceForm.countrycode.$invalid, 'has-success': addDeviceForm.countrycode.$touched && addDeviceForm.countrycode.$valid }">
+										<label for="countrycode" required class=" control-label">Country Code</label>
+										<input type="text" required ng-pattern='/[0-9]+/' ng-model='vm.deviceForm.country_code' class="form-control" name="countrycode" placeholder="1">
+										<div ng-messages="addDeviceForm.countrycode.$dirty && addDeviceForm.countrycode.$error">
+											<div ng-message="pattern">Please enter a valid country code</div>
+											<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+								-->
+							<!-- 
+							</div>
+							<hr>
+							<div class="row">
+							
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.ip_address.$touched && addDeviceForm.ip_address.$invalid, 'has-success': addDeviceForm.ip_address.$touched && addDeviceForm.ip_address.$valid }">
+										<label for="ip_address" class=" control-label">IP Address</label>
+										<input type="textarea" ng-pattern='/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/' ng-model='vm.deviceForm.ip_address' class="form-control" name="ip_address" placeholder="10.0.0.1" ng-minlength='6'>
+										<div ng-messages="addDeviceForm.ip_address.$dirty && addDeviceForm.ip_address.$error">
+											<div ng-message="pattern">Please enter the ip_address in IP Address Format</div>
+											<div ng-message='minlength'>Please enter the ip_address in IP Address Format</div>
+											<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.mgmt_url.$touched && addDeviceForm.mgmt_url.$invalid, 'has-success': addDeviceForm.mgmt_url.$touched && addDeviceForm.mgmt_url.$valid }">
+										<label for="mgmt_url" class="control-label">URL</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.mgmt_url' required class="form-control"  name="mgmt_url" placeholder="https://server">
+											</div>
+											<div ng-messages="addDeviceForm.mgmt_url.$dirty && addDeviceForm.mgmt_url.$error">
+													<div ng-message='required'> mgmt_url is required </div>
+													<div ng-message='minlength'>Please enter a mgmt_url at least 8 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.manufacturer.$touched && addDeviceForm.manufacturer.$invalid, 'has-success': addDeviceForm.manufacturer.$touched && addDeviceForm.manufacturer.$valid }">
+										<label for="manufacturer" class="control-label">Manufacturer</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.manufacturer' required class="form-control"  name="manufacturer" placeholder="Cisco">
+											</div>
+											<div ng-messages="addDeviceForm.manufacturer.$dirty && addDeviceForm.manufacturer.$error">
+													<div ng-message='required'> manufacturer is required </div>
+													<div ng-message='minlength'>Please enter a manufacturer at least 8 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.application.$touched && addDeviceForm.application.$invalid, 'has-success': addDeviceForm.application.$touched && addDeviceForm.application.$valid }">
+										<label for="application" class="control-label">Application</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.application' required class="form-control"  name="application" placeholder="Unified Communications Manager">
+											</div>
+											<div ng-messages="addDeviceForm.application.$dirty && addDeviceForm.application.$error">
+													<div ng-message='required'> application is required </div>
+													<div ng-message='minlength'>Please enter a application at least 8 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.software_version.$touched && addDeviceForm.software_version.$invalid, 'has-success': addDeviceForm.software_version.$touched && addDeviceForm.software_version.$valid }">
+										<label for="software_version" class="control-label">Software Version</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.software_version' required class="form-control"  name="software_version" placeholder="10.5.2">
+											</div>
+											<div ng-messages="addDeviceForm.software_version.$dirty && addDeviceForm.software_version.$error">
+													<div ng-message='required'> software_version is required </div>
+													<div ng-message='minlength'>Please enter a software_version at least 8 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.os.$touched && addDeviceForm.os.$invalid, 'has-success': addDeviceForm.os.$touched && addDeviceForm.os.$valid }">
+										<label for="os" class="control-label">Operating System</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.os' required class="form-control"  name="os" placeholder="Linux, Windows">
+											</div>
+											<div ng-messages="addDeviceForm.os.$dirty && addDeviceForm.os.$error">
+													<div ng-message='required'> os is required </div>
+													<div ng-message='minlength'>Please enter a os at least 8 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.location.$touched && addDeviceForm.location.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
+										<label for="location" class="control-label">Location</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.location' required class="form-control"  name="location" placeholder="Sitecode">
+											</div>
+											<div ng-messages="addDeviceForm.location.$dirty && addDeviceForm.location.$error">
+													<div ng-message='required'> location is required </div>
+													<div ng-message='minlength'>Please enter a location at least 8 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 8 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							-->
+							
+							<!-- Print Form JSON-->
+							<!--
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+									{{vm.deviceForm}}
+									
+								</div>
+							</div>
+							
+							-->
+						
+							<hr />
+							<div class="row">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group">
+										<button  type="submit" ng-disabled="addDeviceForm.$invalid" class="btn btn-primary">Submit</button>
+										<button type="reset" class="btn btn-primary">Reset</button>
+									</div>
+								</div>
+							</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div style="margin:25px"></div>
+	</div>
+</div>
+</div>

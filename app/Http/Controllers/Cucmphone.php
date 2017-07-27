@@ -155,7 +155,6 @@ class Cucmphone extends Cucm
                 $RETURN['deleted_uuid'] = $this->cucm->delete_object_type_by_uuid($UUID, $TYPE);
 
                 // Create log entry
-                
 
                 $response = [
                     'status_code'    => 200,
@@ -166,17 +165,17 @@ class Cucmphone extends Cucm
             }
         } catch (\Exception $E) {
             $message = "{$NAME} Does not exist in CUCM Database.".
-			"{$E->getMessage()}";
-			
-			$response = [
+            "{$E->getMessage()}";
+
+            $response = [
                     'status_code'    => 200,
                     'success'        => false,
                     'message'        => $message,
-                    'response'       => "",
+                    'response'       => '',
                     ];
         }
 
-		return $response;
+        return $response;
     }
 
     public function updatePhone(Request $request)
@@ -249,8 +248,9 @@ class Cucmphone extends Cucm
         }
         $NAME = $request->name;
 
-		$response = $this->deletePhonebyName($NAME);
-		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $response])->log('delete object');
+        $response = $this->deletePhonebyName($NAME);
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $response])->log('delete object');
+
         return $response;
     }
 
@@ -442,7 +442,7 @@ class Cucmphone extends Cucm
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             ) {
-		$NAME = strtoupper($NAME);
+        $NAME = strtoupper($NAME);
 
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
@@ -623,24 +623,22 @@ class Cucmphone extends Cucm
                                     ],
             ];
 
-			
-		// Check to make sure the site has the new Css built or failback to the old one. 
-		
-		try {
+        // Check to make sure the site has the new Css built or failback to the old one.
+
+        try {
             $sitecss = $this->cucm->get_object_type_by_site($SITE, 'Css');
-			$sitecss = $sitecss['response'];
-			
+            $sitecss = $sitecss['response'];
         } catch (\Exception $e) {
             //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             //dd($e->getTrace());
         }
-		
-		if($sitecss){
-			if(!in_array('CSS_'.$SITE.'_DEVICE', $sitecss)){
-				$PHONE['callingSearchSpaceName'] = 'CSS_'.$SITE;
-			}
-		}
-		
+
+        if ($sitecss) {
+            if (! in_array('CSS_'.$SITE.'_DEVICE', $sitecss)) {
+                $PHONE['callingSearchSpaceName'] = 'CSS_'.$SITE;
+            }
+        }
+
         // Set back to SCCP after adding phone.
         $PROTOCOL = 'SCCP';
 

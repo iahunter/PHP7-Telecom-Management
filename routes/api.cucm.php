@@ -140,8 +140,8 @@
      * )
      **/
     $api->get('cucm/routepattern/{routePartitionName}', 'App\Http\Controllers\Cucm@listRoutePatternsByPartition');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/routeplan/summary/{number}",
      *     tags={"Management - CUCM"},
@@ -168,8 +168,8 @@
      * )
      **/
     $api->get('cucm/routeplan/summary/{number}', 'App\Http\Controllers\Cucm@getNumberbyRoutePlan');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/routeplan/details/{number}",
      *     tags={"Management - CUCM"},
@@ -231,8 +231,8 @@
      * )
      **/
     $api->get('cucm/search/{type}/{name}', 'App\Http\Controllers\Cucm@getObjectTypebyName');
-	
-	    /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/searchsite/{type}/{sitecode}",
      *     tags={"Management - CUCM"},

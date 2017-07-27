@@ -98,14 +98,14 @@ angular
 			
 		vm.submitDevice = function(phone) {
 			console.log("Submit Triggered!")
-			/*
+			
 			if(phone.device == "IP Communicator"){
 				phone.name = "CIPC_" + phone.dn;
 			}
 			console.log(phone)
 			var path = '/phone/site/'+ id + '/create/'+ phone.device + '&' + phone.name + '&' + phone.dn
 			$location.path(path);
-			*/
+			
 		}
 		
 		vm.checkname = function(phone){

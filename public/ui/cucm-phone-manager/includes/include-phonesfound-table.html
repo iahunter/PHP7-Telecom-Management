@@ -1,0 +1,151 @@
+<div ng-if="vm.linedetails.device_details < 1" class="well" style="background-color: #e6e6e6">
+	<legend>No Phones found in CUCM</legend>
+</div>
+
+<div ng-if="vm.linesummary.length > 0">
+<legend ng-if="vm.linesummary.length == 1">{{vm.linesummary.length}} Device Exist in CUCM with this Line Assigned</legend>
+<legend ng-if="vm.linesummary.length > 1">{{vm.linesummary.length}} Devices Exist in CUCM with this Line Assigned</legend>
+
+<button ng-if="vm.linesummary.length > 0" class="btn btn-info" data-toggle="modal" data-target="#lines-on-phones-modal">View Phones</button>
+
+	<div class="modal fade " id="lines-on-phones-modal" role="dialog">
+		<div class="modal-dialog" style="width: 90%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>Deploy Unity Mailboxes</h3>
+				</div>
+
+				<div class="modal-body">
+					<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+						<div class="table-responsive">
+						<table class="table table-striped table-condensed table-bordered table-hover">
+							<thead>
+								<tr class="warning">
+									<th><input type="checkbox" ng-model="vm.cucmphoneselectAll" ng-click="vm.cucmphonecheckAll()"/></th>
+									<th>
+										<a href="" ng-click="sortType = 'phoneid'; sortReverse = !sortReverse" style="color:black">
+											Phone ID
+												<span ng-show="sortType == 'phoneid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+												<span ng-show="sortType == 'phoneid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										</a>
+									</th>
+									<th>
+										<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+											MAC
+												<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+												<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										</a>
+									</th>
+									<th>
+										<a href="" ng-click="sortType = 'description'; sortReverse = !sortReverse" style="color:black">
+											Description
+												<span ng-show="sortType == 'description' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+												<span ng-show="sortType == 'description' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										</a>
+									</th>
+									<th>
+										<a href="" ng-click="sortType = 'model'; sortReverse = !sortReverse" style="color:black">
+											Model
+												<span ng-show="sortType == 'model' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+												<span ng-show="sortType == 'model' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										</a>
+									</th>
+									<th>
+										<a href="" ng-click="sortType = 'devicePoolName._'; sortReverse = !sortReverse" style="color:black">
+											Device Pool
+												<span ng-show="sortType == 'devicePoolName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+												<span ng-show="sortType == 'devicePoolName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										</a>
+									</th>
+									<th>
+										<a href="" ng-click="sortType = 'ownerUserName._'; sortReverse = !sortReverse" style="color:black">
+											Owner ID
+												<span ng-show="sortType == 'ownerUserName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+												<span ng-show="sortType == 'ownerUserName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+										</a>
+									</th>
+									<th>
+											Phone Assigned Lines
+									</th>
+									<th>
+											Lines Details
+									</th>
+									<!--<th>
+											Actions
+									</th>-->
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="phone in vm.linedetails.device_details | orderBy:sortType:sortReverse | filter:vm.search: strict">
+									<td>
+										<input type="checkbox" ng-model="phone.select" ng-click="vm.cucmphoneselecttouched()">
+									</td>
+									
+									<td>{{ phone.phoneid}}</td>
+									<td>{{ phone.name}}</td>
+									<td>{{ phone.description}}</td>
+									<td>{{ phone.model}}</td>
+									<td>{{ phone.devicePoolName._}}</td>
+									<td>{{ phone.ownerUserName._}}</td>
+									<td>
+										
+											<!--Nested Table inside Row-->
+											<div ng-if="phone.lines != ''" class="panel panel-default" style="background-color: transparent;">
+												<table class="table-condensed" style="background-color: transparent;">
+													<td><i>End User</i></td>
+													<td><i>Pattern</i></td>
+													<td><i>Label</i></td>
+													
+													
+													<tr ng-repeat="line in phone.lines" ng-if="!vm.isArray(phone.lines.line)">
+														<td>{{line.associatedEndusers.enduser.userId}}</td>
+														<td>{{line.dirn.pattern}}</td>
+														<td>{{line.label}}</td>
+														
+													</tr>
+													
+													<tr ng-repeat="line in phone.lines.line" ng-if="vm.isArray(phone.lines.line)">
+														<td>{{line.associatedEndusers.enduser.userId}}</td>
+														<td>{{line.dirn.pattern}}</td>
+														<td>{{line.label}}</td>
+														
+													</tr>
+												</table>
+											</div>
+											
+									</td>
+									
+									<td>
+											<!--Nested Table inside Row-->
+											<div ng-if="phone.line_details != ''" class="panel panel-default" style="background-color: transparent;">
+												<table class="table-condensed" style="background-color: transparent;">
+													
+													<td><i>Pattern</i></td>
+													<td><i>Description</i></td>
+													<td><i>Call Forwarding</i></td>
+													
+													<tr ng-repeat="line in phone.line_details">
+														<td ng-if="line.pattern != ''">{{line.pattern}}</td>
+														<td ng-if="line.description != ''">{{line.description}}</td>
+														<td ng-if="line.callForwardAll.destination != ''" style="color:red">Forwarded to: {{line.callForwardAll.destination}}</td>
+													</tr>
+												</table>
+											</div>
+											
+									</td>
+									<!--<td><a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.deletecucmphone(phone)">Delete</a></td>-->
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					</div>
+					<div style="margin:25px"></div>
+					<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.cucmphonedeleteselected(vm.linedetails.device_details)">Delete Selected</a>
+					<a class="btn btn-primary" ng-click="vm.modaldismiss('lines-on-phones-modal')" >Dismiss</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

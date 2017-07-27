@@ -247,12 +247,12 @@ angular
 					//console.log(result);
 
 					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-					if(result != "Not Found"){
+					if(result != ""){
 						result.phoneid = phone.id;
 						phone.inuse = true;
 						vm.cucmphones.push(result);
 					}
-					if(result == "Not Found"){
+					if(result == ""){
 						phone.inuse = false;
 					}
 					

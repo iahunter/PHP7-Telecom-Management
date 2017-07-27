@@ -43,16 +43,29 @@
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-server"></i></span>
-												<input type="text" ng-model='vm.deviceForm.name' required class="form-control"  name="name" placeholder="MAC Address" ng-minlength='12' ng-maxlength='12'>
+												<input type="text" ng-model='vm.deviceForm.name' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkname(vm.deviceForm)" required class="form-control"  name="name" placeholder="MAC Address" ng-minlength='12' ng-maxlength='12'>
 											</div>
 											<div ng-messages="addDeviceForm.name.$dirty && addDeviceForm.name.$error">
-													<div ng-message='required'> name is required </div>
+													<div ng-message='required'> DeviceName is required </div>
 													<div ng-message='minlength'>Please enter a name at least 12 chars long</div>
 													<div ng-message='maxlength'>Name entered cannot be longer than 12 chars</div>
+													
 											</div>
+											<div ng-if="vm.nameinvalid">
+												<div class="danger"> DeviceName is invalid </div>
+											</div>
+											
 										</div>
 									</div>
 								</div>
+						
+						</div>
+						
+						<div class="row" ng-if="vm.phone">
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+								<ng-include src="'cucm-phone-manager/includes/include-phonefound.html'"></ng-include>
+							</div>
+							<div style="margin-bottom:125px"></div>
 						</div>
 						
 						<div class="row">
@@ -83,13 +96,17 @@
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-server"></i></span>
-												<input type="text" required  ng-model='vm.deviceForm.dn' required class="form-control"  name="dn" placeholder="10 Digit Phone Number" ng-minlength='10'>
+												<input type="text" required  ng-model='vm.deviceForm.dn' ng-model-options='{ debounce: 500 }' ng-change="vm.checklineusage(vm.deviceForm.dn); vm.check_ipcommunicator_usage(vm.deviceForm)" required class="form-control"  name="dn" placeholder="10 Digit Phone Number" ng-minlength='10'>
 											</div>
 											<div ng-messages="addDeviceForm.dn.$dirty && addDeviceForm.dn.$error">
 													<div ng-message='required'> DN is required </div>
 													<div ng-message='minlength'>Please enter a dn at least 10 chars long</div>
 													<div ng-message='maxlength'>Name entered cannot be longer than 10 chars</div>
 											</div>
+											<div ng-if="vm.nameinvalid">
+												<div class="danger"> DeviceName is invalid </div>
+											</div>
+											
 										</div>
 									</div>
 								</div>
@@ -103,7 +120,7 @@
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
 												
-												<select class="form-control" required ng-model='vm.deviceForm.dn' ng-options="did as did for did in vm.availablenumbers" data-width="100%" name="model">
+												<select class="form-control" required ng-model='vm.deviceForm.dn' ng-model-options='{ debounce: 500 }' ng-change="vm.checklineusage(vm.deviceForm.dn); vm.check_ipcommunicator_usage(vm.deviceForm)" ng-options="did as did for did in vm.availablenumbers" data-width="100%" name="model">
 												</select>
 											</div>
 											<div ng-messages="addDeviceForm.dn.$dirty && addDeviceForm.dn.$error">
@@ -113,8 +130,12 @@
 									</div>
 								</div>
 							</div>
-
+							<div class="row">
 							
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+								<ng-include src="'cucm-phone-manager/includes/include-phonesfound-table.html'"></ng-include>
+							</div>
+							</div>
 							<hr />
 							<div class="row">
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">

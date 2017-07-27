@@ -140,6 +140,62 @@
      * )
      **/
     $api->get('cucm/routepattern/{routePartitionName}', 'App\Http\Controllers\Cucm@listRoutePatternsByPartition');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/routeplan/summary/{number}",
+     *     tags={"Management - CUCM"},
+     *     summary="List Route Plan Numbers Summary by Number",
+     *     description="",
+     *     operationId="listRoutePatternbyPartition",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     * 	   @SWG\Parameter(
+     *         name="number",
+     *         in="path",
+     *         description="Search Route Plan for number in CUCM",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/routeplan/summary/{number}', 'App\Http\Controllers\Cucm@getNumberbyRoutePlan');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/routeplan/details/{number}",
+     *     tags={"Management - CUCM"},
+     *     summary="List Route Plan Numbers Details by Number",
+     *     description="",
+     *     operationId="listRoutePatternbyPartition",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     * 	   @SWG\Parameter(
+     *         name="number",
+     *         in="path",
+     *         description="Search Route Plan for number in CUCM",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/routeplan/details/{number}', 'App\Http\Controllers\Cucm@getNumberandDeviceDetailsbyRoutePlan');
 
     /**
      * @SWG\Get(
@@ -175,6 +231,41 @@
      * )
      **/
     $api->get('cucm/search/{type}/{name}', 'App\Http\Controllers\Cucm@getObjectTypebyName');
+	
+	    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/searchsite/{type}/{sitecode}",
+     *     tags={"Management - CUCM"},
+     *     summary="List Object Type details by Site",
+     *     description="",
+     *     operationId="getObjectTypebyName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="Name of Object",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *	   @SWG\Parameter(
+     *         name="type",
+     *         in="path",
+     *         description="Object Type",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/searchsite/{type}/{sitecode}', 'App\Http\Controllers\Cucm@getObjectTypebySite');
 
     /**
      * @SWG\Get(

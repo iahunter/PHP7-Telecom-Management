@@ -301,6 +301,38 @@ class Cucm extends Controller
 
         return response()->json($response);
     }
+	
+	
+	public function getObjectTypebySite(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
+		//return $request;
+		//echo $request->sitecode;
+        try {
+            $result = $this->cucm->get_object_type_by_site($request->sitecode, $request->type);
+
+            if (! count($result)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $result,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function getObjectTypebyName(Request $request)
     {
@@ -348,6 +380,81 @@ class Cucm extends Controller
         } catch (\Exception $e) {
             echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $result,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function getNumberbyRoutePlan(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        try {
+			
+			$result = $this->cucm->get_route_plan_by_name($request->number);
+
+            if (! count($result)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $result,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function getNumberandDeviceDetailsbyRoutePlan(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        try {
+			$result = [];
+			$numbers = $this->cucm->get_route_plan_by_name($request->number);
+			
+			if(count($numbers)){
+				
+				$result['numbers'] = $numbers;
+				$result['uuid'] = $numbers[0]['uuid'];
+				$result['line_details'] = $this->cucm->get_object_type_by_uuid($result['uuid'], 'Line');
+			
+				foreach($numbers as $number){
+					$phone = $this->cucm->get_object_type_by_name($number['routeDetail'], 'Phone');
+					$phone['line_details'] = $this->cucm->get_lines_details_by_phone_name($phone['name']);
+					$result['device_details'][] = $phone;
+				}
+			}
+			
+			
+			
+            if (! count($result)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
         }
 
         $response = [

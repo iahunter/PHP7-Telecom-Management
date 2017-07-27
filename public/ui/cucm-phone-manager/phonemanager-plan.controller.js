@@ -6,6 +6,9 @@ angular
 		
 		var vm = this;
 		
+		vm.phonereviewed = true;
+		vm.linesreviewed = true;
+		
 		vm.refresh = function (){
 			
 			// jQuery Hack to fix body from the Model. 
@@ -17,6 +20,24 @@ angular
 			//console.log(vm.newphones);
 			$state.reload();
 		};
+		
+		/*
+		vm.modaldismiss = function(modalid){
+			// jQuery Hack to fix body from the Model. 
+			$(".modal-backdrop").hide();
+			$('body').removeClass("modal-open");
+			$('body').removeClass("modal-open");
+			$('body').removeAttr( 'style' );
+		}
+		*/
+		vm.modaldismiss = function(modalid){
+			// jQuery Hack to fix body from the Model. 
+			$("#"+modalid+"").hide();
+			$('body').removeClass("modal-open");
+			$('body').removeClass("modal-open");
+			$('body').removeAttr( 'style' );
+			$('div').remove('.modal-backdrop');
+		}
 		
 		
 		vm.isArray = angular.isArray;
@@ -76,12 +97,152 @@ angular
 			});
 			
 		vm.submitDevice = function(phone) {
+			console.log("Submit Triggered!")
+			/*
 			if(phone.device == "IP Communicator"){
 				phone.name = "CIPC_" + phone.dn;
 			}
 			console.log(phone)
 			var path = '/phone/site/'+ id + '/create/'+ phone.device + '&' + phone.name + '&' + phone.dn
 			$location.path(path);
+			*/
+		}
+		
+		vm.checkname = function(phone){
+			if(phone.name){
+				vm.nameinvalid = false;
+				if(phone.device != "IP Communicator"){
+					
+					// Check if valid MAC
+					var regexp = /^[0-9a-f]{1,12}$/gi;
+					if(!phone.name.match(regexp)){
+						console.log("NO REGEX MATCH FOUND ON NAME")
+						vm.nameinvalid = true;
+					}
+					// If not it should be 12 digits long. 
+					if(phone.name.length != 12){
+						vm.nameinvalid = true;
+					}
+				}
+				console.log(vm.nameinvalid)
+			}
+			
+			if(phone.name && !vm.nameinvalid){
+				console.log("Hitting Here")
+				
+				if(phone.device != "IP Communicator"){
+					vm.checkphoneusage('SEP'+phone.name)
+				}
+				
+			}
+			
+		}
+		
+		vm.check_ipcommunicator_usage = function(phone){
+			if(phone.device == "IP Communicator" && phone.dn){
+				vm.checkphoneusage('CIPC_'+phone.dn)
+			}
+		}
+		
+		
+		vm.checkphoneusage = function(phone){
+			if(phone){
+				console.log(phone)
+				
+				cucmService.getphone(phone)
+					.then(function(res){
+						result = res.data.response;
+						
+
+						//console.log(result);
+
+						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+						if(result){
+							vm.phonereviewed = false;
+							vm.phone = result;
+							console.log(vm.phone)
+						}
+						
+
+					}, function(err){
+						// Error
+					});
+			}
+		}
+		
+		vm.deletephone = function(phone){
+			if(phone){
+				console.log("Deleting Phone")
+				console.log(phone)
+				var phonename = angular.copy(phone)
+				console.log(phonename)
+				
+				cucmService.deletephone(phone)
+					.then(function(res){
+						result = res.data.response;
+						
+						if(result){
+							vm.phone = ""
+							vm.checkphoneusage(phonename)
+							console.log(phonename)
+						}
+
+					}, function(err){
+						// Error
+					});
+			}
+		}
+		
+		vm.checklineusage = function(line){
+			if(line){
+				console.log(line)
+				
+				cucmService.getNumberbyRoutePlan(line)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						
+						result = res.data.response;
+						
+
+						//console.log(result);
+
+						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+						if(result){
+							vm.linesummary = result;
+							console.log(vm.linesummary)
+						}
+						
+
+					}, function(err){
+						// Error
+					});
+				
+				cucmService.getNumberandDeviceDetailsbyRoutePlan(line)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						
+						result = res.data.response;
+						
+
+						//console.log(result);
+
+						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+						if(result){
+							vm.linedetails = result;
+							console.log(vm.linedetails)
+						}
+						
+
+					}, function(err){
+						// Error
+					});
+			}
 			
 		}
 		

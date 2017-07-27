@@ -173,6 +173,36 @@ angular
 			  });
 		}
 		
+		// Get Number usage from Route Plan Report
+		self.getNumberbyRoutePlan = function(number) {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/routeplan/summary/'+number)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
+		
+		// Get Number usage from Route Plan Report
+		self.getNumberandDeviceDetailsbyRoutePlan = function(number) {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/routeplan/details/'+number)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
+		
 		
 		// Create Block
 		self.createphone = function(phone){

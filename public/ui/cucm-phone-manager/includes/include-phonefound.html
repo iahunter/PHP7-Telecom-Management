@@ -1,0 +1,102 @@
+<div ng-if="vm.linedetails.device_details < 1" class="well" style="background-color: #e6e6e6">
+	<legend>No Phones found in CUCM</legend>
+</div>
+
+<div ng-if="vm.phone">
+<legend ng-if="vm.phone">1 Device Exists in CUCM matching that Name</legend>
+<p>You will need to delete this phone prior to adding.</p>
+
+<button ng-if="vm.phone" class="btn btn-info btn-xs" data-toggle="modal" data-target="#exting-phones-modal">View</button>
+
+	<div class="modal fade " id="exting-phones-modal" role="dialog">
+		<div class="modal-dialog" style="width: 90%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>{{vm.phone.name}} Phone Details</h3>
+				</div>
+
+				<div class="modal-body">
+					<div class="container">
+					<form class="form" role="form" id="ExisingPhoneForm" name="ExistingDeviceForm">
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="name" class="control-label">Name</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" ng-model='vm.phone.name' name="name">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="model" class="control-label">Model</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" ng-model='vm.phone.model' name="model">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								
+								<div class="col-sm-12 ">
+									<div class="form-group">
+										<label for="name" class="control-label">Description</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.description' name="name">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+						
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="callingSearchSpaceName" class="control-label">Calling Search Space</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" ng-model='vm.phone.callingSearchSpaceName._' name="callingSearchSpaceName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						
+						</div>
+						
+						<div style="margin:25px"></div>
+						
+						
+					</form>
+				</div>
+				</div>
+				<div class="modal-footer">
+					<div class="container">
+						<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.deletephone(vm.phone.name)">Delete</a>
+						<a class="btn btn-primary" ng-click="vm.modaldismiss('exting-phones-modal')" >Dismiss</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+

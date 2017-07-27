@@ -81,7 +81,7 @@
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-												<input type="text" ng-model='vm.deviceForm.username' class="form-control"  name="username" placeholder="Username" ng-change="vm.lookupuser(vm.deviceForm.username)" ng-minlength='6' ng-maxlength='50'>
+												<input type="text" ng-model='vm.deviceForm.username' ng-model-options='{ debounce: 1500 }' ng-change="vm.lookupuser(vm.deviceForm.username)" class="form-control"  name="username" placeholder="Username" ng-minlength='6' ng-maxlength='50'>
 											</div>
 											<div ng-messages="addDeviceForm.username.$dirty && addDeviceForm.username.$error">
 												<div ng-message='minlength'>Please enter a dn at least 6 chars long</div>

@@ -1060,6 +1060,72 @@
                 }
             }
         },
+        "/telephony/api/cucm/routeplan/summary/{number}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "List Route Plan Numbers Summary by Number",
+                "description": "",
+                "operationId": "listRoutePatternbyPartition",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "description": "Search Route Plan for number in CUCM",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/routeplan/details/{number}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "List Route Plan Numbers Details by Number",
+                "description": "",
+                "operationId": "listRoutePatternbyPartition",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "description": "Search Route Plan for number in CUCM",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/search/{type}/{name}": {
             "get": {
                 "tags": [
@@ -1077,6 +1143,46 @@
                 "parameters": [
                     {
                         "name": "name",
+                        "in": "path",
+                        "description": "Name of Object",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "Object Type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/searchsite/{type}/{sitecode}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM"
+                ],
+                "summary": "List Object Type details by Site",
+                "description": "",
+                "operationId": "getObjectTypebyName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
                         "in": "path",
                         "description": "Name of Object",
                         "required": true,

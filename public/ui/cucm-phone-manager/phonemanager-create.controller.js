@@ -25,15 +25,16 @@ angular
 		vm.messages = 'Loading sites...';
 		
 		var id = $stateParams.id;
+		
+		vm.sitecode = $stateParams.id;
 
 		vm.deviceForm = {};
 		
 		vm.deviceForm.device = $stateParams.device;
-		vm.deviceForm.name = $stateParams.name;
-		vm.deviceForm.name = vm.deviceForm.name.toUpperCase();
+		var name = $stateParams.name;
+		vm.deviceForm.name = name.toUpperCase();
+		
 		vm.deviceForm.dn = $stateParams.dn;
-
-		console.log(vm.deviceForm)
 
 		vm.deploybutton = false;
 		
@@ -44,47 +45,7 @@ angular
 			$location.path('/accessdenied');
 		}
 
-		vm.getavailablenumbers = telephonyService.getAvailableDidsbySitecode(id)
-			.then(function(res){
-				// Check if Token has expired. If so then direct them to login screen. 
-				if(res.message == "Token has expired"){
-					vm.tokenexpired = true;
-					//alert("Token has expired, Please relogin");
-					//alert(res.message);
-					$state.go('logout');
-				}
 
-				vm.availablenumbers = res.data.response;
-				
-				
-				console.log(vm.availablenumbers);
-				
-				
-			}, function(err){
-				//Error
-			});
-		
-		vm.getphonemodels = cucmReportService.phone_model_report()
-			.then(function(res){
-				// Check if Token has expired. If so then direct them to login screen. 
-				if(res.message == "Token has expired"){
-					vm.tokenexpired = true;
-					//alert("Token has expired, Please relogin");
-					//alert(res.message);
-					$state.go('logout');
-				}
-
-				vm.phonemodels = res.data.response;
-				
-				
-				console.log(vm.phonemodels);
-				
-				
-			}, function(err){
-				//Error
-			});
-			
-		
 		vm.languages = [{
 				id: 1,
 				name: 'english'
@@ -118,7 +79,6 @@ angular
 									phone.aduser = "";
 								
 								}else{
-									console.log("hitting")
 									phone.adipphone = result.ipphone
 									phone.aduser = result.user
 									
@@ -155,10 +115,6 @@ angular
 				console.log(vm.aduser)
 			
 			}
-			
-			
-				
-			
 		}
 		
 		vm.getphoneplanphones = sitePhonePlanService.getphoneplanphones(id)
@@ -275,6 +231,110 @@ angular
 					// Error
 				});
 		}
+		
+		vm.getsite = function(){
+						cucmService.getsitesummary(vm.sitecode)
+							.then(function(res){
+								
+								var cucmsitesummary = res.data.response;
+								
+								//console.log(cucmsitesummary);
+								
+								if (res.data.response == 0){
+									vm.deploybutton = true;
+									
+									return vm.cucmsitesummary = false;
+								}else{
+									cucmsitesummary = res.data.response;
+								}
+								console.log(cucmsitesummary);
+								
+								vm.cucmsite = {};
+								vm.cucmsite.summary = {};
+								vm.cucmsite.details = {};
+								// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
+								
+								angular.forEach(cucmsitesummary, function(k,v) {
+									
+										//console.log("VALUE: " + v);
+										//console.log(k);
+										//vm.cucmsite.summary
+										angular.forEach(k, function(key,object) {
+											if(key.length != 0){
+												//vm.cucmsite.summary['length']++;
+												if (!vm.cucmsite.summary[v]){
+													vm.cucmsite.summary[v] = [];
+													if(key){
+														vm.cucmsite.summary[v].push(key);
+													}
+													
+													
+												}else{
+													if(key){
+														vm.cucmsite.summary[v].push(key);
+													}
+													
+												}
+												console.log(object)
+												
+												// Get object details for popover
+												cucmService.get_object_type_by_uuid(object, v)
+														.then(function(res) {
+															
+															
+															vm.cucmsite.details[key] = [];
+															//vm.cucmsite.details[key] = res.data.response;
+															
+															// Json stringify to make object readable in popover
+															var response = JSON.stringify(res.data.response, undefined, 2);
+															//console.log(response)
+															vm.cucmsite.details[key] = response;
+															
+															
+
+														}, function(error) {
+															alert('An error occurred while getting object')
+														});
+												
+											}
+										});
+									
+									//console.log(vm.cucmsite.details);
+									
+								});
+								
+								if(vm.cucmsite.summary == 0){
+									console.log("Does not exist in CUCM");
+									vm.cucmsite.summary = false;
+								}
+								
+								//console.log(vm.cucmsite.details)
+								console.log(vm.cucmsite.summary)
+							}, function(err){
+								//Error
+							});
+							
+							
+						cupiService.listusertemplatesbysite(vm.sitecode)
+							.then(function(res) {
+								
+								vm.siteusertemplates = res.data;
+								//console.log(vm.siteusertemplates);
+								
+								if(vm.siteusertemplates.length > 0){
+									vm.usertemplatedeploybutton = false;
+								}
+								if(vm.siteusertemplates.length == 0){
+									vm.usertemplatedeploybutton = true;
+								}
+								
+
+							}, function(error) {
+								alert('An error occurred while getting user templates from unity connection')
+							});
+		}
+					
+		vm.getsite();
 		
 		vm.getphonesfromcucm = function(phones){
 			vm.cucmphones = [];

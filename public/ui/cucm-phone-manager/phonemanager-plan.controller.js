@@ -188,54 +188,67 @@ angular
 		}
 		
 		vm.checklineusage = function(line){
+			
 			if(line){
+				vm.lineinvalid = true
 				console.log(line)
+				if((line > 1000000000) && (line < 9999999999)){
+						//console.log(phone.dn)
+						vm.lineinvalid = false;
+						
+				}
+				if(vm.lineinvalid){
+					console.log("Line Invalid")
+					vm.linesummary = false;
+				}
+				else if(!vm.lineinvalid){
+					cucmService.getNumberbyRoutePlan(line)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
+							
+							
+							result = res.data.response;
+							
+
+							//console.log(result);
+
+							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+							if(result){
+								vm.linesummary = result;
+								console.log(vm.linesummary)
+							}
+							
+
+						}, function(err){
+							// Error
+						});
+					
+					cucmService.getNumberandDeviceDetailsbyRoutePlan(line)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
+							
+							
+							result = res.data.response;
+							
+
+							//console.log(result);
+
+							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+							if(result){
+								vm.linedetails = result;
+								console.log(vm.linedetails)
+							}
+							
+
+						}, function(err){
+							// Error
+						});
+				}
 				
-				cucmService.getNumberbyRoutePlan(line)
-					.then(function(res){
-						user = [];
-						//console.log(res);
-						//user.username = username;
-						
-						
-						result = res.data.response;
-						
-
-						//console.log(result);
-
-						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-						if(result){
-							vm.linesummary = result;
-							console.log(vm.linesummary)
-						}
-						
-
-					}, function(err){
-						// Error
-					});
-				
-				cucmService.getNumberandDeviceDetailsbyRoutePlan(line)
-					.then(function(res){
-						user = [];
-						//console.log(res);
-						//user.username = username;
-						
-						
-						result = res.data.response;
-						
-
-						//console.log(result);
-
-						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-						if(result){
-							vm.linedetails = result;
-							console.log(vm.linedetails)
-						}
-						
-
-					}, function(err){
-						// Error
-					});
 			}
 			
 		}

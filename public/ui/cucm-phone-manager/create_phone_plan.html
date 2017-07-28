@@ -97,17 +97,14 @@
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-server"></i></span>
-												<input type="text" required  ng-model='vm.deviceForm.dn' ng-model-options='{ debounce: 500 }' ng-change="vm.checklineusage(vm.deviceForm.dn); vm.check_ipcommunicator_usage(vm.deviceForm)" required class="form-control"  name="dn" placeholder="10 Digit Phone Number" ng-minlength='10'>
+												<input type="text" required  ng-model='vm.deviceForm.dn' ng-model-options='{ debounce: 500 }' ng-change="vm.checklineusage(vm.deviceForm.dn); vm.check_ipcommunicator_usage(vm.deviceForm)" required class="form-control"  name="dn" placeholder="10 Digit Phone Number" ng-minlength='10' ng-maxlength='10'>
 											</div>
 											<div ng-messages="addDeviceForm.dn.$dirty && addDeviceForm.dn.$error">
 													<div ng-message='required'> DN is required </div>
 													<div ng-message='minlength'>Please enter a dn at least 10 chars long</div>
 													<div ng-message='maxlength'>Name entered cannot be longer than 10 chars</div>
 											</div>
-											<div ng-if="vm.nameinvalid">
-												<div class="danger"> DeviceName is invalid </div>
-											</div>
-											
+											<div class="danger" ng-if="vm.lineinvalid">Line Invalid - Must be a 10 digit phone number</div>
 										</div>
 									</div>
 								</div>
@@ -127,6 +124,7 @@
 											<div ng-messages="addDeviceForm.dn.$dirty && addDeviceForm.dn.$error">
 													<div ng-message='required'> DN is required </div>
 											</div>
+											
 										</div>
 									</div>
 								</div>

@@ -135,7 +135,7 @@
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
 					<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict" ng-show="site.sitecode">
-							<td>{{site.sitecode}}</td>
+							<td><a href="#/sitestatusreports/{{site.sitecode}}">{{site.sitecode}}</a></td>
 							<td>
 								<i ng-if="site.trunking == 'sip'" class="fa fa-check-square-o" aria-hidden="true"></i>
 								<i ng-if="site.trunking == 'local'" class="fa fa-square-o" aria-hidden="true"></i>
@@ -151,7 +151,10 @@
 							</td>
 							
 							<td>{{site.phonecount}}</td>
-							<td><a href="#/sitestatusreports/{{site.sitecode}}"><button class="btn btn-primary btn-xs">View</button></a></td>
+							<td>
+								<a href="#/sitestatusreports/{{site.sitecode}}"><button class="btn btn-default btn-xs"><b>View</b></button></a>
+								<a href="#/sitestatusreports/{{site.sitecode}}/phone/create"><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i><b> Phone</b></button></a>
+							</td>
 					</tr>
 							
 					</tbody>

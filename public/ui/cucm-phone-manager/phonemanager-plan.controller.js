@@ -21,15 +21,7 @@ angular
 			$state.reload();
 		};
 		
-		/*
-		vm.modaldismiss = function(modalid){
-			// jQuery Hack to fix body from the Model. 
-			$(".modal-backdrop").hide();
-			$('body').removeClass("modal-open");
-			$('body').removeClass("modal-open");
-			$('body').removeAttr( 'style' );
-		}
-		*/
+		// Shouldn't need this anymore... changed form to ng-click instead of 
 		vm.modaldismiss = function(modalid){
 			// jQuery Hack to fix body from the Model. 
 			$("#"+modalid+"").hide();
@@ -39,9 +31,11 @@ angular
 			$('div').remove('.modal-backdrop');
 		}
 		
+		vm.firstlettertoupper = function(string){
+			return string.charAt(0).toUpperCase() + string.slice(1);
+		}
 		
 		vm.isArray = angular.isArray;
-		
 
 		vm.messages = 'Loading sites...';
 		

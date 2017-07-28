@@ -23,6 +23,14 @@ angular
 		};
 	})
 	
+	.directive('lineDirective', function() {
+		return {
+			restrict: 'AECM',
+			templateUrl: 'app-directives/line_form.html',
+			replace: true
+		};
+	})
+	
 	.directive('popOver', function ($compile, $templateCache) {
 		var getTemplate = function () {
 		

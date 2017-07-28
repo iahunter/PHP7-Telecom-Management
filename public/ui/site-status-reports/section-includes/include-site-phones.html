@@ -1,3 +1,5 @@
+	
+
 <div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 	<div class="panel-heading" role="tab" id="sitephones" style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 
@@ -7,6 +9,7 @@
 	</div>
 	<div class="panel-body panel-collapse collapse" role="tabpanel" id="collapse_phones"  aria-labelledby="sitephones">
 			<legend> Phones: {{vm.sitecode}}</legend>
+			<p><b style="color:red;">Note! </b>This report updates every 24 hrs.</p>
 			<div style="margin:25px"></div>
 
 			
@@ -15,10 +18,7 @@
 			</div>
 			
 			<div style="margin:25px"></div>
-			
-
-			<a href="#/sitestatusreports/{{vm.sitecode}}/phone/create"><button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i>Add</button> </a>
-			
+		
 			<div style="margin:25px"></div>
 			
 			<div ng-if="vm.phones.length > 0">
@@ -32,6 +32,8 @@
 					<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
 				</div>
 			</div>
+			<div style="margin:15px"></div>	
+			<a href="#/sitestatusreports/{{vm.sitecode}}/phone/create"><button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</button> </a>
 			
 			<div style="margin:25px"></div>
 				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -69,24 +71,24 @@
 									</a>
 								</th>
 								<th>
-									<a href="" ng-click="sortType = 'devicePoolName._'; sortReverse = !sortReverse" style="color:black">
+									<a href="" ng-click="sortType = 'devicepool'; sortReverse = !sortReverse" style="color:black">
 										Device Pool
-											<span ng-show="sortType == 'devicePoolName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-											<span ng-show="sortType == 'devicePoolName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+											<span ng-show="sortType == 'devicepool' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'devicepool' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
 								</th>
 								<th>
-									<a href="" ng-click="sortType = 'devicePoolName._'; sortReverse = !sortReverse" style="color:black">
+									<a href="" ng-click="sortType = 'css'; sortReverse = !sortReverse" style="color:black">
 										CSS
-											<span ng-show="sortType == 'devicePoolName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-											<span ng-show="sortType == 'devicePoolName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+											<span ng-show="sortType == 'css' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'css' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
 								</th>
 								<th>
-									<a href="" ng-click="sortType = 'ownerUserName._'; sortReverse = !sortReverse" style="color:black">
+									<a href="" ng-click="sortType = 'ownerid'; sortReverse = !sortReverse" style="color:black">
 										Owner ID
-											<span ng-show="sortType == 'ownerUserName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-											<span ng-show="sortType == 'ownerUserName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+											<span ng-show="sortType == 'ownerid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'ownerid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
 								</th>
 								<th>

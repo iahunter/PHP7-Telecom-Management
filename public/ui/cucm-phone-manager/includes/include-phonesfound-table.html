@@ -6,13 +6,13 @@
 <legend ng-if="vm.linesummary.length == 1">{{vm.linesummary.length}} Device Exist in CUCM with this Line Assigned</legend>
 <legend ng-if="vm.linesummary.length > 1">{{vm.linesummary.length}} Devices Exist in CUCM with this Line Assigned</legend>
 
-<button ng-if="vm.linesummary.length > 0" class="btn btn-info" data-toggle="modal" data-target="#lines-on-phones-modal">View Phones</button>
+<button ng-if="vm.linesummary.length > 0" class="btn btn-info btn-xs" data-toggle="modal" data-target="#lines-on-phones-modal">View Phones</button>
 
 	<div class="modal fade " id="lines-on-phones-modal" role="dialog">
 		<div class="modal-dialog" style="width: 90%;">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3>Deploy Unity Mailboxes</h3>
+					<h3>Devices with {{vm.deviceForm.dn}} Configured</h3>
 				</div>
 
 				<div class="modal-body">
@@ -141,7 +141,7 @@
 					</div>
 					<div style="margin:25px"></div>
 					<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.cucmphonedeleteselected(vm.linedetails.device_details)">Delete Selected</a>
-					<a class="btn btn-primary" ng-click="vm.modaldismiss('lines-on-phones-modal')" >Dismiss</a>
+					<a class="btn btn-primary" data-dismiss="modal" >Dismiss</a>
 				</div>
 			</div>
 		</div>

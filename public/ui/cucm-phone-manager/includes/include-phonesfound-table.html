@@ -11,10 +11,22 @@
 	<div class="modal fade " id="lines-on-phones-modal" role="dialog">
 		<div class="modal-dialog" style="width: 90%;">
 			<div class="modal-content">
+				
 				<div class="modal-header">
 					<h3>Line Details: {{vm.linedetails.line_details.pattern}}</h3>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" ng-if="!vm.linedetails">
+					<div>
+						<legend >Loading. Please be patient... </legend>
+						<div class="well">
+							<div class="row">
+								<div class="container loader"></div>
+							</div>
+							<div style="margin:25px"></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-body" ng-if="vm.linedetails">
 					<div style="margin-left:5%; margin-right:5%">
 						<div class="row">
 							<div class="col-sm-6">
@@ -129,7 +141,7 @@
 							</div>
 							
 							<div ng-if="vm.linedetails.device_details">
-								<h4>Devices with {{vm.deviceForm.dn}} Configured</h4>
+								<h4><b>{{vm.linedetails.device_details.length}} Devices with {{vm.deviceForm.dn}} Configured</b></h4>
 								<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 									<div class="table-responsive">
 										<table class="table table-striped table-condensed table-bordered table-hover">

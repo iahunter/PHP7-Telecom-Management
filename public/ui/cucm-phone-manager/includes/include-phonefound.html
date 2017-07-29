@@ -20,6 +20,7 @@
 				<div class="modal-body">
 					<div class="container">
 					<div class="row">
+						<legend><b>Device</b></legend>
 						<div class="col-sm-6">
 							<div class="row">
 								<div class="col-sm-12">
@@ -112,7 +113,7 @@
 							</div>
 							
 							
-							
+						
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group">
@@ -127,7 +128,16 @@
 									</div>
 								</div>
 							</div>
-						
+							
+							<div class="row" ng-if="vm.phone.addOnModules.addOnModule.length > 0">
+								
+
+									<!-- addOnModule Directive to print HTML for each addOnModule-->
+									<div ng-repeat="addOnModule in vm.phone.addOnModules" ng-if="!vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>	
+										
+									<div ng-repeat="addOnModule in vm.phone.addOnModules.addOnModule" ng-if="vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>
+
+							</div>
 						</div>
 						
 						
@@ -136,13 +146,36 @@
 						
 						
 					</div>
-					<hr>
+
 					<div class="row" >
+						<legend><b>Lines</b></legend>
 
 							<!-- Line Directive to print HTML for each Line-->
 							<div ng-repeat="line in vm.phone.lines" ng-if="!vm.isArray(vm.phone.lines.line)" line-directive></div>	
 								
 							<div ng-repeat="line in vm.phone.lines.line" ng-if="vm.isArray(vm.phone.lines.line)" line-directive></div>
+
+					</div>
+					
+					
+					
+					<div class="row" ng-if="vm.phone.speeddials.speeddial.length > 0">
+						<legend><b>Speed Dials</b></legend>
+
+							<!-- Line Directive to print HTML for each Line-->
+							<div ng-repeat="speeddial in vm.phone.speeddials" ng-if="!vm.isArray(vm.phone.speeddials.speeddial)" speeddial-directive></div>	
+								
+							<div ng-repeat="speeddial in vm.phone.speeddials.speeddial" ng-if="vm.isArray(vm.phone.speeddials.speeddial)" speeddial-directive></div>
+
+					</div>
+					
+					<div class="row" ng-if="vm.phone.busyLampFields.busyLampField.length > 0">
+						<legend><b>Busy Lamp Fields</b></legend>
+
+							<!-- Line Directive to print HTML for each Line-->
+							<div ng-repeat="busyLampField in vm.phone.busyLampFields" ng-if="!vm.isArray(vm.phone.busyLampFields.busyLampField)" blf-directive></div>	
+								
+							<div ng-repeat="busyLampField in vm.phone.busyLampFields.busyLampField" ng-if="vm.isArray(vm.phone.busyLampFields.busyLampField)" blf-directive></div>
 
 					</div>
 					

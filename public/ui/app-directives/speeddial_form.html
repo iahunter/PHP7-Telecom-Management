@@ -1,18 +1,34 @@
 <div>
-	<div class="col-sm-6">
-	<div class="panel panel-default">
+	<div class="col-sm-3">
+	<div class="panel panel-primary">
+	
 	<div class="panel-heading">
-		{{line.dirn.pattern}}
+		{{speeddial.dirn}}
 	</div>
+	
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group">
-					<label class="control-label">Line Number</label>
+					<label class="control-label">Index</label>
 					<div class="inputGroupContainer">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-							<input class="form-control" readonly ng-model="line.dirn.pattern">
+							<input class="form-control" readonly ng-model="speeddial.index">
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="control-label">Speeddial Number</label>
+					<div class="inputGroupContainer">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+							<input class="form-control" readonly ng-model="speeddial.dirn">
 						</div>
 						
 					</div>
@@ -26,27 +42,14 @@
 					<div class="inputGroupContainer">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-							<input class="form-control" readonly ng-model="line.label">
+							<input class="form-control" readonly ng-model="speeddial.label">
 						</div>
 						
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="form-group">
-					<label class="control-label">Associated End User</label>
-					<div class="inputGroupContainer">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-							<input class="form-control" readonly ng-model="line.associatedEndusers.enduser.userId">
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
+		
 	</div></div>
 	</div>
 </div>

@@ -31,6 +31,30 @@ angular
 		};
 	})
 	
+	.directive('speeddialDirective', function() {
+		return {
+			restrict: 'AECM',
+			templateUrl: 'app-directives/speeddial_form.html',
+			replace: true
+		};
+	})
+	
+	.directive('blfDirective', function() {
+		return {
+			restrict: 'AECM',
+			templateUrl: 'app-directives/blf_form.html',
+			replace: true
+		};
+	})
+	
+	.directive('addonmoduleDirective', function() {
+		return {
+			restrict: 'AECM',
+			templateUrl: 'app-directives/addonmodule_form.html',
+			replace: true
+		};
+	})
+	
 	.directive('popOver', function ($compile, $templateCache) {
 		var getTemplate = function () {
 		

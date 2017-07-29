@@ -1,10 +1,26 @@
 <div>
-	<div class="col-sm-6">
-	<div class="panel panel-default">
+	<div class="col-sm-3">
+	<div class="panel panel-danger">
+	
 	<div class="panel-heading">
-		{{line.dirn.pattern}}
+		{{busyLampField.blfDirn}}
 	</div>
+	
 	<div class="panel-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="control-label">Index</label>
+					<div class="inputGroupContainer">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+							<input class="form-control" readonly ng-model="busyLampField.index">
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group">
@@ -12,7 +28,21 @@
 					<div class="inputGroupContainer">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-							<input class="form-control" readonly ng-model="line.dirn.pattern">
+							<input class="form-control" readonly ng-model="busyLampField.blfDirn">
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="control-label">Partition</label>
+					<div class="inputGroupContainer">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+							<input class="form-control" readonly ng-model="busyLampField.routePartition">
 						</div>
 						
 					</div>
@@ -26,27 +56,14 @@
 					<div class="inputGroupContainer">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-							<input class="form-control" readonly ng-model="line.label">
+							<input class="form-control" readonly ng-model="busyLampField.label">
 						</div>
 						
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="form-group">
-					<label class="control-label">Associated End User</label>
-					<div class="inputGroupContainer">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-							<input class="form-control" readonly ng-model="line.associatedEndusers.enduser.userId">
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div></div>
+		
+		</div></div>
 	</div>
 </div>

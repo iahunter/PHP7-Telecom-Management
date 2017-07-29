@@ -47,6 +47,20 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="control-label">Call Forwarding</label>
+					<div class="inputGroupContainer">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+							<input class="form-control" readonly style="color:red;" ng-model="forwarding" ng-init="forwarding = vm.getcallforwardinfo(line.dirn.uuid)">
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 	</div></div>
 	</div>
 </div>

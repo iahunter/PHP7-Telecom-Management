@@ -138,6 +138,25 @@ angular
 			}
 		}
 		
+		vm.getcallforwardinfo = function(uuid){
+			//console.log(uuid)
+			var forward = false;
+			if(uuid){
+				angular.forEach(vm.phone.line_details, function(value,key) {
+					if(key == uuid){
+						console.log("CallForward:")
+						console.log(value.callForwardAll.destination)
+						forward = value.callForwardAll.destination
+						return forward
+						
+					}
+				});
+			}
+			console.log(forward)
+			return forward
+			
+		}
+		
 		
 		vm.checkphoneusage = function(phone){
 			if(phone){

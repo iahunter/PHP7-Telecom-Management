@@ -4,7 +4,7 @@
 
 <div ng-if="vm.phone">
 <legend ng-if="vm.phone">1 Device Exists in CUCM matching that Name</legend>
-<p>You will need to delete this phone prior to adding.</p>
+<p>You will need to delete this phone prior to adding a new one with the same name.</p>
 
 <button ng-if="vm.phone" class="btn btn-info btn-xs" data-toggle="modal" data-target="#exting-phones-modal">View</button>
 
@@ -19,6 +19,10 @@
 
 				<div class="modal-body">
 					<div class="container">
+					<div class="alert alert-warning" role="alert" ng-if="vm.phone.addOnModules.addOnModule.length > 0">
+						<strong>This Device has Expansion Modules!!! Do Not Delete unless you verify this configuration is no longer needed!!!</strong>										
+					</div>
+								
 					<div class="row">
 						<legend><b>Device</b></legend>
 						<div class="col-sm-6">
@@ -130,12 +134,11 @@
 							</div>
 							
 							<div class="row" ng-if="vm.phone.addOnModules.addOnModule.length > 0">
-								
 
-									<!-- addOnModule Directive to print HTML for each addOnModule-->
-									<div ng-repeat="addOnModule in vm.phone.addOnModules" ng-if="!vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>	
-										
-									<div ng-repeat="addOnModule in vm.phone.addOnModules.addOnModule" ng-if="vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>
+								<!-- addOnModule Directive to print HTML for each addOnModule-->
+								<div ng-repeat="addOnModule in vm.phone.addOnModules" ng-if="!vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>	
+									
+								<div ng-repeat="addOnModule in vm.phone.addOnModules.addOnModule" ng-if="vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>
 
 							</div>
 						</div>

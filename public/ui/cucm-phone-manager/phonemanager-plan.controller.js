@@ -148,13 +148,15 @@ angular
 						result = res.data.response;
 						
 
-						//console.log(result);
+						console.log(result);
 
 						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 						if(result){
 							vm.phonereviewed = false;
 							vm.phone = result;
 							console.log(vm.phone)
+						}else{
+							vm.phone = false;
 						}
 						
 
@@ -212,12 +214,35 @@ angular
 							result = res.data.response;
 							
 
-							//console.log(result);
+							console.log(result.length);
 
 							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 							if(result){
-								vm.linesummary = result;
-								console.log(vm.linesummary)
+								if(result.length == 1){
+									console.log("Length = 1")
+									//var blankline = false;
+									angular.forEach(result, function(line) {
+										console.log(line)
+										if(line.routeDetail == ""){
+											console.log("Hitting blank route details")
+											//blankline = true;
+											vm.nodevices = true;
+											vm.linesummary = result;
+											
+										}
+									});
+									/*
+									if(!blankline){
+										vm.linesummary = result;
+										console.log(vm.linesummary)
+									}*/
+								}else{
+									vm.linesummary = result;
+									console.log(vm.linesummary)
+								}
+								
+							}else{
+								vm.linesummary = false;
 							}
 							
 
@@ -253,7 +278,8 @@ angular
 			
 		}
 		
-		
+
+
 		vm.getphoneplanphones = sitePhonePlanService.getphoneplanphones(id)
 			.then(function(res){
 				// Check if Token has expired. If so then direct them to login screen. 
@@ -847,10 +873,11 @@ angular
 		
 		
 		vm.checkAllcucmphones = function() {
+			console.log("Hitting check all")
 			angular.forEach(vm.cucmphones, function(phone) {
 			  phone.select = vm.selectAll;
 			  //console.log(phone);
-			  vm.cucmphoneselecttouched();
+			  //vm.cucmphoneselecttouched();
 			});
 		  };
 		  
@@ -883,19 +910,20 @@ angular
 			});
 			
 			$timeout(function(){
-				vm.getphonesfromcucm(vm.phones)
+				vm.checklineusage(vm.deviceForm.dn)
 			}, 2000);
 				
 		}
 		
-		
 		vm.cucmphonecheckAll = function() {
-			angular.forEach(vm.cucmphones, function(phone) {
+			angular.forEach(vm.linedetails.device_details, function(phone) {
 			  phone.select = vm.cucmphoneselectAll;
 			  //console.log(phone);
 			  //vm.selecttouched();
 			});
 		  };
+		
+		
 		
 		
 		//$timeout(function(),5000, false)

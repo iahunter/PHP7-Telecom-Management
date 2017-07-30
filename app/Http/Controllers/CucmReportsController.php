@@ -183,12 +183,12 @@ class CucmReportsController extends Controller
 
         /*
         // Custom SQL Query for Report
-        SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911,
+        SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.shortextenlength,
         COUNT(cucmphone.id) as phonecount
         FROM cucmsite
         LEFT JOIN cucmphone ON SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode AND cucmphone.deleted_at is NULL
         WHERE cucmsite.deleted_at is NULL
-        GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911
+        GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.shortextenlength
         ORDER BY cucmsite.sitecode
         */
 

@@ -14,7 +14,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class CucmReportsController extends Controller
 {
     public $phones = [];
-	public $extnlength = [];
+    public $extnlength = [];
 
     //use Helpers;
     public function __construct()
@@ -53,41 +53,37 @@ class CucmReportsController extends Controller
 
         $site = Cucmsiteconfigs::where('sitecode', $request->sitecode)->first();
         $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
-		
-		// Get extension Length from phone descriptions
-		
+
+        // Get extension Length from phone descriptions
+
         $phone_array = [];
 
         if ($phonecount) {
             $phone_array[] = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->chunk(300, function ($phones) {
-                
                 foreach ($phones as $phone) {
-                    $desc_array = explode(" - ", $phone['description']);
-					
-                    if(is_array($desc_array)){
-						$shortextn = array_pop($desc_array);
-						$shortextnlength = strlen($shortextn);
-						if(isset($this->extnlength[$shortextnlength])){
-							$this->extnlength[$shortextnlength] = $this->extnlength[$shortextnlength] + 1;
-						}else{
-							$this->extnlength[$shortextnlength] = 1;
-						}
-						
-					}
+                    $desc_array = explode(' - ', $phone['description']);
+
+                    if (is_array($desc_array)) {
+                        $shortextn = array_pop($desc_array);
+                        $shortextnlength = strlen($shortextn);
+                        if (isset($this->extnlength[$shortextnlength])) {
+                            $this->extnlength[$shortextnlength] = $this->extnlength[$shortextnlength] + 1;
+                        } else {
+                            $this->extnlength[$shortextnlength] = 1;
+                        }
+                    }
                 }
             });
-			
-			//print_r($this->extnlength);
-			
-			// Get the one with the most counts. 
-			$extnlength = array_keys($this->extnlength, max($this->extnlength));
-			$extnlength = $extnlength[0];
-			$site->shortextenlength = $extnlength;	
-        }else{
-			$site->shortextenlength = 4;
-		}
-		
-		
+
+            //print_r($this->extnlength);
+
+            // Get the one with the most counts.
+            $extnlength = array_keys($this->extnlength, max($this->extnlength));
+            $extnlength = $extnlength[0];
+            $site->shortextenlength = $extnlength;
+        } else {
+            $site->shortextenlength = 4;
+        }
 
         // Change Site type based on site design user chooses. This will determine the site type.
         if ($site->trunking == 'sip' && $site->e911 == '911enable') {
@@ -99,8 +95,6 @@ class CucmReportsController extends Controller
         } elseif ($site->trunking == 'local' && $site->e911 == 'local') {
             $site->type = 4;
         }
-		
-		
 
         $site->phonecount = $phonecount;
         //print_r($site);

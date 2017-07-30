@@ -197,7 +197,7 @@
 							</div>
 							
 							<div class="row" >
-								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.voicemail">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.voicemail && vm.siteusertemplates.length">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.template.$touched && addDeviceForm.template.$invalid, 'has-success': addDeviceForm.template.$touched && addDeviceForm.template.$valid }">
 										<label for="template" class="control-label">Select Voicemail Template</label>
 										<div class="inputGroupContainer">
@@ -216,7 +216,7 @@
 								</div>
 							</div>
 							<div class="alert alert-danger" role="alert" ng-if="vm.deviceForm.voicemail && !vm.siteusertemplates.length">
-								<strong>No Available Numbers Found for {{vm.sitecode}}. Contact System Administrator</strong>										
+								<strong>No Available Voicemail User Templates Found for {{vm.sitecode}}. Contact the System Administrator</strong>										
 							</div>
 							
 							<hr />

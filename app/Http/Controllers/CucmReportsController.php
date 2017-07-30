@@ -56,6 +56,8 @@ class CucmReportsController extends Controller
 		
 		// Get extension Length from phone descriptions
 		
+		/* Moved this code to the hourly site scan command and updates the database table. 
+		
         $phone_array = [];
 
         if ($phonecount) {
@@ -87,7 +89,7 @@ class CucmReportsController extends Controller
 			$site->shortextenlength = 4;
 		}
 		
-		
+		*/
 
         // Change Site type based on site design user chooses. This will determine the site type.
         if ($site->trunking == 'sip' && $site->e911 == '911enable') {
@@ -190,7 +192,7 @@ class CucmReportsController extends Controller
         ORDER BY cucmsite.sitecode
         */
 
-        $sites = DB::select(DB::raw('SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, COUNT(cucmphone.id) as phonecount FROM cucmsite  LEFT JOIN cucmphone ON SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode AND cucmphone.deleted_at is NULL WHERE cucmsite.deleted_at is NULL GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911 ORDER BY cucmsite.sitecode'));
+        $sites = DB::select(DB::raw('SELECT cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.shortextenlength, COUNT(cucmphone.id) as phonecount FROM cucmsite  LEFT JOIN cucmphone ON SUBSTRING(cucmphone.devicepool, 4) = cucmsite.sitecode AND cucmphone.deleted_at is NULL WHERE cucmsite.deleted_at is NULL GROUP BY devicepool, cucmsite.sitecode, cucmsite.trunking, cucmsite.e911, cucmsite.shortextenlength ORDER BY cucmsite.sitecode'));
 
         // Get Trunking for Graph
         $trunking = DB::table('cucmsite')

@@ -110,7 +110,7 @@
 								</div>
 								
 							</div>
-							<div class="row" ng-if="usenumber == 'new' && vm.availablenumbers.count > 0">
+							<div class="row" ng-if="usenumber == 'new' && vm.availablenumbers.length > 0">
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.dn.$touched && addDeviceForm.dn.$invalid, 'has-success': addDeviceForm.dn.$touched && addDeviceForm.dn.$valid }">
 										<label for="dn" class="control-label">Select Available Number</label>
@@ -129,7 +129,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="alert alert-danger" role="alert" ng-if="usenumber == 'new' &&!vm.availablenumbers.count">
+							<div class="alert alert-danger" role="alert" ng-if="usenumber == 'new' &&!vm.availablenumbers.length">
 								<strong>No Available Numbers Found for {{vm.sitecode}}. Contact System Administrator</strong>										
 							</div>
 							<div class="row">

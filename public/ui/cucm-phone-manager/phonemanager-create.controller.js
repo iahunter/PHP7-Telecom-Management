@@ -308,6 +308,8 @@ angular
 									vm.cucmsite.summary = false;
 								}
 								
+								//vm.deviceForm
+								
 								//console.log(vm.cucmsite.details)
 								console.log(vm.cucmsite.summary)
 							}, function(err){

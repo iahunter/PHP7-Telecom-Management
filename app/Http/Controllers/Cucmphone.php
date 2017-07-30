@@ -634,8 +634,8 @@ class Cucmphone extends Cucm
         }
 
         if ($sitecss) {
-            if (! in_array('CSS_'.$SITE.'_DEVICE', $sitecss)) {
-                $PHONE['callingSearchSpaceName'] = 'CSS_'.$SITE;
+		if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
+                $PHONE['callingSearchSpaceName'] = "CSS_{$SITE}";
             }
         }
 

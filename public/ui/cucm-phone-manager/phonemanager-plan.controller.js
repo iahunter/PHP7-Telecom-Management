@@ -50,7 +50,7 @@ angular
 				vm.availablenumbers = res.data.response;
 				
 				
-				console.log(vm.availablenumbers);
+				//console.log(vm.availablenumbers);
 				
 				
 			}, function(err){
@@ -70,7 +70,7 @@ angular
 				vm.phonemodels = res.data.response;
 				
 				
-				console.log(vm.phonemodels);
+				//console.log(vm.phonemodels);
 				
 				
 			}, function(err){
@@ -105,11 +105,11 @@ angular
 						vm.nameinvalid = true;
 					}
 				}
-				console.log(vm.nameinvalid)
+				//console.log(vm.nameinvalid)
 			}
 			
 			if(phone.name && !vm.nameinvalid){
-				console.log("Hitting Here")
+				//console.log("Hitting Here")
 				
 				if(phone.device != "IP Communicator"){
 					vm.checkphoneusage('SEP'+phone.name)
@@ -131,15 +131,15 @@ angular
 			if(uuid){
 				angular.forEach(vm.phone.line_details, function(value,key) {
 					if(key == uuid){
-						console.log("CallForward:")
-						console.log(value.callForwardAll.destination)
+						//console.log("CallForward:")
+						//console.log(value.callForwardAll.destination)
 						forward = value.callForwardAll.destination
 						return forward
 						
 					}
 				});
 			}
-			console.log(forward)
+			//console.log(forward)
 			return forward
 			
 		}
@@ -147,20 +147,20 @@ angular
 		
 		vm.checkphoneusage = function(phone){
 			if(phone){
-				console.log(phone)
+				//console.log(phone)
 				
 				cucmService.getphone(phone)
 					.then(function(res){
 						result = res.data.response;
 						
 
-						console.log(result);
+						//console.log(result);
 
 						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 						if(result){
 							vm.phonereviewed = false;
 							vm.phone = result;
-							console.log(vm.phone)
+							//console.log(vm.phone)
 						}else{
 							vm.phone = false;
 						}
@@ -199,7 +199,7 @@ angular
 			
 			if(line){
 				vm.lineinvalid = true
-				console.log(line)
+				//console.log(line)
 				if((line > 1000000000) && (line < 9999999999)){
 						//console.log(phone.dn)
 						vm.lineinvalid = false;
@@ -220,17 +220,17 @@ angular
 							result = res.data.response;
 							
 
-							console.log(result.length);
+							//console.log(result.length);
 
 							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 							if(result){
 								if(result.length == 1){
-									console.log("Length = 1")
+									//console.log("Length = 1")
 									//var blankline = false;
 									angular.forEach(result, function(line) {
-										console.log(line)
+										//console.log(line)
 										if(line.routeDetail == ""){
-											console.log("Hitting blank route details")
+											//console.log("Hitting blank route details")
 											//blankline = true;
 											vm.nodevices = true;
 											//vm.linesummary = result;
@@ -244,7 +244,7 @@ angular
 									
 								}else{
 									vm.linesummary = result;
-									console.log(vm.linesummary)
+									//console.log(vm.linesummary)
 								}
 								
 							}else{
@@ -271,7 +271,7 @@ angular
 							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 							if(result){
 								vm.linedetails = result;
-								console.log(vm.linedetails)
+								//console.log(vm.linedetails)
 							}
 							
 

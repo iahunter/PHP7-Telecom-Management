@@ -39,8 +39,8 @@ class CucmSiteScan extends Command
                                                     );
 
         $this->svn = env('CUCM_SVN');
-		$this->extnlength = [];
-		$this->shortext_exclude = ['KMXFDMDO'];
+        $this->extnlength = [];
+        $this->shortext_exclude = ['KMXFDMDO'];
 
         parent::__construct();
     }
@@ -144,59 +144,54 @@ class CucmSiteScan extends Command
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     protected function create_update_site($sitecode, $site_summary, $site_details, $e911, $trunking)
     {
-		// Reset extnlength
-		$this->extnlength = [];
-		
+        // Reset extnlength
+        $this->extnlength = [];
+
         $INSERT['sitecode'] = $sitecode;
         $INSERT['sitesummary'] = $site_summary;
         $INSERT['sitedetails'] = $site_details;
         $INSERT['e911'] = $e911;
         $INSERT['trunking'] = $trunking;
-		$INSERT['shortextenlength'] = 4;
-		
-		$phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$sitecode.'%')->count();
-		
-		if(!in_array($sitecode, $this->shortext_exclude)){
-			print "Phone Count ".$phonecount.PHP_EOL;
-			// Get extension Length from phone descriptions
-			
-			$phone_array = [];
+        $INSERT['shortextenlength'] = 4;
 
-			if ($phonecount) {
-				$phone_array[] = Cucmphoneconfigs::where('devicepool', 'like', '%'.$sitecode.'%')->chunk(300, function ($phones) {
-					
-					foreach ($phones as $phone) {
-						$desc_array = explode(" - ", $phone['description']);
-						
-						if(is_array($desc_array)){
-							$shortextn = array_pop($desc_array);
-							$shortextnlength = strlen($shortextn);
-							if(isset($this->extnlength[$shortextnlength])){
-								$this->extnlength[$shortextnlength] = $this->extnlength[$shortextnlength] + 1;
-							}else{
-								$this->extnlength[$shortextnlength] = 1;
-							}
-							
-						}
-					}
-				});
-				
-				//print_r($this->extnlength);
-				
-				// Get the one with the most counts. 
-				$extnlength = array_keys($this->extnlength, max($this->extnlength));
-				$extnlength = $extnlength[0];
-				$INSERT['shortextenlength'] = $extnlength;
-				print "Found Extension Length: ".$extnlength.PHP_EOL;
-			}else{
-				print "Did not Find Extension Length... Leaving Site at Default value of 4... ".PHP_EOL;
-			}
-		}else{
-			print "Found Site in short extension excluded list. Leaving Site at Default value of 4...".PHP_EOL;
-		}
-		
-		
-		
+        $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$sitecode.'%')->count();
+
+        if (! in_array($sitecode, $this->shortext_exclude)) {
+            echo 'Phone Count '.$phonecount.PHP_EOL;
+            // Get extension Length from phone descriptions
+
+            $phone_array = [];
+
+            if ($phonecount) {
+                $phone_array[] = Cucmphoneconfigs::where('devicepool', 'like', '%'.$sitecode.'%')->chunk(300, function ($phones) {
+                    foreach ($phones as $phone) {
+                        $desc_array = explode(' - ', $phone['description']);
+
+                        if (is_array($desc_array)) {
+                            $shortextn = array_pop($desc_array);
+                            $shortextnlength = strlen($shortextn);
+                            if (isset($this->extnlength[$shortextnlength])) {
+                                $this->extnlength[$shortextnlength] = $this->extnlength[$shortextnlength] + 1;
+                            } else {
+                                $this->extnlength[$shortextnlength] = 1;
+                            }
+                        }
+                    }
+                });
+
+                //print_r($this->extnlength);
+
+                // Get the one with the most counts.
+                $extnlength = array_keys($this->extnlength, max($this->extnlength));
+                $extnlength = $extnlength[0];
+                $INSERT['shortextenlength'] = $extnlength;
+                echo 'Found Extension Length: '.$extnlength.PHP_EOL;
+            } else {
+                echo 'Did not Find Extension Length... Leaving Site at Default value of 4... '.PHP_EOL;
+            }
+        } else {
+            echo 'Found Site in short extension excluded list. Leaving Site at Default value of 4...'.PHP_EOL;
+        }
 
         // Save Site Config as JSON and upload to subversion for change tracking.
         $svn_save = json_encode($INSERT, JSON_PRETTY_PRINT);
@@ -216,7 +211,7 @@ class CucmSiteScan extends Command
             $site->sitedetails = $INSERT['sitedetails'];
             $site->e911 = $INSERT['e911'];
             $site->trunking = $INSERT['trunking'];
-			$site->shortextenlength = $INSERT['shortextenlength'];
+            $site->shortextenlength = $INSERT['shortextenlength'];
 
             echo 'Saving Site with current config...'.PHP_EOL;
             $site->save();

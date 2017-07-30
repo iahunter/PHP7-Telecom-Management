@@ -27,7 +27,7 @@
      * @SWG\Get(
      *     path="/telephony/api/reports/site/{sitecode}",
      *     tags={"CUCM Reports"},
-     *     summary="List of DID Blocks for authorized user",
+     *     summary="List of Site Objects",
      *     description="",
      *     operationId="listSites",
      *     consumes={"application/json"},
@@ -52,7 +52,7 @@
      * @SWG\Get(
      *     path="/telephony/api/reports/phones/{sitecode}",
      *     tags={"CUCM Reports"},
-     *     summary="List of DID Blocks for authorized user",
+     *     summary="List of Phones for Site",
      *     description="",
      *     operationId="listSites",
      *     consumes={"application/json"},
@@ -77,7 +77,7 @@
      * @SWG\Get(
      *     path="/telephony/api/reports/siteE911TrunkingReport",
      *     tags={"CUCM Reports"},
-     *     summary="List of DID Blocks for authorized user",
+     *     summary="List Report of Trunking and E911 for all Sites",
      *     description="",
      *     operationId="listSites",
      *     consumes={"application/json"},

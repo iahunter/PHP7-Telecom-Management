@@ -118,6 +118,14 @@
 							</th>
 							
 							<th>
+								<a href="" ng-click="sortType = 'shortextenlength'; sortReverse = !sortReverse" style="color:black">
+									Short Extension Length
+										<span ng-show="sortType == 'shortextenlength' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'shortextenlength' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'phonecount'; sortReverse = !sortReverse" style="color:black">
 									Phone Count
 										<span ng-show="sortType == 'phonecount' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -149,7 +157,7 @@
 								
 								{{site.e911}}
 							</td>
-							
+							<td>{{site.shortextenlength}}</td>
 							<td>{{site.phonecount}}</td>
 							<td>
 								<a href="#/sitestatusreports/{{site.sitecode}}"><button class="btn btn-default btn-xs"><b>View</b></button></a>

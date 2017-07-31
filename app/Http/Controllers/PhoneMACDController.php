@@ -9,5 +9,4 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PhoneMACDController extends Controller
 {
-	
 }

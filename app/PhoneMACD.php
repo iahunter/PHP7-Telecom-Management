@@ -7,7 +7,7 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
 
-class CucmMAC extends Model
+class PhoneMACD extends Model
 {
     // Added dummy class for permissions use for now.
     protected $fillable = ['uuid'];

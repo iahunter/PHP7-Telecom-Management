@@ -12,8 +12,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class Create_Phone_Event
 {
     use InteractsWithSockets, SerializesModels;
-	
-	public $phone; 
+
+    public $phone;
 
     /**
      * Create a new event instance.

@@ -27,7 +27,6 @@ class Create_Phone_Listener
     public function handle(Create_Phone_Event $event)
     {
         // Testing Event Listeners
-		\Log::info('createPhoneListener', ['data' => $event->phone]);
-		
+        \Log::info('createPhoneListener', ['data' => $event->phone]);
     }
 }

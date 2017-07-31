@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\Create_UnityConnection_Mailbox_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\Create_UnityConnection_Mailbox_Event;
 
 class Create_UnityConnection_Mailbox_Listener
 {

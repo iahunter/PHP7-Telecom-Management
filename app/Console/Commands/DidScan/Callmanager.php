@@ -44,10 +44,10 @@ class Callmanager extends Command
     {
         // Get our list of NPA/NXX's
         $prefixes = $this->getDidNPANXXList();
-		$prefixes = [913689];
-		$prefixes = [307232];
+        $prefixes = [913689];
+        $prefixes = [307232];
 
-		$possible_deletes = [];
+        $possible_deletes = [];
         // Loop through our NPA/NXX's and get their devices out of call wrangler
         foreach ($prefixes as $npanxx) {
             $didinfo = [];
@@ -61,24 +61,23 @@ class Callmanager extends Command
             // Update all our DID information for this NPANXX based on those device records.
             $possible_deletes[$npanxx] = $this->updateDidInfo($npanxx, $didinfo);
         }
-		
-		// Return Array with numbers that could not be deleted because CFWA is set. 
-		$numbers_with_no_device_and_cfa_set = [];
-		
-		foreach($possible_deletes as $npanxx => $cleanuparray){
-			print $npanxx. "| Count: ".count($cleanuparray).PHP_EOL;
-			//print_r($cleanuparray);
-			foreach($cleanuparray as $uuid => $number){
-				$line = $this->cleanup_number($uuid, $number);
-				if($line){
-					$numbers_with_no_device_and_cfa_set[] = $line;
-				}
-				
-			}
-		}
-		
-		// 
-		print_r($numbers_with_no_device_and_cfa_set);
+
+        // Return Array with numbers that could not be deleted because CFWA is set.
+        $numbers_with_no_device_and_cfa_set = [];
+
+        foreach ($possible_deletes as $npanxx => $cleanuparray) {
+            echo $npanxx.'| Count: '.count($cleanuparray).PHP_EOL;
+            //print_r($cleanuparray);
+            foreach ($cleanuparray as $uuid => $number) {
+                $line = $this->cleanup_number($uuid, $number);
+                if ($line) {
+                    $numbers_with_no_device_and_cfa_set[] = $line;
+                }
+            }
+        }
+
+        //
+        print_r($numbers_with_no_device_and_cfa_set);
     }
 
     // This gets a SIMPLE array of NPA/NXX for our numbers in the database.
@@ -93,53 +92,46 @@ class Callmanager extends Command
 
         return $prefixes;
     }
-	
-	// Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
+
+    // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function cleanup_number($uuid, $number)
     {
+        $call_fowarded_numbers = [];
 
-		$call_fowarded_numbers = [];
-		
-		echo 'Getting Number: '.$number.' from CUCM...'.PHP_EOL;
+        echo 'Getting Number: '.$number.' from CUCM...'.PHP_EOL;
         try {
             $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-            
-			$line = $cucm->get_object_type_by_uuid($uuid, 'Line');
-			
-			if($line){
-				if(!$line['callForwardAll']['destination']){
-					print "{$number} can be deleted!!!!".PHP_EOL;
-					
-					// Add Logic to go remove this Line from CUCM here....
-					
-					// Add Logic to make number available here. 
-					
-				}
-				if($line['callForwardAll']['destination']){
-					print "{$number} has Call Forwarding Set!!!! DO NOT DELETE... {$line['callForwardAll']['destination']}".PHP_EOL;
-					
-					// return lines that have this set 
-					return $line; 
-				}
-			}else{
-				throw new \Exception('No Line Found!!!');
-			}
-			
-            unset($cucm);
 
+            $line = $cucm->get_object_type_by_uuid($uuid, 'Line');
+
+            if ($line) {
+                if (! $line['callForwardAll']['destination']) {
+                    echo "{$number} can be deleted!!!!".PHP_EOL;
+
+                    // Add Logic to go remove this Line from CUCM here....
+
+                    // Add Logic to make number available here.
+                }
+                if ($line['callForwardAll']['destination']) {
+                    echo "{$number} has Call Forwarding Set!!!! DO NOT DELETE... {$line['callForwardAll']['destination']}".PHP_EOL;
+
+                    // return lines that have this set
+                    return $line;
+                }
+            } else {
+                throw new \Exception('No Line Found!!!');
+            }
+
+            unset($cucm);
         } catch (\Exception $e) {
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
-		
-		
     }
-
-	
 
     // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function getDidsByNPANXX($npanxx)
@@ -181,10 +173,10 @@ class Callmanager extends Command
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     protected function updateDidInfo($npanxx, $didinfo)
     {
-        
-		// Return array of the numbers that we need to look into cleaning up. 
-		$possible_deletes = [];
-		
+
+        // Return array of the numbers that we need to look into cleaning up.
+        $possible_deletes = [];
+
         // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
         if (\App\Did::where([['number', 'like', $npanxx.'%']])->count()) {
             $dids = \App\Did::where([['country_code', '=', 1], ['number', 'like', $npanxx.'%']])->get();
@@ -192,14 +184,13 @@ class Callmanager extends Command
 
         // Go through all the mathcing DID's and update them, OR set them to available
             // maybe WRAP this in a try/catch block to handle individual number update failures!
-		
-		foreach ($dids as $did) {
+
+        foreach ($dids as $did) {
             try {
                 // SKIP updating OR making available DID's that are RESERVED!
                 if ($did->status == 'reserved') {
                     //continue;
                     if (isset($didinfo[$did->number])) {
-						
                         $did->assignments = $didinfo[$did->number];
                         $did->status = 'inuse';
                         $did->system_id = 'CUCM-Enterprise-Cluster';
@@ -207,16 +198,16 @@ class Callmanager extends Command
                         continue;
                     }
                 }
-				
+
                 // IF this DID IS in the results from call wrangler, update it!
                 if (isset($didinfo[$did->number])) {
-					foreach($didinfo[$did->number] as $entry){
-						if(isset($entry['routeDetail']) && !$entry['routeDetail']){
-							//print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL; 
-							$possible_deletes[$entry['uuid']] = $entry['dnOrPattern'];
-						}
-					}
-					//print_r($didinfo[$did->number]);
+                    foreach ($didinfo[$did->number] as $entry) {
+                        if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
+                            //print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
+                            $possible_deletes[$entry['uuid']] = $entry['dnOrPattern'];
+                        }
+                    }
+                    //print_r($didinfo[$did->number]);
                     $did->assignments = $didinfo[$did->number];
                     $did->status = 'inuse';
                     $did->system_id = 'CUCM-Enterprise-Cluster';
@@ -233,9 +224,8 @@ class Callmanager extends Command
             }
             echo 'Processing DID: '.$did->number.' '.PHP_EOL;
             //die();
-
         }
-		
-		return $possible_deletes;
+
+        return $possible_deletes;
     }
 }

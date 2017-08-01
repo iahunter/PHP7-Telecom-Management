@@ -21,7 +21,6 @@ angular
 		
 		vm.isArray = angular.isArray;
 		
-
 		vm.messages = 'Loading sites...';
 		
 		var id = $stateParams.id;
@@ -116,98 +115,6 @@ angular
 			
 			}
 		}
-		
-		vm.getphoneplanphones = sitePhonePlanService.getphoneplanphones(id)
-			.then(function(res){
-				// Check if Token has expired. If so then direct them to login screen. 
-				if(res.message == "Token has expired"){
-					vm.tokenexpired = true;
-					//alert("Token has expired, Please relogin");
-					//alert(res.message);
-					$state.go('logout');
-				}
-				
-				vm.phones = res.data.result;
-				//console.log(phones);
-				//return vm.phones = phones;
-				//vm.phones = [];
-				angular.forEach(vm.phones, function(phone) {
-					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
-					//console.log(phone.dn)
-					
-
-					// Check Valid MAC Address format for Phones not IP Communicator
-					if(phone.device != "IP Communicator"){
-						
-						// Check if valid MAC
-						var regexp = /^[0-9a-f]{1,12}$/gi;
-						if(!phone.name.match(regexp)){
-							console.log("NO REGEX MATCH FOUND ON NAME")
-							phone.nameinvalid = true;
-						}
-						// If not it should be 12 digits long. 
-						if(phone.name.length != 12){
-							phone.nameinvalid = true;
-						}
-					}
-					/*
-					var mac = phone.name.split("");
-					angular.forEach(mac, function(character) {
-						var regexp = /^[0-9a-f]{1,12}$/gi
-						if str.match(regexp)
-					}*/
-					
-					if((phone.dn > 1000000000) && (phone.dn < 9999999999)){
-						//console.log(phone.dn)
-						phone.dnint = true;
-					}
-					
-
-					if((phone.username != "") && (phone.username != null)){
-						LDAPService.getusername(phone.username)
-						.then(function(res){
-							user = [];
-							//console.log(res);
-							//user.username = username;
-							
-							result = res.data.result;
-							
-							if(result != undefined){
-								if (result.user == ""){
-									phone.aduser = ""
-									phone.adipphone = ""
-								
-								}if (result.disabled == true){
-									phone.aduser = "";
-								
-								}else{
-									phone.adipphone = result.ipphone
-									phone.aduser = result.user
-								}
-							}else{
-								phone.aduser = ""
-								phone.adipphone = ""
-							}
-
-							
-							
-							//console.log(phone);
-							
-						});
-					}else{
-						phone.aduser = ""
-						phone.adipphone = ""
-					}
-				});
-				
-				
-				return vm.phones;
-
-				
-			}, function(err){
-				//Error
-			});
-			
 			
 		vm.getusername = function(username){
 			//console.log(username);
@@ -389,91 +296,178 @@ angular
 			
 		}
 		
-		// Set Display Unity to False 
+		vm.checklineusage = function(line){
+			
+			if(line){
+				vm.lineinvalid = true
+				//console.log(line)
+				if((line > 1000000000) && (line < 9999999999)){
+						//console.log(phone.dn)
+						vm.lineinvalid = false;
+						
+				}
+				if(vm.lineinvalid){
+					console.log("Line Invalid")
+					vm.linesummary = false;
+				}
+				else if(!vm.lineinvalid){
+					cucmService.getNumberbyRoutePlan(line)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
+							
+							
+							result = res.data.response;
+							
+
+							//console.log(result.length);
+
+							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+							if(result){
+								if(result.length == 1){
+									//console.log("Length = 1")
+									//var blankline = false;
+									angular.forEach(result, function(line) {
+										//console.log(line)
+										if(line.routeDetail == ""){
+											//console.log("Hitting blank route details")
+											//blankline = true;
+											vm.nodevices = true;
+											//vm.linesummary = result;
+											
+										}
+										
+									});
+									
+									
+									vm.linesummary = result;
+									
+								}else{
+									vm.linesummary = result;
+									//console.log(vm.linesummary)
+								}
+								
+							}else{
+								vm.linesummary = false;
+							}
+							
+
+						}, function(err){
+							// Error
+						});
+					
+					cucmService.getNumberandDeviceDetailsbyRoutePlan(line)
+						.then(function(res){
+							user = [];
+							//console.log(res);
+							//user.username = username;
+							
+							
+							result = res.data.response;
+							
+
+							//console.log(result);
+
+							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+							if(result){
+								vm.linedetails = result;
+								//console.log(vm.linedetails)
+							}
+							
+
+						}, function(err){
+							// Error
+						});
+				}
+				
+			}
+			
+		}
+		
+		// Set Display Unity to False
 		vm.displayunityusers = false;
 		
 		
 		// This function runs thru the users in unity to check whats is in use and adds it to the object. 
-		vm.getusersfromcupi = function(phones){
-			vm.cupiphones = [];
+		vm.getusersfromcupi = function(phone){
+			//console.log("Hitting getusersfromcupi")
+			phone.voicemail = angular.lowercase(phone.voicemail);
+			//console.log(phone)
+			if((phone.voicemail == true) || (phone.voicemail == 'true') || (phone.voicemail == 't') || (phone.voicemail == 'y') || (phone.voicemail == 'yes')){
 			
-			angular.forEach(phones, function(phone) {
-				phone.voicemail = angular.lowercase(phone.voicemail);
-				if((phone.voicemail == 'true') || (phone.voicemail == 't') || (phone.voicemail == 'y') || (phone.voicemail == 'yes')){
-				
-					if(phone.username != ""){
-						phone.username = angular.lowercase(phone.username);
-						cupiService.getuser(phone.username)
-						.then(function(res){
-							user = [];
-							//console.log(res);
-							//user.username = username;
-							
-							
-							result = res.data.response;
-							if(result['@total'] == 0){
-								phone.unityuser = null;
-							}else{
-								phone.unityuser = result['User'];
-							}
-							
-						}, function(err){
-							// Error
-						});
+				if(phone.username != ""){
+					phone.username = angular.lowercase(phone.username);
+					cupiService.getuser(phone.username)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
 						
-						cupiService.getldapuser(phone.username)
-						.then(function(res){
-							user = [];
-							//console.log(res);
-							//user.username = username;
-							
-							
-							result = res.data.response;
-							//console.log(result)
-							if(result['@total'] == 0){
-								phone.unityldapuser = null;
-							}else{
-								phone.unityldapuser = result['ImportUser'];
-							}
-							
+						
+						result = res.data.response;
+						if(result['@total'] == 0){
+							vm.unityuser = null;
+						}else{
+							vm.unityuser = result['User'];
+							console.log("vm.unityuser")
+							console.log(vm.unityuser)
+						}
+						
+					}, function(err){
+						// Error
+					});
+					
+					cupiService.getldapuser(phone.username)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						
+						result = res.data.response;
+						//console.log(result)
+						if(result['@total'] == 0){
+							vm.unityldapuser = null;
+						}else{
+							vm.unityldapuser = result['ImportUser'];
+							console.log("vm.unityldapuser")
+							console.log(vm.unityldapuser)
+						}
+						
 
-							
-						}, function(err){
-							// Error
-						});
-					
-					}
-					
-					cupiService.getmailboxbyextension(phone.dn)
-						.then(function(res){
-							user = [];
-							//console.log(res);
-							//user.username = username;
-							
-							
-							result = res.data.response;
-							if(result['@total'] == 0){
-								phone.unity_mailbox_inuse = null;
-							}else{
-								phone.unity_mailbox_inuse = result['User'];
-								phone.unity_mailbox_inuse.Alias = angular.lowercase(result['User']['Alias']);
-							}
-							
-						}, function(err){
-							// Error
-						});
-					
+						
+					}, function(err){
+						// Error
+					});
+				
 				}
 				
+				cupiService.getmailboxbyextension(phone.dn)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						
+						result = res.data.response;
+						if(result['@total'] == 0){
+							vm.unity_mailbox_extension_inuse = null;
+						}else{
+							vm.unity_mailbox_extension_inuse = result['User'];
+							vm.unity_mailbox_extension_inuse.Alias = angular.lowercase(result['User']['Alias']);
+							console.log("vm.unity_mailbox_extension_inuse")
+							console.log(vm.unity_mailbox_extension_inuse)
+						}
+						
+					}, function(err){
+						// Error
+					});
 				
-				//console.log(phone);
-				vm.displayunityusers = true;
-			});
-			
+			}			
 			
 		}
 		
-		vm.trest = vm.getusersfromcupi(vm.phones);
 		
 		// Get the list of Unfied Messaging Services
 		vm.cupilistexternalservices = cupiService.listexternalservices()
@@ -784,6 +778,18 @@ angular
 				// End of Hack */
 			
 				return $state.reload();
+          }, function(error) {
+				alert('An error occurred');
+          });
+
+		}
+		
+		// Delete Cupi User
+		vm.delete_cupi_mailbox = function(user) {
+			cupiService.deleteuser(user).then(function(data) {
+				
+				vm.getusersfromcupi(vm.deviceForm);
+			
           }, function(error) {
 				alert('An error occurred');
           });

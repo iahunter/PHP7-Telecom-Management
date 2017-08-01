@@ -53,6 +53,7 @@
 							</div>
 						</div>
 						
+						
 
 							<div class="row">
 							
@@ -71,6 +72,13 @@
 									</div>
 								</div>
 								
+																	
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.dn && vm.deviceForm.voicemail && vm.unity_mailbox_extension_inuse">
+									<div >
+										<ng-include src="'cucm-phone-manager/includes/include-extension-mailbox-found.html'"></ng-include>
+									</div>
+								
+								</div>
 							</div>
 							
 							
@@ -91,6 +99,14 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.username && vm.deviceForm.voicemail && vm.unityuser">
+									<div >
+										<ng-include src="'cucm-phone-manager/includes/include-user-mailbox-found.html'"></ng-include>
+									</div>
+								
+								</div>
+
 								
 							</div>
 							<div class="row">	
@@ -130,7 +146,7 @@
 							<div class="row" ng-if="vm.aduser.aduser || vm.nouserfound">	
 								<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
 									<div class="panel-group">
-									<div class="panel panel-success" ng-if="!vm.nouserfound"">
+									<div class="panel panel-success" ng-if="!vm.nouserfound">
 									
 										<div class="panel panel-heading" >Active Directory User</div>
 										<div class="panel panel-body">
@@ -186,7 +202,7 @@
 											<div class="form-group"  ng-class="{'has-error': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$invalid, 'has-success': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$valid }">
 												<label for="voicemail" class="control-label">Voicemail Box</label>
 												<br>
-												<input type="checkbox"  ng-model='vm.deviceForm.voicemail' style="width: 17px; height: 17px;" name="voicemail" >
+												<input type="checkbox"  ng-model='vm.deviceForm.voicemail' ng-change="vm.getusersfromcupi(vm.deviceForm)" style="width: 17px; height: 17px;" name="voicemail" >
 
 												<div ng-messages="addDidblockForm.voicemail.$dirty && addDidblockForm.voicemail.$error">
 													<div ng-messages-include="error-messages"></div>

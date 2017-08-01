@@ -170,6 +170,12 @@ angular
 		}
 		
 		
+		// Create Block
+		self.deleteuser = function(user){
+			return $http.delete('../api/cupi/user/delete/' + user);
+		}
+		
+		
 		
 		return self
 

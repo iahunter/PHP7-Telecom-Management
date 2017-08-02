@@ -2,10 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Http\Controllers\Cucmphone as Cucmphone;
 use App\Events\Create_Phone_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Http\Controllers\Cucmphone as Cucmphone;
 
 class Create_Phone_Listener implements ShouldQueue
 {
@@ -16,7 +16,6 @@ class Create_Phone_Listener implements ShouldQueue
      */
     public function __construct()
     {
-        
     }
 
     /**
@@ -29,24 +28,18 @@ class Create_Phone_Listener implements ShouldQueue
     {
         // Testing Event Listeners
         \Log::info('createPhoneListener', ['data' => $event->phone]);
-		
-		
-		$SITE = $event->phone['sitecode'];
-		$DEVICE = $event->phone['device'];
-		$NAME = $event->phone['name'];
-		$FIRSTNAME = $event->phone['firstname'];
-		$LASTNAME = $event->phone['lastname'];
-		$USERNAME = $event->phone['username'];
-		$DN = $event->phone['dn'];
-		$EXTENSIONLENGTH = $event->phone['extlength'];
-		$LANGUAGE = $event->phone['language'];
-		$VOICEMAIL = $event->phone['voicemail'];
-		
-		
-		\Log::info('createPhoneListener', ['site' => $SITE]);
-		
-		
-		
-		
+
+        $SITE = $event->phone['sitecode'];
+        $DEVICE = $event->phone['device'];
+        $NAME = $event->phone['name'];
+        $FIRSTNAME = $event->phone['firstname'];
+        $LASTNAME = $event->phone['lastname'];
+        $USERNAME = $event->phone['username'];
+        $DN = $event->phone['dn'];
+        $EXTENSIONLENGTH = $event->phone['extlength'];
+        $LANGUAGE = $event->phone['language'];
+        $VOICEMAIL = $event->phone['voicemail'];
+
+        \Log::info('createPhoneListener', ['site' => $SITE]);
     }
 }

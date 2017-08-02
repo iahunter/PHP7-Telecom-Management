@@ -110,8 +110,7 @@ class Callmanager extends Command
 
             if ($line) {
                 if (! $line['callForwardAll']['destination']) {
-                    
-					echo $number . " | " . $line['description'] . " | " . $line['alertingName']. " | can be deleted!!!!". PHP_EOL;
+                    echo $number.' | '.$line['description'].' | '.$line['alertingName'].' | can be deleted!!!!'.PHP_EOL;
                     // Add Logic to go remove this Line from CUCM here....
 
                     // Add Logic to make number available here.

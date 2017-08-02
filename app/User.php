@@ -146,8 +146,7 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('delete', Cucmclass::class)) {
             $claims['permissions']['delete']['Cucmclass'] = true;
         }
-		
-		
+
         // Phone MACD Permissions
 
         if ($this->can('read', PhoneMACD::class)) {

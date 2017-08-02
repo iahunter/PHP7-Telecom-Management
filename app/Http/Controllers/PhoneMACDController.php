@@ -15,30 +15,30 @@ class PhoneMACDController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
-		if (! $user->can('create', PhoneMACD::class)) {
-			if (! $user->can('create', Cucmclass::class)) {
-				abort(401, 'You are not authorized');
-			}
-		}
+        if (! $user->can('create', PhoneMACD::class)) {
+            if (! $user->can('create', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
 
-		$request->merge(['created_by' => $user->username]);
-		
-		$phone = $request->all();
+        $request->merge(['created_by' => $user->username]);
+
+        $phone = $request->all();
         // Testing of Events Controller
         event(new Create_Phone_Event($phone));
-        
-		return $request;
+
+        return $request;
     }
-	
-	public function importPhoneMACD_Mailbox(Request $request)
+
+    public function importPhoneMACD_Mailbox(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', PhoneMACD::class)) {
-			if (! $user->can('create', Cucmclass::class)) {
-				abort(401, 'You are not authorized');
-			}
-		}
+            if (! $user->can('create', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
 
         $phone = $request->all();
 
@@ -47,16 +47,16 @@ class PhoneMACDController extends Controller
 
         return $request;
     }
-	
-	public function createPhoneMACD_Mailbox(Request $request)
+
+    public function createPhoneMACD_Mailbox(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', PhoneMACD::class)) {
-			if (! $user->can('create', Cucmclass::class)) {
-				abort(401, 'You are not authorized');
-			}
-		}
+            if (! $user->can('create', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
 
         $phone = $request->all();
 
@@ -65,16 +65,16 @@ class PhoneMACDController extends Controller
 
         return $request;
     }
-	
-	public function createPhoneMACD_AD_IPPhone(Request $request)
+
+    public function createPhoneMACD_AD_IPPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', PhoneMACD::class)) {
-			if (! $user->can('create', Cucmclass::class)) {
-				abort(401, 'You are not authorized');
-			}
-		}
+            if (! $user->can('create', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
 
         $phone = $request->all();
 

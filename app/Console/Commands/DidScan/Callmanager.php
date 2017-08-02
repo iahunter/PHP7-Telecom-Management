@@ -98,7 +98,7 @@ class Callmanager extends Command
     {
         $call_fowarded_numbers = [];
 
-        echo 'Getting Number: '.$number.' from CUCM...'.PHP_EOL;
+        //echo 'Getting Number: '.$number.' from CUCM...'.PHP_EOL;
         try {
             $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
@@ -110,8 +110,8 @@ class Callmanager extends Command
 
             if ($line) {
                 if (! $line['callForwardAll']['destination']) {
-                    echo "{$number} can be deleted!!!!".PHP_EOL;
-
+                    
+					echo $number . " | " . $line['description'] . " | " . $line['alertingName']. " | can be deleted!!!!". PHP_EOL;
                     // Add Logic to go remove this Line from CUCM here....
 
                     // Add Logic to make number available here.

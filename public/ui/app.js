@@ -229,6 +229,7 @@
                 controller: 'getSite.Objects.Controller',
                 controllerAs: 'vm'
             })
+			// This just gives the option for Type, MAC, and Select Number... It then passes those variables in the URL in createphone. 
 			.state('createsitephone', {
                 url: '/sitestatusreports/{id}/phone/create',
                 templateUrl: 'cucm-phone-manager/create_phone_plan.html',
@@ -239,6 +240,18 @@
                 url: '/phone/site/{id}/create/{device}&{name}&{dn}',
                 templateUrl: 'cucm-phone-manager/create_phone.html',
                 controller: 'phoneManagerCreate.Controller',
+                controllerAs: 'vm'
+            })
+			.state('phone', {
+                url: '/phone/{name}',
+                templateUrl: 'cucm-phone-manager/phonemanager.html',
+                controller: 'phoneManager.Controller',
+                controllerAs: 'vm'
+            })
+			.state('line', {
+                url: '/line/{dn}',
+                templateUrl: 'cucm-phone-manager/linemanager.html',
+                controller: 'lineManager.Controller',
                 controllerAs: 'vm'
             })
 			.state('getsitemigration', {

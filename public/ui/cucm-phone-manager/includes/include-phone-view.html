@@ -1,0 +1,195 @@
+<div ng-if="vm.nophone" class="well" style="background-color: #e6e6e6">
+	<legend>No Phone found matching that name.</legend>
+</div>
+
+<div ng-if="vm.phone">
+	<div>
+		<div class="well" style="margin-left:5%; margin-right:5%;">
+			<div>
+				<div style="margin:25px;"></div>
+				<legend><h1>Real Time Phone Poller</h1></legend>
+				
+
+				<div >
+					<div style="margin-left:5%; margin-right:5%;">
+					
+					<div class="row">
+						<h3 style="color:#337ab7;">{{vm.phone.name}} Phone Details</h3>
+						<div style="margin:25px;"></div>
+					</div>
+					
+					<div class="alert alert-danger" role="alert" ng-if="vm.phone.addOnModules.addOnModule.length > 0">
+						<strong>This Device has Expansion Modules!!! Do Not Delete unless you verify this configuration is no longer needed!!!</strong>										
+					</div>
+								
+					<div class="row">
+						<legend><b>Device</b></legend>
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="name" class="control-label">Name</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.name' name="name">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="model" class="control-label">Model</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.model' name="model">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								
+								<div class="col-sm-12 ">
+									<div class="form-group">
+										<label for="name" class="control-label">Description</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.description' name="name">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="ownerUserName" class="control-label">Owner ID</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.ownerUserName._' name="ownerUserName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+						
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="devicePoolName" class="control-label">Device Pool</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.devicePoolName._' name="devicePoolName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="callingSearchSpaceName" class="control-label">Calling Search Space</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.callingSearchSpaceName._' name="callingSearchSpaceName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+						
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="locationName" class="control-label">Location</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.locationName._' name="locationName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row" ng-if="vm.phone.addOnModules.addOnModule.length > 0">
+
+								<!-- addOnModule Directive to print HTML for each addOnModule-->
+								<div ng-repeat="addOnModule in vm.phone.addOnModules" ng-if="!vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>	
+									
+								<div ng-repeat="addOnModule in vm.phone.addOnModules.addOnModule" ng-if="vm.isArray(vm.phone.addOnModules.addOnModule)" addonmodule-directive></div>
+
+							</div>
+						</div>
+						
+						
+						
+						<div style="margin:25px"></div>
+						
+						
+					</div>
+
+					<div class="row" >
+						<legend><b>Lines</b></legend>
+
+							<!-- Line Directive to print HTML for each Line-->
+							<div ng-repeat="line in vm.phone.lines" ng-if="!vm.isArray(vm.phone.lines.line)" line-directive></div>	
+								
+							<div ng-repeat="line in vm.phone.lines.line" ng-if="vm.isArray(vm.phone.lines.line)" line-directive></div>
+
+					</div>
+					
+					
+					
+					<div class="row" ng-if="vm.phone.speeddials.speeddial.length > 0">
+						<legend><b>Speed Dials</b></legend>
+
+							<!-- Line Directive to print HTML for each Line-->
+							<div ng-repeat="speeddial in vm.phone.speeddials" ng-if="!vm.isArray(vm.phone.speeddials.speeddial)" speeddial-directive></div>	
+								
+							<div ng-repeat="speeddial in vm.phone.speeddials.speeddial" ng-if="vm.isArray(vm.phone.speeddials.speeddial)" speeddial-directive></div>
+
+					</div>
+					
+					<div class="row" ng-if="vm.phone.busyLampFields.busyLampField.length > 0">
+						<legend><b>Busy Lamp Fields</b></legend>
+
+							<!-- Line Directive to print HTML for each Line-->
+							<div ng-repeat="busyLampField in vm.phone.busyLampFields" ng-if="!vm.isArray(vm.phone.busyLampFields.busyLampField)" blf-directive></div>	
+								
+							<div ng-repeat="busyLampField in vm.phone.busyLampFields.busyLampField" ng-if="vm.isArray(vm.phone.busyLampFields.busyLampField)" blf-directive></div>
+
+					</div>
+					
+					<div style="margin:25px;"></div>
+					<div class="row">
+							<a class="btn btn-danger" ng-click="vm.deletephone(vm.phone.name)">Delete</a>
+							
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

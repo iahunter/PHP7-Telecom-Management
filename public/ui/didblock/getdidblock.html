@@ -423,7 +423,7 @@
 						<!--List View-->
 						<td>{{ did.id}}</a></td>
 						<!--<td>{{ did.parent}}</td>-->
-						<td   ng-show="!vm.edit[did.id]">{{ did.number}}</td>
+						<td   ng-show="!vm.edit[did.id]"><b><a href="#/line/{{ did.number}}">{{ did.number}}</a></b></td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.name}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.status}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.system_id}}</td>
@@ -441,7 +441,8 @@
 										
 										<td>{{assignment.partition._}}</td>
 										<td>{{assignment.type}}</td>
-										<td>{{assignment.routeDetail}}</td>
+										<td ng-if="assignment.type != 'Device'">{{assignment.routeDetail}}</td>
+										<td ng-if="assignment.type == 'Device'"><a href="#/phone/{{ assignment.routeDetail}}"><b>{{ assignment.routeDetail}}</b></a></td>
 									</tr>
 								</table>
 							</div>

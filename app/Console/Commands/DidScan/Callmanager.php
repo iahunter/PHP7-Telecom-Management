@@ -111,9 +111,16 @@ class Callmanager extends Command
             if ($line) {
                 if (! $line['callForwardAll']['destination']) {
                     echo $number.' | '.$line['description'].' | '.$line['alertingName'].' | can be deleted!!!!'.PHP_EOL;
-                    // Add Logic to go remove this Line from CUCM here....
 
-                    // Add Logic to make number available here.
+
+                    // Check if line has voicemail box built. 
+						// If so do not delete or make available. 
+					
+					
+					// Add Logic to go remove this Line from CUCM here....
+					// Add Logic to make number available here.
+					
+					
                 }
                 if ($line['callForwardAll']['destination']) {
                     echo "{$number} has Call Forwarding Set!!!! DO NOT DELETE... {$line['callForwardAll']['destination']}".PHP_EOL;

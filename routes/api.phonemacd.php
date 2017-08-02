@@ -83,6 +83,13 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
+     *         name="template",
+     *         in="formData",
+     *         description="Voicemail Template - Required of voicemail is true",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
      *         name="notes",
      *         in="formData",
      *         description="Notes",

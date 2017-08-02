@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\PhoneMACD;
+use App\Cucmclass;
 use Illuminate\Http\Request;
 use OwenIt\Auditing\Auditable;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -24,6 +25,11 @@ class Ldap extends Controller
     public function listusers()
     {
         $user = JWTAuth::parseToken()->authenticate();
+		if (! $user->can('read', PhoneMACD::class)) {
+			if (! $user->can('read', Cucmclass::class)) {
+				abort(401, 'You are not authorized');
+			}
+		}
 
         $result = $this->Auth->listusers();
 
@@ -40,7 +46,12 @@ class Ldap extends Controller
     public function user_update_ipphone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-
+		if (! $user->can('update', PhoneMACD::class)) {
+			if (! $user->can('update', Cucmclass::class)) {
+				abort(401, 'You are not authorized');
+			}
+		}
+		
         $username = $request->username;
         $phonenumber = $request->ipphone;
 
@@ -59,6 +70,11 @@ class Ldap extends Controller
     public function get_user(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
+		if (! $user->can('read', PhoneMACD::class)) {
+			if (! $user->can('read', Cucmclass::class)) {
+				abort(401, 'You are not authorized');
+			}
+		}
 
         $username = $request->username;
         //print $username;

@@ -6,7 +6,7 @@ use App\Events\Create_Phone_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Create_Phone_Listener
+class Create_Phone_Listener implements ShouldQueue
 {
     /**
      * Create the event listener.

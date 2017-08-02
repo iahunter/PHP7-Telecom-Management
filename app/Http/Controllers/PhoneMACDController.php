@@ -21,8 +21,6 @@ class PhoneMACDController extends Controller
 			}
 		}
 
-       
-
 		$request->merge(['created_by' => $user->username]);
 		
 		$phone = $request->all();

@@ -7,7 +7,6 @@ angular
 		var vm = this;
 
 		vm.refresh = function (){
-			
 			// jQuery Hack to fix body from the Model. 
 			$(".modal-backdrop").hide();
 			$('body').removeClass("modal-open");

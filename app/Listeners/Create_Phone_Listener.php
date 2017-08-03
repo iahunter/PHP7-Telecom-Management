@@ -40,10 +40,10 @@ class Create_Phone_Listener implements ShouldQueue
         $EXTENSIONLENGTH = $event->phone['extlength'];
         $LANGUAGE = $event->phone['language'];
         $VOICEMAIL = $event->phone['voicemail'];
-		
-		$CREATEDBY = $event->phone['created_by'];
-		
-		$LOG = Cucmclass::provision_cucm_phone_axl(
+
+        $CREATEDBY = $event->phone['created_by'];
+
+        $LOG = Cucmclass::provision_cucm_phone_axl(
                                                 $SITE,
                                                 $DEVICE,
                                                 $NAME,

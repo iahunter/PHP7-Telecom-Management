@@ -254,7 +254,6 @@ class Cucmphone extends Cucm
         return $response;
     }
 
-
     // Create New Phone
     public function createPhone(Request $request)
     {
@@ -349,9 +348,8 @@ class Cucmphone extends Cucm
                         'message'        => '',
                         'response'       => $result,
                         ];
-						
-						
-			activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
+
+            activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
 
             return response()->json($response);
         }
@@ -378,6 +376,4 @@ class Cucmphone extends Cucm
 
         return response()->json($response);
     }
-
-
 }

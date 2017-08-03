@@ -15,14 +15,14 @@ class CreateQueuedTasksTable extends Migration
     {
         Schema::create('queued_tasks', function (Blueprint $table) {
             $table->increments('id');
-			$table->json('form_data')->nullable();                  // JSON Custom Field Data
+            $table->json('form_data')->nullable();                  // JSON Custom Field Data
             $table->json('json')->nullable();                       // JSON Custom Field Data
-			$table->string('status')->nullable();              		// simple name to reference the account by
+            $table->string('status')->nullable();                      // simple name to reference the account by
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
             $table->string('deleted_by')->nullable();              // simple name to reference the account by
-            $table->timestamps();                       			// Time Stamps
-            $table->softDeletes();                      			// Soft Deletes
+            $table->timestamps();                                   // Time Stamps
+            $table->softDeletes();                                  // Soft Deletes
         });
     }
 

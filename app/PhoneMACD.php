@@ -11,5 +11,4 @@ class PhoneMACD extends Model
 {
     // Added dummy class for permissions use for now.
     protected $fillable = ['uuid'];
-
 }

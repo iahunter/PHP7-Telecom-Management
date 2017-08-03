@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 // Add Dummy CUCM class for permissions use for now.
-use App\QueuedTasks;
 use App\Cucmclass;
 use App\PhoneMACD;
+use App\QueuedTasks;
 use Illuminate\Http\Request;
 use App\Events\Create_Phone_Event;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -21,15 +21,15 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-		$phone = $request->all();
+
+        $phone = $request->all();
 
         $data['phone'] = $phone;
-		
-		$task = QueuedTasks::create(['form_data' => $phone, 'created_by' => $user->username]);
-		
-		$data['taskid'] = $task->id;
-		
+
+        $task = QueuedTasks::create(['form_data' => $phone, 'created_by' => $user->username]);
+
+        $data['taskid'] = $task->id;
+
         // Testing of Events Controller
         event(new Create_Phone_Event($data));
 

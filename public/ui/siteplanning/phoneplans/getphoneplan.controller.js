@@ -42,7 +42,6 @@ angular
 		
 		var id = $stateParams.id;
 		
-		vm.getpage = PageService.getpage('getPhonePlan-' + id)
 		
 		vm.deploybutton = false;
 		

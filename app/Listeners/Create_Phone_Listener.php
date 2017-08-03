@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Cucmclass;
 use App\Events\Create_Phone_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,7 +40,22 @@ class Create_Phone_Listener implements ShouldQueue
         $EXTENSIONLENGTH = $event->phone['extlength'];
         $LANGUAGE = $event->phone['language'];
         $VOICEMAIL = $event->phone['voicemail'];
+		
+		$CREATEDBY = $event->phone['created_by'];
+		
+		$LOG = Cucmclass::provision_cucm_phone_axl(
+                                                $SITE,
+                                                $DEVICE,
+                                                $NAME,
+                                                $FIRSTNAME,
+                                                $LASTNAME,
+                                                $USERNAME,
+                                                $DN,
+                                                $EXTENSIONLENGTH,
+                                                $LANGUAGE,
+                                                $VOICEMAIL
+                                            );
 
-        \Log::info('createPhoneListener', ['site' => $SITE]);
+        \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'phone' => $LOG]);
     }
 }

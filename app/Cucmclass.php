@@ -24,20 +24,19 @@ class Cucmclass extends Model
         // return the lower case UUID as our unique identifier
         return $this->uuid;
     }
-	
-	
-	public static $results = [];
-	
-	// CUCM Add Phone Wrapper
+
+    public static $results = [];
+
+    // CUCM Add Phone Wrapper
     public static function wrap_add_phone_object($DATA, $TYPE)
     {
-		// Construct new cucm object
+        // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-		
+
         // Get the name to reference the object.
         if (isset($DATA['name'])) {
             $OBJECT = $DATA['name'];
@@ -59,7 +58,6 @@ class Cucmclass extends Model
                 ];
 
             // Create log entry
-            
 
             static::$results[$TYPE] = $LOG;
 
@@ -77,8 +75,8 @@ class Cucmclass extends Model
                                     ];
         }
     }
-	
-	public static function provision_cucm_phone_axl(
+
+    public static function provision_cucm_phone_axl(
                                                 $SITE,
                                                 $DEVICE,
                                                 $NAME,
@@ -90,15 +88,15 @@ class Cucmclass extends Model
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             ) {
-        
-		// Construct new cucm object
+
+        // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-		
-		$NAME = strtoupper($NAME);
+
+        $NAME = strtoupper($NAME);
 
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
@@ -325,7 +323,6 @@ class Cucmclass extends Model
 
         $RETURN = [];
 
-
         // Add Line
         self::wrap_add_phone_object($PHONELINE, 'Line');
 
@@ -337,5 +334,4 @@ class Cucmclass extends Model
 
         return json_decode(json_encode(static::$results), true);
     }
-	
 }

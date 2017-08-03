@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use App\QueuedTasks;
 use App\Cucmclass;
+use App\QueuedTasks;
 use App\Events\Create_Phone_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -56,17 +56,15 @@ class Create_Phone_Listener implements ShouldQueue
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             );
-											
-			
-		// Find Task record by id
-		$task = QueuedTasks::find($event->taskid);
-		
-		$CREATEDBY = $task->created_by;
 
-		$task->fill(['updated_by' => "Telecom Management Server", 'status' => 'complete', 'json' => $LOG]);
-		$task->save();
+        // Find Task record by id
+        $task = QueuedTasks::find($event->taskid);
 
-		\Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
-		
+        $CREATEDBY = $task->created_by;
+
+        $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
+        $task->save();
+
+        \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
     }
 }

@@ -44,8 +44,8 @@ class Callmanager extends Command
     {
         // Get our list of NPA/NXX's
         $prefixes = $this->getDidNPANXXList();
-        $prefixes = [913689];
-        $prefixes = [307232];
+        //$prefixes = [913689];
+        //$prefixes = [307232];
 
         $possible_deletes = [];
         // Loop through our NPA/NXX's and get their devices out of call wrangler

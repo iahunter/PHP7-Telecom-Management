@@ -14,6 +14,7 @@ class Create_Phone_Event
     use InteractsWithSockets, SerializesModels;
 
     public $phone;
+	public $taskid;
 
     /**
      * Create a new event instance.
@@ -22,7 +23,8 @@ class Create_Phone_Event
      */
     public function __construct($data)
     {
-        $this->phone = $data;
+        $this->phone = $data['phone'];
+		$this->taskid = $data['taskid'];
     }
 
     /**

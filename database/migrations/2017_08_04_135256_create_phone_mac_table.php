@@ -15,7 +15,7 @@ class CreatePhoneMacTable extends Migration
     {
         Schema::create('phone_mac', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('type')->nullable();                      // simple name to reference the account by
+            $table->string('type')->nullable();                      // simple name to reference the account by
             $table->json('form_data')->nullable();                  // JSON Custom Field Data
             $table->json('json')->nullable();                       // JSON Custom Field Data
             $table->string('status')->nullable();                      // simple name to reference the account by

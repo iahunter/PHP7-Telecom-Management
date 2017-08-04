@@ -13,9 +13,9 @@ class Create_UnityConnection_LDAP_Import_Mailbox_Event
 {
     use InteractsWithSockets, SerializesModels;
 
-	public $phone;
+    public $phone;
     public $taskid;
-	
+
     /**
      * Create a new event instance.
      *

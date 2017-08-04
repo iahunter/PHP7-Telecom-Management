@@ -29,15 +29,14 @@ class Create_Phone_Listener implements ShouldQueue
     {
         // Create Log Entry
         \Log::info('createPhoneListener', ['data' => $event->phone]);
-		
-		// Get the Task ID
-		$task = PhoneMACD::find($event->taskid);
-		
-		// Update the status in the MACD Table.
-		$task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'entered queue']);
-		$task->save();
-		
-		
+
+        // Get the Task ID
+        $task = PhoneMACD::find($event->taskid);
+
+        // Update the status in the MACD Table.
+        $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'entered queue']);
+        $task->save();
+
         $SITE = $event->phone['sitecode'];
         $DEVICE = $event->phone['device'];
         $NAME = $event->phone['name'];
@@ -49,7 +48,7 @@ class Create_Phone_Listener implements ShouldQueue
         $LANGUAGE = $event->phone['language'];
         $VOICEMAIL = $event->phone['voicemail'];
 
-		// Do Work. 
+        // Do Work.
         $LOG = Cucmclass::provision_cucm_phone_axl(
                                                 $SITE,
                                                 $DEVICE,
@@ -64,16 +63,16 @@ class Create_Phone_Listener implements ShouldQueue
                                             );
 
         // Find Task record by id
-        
-		$task = PhoneMACD::find($event->taskid);
-        
-		$CREATEDBY = $task->created_by;
 
-		// Update task to completed. 
+        $task = PhoneMACD::find($event->taskid);
+
+        $CREATEDBY = $task->created_by;
+
+        // Update task to completed.
         $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
         $task->save();
 
-		// Create Log Entry
+        // Create Log Entry
         \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
     }
 }

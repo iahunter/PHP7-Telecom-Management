@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\PhoneMACD;
-use App\Http\Controllers\Auth\AuthController;
 use App\Events\Create_AD_IPPhone_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Http\Controllers\Auth\AuthController;
 
 class Create_AD_IPPhone_Listener
 {
@@ -31,28 +31,27 @@ class Create_AD_IPPhone_Listener
     {
         // Create Log Entry
         \Log::info('createAdPhoneListener', ['data' => $event->phone]);
-		
-		// Get the Task ID
-		$task = PhoneMACD::find($event->taskid);
-		
-		// Update the status in the MACD Table. 
-		$task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'entered queue']);
-		$task->save();
-		
-		
+
+        // Get the Task ID
+        $task = PhoneMACD::find($event->taskid);
+
+        // Update the status in the MACD Table.
+        $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'entered queue']);
+        $task->save();
+
         $USERNAME = $event->phone['username'];
         $DN = $event->phone['dn'];
-		
-		// Do Work. 
+
+        // Do Work.
         $LOG = $this->Auth->changeLdapPhone($USERNAME, $DN);
 
-		$CREATEDBY = $task->created_by;
+        $CREATEDBY = $task->created_by;
 
-		// Update task to completed. 
+        // Update task to completed.
         $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
         $task->save();
 
-		// Create Log Entry
+        // Create Log Entry
         \Log::info('createAdPhoneListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
     }
 }

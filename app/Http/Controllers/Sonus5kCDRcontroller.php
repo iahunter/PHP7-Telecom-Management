@@ -274,18 +274,15 @@ class Sonus5kCDRcontroller extends Controller
             $end = $subhour;
             $hours--; // Subtract an hour from hours when looping.
 
-			//DB::enableQueryLog();
-			
+            //DB::enableQueryLog();
+
             $calls = \App\Sonus5kCDR::groupBy('disconnect_reason')
                 ->select('disconnect_reason', DB::raw('count(*) as total'))
                 ->whereBetween('start_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
                 ->get();
-				
-			
-			//return DB::getQueryLog();
-			
-			
+
+            //return DB::getQueryLog();
 
             $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
 
@@ -295,8 +292,7 @@ class Sonus5kCDRcontroller extends Controller
                                     ->orWhere('egress_lost_ptks', '>', 100);
                                 })
                                 ->get();
-			
-			
+
             $losscalls = [];
 
             foreach ($pktlosscalls as $call) {

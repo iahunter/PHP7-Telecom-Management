@@ -12,8 +12,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class Create_UnityConnection_Mailbox_Event
 {
     use InteractsWithSockets, SerializesModels;
-	
-	public $phone;
+
+    public $phone;
     public $taskid;
 
     /**

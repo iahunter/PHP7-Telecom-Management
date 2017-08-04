@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 // Add Dummy CUCM class for permissions use for now.
 use App\Cucmclass;
 use App\PhoneMACD;
-use App\QueuedTasks;
+//use App\QueuedTasks;
 use Illuminate\Http\Request;
+
 use App\Events\Create_Phone_Event;
+use App\Events\Create_AD_IPPhone_Event;
+use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
+use App\Events\Create_UnityConnection_Mailbox_Event;
+
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PhoneMACDController extends Controller
@@ -21,18 +26,59 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-
+		
+		
+		
         $phone = $request->all();
 
         $data['phone'] = $phone;
+		
+		
+		// Update AD User IP Phone Field
+		if(isset($phone['username']) && $phone['username'] && (isset($phone['dn']) && $phone['dn'])){
+			$task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+		
+			$data['taskid'] = $task->id;
 
-        $task = QueuedTasks::create(['form_data' => $phone, 'created_by' => $user->username]);
+			// Testing of Events Controller
+			event(new Create_AD_IPPhone_Event($data));
+		}
 
-        $data['taskid'] = $task->id;
+		// Build Phone
+		if(isset($phone['name']) && $phone['name']){
+			$task = PhoneMACD::create(['type' => 'Add Phone', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+		
+			$data['taskid'] = $task->id;
 
-        // Testing of Events Controller
-        event(new Create_Phone_Event($data));
+			// Testing of Events Controller
+			event(new Create_Phone_Event($data));
+		}
+		
+		
+		// Build Voicemail Box
+        if(isset($phone['voicemail'])){
+			if($phone['voicemail'] == 'true') {
+				if(isset($phone['template']) && $phone['template']){
+					if(isset($phone['username']) && $phone['username']){
+						$task = PhoneMACD::create(['type' => 'Create Mailbox from LDAP User', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+				
+						$data['taskid'] = $task->id;
 
+						// Testing of Events Controller
+						event(new Create_UnityConnection_LDAP_Import_Mailbox_Event($data));
+					}else{
+						// If no username build user as a new user without Unified Messaging
+						$task = PhoneMACD::create(['type' => 'Create Mailbox with no UserID', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+					
+						$data['taskid'] = $task->id;
+
+						// Testing of Events Controller
+						event(new Create_UnityConnection_Mailbox_Event($data));
+					}
+				}
+			}
+		}
+		
         return $request;
     }
 

@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Create_UnityConnection_Mailbox_Event' => [
             'App\Listeners\Create_UnityConnection_Mailbox_Listener',
         ],
+        'App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event' => [
+            'App\Listeners\Create_UnityConnection_LDAP_Import_Mailbox_Listener',
+        ],
 
     ];
 

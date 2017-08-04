@@ -9,13 +9,13 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class Create_AD_IPPhone_Event
+class Create_UnityConnection_LDAP_Import_Mailbox_Event
 {
     use InteractsWithSockets, SerializesModels;
-	
+
 	public $phone;
     public $taskid;
-
+	
     /**
      * Create a new event instance.
      *

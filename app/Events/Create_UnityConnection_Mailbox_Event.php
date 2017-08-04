@@ -12,15 +12,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class Create_UnityConnection_Mailbox_Event
 {
     use InteractsWithSockets, SerializesModels;
+	
+	public $phone;
+    public $taskid;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->phone = $data['phone'];
+        $this->taskid = $data['taskid'];
     }
 
     /**

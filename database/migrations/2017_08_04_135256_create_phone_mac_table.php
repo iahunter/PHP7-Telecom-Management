@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQueuedTasksTable extends Migration
+class CreatePhoneMacTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateQueuedTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('queued_tasks', function (Blueprint $table) {
+        Schema::create('phone_mac', function (Blueprint $table) {
             $table->increments('id');
+			$table->string('type')->nullable();                      // simple name to reference the account by
             $table->json('form_data')->nullable();                  // JSON Custom Field Data
             $table->json('json')->nullable();                       // JSON Custom Field Data
             $table->string('status')->nullable();                      // simple name to reference the account by
@@ -33,6 +34,6 @@ class CreateQueuedTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('queued_tasks');
+        Schema::dropIfExists('phone_mac');
     }
 }

@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('phoneManagerCreate.Controller', ['telephonyService', 'LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(telephonyService, LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
+	.controller('phoneManagerCreate.Controller', ['telephonyService', 'macdService', 'LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(telephonyService, macdService, LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
 		
 		// This controller does planning and systems provisioning. 
 		
@@ -28,6 +28,9 @@ angular
 		vm.sitecode = $stateParams.id;
 
 		vm.deviceForm = {};
+		
+		vm.deviceForm.sitecode = $stateParams.id; 
+		
 		
 		vm.deviceForm.device = $stateParams.device;
 		var name = $stateParams.name;
@@ -468,251 +471,7 @@ angular
 			
 		}
 		
-		
-		// Get the list of Unfied Messaging Services
-		vm.cupilistexternalservices = cupiService.listexternalservices()
-						.then(function(res){
-							//console.log(res);
-							vm.externalservices = res.data.response.ExternalService;
-							
-						}, function(err){
-							// Error
-						});
-		
-		
-		vm.getusers_um_fromcupi = function(phones){
-				// Get the UM info for account mailbox
-				angular.forEach(phones, function(phone) {
-					if(phone.unityuser != null){
-						
-						cupiService.getuserunifiedmessaging(phone.unityuser.ObjectId)
-						.then(function(extservice){
-							user = [];
-							//console.log(extservice);
-							//user.username = username;
-							
-							//console.log(extservice);
-							extserviceresult = extservice.data.return.response;
-							if(extserviceresult['@total'] == 0){
-								phone.unityuser.externalserviceaccountid = null;
-							}else{
-								phone.unityuser.externalserviceaccountid = extserviceresult['ExternalServiceAccount']['ExternalServiceObjectId'];
-								angular.forEach(vm.externalservices, function(service) {
-									
-									//console.log(service);
-									if (service.ObjectId == phone.unityuser.externalserviceaccountid){
-										// set field to the display name to make it readable. 
-										phone.unityuser.externalserviceaccount = service.DisplayName;
-									}
-								});
-							}
 
-						}, function(err){
-							// Error
-						});
-					}
-				});
-		}
-		
-		
-		vm.importcupiusers = function(phones){
-				// Get the UM info for account mailbox
-				vm.creatednewmailboxes = [];
-				vm.importedldapmailboxes = [];
-				vm.changedldapmailboxes = [];
-				angular.forEach(phones, function(phone) {
-					phone.voicemail = phone.voicemail.toLowerCase(phone.voicemail);
-					if((phone.voicemail == 'true') || (phone.voicemail == 't') || (phone.voicemail == 'y') || (phone.voicemail == 'yes')){
-						
-						var user = {};
-						user.username = phone.username;
-						user.dn = phone.dn;
-						
-						if(phone.vm_user_template){
-							user.template = phone.vm_user_template;
-						}else{
-							if((user.username == "") || (user.username == null)){
-								user.username = phone.firstname + " " + phone.lastname + " " + phone.dn;
-								user.template = vm.phoneplan.nonemployee_vm_user_template;
-								
-								// If Username exists and voicemail is set then we assume user is not an Employee and we create a mailbox without Unified Messaging. 
-								
-								// Import LDAP User / Update User Mailbox Extension
-								console.log("Creating New User for NonEmployee...")
-								cupiService.createuser(user)
-									.then(function(res){
-										
-										console.log(res.data)
-										
-										//var mailbox = res.data;
-										
-										user.response = res.data;
-										vm.creatednewmailboxes.push(user);
-										console.log(vm.creatednewmailboxes);
-										
-									}, function(err){
-										console.log(err);
-										user.error = err.data.message;
-										vm.creatednewmailboxes.push(user);
-									});
-								
-							}else{
-								
-								// If Username is set then we assume that user exists by now. 
-								user.template = vm.phoneplan.employee_vm_user_template;
-								
-								// Import LDAP User / Update User Mailbox Extension
-								console.log("Importing User from LDAP...")
-								cupiService.importldapuser(user)
-									.then(function(res){
-										
-										console.log(res.data)
-										
-										user.response = res.data
-										vm.importedldapmailboxes.push(user);
-										console.log(vm.importedldapmailboxes);
-										
-									}, function(err){
-										console.log(err);
-										user.error = err.data.message;
-										vm.importedldapmailboxes.push(user);
-									});
-							
-							}
-						}
-						
-
-
-					}else{
-						console.log(phone.id + " Skipping, No Voicemail" )
-					}
-				});
-		}
-		
-		vm.getusernames = function(phones){
-			vm.users = [];
-			
-			angular.forEach(phones, function(phone) {
-				// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
-				LDAPService.getusername(phone.username)
-				.then(function(res){
-					user = [];
-					//console.log(res);
-					//user.username = username;
-					
-					user.id = phone.id;
-					user.username = phone.username
-					user.newipphone = phone.dn;
-					
-					result = res.data.result;
-					
-					// Must do these inline inside the API Call or callbacks can screw you with black objects!!!! 
-					if(result != undefined){
-						if (result.user == ""){
-							user.user = "User Not Found"
-						}else{
-							user.ipphone = result.ipphone
-							user.user = result.user
-						}
-						if(result.disabled){
-							user.disabled = true;
-						}
-					}else{
-						user.user = "User Not Found"
-					}
-					
-					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-					vm.users.push(user);
-
-				}, function(err){
-					// Error
-				});
-
-				
-				
-			});
-			
-			//console.log(vm.users);
-		}
-		
-		// Update LDAP AD IP Phone field in user account
-		vm.updateadipphones = function(phones){
-			vm.ipphoneupdates = [];
-			
-			angular.forEach(phones, function(phone) {
-				
-				//console.log(phone);
-				
-				if((phone.username != null) && (phone.username != "")){
-					var update = {};
-					update.username = phone.username;
-					update.ipphone = phone.dn;
-					
-					//console.log(update);
-					//return update
-					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
-					LDAPService.updateadipphone(update)
-					.then(function(res){
-
-						result = res.data.result;
-
-						//console.log(result);
-						
-						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-						vm.ipphoneupdates.push(result);
-						
-					}, function(err){
-						// Error
-					});
-				}
-			});
-			
-			//console.log(vm.ipphoneupdates);
-			
-			
-			$timeout(function(){
-				// Tell CUCM to do a LDAP Sync to retrieve the updates after AD account change
-				cucmService.initiate_cucm_ldap_sync()
-					.then(function(res){
-						result = res.data;
-						//console.log(result);
-						
-						vm.getldapsyncstatus();
-					}, function(err){
-						// Error
-					});
-			}, 5000);
-			/*
-			cucmService.initiate_cucm_ldap_sync()
-					.then(function(res){
-						result = res.data;
-						//console.log(result);
-					}, function(err){
-						// Error
-					});*/
-			//vm.getldapsyncstatus();
-		}
-		
-		
-		vm.getldapsyncstatus = function() {
-			cucmService.get_cucm_ldap_sync_status()
-					.then(function(res){
-						var ldapsyncstatus = res.data;
-						vm.ldapsyncstatus = ldapsyncstatus.trim();
-						console.log(vm.ldapsyncstatus);
-						if(vm.ldapsyncstatus == "" || vm.ldapsyncstatus == "Sync is currently under process" || vm.ldapsyncstatus == "Sync is initiated"){
-							
-							$timeout(function(){
-								vm.getldapsyncstatus();
-							}, 5000);
-						}
-							
-					}, function(err){
-						// Error
-					});
-		}
-	
-		
 			
 		vm.truefalse = [{
 				id: 1,
@@ -730,60 +489,51 @@ angular
 				name: "existing"
 			}];
 
-		// Create Phone 
-		vm.createphone = function(phone) {
-			phone.phoneplan = id;
-			phone.site = vm.phoneplan.site;
-			
-			//console.log(phone);
-			
-			sitePhonePlanService.createphone(phone).then(function(data) {
-			  //alert('phone was added successfully');
-			  return $state.reload();
-			}, function(error) {
-				alert(error.data.message)
-			});
-			//$state.reload();
-		}
 		
 		vm.submitDevice = function(phone) {
 			console.log(phone)
-		}
-		
-		// Edit state for phone block Edit button.
-		vm.edit = {};
-		
-		// Update 
-		vm.update = function(phone) {
 			
-			sitePhonePlanService.updatephone(phone.id, phone).then(function(data) {
-			  //return $state.reload();
-			}, function(error) {
-				alert('An error occurred while updating the event')
-			});
-			//$state.reload();
-		}
-		
-		
-		// Delete 
-		vm.delete = function(phone) {
-			sitePhonePlanService.deletephone(phone.id).then(function(data) {
+			macdService.create_macd_add(phone)
+				.then(function(res){
+					
+					//console.log(res)
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							//alert("Token has expired, Please relogin");
+							$state.go('logout');
+						}
 
+						return vm.message;
+					}else{
+						
+						vm.macobjects = res.data.result;
+						
+						console.log(vm.macobjects)
+										
+						vm.loading = false;
+						
+					}
+					
+				}, function(err){
+					console.log(err)
+					alert(err);
+				});
 			
-				// jQuery Hack to fix body from the Model. 
-					$(".modal-backdrop").hide();
-					$('body').removeClass("modal-open");
-					$('body').removeClass("modal-open");
-					$('body').removeAttr( 'style' );
-				// End of Hack */
-			
-				return $state.reload();
-          }, function(error) {
-				alert('An error occurred');
-          });
-
 		}
+
 		
+		// Need to build a timeout that tracks the objects that were returned every 5 seconds.
+		
+		// Maybe pop that into a modal. 
+		
+		
+
 		// Delete Cupi User
 		vm.delete_cupi_mailbox = function(user) {
 			cupiService.deleteuser(user).then(function(data) {
@@ -879,84 +629,7 @@ angular
 		
 		
 		
-		
-		// Show Failures for Deploy Mailboxes to Unity Connection
-		vm.showunityfailuresonly = function() {
-			vm.showunityemployeefailures = [];
-			angular.forEach(vm.importedldapmailboxes, function(phone) {
-				if(!phone.error){
-					// Hide Phones with No Errors for Show Errors button
-					phone.hide = true;
-				}
-			})
-			vm.showunitynonemployeefailures = [];
-			angular.forEach(vm.creatednewmailboxes, function(phone) {
-				if(!phone.error){
-					// Hide Phones with No Errors for Show Errors button
-					phone.hide = true;
-				}
-			})
-			vm.showunityemployeefailures = true
-			vm.showunitynonemployeefailures = true
-		}
-		
-		
-		// Show Failures for Deploy Phones to CUCM
-		vm.showfailuresonly = function() {
-			vm.phonefailures = [];
-			angular.forEach(vm.newphones, function(phone) {
-				if(phone.Line.status == "error" || ""  && phone.Phone.status == "error"){
-					//console.log(phone.Line.status);
-					//console.log(phone.Line.status);
-					vm.phonefailures.push(phone);
-				}
-			})
-			return vm.phonefailures
-		}
-		
-		
-		/*
-		Old function that executed in parralel. Had issues with locking on cucm db. see new function below to execute in series using service. 
-		vm.deployphonescucm = function() {
-			angular.forEach(vm.phones, function(phone) {
-				phone.sitecode = vm.site.sitecode;
-				phone.extlength = vm.site.extlen;
-				console.log(phone);
-				cucmService.createphone(phone)
-				.then(function(res) {
-					
 
-					console.log(res)
-				}, function(error) {
-					alert('An error occurred');
-				});
-			  
-			});
-		*/
-		
-		// default variable to false. 
-		vm.ignoreexistingphones = false;
-		
-		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
-		vm.deployphonescucm = function() {
-			vm.newphones = "";
-			angular.forEach(vm.phones, function(phone) {
-				phone.sitecode = vm.site.sitecode;
-				phone.extlength = vm.site.extlen;
-				//console.log(phone);
-			});
-			
-				//angular.copy(vm.phones)
-				var newphones = cucmService.createphones(angular.copy(vm.phones), vm.ignoreexistingphones);
-			
-				vm.newphones = newphones;
-				
-
-				//console.log(vm.newphones);
-			
-		};
-		
-		
 		
 	}])
 	

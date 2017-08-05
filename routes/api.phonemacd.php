@@ -2,10 +2,10 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/macd/phone",
-     *     tags={"Management - CUCM - Phone MACD"},
-     *     summary="Create New Phone in CUCM",
-     *     description="",
+     *     path="/telephony/api/cucm/macd/add",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="Create New MACD - Updates AD, CUCM, and Unity Connection",
+     *     description="This sends the variables to the queue where they get worked. The results are stored in the PhoneMACD Table.",
      *     operationId="createSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
@@ -106,4 +106,41 @@
      *     ),
      * )
      **/
-    $api->post('cucm/macd/phone', 'App\Http\Controllers\PhoneMACDController@createPhoneMACD_Phone');
+    $api->post('cucm/macd/add', 'App\Http\Controllers\PhoneMACDController@createPhoneMACD_Phone');
+
+
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/macd/list/week/user",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="List of Phone MACDs created by authorized user",
+     *     description="",
+     *     operationId="listMyMacds",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('cucm/macd/list/week/user', 'App\Http\Controllers\PhoneMACDController@list_my_macd_jobs_for_week');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/macd/list/week",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="List of Phone MACDs for last week.",
+     *     description="",
+     *     operationId="listMyMacds",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('cucm/macd/list/week', 'App\Http\Controllers\PhoneMACDController@list_macd_jobs_for_week');

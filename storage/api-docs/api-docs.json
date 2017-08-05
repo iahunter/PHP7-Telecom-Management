@@ -3466,13 +3466,13 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/phone": {
+        "/telephony/api/cucm/macd/add": {
             "post": {
                 "tags": [
-                    "Management - CUCM - Phone MACD"
+                    "Management - Cisco Voice - MACD"
                 ],
-                "summary": "Create New Phone in CUCM",
-                "description": "",
+                "summary": "Create New MACD - Updates AD, CUCM, and Unity Connection",
+                "description": "This sends the variables to the queue where they get worked. The results are stored in the PhoneMACD Table.",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -3585,6 +3585,48 @@
                     },
                     "401": {
                         "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/macd/list/week/user": {
+            "get": {
+                "tags": [
+                    "Management - Cisco Voice - MACD"
+                ],
+                "summary": "List of Phone MACDs created by authorized user",
+                "description": "",
+                "operationId": "listMyMacds",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/macd/list/week": {
+            "get": {
+                "tags": [
+                    "Management - Cisco Voice - MACD"
+                ],
+                "summary": "List of Phone MACDs for last week.",
+                "description": "",
+                "operationId": "listMyMacds",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
                     }
                 }
             }

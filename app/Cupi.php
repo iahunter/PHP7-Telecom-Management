@@ -34,19 +34,27 @@ class Cupi extends Model
         if ($json != '') {
             $headers['json'] = $json;
         }
+		
+		$response = [];
+		
+		try {
+            $apiRequest = $client->request($verb, $apiurl, $headers);
 
-        $apiRequest = $client->request($verb, $apiurl, $headers);
+			$response['status_code'] = $apiRequest->getStatusCode();
 
-        $status_code = $apiRequest->getStatusCode();
+			$result = json_decode($apiRequest->getBody()->getContents(), true);
 
-        $result = json_decode($apiRequest->getBody()->getContents(), true);
+			$response = [
+						'success'        => true,
+						'message'        => '',
+						'response'       => $result,
+						];
+        } catch (\Exception $e) {
+			$response['message'] = $e->getMessage();
+			$response['success'] = false;
+			$response['response'] = $e->getMessage();
+        }
 
-        $response = [
-                    'status_code'    => $status_code,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
 
         return $response;
 
@@ -273,10 +281,18 @@ class Cupi extends Model
                 $IMPORT = self::wrapapi($verb, $apiurl, $query, $json);
 
                 //return $IMPORT;
+				if($IMPORT['success'] == false){
+					throw new \Exception($IMPORT['message']);
+				}
                 //$IMPORT = Cupi::importLDAPUser($this->user_template, $userarray['ldap']);
                 $IMPORT = self::finduserbyalias($USERNAME);
+				if ($IMPORT['response']['@total'] == 0) {
+					throw new \Exception('Error importing User');
+				}
+				
                 $userarray['user_imported'] = $IMPORT;
             } elseif ($LDAPUSER['@total'] == 0) {
+				throw new \Exception('Error importing User');
                 $userarray['error'] = 'No User Found';
             }
         }

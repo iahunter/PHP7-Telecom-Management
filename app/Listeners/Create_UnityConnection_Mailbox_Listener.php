@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Events\Create_UnityConnection_Mailbox_Event;
 
-class Create_UnityConnection_Mailbox_Listener
+class Create_UnityConnection_Mailbox_Listener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -41,21 +41,30 @@ class Create_UnityConnection_Mailbox_Listener
         $USERNAME = $event->phone['username'];
         $DN = $event->phone['dn'];
         $TEMPLATE = $event->phone['template'];
+		
+		$CREATEDBY = $task->created_by;
 
-        // Do Work.
-        $LOG = Cupi::createuser($USERNAME, $DN, $TEMPLATE);
+		// Try to Do Work.
+		try{
+			$LOG = Cupi::createuser($USERNAME, $DN, $TEMPLATE);
+			
+			// Update task to completed.
+			$task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
+			$task->save();
 
-        // Find Task record by id
+			// Create Log Entry
+			\Log::info('createUnityMailboxListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
+			
+		}catch (\Exception $e) {
+			// Update the status with exception info. 
+			$task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'error', 'json' => $e->getMessage()]);
+			$task->save();
+			
+			\Log::info('createUnityMailboxListener', ['created_by' => $CREATEDBY, 'log' => $e->getMessage()]);
+			
+			// Fail the Job
+			throw new \Exception($e->getMessage());
+		}
 
-        $task = PhoneMACD::find($event->taskid);
-
-        $CREATEDBY = $task->created_by;
-
-        // Update task to completed.
-        $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
-        $task->save();
-
-        // Create Log Entry
-        \Log::info('createUnityMailboxListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
     }
 }

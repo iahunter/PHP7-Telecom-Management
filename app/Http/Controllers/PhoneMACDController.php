@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 // Add Dummy CUCM class for permissions use for now.
 use App\Cucmclass;
 use App\PhoneMACD;
-//use App\QueuedTasks;
 use Illuminate\Http\Request;
-use App\Events\Create_Phone_Event;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use App\Events\Create_Phone_Event;
 use App\Events\Create_AD_IPPhone_Event;
 use App\Events\Create_UnityConnection_Mailbox_Event;
 use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
@@ -63,7 +63,10 @@ class PhoneMACDController extends Controller
                     } else {
                         // If no username build user as a new user without Unified Messaging
                         $task = PhoneMACD::create(['type' => 'Create Mailbox with no UserID', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
-
+						
+						// Create the User Alias for the mailbox. 
+						$data['phone']['username'] = $data['phone']['firstname'] . " " . $data['phone']['lastname'] . " " . $data['phone']['dn'];
+						
                         $data['taskid'] = $task->id;
 
                         // Testing of Events Controller
@@ -76,20 +79,18 @@ class PhoneMACDController extends Controller
         return $request;
     }
 
-    public function importPhoneMACD_Mailbox(Request $request)
+    public function Create_AD_IPPhone_Event($data)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
-        if (! $user->can('create', PhoneMACD::class)) {
-            if (! $user->can('create', Cucmclass::class)) {
-                abort(401, 'You are not authorized');
-            }
-        }
+		event(new Create_AD_IPPhone_Event($data));
+    }
+	
+	public function importPhoneMACD_Mailbox($data)
+    {
 
         $phone = $request->all();
 
         // Testing of Events Controller
-        event(new Create_UnityConnection_Mailbox_Event($phone));
+		event(new Create_UnityConnection_LDAP_Import_Mailbox_Event($data));
 
         return $request;
     }

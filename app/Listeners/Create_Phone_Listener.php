@@ -47,9 +47,11 @@ class Create_Phone_Listener implements ShouldQueue
         $EXTENSIONLENGTH = $event->phone['extlength'];
         $LANGUAGE = $event->phone['language'];
         $VOICEMAIL = $event->phone['voicemail'];
-
-        // Do Work.
-        $LOG = Cucmclass::provision_cucm_phone_axl(
+		
+		$CREATEDBY = $task->created_by;
+		
+		try{
+			 $LOG = Cucmclass::provision_cucm_phone_axl(
                                                 $SITE,
                                                 $DEVICE,
                                                 $NAME,
@@ -61,18 +63,27 @@ class Create_Phone_Listener implements ShouldQueue
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             );
+											
+			// Update task to completed.
+			$task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
+			$task->save();
 
-        // Find Task record by id
+			// Create Log Entry
+			\Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);					
+											
+		}catch (\Exception $e) {
+			// Update the status with exception info. 
+			$task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'error', 'json' => $e->getMessage()]);
+			$task->save();
+			
+			\Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $e->getMessage()]);
+			
+			// Fail the Job
+			throw new \Exception($e->getMessage());
+		}
 
-        $task = PhoneMACD::find($event->taskid);
+        
 
-        $CREATEDBY = $task->created_by;
-
-        // Update task to completed.
-        $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
-        $task->save();
-
-        // Create Log Entry
-        \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
+        
     }
 }

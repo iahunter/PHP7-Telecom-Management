@@ -108,8 +108,7 @@
      **/
     $api->post('cucm/macd/add', 'App\Http\Controllers\PhoneMACDController@createPhoneMACD_Phone');
 
-
-	 /**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/macd/list/week/user",
      *     tags={"Management - Cisco Voice - MACD"},
@@ -126,8 +125,8 @@
      * )
      **/
     $api->get('cucm/macd/list/week/user', 'App\Http\Controllers\PhoneMACDController@list_my_macd_jobs_for_week');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/macd/list/week",
      *     tags={"Management - Cisco Voice - MACD"},
@@ -144,8 +143,8 @@
      * )
      **/
     $api->get('cucm/macd/list/week', 'App\Http\Controllers\PhoneMACDController@list_macd_jobs_for_week');
-	
-	    /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/macd/list/tasks/{id}",
      *     tags={"Management - Cisco Voice - MACD"},

@@ -23,22 +23,22 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-		$phone = $request->all();
-		
-		// Clear the token, we don't want to save that data.
-		unset ($phone['token']);
-		
-		$macd = PhoneMACD::create(['type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
-		
-		$tasks = [];
+
+        $phone = $request->all();
+
+        // Clear the token, we don't want to save that data.
+        unset($phone['token']);
+
+        $macd = PhoneMACD::create(['type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
+
+        $tasks = [];
 
         $data['phone'] = $phone;
 
         // Update AD User IP Phone Field
         if (isset($phone['username']) && $phone['username'] && (isset($phone['dn']) && $phone['dn'])) {
             $task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'parent' => $macd->id, 'status' => 'job recieved']);
-			$tasks[] = $task;
+            $tasks[] = $task;
             $data['taskid'] = $task->id;
 
             // Testing of Events Controller
@@ -48,9 +48,9 @@ class PhoneMACDController extends Controller
         // Build Phone
         if (isset($phone['name']) && $phone['name']) {
             $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
-			$tasks[] = $task;
+            $tasks[] = $task;
             $data['taskid'] = $task->id;
-			
+
             // Testing of Events Controller
             event(new Create_Phone_Event($data));
         }
@@ -61,7 +61,7 @@ class PhoneMACDController extends Controller
                 if (isset($phone['template']) && $phone['template']) {
                     if (isset($phone['username']) && $phone['username']) {
                         $task = PhoneMACD::create(['type' => 'Create Mailbox from LDAP User', 'parent' => $macd->id, 'status' => 'job recieved']);
-						$tasks[] = $task;
+                        $tasks[] = $task;
                         $data['taskid'] = $task->id;
 
                         // Testing of Events Controller
@@ -69,7 +69,7 @@ class PhoneMACDController extends Controller
                     } else {
                         // If no username build user as a new user without Unified Messaging
                         $task = PhoneMACD::create(['type' => 'Create Mailbox with no UserID', 'parent' => $macd->id, 'status' => 'job recieved']);
-						$tasks[] = $task;
+                        $tasks[] = $task;
                         // Create the User Alias for the mailbox.
                         $data['phone']['username'] = $data['phone']['firstname'].' '.$data['phone']['lastname'].' '.$data['phone']['dn'];
 
@@ -81,25 +81,23 @@ class PhoneMACDController extends Controller
                 }
             }
         }
-		
-		
-		$result = ['macd' 	=> $macd,
-				   'tasks' 	=> $tasks,
-					];
 
-		
-		$response = [
+        $result = ['macd'     => $macd,
+                   'tasks'    => $tasks,
+                    ];
+
+        $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
                     'request'              => $request->all(),
-					'result'			   => $result
+                    'result'               => $result,
                     ];
 
         return response()->json($response);
     }
 
-	public function list_macd_jobs_for_week(Request $request)
+    public function list_macd_jobs_for_week(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -109,19 +107,19 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-		$start = \Carbon\Carbon::now();
-		$end = \Carbon\Carbon::now()->subWeek();
-		
+
+        $start = \Carbon\Carbon::now();
+        $end = \Carbon\Carbon::now()->subWeek();
+
         // Search for DID by numberCheck if there are any matches.
         if (! PhoneMACD::whereBetween('created_at', [$end, $start])
-					->count()) {
+                    ->count()) {
             abort(404, 'No MACDs Found');
         }
-		
+
         // Search for numbers like search.
         $macs = PhoneMACD::whereBetween('created_at', [$end, $start])
-			->orderby('created_at', 'desc')->get();
+            ->orderby('created_at', 'desc')->get();
 
         //return "HERE ".$did;
 
@@ -130,13 +128,13 @@ class PhoneMACDController extends Controller
                     'success'              => true,
                     'message'              => '',
                     'request'              => $request->all(),
-                    'result'            => $macs,
+                    'result'               => $macs,
                     ];
 
         return response()->json($response);
     }
-	
-	public function list_my_macd_jobs_for_week(Request $request)
+
+    public function list_my_macd_jobs_for_week(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -146,21 +144,21 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-		$start = \Carbon\Carbon::now();
-		$end = \Carbon\Carbon::now()->subWeek();
+
+        $start = \Carbon\Carbon::now();
+        $end = \Carbon\Carbon::now()->subWeek();
 
         // Search for DID by numberCheck if there are any matches.
         if (! PhoneMACD::where([['created_by', $user->username]])
-				->whereBetween('created_at', [$end, $start])
-				->count()) {
+                ->whereBetween('created_at', [$end, $start])
+                ->count()) {
             abort(404, 'No Block found matching search: '.$number_search);
         }
 
         // Search for numbers like search.
         $macs = PhoneMACD::where([['created_by', $user->username]])->orderby('created_at', 'desc')
-			->whereBetween('created_at', [$end, $start])
-			->get();
+            ->whereBetween('created_at', [$end, $start])
+            ->get();
 
         //return "HERE ".$did;
 
@@ -169,13 +167,13 @@ class PhoneMACDController extends Controller
                     'success'              => true,
                     'message'              => '',
                     'request'              => $request->all(),
-                    'result'            => $macs,
+                    'result'               => $macs,
                     ];
 
         return response()->json($response);
     }
-	
-	public function list_macd_and_children_by_id(Request $request, $id)
+
+    public function list_macd_and_children_by_id(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -185,29 +183,28 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-		$macd = PhoneMACD::find($id);
+
+        $macd = PhoneMACD::find($id);
 
         // Search for DID by numberCheck if there are any matches.
-        if (! PhoneMACD::where('parent', '=',  $id)
-				->count()) {
+        if (! PhoneMACD::where('parent', '=', $id)
+                ->count()) {
             $tasks = [];
-        }else{
-			// Search for numbers like search.
-			$tasks = PhoneMACD::where('parent', '=', $id)->get();
-		}
+        } else {
+            // Search for numbers like search.
+            $tasks = PhoneMACD::where('parent', '=', $id)->get();
+        }
 
-		$result = ['macd' 	=> $macd,
-				   'tasks' 	=> $tasks,
-					];
-					
+        $result = ['macd'     => $macd,
+                   'tasks'    => $tasks,
+                    ];
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'result'            	=> $result,
+                    'status_code'           => 200,
+                    'success'               => true,
+                    'message'               => '',
+                    'request'               => $request->all(),
+                    'result'                => $result,
                     ];
 
         return response()->json($response);

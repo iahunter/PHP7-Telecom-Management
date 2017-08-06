@@ -166,7 +166,7 @@
 					<tr>
 						<td><a ui-sref="getdidblock({id: vm.didblock.id})"><button class="btn btn-xs btn-default btn-block">{{ vm.didblock.id}}</button></a></td>
 						<!--<td>{{ vm.didblock.id}}</a></td>-->
-						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.name}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]"><a href="#/sitestatusreports/{{ vm.didblock.name}}"><b>{{ vm.didblock.name}}</b></a></td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.carrier}}</a></td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.country_code}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.start}}</td>

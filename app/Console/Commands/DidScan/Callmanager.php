@@ -60,10 +60,10 @@ class Callmanager extends Command
             $possible_deletes[$npanxx] = $this->updateDidInfo($npanxx, $didinfo);
         }
 
-		/*
-		
-		// Stuff to help cleanup numbers that are not in use. Need to move this functionality to its own command and schedule. 
-		
+        /*
+
+        // Stuff to help cleanup numbers that are not in use. Need to move this functionality to its own command and schedule.
+
         // Return Array with numbers that could not be deleted because CFWA is set.
         $numbers_with_no_device_and_cfa_set = [];
 
@@ -80,8 +80,8 @@ class Callmanager extends Command
 
         //
         print_r($numbers_with_no_device_and_cfa_set);
-		
-		*/
+
+        */
     }
 
     // This gets a SIMPLE array of NPA/NXX for our numbers in the database.
@@ -207,10 +207,9 @@ class Callmanager extends Command
 
                 // IF this DID IS in the results from call wrangler, update it!
                 if (isset($didinfo[$did->number])) {
-					
-					// Check if this number has any assigned devices... Need to move this functionality to its own command and schedule. 
+
+                    // Check if this number has any assigned devices... Need to move this functionality to its own command and schedule.
                     foreach ($didinfo[$did->number] as $entry) {
-						
                         if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
                             //print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
                             $possible_deletes[$entry['uuid']] = $entry['dnOrPattern'];

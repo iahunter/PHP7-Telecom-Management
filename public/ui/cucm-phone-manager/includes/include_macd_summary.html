@@ -1,0 +1,132 @@
+
+
+
+	
+
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		<div ng-if="!vm.loading && vm.mactasks">
+			<legend><h3>MACD Job Summary - ID: {{vm.macd_details.macd.id}} </h3></legend>
+			
+		</div>
+			
+		<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+				<div class="table-responsive">    
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+								<th>
+									<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+										ID
+											<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+								<th>
+									<a href="" ng-click="sortType = 'sitecode'; sortReverse = !sortReverse" style="color:black">
+										parent
+											<span ng-show="sortType == 'sitecode' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'sitecode' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+								<th>
+									<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
+										type
+											<span ng-show="sortType == 'srstip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'srstip' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>	
+
+								<th>
+									<a href="" ng-click="sortType = 'h323ip'; sortReverse = !sortReverse" style="color:black">
+										status
+											<span ng-show="sortType == 'country_code' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'country_code' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+								<th>
+									<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+										Created By
+											<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>								
+								
+
+								<th>
+									<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+										Created At
+											<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'updated_by'; sortReverse = !sortReverse" style="color:black">
+										Updated By
+											<span ng-show="sortType == 'updated_by' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'updated_by' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
+								<th>
+									<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
+										Updated At
+											<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+
+						<tr ng-repeat="task in vm.mactasks">
+								<td>{{ task.id}}</a></td>
+								<td>{{ task.parent}}</td>
+								<td>{{ task.type}}</td>
+								<td>{{ task.status}}</td>
+								<td>{{ vm.macd_details.macd.created_by}}</td>
+								<td>{{ task.created_at}}</td>
+								<td>{{ task.updated_by}}</td>
+								<td>{{ task.updated_at}}</td>
+								
+						</tr>
+						</tbody>
+					</table>
+					</div>
+		</div>
+
+
+		<div style="margin:25px"></div>
+		
+		{{vm.phone}}
+		
+		<div class="col-md-12 col-sm-12 col-lg-12">
+			<div class="btn-group" role="group" aria-label="test">
+				<button ng-if="vm.phone" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#lines-on-phones-modal">View Phone</button>
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#lines-on-phones-modal">View Line</button>
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#lines-on-phones-modal">View Line</button>
+			</div>
+		</div>
+		
+		
+		<div style="margin:50px"></div>
+	
+

@@ -35,6 +35,21 @@ angular
 					return defer.promise;
 			});
 		}
+		
+		// Get Dids by Block ID
+		self.list_macd_and_children_by_id = function(id) {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/macd/list/tasks/' + id)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
 
 		// Create
 		self.create_macd_add = function(data){

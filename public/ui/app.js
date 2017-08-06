@@ -242,6 +242,12 @@
                 controller: 'phoneManagerCreate.Controller',
                 controllerAs: 'vm'
             })
+			.state('macdsummary', {
+                url: '/macd/jobsummary/{id}',
+                templateUrl: 'cucm-phone-manager/macd-job-summary.html',
+                controller: 'macdJobSummary.Controller',
+                controllerAs: 'vm'
+            })
 			.state('phone', {
                 url: '/phone/{name}',
                 templateUrl: 'cucm-phone-manager/phonemanager.html',

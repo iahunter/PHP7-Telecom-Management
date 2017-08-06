@@ -144,3 +144,27 @@
      * )
      **/
     $api->get('cucm/macd/list/week', 'App\Http\Controllers\PhoneMACDController@list_macd_jobs_for_week');
+	
+	    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/macd/list/tasks/{id}",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="List of Phone MACD Childrent tasks",
+     *     description="",
+     *     operationId="listMyMacdsChildren",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of Parent",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('/cucm/macd/list/tasks/{id}', 'App\Http\Controllers\PhoneMACDController@list_macd_and_children_by_id');

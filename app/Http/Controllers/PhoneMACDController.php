@@ -24,15 +24,20 @@ class PhoneMACDController extends Controller
             }
         }
 		
+		$phone = $request->all();
+		
+		// Clear the token, we don't want to save that data.
+		unset ($phone['token']);
+		
+		$macd = PhoneMACD::create(['type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
+		
 		$tasks = [];
-
-        $phone = $request->all();
 
         $data['phone'] = $phone;
 
         // Update AD User IP Phone Field
         if (isset($phone['username']) && $phone['username'] && (isset($phone['dn']) && $phone['dn'])) {
-            $task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+            $task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'parent' => $macd->id, 'status' => 'job recieved']);
 			$tasks[] = $task;
             $data['taskid'] = $task->id;
 
@@ -42,7 +47,7 @@ class PhoneMACDController extends Controller
 
         // Build Phone
         if (isset($phone['name']) && $phone['name']) {
-            $task = PhoneMACD::create(['type' => 'Add Phone', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+            $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
 			$tasks[] = $task;
             $data['taskid'] = $task->id;
 			
@@ -55,7 +60,7 @@ class PhoneMACDController extends Controller
             if ($phone['voicemail'] == 'true') {
                 if (isset($phone['template']) && $phone['template']) {
                     if (isset($phone['username']) && $phone['username']) {
-                        $task = PhoneMACD::create(['type' => 'Create Mailbox from LDAP User', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+                        $task = PhoneMACD::create(['type' => 'Create Mailbox from LDAP User', 'parent' => $macd->id, 'status' => 'job recieved']);
 						$tasks[] = $task;
                         $data['taskid'] = $task->id;
 
@@ -63,7 +68,7 @@ class PhoneMACDController extends Controller
                         event(new Create_UnityConnection_LDAP_Import_Mailbox_Event($data));
                     } else {
                         // If no username build user as a new user without Unified Messaging
-                        $task = PhoneMACD::create(['type' => 'Create Mailbox with no UserID', 'status' => 'job recieved', 'form_data' => $phone, 'created_by' => $user->username]);
+                        $task = PhoneMACD::create(['type' => 'Create Mailbox with no UserID', 'parent' => $macd->id, 'status' => 'job recieved']);
 						$tasks[] = $task;
                         // Create the User Alias for the mailbox.
                         $data['phone']['username'] = $data['phone']['firstname'].' '.$data['phone']['lastname'].' '.$data['phone']['dn'];
@@ -76,6 +81,11 @@ class PhoneMACDController extends Controller
                 }
             }
         }
+		
+		
+		$result = ['macd' 	=> $macd,
+				   'tasks' 	=> $tasks,
+					];
 
 		
 		$response = [
@@ -83,7 +93,7 @@ class PhoneMACDController extends Controller
                     'success'              => true,
                     'message'              => '',
                     'request'              => $request->all(),
-                    'result'               => $tasks,
+					'result'			   => $result
                     ];
 
         return response()->json($response);
@@ -120,7 +130,7 @@ class PhoneMACDController extends Controller
                     'success'              => true,
                     'message'              => '',
                     'request'              => $request->all(),
-                    'didblocks'            => $macs,
+                    'result'            => $macs,
                     ];
 
         return response()->json($response);
@@ -159,7 +169,45 @@ class PhoneMACDController extends Controller
                     'success'              => true,
                     'message'              => '',
                     'request'              => $request->all(),
-                    'didblocks'            => $macs,
+                    'result'            => $macs,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function list_macd_and_children_by_id(Request $request, $id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check user permissions
+        if (! $user->can('read', PhoneMACD::class)) {
+            if (! $user->can('read', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+		
+		$macd = PhoneMACD::find($id);
+
+        // Search for DID by numberCheck if there are any matches.
+        if (! PhoneMACD::where('parent', '=',  $id)
+				->count()) {
+            $tasks = [];
+        }else{
+			// Search for numbers like search.
+			$tasks = PhoneMACD::where('parent', '=', $id)->get();
+		}
+
+		$result = ['macd' 	=> $macd,
+				   'tasks' 	=> $tasks,
+					];
+					
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'result'            	=> $result,
                     ];
 
         return response()->json($response);

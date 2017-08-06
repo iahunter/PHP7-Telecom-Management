@@ -1,0 +1,247 @@
+<!-- Include Navbar -->
+
+<div style="margin:10px"></div>
+
+<div class="container">
+<div class="well">
+<div style="margin:50px"></div>
+
+	<div class="row">
+		
+		
+		<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1">
+			<script type="text/ng-template" id="error-messages">
+							<div ng-message='required'> This Field is required </div>
+							<div ng-message='minlength'> Too short </div>
+							<div ng-message='maxlength'> Too long </div>
+			</script>
+				<legend><h2><i class="fa fa-pencil fa-fw"></i> Create New Phone</h2></legend>
+
+					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
+					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.device.$touched && addDeviceForm.device.$invalid, 'has-success': addDeviceForm.device.$touched && addDeviceForm.device.$valid }">
+									<label for="device" class="control-label">Phone Model</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+											
+											<input type="text" readonly ng-model='vm.deviceForm.device' class="form-control" data-width="100%" name="model">
+										</div>
+										<div ng-messages="addDeviceForm.device.$dirty && addDeviceForm.device.$error">
+												<div ng-message='required'> device is required </div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.name.$touched && addDeviceForm.name.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
+										<label for="name" class="control-label">Phone MAC Address</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" readonly ng-model='vm.deviceForm.name' class="form-control"  data-width="100%" name="name">
+											</div>
+											<div ng-messages="addDeviceForm.name.$dirty && addDeviceForm.name.$error">
+													<div ng-message='required'> name is required </div>
+
+											</div>
+										</div>
+									</div>
+							</div>
+						</div>
+						
+						
+
+							<div class="row">
+							
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.dn.$touched && addDeviceForm.dn.$invalid, 'has-success': addDeviceForm.dn.$touched && addDeviceForm.dn.$valid }">
+										<label for="dn" class="control-label">Phone Number</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" readonly ng-model='vm.deviceForm.dn' class="form-control"  data-width="100%" name="dn">
+											</div>
+											<div ng-messages="addDeviceForm.dn.$dirty && addDeviceForm.dn.$error">
+													<div ng-message='required'> DN is required </div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+																	
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.dn && vm.deviceForm.voicemail && vm.unity_mailbox_extension_inuse">
+									<div >
+										<ng-include src="'cucm-phone-manager/includes/include-extension-mailbox-found.html'"></ng-include>
+									</div>
+								
+								</div>
+							</div>
+							
+							
+							<hr>
+							<div class="row">	
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.username.$touched && addDeviceForm.username.$invalid, 'has-success': addDeviceForm.username.$touched && addDeviceForm.username.$valid }">
+										<label for="username" class="control-label">samAccountName <small> (Employees Only)</small></label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input type="text" readonly ng-model='vm.deviceForm.username' class="form-control"  name="username" placeholder="Username" ng-minlength='6' ng-maxlength='50'>
+											
+											</div>
+											<div ng-messages="addDeviceForm.username.$dirty && addDeviceForm.username.$error">
+												<div ng-message='minlength'>Please enter a dn at least 6 chars long</div>
+												<div ng-message='maxlength'>Name entered cannot be longer than 50 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.username && vm.deviceForm.voicemail && vm.unityuser">
+									<div >
+										<ng-include src="'cucm-phone-manager/includes/include-user-mailbox-found.html'"></ng-include>
+									</div>
+								
+								</div>
+
+								
+							</div>
+							<div class="row">	
+								
+								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.firstname.$touched && addDeviceForm.firstname.$invalid, 'has-success': addDeviceForm.firstname.$touched && addDeviceForm.firstname.$valid }">
+										<label for="firstname" class="control-label">First Name</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input type="text" readonly required ng-model='vm.deviceForm.firstname' class="form-control"  name="firstname" placeholder="First Name" ng-minlength='1' ng-maxlength='50'>
+											</div>
+											<div ng-messages="addDeviceForm.firstname.$dirty && addDeviceForm.firstname.$error">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">	
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.lastname.$touched && addDeviceForm.lastname.$invalid, 'has-success': addDeviceForm.lastname.$touched && addDeviceForm.lastname.$valid }">
+										<label for="lastname" class="control-label">Last Name</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input type="text" readonly required ng-model='vm.deviceForm.lastname' class="form-control"  name="lastname" placeholder="Last Name" ng-minlength='1' ng-maxlength='50'>
+											</div>
+											<div ng-messages="addDeviceForm.lastname.$dirty && addDeviceForm.lastname.$error">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							
+							<div class="row" ng-if="vm.aduser.aduser || vm.nouserfound">	
+								<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+									<div class="panel-group">
+									<div class="panel panel-success" ng-if="!vm.nouserfound">
+									
+										<div class="panel panel-heading" >Active Directory User</div>
+										<div class="panel panel-body">
+											<span style="color:green"> {{vm.aduser.aduser}} </span><br>
+											<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone == ''" style="color:red"> AD Needs Updated with IP Phone Info </span>
+											<span ng-if="vm.aduser.adipphone == vm.deviceForm.dn" style="color:green"> {{vm.aduser.adipphone}} </span>
+											<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone != vm.deviceForm.dn" style="color:red"> {{vm.aduser.adipphone}}</span>
+										</div>
+									</div>
+									<div class="panel panel-danger" ng-if="vm.nouserfound">
+									
+										<div class="panel panel-heading" >Active Directory User</div>
+										<div class="panel panel-body">
+											<span style="color:danger"> No User Found </span><br>
+
+										</div>
+									</div>
+									</div>
+								</div>
+							</div>
+								
+							
+							<!-- Print Form JSON-->
+							<!--
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+									{{vm.deviceForm}}
+									
+								</div>
+							</div>
+							
+							-->
+							<div class="row">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+										<div class="form-group" ng-class="{'has-error': addDeviceForm.language.$touched && addDeviceForm.language.$invalid, 'has-success': addDeviceForm.language.$touched && addDeviceForm.language.$valid }">
+											<label for="language" class="control-label">Language</label>
+											<div class="inputGroupContainer">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-server"></i></span>
+													<input type="text" readonly required ng-model='vm.deviceForm.language' class="form-control"  name="language" placeholder="Last Name" ng-minlength='1' ng-maxlength='50'>
+											
+												</div>
+												<div ng-messages="addDeviceForm.language.$dirty && addDeviceForm.language.$error">
+														<div ng-message='required'> Language is required </div>
+												</div>
+											</div>
+										</div>
+									</div>
+							</div>
+							<div class="row" ng-if='vm.deviceForm.voicemail'>
+								
+									<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+											<div class="form-group"  ng-class="{'has-error': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$invalid, 'has-success': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$valid }">
+												<label for="voicemail" class="control-label">Voicemail Box</label>
+												<br>
+												<input type="checkbox"  ng-model='vm.deviceForm.voicemail'style="width: 17px; height: 17px;" name="voicemail" >
+
+												<div ng-messages="addDidblockForm.voicemail.$dirty && addDidblockForm.voicemail.$error">
+													<div ng-messages-include="error-messages"></div>
+												</div>
+											</div>
+									</div>
+									
+							</div>
+							
+							<div class="row" ng-if='vm.deviceForm.template'>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.template.$touched && addDeviceForm.template.$invalid, 'has-success': addDeviceForm.template.$touched && addDeviceForm.template.$valid }">
+										<label for="template" class="control-label">Voicemail Template</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												
+												<input type="text" readonly required ng-model='vm.deviceForm.template' class="form-control"  name="template" placeholder="Last Name" ng-minlength='1' ng-maxlength='50'>
+											
+											</div>
+											<div ng-messages="addDeviceForm.template.$dirty && addDeviceForm.template.$error">
+													<div ng-message='required'> Template is required </div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+
+							
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div style="margin:25px"></div>
+	</div>
+</div>
+</div>

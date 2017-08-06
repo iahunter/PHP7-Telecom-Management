@@ -1,62 +1,143 @@
 angular
 	.module('app')
-	.controller('phoneManagerCreate.Controller', ['telephonyService', 'macdService', 'LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(telephonyService, macdService, LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
+	.controller('macdJobSummary.Controller', ['telephonyService', 'macdService', 'LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', 'cucmReportService', '$interval', '$timeout', '$location', '$state', '$stateParams', '$scope', function(telephonyService, macdService, LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, cucmReportService, $interval, $timeout, $location, $state, $stateParams, $scope) {
 		
 		// This controller does planning and systems provisioning. 
 		
 		var vm = this;
 		
-		vm.refresh = function (){
-			
-			// jQuery Hack to fix body from the Model. 
-			$(".modal-backdrop").hide();
-			$('body').removeClass("modal-open");
-			$('body').removeClass("modal-open");
-			$('body').removeAttr( 'style' );
-			// End of Hack */
-			//console.log(vm.newphones);
-			$state.reload();
-		};
-		
-		
-		vm.isArray = angular.isArray;
-		
 		vm.messages = 'Loading sites...';
 		
 		var id = $stateParams.id;
-		
-		vm.sitecode = $stateParams.id;
 
-		vm.deviceForm = {};
-		
-		vm.deviceForm.sitecode = $stateParams.id; 
-		
-		
-		vm.deviceForm.device = $stateParams.device;
-		var name = $stateParams.name;
-		vm.deviceForm.name = name.toUpperCase();
-		
-		vm.deviceForm.dn = $stateParams.dn;
 
-		vm.deploybutton = false;
-		
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
 
-		if(!vm.permissions.read.Phoneplan){
+		if(!vm.permissions.read.Cucmclass){
 			$location.path('/accessdenied');
 		}
-
-
-		vm.languages = [{
-				id: 1,
-				name: 'english'
-			}, {
-				id: 2,
-				name: 'french'
-			}];
 		
 		
+		
+		vm.list_macd_and_children_by_id = function(){
+		
+			macdService.list_macd_and_children_by_id(id)
+				.then(function(res){
+					// Check if Token has expired. If so then direct them to login screen. 
+					if(res.message == "Token has expired"){
+						vm.tokenexpired = true;
+						//alert("Token has expired, Please relogin");
+						//alert(res.message);
+						$state.go('logout');
+					}
+
+					vm.macd_details = res.data.result;
+
+					console.log(vm.macd_details);
+					
+					vm.deviceForm = vm.macd_details.macd.form_data
+					
+					vm.mactasks = vm.macd_details.tasks
+					
+					if(!vm.aduser){
+						vm.lookupuser(vm.deviceForm.username)
+						vm.getusername(vm.deviceForm.username)
+					}
+					
+					if(!vm.linesummary){
+						vm.checklineusage(vm.deviceForm.dn)
+					}
+					
+					if(!vm.phone){
+						vm.checkname(vm.deviceForm)
+					}
+
+					vm.getusersfromcupi(vm.deviceForm)
+					
+					
+				}, function(err){
+					//Error
+				});
+		}
+		
+		vm.list_macd_and_children_by_id()
+
+		
+		var pull = $interval(vm.list_macd_and_children_by_id,5000); 
+		
+		$scope.$on('$destroy', function() {
+			//console.log($scope);
+			$interval.cancel(pull);
+		});
+		
+		
+		
+		vm.checkname = function(phone){
+			if(phone.name){
+				vm.nameinvalid = false;
+				if(phone.device != "IP Communicator"){
+					
+					// Check if valid MAC
+					var regexp = /^[0-9a-f]{1,12}$/gi;
+					if(!phone.name.match(regexp)){
+						console.log("NO REGEX MATCH FOUND ON NAME")
+						vm.nameinvalid = true;
+					}
+					// If not it should be 12 digits long. 
+					if(phone.name.length != 12){
+						vm.nameinvalid = true;
+					}
+				}
+			}
+			
+			if(phone.name && !vm.nameinvalid){
+				//console.log("Hitting Here")
+				
+				if(phone.device != "IP Communicator"){
+					vm.checkphoneusage('SEP'+phone.name)
+				}
+			}
+			
+		}
+		
+		vm.check_ipcommunicator_usage = function(phone){
+			if(phone.device == "IP Communicator" && phone.dn){
+				vm.checkphoneusage('CIPC_'+phone.dn)
+			}
+		}
+		
+		
+		
+		vm.checkphoneusage = function(phone){
+			if(phone){
+				//console.log(phone)
+				
+				cucmService.getphone(phone)
+					.then(function(res){
+						result = res.data.response;
+						
+
+						console.log(result);
+
+						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+						if(result){
+							vm.phonereviewed = false;
+							vm.phone = result;
+							//console.log(vm.phone)
+						}else{
+							vm.phone = false;
+						}
+						
+
+					}, function(err){
+						// Error
+					});
+			}
+		}
+		
+		
+
 		vm.lookupuser = function(username){
 			vm.nouserfound = false;
 			phone = {}
@@ -141,95 +222,8 @@ angular
 					// Error
 				});
 		}
-		
-		vm.getsite = function(){
-						
-						cucmReportService.getsitesummary(vm.sitecode)
-							.then(function(res) {
-								
-								vm.sitesummary = res.data.response;
-								
-								vm.deviceForm.extlength	= vm.sitesummary.shortextenlength
 
-								//console.log(vm.deviceForm)
-								
-							}, function(error) {
-								alert('An error occurred while getting user templates from unity connection')
-							});
-							
-						cupiService.listusertemplatesbysite(vm.sitecode)
-							.then(function(res) {
-								
-								vm.siteusertemplates = res.data;
-								//console.log(vm.siteusertemplates);
-								
-								if(vm.siteusertemplates.length > 0){
-									vm.usertemplatedeploybutton = false;
-								}
-								if(vm.siteusertemplates.length == 0){
-									vm.usertemplatedeploybutton = true;
-								}
-								
-							
 
-							}, function(error) {
-								alert('An error occurred while getting user templates from unity connection')
-							});
-		}
-					
-		vm.getsite();
-		
-		vm.getphonesfromcucm = function(phones){
-			vm.cucmphones = [];
-			angular.forEach(phones, function(phone) {
-				// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
-				
-				//console.log(phone);
-				if(phone.device == "ATA190"){
-					name = "ATA"+ phone.name
-				}
-				else if(phone.device == "IP Communicator"){
-					name = phone.name
-				}else{
-					name = phone.name
-					name = "SEP"+ phone.name
-				}
-				
-				cucmService.getphone(name)
-				.then(function(res){
-					user = [];
-					//console.log(res);
-					//user.username = username;
-					
-					
-					result = res.data.response;
-					
-
-					//console.log(result);
-
-					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-					if(result != "Not Found"){
-						result.phoneid = phone.id;
-						phone.inuse = true;
-						vm.cucmphones.push(result);
-					}
-					if(result == "Not Found"){
-						phone.inuse = false;
-					}
-					
-
-				}, function(err){
-					// Error
-				});
-
-				
-				
-			});
-			
-			//console.log(vm.cucmphones);
-			
-		}
-		
 		vm.checklineusage = function(line){
 			
 			if(line){
@@ -402,37 +396,13 @@ angular
 			
 		}
 		
-
-			
-		vm.truefalse = [{
-				id: 1,
-				name: "true"
-			}, {
-				id: 0,
-				name: "false"
-			}];
-	
-		vm.neworexisting = [{
-				id: 1,
-				name: "new"
-			}, {
-				id: 0,
-				name: "existing"
-			}];
-
-		
 		vm.submitDevice = function(phone) {
 			console.log(phone)
-			
-			if(!phone.voicemail){
-				phone.voicemail = false;
-			}
 			
 			macdService.create_macd_add(phone)
 				.then(function(res){
 					
-					
-					console.log(res)
+					//console.log(res)
 					// Check for errors and if token has expired. 
 					if(res.data.message){
 						//console.log(res);
@@ -454,15 +424,6 @@ angular
 										
 						vm.loading = false;
 						
-						
-						if(vm.macobjects.macd.id){
-							$timeout(function(){
-								$location.path('/macd/jobsummary/'+ vm.macobjects.macd.id);
-							}, 500);
-							
-						}
-							
-						
 					}
 					
 				}, function(err){
@@ -476,7 +437,6 @@ angular
 		// Need to build a timeout that tracks the objects that were returned every 5 seconds.
 		
 		// Maybe pop that into a modal. 
-		
 		
 
 		// Delete Cupi User
@@ -540,39 +500,6 @@ angular
 			  });
 			
 		}
-		
-		vm.cucmphonedeleteselected = function(phones){
-			angular.forEach(phones, function(phone) {
-				if(phone.select == true){
-					//console.log(phone);
-					vm.deletecucmphone(phone);
-				}
-				
-			});
-			
-			$timeout(function(){
-				vm.getphonesfromcucm(vm.phones)
-			}, 2000);
-				
-		}
-		
-		
-		vm.cucmphonecheckAll = function() {
-			angular.forEach(vm.cucmphones, function(phone) {
-			  phone.select = vm.cucmphoneselectAll;
-			  //console.log(phone);
-			  //vm.selecttouched();
-			});
-		  };
-		
-		
-		//$timeout(function(),5000, false)
-		
-		$timeout(function(){
-            vm.getphonesfromcucm(vm.phones)
-        }, 500);
-		
-		
 		
 
 		

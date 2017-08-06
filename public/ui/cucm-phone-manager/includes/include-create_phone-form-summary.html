@@ -203,7 +203,7 @@
 											<div class="form-group"  ng-class="{'has-error': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$invalid, 'has-success': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$valid }">
 												<label for="voicemail" class="control-label">Voicemail Box</label>
 												<br>
-												<input type="checkbox"  ng-model='vm.deviceForm.voicemail'style="width: 17px; height: 17px;" name="voicemail" >
+												<input type="checkbox" readonly ng-model='vm.deviceForm.voicemail'style="width: 17px; height: 17px;" name="voicemail" >
 
 												<div ng-messages="addDidblockForm.voicemail.$dirty && addDidblockForm.voicemail.$error">
 													<div ng-messages-include="error-messages"></div>

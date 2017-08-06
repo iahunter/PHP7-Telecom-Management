@@ -45,9 +45,10 @@ angular
 						vm.getusername(vm.deviceForm.username)
 					}
 					
-					if(!vm.linesummary){
+					if(!vm.line_number){
 						vm.checklineusage(vm.deviceForm.dn)
 					}
+
 					
 					if(!vm.phone){
 						vm.checkname(vm.deviceForm)
@@ -266,6 +267,7 @@ angular
 											
 										}
 										
+										
 									});
 									
 									
@@ -300,7 +302,9 @@ angular
 							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 							if(result){
 								vm.linedetails = result;
-								//console.log(vm.linedetails)
+								
+								vm.line_number = vm.linedetails.line_details.pattern
+								console.log(vm.line_number)
 							}
 							
 

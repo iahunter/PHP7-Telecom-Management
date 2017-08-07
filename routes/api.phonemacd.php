@@ -133,7 +133,7 @@
      * )
      **/
     $api->get('cucm/macd/list/week/user', 'App\Http\Controllers\PhoneMACDController@list_my_macd_jobs_for_week');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/macd/parentlist/week/user",
@@ -169,7 +169,7 @@
      * )
      **/
     $api->get('cucm/macd/list/week', 'App\Http\Controllers\PhoneMACDController@list_macd_jobs_for_week');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/macd/parentlist/week",

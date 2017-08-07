@@ -113,6 +113,8 @@ angular
 				}
 				
 				vm.phones = res.data.result;
+				
+				vm.getphonesfromcucm(vm.phones);
 				//console.log(phones);
 				//return vm.phones = phones;
 				//vm.phones = [];
@@ -738,14 +740,6 @@ angular
 		  };
 		
 		
-		//$timeout(function(),5000, false)
-		
-		$timeout(function(){
-            vm.getphonesfromcucm(vm.phones)
-        }, 500);
-		
-		
-		
 		
 		// Show Failures for Deploy Mailboxes to Unity Connection
 		vm.showunityfailuresonly = function() {
@@ -781,25 +775,7 @@ angular
 			return vm.phonefailures
 		}
 		
-		
-		/*
-		Old function that executed in parralel. Had issues with locking on cucm db. see new function below to execute in series using service. 
-		vm.deployphonescucm = function() {
-			angular.forEach(vm.phones, function(phone) {
-				phone.sitecode = vm.site.sitecode;
-				phone.extlength = vm.site.extlen;
-				console.log(phone);
-				cucmService.createphone(phone)
-				.then(function(res) {
-					
 
-					console.log(res)
-				}, function(error) {
-					alert('An error occurred');
-				});
-			  
-			});
-		*/
 		
 		// default variable to false. 
 		vm.ignoreexistingphones = false;

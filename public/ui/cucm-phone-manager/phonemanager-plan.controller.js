@@ -83,7 +83,7 @@ angular
 				phone.name = "CIPC_" + phone.dn;
 			}
 			console.log(phone)
-			var path = '/phone/site/'+ id + '/create/'+ phone.device + '&' + phone.name + '&' + phone.dn
+			var path = '/phone/site/'+ id + '/create/'+ phone.device + '&' + phone.name + '&' + phone.dn + '&' + phone.usenumber
 			$location.path(path);
 			
 		}

@@ -237,7 +237,7 @@
                 controllerAs: 'vm'
             })
 			.state('createphone', {
-                url: '/phone/site/{id}/create/{device}&{name}&{dn}',
+                url: '/phone/site/{id}/create/{device}&{name}&{dn}&{usenumber}',
                 templateUrl: 'cucm-phone-manager/create_phone.html',
                 controller: 'phoneManagerCreate.Controller',
                 controllerAs: 'vm'

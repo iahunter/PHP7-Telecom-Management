@@ -59,6 +59,14 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
+     *         name="usenumber",
+     *         in="formData",
+     *         description="Create a new directory number or use existing number",
+     *		   enum={"new", "existing"},
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
      *         name="extlength",
      *         in="formData",
      *         description="Internal Extension Length - 4 digit is standard - Used for Internal Short Dialing",

@@ -31,6 +31,7 @@ angular
 		
 		vm.deviceForm.sitecode = $stateParams.id; 
 		
+		vm.deviceForm.usenumber = $stateParams.usenumber;
 		
 		vm.deviceForm.device = $stateParams.device;
 		var name = $stateParams.name;
@@ -461,8 +462,6 @@ angular
 							}, 500);
 							
 						}
-							
-						
 					}
 					
 				}, function(err){

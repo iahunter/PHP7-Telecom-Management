@@ -253,9 +253,9 @@ class Cucmphone extends Cucm
 
         return $response;
     }
-
-    // Create New Phone
-    public function createPhone(Request $request)
+	
+	// Create New Phone
+    public function createPhoneandLine(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -371,6 +371,266 @@ class Cucmphone extends Cucm
             'status_code'    => 200,
             'success'        => true,
             'message'        => '',
+            'response'       => $result,
+            ];
+
+        return response()->json($response);
+    }
+
+    // Create New Phone
+    public function createPhone(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('create', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $errors = [];
+
+        // Check if sitecode is Set
+        if (! isset($request->sitecode) || ! $request->sitecode) {
+            throw new \Exception('Error, no sitecode set');
+        }
+        $SITE = $request->sitecode;
+
+        // Check if device is Set
+        if (! isset($request->device) || ! $request->device) {
+             throw new \Exception('Error, no device set');
+        }
+        $DEVICE = $request->device;
+
+        // Check if name is Set
+        if (! isset($request->name) || ! $request->name) {
+            throw new \Exception('Error, no name set');
+        }
+        $NAME = $request->name;
+
+        // Check if firstname is Set
+        if (! isset($request->firstname) || ! $request->firstname) {
+             throw new \Exception('Error, no firstname set');
+        }
+        $FIRSTNAME = $request->firstname;
+
+        // Check if lastname is Set
+        if (! isset($request->lastname) || ! $request->lastname) {
+             throw new \Exception('Error, no lastname set');
+        }
+        $LASTNAME = $request->lastname;
+
+        // Check if username is Set
+        if (! isset($request->username) || ! $request->username) {
+            $USERNAME = 'CallManager.Unassign';
+            //return 'Error, no username set';
+        } else {
+            $USERNAME = $request->username;
+        }
+
+        // Check if dn is Set
+        if (! isset($request->dn) || ! $request->dn) {
+             throw new \Exception('Error, no dn set');
+        }
+        $DN = $request->dn;
+
+        // Check if extlength is Set
+        if (! isset($request->extlength) || ! $request->extlength) {
+             throw new \Exception('Error, no extlength set');
+        }
+        $EXTENSIONLENGTH = $request->extlength;
+
+        // Check if language is Set
+        if (! isset($request->language) || ! $request->language) {
+            //$errors[] = 'Error, no language set';
+            $LANGUAGE = 'english';
+        }
+        $LANGUAGE = $request->language;
+
+        // Check if voicemail is Set
+        if (! isset($request->voicemail) || ! $request->voicemail) {
+             throw new \Exception('Error, no voicemail set');
+        }
+        $VOICEMAIL = $request->voicemail;
+
+        // Check if notes is Set
+        if (isset($request->notes) && $request->notes) {
+            $NOTES = $request->notes;
+        }
+		
+		$request = $request->all();
+		unset($request['token']);
+
+        if ((isset($errors)) && ! empty($errors)) {
+            $result = [
+                        'type'         => 'Phone',
+                        'object'       => $request->name,
+                        'status'       => 'error',
+                        'request'      => $request->all,
+                        'exception'    => $errors,
+                    ];
+
+            $response = [
+                        'status_code'    => 200,
+                        'success'        => true,
+                        'message'        => '',
+                        'response'       => $result,
+                        ];
+
+           
+
+            return response()->json($response);
+        }
+		
+		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
+		
+        // Final user information required to provision phone:
+        $result = Cucmclass::add_cucm_phone(
+                                                $SITE,
+                                                $DEVICE,
+                                                $NAME,
+                                                $FIRSTNAME,
+                                                $LASTNAME,
+                                                $USERNAME,
+                                                $DN,
+                                                $EXTENSIONLENGTH,
+                                                $LANGUAGE,
+                                                $VOICEMAIL
+                                            );
+        $response = [
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+            ];
+
+        return response()->json($response);
+    }
+	
+	// Create New Phone
+    public function createLine(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('create', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $errors = [];
+
+        // Check if sitecode is Set
+        if (! isset($request->sitecode) || ! $request->sitecode) {
+            $errors[] = 'Error, no sitecode set';
+        }
+        $SITE = $request->sitecode;
+
+        // Check if device is Set
+        if (! isset($request->device) || ! $request->device) {
+            $errors[] = 'Error, no device set';
+        }
+        $DEVICE = $request->device;
+
+        // Check if name is Set
+        if (! isset($request->name) || ! $request->name) {
+            $errors[] = 'Error, no name set';
+        }
+        $NAME = $request->name;
+
+        // Check if firstname is Set
+        if (! isset($request->firstname) || ! $request->firstname) {
+            $errors[] = 'Error, no firstname set';
+        }
+        $FIRSTNAME = $request->firstname;
+
+        // Check if lastname is Set
+        if (! isset($request->lastname) || ! $request->lastname) {
+            $errors[] = 'Error, no lastname set';
+        }
+        $LASTNAME = $request->lastname;
+
+        // Check if username is Set
+        if (! isset($request->username) || ! $request->username) {
+            $USERNAME = 'CallManager.Unassign';
+            //return 'Error, no username set';
+        } else {
+            $USERNAME = $request->username;
+        }
+
+        // Check if dn is Set
+        if (! isset($request->dn) || ! $request->dn) {
+            $errors[] = 'Error, no dn set';
+        }
+        $DN = $request->dn;
+
+        // Check if extlength is Set
+        if (! isset($request->extlength) || ! $request->extlength) {
+            $errors[] = 'Error, no extlength set';
+        }
+        $EXTENSIONLENGTH = $request->extlength;
+
+        // Check if language is Set
+        if (! isset($request->language) || ! $request->language) {
+            //$errors[] = 'Error, no language set';
+            $LANGUAGE = 'english';
+        }
+        $LANGUAGE = $request->language;
+
+        // Check if voicemail is Set
+        if (! isset($request->voicemail) || ! $request->voicemail) {
+            $errors[] = 'Error, no voicemail set';
+        }
+        $VOICEMAIL = $request->voicemail;
+
+        // Check if notes is Set
+        if (isset($request->notes) && $request->notes) {
+            $NOTES = $request->notes;
+        }
+		
+		unset($request['token']);
+
+        if ((isset($errors)) && ! empty($errors)) {
+            $result['Phone'] = [
+                        'type'         => 'Phone',
+                        'object'       => $request->name,
+                        'status'       => 'error',
+                        'request'      => $request->all,
+                        'exception'    => $errors,
+                    ];
+
+            $response = [
+                        'status_code'    => 200,
+                        'success'        => true,
+                        'message'        => '',
+                        'response'       => $result,
+                        ];
+
+            activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
+
+            return response()->json($response);
+        }
+		
+		$request = $request->all();
+
+        // Clear the token, we don't want to save that data.
+        unset($request['token']);
+		
+		
+        // Final user information required to provision phone:
+        $result = Cucmclass::add_cucm_line(
+                                                $SITE,
+                                                $DEVICE,
+                                                $NAME,
+                                                $FIRSTNAME,
+                                                $LASTNAME,
+                                                $USERNAME,
+                                                $DN,
+                                                $EXTENSIONLENGTH,
+                                                $LANGUAGE,
+                                                $VOICEMAIL
+                                            );
+        $response = [
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+			'request'		 => $request,
             'response'       => $result,
             ];
 

@@ -75,11 +75,11 @@
 									<label for="usenumber"  class="control-label"><i class="fa fa-phone"></i> Assign Phone Number</label><br>
 										<div class="panel panel-default panel-body">
 											<label> 
-												<input type="radio" class="radio-inline" required ng-model='usenumber' value="new" data-width="100%" name="usenumber">
+												<input type="radio" class="radio-inline" required ng-model='vm.deviceForm.usenumber' value="new" data-width="100%" name="usenumber">
 												New&nbsp&nbsp&nbsp&nbsp&nbsp
 											</label>
 											<label> 
-												<input type="radio" class="radio-inline" required ng-model='usenumber' value="existing" data-width="100%" name="usenumber">
+												<input type="radio" class="radio-inline" required ng-model='vm.deviceForm.usenumber' value="existing" data-width="100%" name="usenumber">
 												Use Existing
 											</label>
 											<div ng-messages="addDeviceForm.usenumber.$dirty && addDeviceForm.usenumber.$error">
@@ -89,7 +89,7 @@
 								</div>
 							</div>
 						</div>
-							<div class="row" ng-if="usenumber == 'existing'">
+							<div class="row" ng-if="vm.deviceForm.usenumber == 'existing'">
 							
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.dn.$touched && addDeviceForm.dn.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
@@ -110,7 +110,7 @@
 								</div>
 								
 							</div>
-							<div class="row" ng-if="usenumber == 'new' && vm.availablenumbers.length > 0">
+							<div class="row" ng-if="vm.deviceForm.usenumber == 'new' && vm.availablenumbers.length > 0">
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.dn.$touched && addDeviceForm.dn.$invalid, 'has-success': addDeviceForm.dn.$touched && addDeviceForm.dn.$valid }">
 										<label for="dn" class="control-label">Select Available Number</label>
@@ -129,7 +129,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="alert alert-danger" role="alert" ng-if="usenumber == 'new' &&!vm.availablenumbers.length">
+							<div class="alert alert-danger" role="alert" ng-if="vm.deviceForm.usenumber == 'new' &&!vm.availablenumbers.length">
 								<strong>No Available Numbers Found for {{vm.sitecode}}. Contact System Administrator</strong>										
 							</div>
 							<div class="row">

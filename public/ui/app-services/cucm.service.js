@@ -209,9 +209,13 @@ angular
 			return $http.post('../api/cucm/phone', phone);
 		}
 		
+		// Create Block
+		self.createline = function(line){
+			return $http.post('../api/cucm/line', line);
+		}
+		
 		
 		// Create phones - Had to make the posts in series or Informix was throwing errors. 
-		
 		self.clearphoneadds = function(){
 			return self.results = [];
 		}
@@ -226,7 +230,7 @@ angular
 					if (ignoreexisting == true){
 						if (postdata.inuse == false){
 							//phone.inuse = false
-							$http.post('../api/cucm/phone', postdata)
+							$http.post('../api/cucm/phone_and_line', postdata)
 							  .then(
 								  function(data) {
 									self.results.push(data.data.response);
@@ -258,7 +262,7 @@ angular
 						}
 					}else{
 						//phone.inuse = true
-						$http.post('../api/cucm/phone', postdata)
+						$http.post('../api/cucm/phone_and_line', postdata)
 						  .then(
 							  function(data) {
 								self.results.push(data.data.response);

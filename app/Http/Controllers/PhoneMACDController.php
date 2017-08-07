@@ -144,6 +144,47 @@ class PhoneMACDController extends Controller
 
         return response()->json($response);
     }
+	
+	public function list_macd_parents_for_week(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check user permissions
+        if (! $user->can('read', PhoneMACD::class)) {
+            if (! $user->can('read', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+		
+
+        $start = \Carbon\Carbon::now();
+        $end = \Carbon\Carbon::now()->subWeek();
+		
+        // Search for DID by numberCheck if there are any matches.
+        if (! PhoneMACD::where('type', "MACD")
+                ->whereBetween('created_at', [$end, $start])
+                ->count()) {
+            abort(404, 'No Block found matching search: '.$number_search);
+        }
+
+        // Search for numbers like search.
+        $macs = PhoneMACD::where('type', "MACD")
+			->whereBetween('created_at', [$end, $start])
+			->orderby('created_at', 'desc')
+            ->get();
+
+        //return "HERE ".$did;
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'result'               => $macs,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function list_my_macd_jobs_for_week(Request $request)
     {
@@ -155,6 +196,7 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
+		
 
         $start = \Carbon\Carbon::now();
         $end = \Carbon\Carbon::now()->subWeek();
@@ -169,6 +211,49 @@ class PhoneMACDController extends Controller
         // Search for numbers like search.
         $macs = PhoneMACD::where([['created_by', $user->username]])->orderby('created_at', 'desc')
             ->whereBetween('created_at', [$end, $start])
+            ->get();
+
+        //return "HERE ".$did;
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'result'               => $macs,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function list_my_macd_parents_for_week(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check user permissions
+        if (! $user->can('read', PhoneMACD::class)) {
+            if (! $user->can('read', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+		
+
+        $start = \Carbon\Carbon::now();
+        $end = \Carbon\Carbon::now()->subWeek();
+
+        // Search for DID by numberCheck if there are any matches.
+        if (! PhoneMACD::where([['created_by', $user->username]])
+				->where('type', "MACD")
+                ->whereBetween('created_at', [$end, $start])
+                ->count()) {
+            abort(404, 'No Block found matching search: '.$number_search);
+        }
+
+        // Search for numbers like search.
+        $macs = PhoneMACD::where([['created_by', $user->username]])
+			->where('type', "MACD")
+            ->whereBetween('created_at', [$end, $start])
+			->orderby('created_at', 'desc')
             ->get();
 
         //return "HERE ".$did;

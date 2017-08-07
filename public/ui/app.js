@@ -242,6 +242,18 @@
                 controller: 'phoneManagerCreate.Controller',
                 controllerAs: 'vm'
             })
+			.state('mymacds', {
+                url: '/mymacds/week',
+                templateUrl: 'cucm-phone-manager/macd-reports/my-macd-weekly-report.html',
+                controller: 'MyMacdWeekly.Controller',
+                controllerAs: 'vm'
+            })
+			.state('macds', {
+                url: '/macds/week',
+                templateUrl: 'siteplanning/site.html',
+                controller: 'Site.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('macdsummary', {
                 url: '/macd/jobsummary/{id}',
                 templateUrl: 'cucm-phone-manager/macd-job-summary.html',

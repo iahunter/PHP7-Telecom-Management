@@ -5,7 +5,7 @@ angular
 		// Service for Phone MACDs. 
 		var self = {};
 
-		// Get Site Summary
+		// Get all MACD Parents and children for the week
 		self.list_macds_week = function() {
 			var defer = $q.defer();
 			return $http.get('../api/cucm/macd/list/week')
@@ -20,11 +20,41 @@ angular
 					return defer.promise;
 			  });
 		}
+		// Get all MACD Parents for the week
+		self.list_macds_week = function() {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/macd/parentlist/week')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
 		
-		// Get Dids by Block ID
+		// Get all MACDs Parents and Children for the week for user
 		self.list_macds_week_by_user = function(name) {
 			var defer = $q.defer();
 			return $http.get('../api/cucm/macd/list/week/user')
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
+		
+		// Get  MACD Parents for the week for user
+		self.list_my_macd_parents_for_week = function(name) {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/macd/parentlist/week/user')
 				.then(function successCallback(response) {
 					defer.resolve(response);
 					// Must return the promise to the controller. 

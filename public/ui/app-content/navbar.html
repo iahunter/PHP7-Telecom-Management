@@ -62,6 +62,7 @@
 				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Site Management</a>
 				  <ul class="dropdown-menu">
 					<li><a href="#/reports/site-trunking-911-report"  ng-show="vm.permissions.read.Cucmsiteconfigs == true">List Sites</a></li>
+					<li><a href="#/mymacds/week"  ng-show="vm.permissions.read.PhoneMACD == true || vm.permissions.read.Cucmclass == true" >My 7 day MACD Report</a></li>
 					
 					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
 					<!--

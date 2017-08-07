@@ -3851,12 +3851,54 @@
                 }
             }
         },
+        "/telephony/api/cucm/macd/parentlist/week/user": {
+            "get": {
+                "tags": [
+                    "Management - Cisco Voice - MACD"
+                ],
+                "summary": "List of Phone MACDs Parents created by authorized user",
+                "description": "",
+                "operationId": "listMyMacds",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/macd/list/week": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
                 ],
                 "summary": "List of Phone MACDs for last week.",
+                "description": "",
+                "operationId": "listMyMacds",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/macd/parentlist/week": {
+            "get": {
+                "tags": [
+                    "Management - Cisco Voice - MACD"
+                ],
+                "summary": "List of Phone MACDs Parents for last week.",
                 "description": "",
                 "operationId": "listMyMacds",
                 "consumes": [

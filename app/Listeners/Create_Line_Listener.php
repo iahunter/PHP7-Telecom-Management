@@ -4,8 +4,8 @@ namespace App\Listeners;
 
 use App\Cucmclass;
 use App\PhoneMACD;
-use App\Events\Create_Phone_Event;
 use App\Events\Create_Line_Event;
+use App\Events\Create_Phone_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -81,21 +81,20 @@ class Create_Line_Listener implements ShouldQueue
             // Fail the Job
             throw new \Exception($e->getMessage());
         }
-		
-		// After line is built. Go ahead and trigger a build phone event. 
-		
-		// Build Phone
-		
-			$task = PhoneMACD::find($event->taskid);
-			
-			$task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $task->parent, 'status' => 'job recieved', 'created_by' => $task->created_by]);
-			$tasks[] = $task;
-			
-			$data['taskid'] = $task->id;
-			$data['phone'] = $event->phone;
 
-			// Testing of Events Controller
-			event(new Create_Phone_Event($data));
-		
+        // After line is built. Go ahead and trigger a build phone event.
+
+        // Build Phone
+
+            $task = PhoneMACD::find($event->taskid);
+
+        $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $task->parent, 'status' => 'job recieved', 'created_by' => $task->created_by]);
+        $tasks[] = $task;
+
+        $data['taskid'] = $task->id;
+        $data['phone'] = $event->phone;
+
+            // Testing of Events Controller
+            event(new Create_Phone_Event($data));
     }
 }

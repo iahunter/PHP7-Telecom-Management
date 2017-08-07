@@ -64,7 +64,6 @@ class Create_Phone_Listener implements ShouldQueue
                                                 $VOICEMAIL
                                             );
 
-			
             // Update task to completed.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
             $task->save();

@@ -75,8 +75,8 @@ class Cucmclass extends Model
                                     ];
         }
     }
-	
-	public static function add_cucm_line    (
+
+    public static function add_cucm_line(
                                                 $SITE,
                                                 $DEVICE,
                                                 $NAME,
@@ -88,8 +88,6 @@ class Cucmclass extends Model
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             ) {
-
-
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
         // 30 is max, off-by-1 is 29, space-dash-space is 3, shortdn length could be 4-10
@@ -98,14 +96,13 @@ class Cucmclass extends Model
         $DESCRIPTION = substr($FULLNAME, 0, 45 - strlen($SHORTDN)).' - '.$SHORTDN;
         //$DESCRIPTION = $FULLNAME . " - " . $SHORTDN;
 
-
         if (isset($USERNAME)) {
             if (! $USERNAME) {
                 $USERNAME = 'CallManager.Unassign';
             }
         }
 
-		$VOICEMAILPROFILE = 'Default';
+        $VOICEMAILPROFILE = 'Default';
 
         $LINECSS = 'CSS_LINEONLY_L4_INTL';
 
@@ -129,7 +126,6 @@ class Cucmclass extends Model
                                                         'active'                      => 'true',
                                                         'advertiseGloballyIls'        => 'true',
                                                     ],
-
 
                     'callForwardAll'               => [
                                                         'forwardToVoiceMail'        => 'false',
@@ -194,42 +190,35 @@ class Cucmclass extends Model
                                                     ],
                             ];
 
-						
-		
-		// Construct new cucm object
+        // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
 
+        $TYPE = 'Line';
 
-		
-		$TYPE = 'Line';
-		
-		try {
-            
-			$REPLY = $cucm->add_object_type_by_assoc($PHONELINE, $TYPE);
-			
-        } catch (\Exception $E) {
-			$EXCEPTION = "{$E->getMessage()}";
-			//return $EXCEPTION;
-			throw new \Exception($E->getMessage());
-        }
-
-		try {
-            $REPLY = $cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, $TYPE);
-			
+        try {
+            $REPLY = $cucm->add_object_type_by_assoc($PHONELINE, $TYPE);
         } catch (\Exception $E) {
             $EXCEPTION = "{$E->getMessage()}";
             //return $EXCEPTION;
-			throw new \Exception($E->getMessage());
+            throw new \Exception($E->getMessage());
         }
-		
+
+        try {
+            $REPLY = $cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, $TYPE);
+        } catch (\Exception $E) {
+            $EXCEPTION = "{$E->getMessage()}";
+            //return $EXCEPTION;
+            throw new \Exception($E->getMessage());
+        }
+
         return json_decode(json_encode($REPLY), true);
     }
-	
-	public static function add_cucm_phone(
+
+    public static function add_cucm_phone(
                                                 $SITE,
                                                 $DEVICE,
                                                 $NAME,
@@ -241,8 +230,6 @@ class Cucmclass extends Model
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             ) {
-
-
         $NAME = strtoupper($NAME);
 
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
@@ -328,14 +315,13 @@ class Cucmclass extends Model
                                     ],
             ];
 
-			
-		// Construct new cucm object
+        // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-													
+
         // Check to make sure the site has the new Css built or failback to the old one.
 
         try {
@@ -346,7 +332,6 @@ class Cucmclass extends Model
             //dd($e->getTrace());
         }
 
-		
         if ($sitecss) {
             if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
                 $PHONE['callingSearchSpaceName'] = "CSS_{$SITE}";
@@ -369,23 +354,18 @@ class Cucmclass extends Model
             $PHONE['useDevicePoolCgpnTransformCss'] = 'false';
         }
 
+        $TYPE = 'Phone';
 
-		$TYPE = 'Phone';
-		
-		try {
-            
-			$REPLY = $cucm->add_object_type_by_assoc($PHONE, $TYPE);
-			
+        try {
+            $REPLY = $cucm->add_object_type_by_assoc($PHONE, $TYPE);
         } catch (\Exception $E) {
-			$EXCEPTION = "{$E->getMessage()}";
-			//return $EXCEPTION;
-			
-			throw new \Exception($E->getMessage());
+            $EXCEPTION = "{$E->getMessage()}";
+            //return $EXCEPTION;
+
+            throw new \Exception($E->getMessage());
         }
 
-		
         return json_decode(json_encode($REPLY), true);
-
     }
 
     public static function provision_cucm_phone_axl(

@@ -303,8 +303,11 @@ angular
 							if(result){
 								vm.linedetails = result;
 								
-								vm.line_number = vm.linedetails.line_details.pattern
-								console.log(vm.line_number)
+								if(vm.linedetails.line_details.pattern){
+									vm.line_number = vm.linedetails.line_details.pattern
+									console.log(vm.line_number)
+								}
+								
 							}
 							
 

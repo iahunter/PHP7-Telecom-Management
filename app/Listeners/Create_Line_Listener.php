@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Cucmclass;
 use App\PhoneMACD;
+use App\Events\Create_Phone_Event;
 use App\Events\Create_Line_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,7 +29,7 @@ class Create_Line_Listener implements ShouldQueue
     public function handle(Create_Line_Event $event)
     {
         // Create Log Entry
-        \Log::info('createPhoneListener', ['data' => $event->phone]);
+        \Log::info('createLineListener', ['data' => $event->phone]);
 
         // Get the Task ID
         $task = PhoneMACD::find($event->taskid);
@@ -69,16 +70,32 @@ class Create_Line_Listener implements ShouldQueue
             $task->save();
 
             // Create Log Entry
-            \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
+            \Log::info('createLineListener', ['created_by' => $CREATEDBY, 'status' => 'complete', 'log' => $LOG]);
         } catch (\Exception $e) {
             // Update the status with exception info.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'error', 'json' => $e->getMessage()]);
             $task->save();
 
-            \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $e->getMessage()]);
+            \Log::info('createLineListener', ['created_by' => $CREATEDBY, 'status' => 'error', 'log' => $e->getMessage()]);
 
             // Fail the Job
             throw new \Exception($e->getMessage());
         }
+		
+		// After line is built. Go ahead and trigger a build phone event. 
+		
+		// Build Phone
+		
+			$task = PhoneMACD::find($event->taskid);
+			
+			$task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $task->parent, 'status' => 'job recieved', 'created_by' => $task->created_by]);
+			$tasks[] = $task;
+			
+			$data['taskid'] = $task->id;
+			$data['phone'] = $event->phone;
+
+			// Testing of Events Controller
+			event(new Create_Phone_Event($data));
+		
     }
 }

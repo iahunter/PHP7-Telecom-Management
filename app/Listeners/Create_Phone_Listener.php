@@ -51,7 +51,7 @@ class Create_Phone_Listener implements ShouldQueue
         $CREATEDBY = $task->created_by;
 
         try {
-            $LOG = Cucmclass::provision_cucm_phone_axl(
+            $LOG = Cucmclass::add_cucm_phone(
                                                 $SITE,
                                                 $DEVICE,
                                                 $NAME,
@@ -64,6 +64,7 @@ class Create_Phone_Listener implements ShouldQueue
                                                 $VOICEMAIL
                                             );
 
+			
             // Update task to completed.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
             $task->save();
@@ -75,7 +76,7 @@ class Create_Phone_Listener implements ShouldQueue
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'error', 'json' => $e->getMessage()]);
             $task->save();
 
-            \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'log' => $e->getMessage()]);
+            \Log::info('createPhoneListener', ['created_by' => $CREATEDBY, 'status' => 'error', 'log' => $e->getMessage()]);
 
             // Fail the Job
             throw new \Exception($e->getMessage());

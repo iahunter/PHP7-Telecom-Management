@@ -114,13 +114,14 @@
 		</div>
 
 		<div style="margin:25px"></div>
+
 		
 		<div class="col-md-12 col-sm-12 col-lg-12">
-			<div class="btn-group" role="group" aria-label="test">
+			
 				<a href="#phone/{{vm.phone.name}}"><button type="button" class="btn btn-primary btn-sm" ng-if="vm.phone">View Phone</button></a>
 				<a href="#line/{{vm.line_number}}"><button type="button" class="btn btn-primary btn-sm" ng-if="vm.line_number">View Line</button></a>
-				
-			</div>
+				<button ng-if="vm.unity_mailbox_extension_inuse" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exting-extension-mailbox-modal">View Mailbox</button>
+
 		</div>
 		
 		

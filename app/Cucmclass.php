@@ -105,10 +105,8 @@ class Cucmclass extends Model
             }
         }
 
-		if($VOICEMAIL){
-			$VOICEMAILPROFILE = 'Default';
-		}
-        
+		$VOICEMAILPROFILE = 'Default';
+
         $LINECSS = 'CSS_LINEONLY_L4_INTL';
 
         $PHONELINE = [
@@ -215,7 +213,8 @@ class Cucmclass extends Model
 			
         } catch (\Exception $E) {
 			$EXCEPTION = "{$E->getMessage()}";
-			return $EXCEPTION;
+			//return $EXCEPTION;
+			throw new \Exception($E->getMessage());
         }
 
 		try {
@@ -223,7 +222,8 @@ class Cucmclass extends Model
 			
         } catch (\Exception $E) {
             $EXCEPTION = "{$E->getMessage()}";
-            return $EXCEPTION;
+            //return $EXCEPTION;
+			throw new \Exception($E->getMessage());
         }
 		
         return json_decode(json_encode($REPLY), true);
@@ -328,6 +328,14 @@ class Cucmclass extends Model
                                     ],
             ];
 
+			
+		// Construct new cucm object
+        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+													
         // Check to make sure the site has the new Css built or failback to the old one.
 
         try {
@@ -338,6 +346,7 @@ class Cucmclass extends Model
             //dd($e->getTrace());
         }
 
+		
         if ($sitecss) {
             if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
                 $PHONE['callingSearchSpaceName'] = "CSS_{$SITE}";
@@ -360,15 +369,7 @@ class Cucmclass extends Model
             $PHONE['useDevicePoolCgpnTransformCss'] = 'false';
         }
 
-		// Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
 
-
-		
 		$TYPE = 'Phone';
 		
 		try {
@@ -377,7 +378,9 @@ class Cucmclass extends Model
 			
         } catch (\Exception $E) {
 			$EXCEPTION = "{$E->getMessage()}";
-			return $EXCEPTION;
+			//return $EXCEPTION;
+			
+			throw new \Exception($E->getMessage());
         }
 
 		

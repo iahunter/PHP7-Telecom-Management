@@ -6,8 +6,11 @@ namespace App\Http\Controllers;
 use App\Cucmclass;
 use App\PhoneMACD;
 use Illuminate\Http\Request;
-use App\Events\Create_Phone_Event;
+
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use App\Events\Create_Phone_Event;
+use App\Events\Create_Line_Event;
 use App\Events\Create_AD_IPPhone_Event;
 use App\Events\Create_UnityConnection_Mailbox_Event;
 use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
@@ -44,16 +47,28 @@ class PhoneMACDController extends Controller
             // Testing of Events Controller
             event(new Create_AD_IPPhone_Event($data));
         }
-
-        // Build Phone
-        if (isset($phone['name']) && $phone['name']) {
-            $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
+		
+		// Build new line first and then chain to add the phone if a new line is required. 
+		if(isset($phone['usenumber']) && $phone['usenumber'] == 'new') {
+			$task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
             $tasks[] = $task;
             $data['taskid'] = $task->id;
 
             // Testing of Events Controller
-            event(new Create_Phone_Event($data));
-        }
+            event(new Create_Line_Event($data));
+        }else{
+			// Build Phone
+			if (isset($phone['name']) && $phone['name']) {
+				$task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
+				$tasks[] = $task;
+				$data['taskid'] = $task->id;
+
+				// Testing of Events Controller
+				event(new Create_Phone_Event($data));
+			}
+		}
+
+        
 
         // Build Voicemail Box
         if (isset($phone['voicemail'])) {

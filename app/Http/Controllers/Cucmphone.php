@@ -480,7 +480,7 @@ class Cucmphone extends Cucm
             return response()->json($response);
         }
 		
-		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
+		
 		
         // Final user information required to provision phone:
         $result = Cucmclass::add_cucm_phone(
@@ -495,6 +495,9 @@ class Cucmphone extends Cucm
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             );
+											
+		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');									
+											
         $response = [
             'status_code'    => 200,
             'success'        => true,
@@ -602,7 +605,7 @@ class Cucmphone extends Cucm
                         'response'       => $result,
                         ];
 
-            activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
+            
 
             return response()->json($response);
         }
@@ -626,6 +629,9 @@ class Cucmphone extends Cucm
                                                 $LANGUAGE,
                                                 $VOICEMAIL
                                             );
+											
+		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
+		
         $response = [
             'status_code'    => 200,
             'success'        => true,

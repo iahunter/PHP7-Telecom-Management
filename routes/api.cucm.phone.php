@@ -153,8 +153,8 @@
      * )
      **/
     $api->post('cucm/phone_and_line', 'App\Http\Controllers\Cucmphone@createPhoneandLine');
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/phone",
      *     tags={"Management - CUCM - Phone Provisioning"},
@@ -254,8 +254,8 @@
      * )
      **/
     $api->post('cucm/phone', 'App\Http\Controllers\Cucmphone@createPhone');
-	
-	    /**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/line",
      *     tags={"Management - CUCM - Phone Provisioning"},

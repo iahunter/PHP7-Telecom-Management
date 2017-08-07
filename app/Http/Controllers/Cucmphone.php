@@ -253,8 +253,8 @@ class Cucmphone extends Cucm
 
         return $response;
     }
-	
-	// Create New Phone
+
+    // Create New Phone
     public function createPhoneandLine(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -396,7 +396,7 @@ class Cucmphone extends Cucm
 
         // Check if device is Set
         if (! isset($request->device) || ! $request->device) {
-             throw new \Exception('Error, no device set');
+            throw new \Exception('Error, no device set');
         }
         $DEVICE = $request->device;
 
@@ -408,13 +408,13 @@ class Cucmphone extends Cucm
 
         // Check if firstname is Set
         if (! isset($request->firstname) || ! $request->firstname) {
-             throw new \Exception('Error, no firstname set');
+            throw new \Exception('Error, no firstname set');
         }
         $FIRSTNAME = $request->firstname;
 
         // Check if lastname is Set
         if (! isset($request->lastname) || ! $request->lastname) {
-             throw new \Exception('Error, no lastname set');
+            throw new \Exception('Error, no lastname set');
         }
         $LASTNAME = $request->lastname;
 
@@ -428,13 +428,13 @@ class Cucmphone extends Cucm
 
         // Check if dn is Set
         if (! isset($request->dn) || ! $request->dn) {
-             throw new \Exception('Error, no dn set');
+            throw new \Exception('Error, no dn set');
         }
         $DN = $request->dn;
 
         // Check if extlength is Set
         if (! isset($request->extlength) || ! $request->extlength) {
-             throw new \Exception('Error, no extlength set');
+            throw new \Exception('Error, no extlength set');
         }
         $EXTENSIONLENGTH = $request->extlength;
 
@@ -447,7 +447,7 @@ class Cucmphone extends Cucm
 
         // Check if voicemail is Set
         if (! isset($request->voicemail) || ! $request->voicemail) {
-             throw new \Exception('Error, no voicemail set');
+            throw new \Exception('Error, no voicemail set');
         }
         $VOICEMAIL = $request->voicemail;
 
@@ -455,9 +455,9 @@ class Cucmphone extends Cucm
         if (isset($request->notes) && $request->notes) {
             $NOTES = $request->notes;
         }
-		
-		$request = $request->all();
-		unset($request['token']);
+
+        $request = $request->all();
+        unset($request['token']);
 
         if ((isset($errors)) && ! empty($errors)) {
             $result = [
@@ -475,13 +475,11 @@ class Cucmphone extends Cucm
                         'response'       => $result,
                         ];
 
-           
-
             return response()->json($response);
         }
-		
-		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
-		
+
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
+
         // Final user information required to provision phone:
         $result = Cucmclass::add_cucm_phone(
                                                 $SITE,
@@ -504,8 +502,8 @@ class Cucmphone extends Cucm
 
         return response()->json($response);
     }
-	
-	// Create New Phone
+
+    // Create New Phone
     public function createLine(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -583,8 +581,8 @@ class Cucmphone extends Cucm
         if (isset($request->notes) && $request->notes) {
             $NOTES = $request->notes;
         }
-		
-		unset($request['token']);
+
+        unset($request['token']);
 
         if ((isset($errors)) && ! empty($errors)) {
             $result['Phone'] = [
@@ -606,13 +604,12 @@ class Cucmphone extends Cucm
 
             return response()->json($response);
         }
-		
-		$request = $request->all();
+
+        $request = $request->all();
 
         // Clear the token, we don't want to save that data.
         unset($request['token']);
-		
-		
+
         // Final user information required to provision phone:
         $result = Cucmclass::add_cucm_line(
                                                 $SITE,
@@ -627,11 +624,11 @@ class Cucmphone extends Cucm
                                                 $VOICEMAIL
                                             );
         $response = [
-            'status_code'    => 200,
-            'success'        => true,
-            'message'        => '',
-			'request'		 => $request,
-            'response'       => $result,
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+            'request'         => $request,
+            'response'        => $result,
             ];
 
         return response()->json($response);

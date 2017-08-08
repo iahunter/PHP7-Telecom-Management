@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\CallManager;
 
-use App\Didblock;
 use App\Did;
+use App\Didblock;
 use Illuminate\Console\Command;
 
 class CucmNumberCleanup extends Command
@@ -41,36 +41,32 @@ class CucmNumberCleanup extends Command
     {
         $didblocks = \App\Didblock::where([['country_code', '=', 1]])->get();
 
-		$possible_deletes = [];
-		foreach($didblocks as $didblock){
-			
-			 // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
-			if (\App\Did::where([['parent', '=', $didblock->id]])->count()) {
-				$dids = \App\Did::where([['parent', '=', $didblock->id]])->get();
-				
-				$dids = json_decode(json_encode($dids, true));
-				
-				foreach ($dids as $did) {
-					if ($did->status == 'inuse') {
-						// Check if this number has any assigned devices... Need to move this functionality to its own command and schedule.
-						$did = (array) $did;
-						//print_r($did);
-						foreach ($did['assignments'] as $entry) {
-							$entry = (array) $entry;
-							if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
-								//print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
-								$possible_deletes[$didblock->id][$entry['uuid']] = $entry['dnOrPattern'];
-							}
-						}
-					}
-				}
+        $possible_deletes = [];
+        foreach ($didblocks as $didblock) {
 
-				
-			}
-			
-		}
-		
-		print_r($possible_deletes);
-		
+             // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
+            if (\App\Did::where([['parent', '=', $didblock->id]])->count()) {
+                $dids = \App\Did::where([['parent', '=', $didblock->id]])->get();
+
+                $dids = json_decode(json_encode($dids, true));
+
+                foreach ($dids as $did) {
+                    if ($did->status == 'inuse') {
+                        // Check if this number has any assigned devices... Need to move this functionality to its own command and schedule.
+                        $did = (array) $did;
+                        //print_r($did);
+                        foreach ($did['assignments'] as $entry) {
+                            $entry = (array) $entry;
+                            if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
+                                //print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
+                                $possible_deletes[$didblock->id][$entry['uuid']] = $entry['dnOrPattern'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        print_r($possible_deletes);
     }
 }

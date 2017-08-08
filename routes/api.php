@@ -46,13 +46,16 @@ $api->version('v1', function ($api) {
     // Site Migraiton Routes
     require __DIR__.'/api.migration.site.php';
 
-    // CUCM routes
+    // CUCM AXL Routes
     require __DIR__.'/api.cucm.php';
     require __DIR__.'/api.cucm.site.php';
     require __DIR__.'/api.cucm.phone.php';
     require __DIR__.'/api.cucm.ctiroutepoint.php';
     require __DIR__.'/api.cucm.line.php';
     require __DIR__.'/api.cucm.site.migration.php';
+	
+	// CUCM Realtime API Routes
+	require __DIR__.'/api.cucm.ris.php';
 
     // Phone MACD Routes
     require __DIR__.'/api.phonemacd.php';

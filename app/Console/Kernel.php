@@ -14,10 +14,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
-        Commands\DidScan\Callmanager::class,
         Commands\CallManager\Ldapsync::class,
         Commands\CallManager\CucmSiteScan::class,
         Commands\CallManager\CucmPhoneScan::class,
+		Commands\CallManager\DidScanCucm::class,
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
         Commands\Sonus\GetSonusCDRs::class,

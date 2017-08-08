@@ -26,8 +26,8 @@ class CucmRealTime extends Model
                         ]),
                     'connection_timeout'    => 10,
                     'location'              => env('CALLMANAGER_RISDB_URL').':8443/realtimeservice/services/RisPort',
-                    'login'                 => env('CALLMANAGER_USER'),
-                    'password'              => env('CALLMANAGER_PASS'),
+                    'login'                 => env('CALLMANAGER_RISDB_USER'),
+                    'password'              => env('CALLMANAGER_RISDB_PASS'),
                    ];
 
         $this->SOAPCLIENT = new \SoapClient($SCHEMA, $OPTIONS);

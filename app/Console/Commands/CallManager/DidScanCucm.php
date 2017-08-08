@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Console\Commands\DidScan;
+namespace App\Console\Commands\CallManager;
 
 use DB;
 use App\Did;
 use App\Didblock;
 use Illuminate\Console\Command;
 
-class Callmanager extends Command
+class DidScanCucm extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'didscan:callmanager';
+    protected $signature = 'callmanager:didscan';
 
     /**
      * The console command description.

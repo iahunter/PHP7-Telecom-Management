@@ -107,7 +107,7 @@
 								</td>
 								-->
 								<td>{{ phone.id}}</td>
-								<td>{{ phone.name}}</td>
+								<td><a href="#/phone/{{ phone.name}}"><b>{{ phone.name}}</b></a></td>
 								<td>{{ phone.description}}</td>
 								<td>{{ phone.model}}</td>
 								<td>{{ phone.devicepool}}</td>
@@ -124,7 +124,7 @@
 												<td><i>Call Forwarding</i></td>
 												-->
 												<tr ng-repeat="line in phone.lines">
-													<td ng-if="line.pattern != ''">{{line.pattern}}</td>
+													<td ng-if="line.pattern != ''"><a href="#/line/{{ line.pattern}}"><b>{{line.pattern}}</b></a></td>
 													<td ng-if="line.description != ''">{{line.description}}</td>
 													<td ng-if="line.css != ''">{{line.css}}</td>
 													<td ng-if="line.callForwardAll.destination != ''" style="color:red">Forwarded to: {{line.callForwardAll.destination}}</td>

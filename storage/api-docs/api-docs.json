@@ -702,6 +702,36 @@
                 }
             }
         },
+        "/telephony/api/cucm/line/{uuid}": {
+            "delete": {
+                "tags": [
+                    "Management - CUCM - Line Provisioning"
+                ],
+                "summary": "Remove Line by UUID",
+                "description": "",
+                "operationId": "deleteLine",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of Line to Delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/phone/{name}": {
             "get": {
                 "tags": [

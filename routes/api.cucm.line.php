@@ -115,3 +115,28 @@
      * )
      **/
     $api->put('cucm/line', 'App\Http\Controllers\CucmLine@updateLine');
+	
+	 /**
+     * @SWG\Delete(
+     *     path="/telephony/api/cucm/line/{uuid}",
+     *     tags={"Management - CUCM - Line Provisioning"},
+     *     summary="Remove Line by UUID",
+     *     description="",
+     *     operationId="deleteLine",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         description="UUID of Line to Delete",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->delete('cucm/line/{uuid}', 'App\Http\Controllers\CucmLine@delete_line_by_uuid');

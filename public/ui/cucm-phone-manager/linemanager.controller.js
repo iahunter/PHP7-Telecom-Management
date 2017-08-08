@@ -175,30 +175,9 @@ angular
 			}
 		}
 		
-		vm.deletephone = function(phone){
-			if(phone){
-				console.log("Deleting Phone")
-				console.log(phone)
-				var phonename = angular.copy(phone)
-				console.log(phonename)
-				
-				cucmService.deletephone(phone)
-					.then(function(res){
-						result = res.data.response;
-						
-						if(result){
-							vm.phone = ""
-							vm.checkphoneusage(phonename)
-							console.log(phonename)
-						}
-
-					}, function(err){
-						// Error
-					});
-			}
-		}
 		
 		vm.checklineusage = function(line){
+			
 			
 			if(line){
 				vm.lineinvalid = true
@@ -236,7 +215,7 @@ angular
 											//console.log("Hitting blank route details")
 											//blankline = true;
 											vm.nodevices = true;
-											//vm.linesummary = result;
+											console.log(vm.nodevices)
 											
 										}
 										
@@ -260,6 +239,7 @@ angular
 							// Error
 						});
 					
+					
 					cucmService.getNumberandDeviceDetailsbyRoutePlan(line)
 						.then(function(res){
 							user = [];
@@ -275,13 +255,23 @@ angular
 							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 							if(result){
 								vm.linedetails = result;
-								//console.log(vm.linedetails)
+
+								if(vm.linedetails.line_details){
+
+									if(vm.linedetails.line_details.callForwardAll.destination == ""){
+										console.log("No Call Forward Active")
+										//console.log(vm.linedetails.line_details.callForwardAll)
+										vm.noCallForwardAll = true;
+									}
+								}
 							}
 							
+							//console.log(vm.noCallForwardAll)
 
 						}, function(err){
 							// Error
 						});
+
 				}
 				
 			}
@@ -299,6 +289,29 @@ angular
 			  //vm.cucmphoneselecttouched();
 			});
 		  };
+		  
+		
+		vm.deletecucmline = function(uuid) {
+			console.log("Deleting UUID: " + vm.linedetails.uuid)
+			cucmService.deletelinebyuuid(uuid)
+				.then(function(res) {
+					
+					
+					if(res.data.response.deleted){
+						if(res.data.response.old.pattern){
+							line = res.data.response.old.pattern
+							console.log(uuid + " Successfully Deleted")
+							
+							vm.checklineusage(vm.line)
+						}
+
+					}
+					//console.log(res)
+			  }, function(error) {
+					alert('An error occurred');
+			  });
+			
+		}
 		  
 		
 		vm.deletecucmphone = function(phone) {
@@ -329,7 +342,7 @@ angular
 			});
 			
 			$timeout(function(){
-				vm.checklineusage(vm.deviceForm.dn)
+				vm.checklineusage(vm.line)
 			}, 2000);
 				
 		}

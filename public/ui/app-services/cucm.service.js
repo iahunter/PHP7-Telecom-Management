@@ -138,6 +138,22 @@ angular
 					return defer.promise;
 			});
 		}
+		
+		// Delete Line by UUID
+		self.deletelinebyuuid = function(uuid) {
+			var defer = $q.defer();
+			console.log('Service - Deleting ID: '+ uuid);
+			return $http.delete('../api/cucm/line/'+uuid, uuid)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
 
 
 		

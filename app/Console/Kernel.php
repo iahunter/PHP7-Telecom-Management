@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmSiteScan::class,
         Commands\CallManager\CucmPhoneScan::class,
         Commands\CallManager\DidScanCucm::class,
-		Commands\CallManager\CucmNumberCleanup::class,
+        Commands\CallManager\CucmNumberCleanup::class,
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
         Commands\Sonus\GetSonusCDRs::class,

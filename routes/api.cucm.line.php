@@ -115,8 +115,8 @@
      * )
      **/
     $api->put('cucm/line', 'App\Http\Controllers\CucmLine@updateLine');
-	
-	 /**
+
+    /**
      * @SWG\Delete(
      *     path="/telephony/api/cucm/line/{uuid}",
      *     tags={"Management - CUCM - Line Provisioning"},

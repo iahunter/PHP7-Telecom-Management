@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 // Add Dummy CUCM class for permissions use for now.
-use App\PhoneMACD;
 use App\Cucmclass;
+use App\PhoneMACD;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -346,61 +346,52 @@ class CucmLine extends Cucm
 
         return response()->json($LOG);
     }
-	
-	public function delete_line_by_uuid(Request $request){
-		
-		$user = JWTAuth::parseToken()->authenticate();
+
+    public function delete_line_by_uuid(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('delete', Cucmclass::class)) {
             if (! $user->can('delete', PhoneMACD::class)) {
-				abort(401, 'You are not authorized');
-			}
+                abort(401, 'You are not authorized');
+            }
         }
-		
-		
-		
-		$UUID = $request->uuid;
-		$TYPE = 'Line';
-		
-		$REPLY = [];
-		
-		try {
-			
-            $LINE = $this->cucm->get_object_type_by_uuid($UUID, $TYPE);
-			$REPLY['old'] = $LINE;
-			
-			
-			// If Call Forwarding is active we don't want MACD folks to be able to delete. You need to have all permissions in order to do that. 
-			if($LINE['callForwardAll']['destination'] != ""){
-				
-				if (! $user->can('delete', Cucmclass::class)) {
-					abort(401, "Call Forward settings are enabled. You do not have permissions to delete this Line.");
-				}
-			}
-			
-        } catch (\Exception $e) {
-            return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-        }
-		
-		
-		try {
-			
-            $DELETE = $this->cucm->delete_object_type_by_uuid($UUID, $TYPE);
-			$REPLY['deleted'] = $DELETE;
-			
-        } catch (\Exception $e) {
-            return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-        }
-		
-		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'delete' => $LINE])->log('delete line');
 
-		$response = [
+        $UUID = $request->uuid;
+        $TYPE = 'Line';
+
+        $REPLY = [];
+
+        try {
+            $LINE = $this->cucm->get_object_type_by_uuid($UUID, $TYPE);
+            $REPLY['old'] = $LINE;
+
+            // If Call Forwarding is active we don't want MACD folks to be able to delete. You need to have all permissions in order to do that.
+            if ($LINE['callForwardAll']['destination'] != '') {
+                if (! $user->can('delete', Cucmclass::class)) {
+                    abort(401, 'Call Forward settings are enabled. You do not have permissions to delete this Line.');
+                }
+            }
+        } catch (\Exception $e) {
+            return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+        }
+
+        try {
+            $DELETE = $this->cucm->delete_object_type_by_uuid($UUID, $TYPE);
+            $REPLY['deleted'] = $DELETE;
+        } catch (\Exception $e) {
+            return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+        }
+
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'delete' => $LINE])->log('delete line');
+
+        $response = [
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
                     'response'       => $REPLY,
                     ];
-		
-		 return response()->json($response);
-	}
+
+        return response()->json($response);
+    }
 }

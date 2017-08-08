@@ -8,16 +8,10 @@
 	<div class="well">
 	<legend><h3>My Last 7 days MACDs</h3></legend>
 		
-		<div class="input-group col-md-3 ">
-			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
-			<div class="input-group-btn">
-				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
-			</div>
-		</div>
-		
 		
 
 		<div style="margin:25px"></div>
+
 		
 		
 		<!-- Loading -->
@@ -38,6 +32,13 @@
 
 		
 		<div ng-if="vm.logs">
+		
+			<div class="input-group col-md-3 ">
+				<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+				<div class="input-group-btn">
+					<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+				</div>
+			</div>
 		
 			<b>Found {{vm.logs.length}} Logs</b>
 			<b class="pull-right">{{vm.datetime}}</b>

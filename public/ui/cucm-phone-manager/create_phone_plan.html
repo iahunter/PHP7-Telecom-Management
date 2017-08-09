@@ -19,6 +19,29 @@
 
 					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
 					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
+						
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.sitecode.$touched && addDeviceForm.sitecode.$invalid, 'has-success': addDeviceForm.sitecode.$touched && addDeviceForm.sitecode.$valid }">
+									<label for="sitecode" class="control-label">Sitecode</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+											
+											<input type="text" readonly ng-model='vm.deviceForm.sitecode' class="form-control" data-width="100%" name="model">
+										</div>
+										<div ng-messages="addDeviceForm.sitecode.$dirty && addDeviceForm.sitecode.$error">
+												<div ng-message='required'> sitecode is required </div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						
+						<hr>
+						
 						<div class="row">
 							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 								<div class="form-group" ng-class="{'has-error': addDeviceForm.device.$touched && addDeviceForm.device.$invalid, 'has-success': addDeviceForm.device.$touched && addDeviceForm.device.$valid }">

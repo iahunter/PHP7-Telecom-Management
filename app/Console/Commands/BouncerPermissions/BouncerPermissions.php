@@ -39,26 +39,21 @@ class BouncerPermissions extends Command
      */
     public function handle()
     {
-		// We may in the future want to track these in a database so that groups can be added to roles  
-		
-		
-		// Assign roles to each of the following groups. 
-		$this->assignAdminGroupBouncerRoles(env('ADMIN_GRP'));
-		$this->assignExecGroupBouncerRoles(env('EXECS_GRP'));
-		$this->assignServiceDeskBouncerRoles(env('SERVICEDESK_GRP'));
-		$this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));
-		
-    }
-	
-	
-	
-	protected function assignAdminGroupBouncerRoles($group)
-	{
-        // Assign Network Engineer to Admin.	
+        // We may in the future want to track these in a database so that groups can be added to roles
 
-		
+        // Assign roles to each of the following groups.
+        $this->assignAdminGroupBouncerRoles(env('ADMIN_GRP'));
+        $this->assignExecGroupBouncerRoles(env('EXECS_GRP'));
+        $this->assignServiceDeskBouncerRoles(env('SERVICEDESK_GRP'));
+        $this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));
+    }
+
+    protected function assignAdminGroupBouncerRoles($group)
+    {
+        // Assign Network Engineer to Admin.
+
         echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
-		
+
         $tasks = [
             'create',
             'read',
@@ -82,7 +77,7 @@ class BouncerPermissions extends Command
             App\TelecomInfrastructure::class,
             App\SiteMigration::class,
             App\Ping::class,
-			App\PhoneMACD::class,
+            App\PhoneMACD::class,
             \Spatie\Activitylog\Models\Activity::class, // Activity Log Permissions
         ];
 
@@ -93,14 +88,14 @@ class BouncerPermissions extends Command
         }
 
         echo 'Finished Assigning Permissions'.PHP_EOL;
-	}
-	
-	protected function assignExecGroupBouncerRoles($group)
-	{
-		// Assign permissions to execs for review of features. 
+    }
 
-		echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
-		
+    protected function assignExecGroupBouncerRoles($group)
+    {
+        // Assign permissions to execs for review of features.
+
+        echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
+
         $tasks = [
             'create',
             'read',
@@ -121,7 +116,7 @@ class BouncerPermissions extends Command
             App\Calls::class,
             App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
-			App\PhoneMACD::class,
+            App\PhoneMACD::class,
         ];
 
         foreach ($types as $type) {
@@ -129,16 +124,16 @@ class BouncerPermissions extends Command
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		echo 'Finished Assigning Permissions '. $group . PHP_EOL;
+
+        echo 'Finished Assigning Permissions '.$group.PHP_EOL;
     }
-	
-	protected function assignServiceDeskBouncerRoles($group)
+
+    protected function assignServiceDeskBouncerRoles($group)
     {
 
         // Assign groups who are only allowed to read and update names.
 
-		echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
+        echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
 
         $tasks = [
             'read',
@@ -157,7 +152,7 @@ class BouncerPermissions extends Command
             App\Cucmsiteconfigs::class,
             App\Cucmphoneconfigs::class,
             App\TelecomInfrastructure::class,
-			App\PhoneMACD::class,
+            App\PhoneMACD::class,
         ];
 
         foreach ($types as $type) {
@@ -177,7 +172,7 @@ class BouncerPermissions extends Command
             App\Phoneplan::class,
             App\Cucmclass::class,
             App\Cupi::class,
-			App\PhoneMACD::class,
+            App\PhoneMACD::class,
         ];
 
         foreach ($types as $type) {
@@ -193,7 +188,7 @@ class BouncerPermissions extends Command
         $types = [
             App\Phone::class,
             App\Phoneplan::class,
-			App\PhoneMACD::class,
+            App\PhoneMACD::class,
         ];
 
         foreach ($types as $type) {
@@ -201,13 +196,13 @@ class BouncerPermissions extends Command
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		$tasks = [
+
+        $tasks = [
             'delete',
         ];
 
         $types = [
-			App\PhoneMACD::class,
+            App\PhoneMACD::class,
         ];
 
         foreach ($types as $type) {
@@ -215,16 +210,16 @@ class BouncerPermissions extends Command
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		echo 'Finished Assigning Permissions '. $group . PHP_EOL;
+
+        echo 'Finished Assigning Permissions '.$group.PHP_EOL;
     }
-	
-	protected function assignFieldTechsBouncerRoles($group)
+
+    protected function assignFieldTechsBouncerRoles($group)
     {
 
         // Assign groups who are only allowed to read
-		
-		echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
+
+        echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
 
         $tasks = [
             'read',
@@ -236,7 +231,7 @@ class BouncerPermissions extends Command
             App\Phone::class,
             App\Phoneplan::class,
             App\Calls::class,
-			App\PhoneMACD::class,
+            App\PhoneMACD::class,
         ];
 
         foreach ($types as $type) {
@@ -244,7 +239,7 @@ class BouncerPermissions extends Command
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		echo 'Finished Assigning Permissions'.PHP_EOL;
+
+        echo 'Finished Assigning Permissions'.PHP_EOL;
     }
 }

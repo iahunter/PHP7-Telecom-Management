@@ -95,8 +95,8 @@ class CucmNumberCleanup extends Command
         $lines_with_cfa_active_count = 0;
         $lines_with_mailbox_built = [];
         $lines_with_mailbox_built_count = 0;
-		$lines_with_other_usages = [];
-		$lines_with_other_usages_count = 0;
+        $lines_with_other_usages = [];
+        $lines_with_other_usages_count = 0;
         foreach ($possible_deletes as $blockid => $line) {
             $didblock = \App\Didblock::find($blockid);
             $sitecode = $didblock->name;
@@ -140,45 +140,44 @@ class CucmNumberCleanup extends Command
                     // Check if CFA is set.
 
                     $line_summary = [
-                                        'uuid'                   => $linedetails['uuid'],
-                                        'pattern'                => $linedetails['pattern'],
-                                        'callForwardAll'         => $linedetails['callForwardAll']['destination'],
-                                        'description'            => $linedetails['description'],
-                                        'associatedDevices'      => $linedetails['associatedDevices'],
-                                        'mailbox'                => $mailbox,
-                                        'sitecode'               => $sitecode,
-										'usage'					 => $linedetails['usage'],
+                                        'uuid'                      => $linedetails['uuid'],
+                                        'pattern'                   => $linedetails['pattern'],
+                                        'callForwardAll'            => $linedetails['callForwardAll']['destination'],
+                                        'description'               => $linedetails['description'],
+                                        'associatedDevices'         => $linedetails['associatedDevices'],
+                                        'mailbox'                   => $mailbox,
+                                        'sitecode'                  => $sitecode,
+                                        'usage'                     => $linedetails['usage'],
                                         ];
 
-					// Only look at lines that are assigned a usage value of Device. 
-					if($linedetails['usage'] == "Device"){
-						if ($linedetails['callForwardAll']['destination'] == '') {
-							if (! $mailbox) {
-								$lines_to_delete[$linedetails['uuid']] = $line_summary;
-								$lines_to_delete_count++;
-								print_r($lines_to_delete[$linedetails['uuid']]);
-								echo "{$linedetails['pattern']} is Ready to Delete...".PHP_EOL;
+                    // Only look at lines that are assigned a usage value of Device.
+                    if ($linedetails['usage'] == 'Device') {
+                        if ($linedetails['callForwardAll']['destination'] == '') {
+                            if (! $mailbox) {
+                                $lines_to_delete[$linedetails['uuid']] = $line_summary;
+                                $lines_to_delete_count++;
+                                print_r($lines_to_delete[$linedetails['uuid']]);
+                                echo "{$linedetails['pattern']} is Ready to Delete...".PHP_EOL;
 
-								// Call Delete Function here...
-							}
-							if ($mailbox) {
-								$lines_with_mailbox_built[$linedetails['uuid']] = $line_summary;
-								$lines_with_mailbox_built_count++;
-								print_r($lines_with_mailbox_built[$linedetails['uuid']]);
-								echo "{$linedetails['pattern']} is has a mailbox built and cannot delete...".PHP_EOL;
-							}
-						} elseif ($linedetails['callForwardAll']['destination'] != '') {
-							$lines_with_cfa_active[$linedetails['uuid']] = $line_summary;
-							$lines_with_cfa_active_count++;
-							echo "{$linedetails['pattern']} is Forwarded to: {$linedetails['callForwardAll']['destination']}...".PHP_EOL;
-						} else {
-							echo "Something jacked up... {$uuid} {$number}".PHP_EOL;
-						}
-					}else{
-						$lines_with_other_usages[$linedetails['uuid']] = $line_summary;
-						$lines_with_other_usages_count++;
-					}
-                    
+                                // Call Delete Function here...
+                            }
+                            if ($mailbox) {
+                                $lines_with_mailbox_built[$linedetails['uuid']] = $line_summary;
+                                $lines_with_mailbox_built_count++;
+                                print_r($lines_with_mailbox_built[$linedetails['uuid']]);
+                                echo "{$linedetails['pattern']} is has a mailbox built and cannot delete...".PHP_EOL;
+                            }
+                        } elseif ($linedetails['callForwardAll']['destination'] != '') {
+                            $lines_with_cfa_active[$linedetails['uuid']] = $line_summary;
+                            $lines_with_cfa_active_count++;
+                            echo "{$linedetails['pattern']} is Forwarded to: {$linedetails['callForwardAll']['destination']}...".PHP_EOL;
+                        } else {
+                            echo "Something jacked up... {$uuid} {$number}".PHP_EOL;
+                        }
+                    } else {
+                        $lines_with_other_usages[$linedetails['uuid']] = $line_summary;
+                        $lines_with_other_usages_count++;
+                    }
                 } catch (\Exception $e) {
                     echo $e->getMessage();
                     echo 'Call Mnaager blew up'.PHP_EOL;

@@ -6,9 +6,9 @@ use DB;
 use App\Cucmsiteconfigs;
 use App\Cucmphoneconfigs;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-// Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
+// Include the JWT Facades shortcut
+use Illuminate\Support\Facades\Storage;
 
 //use Dingo\Api\Routing\Helpers;
 
@@ -335,35 +335,33 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	
-	public function get_line_cleanup_report()
+
+    public function get_line_cleanup_report()
     {
-		/*
-		// This was a bad way of doing this because you needed to know the apbolute path. Using the storage_path from laravel is better approach below. 
-		$location = "/PATHTOAPP/storage/cucm/linecleanup/report"; 
-		
-		if(!file_exists($location) || !is_readable($location)){
-			return "FILE IS NOT BEING LOADED FROM: ". $location;
-		}
-		
-		$json = file_get_contents($location);
-		*/
-		
-		if(!file_exists(storage_path('cucm/linecleanup/report.json')) || !is_readable(storage_path('cucm/linecleanup/report.json'))){
-			return "FILE IS NOT BEING LOADED FROM: ". $location;
-		}
-		
-		// Get the json from the file in storage. 
-		$json = file_get_contents(storage_path('cucm/linecleanup/report.json'));
-		
-		$data = json_decode($json, TRUE);
-		
-		$data = (array) $data;
-		
-		
-		// Need look into using Storage vs file_get_contents
-		//$data = Storage::disk('local')->get('marquee.json');
+        /*
+        // This was a bad way of doing this because you needed to know the apbolute path. Using the storage_path from laravel is better approach below.
+        $location = "/PATHTOAPP/storage/cucm/linecleanup/report";
+
+        if(!file_exists($location) || !is_readable($location)){
+            return "FILE IS NOT BEING LOADED FROM: ". $location;
+        }
+
+        $json = file_get_contents($location);
+        */
+
+        if (! file_exists(storage_path('cucm/linecleanup/report.json')) || ! is_readable(storage_path('cucm/linecleanup/report.json'))) {
+            return 'FILE IS NOT BEING LOADED FROM: '.$location;
+        }
+
+        // Get the json from the file in storage.
+        $json = file_get_contents(storage_path('cucm/linecleanup/report.json'));
+
+        $data = json_decode($json, true);
+
+        $data = (array) $data;
+
+        // Need look into using Storage vs file_get_contents
+        //$data = Storage::disk('local')->get('marquee.json');
 
         $response = [
                     'status_code'       => 200,

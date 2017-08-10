@@ -59,8 +59,7 @@ class CucmNumberCleanup extends Command
         $count = 0;
         $possible_deletes = [];
         foreach ($didblocks as $didblock) {
-			
-			$sitecode = $didblock->name;
+            $sitecode = $didblock->name;
 
              // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
             if (\App\Did::where([['parent', '=', $didblock->id]])->count()) {
@@ -97,12 +96,11 @@ class CucmNumberCleanup extends Command
         $lines_with_mailbox_built = [];
         $lines_with_mailbox_built_count = 0;
         foreach ($possible_deletes as $blockid => $line) {
-			$didblock = \App\Didblock::find($blockid);
-			$sitecode = $didblock->name;
-			
-			print "Sitecode: {$sitecode}".PHP_EOL; 
+            $didblock = \App\Didblock::find($blockid);
+            $sitecode = $didblock->name;
 
-			
+            echo "Sitecode: {$sitecode}".PHP_EOL;
+
             foreach ($line as $uuid => $number) {
                 //$uuid = $uuid[0];
                 try {
@@ -111,34 +109,28 @@ class CucmNumberCleanup extends Command
                     $mailbox_details = Cupi::findmailboxbyextension($linedetails['pattern']);
 
                     if ($mailbox_details['response']['@total'] > 0) {
-						
-						
-						
-						
                         $mailbox = $mailbox_details['response']['User'];
-						$mailbox = ['Alias'			=> $mailbox['Alias'],
-									'DisplayName'	=> $mailbox['DisplayName'],
-									'FirstName'		=> $mailbox['FirstName'],
-									'LastName'		=> $mailbox['LastName'],
-									'DtmfAccessId'	=> $mailbox['DtmfAccessId'],
-									'AD User Found'	=> "",
-									
-									];
-									
-						if(isset($mailbox_details['response']['user']['Alias']) && $mailbox_details['response']['user']['Alias']){
-							$username = $mailbox_details['response']['user']['Alias'];
-							$username = $this->Auth->getUserLdapPhone($username);
-							
-							//print_r($username.user);
-							//die();
-							if($username){
-								$mailbox['AD User Found'] = $username.user;
-							}
-							
-						}			
+                        $mailbox = ['Alias'            => $mailbox['Alias'],
+                                    'DisplayName'      => $mailbox['DisplayName'],
+                                    'FirstName'        => $mailbox['FirstName'],
+                                    'LastName'         => $mailbox['LastName'],
+                                    'DtmfAccessId'     => $mailbox['DtmfAccessId'],
+                                    'AD User Found'    => '',
 
-						//print_r($mailbox);
-						
+                                    ];
+
+                        if (isset($mailbox_details['response']['user']['Alias']) && $mailbox_details['response']['user']['Alias']) {
+                            $username = $mailbox_details['response']['user']['Alias'];
+                            $username = $this->Auth->getUserLdapPhone($username);
+
+                            //print_r($username.user);
+                            //die();
+                            if ($username) {
+                                $mailbox['AD User Found'] = $username.user;
+                            }
+                        }
+
+                        //print_r($mailbox);
                     } else {
                         $mailbox = false;
                     }
@@ -146,19 +138,19 @@ class CucmNumberCleanup extends Command
                     // Check if CFA is set.
 
                     $line_summary = [
-                                        'uuid'                 => $linedetails['uuid'],
-                                        'pattern'              => $linedetails['pattern'],
-                                        'callForwardAll'       => $linedetails['callForwardAll']['destination'],
-                                        'description'          => $linedetails['description'],
-                                        'associatedDevices'    => $linedetails['associatedDevices'],
-                                        'mailbox'              => $mailbox,
-										'sitecode'			   => $sitecode,
+                                        'uuid'                   => $linedetails['uuid'],
+                                        'pattern'                => $linedetails['pattern'],
+                                        'callForwardAll'         => $linedetails['callForwardAll']['destination'],
+                                        'description'            => $linedetails['description'],
+                                        'associatedDevices'      => $linedetails['associatedDevices'],
+                                        'mailbox'                => $mailbox,
+                                        'sitecode'               => $sitecode,
                                         ];
 
                     if ($linedetails['callForwardAll']['destination'] == '') {
                         if (! $mailbox) {
                             $lines_to_delete[$linedetails['uuid']] = $line_summary;
-							$lines_to_delete_count++;
+                            $lines_to_delete_count++;
                             print_r($lines_to_delete[$linedetails['uuid']]);
                             echo "{$linedetails['pattern']} is Ready to Delete...".PHP_EOL;
 
@@ -166,13 +158,13 @@ class CucmNumberCleanup extends Command
                         }
                         if ($mailbox) {
                             $lines_with_mailbox_built[$linedetails['uuid']] = $line_summary;
-							$lines_with_mailbox_built_count++;
+                            $lines_with_mailbox_built_count++;
                             print_r($lines_with_mailbox_built[$linedetails['uuid']]);
                             echo "{$linedetails['pattern']} is has a mailbox built and cannot delete...".PHP_EOL;
                         }
                     } elseif ($linedetails['callForwardAll']['destination'] != '') {
                         $lines_with_cfa_active[$linedetails['uuid']] = $line_summary;
-						$lines_with_cfa_active_count++;
+                        $lines_with_cfa_active_count++;
                         echo "{$linedetails['pattern']} is Forwarded to: {$linedetails['callForwardAll']['destination']}...".PHP_EOL;
                     } else {
                         echo "Something jacked up... {$uuid} {$number}".PHP_EOL;
@@ -197,7 +189,6 @@ class CucmNumberCleanup extends Command
         echo "lines_to_delete_count: {$lines_to_delete_count}".PHP_EOL;
         echo "lines_with_cfa_active_count: {$lines_with_cfa_active_count}".PHP_EOL;
         echo "lines_with_mailbox_built_count: {$lines_with_mailbox_built_count}".PHP_EOL;
-		
 
         $end = Carbon::now();
         echo PHP_EOL;

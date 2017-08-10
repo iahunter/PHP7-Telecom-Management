@@ -97,6 +97,14 @@
 								</a>
 							</th>
 							<th>
+								<a href="" ng-click="sortType = 'usage'; sortReverse = !sortReverse" style="color:black">
+									Type
+										<span ng-show="sortType == 'usage' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'usage' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
 								<a href="" ng-click="sortType = 'callForwardAll'; sortReverse = !sortReverse" style="color:black">
 									callForwardAll
 										<span ng-show="sortType == 'callForwardAll' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -140,13 +148,14 @@
 					
 
 					<tr ng-repeat="number in vm.report | orderBy:sortType:sortReverse | filter:vm.search: strict">
-							<td><a href="#/line/{{number.pattern}}"><b>{{number.pattern}}</b></a></td>
+							<td><a target="_blank" href="#/line/{{number.pattern}}"><b>{{number.pattern}}</b></a></td>
 							<td>{{number.description}}</td>
+							<td>{{number.usage}}</td>
 							<td><span style="color:red;">{{number.callForwardAll}}</span></td>
 							<td><span ng-if="number.associatedDevices.length > 0">{{number.associatedDevices}}</span></td>
 							<td>{{number.sitecode}}</td>
 							<td><span  ng-if="number.mailbox"style="color:red;">{{number.mailbox}}</span><span  ng-if="!number.mailbox">{{number.mailbox}}</span></td>
-							<td><a href="#/line/{{number.pattern}}">{{number.uuid}}</a></td>
+							<td><a target="_blank" href="#/line/{{number.pattern}}">{{number.uuid}}</a></td>
 					</tr>
 							
 					</tbody>

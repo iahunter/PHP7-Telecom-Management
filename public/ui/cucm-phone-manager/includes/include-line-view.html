@@ -135,10 +135,16 @@
 					
 
 						<div class="row">
-							<div ng-if="!vm.linedetails.device_details">
+							<div ng-if="vm.linedetails.line_details.usage == 'Device' && !vm.linedetails.device_details ">
 								<h3>Line found but not assigned to any Devices.</h3> 
 								<div style="margin:25px;"></div>
 								<a class="btn btn-danger" ng-if="vm.noCallForwardAll && vm.nodevices" ng-click="vm.deletecucmline(vm.linedetails.uuid)">Delete Line</a>
+							</div>
+							
+							<div ng-if="vm.linedetails.line_details.usage != 'Device'">
+								<h3>This Line number is setup as a {{vm.linedetails.line_details.usage }}.</h3> 
+								<div style="margin:25px;"></div>
+								<p>You are not allowed to use this as a phone.</p>
 							</div>
 							
 							<div ng-if="vm.linedetails.device_details">

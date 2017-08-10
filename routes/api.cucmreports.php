@@ -126,3 +126,21 @@
      * )
      **/
     $api->get('/reports/get_count_phone_models_inuse', 'App\Http\Controllers\CucmReportsController@get_count_phone_models_inuse');
+
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/reports/linecleanup",
+     *     tags={"CUCM Reports"},
+     *     summary="List of DID Blocks for authorized user",
+     *     description="",
+     *     operationId="listSites",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->get('/reports/linecleanup', 'App\Http\Controllers\CucmReportsController@get_line_cleanup_report');

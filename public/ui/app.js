@@ -314,6 +314,12 @@
 				controller: 'siteTrunking911Report.IndexController',
                 controllerAs: 'vm'
             })
+			.state('linecleanupreport', {
+                url: '/reports/linecleanup',
+                templateUrl: 'reports/linecleanup-report.html',
+				controller: 'lineCleanup.Report.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('getphoneplan', {
                 url: '/phoneplan/{id}',
                 templateUrl: 'siteplanning/phoneplans/getphoneplan.html',

@@ -74,16 +74,15 @@ class CucmNumberCleanup extends Command
                         //print_r($did);
                         foreach ($did['assignments'] as $entry) {
                             $entry = (array) $entry;
-							
-							// Only look at Lines with Type Device. This will ignore transpatterns and meet me numbers from report. 
-							if($entry['type'] == "Device"){
-								if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
-									//print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
-									$possible_deletes[$didblock->id][$entry['uuid']] = $entry['dnOrPattern'];
-									$count++;
-								}
-							}
-                            
+
+                            // Only look at Lines with Type Device. This will ignore transpatterns and meet me numbers from report.
+                            if ($entry['type'] == 'Device') {
+                                if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
+                                    //print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
+                                    $possible_deletes[$didblock->id][$entry['uuid']] = $entry['dnOrPattern'];
+                                    $count++;
+                                }
+                            }
                         }
                     }
                 }
@@ -197,16 +196,14 @@ class CucmNumberCleanup extends Command
         $results['Lines to Delete'] = $lines_to_delete;
         $results['Lines with a mailbox'] = $lines_with_mailbox_built;
         $results['Lines with Call Forward Active'] = $lines_with_cfa_active;
-		$results['Lines Found with other Usages'] = $lines_with_other_usages;
-
-
+        $results['Lines Found with other Usages'] = $lines_with_other_usages;
 
         echo '###########################################################################'.PHP_EOL;
 
         echo "lines_to_delete_count: {$lines_to_delete_count}".PHP_EOL;
         echo "lines_with_cfa_active_count: {$lines_with_cfa_active_count}".PHP_EOL;
         echo "lines_with_mailbox_built_count: {$lines_with_mailbox_built_count}".PHP_EOL;
-		echo "lines_with_other_usages_count: {$lines_with_other_usages_count}".PHP_EOL;
+        echo "lines_with_other_usages_count: {$lines_with_other_usages_count}".PHP_EOL;
 
         $end = Carbon::now();
         echo PHP_EOL;

@@ -135,3 +135,35 @@
      * )
      **/
     $api->get('cucm/site/migration/phonescan', 'App\Http\Controllers\CucmSiteMigration@rescan_site_phones');
+	
+		/**
+     * @SWG\Post(
+     *     path="/telephony/api/cucm/site/rename_site",
+     *     tags={"Management - CUCM - Site Migration"},
+     *     summary="Update Site Plan by ID for authorized user",
+     *     description="Rename Site Ojbects to new Sitecode",
+     *     operationId="renameSite",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="formData",
+     *         description="Sitecode",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="newsitecode",
+     *         in="formData",
+     *         description="New Sitecode",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+
+     *     ),
+     * )
+     **/
+    $api->post('/cucm/site/rename_site', 'App\Http\Controllers\CucmSiteMigration@rename_site');

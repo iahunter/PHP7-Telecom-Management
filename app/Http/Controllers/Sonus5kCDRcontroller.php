@@ -246,6 +246,27 @@ class Sonus5kCDRcontroller extends Controller
         if (! $user->can('read', Sonus5kCDR::class)) {
             abort(401, 'You are not authorized');
         }
+		
+		// Name of Cache key.
+        $key = 'sonus:get_todays_attempt_report';
+
+		// Check if we have this report in cache. 
+        if (Cache::has($key)) {
+			$return = Cache::get($key);
+			
+			$response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'count'                => count($return),
+                    'result'               => $return,
+                    ];
+
+			return response()->json($response);
+        }
+
+		
         $return = [];
 
         $hours = 24;

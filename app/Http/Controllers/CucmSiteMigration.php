@@ -2125,4 +2125,91 @@ class CucmSiteMigration extends Cucm
 
         return response()->json($response);
     }
+	
+	public function rename_site(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('update', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
+		$sitecode = $request->sitecode;
+		$newsitecode = $request->newsitecode;
+
+		// Get Site Summary from CUCM
+        try {
+            $site_array = $this->cucm->get_all_object_types_by_site($sitecode);
+            if (! count($site_array)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+        }
+		
+		$newarray = [];
+		
+		foreach($site_array as $type => $array){
+			if(!count($type)){
+				continue;
+			}
+			
+			if($type == "H323Gateway" 
+			|| $type == "RoutePattern" 
+			|| $type == "TransPattern" 
+			|| $type == "ApplicationDialRules"
+			|| $type == "CallingPartyTransformationPattern"
+			|| $type == "CalledPartyTransformationPattern"
+			|| $type == "DateTimeGroup"
+			|| $type == "CtiRoutePoint"
+			|| $type == "HuntPilot"
+			|| $type == "RemoteDestinationProfile")
+			{
+				// Skip all these types. 
+				continue;
+			}
+			
+			//$newarray[$type] = [];
+			
+			foreach($array as $uuid => $name){
+				
+				$object = $this->cucm->get_object_type_by_uuid($uuid, $type);
+				
+				$newdescription = false;
+				if(isset($object['description']) && $object['description']){
+					$description = $object['description']; 
+					$newdescription = str_replace($sitecode, $newsitecode, $description);
+				}
+				$newname = str_replace($sitecode, $newsitecode, $name);
+				$newarray[$type][] = [$uuid => $newname];
+				
+				$data = [
+							'uuid' 		=> $uuid, 
+							'newName'	=> $newname, 
+						];
+						
+				if($newdescription){
+					$data['description'] = $newdescription;
+				}
+					
+				try {
+					$this->results[$type][$uuid] = $this->cucm->update_object_type_by_uuid_assoc($data, $type);
+				}catch (\Exception $e){
+					$this->results[$type][$uuid] = "{$e->getMessage()}";
+				}
+			}
+		}
+		
+		$response = [
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $this->results,
+            ];
+
+        // Create log entry
+        //activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'response' => $response])->log('add site');
+
+        return response()->json($response);
+    }
 }

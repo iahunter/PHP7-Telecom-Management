@@ -1684,6 +1684,43 @@
                 }
             }
         },
+        "/telephony/api/cucm/site/rename_site": {
+            "post": {
+                "tags": [
+                    "Management - CUCM - Site Migration"
+                ],
+                "summary": "Update Site Plan by ID for authorized user",
+                "description": "Rename Site Ojbects to new Sitecode",
+                "operationId": "renameSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "formData",
+                        "description": "Sitecode",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "newsitecode",
+                        "in": "formData",
+                        "description": "New Sitecode",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/sites": {
             "get": {
                 "tags": [

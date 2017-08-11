@@ -193,10 +193,19 @@ class CucmNumberCleanup extends Command
         }
 
         $results = [];
-        $results['Lines to Delete'] = $lines_to_delete;
-        $results['Lines with a mailbox'] = $lines_with_mailbox_built;
-        $results['Lines with Call Forward Active'] = $lines_with_cfa_active;
-        $results['Lines Found with other Usages'] = $lines_with_other_usages;
+		
+		if(count($lines_to_delete)){
+			$results['lines_to_delete'] = $lines_to_delete;
+		}
+		if(count($lines_with_mailbox_built)){
+			$results['lines_with_mailbox_built'] = $lines_with_mailbox_built;
+        }
+		if(count($lines_with_cfa_active)){
+			$results['lines_with_cfa_active'] = $lines_with_cfa_active;
+		}
+		if(count($lines_with_other_usages)){
+			$results['lines_with_other_usages'] = $lines_with_other_usages;
+		}
 
         echo '###########################################################################'.PHP_EOL;
 

@@ -9,7 +9,7 @@ use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
 
 class Cucmclass extends Model
 {
-	// This class does real time queries, adds, deletes and updates to the production system. 
+    // This class does real time queries, adds, deletes and updates to the production system.
 
     // Added dummy class for permissions use for now.
     protected $fillable = ['uuid'];

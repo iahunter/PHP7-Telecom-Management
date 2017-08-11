@@ -261,5 +261,3 @@
      * )
      **/
     $api->delete('site_migration/{id}', 'App\Http\Controllers\SiteMigrationController@delete_site_migration');
-	
-

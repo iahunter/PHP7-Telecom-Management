@@ -47,28 +47,24 @@ class Callcontroller extends Controller
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'calls:list_last_7days_callstats';
-		
-		// Look if the report is in the cache. 
+
+        // Look if the report is in the cache.
         if (Cache::has($key)) {
-			
-            $stats  = Cache::get($key);
-			
+            $stats = Cache::get($key);
+
             $response = [
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-					'cached'		 => true,
+                    'cached'         => true,
                     'result'         => $stats,
                     ];
 
-			return response()->json($response);
+            return response()->json($response);
         }
-		
-		
-		
 
         $currentDate = \Carbon\Carbon::now();
         $now = $currentDate->toDateTimeString();
@@ -97,24 +93,23 @@ class Callcontroller extends Controller
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'calls:list_last_24hrs_callstats';
-		
-		// Look if the report is in the cache. 
+
+        // Look if the report is in the cache.
         if (Cache::has($key)) {
-			
-            $stats  = Cache::get($key);
-			
+            $stats = Cache::get($key);
+
             $response = [
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-					'cached'		 => true,
+                    'cached'         => true,
                     'result'         => $stats,
                     ];
 
-			return response()->json($response);
+            return response()->json($response);
         }
 
         $currentDate = \Carbon\Carbon::now();
@@ -173,24 +168,23 @@ class Callcontroller extends Controller
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'calls:list_last_month_daily_call_peak_stats';
-		
-		// Look if the report is in the cache. 
+
+        // Look if the report is in the cache.
         if (Cache::has($key)) {
-			
-            $stats  = Cache::get($key);
-			
+            $stats = Cache::get($key);
+
             $response = [
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-					'cached'		 => true,
+                    'cached'         => true,
                     'result'         => $stats,
                     ];
 
-			return response()->json($response);
+            return response()->json($response);
         }
 
         $currentDate = \Carbon\Carbon::now();
@@ -237,23 +231,22 @@ class Callcontroller extends Controller
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'calls:list_3_month_daily_call_peak_stats';
-		
-		// Look if the report is in the cache. 
+
+        // Look if the report is in the cache.
         if (Cache::has($key)) {
-			
-            $stats  = Cache::get($key);
+            $stats = Cache::get($key);
             $response = [
                     'status_code'    => 200,
                     'success'        => true,
                     'message'        => '',
-					'cached'		 => true,
+                    'cached'         => true,
                     'result'         => $stats,
                     ];
 
-			return response()->json($response);
+            return response()->json($response);
         }
 
         $currentDate = \Carbon\Carbon::now();
@@ -296,15 +289,14 @@ class Callcontroller extends Controller
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'calls:list_3_month_daily_call_peak_stats_sql';
-		
-		// Look if the report is in the cache. 
+
+        // Look if the report is in the cache.
         if (Cache::has($key)) {
-			
-            $stats  = Cache::get($key);
-			
+            $stats = Cache::get($key);
+
             $response = [
                     'status_code'    => 200,
                     'success'        => true,
@@ -312,7 +304,7 @@ class Callcontroller extends Controller
                     'result'         => $stats,
                     ];
 
-			return response()->json($response);
+            return response()->json($response);
         }
 
         $currentDate = \Carbon\Carbon::now();
@@ -351,15 +343,14 @@ class Callcontroller extends Controller
         if (! $user->can('read', Calls::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'calls:list_one_year_daily_call_peak_stats_sql';
-		
-		// Look if the report is in the cache. 
+
+        // Look if the report is in the cache.
         if (Cache::has($key)) {
-			
-            $stats  = Cache::get($key);
-			
+            $stats = Cache::get($key);
+
             $response = [
                     'status_code'    => 200,
                     'success'        => true,
@@ -367,7 +358,7 @@ class Callcontroller extends Controller
                     'result'         => $stats,
                     ];
 
-			return response()->json($response);
+            return response()->json($response);
         }
 
         $currentDate = \Carbon\Carbon::now();

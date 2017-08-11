@@ -135,8 +135,8 @@
      * )
      **/
     $api->get('cucm/site/migration/phonescan', 'App\Http\Controllers\CucmSiteMigration@rescan_site_phones');
-	
-		/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/site/rename_site",
      *     tags={"Management - CUCM - Site Migration"},

@@ -22,14 +22,13 @@ class Kernel extends ConsoleKernel
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
         Commands\Sonus\GetSonusCDRs::class,
-		Commands\Sonus\GetSonusCallReports::class,
+        Commands\Sonus\GetSonusCallReports::class,
         Commands\OnCall\OnCallPermissions::class,
         Commands\BouncerPermissions\BouncerPermissions::class,
         Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
         Commands\Monitoring\SonusAttemptMonitor::class,
         Commands\CallManager\CucmPhoneScanOnDemand::class,
-		
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

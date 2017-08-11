@@ -3,11 +3,11 @@
 namespace App\Console\Commands\Sonus;
 
 use DB;
-use App\Sonus5kCDR;
+use App\Calls;
 use Carbon\Carbon;
+use App\Sonus5kCDR;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
-use App\Calls;
 
 class GetSonusCallReports extends Command
 {
@@ -41,20 +41,17 @@ class GetSonusCallReports extends Command
      * @return mixed
      */
     public function handle()
-	{
-        
-		$this->get_todays_attempt_report();
-		$this->list_last_7days_callstats();
-		$this->list_3_month_daily_call_peak_stats();
-		$this->list_3_month_daily_call_peak_stats_sql();
-		
-    }
-	
-	protected function get_todays_attempt_report()
     {
+        $this->get_todays_attempt_report();
+        $this->list_last_7days_callstats();
+        $this->list_3_month_daily_call_peak_stats();
+        $this->list_3_month_daily_call_peak_stats_sql();
+    }
 
-		$return = [];
-		
+    protected function get_todays_attempt_report()
+    {
+        $return = [];
+
         $hours = 24;
 
         $now = Carbon::now()->setTimezone('UTC');
@@ -160,29 +157,25 @@ class GetSonusCallReports extends Command
             $return[$end] = $attempt_count;
         }
 
-
-		// Name of Cache key.
+        // Name of Cache key.
         $key = 'sonus:get_todays_attempt_report';
 
-		/* Call this from the controller to fetch the data. 
+        /* Call this from the controller to fetch the data.
 
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             return Cache::get($key);
         }
 
-		*/
+        */
 
         // Cache Calls for 10 Minutes - Put the $CALLS as value of cache.
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $return, $time);
-
     }
-	
-	
-	protected function list_last_7days_callstats()
-    {
 
+    protected function list_last_7days_callstats()
+    {
         $currentDate = \Carbon\Carbon::now();
         $now = $currentDate->toDateTimeString();
         $weekago = $currentDate->subHours(168)->toDateTimeString();
@@ -195,15 +188,14 @@ class GetSonusCallReports extends Command
             $stats[] = $call;
         }
 
-		// Name of Cache key.
+        // Name of Cache key.
         $key = 'calls:list_last_7days_callstats';
-		
+
         // Cache Calls for 10 Minutes - Put the $CALLS as value of cache.
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $stats, $time);
     }
-	
-	
+
     protected function list_3_month_daily_call_peak_stats_sql()
     {
         // This is a new version of returning the peak of each date so make our graph a little smoother.
@@ -227,7 +219,7 @@ class GetSonusCallReports extends Command
                 ->whereBetween('created_at', [$start, $end])->orderby('created_at')
                 ->get();
 
-		/*
+        /*
         $response = [
                     'status_code'    => 200,
                     'success'        => true,
@@ -236,21 +228,18 @@ class GetSonusCallReports extends Command
                     ];
 
         return response()->json($response);
-		*/
-		
-		// Name of Cache key.
+        */
+
+        // Name of Cache key.
         $key = 'calls:list_3_month_daily_call_peak_stats_sql';
-		
+
         // Cache Calls for 10 Minutes - Put the $CALLS as value of cache.
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $stats, $time);
     }
 
-	
-	protected function list_last_month_daily_call_peak_stats()
+    protected function list_last_month_daily_call_peak_stats()
     {
-
-
         $currentDate = \Carbon\Carbon::now();
         $end = $currentDate->toDateTimeString();
         $start = $currentDate->subMonth(3)->toDateTimeString();
@@ -278,10 +267,10 @@ class GetSonusCallReports extends Command
 
             $stats[$date] = $call;
         }
-		
+
         // Name of Cache key.
         $key = 'calls:list_last_month_daily_call_peak_stats';
-		
+
         // Cache Calls for 10 Minutes - Put the $CALLS as value of cache.
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $stats, $time);
@@ -289,7 +278,6 @@ class GetSonusCallReports extends Command
 
     public function list_3_month_daily_call_peak_stats()
     {
-
         $currentDate = \Carbon\Carbon::now();
         $end = $currentDate->toDateTimeString();
         $start = $currentDate->subMonth(3)->toDateTimeString();
@@ -312,15 +300,13 @@ class GetSonusCallReports extends Command
 
             $stats[$date] = $call;
         }
-        
-		// Name of Cache key.
+
+        // Name of Cache key.
 
         $key = 'calls:list_3_month_daily_call_peak_stats';
-		
+
         // Cache Calls for 10 Minutes - Put the $CALLS as value of cache.
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $stats, $time);
     }
-	
-	
 }

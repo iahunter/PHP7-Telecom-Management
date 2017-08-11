@@ -258,8 +258,7 @@ class Sonus5kCDRcontroller extends Controller
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
-                    'request'              => $request->all(),
-                    'count'                => count($return),
+					'cached'			   => true,
                     'result'               => $return,
                     ];
 
@@ -377,8 +376,6 @@ class Sonus5kCDRcontroller extends Controller
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
-                    'request'              => $request->all(),
-                    'count'                => count($return),
                     'result'               => $return,
                     ];
 

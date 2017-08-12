@@ -61,7 +61,7 @@ class CucmNumberCleanup extends Command
         foreach ($didblocks as $didblock) {
             $sitecode = $didblock->name;
 
-             // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
+            // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
             if (\App\Did::where([['parent', '=', $didblock->id]])->count()) {
                 $dids = \App\Did::where([['parent', '=', $didblock->id]])->get();
 
@@ -221,7 +221,7 @@ class CucmNumberCleanup extends Command
 
         echo '###########################################################################'.PHP_EOL;
 
-         // Save Site Config as JSON and upload to subversion for change tracking.
+        // Save Site Config as JSON and upload to subversion for change tracking.
         $svn_save = json_encode($results, JSON_PRETTY_PRINT);
 
         echo 'Saving output json to file...'.PHP_EOL;

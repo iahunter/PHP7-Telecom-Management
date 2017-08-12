@@ -149,7 +149,7 @@ class SonusAttemptMonitor extends Command
                 Mail::send(['html'=>'sonuscdralarm'], $data, function ($message) {
                     $message->subject('Telecom Management Alert - Sonus SBC Attempt Threshold Alert!')
                         ->to($this->ONCALL_EMAIL);
-                        //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
+                    //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
                 });
 
                 echo 'Email sent to '.$this->ONCALL_EMAIL.''.PHP_EOL;
@@ -225,16 +225,16 @@ class SonusAttemptMonitor extends Command
             foreach ($pktlosscalls as $call) {
                 //$losscalls = [];
 
-                    /*
-                    if ($call['call_duration']) {
-                        $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
-                    }
+                /*
+                if ($call['call_duration']) {
+                    $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
+                }
 
-                    //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
-                    //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-                    */
+                //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
+                //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
+                */
 
-                    $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
+                $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
                 $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
                 $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
                 $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
@@ -246,10 +246,10 @@ class SonusAttemptMonitor extends Command
                 $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
                 $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
 
-                    //return $call;
-                    if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
-                        $losscalls[] = $call;
-                    }
+                //return $call;
+                if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
+                    $losscalls[] = $call;
+                }
             }
 
             $pktlosscalls = array_reverse($losscalls);

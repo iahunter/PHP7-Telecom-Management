@@ -6,11 +6,11 @@
      *     tags={"Management - CUCM - Site Migration"},
      *     summary="Create New Site in CUCM",
      *     description="
-     Select the correct Site Design Type according to your site's specific requirements.
-     Type 1 - Centralized SIP Trunking and Centralized E911
-     Type 2 - Local Gateway Trunking but using Centralized E911
-     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911
-     Type 4 - Local Gateway Trunking and 911",
+     * Select the correct Site Design Type according to your site's specific requirements.
+     * Type 1 - Centralized SIP Trunking and Centralized E911
+     * Type 2 - Local Gateway Trunking but using Centralized E911
+     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911
+     * Type 4 - Local Gateway Trunking and 911",
      *     operationId="createSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
@@ -162,21 +162,20 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-
+     *
      *     ),
      * )
      **/
     $api->post('/cucm/site/rename_site', 'App\Http\Controllers\CucmSiteMigration@rename_site');
-	
-	
-	 /**
+
+    /**
      * @SWG\Delete(
      *     path="/telephony/api/cucm/site/delete/{sitecode}",
      *     tags={"Management - CUCM - Site Migration"},
      *     summary="Delete Site from CUCM",
      *     description="
-	 WARNING!!! THIS COMPLETELY DELETES THE SITE!!! THERE IS NO RESTORE!!! 
-	 This does exclude phones. All Site Phones must be deleted first.",
+     * WARNING!!! THIS COMPLETELY DELETES THE SITE!!! THERE IS NO RESTORE!!!
+     * This does exclude phones. All Site Phones must be deleted first.",
      *     operationId="deleteSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},

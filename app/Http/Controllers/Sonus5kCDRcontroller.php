@@ -276,8 +276,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_todays_pkt_loss_summary_report(Request $request)
+
+    public function list_todays_pkt_loss_summary_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
@@ -285,8 +285,8 @@ class Sonus5kCDRcontroller extends Controller
         if (! $user->can('read', Sonus5kCDR::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'Sonus5kCDR::list_todays_pkt_loss_summary_report()';
 
         // Check if we have this report in cache.
@@ -303,8 +303,8 @@ class Sonus5kCDRcontroller extends Controller
 
             return response()->json($response);
         }
-	
-		$return = Sonus5kCDR::list_todays_pkt_loss_summary_report();
+
+        $return = Sonus5kCDR::list_todays_pkt_loss_summary_report();
 
         $response = [
                     'status_code'          => 200,
@@ -314,8 +314,7 @@ class Sonus5kCDRcontroller extends Controller
                     ];
 
         return response()->json($response);
-	
-	}
+    }
 
     public function get_call_termination_code(Request $request, $code)
     {

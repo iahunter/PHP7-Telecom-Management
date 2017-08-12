@@ -290,7 +290,7 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-
+     *
      *     ),
      * )
      **/

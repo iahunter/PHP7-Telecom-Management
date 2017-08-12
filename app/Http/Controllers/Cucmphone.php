@@ -22,10 +22,10 @@ class Cucmphone extends Cucm
 
         // Open CSV and Create a new DID Block for each row.
         $filename = $request->phones;
-            //return $filename;
-            if (! file_exists($filename) || ! is_readable($filename)) {
-                return 'Something is jacked with the file';
-            }
+        //return $filename;
+        if (! file_exists($filename) || ! is_readable($filename)) {
+            return 'Something is jacked with the file';
+        }
 
         $delimiter = ',';
         $header = null;
@@ -217,9 +217,9 @@ class Cucmphone extends Cucm
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type: {$TYPE}".
                   "{$E->getMessage()}";
-                  /*"Stack trace:\n".
-                  "{$E->getTraceAsString()}".
-                  "Data sent:\n";*/
+            /*"Stack trace:\n".
+            "{$E->getTraceAsString()}".
+            "Data sent:\n";*/
             //$delimiter = "Stack trace:";
             //explode ($delimiter , $EXCEPTION);
             $LOG = [

@@ -189,7 +189,7 @@ class DidScanCucm extends Command
         }
 
         // Go through all the mathcing DID's and update them, OR set them to available
-            // maybe WRAP this in a try/catch block to handle individual number update failures!
+        // maybe WRAP this in a try/catch block to handle individual number update failures!
 
         foreach ($dids as $did) {
             try {
@@ -219,7 +219,7 @@ class DidScanCucm extends Command
                     $did->assignments = $didinfo[$did->number];
                     $did->status = 'inuse';
                     $did->system_id = 'CUCM-Enterprise-Cluster';
-                // OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
+                    // OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
                 } else {
                     $did->assignments = null;
                     $did->status = 'available';

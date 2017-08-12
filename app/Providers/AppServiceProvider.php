@@ -24,14 +24,14 @@ class AppServiceProvider extends ServiceProvider
 
             \Log::info('failedjob', ['log' => $event]);
 
-			/*
+            /*
             // Get the Task ID
             if ($event->taskid) {
                 $task = PhoneMACD::find($event->taskid);
                 $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'failed', 'json' => $event->exception]);
                 $task->save();
             }
-			*/
+            */
         });
     }
 

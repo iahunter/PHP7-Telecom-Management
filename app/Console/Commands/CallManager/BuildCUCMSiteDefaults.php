@@ -884,7 +884,7 @@ class BuildCUCMSiteDefaults extends Command
     {
 
 // Pasted in from Excel with following headers.
-// Pattern	Partition	Description
+        // Pattern	Partition	Description
         $INPUT = <<<END
 9.1[2-9]XX[2-9]XXXXXX	PT_BLOCK_LD	global block LD
 9.[2-9]XX[2-9]XXXXXX	PT_BLOCK_LOCAL	global block local
@@ -959,7 +959,7 @@ END;
                             // Anonymous inline function callback
                             function ($LINE) {
                                 // split each row into a tab delimited array
-                                                return array_combine(
+                                return array_combine(
                                                                         // And map these keys to each value extracted
                                                                         [
                                                                             'pattern',    'routePartitionName',    'description',

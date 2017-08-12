@@ -259,27 +259,27 @@ class CucmSiteScan extends Command
         }
     }
 
-     // Get a summary of all types supported by site.
-     protected function getSiteDetails($SITE)
-     {
-         try {
-             $site_details = $this->cucm->get_all_object_types_by_site($SITE);
-         } catch (\Exception $e) {
-             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-         }
+    // Get a summary of all types supported by site.
+    protected function getSiteDetails($SITE)
+    {
+        try {
+            $site_details = $this->cucm->get_all_object_types_by_site($SITE);
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
 
-         return $site_details;
-     }
+        return $site_details;
+    }
 
-     // Get a summary of all types supported by site.
-     protected function getSiteOjbectDetails($SITE)
-     {
-         try {
-             $site_object_details = $this->cucm->get_all_object_type_details_by_site($SITE);
-         } catch (\Exception $e) {
-             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-         }
+    // Get a summary of all types supported by site.
+    protected function getSiteOjbectDetails($SITE)
+    {
+        try {
+            $site_object_details = $this->cucm->get_all_object_type_details_by_site($SITE);
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
 
-         return $site_object_details;
-     }
+        return $site_object_details;
+    }
 }

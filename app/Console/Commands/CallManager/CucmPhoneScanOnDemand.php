@@ -50,20 +50,20 @@ class CucmPhoneScanOnDemand extends Command
     public function handle()
     {
         $site = $this->argument('site');
-		$sites = [$site];
-		$this->scanPhones($sites);
+        $sites = [$site];
+        $this->scanPhones($sites);
     }
 
-    // Get a list of Sites by device pools.	
-	
-	protected function scanPhones($sites)
-	{
-		$start = Carbon::now();
+    // Get a list of Sites by device pools.
+
+    protected function scanPhones($sites)
+    {
+        $start = Carbon::now();
         echo 'Starting Site Scan at: '.$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.
-        
-		/*
-		$sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
+
+        /*
+        $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
 
         print_r($sites);
 
@@ -83,8 +83,8 @@ class CucmPhoneScanOnDemand extends Command
         fclose($handle);
         echo "\n";
         echo "Thank you, Scanning sitecode {$site}...\n";
-		
-		*/
+
+        */
 
         //$sites = ['TRAVIS01'];
         $sitetotalcount = count($sites);
@@ -144,11 +144,8 @@ class CucmPhoneScanOnDemand extends Command
         echo PHP_EOL;
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL;
-
     }
 
-
-	
     protected function getPhonesNamesbySite($site)
     {
         // $site = 'TRAVIS01';

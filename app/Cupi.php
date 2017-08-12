@@ -244,7 +244,7 @@ class Cupi extends Model
                 return $userarray;
             }
 
-        // If not then find the user in LDAP and import user with selected template and new DN.
+            // If not then find the user in LDAP and import user with selected template and new DN.
         } else {
             //echo "Finding User {$userarray['username']}...".PHP_EOL;
             $LDAPUSER = self::getLDAPUserbyAlias($userarray['username']);
@@ -480,7 +480,7 @@ class Cupi extends Model
         if (isset($operator) && $operator > 1000000000 && $operator < 9999999999) {
             if (isset($objectid) && $objectid) {
                 $template['update_operator'] = self::update_usertemplate_operator($objectid, $sitecode, $operator);
-            //$template['update_timezone'] = self::update_usertemplate_timezone($objectid, $timezone, $language);
+                //$template['update_timezone'] = self::update_usertemplate_timezone($objectid, $timezone, $language);
             }
         }
 

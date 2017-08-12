@@ -325,7 +325,7 @@ class SitePlanController extends Controller
     }
 
     /**
-     Phone Plans
+     * Phone Plans.
      **/
     public function listphoneplan()
     {

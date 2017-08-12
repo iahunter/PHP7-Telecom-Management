@@ -237,8 +237,8 @@ class SiteLocal911 extends Command
                         echo "Building RoutePattern {$e911route['pattern']}...".PHP_EOL;
                         $TYPE = 'RoutePattern';
                         $routepattern = $this->cucm->add_object_type_by_assoc($e911route, $TYPE);
-                            //print_r($routepattern);
-                            echo "RoutePattern {$e911route['pattern']} with {$e911route['routePartitionName']} added succesfully | {$routepattern}".PHP_EOL;
+                        //print_r($routepattern);
+                        echo "RoutePattern {$e911route['pattern']} with {$e911route['routePartitionName']} added succesfully | {$routepattern}".PHP_EOL;
                     } catch (\Exception $e) {
                         echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
                         dd($e->getTrace());
@@ -375,16 +375,16 @@ class SiteLocal911 extends Command
     }
 
     // Get a summary of all types supported by site.
-     protected function getSiteDetails($SITE)
-     {
-         try {
-             $site_details = $this->cucm->get_all_object_types_by_site($SITE);
-         } catch (\Exception $e) {
-             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-         }
+    protected function getSiteDetails($SITE)
+    {
+        try {
+            $site_details = $this->cucm->get_all_object_types_by_site($SITE);
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
 
-         return $site_details;
-     }
+        return $site_details;
+    }
 
     //
     protected function getCssMembers($css_details)
@@ -433,8 +433,8 @@ class SiteLocal911 extends Command
         if ($css['partitionUsage'] == 'General') {
             foreach ($css['members'] as $member) {
                 //print "Member: ".PHP_EOL;
-                    //print_r($member);
-                    $MEMBERS = [];
+                //print_r($member);
+                $MEMBERS = [];
                 if (is_array($member)) {
                     foreach ($member as $partition) {
                         print_r($partition);
@@ -449,14 +449,14 @@ class SiteLocal911 extends Command
                             return $RESULTS;
                         }
 
-                            // Append Member to Members with the key as the index number.
-                            $MEMBERS[$MEMBER['index']] = $MEMBER;
+                        // Append Member to Members with the key as the index number.
+                        $MEMBERS[$MEMBER['index']] = $MEMBER;
                     }
                 }
             }
 
-                // Append CSS Members to Results with Name as Key.
-                print_r($MEMBERS);
+            // Append CSS Members to Results with Name as Key.
+            print_r($MEMBERS);
             if (! empty($MEMBERS)) {
                 $RESULTS[$css['name']] = $MEMBERS;
             }
@@ -470,11 +470,11 @@ class SiteLocal911 extends Command
         $RESULTS = [];
 
         // Do a compare of the start and end of the site array after the changes.
-            foreach ($array1 as $key => $value) {
-                print_r($value);
+        foreach ($array1 as $key => $value) {
+            print_r($value);
 
-                $RESULTS[$key] = array_diff_assoc($value, $site_details_after[$key]);
-            }
+            $RESULTS[$key] = array_diff_assoc($value, $site_details_after[$key]);
+        }
         print_r($RESULTS);
 
         return $RESULTS;

@@ -46,20 +46,20 @@ class GetSonusCallReports extends Command
         $this->list_last_7days_callstats();
         $this->list_3_month_daily_call_peak_stats();
         $this->list_3_month_daily_call_peak_stats_sql();
-		$this->list_todays_pkt_loss_summary_report();
+        $this->list_todays_pkt_loss_summary_report();
     }
-	
-	protected function list_todays_pkt_loss_summary_report()
+
+    protected function list_todays_pkt_loss_summary_report()
     {
         $return = Sonus5kCDR::list_todays_pkt_loss_summary_report();
 
-		//print_r($return);
-		
+        //print_r($return);
+
         // Name of Cache key.
         $key = 'Sonus5kCDR::list_todays_pkt_loss_summary_report()';
 
         /* Call this from the controller to fetch the data in the cache*/
-		/*
+        /*
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             return Cache::get($key);
@@ -70,18 +70,17 @@ class GetSonusCallReports extends Command
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $return, $time);
     }
-	
 
     protected function get_todays_attempt_report()
     {
         $return = Sonus5kCDR::list_todays_attempts_summary_report();
 
-		//print_r($return);
+        //print_r($return);
         // Name of Cache key.
         $key = 'Sonus5kCDR::list_todays_attempts_summary_report()';
 
         /* Call this from the controller to fetch the data in the cache*/
-		/*
+        /*
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             return Cache::get($key);

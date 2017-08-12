@@ -14,14 +14,14 @@ class CucmPhoneScanOnDemand extends Command
      *
      * @var string
      */
-    protected $signature = 'callmanager:phonescanbysite';
+    protected $signature = 'callmanager:phonescanbysite {site}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Scan CUCM Phones and Write to Database';
+    protected $description = 'Scan CUCM Site Phones and Write to Database - Pass sitecode in after command';
 
     /**
      * Create a new command instance.
@@ -49,10 +49,21 @@ class CucmPhoneScanOnDemand extends Command
      */
     public function handle()
     {
-        $start = Carbon::now();
+        $site = $this->argument('site');
+		$sites = [$site];
+		$this->scanPhones($sites);
+    }
+
+    // Get a list of Sites by device pools.	
+	
+	protected function scanPhones($sites)
+	{
+		$start = Carbon::now();
         echo 'Starting Site Scan at: '.$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.
-        $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
+        
+		/*
+		$sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
 
         print_r($sites);
 
@@ -72,8 +83,9 @@ class CucmPhoneScanOnDemand extends Command
         fclose($handle);
         echo "\n";
         echo "Thank you, Scanning sitecode {$site}...\n";
-        $sites = [];
-        $sites[] = $site;
+		
+		*/
+
         //$sites = ['TRAVIS01'];
         $sitetotalcount = count($sites);
         $sitecount = 0;
@@ -133,39 +145,10 @@ class CucmPhoneScanOnDemand extends Command
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL;
 
-        /*
-        echo '
-        ***************************************
-            Cleaning up Deleted Phones
-        ****************************************
-        ';
-        $start = Carbon::now();
-        echo 'Start Time: '.$start.PHP_EOL;
-
-        //$count = count($storephonenames);
-
-        $dbPhones = $this->getphonesfromdb();
-        //print_r($dbPhones);
-        $count = 0;
-        foreach ($dbPhones as $phone) {
-            //print $phone['name'].PHP_EOL;
-            $count++;
-
-            echo $count.' of '.count($dbPhones).PHP_EOL;
-            if (! in_array($phone['name'], $storephonenames)) {
-                echo 'Phone No longer Exists, Deleting: '.$phone['name'].PHP_EOL;
-                print_r($this->deletephone($phone['name']));
-                echo 'Deleted: '.$phone['name'].PHP_EOL;
-            }
-        }
-
-        $end = Carbon::now();
-        echo 'Start Time: '.$start.PHP_EOL;
-        echo 'End Time: '.$end.PHP_EOL;
-        */
     }
 
-    // Get a list of Sites by device pools.
+
+	
     protected function getPhonesNamesbySite($site)
     {
         // $site = 'TRAVIS01';
@@ -243,8 +226,8 @@ class CucmPhoneScanOnDemand extends Command
     protected function deletephone($name)
     {
         // Delete File from Subversion directory.
-        if (file_exists("storage/cucm/{$this->svn}/phones/{$name}")) {
-            unlink("storage/cucm/{$this->svn}/phones/{$name}");
+        if (file_exists(storage_path("storage/cucm/{$this->svn}/phones/{$name}"))) {
+            unlink(storage_path("storage/cucm/{$this->svn}/phones/{$name}"));
         }
 
         //echo 'ENTERED deletephone function';
@@ -260,7 +243,7 @@ class CucmPhoneScanOnDemand extends Command
         // Save Site Config as JSON and upload to subversion for change tracking.
         $svn_save = json_encode($newphone, JSON_PRETTY_PRINT);
         //echo "Saving {$newphone['name']} json to file...".PHP_EOL;
-        file_put_contents("storage/cucm/{$this->svn}/phones/{$newphone['name']}", $svn_save);
+        file_put_contents(storage_path("cucm/{$this->svn}/phones/{$newphone['name']}"), $svn_save);
         //echo "Saved to file...".PHP_EOL;
 
         // Check if Site exists in the database

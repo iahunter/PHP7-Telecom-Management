@@ -140,7 +140,7 @@
      * @SWG\Post(
      *     path="/telephony/api/cucm/site/rename_site",
      *     tags={"Management - CUCM - Site Migration"},
-     *     summary="Update Site Plan by ID for authorized user",
+     *     summary="Replace All Site Object Names with new Name",
      *     description="Rename Site Ojbects to new Sitecode",
      *     operationId="renameSite",
      *     consumes={"application/json"},

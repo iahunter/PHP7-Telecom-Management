@@ -226,7 +226,7 @@ class CucmNumberCleanup extends Command
 
         echo 'Saving output json to file...'.PHP_EOL;
 
-        file_put_contents('storage/cucm/linecleanup/report.json', $svn_save);
+        file_put_contents(storage_path('cucm/linecleanup/report.json'), $svn_save);
 
         echo 'Saved to file...'.PHP_EOL;
     }

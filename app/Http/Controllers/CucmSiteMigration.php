@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use Illuminate\Support\Facades\Artisan;
+
 //error_reporting(E_ALL);
 
 class CucmSiteMigration extends Cucm
@@ -1893,6 +1895,7 @@ class CucmSiteMigration extends Cucm
     // THIS NEEDS WORK!!!!
     public function rescan_site_phones(Request $request)
     {
+		return "DO NOT CALL THIS!!!";
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
@@ -1900,45 +1903,13 @@ class CucmSiteMigration extends Cucm
         }
 
         $site = $request->sitecode;
-
-        // Step 1. Phones
-        $phonenames = $this->cucm->get_object_type_by_site($site, 'Phone');
-
-        //echo 'Found '.count($phonenames).' Phones in '.$site.PHP_EOL;
-        $phonecount = 0;
-        foreach ($phonenames as $key => $phonename) {
-            $storephonenames[] = $phonename;
-            //print $phonename.PHP_EOL;
-
-            if (preg_match('/'.'^TCT.*$'.'/', $phonename)) {
-                try {
-                    $phonedetails = $this->cucm->get_object_type_by_name($phonename, 'Phone');
-                } catch (\Exception $e) {
-                    //echo 'Discarding unsupported phone type due to AXL Bug... Name: '.$phonename.PHP_EOL;
-                    continue;
-                }
-            } else {
-                $phonedetails = $this->getphone($phonename);
-            }
-
-            $phone['name'] = $phonename;
-            $phone['config'] = $phonedetails;
-            // Set string values for phone db
-            $phone['devicepool'] = $phonedetails['devicePoolName']['_'];
-            $phone['css'] = $devicepool = $phonedetails['callingSearchSpaceName']['_'];
-            $phone['model'] = $devicepool = $phonedetails['model'];
-            $phone['description'] = $devicepool = $phonedetails['description'];
-            $phone['ownerid'] = $phonedetails['ownerUserName']['_'];
-
-            // Get the Line details
-            $phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
-            //echo $phonecount = $phonecount + 1 .' of '.count($phonenames).' ';
-            $this->create_update_phone($phone);
-
-            //return "Complete";
-        }
-
-        return 'Complete';
+		
+		Artisan::queue('callmanager:phonescanbysite', ['site' => $site]);
+			
+		\Log::info("Scanning{$site}!");
+		
+		return "Started";
+		
     }
 
     // Get a list of Sites by device pools.

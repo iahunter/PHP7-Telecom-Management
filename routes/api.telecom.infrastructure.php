@@ -185,7 +185,7 @@
      *         required=false,
      *         type="string"
      *     ),
-
+     *
      *     @SWG\Parameter(
      *         name="manufacture",
      *         in="formData",
@@ -249,7 +249,7 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-
+     *
      *     ),
      * )
      **/
@@ -274,7 +274,7 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-
+     *
      *     ),
      * )
      **/

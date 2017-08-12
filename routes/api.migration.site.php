@@ -10,11 +10,11 @@
      *     tags={"Site Migration - Site"},
      *     summary="Create Site Plan",
      *     description="
-     Select the correct Site Design Type according to your site's specific requirements.
-     Type 1 - Centralized SIP Trunking and Centralized E911
-     Type 2 - Local Gateway Trunking but using Centralized E911
-     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911
-     Type 4 - Local Gateway Trunking and 911",
+     * Select the correct Site Design Type according to your site's specific requirements.
+     * Type 1 - Centralized SIP Trunking and Centralized E911
+     * Type 2 - Local Gateway Trunking but using Centralized E911
+     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911
+     * Type 4 - Local Gateway Trunking and 911",
      *     operationId="createSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
@@ -66,7 +66,7 @@
      *             description="H323 Gateways",
      *         ),
      *     ),
-
+     *
      *     @SWG\Parameter(
      *         name="comment",
      *         in="formData",
@@ -98,7 +98,7 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-
+     *
      *     ),
      * )
      **/
@@ -158,11 +158,11 @@
      *     tags={"Site Migration - Site"},
      *     summary="Update Site Plan by ID for authorized user",
      *     description="
-     Select the correct Site Design Type according to your site's specific requirements.
-     Type 1 - Centralized SIP Trunking and Centralized E911
-     Type 2 - Local Gateway Trunking but using Centralized E911
-     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911
-     Type 4 - Local Gateway Trunking and 911",
+     * Select the correct Site Design Type according to your site's specific requirements.
+     * Type 1 - Centralized SIP Trunking and Centralized E911
+     * Type 2 - Local Gateway Trunking but using Centralized E911
+     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911
+     * Type 4 - Local Gateway Trunking and 911",
      *     operationId="createSite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
@@ -231,7 +231,7 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-
+     *
      *     ),
      * )
      **/
@@ -256,7 +256,7 @@
      *     @SWG\Response(
      *         response=200,
      *         description="successful operation",
-
+     *
      *     ),
      * )
      **/

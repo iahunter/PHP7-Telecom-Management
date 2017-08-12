@@ -2,10 +2,10 @@
 
 namespace App;
 
+use DB;
 use Carbon\Carbon;
 use phpseclib\Net\SFTP as Net_SFTP;
 use Illuminate\Database\Eloquent\Model;
-use DB;
 
 class Sonus5kCDR extends Model
 {
@@ -152,11 +152,11 @@ class Sonus5kCDR extends Model
     {
         $lasttwodays_calls = [];
 
-            // Get latest CDR File.
-            $locations = self::get_cdr_log_names($SBC);
+        // Get latest CDR File.
+        $locations = self::get_cdr_log_names($SBC);
 
-            // Trim off the two most recent files and set them to the locations.
-            $locations = array_slice($locations, 0, 1);
+        // Trim off the two most recent files and set them to the locations.
+        $locations = array_slice($locations, 0, 1);
 
         foreach ($locations as $location) {
             $sftp = new Net_SFTP($SBC, 2024);
@@ -175,22 +175,22 @@ class Sonus5kCDR extends Model
             foreach ($currentfile as $callrecord) {
 
                     // Parse record to the the record type.
-                    $callrecord = explode(',', $callrecord);
+                $callrecord = explode(',', $callrecord);
                 if ($callrecord[0] == 'STOP') {
 
                         // Only Return entries that are in the last two days.
-                        if ($callrecord[5] == $today || $callrecord[5] == $yesterday) {
-                            $callrecord = implode(',', $callrecord);
-                            $lasttwodays_calls[] = $callrecord;
-                        }
+                    if ($callrecord[5] == $today || $callrecord[5] == $yesterday) {
+                        $callrecord = implode(',', $callrecord);
+                        $lasttwodays_calls[] = $callrecord;
+                    }
                 }
 
-                    // Pop off the first member of the array to reduce memory usage.
-                    array_shift($currentfile);
+                // Pop off the first member of the array to reduce memory usage.
+                array_shift($currentfile);
             }
         }
-            // Return the raw comma seperated Log entries not an array.
-            return implode(PHP_EOL, $lasttwodays_calls);
+        // Return the raw comma seperated Log entries not an array.
+        return implode(PHP_EOL, $lasttwodays_calls);
     }
 
     public static function get_last_two_days_cdrs($SBC)
@@ -374,10 +374,10 @@ class Sonus5kCDR extends Model
 
         return $RETURN;
     }
-	
-	public static function list_todays_pkt_loss_summary_report()
-	{
-	    $return = [];
+
+    public static function list_todays_pkt_loss_summary_report()
+    {
+        $return = [];
         $hours = 24;
         $now = Carbon::now()->setTimezone('UTC');
         $start = $now->subHours($hours);
@@ -394,7 +394,7 @@ class Sonus5kCDR extends Model
             $end = $subhour;
             $hours--; // Subtract an hour from hours when looping.
             $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
-            $pktlosscalls = Sonus5kCDR::whereBetween('start_time', [$start, $end])
+            $pktlosscalls = self::whereBetween('start_time', [$start, $end])
                                 ->where(function ($query) {
                                     $query->where('ingress_lost_ptks', '>', 100)
                                     ->orWhere('egress_lost_ptks', '>', 100);
@@ -403,14 +403,14 @@ class Sonus5kCDR extends Model
             $losscalls = [];
             foreach ($pktlosscalls as $call) {
                 //$losscalls = [];
-                    /*
-                    if ($call['call_duration']) {
-                        $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
-                    }
-                    //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
-                    //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-                    */
-                    $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
+                /*
+                if ($call['call_duration']) {
+                    $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
+                }
+                //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
+                //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
+                */
+                $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
                 $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
                 $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
                 $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
@@ -420,10 +420,10 @@ class Sonus5kCDR extends Model
                 $egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
                 $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
                 $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
-                    //return $call;
-                    if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
-                        $losscalls[] = $call;
-                    }
+                //return $call;
+                if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
+                    $losscalls[] = $call;
+                }
             }
             $pktlosscalls = array_reverse($losscalls);
             $pktlosscalls = count($pktlosscalls);
@@ -436,13 +436,13 @@ class Sonus5kCDR extends Model
             // Append to the return array with the end time as the key.
             $return[$end] = $call_count;
         }
-		
-		return $return;
-	}
-	
-	public static function list_todays_attempts_summary_report()
-	{
-		$return = [];
+
+        return $return;
+    }
+
+    public static function list_todays_attempts_summary_report()
+    {
+        $return = [];
 
         $hours = 24;
 
@@ -482,7 +482,7 @@ class Sonus5kCDR extends Model
 
             $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
 
-            $pktlosscalls = Sonus5kCDR::whereBetween('start_time', [$start, $end])
+            $pktlosscalls = self::whereBetween('start_time', [$start, $end])
                                 ->where(function ($query) {
                                     $query->where('ingress_lost_ptks', '>', 100)
                                     ->orWhere('egress_lost_ptks', '>', 100);
@@ -494,16 +494,16 @@ class Sonus5kCDR extends Model
             foreach ($pktlosscalls as $call) {
                 //$losscalls = [];
 
-                    /*
-                    if ($call['call_duration']) {
-                        $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
-                    }
+                /*
+                if ($call['call_duration']) {
+                    $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
+                }
 
-                    //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
-                    //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-                    */
+                //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
+                //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
+                */
 
-                    $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
+                $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
                 $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
                 $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
                 $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
@@ -515,10 +515,10 @@ class Sonus5kCDR extends Model
                 $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
                 $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
 
-                    //return $call;
-                    if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
-                        $losscalls[] = $call;
-                    }
+                //return $call;
+                if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
+                    $losscalls[] = $call;
+                }
             }
 
             $pktlosscalls = array_reverse($losscalls);
@@ -528,7 +528,7 @@ class Sonus5kCDR extends Model
 
             foreach ($codes as $code) {
                 // Resolve the code to description.
-                $code = $code['disconnect_reason'].' - '.Sonus5kCDR::get_call_termination_code($code['disconnect_reason']);
+                $code = $code['disconnect_reason'].' - '.self::get_call_termination_code($code['disconnect_reason']);
 
                 // Set default value of 0 for all inuse code for each interval.
                 $codes_inuse['totalCalls'] = 0;
@@ -542,16 +542,15 @@ class Sonus5kCDR extends Model
             foreach ($calls as $i) {
                 $attempt_count['totalCalls'] = $totalcalls;
                 $attempt_count['packetLoss'] = $pktlosscalls;
-                $attempt_count[$i->disconnect_reason.' - '.Sonus5kCDR::get_call_termination_code($i->disconnect_reason)] = $i->total;
+                $attempt_count[$i->disconnect_reason.' - '.self::get_call_termination_code($i->disconnect_reason)] = $i->total;
             }
 
             // Append to the return array with the end time as the key.
             $return[$end] = $attempt_count;
         }
-		
 
-		return $return;
-	}
+        return $return;
+    }
 
     public static function parse_cdr($LOG)
     {

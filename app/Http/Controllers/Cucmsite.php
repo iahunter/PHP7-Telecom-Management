@@ -227,11 +227,11 @@ class Cucmsite extends Cucm
         if (substr($SITECODE, 0, 2) == 'KHO') {
             $CUCM1 = 'KHONEMDCVCS02';
             $CUCM2 = 'KHONESDCVCS06';
-        // Otherwise if they are KOS, dump them there
+            // Otherwise if they are KOS, dump them there
         } elseif (substr($SITECODE, 0, 2) == 'KOS') {
             $CUCM1 = 'KHONESDCVCS04';
             $CUCM2 = 'KHONEMDCVCS05';
-        // Otherwise if they are EAST or CENTRAL time
+            // Otherwise if they are EAST or CENTRAL time
         } elseif (preg_match('/(eastern|central)+/i', $TIMEZONE)) {
             $CUCM1 = 'KHONEMDCVCS01';
             $CUCM2 = 'KHONESDCVCS06';
@@ -1081,9 +1081,9 @@ class Cucmsite extends Cucm
         } catch (\Exception $E) {
             $EXCEPTION = "Exception updating object type {$TYPE} for site {$SITE}:".
                   "{$E->getMessage()}";
-                  /*"Stack trace:\n".
-                  "{$E->getTraceAsString()}".
-                  "Data sent:\n";*/
+            /*"Stack trace:\n".
+            "{$E->getTraceAsString()}".
+            "Data sent:\n";*/
             //$DATA[$TYPE]['exception'] = $EXCEPTION;
             //$this->results[$TYPE][] = $DATA;
             $this->results[$TYPE][] = [
@@ -1337,7 +1337,7 @@ class Cucmsite extends Cucm
 
                                                             ],
                         ];
-            //print_r($PATTERNS);
+                //print_r($PATTERNS);
             }
 
             // Add each pattern in the array.

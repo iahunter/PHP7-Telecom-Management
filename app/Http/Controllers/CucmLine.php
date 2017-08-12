@@ -92,7 +92,7 @@ class CucmLine extends Cucm
             // if the user can NOT update the line, throw an error
             if (! $user->can('update', $line_instance)) {
                 // Do something to allow or deny.
-                 abort(401, 'You are not authorized');
+                abort(401, 'You are not authorized');
             }
         }
 
@@ -180,7 +180,7 @@ class CucmLine extends Cucm
             if (! $user->can('read', $line_instance)) {
                 //print $line_instance;
                 // Do something to allow or deny.
-                 abort(401, 'You are not authorized');
+                abort(401, 'You are not authorized');
             }
         }
         /*
@@ -308,7 +308,7 @@ class CucmLine extends Cucm
             // if the user can NOT update the line, throw an error
             if (! $user->can('update', $line_instance)) {
                 // Do something to allow or deny.
-                 abort(401, 'You are not authorized');
+                abort(401, 'You are not authorized');
             }
         }
 

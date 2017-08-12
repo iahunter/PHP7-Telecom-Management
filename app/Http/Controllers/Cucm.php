@@ -125,9 +125,9 @@ class Cucm extends Controller
         } catch (\Exception $E) {
             $EXCEPTION = "Exception adding object type: {$TYPE}".
                   "{$E->getMessage()}";
-                  /*"Stack trace:\n".
-                  "{$E->getTraceAsString()}".
-                  "Data sent:\n";*/
+            /*"Stack trace:\n".
+            "{$E->getTraceAsString()}".
+            "Data sent:\n";*/
             //$delimiter = "Stack trace:";
             //explode ($delimiter , $EXCEPTION);
             $this->results[$TYPE][] = [
@@ -562,16 +562,16 @@ class Cucm extends Controller
     }
 
     // Get a summary of all types supported by site.
-     protected function getSiteDetailsbySite($SITE)
-     {
-         try {
-             $site_details = $this->cucm->get_all_object_types_by_site($SITE);
-         } catch (\Exception $e) {
-             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-         }
+    protected function getSiteDetailsbySite($SITE)
+    {
+        try {
+            $site_details = $this->cucm->get_all_object_types_by_site($SITE);
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+        }
 
-         return $site_details;
-     }
+        return $site_details;
+    }
 
     //
     protected function getCssMembers($css_details)
@@ -620,8 +620,8 @@ class Cucm extends Controller
         if ($css['partitionUsage'] == 'General') {
             foreach ($css['members'] as $member) {
                 //print "Member: ".PHP_EOL;
-                    //print_r($member);
-                    $MEMBERS = [];
+                //print_r($member);
+                $MEMBERS = [];
                 if (is_array($member)) {
                     foreach ($member as $partition) {
                         //print_r($partition);
@@ -636,14 +636,14 @@ class Cucm extends Controller
                             return $RESULTS;
                         }
 
-                            // Append Member to Members with the key as the index number.
-                            $MEMBERS[$MEMBER['index']] = $MEMBER;
+                        // Append Member to Members with the key as the index number.
+                        $MEMBERS[$MEMBER['index']] = $MEMBER;
                     }
                 }
             }
 
-                // Append CSS Members to Results with Name as Key.
-                //print_r($MEMBERS);
+            // Append CSS Members to Results with Name as Key.
+            //print_r($MEMBERS);
             if (! empty($MEMBERS)) {
                 $RESULTS[$css['name']] = $MEMBERS;
             }
@@ -680,8 +680,8 @@ class Cucm extends Controller
                 }
             }
 
-                // Append CSS Members to Results with Name as Key.
-                //print_r($MEMBERS);
+            // Append CSS Members to Results with Name as Key.
+            //print_r($MEMBERS);
             if (! empty($MEMBERS)) {
                 $RESULTS = $MEMBERS;
             }
@@ -696,8 +696,8 @@ class Cucm extends Controller
 
         foreach ($mrgl['members'] as $member) {
             //print "Member: ".PHP_EOL;
-                //print_r($member);
-                $MEMBERS = [];
+            //print_r($member);
+            $MEMBERS = [];
             if (is_array($member)) {
                 foreach ($member as $mrg) {
                     if (isset($mrg['_'])) {
@@ -713,8 +713,8 @@ class Cucm extends Controller
             }
         }
 
-            // Append mrgl Members to Results with Name as Key.
-            //print_r($MEMBERS);
+        // Append mrgl Members to Results with Name as Key.
+        //print_r($MEMBERS);
         if (! empty($MEMBERS)) {
             $RESULTS = $MEMBERS;
         }
@@ -727,11 +727,11 @@ class Cucm extends Controller
         $RESULTS = [];
 
         // Do a compare of the start and end of the site array after the changes.
-            foreach ($array1 as $key => $value) {
-                //print_r($value);
+        foreach ($array1 as $key => $value) {
+            //print_r($value);
 
-                $RESULTS[$key] = array_diff_assoc($value, $site_details_after[$key]);
-            }
+            $RESULTS[$key] = array_diff_assoc($value, $site_details_after[$key]);
+        }
         //print_r($RESULTS);
 
         return $RESULTS;

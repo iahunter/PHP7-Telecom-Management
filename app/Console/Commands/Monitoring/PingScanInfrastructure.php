@@ -194,7 +194,7 @@ class PingScanInfrastructure extends Command
                 Mail::send(['html'=>'email'], $data, function ($message) {
                     $message->subject('Telecom Management Alert - Device Status Change!')
                         ->to($this->ONCALL_EMAIL);
-                        //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
+                    //->bcc([env('BACKUP_EMAIL_TO'), env('BACKUP_EMAIL_TO')]);
                 });
 
                 echo 'Email sent to '.$this->ONCALL_EMAIL.''.PHP_EOL;

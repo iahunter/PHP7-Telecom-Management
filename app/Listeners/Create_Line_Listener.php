@@ -86,7 +86,7 @@ class Create_Line_Listener implements ShouldQueue
 
         // Build Phone
 
-            $task = PhoneMACD::find($event->taskid);
+        $task = PhoneMACD::find($event->taskid);
 
         $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $task->parent, 'status' => 'job recieved', 'created_by' => $task->created_by]);
         $tasks[] = $task;
@@ -94,7 +94,7 @@ class Create_Line_Listener implements ShouldQueue
         $data['taskid'] = $task->id;
         $data['phone'] = $event->phone;
 
-            // Testing of Events Controller
-            event(new Create_Phone_Event($data));
+        // Testing of Events Controller
+        event(new Create_Phone_Event($data));
     }
 }

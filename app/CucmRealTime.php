@@ -50,20 +50,20 @@ class CucmRealTime extends Model
             $phones = $this->SOAPCLIENT->SelectCmDevice('', $query);
             if (! is_soap_fault($phones)) {
                 $result = $phones['SelectCmDeviceResult'];
-            //echo __FUNCTION__ . ": Number of phones: {$result->TotalDevicesFound}".PHP_EOL;
+                //echo __FUNCTION__ . ": Number of phones: {$result->TotalDevicesFound}".PHP_EOL;
 
-            if ($result->TotalDevicesFound > 0) {
-                foreach ($result->CmNodes as $node) {
-                    if ($node->ReturnCode == 'Ok') {
-                        //echo "Node $node->Name returned " . count($node->CmDevices) . " phones".PHP_EOL;
-                  foreach ($node->CmDevices as $device) {
-                      if ($device->Status == 'Registered' || $device->Status == 'PartiallyRegistered') {
-                          $output[$device->Name]['ipAddress'] = $device->IpAddress;
-                      }
-                  }
+                if ($result->TotalDevicesFound > 0) {
+                    foreach ($result->CmNodes as $node) {
+                        if ($node->ReturnCode == 'Ok') {
+                            //echo "Node $node->Name returned " . count($node->CmDevices) . " phones".PHP_EOL;
+                            foreach ($node->CmDevices as $device) {
+                                if ($device->Status == 'Registered' || $device->Status == 'PartiallyRegistered') {
+                                    $output[$device->Name]['ipAddress'] = $device->IpAddress;
+                                }
+                            }
+                        }
                     }
                 }
-            }
             } else {
                 throw new \Exception('No Phones Found!!!');
             }

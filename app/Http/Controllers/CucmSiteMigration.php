@@ -98,7 +98,7 @@ class CucmSiteMigration extends Cucm
 
         if (isset($request->type) && $request->type) {
             // Check if the user sent us the Site Design Type.
-             $SITE_TYPE = $request->type;
+            $SITE_TYPE = $request->type;
         } elseif (isset($request->trunking) && $request->trunking && isset($request->e911) && $request->e911) {
             // Change Site type based on site design user chooses. This will determine the site type.
             if ($request->trunking == 'sip' && $request->e911 == '911enable') {
@@ -627,7 +627,7 @@ class CucmSiteMigration extends Cucm
                                 }
                                 foreach ($members as $key => $value) {
                                     // Build Array to remove each partition from the CSS. - We will need to rebuild all members after this.
-                                        $REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
+                                    $REMOVE = $this->remove_partition_member_to_css($DATA['name'], $value, $key);
                                     $this->UPDATE_OBJECTS[$TYPE.'removeMembers'][] = $REMOVE;
                                 }
 
@@ -692,11 +692,11 @@ class CucmSiteMigration extends Cucm
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
+                foreach ($site_array[$TYPE] as $key => $value) {
+                    if ($value == $DATA['name']) {
+                        $UUID = $key;
                     }
+                }
                 $OBJECT = $site_details[$TYPE][$UUID];
                 $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
@@ -778,11 +778,11 @@ class CucmSiteMigration extends Cucm
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
                 //$this->SKIP_OBJECTS[$TYPE][] = [$DATA['name'] => "Skipping... {$DATA['name']} already exists."];
-                    foreach ($site_array[$TYPE] as $key => $value) {
-                        if ($value == $DATA['name']) {
-                            $UUID = $key;
-                        }
+                foreach ($site_array[$TYPE] as $key => $value) {
+                    if ($value == $DATA['name']) {
+                        $UUID = $key;
                     }
+                }
                 $OBJECT = $site_details[$TYPE][$UUID];
                 $this->SKIP_OBJECTS[$TYPE][] = $OBJECT;
             } else {
@@ -2125,36 +2125,35 @@ class CucmSiteMigration extends Cucm
 
         return response()->json($response);
     }
-	
-	public function delete_site(Request $request)
+
+    public function delete_site(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('delete', Cucmclass::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		$sitecode = $request->sitecode;
 
-		// Get Site Summary from CUCM
+        $sitecode = $request->sitecode;
+
+        // Get Site Summary from CUCM
         try {
             $site_array = $this->cucm->get_all_object_type_details_by_site($sitecode);
             if (! count($site_array)) {
                 throw new \Exception('Indexed results from call mangler is empty');
             }
-			activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $site_array])->log('get_site_details');
+            activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $site_array])->log('get_site_details');
         } catch (\Exception $e) {
             return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
         }
-		
-		//return $site_array;
-		
-		try {
-			$this->results = $this->cucm->delete_all_object_types_by_site($sitecode);
-		} catch (\Exception $e) {
-			$this->results = "{$e->getMessage()}";
-		}
 
+        //return $site_array;
+
+        try {
+            $this->results = $this->cucm->delete_all_object_types_by_site($sitecode);
+        } catch (\Exception $e) {
+            $this->results = "{$e->getMessage()}";
+        }
 
         $response = [
             'status_code'    => 200,
@@ -2167,7 +2166,7 @@ class CucmSiteMigration extends Cucm
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'response' => $response])->log('delete_site');
 
         return response()->json($response);
-	}
+    }
 
     public function rename_site(Request $request)
     {
@@ -2225,9 +2224,9 @@ class CucmSiteMigration extends Cucm
                 $newarray[$type][] = [$uuid => $newname];
 
                 $data = [
-                            'uuid'        => $uuid,
-							'name'		  => $name,
-                            'newName'     => $newname,
+                            'uuid'          => $uuid,
+                            'name'          => $name,
+                            'newName'       => $newname,
                         ];
 
                 if ($newdescription) {
@@ -2236,7 +2235,7 @@ class CucmSiteMigration extends Cucm
 
                 try {
                     $response = $this->results[$type][$uuid] = $this->cucm->update_object_type_by_uuid_assoc($data, $type);
-					activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $data, 'response' => $response])->log('rename_object');
+                    activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $data, 'response' => $response])->log('rename_object');
                 } catch (\Exception $e) {
                     $this->results[$type][$uuid] = "{$e->getMessage()}";
                 }

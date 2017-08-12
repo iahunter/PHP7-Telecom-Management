@@ -248,7 +248,7 @@ class Sonus5kCDRcontroller extends Controller
         }
 
         // Name of Cache key.
-        $key = 'sonus:get_todays_attempt_report';
+        $key = 'Sonus5kCDR::list_todays_attempts_summary_report()';
 
         // Check if we have this report in cache.
         if (Cache::has($key)) {
@@ -265,112 +265,7 @@ class Sonus5kCDRcontroller extends Controller
             return response()->json($response);
         }
 
-        $return = [];
-
-        $hours = 24;
-
-        $now = Carbon::now()->setTimezone('UTC');
-        $start = $now->subHours($hours);
-        $end = Carbon::now()->setTimezone('UTC');
-
-        // Get all the active attempt disconnet reasons in use in last 24s.
-        $codes = \App\Sonus5kCDR::groupBy('disconnect_reason')
-                ->select('disconnect_reason', DB::raw('count(*) as total'))
-                ->whereBetween('start_time', [$start, $end])
-                ->where('type', 'ATTEMPT')
-                ->get();
-
-        $x = 0;
-
-        // get all the records for every hour in for the specified number of hours.
-        while ($x != $hours) {
-            $now = Carbon::now()->setTimezone('UTC');
-            $starthour = $now->subHours($hours);
-            $copystart = clone $starthour;
-            $subhour = $copystart->addHours(1)->toDateTimeString();
-            $starthour = $starthour->toDateTimeString();
-            $start = $starthour;
-            $end = $subhour;
-            $hours--; // Subtract an hour from hours when looping.
-
-            //DB::enableQueryLog();
-
-            $calls = \App\Sonus5kCDR::groupBy('disconnect_reason')
-                ->select('disconnect_reason', DB::raw('count(*) as total'))
-                ->whereBetween('start_time', [$start, $end])
-                ->where('type', 'ATTEMPT')
-                ->get();
-
-            //return DB::getQueryLog();
-
-            $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
-
-            $pktlosscalls = Sonus5kCDR::whereBetween('start_time', [$start, $end])
-                                ->where(function ($query) {
-                                    $query->where('ingress_lost_ptks', '>', 100)
-                                    ->orWhere('egress_lost_ptks', '>', 100);
-                                })
-                                ->get();
-
-            $losscalls = [];
-
-            foreach ($pktlosscalls as $call) {
-                //$losscalls = [];
-
-                    /*
-                    if ($call['call_duration']) {
-                        $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
-                    }
-
-                    //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
-                    //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-                    */
-
-                    $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
-                $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
-                $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
-                $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-                $call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
-
-                $egress_pkt_loss = $call['cdr_json']['Egress Number of Packets Recorded as Lost'];
-                $egress_pkts_recieved = $call['cdr_json']['Egress Number of Audio Packets Received'];
-                $egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
-                $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-                $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
-
-                    //return $call;
-                    if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
-                        $losscalls[] = $call;
-                    }
-            }
-
-            $pktlosscalls = array_reverse($losscalls);
-            $pktlosscalls = count($pktlosscalls);
-
-            $codes_inuse = [];
-
-            foreach ($codes as $code) {
-                // Resolve the code to description.
-                $code = $code['disconnect_reason'].' - '.Sonus5kCDR::get_call_termination_code($code['disconnect_reason']);
-
-                // Set default value of 0 for all inuse code for each interval.
-                $codes_inuse['totalCalls'] = 0;
-                $codes_inuse['packetLoss'] = 0;
-                $codes_inuse[$code] = 0;
-            }
-
-            $attempt_count = $codes_inuse;
-
-            // set the value for each disconnect type in time window.
-            foreach ($calls as $i) {
-                $attempt_count['totalCalls'] = $totalcalls;
-                $attempt_count['packetLoss'] = $pktlosscalls;
-                $attempt_count[$i->disconnect_reason.' - '.Sonus5kCDR::get_call_termination_code($i->disconnect_reason)] = $i->total;
-            }
-
-            // Append to the return array with the end time as the key.
-            $return[$end] = $attempt_count;
-        }
+        $return = Sonus5kCDR::list_todays_attempts_summary_report();
 
         $response = [
                     'status_code'          => 200,
@@ -381,103 +276,46 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-
-    public function list_todays_pkt_loss_summary_report(Request $request)
+	
+	public function list_todays_pkt_loss_summary_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
-
         // Check Role of user
         if (! $user->can('read', Sonus5kCDR::class)) {
             abort(401, 'You are not authorized');
         }
-        $return = [];
+		
+		// Name of Cache key.
+        $key = 'Sonus5kCDR::list_todays_pkt_loss_summary_report()';
 
-        $hours = 24;
+        // Check if we have this report in cache.
+        if (Cache::has($key)) {
+            $return = Cache::get($key);
 
-        $now = Carbon::now()->setTimezone('UTC');
-        $start = $now->subHours($hours);
-        $end = Carbon::now()->setTimezone('UTC');
+            $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'cached'               => true,
+                    'result'               => $return,
+                    ];
 
-        $x = 0;
-
-        // get all the records for every hour in for the specified number of hours.
-        while ($x != $hours) {
-            $now = Carbon::now()->setTimezone('UTC');
-            $starthour = $now->subHours($hours);
-            $copystart = clone $starthour;
-            $subhour = $copystart->addHours(1)->toDateTimeString();
-            $starthour = $starthour->toDateTimeString();
-            $start = $starthour;
-            $end = $subhour;
-            $hours--; // Subtract an hour from hours when looping.
-
-            $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
-
-            $pktlosscalls = Sonus5kCDR::whereBetween('start_time', [$start, $end])
-                                ->where(function ($query) {
-                                    $query->where('ingress_lost_ptks', '>', 100)
-                                    ->orWhere('egress_lost_ptks', '>', 100);
-                                })
-                                ->get();
-            $losscalls = [];
-
-            foreach ($pktlosscalls as $call) {
-                //$losscalls = [];
-
-                    /*
-                    if ($call['call_duration']) {
-                        $call['call_duration'] = gmdate('H:i:s', ($call['call_duration'] * 10) / 1000);
-                    }
-
-                    //$call['disconnect_initiator_desc'] = Sonus5kCDR::get_disconnect_initiator_code($call['disconnect_initiator']);
-                    //$call['disconnect_reason_desc'] = Sonus5kCDR::get_call_termination_code($call['disconnect_reason']);
-                    */
-
-                    $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
-                $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
-                $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
-                $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-                $call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
-
-                $egress_pkt_loss = $call['cdr_json']['Egress Number of Packets Recorded as Lost'];
-                $egress_pkts_recieved = $call['cdr_json']['Egress Number of Audio Packets Received'];
-                $egress_pkt_loss_percent = $egress_pkt_loss / ($egress_pkts_recieved + $egress_pkt_loss) * 100;
-                $egress_pkt_loss_percent = round($egress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
-                $call['egress_pkt_loss_percent'] = $egress_pkt_loss_percent;
-
-                    //return $call;
-                    if ($ingress_pkt_loss_percent > 1 || $egress_pkt_loss_percent > 1) {
-                        $losscalls[] = $call;
-                    }
-            }
-
-            $pktlosscalls = array_reverse($losscalls);
-            $pktlosscalls = count($pktlosscalls);
-
-            // Set default value of 0 for all inuse code for each interval.
-            $call_count['totalCalls'] = 0;
-            $call_count['packetLoss'] = 0;
-
-            // set the value for each disconnect type in time window.
-            $call_count['totalCalls'] = $totalcalls;
-            $call_count['packetLoss'] = $pktlosscalls;
-
-            // Append to the return array with the end time as the key.
-            $return[$end] = $call_count;
+            return response()->json($response);
         }
+	
+		$return = Sonus5kCDR::list_todays_pkt_loss_summary_report();
 
         $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
-                    'request'              => $request->all(),
-                    'count'                => count($return),
                     'result'               => $return,
                     ];
 
         return response()->json($response);
-    }
+	
+	}
 
     public function get_call_termination_code(Request $request, $code)
     {

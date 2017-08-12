@@ -2125,6 +2125,49 @@ class CucmSiteMigration extends Cucm
 
         return response()->json($response);
     }
+	
+	public function delete_site(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('delete', Cucmclass::class)) {
+            abort(401, 'You are not authorized');
+        }
+		
+		$sitecode = $request->sitecode;
+
+		// Get Site Summary from CUCM
+        try {
+            $site_array = $this->cucm->get_all_object_type_details_by_site($sitecode);
+            if (! count($site_array)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+			activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $site_array])->log('get_site_details');
+        } catch (\Exception $e) {
+            return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+        }
+		
+		//return $site_array;
+		
+		try {
+			$this->results = $this->cucm->delete_all_object_types_by_site($sitecode);
+		} catch (\Exception $e) {
+			$this->results = "{$e->getMessage()}";
+		}
+
+
+        $response = [
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $this->results,
+            ];
+
+        // Create log entry
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'response' => $response])->log('delete_site');
+
+        return response()->json($response);
+	}
 
     public function rename_site(Request $request)
     {
@@ -2183,6 +2226,7 @@ class CucmSiteMigration extends Cucm
 
                 $data = [
                             'uuid'        => $uuid,
+							'name'		  => $name,
                             'newName'     => $newname,
                         ];
 
@@ -2191,7 +2235,8 @@ class CucmSiteMigration extends Cucm
                 }
 
                 try {
-                    $this->results[$type][$uuid] = $this->cucm->update_object_type_by_uuid_assoc($data, $type);
+                    $response = $this->results[$type][$uuid] = $this->cucm->update_object_type_by_uuid_assoc($data, $type);
+					activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $data, 'response' => $response])->log('rename_object');
                 } catch (\Exception $e) {
                     $this->results[$type][$uuid] = "{$e->getMessage()}";
                 }
@@ -2206,7 +2251,7 @@ class CucmSiteMigration extends Cucm
             ];
 
         // Create log entry
-        //activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'response' => $response])->log('add site');
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'response' => $response])->log('rename_site');
 
         return response()->json($response);
     }

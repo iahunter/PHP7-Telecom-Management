@@ -167,3 +167,34 @@
      * )
      **/
     $api->post('/cucm/site/rename_site', 'App\Http\Controllers\CucmSiteMigration@rename_site');
+	
+	
+	 /**
+     * @SWG\Delete(
+     *     path="/telephony/api/cucm/site/delete/{sitecode}",
+     *     tags={"Management - CUCM - Site Migration"},
+     *     summary="Delete Site from CUCM",
+     *     description="
+	 WARNING!!! THIS COMPLETELY DELETES THE SITE!!! THERE IS NO RESTORE!!! 
+	 This does exclude phones. All Site Phones must be deleted first.",
+     *     operationId="deleteSite",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="Name of Site - WARNING!!! THIS COMPLETELY DELETES THE SITE!!!",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->delete('cucm/site/delete/{sitecode}', 'App\Http\Controllers\CucmSiteMigration@delete_site');

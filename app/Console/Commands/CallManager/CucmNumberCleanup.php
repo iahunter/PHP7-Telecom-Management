@@ -128,10 +128,9 @@ class CucmNumberCleanup extends Command
                             $username = $mailbox_details['response']['user']['Alias'];
                             $username = $this->Auth->getUserLdapPhone($username);
 
-                            
                             //die();
                             if ($username) {
-								print "Found User for Mailbox: {$username['user']}".PHP_EOL;
+                                echo "Found User for Mailbox: {$username['user']}".PHP_EOL;
                                 $mailbox['AD User Found'] = $username['user'];
                             }
                         }

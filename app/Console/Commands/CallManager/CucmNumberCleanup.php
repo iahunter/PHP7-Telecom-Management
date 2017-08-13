@@ -121,18 +121,18 @@ class CucmNumberCleanup extends Command
                                     'FirstName'        => $mailbox['FirstName'],
                                     'LastName'         => $mailbox['LastName'],
                                     'DtmfAccessId'     => $mailbox['DtmfAccessId'],
-                                    'AD User Found'    => '',
-
+                                    'AD User Found'    => false,
                                     ];
 
                         if (isset($mailbox_details['response']['user']['Alias']) && $mailbox_details['response']['user']['Alias']) {
                             $username = $mailbox_details['response']['user']['Alias'];
                             $username = $this->Auth->getUserLdapPhone($username);
 
-                            //print_r($username.user);
+                            
                             //die();
                             if ($username) {
-                                $mailbox['AD User Found'] = $username.user;
+								print "Found User for Mailbox: {$username['user']}".PHP_EOL;
+                                $mailbox['AD User Found'] = $username['user'];
                             }
                         }
 
@@ -160,7 +160,7 @@ class CucmNumberCleanup extends Command
                             if (! $mailbox) {
                                 $lines_to_delete[$linedetails['uuid']] = $line_summary;
                                 $lines_to_delete_count++;
-                                print_r($lines_to_delete[$linedetails['uuid']]);
+                                //print_r($lines_to_delete[$linedetails['uuid']]);
                                 echo "{$linedetails['pattern']} is Ready to Delete...".PHP_EOL;
 
                                 // Call Delete Function here...
@@ -168,7 +168,7 @@ class CucmNumberCleanup extends Command
                             if ($mailbox) {
                                 $lines_with_mailbox_built[$linedetails['uuid']] = $line_summary;
                                 $lines_with_mailbox_built_count++;
-                                print_r($lines_with_mailbox_built[$linedetails['uuid']]);
+                                //print_r($lines_with_mailbox_built[$linedetails['uuid']]);
                                 echo "{$linedetails['pattern']} is has a mailbox built and cannot delete...".PHP_EOL;
                             }
                         } elseif ($linedetails['callForwardAll']['destination'] != '') {

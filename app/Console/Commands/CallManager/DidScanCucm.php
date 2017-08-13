@@ -42,7 +42,7 @@ class DidScanCucm extends Command
      */
     public function handle()
     {
-		
+
         // Get our list of NPA/NXX's
         $prefixes = $this->getDidNPANXXList();
 
@@ -60,13 +60,11 @@ class DidScanCucm extends Command
             // Update all our DID information for this NPANXX based on those device records.
             $possible_deletes[$npanxx] = $this->updateDidInfo($npanxx, $didinfo);
         }
-		
-		// This will remove lines that are now available from the Line Cleanup Report. 
-		print "Starting Cleanup Quick Scan".PHP_EOL; 
-		$this->updateNumberCleanupReport(); 
-		print "Completed Cleanup Quick Scan".PHP_EOL; 
-		
 
+        // This will remove lines that are now available from the Line Cleanup Report.
+        echo 'Starting Cleanup Quick Scan'.PHP_EOL;
+        $this->updateNumberCleanupReport();
+        echo 'Completed Cleanup Quick Scan'.PHP_EOL;
     }
 
     // This gets a SIMPLE array of NPA/NXX for our numbers in the database.
@@ -221,12 +219,13 @@ class DidScanCucm extends Command
 
         return $possible_deletes;
     }
-	
-	protected function updateNumberCleanupReport(){
-		
-		// This report can be added to the hourly scan to update the json for the Cleanup Report. This is to remove lines that have been deleted from the report. 
-		
-		if (! file_exists(storage_path('cucm/linecleanup/report.json')) || ! is_readable(storage_path('cucm/linecleanup/report.json'))) {
+
+    protected function updateNumberCleanupReport()
+    {
+
+        // This report can be added to the hourly scan to update the json for the Cleanup Report. This is to remove lines that have been deleted from the report.
+
+        if (! file_exists(storage_path('cucm/linecleanup/report.json')) || ! is_readable(storage_path('cucm/linecleanup/report.json'))) {
             return 'FILE IS NOT BEING LOADED FROM: '.$location;
         }
 
@@ -236,31 +235,28 @@ class DidScanCucm extends Command
         $data = json_decode($json, true);
 
         $data = (array) $data;
-		
-		
-		foreach($data as $reportname => $numbers){
-			$report_array = [];
-			foreach($numbers as $number){
-				$numberusage = Did::where([['number', '=', $number['pattern']], ['country_code', '=', "1"]])->first();
-				
-				$numberusage = json_decode(json_encode($numberusage), true);
-								
-				//print_r($numberusage);
-				//return $numberusage;
-				if($numberusage['status'] == "inuse"){
-					continue;
-					//unset($numbers[$number['uuid']]);
-					//return $number['pattern'];
-				}else{
-					unset($numbers[$number['uuid']]);
-					
-				}
-				
-			}
-			$data[$reportname] = $numbers;
-		}
-		
-		// Save Site Config as JSON and upload to subversion for change tracking.
+
+        foreach ($data as $reportname => $numbers) {
+            $report_array = [];
+            foreach ($numbers as $number) {
+                $numberusage = Did::where([['number', '=', $number['pattern']], ['country_code', '=', '1']])->first();
+
+                $numberusage = json_decode(json_encode($numberusage), true);
+
+                //print_r($numberusage);
+                //return $numberusage;
+                if ($numberusage['status'] == 'inuse') {
+                    continue;
+                    //unset($numbers[$number['uuid']]);
+                    //return $number['pattern'];
+                } else {
+                    unset($numbers[$number['uuid']]);
+                }
+            }
+            $data[$reportname] = $numbers;
+        }
+
+        // Save Site Config as JSON and upload to subversion for change tracking.
         $data = json_encode($data, JSON_PRETTY_PRINT);
 
         echo 'Saving output json to file...'.PHP_EOL;
@@ -268,5 +264,5 @@ class DidScanCucm extends Command
         file_put_contents(storage_path('cucm/linecleanup/report.json'), $data);
 
         echo 'Saved to file...'.PHP_EOL;
-	}
+    }
 }

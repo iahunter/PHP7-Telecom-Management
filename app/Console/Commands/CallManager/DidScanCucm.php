@@ -42,6 +42,7 @@ class DidScanCucm extends Command
      */
     public function handle()
     {
+		
         // Get our list of NPA/NXX's
         $prefixes = $this->getDidNPANXXList();
 
@@ -59,29 +60,13 @@ class DidScanCucm extends Command
             // Update all our DID information for this NPANXX based on those device records.
             $possible_deletes[$npanxx] = $this->updateDidInfo($npanxx, $didinfo);
         }
+		
+		// This will remove lines that are now available from the Line Cleanup Report. 
+		print "Starting Cleanup Quick Scan".PHP_EOL; 
+		$this->updateNumberCleanupReport(); 
+		print "Completed Cleanup Quick Scan".PHP_EOL; 
+		
 
-        /*
-
-        // Stuff to help cleanup numbers that are not in use. Need to move this functionality to its own command and schedule.
-
-        // Return Array with numbers that could not be deleted because CFWA is set.
-        $numbers_with_no_device_and_cfa_set = [];
-
-        foreach ($possible_deletes as $npanxx => $cleanuparray) {
-            echo $npanxx.'| Count: '.count($cleanuparray).PHP_EOL;
-            //print_r($cleanuparray);
-            foreach ($cleanuparray as $uuid => $number) {
-                $line = $this->cleanup_number($uuid, $number);
-                if ($line) {
-                    $numbers_with_no_device_and_cfa_set[] = $line;
-                }
-            }
-        }
-
-        //
-        print_r($numbers_with_no_device_and_cfa_set);
-
-        */
     }
 
     // This gets a SIMPLE array of NPA/NXX for our numbers in the database.
@@ -236,4 +221,52 @@ class DidScanCucm extends Command
 
         return $possible_deletes;
     }
+	
+	protected function updateNumberCleanupReport(){
+		
+		// This report can be added to the hourly scan to update the json for the Cleanup Report. This is to remove lines that have been deleted from the report. 
+		
+		if (! file_exists(storage_path('cucm/linecleanup/report.json')) || ! is_readable(storage_path('cucm/linecleanup/report.json'))) {
+            return 'FILE IS NOT BEING LOADED FROM: '.$location;
+        }
+
+        // Get the json from the file in storage.
+        $json = file_get_contents(storage_path('cucm/linecleanup/report.json'));
+
+        $data = json_decode($json, true);
+
+        $data = (array) $data;
+		
+		
+		foreach($data as $reportname => $numbers){
+			$report_array = [];
+			foreach($numbers as $number){
+				$numberusage = Did::where([['number', '=', $number['pattern']], ['country_code', '=', "1"]])->first();
+				
+				$numberusage = json_decode(json_encode($numberusage), true);
+								
+				//print_r($numberusage);
+				//return $numberusage;
+				if($numberusage['status'] == "inuse"){
+					continue;
+					//unset($numbers[$number['uuid']]);
+					//return $number['pattern'];
+				}else{
+					unset($numbers[$number['uuid']]);
+					
+				}
+				
+			}
+			$data[$reportname] = $numbers;
+		}
+		
+		// Save Site Config as JSON and upload to subversion for change tracking.
+        $data = json_encode($data, JSON_PRETTY_PRINT);
+
+        echo 'Saving output json to file...'.PHP_EOL;
+
+        file_put_contents(storage_path('cucm/linecleanup/report.json'), $data);
+
+        echo 'Saved to file...'.PHP_EOL;
+	}
 }

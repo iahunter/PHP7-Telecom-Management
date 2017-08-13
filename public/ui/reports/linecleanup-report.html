@@ -72,15 +72,22 @@
 		<div ng-if="vm.report">
 		
 		
-		
+			<div style="margin:25px"></div>
+			<a class="btn btn-danger btn-sm" ng-if="vm.permissions.delete.Cucmclass""data-dismiss="modal" ng-click="vm.cucmlinedeleteselected(vm.report)">Delete Selected</a>
+			<div style="margin:25px"></div>				
+				
 		
 			<b>Found {{vm.report.length}} Numbers</b>
+			
+			
 			<div style="margin:10px"></div>
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">    
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
 						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+						
+							<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAllLines()"/></th>
 							
 							<th>
 								<a href="" ng-click="sortType = 'pattern'; sortReverse = !sortReverse" style="color:black">
@@ -147,7 +154,10 @@
 					<tbody>
 					
 
-					<tr ng-repeat="number in vm.report | orderBy:sortType:sortReverse | filter:vm.search: strict">
+					<tr ng-repeat="number in vm.report | orderBy:sortType:sortReverse | filter:vm.search: strict" ng-if="!number.deleted">
+							<td>
+								<input type="checkbox" ng-model="number.select" >
+							</td>
 							<td><a target="_blank" href="#/line/{{number.pattern}}"><b>{{number.pattern}}</b></a></td>
 							<td>{{number.description}}</td>
 							<td>{{number.usage}}</td>

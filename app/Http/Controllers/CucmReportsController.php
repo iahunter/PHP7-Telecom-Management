@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use App\Did;
 use App\Cucmsiteconfigs;
 use App\Cucmphoneconfigs;
 use Illuminate\Http\Request;
@@ -359,6 +360,7 @@ class CucmReportsController extends Controller
         $data = json_decode($json, true);
 
         $data = (array) $data;
+		
 
         // Need look into using Storage vs file_get_contents
         //$data = Storage::disk('local')->get('marquee.json');

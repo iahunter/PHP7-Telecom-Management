@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('lineCleanup.Report.IndexController', ['cucmReportService', 'PageService','$location', '$state', '$scope', '$stateParams', function(cucmReportService, PageService, $location, $state, $scope,$stateParams) {
+	.controller('lineCleanup.Report.IndexController', ['cucmReportService', 'cucmService', 'PageService','$location', '$state', '$scope', '$stateParams', '$filter',  function(cucmReportService, cucmService, PageService, $location, $state, $scope,$stateParams, $filter) {
 	
 		var vm = this;
 
@@ -44,11 +44,12 @@ angular
 						vm.options.push(key)
 					});
 					vm.reports = Object.keys(vm.reports).map(key => vm.reports[key]);
-					console.log(vm.options)
+					//console.log(vm.options)
 
 					// Convert Object to array to allow sorting 
 					vm.report = Object.keys(vm.report).map(key => vm.report[key]);
-					console.log(vm.report)
+					//console.log(vm.report)
+					
  
 					vm.loading = false;
 				}
@@ -58,18 +59,90 @@ angular
 			});
 		
 		vm.change_report = function (newreport){
+			
+			vm.selectAll = false;
+			
+			angular.forEach(vm.report, function(line) {
+			  line.select = false;
+			  //console.log(line);
+			  //vm.cucmphoneselecttouched();
+			});
 
 			angular.forEach(vm.reports, function(value, key) {
 				if (key == newreport){
 					
 					vm.report = Object.keys(value).map(key => value[key]);
 					
+					console.log(vm.report)
 				}
 			
 			});
 			
 		}
 		
+		vm.checkAllLines = function() {
+			
+			console.log("Hitting check all")
+			
+			// The filter allows us to only select ones that are matching our filter if one exists. 
+			var filter = $filter('filter'); 
+			
+			var filtered = filter(vm.report, vm.search);
+			
+			angular.forEach(filtered, function(line) {
+			  line.select = vm.selectAll;
+			  //console.log(line);
+			  //vm.cucmphoneselecttouched();
+			});
+		  };
+		  
+		
+		/* Old Way
+		vm.checkAllLines = function() {
+			console.log("Hitting check all")
+
+			angular.forEach(vm.report, function(line) {
+			  line.select = vm.selectAll;
+			  //console.log(line);
+			  //vm.cucmphoneselecttouched();
+			});
+		  };
+		*/
+		
+		
+		vm.deletecucmline = function(line) {
+			
+			console.log(line.pattern)
+			
+			cucmService.deletelinebyuuid(line.uuid)
+				.then(function(res) {
+					
+					console.log(res)
+					
+					if(res.data.deleted){
+						console.log(line.pattern + " Successfully Deleted")
+						phone = null;
+					}
+					//console.log(res)
+					line.deleted = true;
+					console.log(line)
+					
+			  }, function(error) {
+					alert('An error occurred');
+			  });
+			
+		}
+		
+		vm.cucmlinedeleteselected = function(lines){
+			angular.forEach(lines, function(line) {
+				if(line.select == true){
+					//console.log(phone);
+					vm.deletecucmline(line);
+				}
+				
+			});
+				
+		}
 
 	}])
 

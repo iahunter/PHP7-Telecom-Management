@@ -360,7 +360,6 @@ class CucmReportsController extends Controller
         $data = json_decode($json, true);
 
         $data = (array) $data;
-		
 
         // Need look into using Storage vs file_get_contents
         //$data = Storage::disk('local')->get('marquee.json');

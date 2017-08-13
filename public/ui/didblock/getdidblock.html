@@ -166,7 +166,7 @@
 					<tr>
 						<td><a ui-sref="getdidblock({id: vm.didblock.id})"><button class="btn btn-xs btn-default btn-block">{{ vm.didblock.id}}</button></a></td>
 						<!--<td>{{ vm.didblock.id}}</a></td>-->
-						<td   ng-show="!vm.edit[vm.didblock.id]"><a href="#/sitestatusreports/{{ vm.didblock.name}}"><b>{{ vm.didblock.name}}</b></a></td>
+						<td   ng-show="!vm.edit[vm.didblock.id]"><a target="_blank" href="#/sitestatusreports/{{ vm.didblock.name}}"><b>{{ vm.didblock.name}}</b></a></td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.carrier}}</a></td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.country_code}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.start}}</td>
@@ -423,7 +423,7 @@
 						<!--List View-->
 						<td>{{ did.id}}</a></td>
 						<!--<td>{{ did.parent}}</td>-->
-						<td   ng-show="!vm.edit[did.id]"><b><a href="#/line/{{ did.number}}">{{ did.number}}</a></b></td>
+						<td   ng-show="!vm.edit[did.id]"><b><a target="_blank" href="#/line/{{ did.number}}">{{ did.number}}</a></b></td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.name}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.status}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.system_id}}</td>
@@ -442,7 +442,7 @@
 										<td>{{assignment.partition._}}</td>
 										<td>{{assignment.type}}</td>
 										<td ng-if="assignment.type != 'Device'">{{assignment.routeDetail}}</td>
-										<td ng-if="assignment.type == 'Device'"><a href="#/phone/{{ assignment.routeDetail}}"><b>{{ assignment.routeDetail}}</b></a></td>
+										<td ng-if="assignment.type == 'Device'"><a  target="_blank" href="#/phone/{{ assignment.routeDetail}}"><b>{{ assignment.routeDetail}}</b></a></td>
 									</tr>
 								</table>
 							</div>

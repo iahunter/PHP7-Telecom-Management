@@ -240,9 +240,9 @@ class Cucmphone extends Cucm
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('delete', Cucmclass::class)) {
-			if (! $user->can('delete', PhoneMACD::class)) {
-				abort(401, 'You are not authorized');
-			}
+            if (! $user->can('delete', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
         }
 
         // Check if name is Set
@@ -261,14 +261,13 @@ class Cucmphone extends Cucm
     public function createPhoneandLine(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		
-		// Check user permissions
-        if (! $user->can('create', Cucmclass::class)) {
-			if (! $user->can('create', PhoneMACD::class)) {
-				abort(401, 'You are not authorized');
-			}
-        }
 
+        // Check user permissions
+        if (! $user->can('create', Cucmclass::class)) {
+            if (! $user->can('create', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
 
         $errors = [];
 
@@ -388,14 +387,13 @@ class Cucmphone extends Cucm
     public function createPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-       
-		// Check user permissions
+
+        // Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
-			if (! $user->can('create', PhoneMACD::class)) {
-				abort(401, 'You are not authorized');
-			}
+            if (! $user->can('create', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
         }
-		
 
         $errors = [];
 
@@ -519,12 +517,12 @@ class Cucmphone extends Cucm
     public function createLine(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        
-		// Check user permissions
+
+        // Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
-			if (! $user->can('create', PhoneMACD::class)) {
-				abort(401, 'You are not authorized');
-			}
+            if (! $user->can('create', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
         }
 
         $errors = [];

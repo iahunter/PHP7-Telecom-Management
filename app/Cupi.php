@@ -89,6 +89,17 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
+	
+	public static function finduserbyemail($email)
+    {
+		// Only supported in Unity Connection >= 11.5
+        $verb = 'GET';
+        $apiurl = '/users/';
+        $query = ['query' => "(emailaddress is  {$email})"];
+        $json = '';
+
+        return self::wrapapi($verb, $apiurl, $query);
+    }
 
     public static function listusertemplates()
     {
@@ -199,6 +210,8 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
+	
+	
 
     public static function importLDAPUser($USERNAME, $DN, $TEMPLATE, $OVERRIDE = '')
     {

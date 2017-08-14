@@ -27,6 +27,34 @@
      * )
      **/
     $api->get('cupi/user/search/{alias}', 'App\Http\Controllers\Cupicontroller@finduserbyalias');
+	
+	    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/user/search/email/{email}",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Seach for current user by email - Supported in Unity Connection >= 11.5",
+     *     description="",
+     *     operationId="getObjectTypebyName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="email",
+     *         in="path",
+     *         description="Name of Object",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/user/search/email/{email}', 'App\Http\Controllers\Cupicontroller@finduserbyemail');
 
     /**
      * @SWG\Get(

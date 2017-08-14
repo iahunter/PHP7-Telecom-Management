@@ -222,6 +222,46 @@ class PhoneMACDController extends Controller
 
         return response()->json($response);
     }
+	
+	public function list_macd_parents(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check user permissions
+        if (! $user->can('read', PhoneMACD::class)) {
+            if (! $user->can('read', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+
+        $start = \Carbon\Carbon::now();
+        $end = \Carbon\Carbon::now()->subWeek();
+
+        // Search for DID by numberCheck if there are any matches.
+        if (! PhoneMACD::where('type', 'MACD')
+                ->limit(1000)
+                ->count()) {
+            abort(404, 'No MACD Logs Found');
+        }
+
+        // Search for numbers like search.
+        $macs = PhoneMACD::where('type', 'MACD')
+            ->limit(1000)
+            ->orderby('created_at', 'desc')
+            ->get();
+
+        //return "HERE ".$did;
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'result'               => $macs,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function list_my_macd_jobs_for_week(Request $request)
     {

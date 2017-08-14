@@ -249,9 +249,9 @@
                 controllerAs: 'vm'
             })
 			.state('macds', {
-                url: '/macds/week',
-                templateUrl: 'siteplanning/site.html',
-                controller: 'Site.IndexController',
+                url: '/macds/report',
+                templateUrl: 'cucm-phone-manager/macd-reports/macd-report.html',
+                controller: 'MacdReport.Controller',
                 controllerAs: 'vm'
             })
 			.state('macdsummary', {

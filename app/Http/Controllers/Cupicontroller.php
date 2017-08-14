@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cupi;
+use App\PhoneMACD;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -13,7 +14,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         $alias = $request->alias;
@@ -22,13 +25,33 @@ class Cupicontroller extends Controller
 
         return $result;
     }
+	
+	public function finduserbyemail(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cupi::class)) {
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
+        }
+
+        $email = $request->email;
+
+        $result = Cupi::finduserbyemail($email);
+
+        return $result;
+    }
+
 
     public function getLDAPUserbyAlias(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         $alias = $request->alias;
@@ -52,9 +75,12 @@ class Cupicontroller extends Controller
     public function importLDAPUser(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+
+		// Check user permissions
         if (! $user->can('create', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('create', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         //return $request;
@@ -89,7 +115,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('create', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('create', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         //return $request;
@@ -111,9 +139,12 @@ class Cupicontroller extends Controller
     public function updateuserdn(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+
+		// Check user permissions
         if (! $user->can('update', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('update', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         //return $request;
@@ -131,9 +162,12 @@ class Cupicontroller extends Controller
     public function deleteuser(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+
+		// Check user permissions
         if (! $user->can('delete', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('delete', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         if (isset($request->username) && $request->username) {
@@ -146,9 +180,12 @@ class Cupicontroller extends Controller
     public function listusertemplates(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+
+		// Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         return Cupi::listusertemplates();
@@ -159,7 +196,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         return Cupi::listusertemplatenames();
@@ -181,7 +220,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         $extension = $request->extension;
@@ -194,7 +235,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         return Cupi::listexternalservices();
@@ -216,7 +259,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         return Cupi::listtimezones();
@@ -227,7 +272,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         if (isset($request->name) && $request->name) {
@@ -244,7 +291,9 @@ class Cupicontroller extends Controller
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('read', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         if (isset($request->sitecode) && $request->sitecode) {
@@ -259,9 +308,12 @@ class Cupicontroller extends Controller
     public function createusertemplate(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+
+		// Check user permissions
         if (! $user->can('create', Cupi::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('create', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         /* Example

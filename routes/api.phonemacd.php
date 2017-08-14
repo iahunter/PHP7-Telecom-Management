@@ -187,6 +187,24 @@
      * )
      **/
     $api->get('cucm/macd/parentlist/week', 'App\Http\Controllers\PhoneMACDController@list_macd_parents_for_week');
+	
+	    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/macd/parentlist",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="List of Phone MACDs Parents - Limit 1000",
+     *     description="",
+     *     operationId="listMyMacds",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->get('cucm/macd/parentlist', 'App\Http\Controllers\PhoneMACDController@list_macd_parents');
 
     /**
      * @SWG\Get(

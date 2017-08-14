@@ -164,8 +164,8 @@ class Cupicontroller extends Controller
 
         return Cupi::listusertemplatenames();
     }
-	
-	public function list_call_handlers(Request $request)
+
+    public function list_call_handlers(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -175,8 +175,8 @@ class Cupicontroller extends Controller
 
         return Cupi::list_call_handlers();
     }
-	
-	 public function get_callhandler_by_extension(Request $request)
+
+    public function get_callhandler_by_extension(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions

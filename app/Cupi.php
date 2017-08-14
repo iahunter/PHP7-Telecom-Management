@@ -427,10 +427,10 @@ class Cupi extends Model
 
     public static function list_call_handlers()
     {
-		// This may not work due to max returns... 
-		
+        // This may not work due to max returns...
+
         $verb = 'GET';
-        $apiurl = "/handlers/callhandlers";
+        $apiurl = '/handlers/callhandlers';
         $query = '';
         $json = '';
 
@@ -440,8 +440,8 @@ class Cupi extends Model
 
         return $return;
     }
-	
-	public static function get_callhandler_by_extension($extension)
+
+    public static function get_callhandler_by_extension($extension)
     {
         $verb = 'GET';
         $apiurl = '/handlers/callhandlers/';
@@ -450,8 +450,8 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-	
-	public static function getusertemplateexternalservice($ID)
+
+    public static function getusertemplateexternalservice($ID)
     {
         $verb = 'GET';
         $apiurl = "/usertemplates/{$ID}/templateexternalserviceaccounts";

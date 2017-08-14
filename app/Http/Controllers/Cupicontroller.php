@@ -164,6 +164,30 @@ class Cupicontroller extends Controller
 
         return Cupi::listusertemplatenames();
     }
+	
+	public function list_call_handlers(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cupi::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        return Cupi::list_call_handlers();
+    }
+	
+	 public function get_callhandler_by_extension(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cupi::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $extension = $request->extension;
+
+        return Cupi::get_callhandler_by_extension($extension);
+    }
 
     public function listexternalservices(Request $request)
     {

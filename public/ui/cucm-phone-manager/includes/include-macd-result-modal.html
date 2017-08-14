@@ -1,0 +1,124 @@
+
+	<div class="modal fade " id="macd-result-modal-{{ task.id}}" role="dialog">
+		<div class="modal-dialog" style="width: 90%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>Task Detail</h3>
+				</div>
+
+				<div class="modal-body">
+					<div style="margin-left:5%; margin-right:5%;">
+					
+						<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+								<div class="table-responsive">    
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+												<th>
+													<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+														ID
+															<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>
+
+												<th>
+													<a href="" ng-click="sortType = 'sitecode'; sortReverse = !sortReverse" style="color:black">
+														parent
+															<span ng-show="sortType == 'sitecode' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'sitecode' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>
+
+												<th>
+													<a href="" ng-click="sortType = 'srstip'; sortReverse = !sortReverse" style="color:black">
+														type
+															<span ng-show="sortType == 'srstip' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'srstip' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>	
+
+												<th>
+													<a href="" ng-click="sortType = 'h323ip'; sortReverse = !sortReverse" style="color:black">
+														status
+															<span ng-show="sortType == 'country_code' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'country_code' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>
+
+												<th>
+													<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+														Created By
+															<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>								
+												
+
+												<th>
+													<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
+														Created At
+															<span ng-show="sortType == 'created_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'created_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>
+												
+												<th>
+													<a href="" ng-click="sortType = 'updated_by'; sortReverse = !sortReverse" style="color:black">
+														Updated By
+															<span ng-show="sortType == 'updated_by' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'updated_by' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>
+												
+												<th>
+													<a href="" ng-click="sortType = 'updated_at'; sortReverse = !sortReverse" style="color:black">
+														Updated At
+															<span ng-show="sortType == 'updated_at' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+															<span ng-show="sortType == 'updated_at' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+													</a>
+												</th>
+											</tr>
+										</thead>
+										
+										<tbody>
+											<tr>
+													<td>{{ task.id}}</a></td>
+													<td>{{ task.parent}}</td>
+													<td>{{ task.type}}</td>
+													<td><button class="btn btn-default btn-xs" data-toggle="modal" data-target="#macd-result-modal-{{ task.id}}"><b>{{ task.status}}</b></button></td>
+													<td>{{ vm.macd_details.macd.created_by}}</td>
+													<td>{{ task.created_at}}</td>
+													<td>{{ task.updated_by}}</td>
+													<td>{{ task.updated_at}}</td>
+													
+											</tr>
+										</tbody>
+									</table>
+									</div>
+						</div>
+						
+						<div>
+							<pre>
+								{{ task.prettyjson}}
+							</pre>
+						</div>	
+
+
+					</div>
+					
+					
+					
+					
+				</div>
+				<div class="modal-footer">
+					<div class="container">
+						<a class="btn btn-primary" data-dismiss="modal" >Dismiss</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+

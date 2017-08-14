@@ -24,7 +24,7 @@
 					<label for="device" class="control-label">Select Report</label>
 					<div class="inputGroupContainer">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+							<span class="input-group-addon"><i class="fa fa-bars"></i></span>
 							
 							<select class="form-control" required ng-model='vm.deviceForm.report' ng-change="vm.change_report(vm.deviceForm.report) "ng-options="key as value for (key, value) in vm.options" data-width="100%" name="model">
 							</select>
@@ -82,7 +82,7 @@
 			<h4><b>Found {{vm.report.length}} Numbers</b></h4>
 			
 			
-			<h5>These numbers have been idetified as inuse but not assigned to any devices. Please review and cleanup unneeded Lines. <br><br> <b style="color:red;">Note! </b>Deleted Lines will disappear but will still show up on the report until the next hourly scan completes. </h5>
+			<h5>These numbers have been identified as <b><u>inuse</u></b> but not assigned to a device. Please review and cleanup any unneeded Lines. <br><br> <b style="color:red;">Note! </b>Deleted Lines will disappear but will still show up on the report until the next hourly scan completes. </h5>
 			
 			<div style="margin:10px"></div>
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -144,13 +144,21 @@
 								</a>
 							</th>
 							<th>
+								<a href="" ng-click="sortType = 'callhandler'; sortReverse = !sortReverse" style="color:black">
+									callhandler
+										<span ng-show="sortType == 'callhandler' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'callhandler' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<!--
+							<th>
 								<a href="" ng-click="sortType = 'uuid'; sortReverse = !sortReverse" style="color:black">
 									uuid
 										<span ng-show="sortType == 'uuid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'uuid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							
+							-->
 
 							
 						</tr>
@@ -169,7 +177,8 @@
 							<td><span ng-if="number.associatedDevices.length > 0">{{number.associatedDevices}}</span></td>
 							<td>{{number.sitecode}}</td>
 							<td><span  ng-if="number.mailbox"style="color:red;">{{number.mailbox}}</span><span  ng-if="!number.mailbox">{{number.mailbox}}</span></td>
-							<td><a target="_blank" href="#/line/{{number.pattern}}">{{number.uuid}}</a></td>
+							<td><span  ng-if="number.callhandler"style="color:red;">{{number.callhandler}}</span><span  ng-if="!number.callhandler">{{number.callhandler}}</span></td>
+							<!--<td><a target="_blank" href="#/line/{{number.pattern}}">{{number.uuid}}</a></td>-->
 					</tr>
 							
 					</tbody>

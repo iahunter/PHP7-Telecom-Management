@@ -111,6 +111,21 @@ angular
 		
 		
 		// Get User mailbox by extension
+		self.get_callhandler_by_extension = function(extension) {
+			var defer = $q.defer();
+			return $http.get('../api/cupi/callhandler/extension/'+extension)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
+		
+		// Get User mailbox by extension
 		self.getmailboxbyextension = function(extension) {
 			var defer = $q.defer();
 			return $http.get('../api/cupi/user/extension/'+extension)

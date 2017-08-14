@@ -8,3 +8,109 @@
 <div class="well" style="margin-left: 5%; margin-right: 5%;">
 	<ng-include src="'cucm-phone-manager/includes/include-create_phone-form-summary.html'"></ng-include>
 </div>
+
+<!-- Mailbox Modal-->
+
+	<div class="modal fade " id="existing-user-mailbox-modal" role="dialog">
+		<div class="modal-dialog" style="width: 90%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>Mailbox Details Details</h3>
+
+				</div>
+
+				<div class="modal-body">
+					<div style="margin-left:5%; margin-right:5%;">
+
+								
+					<div class="row">
+						<legend><b>Voicemail Box</b></legend>
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="Alias" class="control-label">Alias</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.unityuser.Alias' name="Alias">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="DtmfAccessId" class="control-label">Extension Number</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.unityuser.DtmfAccessId' name="DtmfAccessId">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								
+								<div class="col-sm-12 ">
+									<div class="form-group">
+										<label for="FirstName" class="control-label">First Name</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input class="form-control" readonly ng-model='vm.unityuser.FirstName' name="FirstName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="LastName" class="control-label">Last Name</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.unityuser.LastName' name="LastName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+						
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="MailboxStoreName" class="control-label">MailboxStoreName</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.unityuser.MailboxStoreName' name="MailboxStoreName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<div class="container">
+						<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.delete_cupi_mailbox(vm.unityuser.Alias)">Delete</a>
+						<a class="btn btn-primary" data-dismiss="modal" >Dismiss</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+

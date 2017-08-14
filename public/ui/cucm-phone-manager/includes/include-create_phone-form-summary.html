@@ -15,7 +15,7 @@
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
-				<legend><h2><i class="fa fa-pencil fa-fw"></i> Create New Phone</h2></legend>
+				<legend><h2>MACD Form Information</h2></legend>
 
 					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
 					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
@@ -72,13 +72,14 @@
 									</div>
 								</div>
 								
-																	
+								<!--								
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.dn && vm.deviceForm.voicemail && vm.unity_mailbox_extension_inuse">
 									<div >
 										<ng-include src="'cucm-phone-manager/includes/include-extension-mailbox-found.html'"></ng-include>
 									</div>
 								
 								</div>
+								-->
 							</div>
 							
 							
@@ -100,14 +101,14 @@
 										</div>
 									</div>
 								</div>
-								
+								<!--
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.username && vm.deviceForm.voicemail && vm.unityuser">
 									<div >
 										<ng-include src="'cucm-phone-manager/includes/include-user-mailbox-found.html'"></ng-include>
 									</div>
 								
 								</div>
-
+								-->
 								
 							</div>
 							<div class="row">	
@@ -203,7 +204,7 @@
 											<div class="form-group"  ng-class="{'has-error': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$invalid, 'has-success': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$valid }">
 												<label for="voicemail" class="control-label">Voicemail Box</label>
 												<br>
-												<input type="checkbox" readonly ng-model='vm.deviceForm.voicemail'style="width: 17px; height: 17px;" name="voicemail" >
+												<input type="checkbox" disabled="true" readonly ng-model='vm.deviceForm.voicemail'style="width: 17px; height: 17px;" name="voicemail" >
 
 												<div ng-messages="addDidblockForm.voicemail.$dirty && addDidblockForm.voicemail.$error">
 													<div ng-messages-include="error-messages"></div>

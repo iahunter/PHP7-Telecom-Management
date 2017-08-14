@@ -101,11 +101,16 @@
 								<td>{{ task.id}}</a></td>
 								<td>{{ task.parent}}</td>
 								<td>{{ task.type}}</td>
-								<td>{{ task.status}}</td>
+								<td>
+									<button class="btn btn-default btn-xs" data-toggle="modal" data-target="#macd-result-modal-{{ task.id}}"><b>{{ task.status}}</b></button>
+									<ng-include src="'cucm-phone-manager/includes/include-macd-result-modal.html'"></ng-include>
+									
+								</td>
 								<td>{{ vm.macd_details.macd.created_by}}</td>
 								<td>{{ task.created_at}}</td>
 								<td>{{ task.updated_by}}</td>
 								<td>{{ task.updated_at}}</td>
+								
 								
 						</tr>
 						</tbody>
@@ -118,9 +123,9 @@
 		
 		<div class="col-md-12 col-sm-12 col-lg-12">
 			
-				<a href="#phone/{{vm.phone.name}}"><button type="button" class="btn btn-primary btn-sm" ng-if="vm.phone">View Phone</button></a>
-				<a href="#line/{{vm.line_number}}"><button type="button" class="btn btn-primary btn-sm" ng-if="vm.line_number">View Line</button></a>
-				<button ng-if="vm.unity_mailbox_extension_inuse" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exting-extension-mailbox-modal">View Mailbox</button>
+				<a href="#phone/{{vm.phone.name}}" target="_blank"><button type="button" class="btn btn-primary btn-sm" ng-if="vm.phone">View Phone</button></a>
+				<a href="#line/{{vm.line_number}}" target="_blank"><button type="button" class="btn btn-primary btn-sm" ng-if="vm.line_number">View Line</button></a>
+				<button ng-if="vm.unity_mailbox_extension_inuse" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#existing-user-mailbox-modal">View Mailbox</button>
 
 		</div>
 		

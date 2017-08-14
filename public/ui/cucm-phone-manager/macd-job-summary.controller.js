@@ -31,15 +31,58 @@ angular
 						//alert(res.message);
 						$state.go('logout');
 					}
-
+					
+					var alltaskscomplete = true
+					
+					if(vm.macd_details){
+						if(vm.macd_details.tasks){
+							angular.forEach(vm.mactasks, function(task) {
+							
+								if(task.status == "complete" || task.status == "error" ){
+									task.complete = true;
+								}
+							});
+							
+							//console.log(vm.macd_details.tasks)
+							
+							angular.forEach(vm.mactasks, function(task) {
+								if(!task.complete){
+									alltaskscomplete = false
+								}
+							});
+						}
+						
+						
+						console.log("All task complete: " + alltaskscomplete)
+						
+						
+					}
+					
+					
 					vm.macd_details = res.data.result;
 
-					console.log(vm.macd_details);
+					//console.log(vm.macd_details);
 					
 					vm.deviceForm = vm.macd_details.macd.form_data
 					
 					vm.mactasks = vm.macd_details.tasks
 					
+					angular.forEach(vm.mactasks, function(task) {
+					
+						task.prettyjson = [];
+						//vm.cucmsite.details[key] = res.data.response;
+						
+						// Json stringify to make object readable
+						var response = JSON.stringify(task.json, undefined, 2);
+						response = response.trim();
+						//console.log(response)
+						task.prettyjson = response;
+						//console.log(task.prettyjson)
+					
+					});
+					
+					
+					// Only poll the systems if these variables are not set. 
 					if(!vm.aduser){
 						vm.lookupuser(vm.deviceForm.username)
 						vm.getusername(vm.deviceForm.username)
@@ -49,18 +92,23 @@ angular
 						vm.checklineusage(vm.deviceForm.dn)
 					}
 
-					
 					if(!vm.phone){
 						vm.checkname(vm.deviceForm)
 					}
 
-					vm.getusersfromcupi(vm.deviceForm)
+					if(!vm.unity_mailbox_extension_inuse){
+						vm.getusersfromcupi(vm.deviceForm);
+					}
 					
+					if(alltaskscomplete){
+						$interval.cancel(pull);
+					}
 					
 				}, function(err){
 					//Error
 				});
 		}
+		
 		
 		vm.list_macd_and_children_by_id()
 
@@ -119,7 +167,7 @@ angular
 						result = res.data.response;
 						
 
-						console.log(result);
+						//console.log(result);
 
 						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 						if(result){
@@ -176,7 +224,7 @@ angular
 										vm.nouserfound = false;
 									}
 									
-									console.log(phone.aduser);
+									//console.log(phone.aduser);
 								}
 							}else{
 								phone.aduser = ""
@@ -196,7 +244,7 @@ angular
 				
 				//console.log(phone)
 				vm.aduser = phone
-				console.log(vm.aduser)
+				//console.log(vm.aduser)
 			
 			}
 		}
@@ -305,7 +353,7 @@ angular
 								
 								if(vm.linedetails.line_details.pattern){
 									vm.line_number = vm.linedetails.line_details.pattern
-									console.log(vm.line_number)
+									//console.log(vm.line_number)
 								}
 								
 							}
@@ -345,8 +393,8 @@ angular
 							vm.unityuser = null;
 						}else{
 							vm.unityuser = result['User'];
-							console.log("vm.unityuser")
-							console.log(vm.unityuser)
+							//console.log("vm.unityuser")
+							//console.log(vm.unityuser)
 						}
 						
 					}, function(err){
@@ -366,8 +414,8 @@ angular
 							vm.unityldapuser = null;
 						}else{
 							vm.unityldapuser = result['ImportUser'];
-							console.log("vm.unityldapuser")
-							console.log(vm.unityldapuser)
+							//console.log("vm.unityldapuser")
+							//console.log(vm.unityldapuser)
 						}
 						
 
@@ -391,8 +439,8 @@ angular
 						}else{
 							vm.unity_mailbox_extension_inuse = result['User'];
 							vm.unity_mailbox_extension_inuse.Alias = angular.lowercase(result['User']['Alias']);
-							console.log("vm.unity_mailbox_extension_inuse")
-							console.log(vm.unity_mailbox_extension_inuse)
+							//console.log("vm.unity_mailbox_extension_inuse")
+							//console.log(vm.unity_mailbox_extension_inuse)
 						}
 						
 					}, function(err){
@@ -404,7 +452,7 @@ angular
 		}
 		
 		vm.submitDevice = function(phone) {
-			console.log(phone)
+			//console.log(phone)
 			
 			macdService.create_macd_add(phone)
 				.then(function(res){

@@ -15,6 +15,19 @@ use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
 
 class PhoneMACDController extends Controller
 {
+	public function __construct()
+    {
+        // Only authenticated users can make these calls
+        $this->middleware('jwt.auth');
+
+        // Construct new cucm object
+        $this->cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+    }
+	
     public function createPhoneMACD_Phone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -54,6 +67,31 @@ class PhoneMACDController extends Controller
 
             // Testing of Events Controller
             event(new Create_Line_Event($data));
+			
+		// Build new line first and then chain to add the phone if a new line is required.
+        } elseif (isset($phone['usenumber']) && $phone['usenumber'] == 'existing') {
+			
+			// Check if the line exists in the system today. 
+			try {
+				$result = $this->cucm->get_route_plan_by_name($phone['dn']);
+
+				if (! count($result)) {
+					throw new \Exception('Indexed results from call mangler is empty');
+				}
+			} catch (\Exception $e) {
+				//echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+				//dd($e->getTrace());
+			}
+
+			// If its not built in the system go ahead and try to build it. 
+			if(!$result){
+				$task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
+				$tasks[] = $task;
+				$data['taskid'] = $task->id;
+
+				// Testing of Events Controller
+				event(new Create_Line_Event($data));
+			}
         } else {
             // Build Phone
             if (isset($phone['name']) && $phone['name']) {

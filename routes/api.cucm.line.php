@@ -119,7 +119,7 @@
     /**
      * @SWG\Delete(
      *     path="/telephony/api/cucm/line/{uuid}",
-     *     tags={"Management - CUCM - Line Provisioning"},
+     *     tags={"Management - CUCM - Line - Provisioning"},
      *     summary="Remove Line by UUID",
      *     description="",
      *     operationId="deleteLine",

@@ -425,7 +425,33 @@ class Cupi extends Model
         return $templates;
     }
 
-    public static function getusertemplateexternalservice($ID)
+    public static function list_call_handlers()
+    {
+		// This may not work due to max returns... 
+		
+        $verb = 'GET';
+        $apiurl = "/handlers/callhandlers";
+        $query = '';
+        $json = '';
+
+        $return = self::wrapapi($verb, $apiurl, $query, $json);
+
+        $return = ['return' => $return];
+
+        return $return;
+    }
+	
+	public static function get_callhandler_by_extension($extension)
+    {
+        $verb = 'GET';
+        $apiurl = '/handlers/callhandlers/';
+        $query = ['query' => "(DtmfAccessId is {$extension})"];
+        $json = '';
+
+        return self::wrapapi($verb, $apiurl, $query);
+    }
+	
+	public static function getusertemplateexternalservice($ID)
     {
         $verb = 'GET';
         $apiurl = "/usertemplates/{$ID}/templateexternalserviceaccounts";

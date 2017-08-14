@@ -401,7 +401,59 @@
      * )
      **/
     $api->get('cupi/usertemplates/listusertemplates', 'App\Http\Controllers\Cupicontroller@listusertemplates');
-
+	
+	
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/usertemplates/list_call_handlers",
+     *     tags={"Management - UnityConnection"},
+     *     summary="List Call Handlers",
+     *     description="",
+     *     operationId="list_call_handlers",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/usertemplates/list_call_handlers', 'App\Http\Controllers\Cupicontroller@list_call_handlers');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cupi/callhandler/extension/{extension}",
+     *     tags={"Management - UnityConnection"},
+     *     summary="Seach for current callhandler by extension",
+     *     description="",
+     *     operationId="getObjectTypebyExension",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="extension",
+     *         in="path",
+     *         description="Name of Object",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cupi/callhandler/extension/{extension}', 'App\Http\Controllers\Cupicontroller@get_callhandler_by_extension');
+	
+	
     /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/usertemplates/names",

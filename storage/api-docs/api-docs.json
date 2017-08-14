@@ -1099,7 +1099,7 @@
                     "Management - CUCM - Phone Provisioning"
                 ],
                 "summary": "Upload Phone Planning Document in CUCM",
-                "description": "\n     Paste phones in from excel into the text box area. This must be in the correct format to be parsed correctly.\n     See phone planning template for correct format. Do not include headers when pasting.\n\n     phones format:\n     'First Name'\t'Last Name'\t'Username'\t'MAC Address'\t'Device Type'\t'10 digit Extension'\t'Language'\t'Default Password for User ID Access'\tU'nity Mailbox Y/N'\t'NOTES'\n     ",
+                "description": "\n     * Paste phones in from excel into the text box area. This must be in the correct format to be parsed correctly.\n     * See phone planning template for correct format. Do not include headers when pasting.\n     *\n     * phones format:\n     * 'First Name'\t'Last Name'\t'Username'\t'MAC Address'\t'Device Type'\t'10 digit Extension'\t'Language'\t'Default Password for User ID Access'\tU'nity Mailbox Y/N'\t'NOTES'\n     * ",
                 "operationId": "insert phones",
                 "consumes": [
                     "application/json"
@@ -1542,7 +1542,7 @@
                     "Management - CUCM - Site Migration"
                 ],
                 "summary": "Create New Site in CUCM",
-                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "description": "\n     * Select the correct Site Design Type according to your site's specific requirements.\n     * Type 1 - Centralized SIP Trunking and Centralized E911\n     * Type 2 - Local Gateway Trunking but using Centralized E911\n     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     * Type 4 - Local Gateway Trunking and 911",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -1727,7 +1727,7 @@
                     "Management - CUCM - Site Migration"
                 ],
                 "summary": "Delete Site from CUCM",
-                "description": "\n\t WARNING!!! THIS COMPLETELY DELETES THE SITE!!! THERE IS NO RESTORE!!! \n\t This does exclude phones. All Site Phones must be deleted first.",
+                "description": "\n     * WARNING!!! THIS COMPLETELY DELETES THE SITE!!! THERE IS NO RESTORE!!!\n     * This does exclude phones. All Site Phones must be deleted first.",
                 "operationId": "deleteSite",
                 "consumes": [
                     "application/json"
@@ -1850,7 +1850,7 @@
                     "Management - CUCM - Site Provisioning"
                 ],
                 "summary": "Create New Site in CUCM",
-                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "description": "\n     * Select the correct Site Design Type according to your site's specific requirements.\n     * Type 1 - Centralized SIP Trunking and Centralized E911\n     * Type 2 - Local Gateway Trunking but using Centralized E911\n     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     * Type 4 - Local Gateway Trunking and 911",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -2581,6 +2581,63 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/usertemplates/list_call_handlers": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "List Call Handlers",
+                "description": "",
+                "operationId": "list_call_handlers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cupi/callhandler/extension/{extension}": {
+            "get": {
+                "tags": [
+                    "Management - UnityConnection"
+                ],
+                "summary": "Seach for current callhandler by extension",
+                "description": "",
+                "operationId": "getObjectTypebyExension",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "extension",
+                        "in": "path",
+                        "description": "Name of Object",
+                        "required": true,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3399,7 +3456,7 @@
                     "Site Migration - Site"
                 ],
                 "summary": "Create Site Plan",
-                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "description": "\n     * Select the correct Site Design Type according to your site's specific requirements.\n     * Type 1 - Centralized SIP Trunking and Centralized E911\n     * Type 2 - Local Gateway Trunking but using Centralized E911\n     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     * Type 4 - Local Gateway Trunking and 911",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -3514,7 +3571,7 @@
                     "Site Migration - Site"
                 ],
                 "summary": "Update Site Plan by ID for authorized user",
-                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "description": "\n     * Select the correct Site Design Type according to your site's specific requirements.\n     * Type 1 - Centralized SIP Trunking and Centralized E911\n     * Type 2 - Local Gateway Trunking but using Centralized E911\n     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     * Type 4 - Local Gateway Trunking and 911",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -4793,7 +4850,7 @@
                     "Site Planning - Site"
                 ],
                 "summary": "Create Site Plan",
-                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "description": "\n     * Select the correct Site Design Type according to your site's specific requirements.\n     * Type 1 - Centralized SIP Trunking and Centralized E911\n     * Type 2 - Local Gateway Trunking but using Centralized E911\n     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     * Type 4 - Local Gateway Trunking and 911",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"
@@ -4983,7 +5040,7 @@
                     "Site Planning - Site"
                 ],
                 "summary": "Update Site Plan by ID for authorized user",
-                "description": "\n     Select the correct Site Design Type according to your site's specific requirements.\n     Type 1 - Centralized SIP Trunking and Centralized E911\n     Type 2 - Local Gateway Trunking but using Centralized E911\n     Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     Type 4 - Local Gateway Trunking and 911",
+                "description": "\n     * Select the correct Site Design Type according to your site's specific requirements.\n     * Type 1 - Centralized SIP Trunking and Centralized E911\n     * Type 2 - Local Gateway Trunking but using Centralized E911\n     * Type 3 - Centralized SIP Trunking but leveraging local gateway/SRST for 911\n     * Type 4 - Local Gateway Trunking and 911",
                 "operationId": "createSite",
                 "consumes": [
                     "application/json"

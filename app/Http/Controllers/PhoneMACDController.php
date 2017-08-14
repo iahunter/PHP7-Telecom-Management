@@ -222,8 +222,8 @@ class PhoneMACDController extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_macd_parents(Request $request)
+
+    public function list_macd_parents(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 

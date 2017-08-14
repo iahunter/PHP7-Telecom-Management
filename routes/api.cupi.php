@@ -401,8 +401,7 @@
      * )
      **/
     $api->get('cupi/usertemplates/listusertemplates', 'App\Http\Controllers\Cupicontroller@listusertemplates');
-	
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/usertemplates/list_call_handlers",
@@ -423,9 +422,8 @@
      * )
      **/
     $api->get('cupi/usertemplates/list_call_handlers', 'App\Http\Controllers\Cupicontroller@list_call_handlers');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/callhandler/extension/{extension}",
      *     tags={"Management - UnityConnection"},
@@ -452,8 +450,7 @@
      * )
      **/
     $api->get('cupi/callhandler/extension/{extension}', 'App\Http\Controllers\Cupicontroller@get_callhandler_by_extension');
-	
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/usertemplates/names",

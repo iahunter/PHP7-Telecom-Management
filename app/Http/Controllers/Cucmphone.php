@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // Add Dummy CUCM class for permissions use for now.
 use App\Cucmclass;
+use App\PhoneMACD;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -239,7 +240,9 @@ class Cucmphone extends Cucm
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('delete', Cucmclass::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('delete', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         // Check if name is Set
@@ -258,10 +261,14 @@ class Cucmphone extends Cucm
     public function createPhoneandLine(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+		
+		// Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('create', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
+
 
         $errors = [];
 
@@ -381,10 +388,14 @@ class Cucmphone extends Cucm
     public function createPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+       
+		// Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('create', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
+		
 
         $errors = [];
 
@@ -508,9 +519,12 @@ class Cucmphone extends Cucm
     public function createLine(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
+        
+		// Check user permissions
         if (! $user->can('create', Cucmclass::class)) {
-            abort(401, 'You are not authorized');
+			if (! $user->can('create', PhoneMACD::class)) {
+				abort(401, 'You are not authorized');
+			}
         }
 
         $errors = [];

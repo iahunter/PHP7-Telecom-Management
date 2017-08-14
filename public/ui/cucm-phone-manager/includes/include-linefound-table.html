@@ -136,9 +136,14 @@
 					
 
 						<div class="row">
-							<div ng-if="!vm.linedetails.device_details">
-								Line found but not assigned to any Devices.
+							
+							<div ng-if="vm.linedetails.line_details.usage == 'Device' && !vm.linedetails.device_details ">
+								<h3>Line found but not assigned to any Devices.</h3> 
+								<div style="margin:25px;"></div>
+								<a class="btn btn-danger"  data-dismiss="modal" ng-if="vm.permissions.delete.PhoneMACD == true && vm.noCallForwardAll && vm.nodevices" ng-click="vm.deletecucmline(vm.linedetails.uuid)">Delete Line</a>
 							</div>
+							
+							
 							
 							<div ng-if="vm.linedetails.device_details">
 								<h4><b>{{vm.linedetails.device_details.length}} Devices with {{vm.deviceForm.dn}} Configured</b></h4>
@@ -260,7 +265,8 @@
 									</div>
 								</div>
 								<div style="margin:25px"></div>
-								<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.cucmphonedeleteselected(vm.linedetails.device_details)">Delete Selected</a>
+								
+								<a class="btn btn-danger" ng-click="vm.cucmphonedeleteselected(vm.linedetails.device_details)">Delete Selected</a>
 							</div>
 						</div>
 					</div>

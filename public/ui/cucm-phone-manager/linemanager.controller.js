@@ -175,9 +175,7 @@ angular
 			}
 		}
 		
-		
 		vm.checklineusage = function(line){
-			
 			
 			if(line){
 				vm.lineinvalid = true

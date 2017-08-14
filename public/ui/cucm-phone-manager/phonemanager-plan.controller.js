@@ -255,7 +255,7 @@ angular
 							
 
 						}, function(err){
-							// Error
+							console.log('fudsafkaslkdfj')
 						});
 					
 					cucmService.getNumberandDeviceDetailsbyRoutePlan(line)
@@ -271,9 +271,18 @@ angular
 							//console.log(result);
 
 							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+							
 							if(result){
 								vm.linedetails = result;
-								//console.log(vm.linedetails)
+
+								if(vm.linedetails.line_details){
+
+									if(vm.linedetails.line_details.callForwardAll.destination == ""){
+										console.log("No Call Forward Active")
+										//console.log(vm.linedetails.line_details.callForwardAll)
+										vm.noCallForwardAll = true;
+									}
+								}
 							}
 							
 
@@ -283,6 +292,34 @@ angular
 				}
 				
 			}
+			
+		}
+		
+		vm.deletecucmline = function(uuid) {
+			console.log("Deleting UUID: " + vm.linedetails.uuid)
+			cucmService.deletelinebyuuid(uuid)
+				.then(function(res) {
+					
+					//console.log(vm.linedetails.line_details.pattern)
+					
+					var checkline = angular.copy(vm.linedetails.line_details.pattern)
+					//console.log(checkline);
+					
+					if(res.data.response.deleted){
+						if(res.data.response.old.pattern){
+							line = res.data.response.old.pattern
+							console.log(uuid + " Successfully Deleted")
+							
+							vm.checklineusage(checkline)
+						}
+
+					}
+					//console.log(vm.linesummary)
+					vm.checklineusage(checkline)
+					//console.log(res)
+			  }, function(error) {
+					alert('An error occurred');
+			  });
 			
 		}
 		
@@ -309,6 +346,8 @@ angular
 						phone = null;
 					}
 					//console.log(res)
+					
+					
 			  }, function(error) {
 					alert('An error occurred');
 			  });
@@ -321,12 +360,12 @@ angular
 					//console.log(phone);
 					vm.deletecucmphone(phone);
 				}
-				
+
 			});
 			
 			$timeout(function(){
 				vm.checklineusage(vm.deviceForm.dn)
-			}, 2000);
+			}, 500);
 				
 		}
 		

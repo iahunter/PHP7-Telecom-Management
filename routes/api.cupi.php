@@ -27,8 +27,8 @@
      * )
      **/
     $api->get('cupi/user/search/{alias}', 'App\Http\Controllers\Cupicontroller@finduserbyalias');
-	
-	    /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cupi/user/search/email/{email}",
      *     tags={"Management - UnityConnection"},

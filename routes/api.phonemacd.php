@@ -187,8 +187,8 @@
      * )
      **/
     $api->get('cucm/macd/parentlist/week', 'App\Http\Controllers\PhoneMACDController@list_macd_parents_for_week');
-	
-	    /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/macd/parentlist",
      *     tags={"Management - Cisco Voice - MACD"},

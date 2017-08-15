@@ -25,9 +25,9 @@
 					<li><a href="#/didblock/create" ng-if="vm.permissions.create.Didblock == true">Add Number Block</a></li>
 					<!--<li><a href="#/importdidblock" ng-if="vm.permissions.create.Didblock == true">Bulk Import Number Blocks</a></li>-->
 					<li><a href="#/didblock">List Number Blocks</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#/checkdidusage">Check DID Usage</a></li>
-					<li><a href="#/checkdidblockusage">Check DID Block Usage</a></li>
+					<li role="separator" class="divider" ng-if="vm.permissions.read.Cucmclass == true"></li>
+					<li><a href="#/checkdidusage" ng-if="vm.permissions.read.Cucmclass == true">Check DID Usage</a></li>
+					<li><a href="#/checkdidblockusage" ng-if="vm.permissions.read.Cucmclass == true">Check DID Block Usage</a></li>
 					<li role="separator" class="divider" ng-if="vm.permissions.read.Cucmclass == true"></li>
 					<li><a href="#/reports/linecleanup"  ng-if="vm.permissions.read.Cucmclass == true" >Number Cleanup Reports</a></li>
 					

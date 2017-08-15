@@ -180,8 +180,9 @@
 					<!--<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
 					<tr ng-repeat="didblock in vm.resultValue=(vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search: strict)">
 					
-						<!--List View-->
-						<td><a ui-sref="getdidblock({id: didblock.id})"><button class="btn btn-xs btn-default btn-block">{{ didblock.id}}</button></a></td>
+						<!--List View
+						<td><a ui-sref="getdidblock({id: didblock.id})"><button class="btn btn-xs btn-default btn-block">{{ didblock.id}}</button></a></td>-->
+						<td><a ui-sref="getdidblock({id: didblock.id})"><button style="color: white; background-color:#555a5e;" class="btn btn-xs btn-block"><b>View</b></button></a></td>
 						<!--<td>{{ didblock.id}}</a></td>-->
 						<td   ng-show="!vm.edit[didblock.id]"><a ui-sref="getdidblock({id: didblock.id})"><b>{{ didblock.name}}</b></a></td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.carrier}}</a></td>

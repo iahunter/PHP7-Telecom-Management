@@ -66,6 +66,13 @@
 								</a>
 							</th>
 							<th>
+								<a href="" ng-click="sortType = 'ticket_number'; sortReverse = !sortReverse" style="color:black">
+									Ticket Number
+										<span ng-show="sortType == 'ticket_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ticket_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
 								<a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse" style="color:black">
 									Status
 										<span ng-show="sortType == 'status' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -168,6 +175,7 @@
 							
 							<td><a href="#/macd/jobsummary/{{log.id}}"><button style="color: white; background-color:#555a5e;" class="btn btn-xs"><b>View</b></button></a></td>
 							<td>{{log.type}}</td>
+							<td>{{log.form_data.ticket_number}}</td>
 							<td>{{log.status}}</td>
 							<td>{{log.form_data.sitecode}}</td>
 							<td>{{log.form_data.device}}</td>

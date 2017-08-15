@@ -20,6 +20,7 @@ class CreatePhoneMacTable extends Migration
 
             $table->string('type')->nullable();                      // simple name to reference the account by
             $table->string('status')->nullable();                      // simple name to reference the account by
+			$table->string('ticket_number')->nullable();             // simple name to reference the account by
 
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by

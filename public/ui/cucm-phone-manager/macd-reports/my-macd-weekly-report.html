@@ -40,6 +40,7 @@
 				</div>
 			</div>
 		
+			<div style="margin:25px"></div>
 			<b>Found {{vm.logs.length}} Logs</b>
 			<b class="pull-right">{{vm.datetime}}</b>
 			<div style="margin:10px"></div>
@@ -49,13 +50,7 @@
 					<thead>
 						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 						
-							<th>
-								<a href="" ng-click="sortType = 'created_at_local'; sortReverse = !sortReverse" style="color:black">
-									Time
-										<span ng-show="sortType == 'created_at_local' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'created_at_local' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
+							
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 									ID
@@ -147,6 +142,13 @@
 										<span ng-show="sortType == 'template' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							<th>
+								<a href="" ng-click="sortType = 'created_at_local'; sortReverse = !sortReverse" style="color:black">
+									Time
+										<span ng-show="sortType == 'created_at_local' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'created_at_local' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 							
 							
 						</tr>
@@ -156,8 +158,8 @@
 					<!-- Allow you to edit and delete Blocks with new buttons -->
 					<!--<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
 					<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">
-							<td>{{log.created_at_local}}</td>
-							<td><a href="#/macd/jobsummary/{{log.id}}"><b>{{log.id}}</b></a></td>
+							
+							<td><a href="#/macd/jobsummary/{{log.id}}"><button style="color: white; background-color:#555a5e;" class="btn btn-xs"><b>View</b></button></a></td>
 							<td>{{log.type}}</td>
 							<td>{{log.status}}</td>
 							<td>{{log.form_data.sitecode}}</td>
@@ -170,6 +172,7 @@
 							<td>{{log.form_data.lastname}}</td>
 							<td>{{log.form_data.voicemail}}</td>
 							<td>{{log.form_data.template}}</td>
+							<td>{{log.created_at_local}}</td>
 					</tr>
 							
 					</tbody>

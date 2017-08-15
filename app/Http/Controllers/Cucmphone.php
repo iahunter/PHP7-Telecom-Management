@@ -110,7 +110,9 @@ class Cucmphone extends Cucm
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Cucmclass::class)) {
-            abort(401, 'You are not authorized');
+            if (! $user->can('read', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
         }
 
         $name = $request->name;
@@ -184,7 +186,9 @@ class Cucmphone extends Cucm
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('update', Cucmclass::class)) {
-            abort(401, 'You are not authorized');
+            if (! $user->can('update', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
         }
         //return $request;
 

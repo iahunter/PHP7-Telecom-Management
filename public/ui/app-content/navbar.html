@@ -25,11 +25,11 @@
 					<li><a href="#/didblock/create" ng-if="vm.permissions.create.Didblock == true">Add Number Block</a></li>
 					<!--<li><a href="#/importdidblock" ng-if="vm.permissions.create.Didblock == true">Bulk Import Number Blocks</a></li>-->
 					<li><a href="#/didblock">List Number Blocks</a></li>
-					<li role="separator" class="divider" ng-if="vm.permissions.read.Cucmclass == true"></li>
-					<li><a href="#/checkdidusage" ng-if="vm.permissions.read.Cucmclass == true">Check DID Usage</a></li>
-					<li><a href="#/checkdidblockusage" ng-if="vm.permissions.read.Cucmclass == true">Check DID Block Usage</a></li>
-					<li role="separator" class="divider" ng-if="vm.permissions.read.Cucmclass == true"></li>
-					<li><a href="#/reports/linecleanup"  ng-if="vm.permissions.read.Cucmclass == true" >Number Cleanup Reports</a></li>
+					<li role="separator" class="divider" ng-if="vm.permissions.create.Didblock == true"></li>
+					<li><a href="#/checkdidusage" ng-if="vm.permissions.create.Didblock == true">Check DID Usage</a></li>
+					<li><a href="#/checkdidblockusage" ng-if="vm.permissions.create.Didblock == true">Check DID Block Usage</a></li>
+					<li role="separator" class="divider" ng-if="vm.permissions.delete.Cucmclass == true"></li>
+					<li><a href="#/reports/linecleanup"  ng-if="vm.permissions.delete.Cucmclass == true">Number Cleanup Reports</a></li>
 					
 					<!--
 					<li role="separator" class="divider"></li>
@@ -67,7 +67,7 @@
 					<li><a href="#/reports/site-trunking-911-report"  ng-if="vm.permissions.read.Cucmsiteconfigs == true || vm.permissions.read.PhoneMACD == true">List Sites</a></li>
 					<li role="separator" class="divider" ng-if="vm.permissions.read.PhoneMACD == true || vm.permissions.read.Cucmclass == true" ></li>
 					<li><a href="#/mymacds/week"  ng-if="vm.permissions.read.PhoneMACD == true || vm.permissions.read.Cucmclass == true" >My Weeks MACDs</a></li>
-					<li><a href="#/macds/report"  ng-if="vm.permissions.read.Cucmclass == true" >MACD Report</a></li>
+					<li><a href="#/macds/report"  ng-if="vm.permissions.delete.Cucmclass == true" >MACD Report</a></li>
 					
 					<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
 					<!--

@@ -61,6 +61,7 @@ class PhoneMACDController extends Controller
 
         // Build new line first and then chain to add the phone if a new line is required.
         if (isset($phone['usenumber']) && $phone['usenumber'] == 'new') {
+			//\Log::info('createPhoneListener', ['data' => "New Line... Build Line Job"]);
             $task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
             $tasks[] = $task;
             $data['taskid'] = $task->id;
@@ -71,30 +72,37 @@ class PhoneMACDController extends Controller
             // Build new line first and then chain to add the phone if a new line is required.
         } elseif (isset($phone['usenumber']) && $phone['usenumber'] == 'existing') {
 
-            // Check if the line exists in the system today.
-            try {
-                $result = $this->cucm->get_route_plan_by_name($phone['dn']);
-
-                if (! count($result)) {
-                    throw new \Exception('Indexed results from call mangler is empty');
-                }
-            } catch (\Exception $e) {
-                //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-                //dd($e->getTrace());
-            }
-
+			$result = $this->cucm->get_route_plan_by_name($phone['dn']);
+			
+			//\Log::info('Line Found!!!!', ['data' => $result]);
+				
+			//$task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
+			
             // If its not built in the system go ahead and try to build it.
             if (! $result) {
+				//\Log::info('No Line Found!!!', ['data' => "No Result... Add Line"]);
                 $task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
                 $tasks[] = $task;
                 $data['taskid'] = $task->id;
 
                 // Testing of Events Controller
                 event(new Create_Line_Event($data));
-            }
+            }else{
+				// Build Phone
+				if (isset($phone['name']) && $phone['name']) {
+					//\Log::info('createPhoneListener', ['data' => "Create the Phone"]);
+					$task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
+					$tasks[] = $task;
+					$data['taskid'] = $task->id;
+
+					// Testing of Events Controller
+					event(new Create_Phone_Event($data));
+				}
+			}
         } else {
             // Build Phone
             if (isset($phone['name']) && $phone['name']) {
+				//\Log::info('createPhoneListener', ['data' => "Create the Phone"]);
                 $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
                 $tasks[] = $task;
                 $data['taskid'] = $task->id;

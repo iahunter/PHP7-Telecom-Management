@@ -19,7 +19,9 @@
 		</div>
 		
 		<div ng-if="!vm.loading && vm.mactasks">
-			<legend><h3>MACD Job Summary - ID: {{vm.macd_details.macd.id}} </h3></legend>
+		
+		 <div style="margin:25px">
+			<legend><h3>MACD Job Summary - ID: {{vm.macd_details.macd.id}} </h3> </legend><button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:25px"></div>
 			
 		</div>
 			

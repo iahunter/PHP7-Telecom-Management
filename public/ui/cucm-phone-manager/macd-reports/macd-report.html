@@ -43,7 +43,7 @@
 			<b>Found {{vm.logs.length}} Logs</b>
 			
 			<b class="pull-right">{{vm.datetime}}</b>
-			<div style="margin:25px"></div>
+			<div style="margin:10px"></div>
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">    
 				<table class="table table-striped table-condensed table-bordered table-hover">
@@ -166,7 +166,7 @@
 					<!--<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
 					<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">
 							
-							<td><a href="#/macd/jobsummary/{{log.id}}"><b>{{log.id}}</b></a></td>
+							<td><a href="#/macd/jobsummary/{{log.id}}"><button style="color: white; background-color:#555a5e;" class="btn btn-xs"><b>View</b></button></a></td>
 							<td>{{log.type}}</td>
 							<td>{{log.status}}</td>
 							<td>{{log.form_data.sitecode}}</td>

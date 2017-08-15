@@ -19,6 +19,10 @@ angular
 		}
 		
 		
+		vm.refresh = function (){
+			$state.reload();
+		};
+		
 		
 		vm.list_macd_and_children_by_id = function(){
 		
@@ -32,31 +36,9 @@ angular
 						$state.go('logout');
 					}
 					
-					var alltaskscomplete = true
+
 					
-					if(vm.macd_details){
-						if(vm.macd_details.tasks){
-							angular.forEach(vm.mactasks, function(task) {
-							
-								if(task.status == "complete" || task.status == "error" ){
-									task.complete = true;
-								}
-							});
-							
-							//console.log(vm.macd_details.tasks)
-							
-							angular.forEach(vm.mactasks, function(task) {
-								if(!task.complete){
-									alltaskscomplete = false
-								}
-							});
-						}
-						
-						
-						console.log("All task complete: " + alltaskscomplete)
-						
-						
-					}
+					var alltaskscomplete = true
 					
 					
 					vm.macd_details = res.data.result;
@@ -81,34 +63,54 @@ angular
 					
 					});
 					
+					vm.polldevices();
 					
-					// Only poll the systems if these variables are not set. 
-					if(!vm.aduser){
-						vm.lookupuser(vm.deviceForm.username)
-						vm.getusername(vm.deviceForm.username)
+					if(vm.macd_details){
+						if(vm.macd_details.tasks){
+							angular.forEach(vm.mactasks, function(task) {
+								
+								if(task.status == "complete" || task.status == "error" ){
+									console.log(task)
+									
+									task.complete = true;
+									console.log(task.complete)
+								}
+							});
+							
+							//console.log(vm.macd_details.tasks)
+							
+							angular.forEach(vm.mactasks, function(task) {
+								if(!task.complete){
+									alltaskscomplete = false
+								}
+							});
+						}
+						
+						if(alltaskscomplete){
+							console.log("All task complete: " + alltaskscomplete)
+							
+							$timeout($interval.cancel(pull), 5);
+							
+							vm.polldevices()
+						}
+						
+						
+						
 					}
 					
-					if(!vm.line_number){
-						vm.checklineusage(vm.deviceForm.dn)
-					}
-
-					if(!vm.phone){
-						vm.checkname(vm.deviceForm)
-					}
-
-					if(!vm.unity_mailbox_extension_inuse){
-						vm.getusersfromcupi(vm.deviceForm);
-					}
+					/*
+					vm.polldevices()
+					
 					
 					if(alltaskscomplete){
-						$interval.cancel(pull);
+						$interval.cancel(polldevices);
+						vm.polldevices()
 					}
-					
+					*/
 				}, function(err){
 					//Error
 				});
 		}
-		
 		
 		vm.list_macd_and_children_by_id()
 
@@ -119,6 +121,41 @@ angular
 			//console.log($scope);
 			$interval.cancel(pull);
 		});
+		
+		
+		
+		
+		vm.polldevices = function(){
+			// Only poll the systems if these variables are not set. 
+			if(!vm.aduser){
+				vm.lookupuser(vm.deviceForm.username)
+				vm.getusername(vm.deviceForm.username)
+			}
+			
+			if(!vm.line_number){
+				vm.checklineusage(vm.deviceForm.dn)
+			}
+
+			if(!vm.phone){
+				vm.checkname(vm.deviceForm)
+			}
+
+			if(!vm.unity_mailbox_extension_inuse){
+				vm.getusersfromcupi(vm.deviceForm);
+			}
+		}
+		
+		
+		
+		var polldevices = $interval(vm.polldevices,5000); 
+		
+		$scope.$on('$destroy', function() {
+			//console.log($scope);
+			$interval.cancel(polldevices);
+		});
+		
+		
+		
 		
 		
 		
@@ -348,7 +385,7 @@ angular
 							//console.log(result);
 
 							// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-							if(result){
+							if(result.numbers){
 								vm.linedetails = result;
 								
 								if(vm.linedetails.line_details.pattern){
@@ -499,6 +536,8 @@ angular
 			cupiService.deleteuser(user).then(function(data) {
 				
 				vm.getusersfromcupi(vm.deviceForm);
+				
+				vm.polldevices();
 			
           }, function(error) {
 				alert('An error occurred');
@@ -550,6 +589,7 @@ angular
 						phone = null;
 					}
 					//console.log(res)
+					vm.polldevices();
 			  }, function(error) {
 					alert('An error occurred');
 			  });

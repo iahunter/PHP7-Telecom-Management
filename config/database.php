@@ -78,10 +78,10 @@ return [
             'schema'   => 'public',
             'sslmode'  => 'prefer',
         ],
-		
-		// Adding 911Enable EGW DB Connection
-		'egw' => [
-			'driver'    => 'mysql',
+
+        // Adding 911Enable EGW DB Connection
+        'egw' => [
+            'driver'    => 'mysql',
             'host'      => env('EGW_HOST', 'localhost'),
             'port'      => env('EGW_PORT', '3306'),
             'database'  => env('EGW_DATABASE', 'forge'),
@@ -92,7 +92,7 @@ return [
             'prefix'    => '',
             'strict'    => true,
             'engine'    => null,
-		],
+        ],
 
     ],
 

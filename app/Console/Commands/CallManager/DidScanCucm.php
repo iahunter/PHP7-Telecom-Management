@@ -42,8 +42,7 @@ class DidScanCucm extends Command
      */
     public function handle()
     {
-		
-		
+
         // Get our list of NPA/NXX's
         $prefixes = $this->getDidNPANXXList();
 
@@ -61,13 +60,11 @@ class DidScanCucm extends Command
             // Update all our DID information for this NPANXX based on those device records.
             $possible_deletes[$npanxx] = $this->updateDidInfo($npanxx, $didinfo);
         }
-		
-		// This will remove lines that are now available from the Line Cleanup Report.
+
+        // This will remove lines that are now available from the Line Cleanup Report.
         echo 'Starting Cleanup Quick Scan'.PHP_EOL;
         $this->updateNumberCleanupReport();
         echo 'Completed Cleanup Quick Scan'.PHP_EOL;
-
-        
     }
 
     // This gets a SIMPLE array of NPA/NXX for our numbers in the database.
@@ -239,28 +236,28 @@ class DidScanCucm extends Command
 
         $data = (array) $data;
 
-		//print_r($data);
+        //print_r($data);
         foreach ($data as $reportname => $numbers) {
             $report_array = [];
-			if(is_array($numbers) && count($numbers)){
-				foreach ($numbers as $number) {
-					$numberusage = Did::where([['number', '=', $number['pattern']], ['country_code', '=', '1']])->first();
+            if (is_array($numbers) && count($numbers)) {
+                foreach ($numbers as $number) {
+                    $numberusage = Did::where([['number', '=', $number['pattern']], ['country_code', '=', '1']])->first();
 
-					$numberusage = json_decode(json_encode($numberusage), true);
+                    $numberusage = json_decode(json_encode($numberusage), true);
 
-					//print_r($numberusage);
-					//return $numberusage;
-					if ($numberusage['status'] == 'inuse') {
-						continue;
-						//unset($numbers[$number['uuid']]);
-						//return $number['pattern'];
-					} else {
-						unset($numbers[$number['uuid']]);
-						print "Removed {$number['pattern']} from Number Cleanup Report".PHP_EOL;
-					}
-				}
-			}
-            
+                    //print_r($numberusage);
+                    //return $numberusage;
+                    if ($numberusage['status'] == 'inuse') {
+                        continue;
+                        //unset($numbers[$number['uuid']]);
+                        //return $number['pattern'];
+                    } else {
+                        unset($numbers[$number['uuid']]);
+                        echo "Removed {$number['pattern']} from Number Cleanup Report".PHP_EOL;
+                    }
+                }
+            }
+
             $data[$reportname] = $numbers;
         }
 

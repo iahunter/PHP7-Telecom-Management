@@ -17,9 +17,8 @@ class PhoneMACD extends Model
             'form_data' => 'array',
             'json'      => 'array',
         ];
-		
-		
-	protected static function boot()
+
+    protected static function boot()
     {
         parent::boot();
 

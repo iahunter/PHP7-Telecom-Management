@@ -5,8 +5,8 @@ namespace App\Console\Commands\Sonus;
 use App\Calls;
 use App\Sonus5k;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class SonusActiveCallsCache extends Command
 {
@@ -52,8 +52,8 @@ class SonusActiveCallsCache extends Command
         foreach ($this->SBCS as $SBC) {
             $CALLS[$SBC] = Sonus5k::listactivecalls($SBC);
         }
-		
-		// Name of Cache key.
+
+        // Name of Cache key.
         $key = 'listactivecalls';
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.

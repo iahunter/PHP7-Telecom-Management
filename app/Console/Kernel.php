@@ -19,9 +19,9 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmPhoneScan::class,
         Commands\CallManager\DidScanCucm::class,
         Commands\CallManager\CucmNumberCleanup::class,
-		Commands\CallManager\CucmPhoneScanOnDemand::class,
-		
-		Commands\West911Enable\PhoneEGWScanUpdate::class,
+        Commands\CallManager\CucmPhoneScanOnDemand::class,
+
+        Commands\West911Enable\PhoneEGWScanUpdate::class,
 
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
@@ -36,8 +36,6 @@ class Kernel extends ConsoleKernel
         Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
         Commands\Monitoring\SonusAttemptMonitor::class,
-
-        
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

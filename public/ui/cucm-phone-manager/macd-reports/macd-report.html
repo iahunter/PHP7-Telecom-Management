@@ -50,6 +50,7 @@
 					<thead>
 						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
 						
+							<th></th>
 							
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
@@ -174,6 +175,7 @@
 					<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">
 							
 							<td><a href="#/macd/jobsummary/{{log.id}}"><button style="color: white; background-color:#555a5e;" class="btn btn-xs"><b>View</b></button></a></td>
+							<td>{{log.id}}</td>
 							<td>{{log.type}}</td>
 							<td>{{log.form_data.ticket_number}}</td>
 							<td>{{log.status}}</td>

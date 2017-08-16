@@ -17,4 +17,15 @@ class PhoneMACD extends Model
             'form_data' => 'array',
             'json'      => 'array',
         ];
+		
+		
+	protected static function boot()
+    {
+        parent::boot();
+
+        // Cascade Soft Deletes Child Dids
+        static::deleting(function ($macd) {
+            PhoneMACD::where('parent', $macd->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
+        });
+    }
 }

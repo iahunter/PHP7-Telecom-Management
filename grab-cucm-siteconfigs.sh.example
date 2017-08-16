@@ -1,0 +1,28 @@
+#!/bin/bash
+
+printf "\n###########################################################\n"
+printf "Starting - grab-cucm-siteconfigs.sh \n"
+#echo "grab-cucm-siteconfigs.sh Started...\n"
+
+cd /PATH_TO_APP/
+
+php artisan callmanager:sitescan
+
+# Checkout your SVN Repo in this directory
+cd /PATH_TO_APP/storage/cucm/kiewit-cucm/sites/
+
+echo "Commiting Configs to Subversion..."
+
+svn add * 2>&1 | grep -v already | grep -v Illegal
+
+svn status
+
+# Remove Locally deleted files from repo
+svn rm $( svn status | sed -e '/^!/!d' -e 's/^!//' )
+
+svn status
+
+svn commit --username USERNAME --password PASSWORD -m "autoupdated"
+
+printf "Ending Task - grab-cucm-siteconfigs.sh \n"
+#echo "grab-cucm-siteconfigs.sh Completed... Ending Task.\n"

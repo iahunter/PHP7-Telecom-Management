@@ -19,15 +19,21 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmPhoneScan::class,
         Commands\CallManager\DidScanCucm::class,
         Commands\CallManager\CucmNumberCleanup::class,
+		
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
         Commands\Sonus\GetSonusCDRs::class,
         Commands\Sonus\GetSonusCallReports::class,
+		Commands\Sonus\SonusActiveCallsCache::class,
+		
         Commands\OnCall\OnCallPermissions::class,
+		
         Commands\BouncerPermissions\BouncerPermissions::class,
+		
         Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
         Commands\Monitoring\SonusAttemptMonitor::class,
+		
         Commands\CallManager\CucmPhoneScanOnDemand::class,
 
         // Commented out one time scripts - Uncomment if needed.

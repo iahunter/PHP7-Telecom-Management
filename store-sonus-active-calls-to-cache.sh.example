@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#printf "\n###########################################################\n"
+#printf "Starting - store-sonus-active-calls-to-cache.sh \n"
+
+(sleep 1 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 5 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 10 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 15 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 20 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 25 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 30 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 35 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 40 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 45 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 50 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 55 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+(sleep 60 && /PATH_TO_APP/artisan sonus:listactivecalls-to-cache) &
+
+#printf "Ending - store-sonus-active-calls-to-cache.sh \n"
+#printf "\n###########################################################\n"

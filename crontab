@@ -22,6 +22,9 @@
 
 */5 * * * * /opt/dcoapi/telephony/artisan sonus:save_call_reports_to_cache > /dev/null 2>&1
 
+# Store SBC Active Calls to Cache - this script pulls every 5 secs for 1 minute - run every minute   
+*/1 * * * * /opt/dcoapi/telephony/store-sonus-active-calls-to-cache.sh > /dev/null 2>&1
+
 # Update Number Database with CUCM scan every hour
 0 * * * * /PATH_TO_APP/telephony/artisan callmanager:didscan > /dev/null 2>&1
 

@@ -388,4 +388,32 @@ class PhoneMACDController extends Controller
 
         return response()->json($response);
     }
+	
+	public function deletePhoneMACD(Request $request, $id)
+    {
+		
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+			abort(401, 'You are not authorized');
+        }
+
+        $macd = PhoneMACD::find($id);
+
+        $request->merge(['deleted_by' => $user->username]);
+
+        $macd->fill($request->all());
+        $macd->save();
+
+        // Find the block in the database by id
+        $macd->delete();                                                            // Delete the did block.
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => 'MACD '.$id.' successfully deleted',
+                    'deleted_at'     => $macd->deleted_at, ];
+
+        return response()->json($response);
+    }
 }

@@ -229,3 +229,28 @@
      * )
      **/
     $api->get('/cucm/macd/list/tasks/{id}', 'App\Http\Controllers\PhoneMACDController@list_macd_and_children_by_id');
+	
+	 /**
+     * @SWG\Delete(
+     *     path="/telephony/api/cucm/macd/{id}",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="Delete MACD Log ID",
+     *     description="This deletes the logid and its children jobs",
+     *     operationId="deleteMACD",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of MACD to Delete",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->delete('/cucm/macd/{id}', 'App\Http\Controllers\PhoneMACDController@deletePhoneMACD');

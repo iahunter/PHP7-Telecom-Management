@@ -229,8 +229,8 @@
      * )
      **/
     $api->get('/cucm/macd/list/tasks/{id}', 'App\Http\Controllers\PhoneMACDController@list_macd_and_children_by_id');
-	
-	 /**
+
+    /**
      * @SWG\Delete(
      *     path="/telephony/api/cucm/macd/{id}",
      *     tags={"Management - Cisco Voice - MACD"},

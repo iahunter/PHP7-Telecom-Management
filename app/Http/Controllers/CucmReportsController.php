@@ -17,7 +17,7 @@ class CucmReportsController extends Controller
 {
     public $phones = [];
     public $extnlength = [];
-	public $sitecode;
+    public $sitecode;
 
     //use Helpers;
     public function __construct()
@@ -57,8 +57,6 @@ class CucmReportsController extends Controller
         $site = Cucmsiteconfigs::where('sitecode', $request->sitecode)->first();
         $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
 
-        
-
         // Change Site type based on site design user chooses. This will determine the site type.
         if ($site->trunking == 'sip' && $site->e911 == '911enable') {
             $site->type = 1;
@@ -82,56 +80,55 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	public function phones_in_site_erl_but_not_in_site_config(Request $request)
+
+    public function phones_in_site_erl_but_not_in_site_config(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Cucmsiteconfigs::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		$this->sitecode = $request->sitecode;
-		
-		//return $this->sitecode;
+
+        $this->sitecode = $request->sitecode;
+
+        //return $this->sitecode;
 
         $count = Cucmphoneconfigs::where('erl', 'like', '%'.$this->sitecode.'%')->count();
-		//return $count; 
-		if ($count) {
+        //return $count;
+        if ($count) {
             $phone_array[] = Cucmphoneconfigs::where('erl', 'like', '%'.$this->sitecode.'%')->chunk(300, function ($phones) {
                 $return = [];
                 foreach ($phones as $phone) {
                     //print_r($phone);
-					$REGEX =  "/{$this->sitecode}/";
-					if(!preg_match($REGEX, $phone->devicepool)){
-						
-						//$this->phones[] = $phone;
-						
-						//print_r($phone);
-						$lines = [];
-						foreach ($phone['lines'] as $line) {
-							$ln = [];
-							$ln['uuid'] = $line['uuid'];
-							$ln['pattern'] = $line['pattern'];
-							$ln['description'] = $line['description'];
-							$ln['callForwardAll'] = [];
-							$ln['callForwardAll']['destination'] = $line['callForwardAll']['destination'];
-							$ln['css'] = $line['shareLineAppearanceCssName']['_'];
-							$lines[$ln['uuid']] = $ln;
-						}
-						$phone->lines = $lines;        // replace the lines with only the fields we need for our UI.
-						$phone->config = '';        // Scrap the config, we dont' need it.
+                    $REGEX = "/{$this->sitecode}/";
+                    if (! preg_match($REGEX, $phone->devicepool)) {
 
-						$this->phones[] = $phone;    // Append the phone to the array to return.
-						
-					}
+                        //$this->phones[] = $phone;
+
+                        //print_r($phone);
+                        $lines = [];
+                        foreach ($phone['lines'] as $line) {
+                            $ln = [];
+                            $ln['uuid'] = $line['uuid'];
+                            $ln['pattern'] = $line['pattern'];
+                            $ln['description'] = $line['description'];
+                            $ln['callForwardAll'] = [];
+                            $ln['callForwardAll']['destination'] = $line['callForwardAll']['destination'];
+                            $ln['css'] = $line['shareLineAppearanceCssName']['_'];
+                            $lines[$ln['uuid']] = $ln;
+                        }
+                        $phone->lines = $lines;        // replace the lines with only the fields we need for our UI.
+                        $phone->config = '';        // Scrap the config, we dont' need it.
+
+                        $this->phones[] = $phone;    // Append the phone to the array to return.
+                    }
                 }
-				//return $this->phones;
+                //return $this->phones;
             });
         }
-		
-		return $this->phones;
-	}
+
+        return $this->phones;
+    }
 
     public function sitePhones(Request $request)
     {

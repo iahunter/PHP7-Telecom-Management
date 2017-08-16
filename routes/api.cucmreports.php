@@ -47,8 +47,8 @@
      * )
      **/
     $api->get('/reports/site/{sitecode}', 'App\Http\Controllers\CucmReportsController@siteSummary');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/site/{sitecode}/erl/discrepancies",
      *     tags={"CUCM Reports"},

@@ -40,30 +40,31 @@ class PhoneEGWScanUpdate extends Command
      */
     public function handle()
     {
+		print "Starting update_db_phonetable_ip_and_erl...".PHP_EOL;
         // Update Table with IP and ERL info
 		$this->egw_endpoints = West911EnableEGW::get_all_endpoints_ip_erl();
 		if(!count($this->egw_endpoints)){
-			print "No Endpoints...".PHP_EOL;
+			//print "No Endpoints...".PHP_EOL;
 			die();
 		}
 		
 		//print_r($this->egw_endpoints);
 		
 		//$result = West911EnableEGW::get();
-		print "Starting chunking...".PHP_EOL;
+		//print "Starting chunking...".PHP_EOL;
 		
 		Cucmphoneconfigs::chunk(10, function ($phones) {
 			foreach ($phones as $phone) {
 				$erl = "";
 				$ipv4address = "";
-				print "Looking for Phone: {$phone->name}".PHP_EOL;
+				//print "Looking for Phone: {$phone->name}".PHP_EOL;
 				if(array_key_exists($phone->name, $this->egw_endpoints)){
-					print "Found {$phone->name} in Endpoints...".PHP_EOL;
-					print_r($this->egw_endpoints[$phone->name]);
+					//print "Found {$phone->name} in Endpoints...".PHP_EOL;
+					//print_r($this->egw_endpoints[$phone->name]);
 					$erl = $this->egw_endpoints[$phone->name]['erl'];
 					$ipv4address = $this->egw_endpoints[$phone->name]['ip_address'];
-					print $erl.PHP_EOL;
-					print $ipv4address.PHP_EOL;
+					//print $erl.PHP_EOL;
+					//print $ipv4address.PHP_EOL;
 	
 					if($erl){
 						$phone->fill(['erl' => $erl]);
@@ -84,6 +85,8 @@ class PhoneEGWScanUpdate extends Command
 			}
 			//die();
 		});
+		
+		print "Completed update_db_phonetable_ip_and_erl...".PHP_EOL;
     }
 	
 }

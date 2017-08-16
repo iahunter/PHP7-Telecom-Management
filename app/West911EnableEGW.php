@@ -29,7 +29,7 @@ class West911EnableEGW extends Model
 		
 		$result = DB::connection('egw')->select("select * from endpoint");
 		
-		return $result; 
+		return $result;
 	}
 	
 	public static function get_endpoint_by_name($name){
@@ -58,4 +58,12 @@ class West911EnableEGW extends Model
 		
 		return $result; 
 	}
+	
+	public static function list_erls(){
+		
+		$result = DB::connection('egw')->select("select * from locations");
+		
+		return $result; 
+	}
+	
 }

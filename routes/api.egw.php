@@ -120,3 +120,24 @@
      * )
      **/
     $api->get('/egw/endpoint_erlid/all', 'App\Http\Controllers\West911EnableEGWController@get_all_endpoints_ip_erl');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/egw/erls/all",
+     *     tags={"Management - West 911Enable EGW"},
+     *     summary="Seach for current user by alias",
+     *     description="",
+     *     operationId="getphones",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('/egw/erls/all', 'App\Http\Controllers\West911EnableEGWController@list_erls');

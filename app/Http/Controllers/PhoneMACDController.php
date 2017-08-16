@@ -51,7 +51,7 @@ class PhoneMACDController extends Controller
 
         // Update AD User IP Phone Field
         if (isset($phone['username']) && $phone['username'] && (isset($phone['dn']) && $phone['dn'])) {
-            $task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'parent' => $macd->id, 'status' => 'job recieved']);
+            $task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'parent' => $macd->id, 'status' => 'job received']);
             $tasks[] = $task;
             $data['taskid'] = $task->id;
 
@@ -62,7 +62,7 @@ class PhoneMACDController extends Controller
         // Build new line first and then chain to add the phone if a new line is required.
         if (isset($phone['usenumber']) && $phone['usenumber'] == 'new') {
             //\Log::info('createPhoneListener', ['data' => "New Line... Build Line Job"]);
-            $task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
+            $task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job received']);
             $tasks[] = $task;
             $data['taskid'] = $task->id;
 
@@ -75,12 +75,12 @@ class PhoneMACDController extends Controller
 
             //\Log::info('Line Found!!!!', ['data' => $result]);
 
-            //$task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
+            //$task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job received']);
 
             // If its not built in the system go ahead and try to build it.
             if (! $result) {
                 //\Log::info('No Line Found!!!', ['data' => "No Result... Add Line"]);
-                $task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job recieved']);
+                $task = PhoneMACD::create(['type' => 'Add Line', 'parent' => $macd->id, 'status' => 'job received']);
                 $tasks[] = $task;
                 $data['taskid'] = $task->id;
 
@@ -90,7 +90,7 @@ class PhoneMACDController extends Controller
                 // Build Phone
                 if (isset($phone['name']) && $phone['name']) {
                     //\Log::info('createPhoneListener', ['data' => "Create the Phone"]);
-                    $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
+                    $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job received']);
                     $tasks[] = $task;
                     $data['taskid'] = $task->id;
 
@@ -102,7 +102,7 @@ class PhoneMACDController extends Controller
             // Build Phone
             if (isset($phone['name']) && $phone['name']) {
                 //\Log::info('createPhoneListener', ['data' => "Create the Phone"]);
-                $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job recieved']);
+                $task = PhoneMACD::create(['type' => 'Add Phone', 'parent' => $macd->id, 'status' => 'job received']);
                 $tasks[] = $task;
                 $data['taskid'] = $task->id;
 
@@ -116,7 +116,7 @@ class PhoneMACDController extends Controller
             if ($phone['voicemail'] == 'true') {
                 if (isset($phone['template']) && $phone['template']) {
                     if (isset($phone['username']) && $phone['username']) {
-                        $task = PhoneMACD::create(['type' => 'Create Mailbox from LDAP User', 'parent' => $macd->id, 'status' => 'job recieved']);
+                        $task = PhoneMACD::create(['type' => 'Create Mailbox from LDAP User', 'parent' => $macd->id, 'status' => 'job received']);
                         $tasks[] = $task;
                         $data['taskid'] = $task->id;
 
@@ -124,7 +124,7 @@ class PhoneMACDController extends Controller
                         event(new Create_UnityConnection_LDAP_Import_Mailbox_Event($data));
                     } else {
                         // If no username build user as a new user without Unified Messaging
-                        $task = PhoneMACD::create(['type' => 'Create Mailbox with no UserID', 'parent' => $macd->id, 'status' => 'job recieved']);
+                        $task = PhoneMACD::create(['type' => 'Create Mailbox with no UserID', 'parent' => $macd->id, 'status' => 'job received']);
                         $tasks[] = $task;
                         // Create the User Alias for the mailbox.
                         $data['phone']['username'] = $data['phone']['firstname'].' '.$data['phone']['lastname'].' '.$data['phone']['dn'];

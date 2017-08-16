@@ -2007,6 +2007,36 @@
                 }
             }
         },
+        "/telephony/api/reports/site/{sitecode}/erl/discrepancies": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List of phones physically at the site but are not configured for site. ",
+                "description": "",
+                "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "sitecode",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/reports/phones/{sitecode}": {
             "get": {
                 "tags": [

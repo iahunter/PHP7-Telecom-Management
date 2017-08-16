@@ -47,6 +47,31 @@
      * )
      **/
     $api->get('/reports/site/{sitecode}', 'App\Http\Controllers\CucmReportsController@siteSummary');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/reports/site/{sitecode}/erl/discrepancies",
+     *     tags={"CUCM Reports"},
+     *     summary="List of phones physically at the site but are not configured for site. ",
+     *     description="",
+     *     operationId="listSites",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="sitecode",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->get('/reports/site/{sitecode}/erl/discrepancies', 'App\Http\Controllers\CucmReportsController@phones_in_site_erl_but_not_in_site_config');
 
     /**
      * @SWG\Get(

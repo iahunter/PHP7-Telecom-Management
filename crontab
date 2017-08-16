@@ -28,6 +28,9 @@
 # Update Number Database with CUCM scan every hour
 0 * * * * /PATH_TO_APP/telephony/artisan callmanager:didscan > /dev/null 2>&1
 
+# Update Phone Database with IP And ERL Info from EGW scan every hour
+0 * * * * /PATH_TO_APP/telephony/artisan west911enable:update_db_phonetable_ip_and_erl > /dev/null 2>&1
+
 # CUCM Scheduled Jobs every hour
 0 * * * * /PATH_TO_APP/telephony/artisan callmanager:sitescan > /dev/null 2>&1
 

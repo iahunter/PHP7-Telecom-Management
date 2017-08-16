@@ -92,6 +92,20 @@
 									</a>
 								</th>
 								<th>
+									<a href="" ng-click="sortType = 'ipv4address'; sortReverse = !sortReverse" style="color:black">
+										IP Address
+											<span ng-show="sortType == 'ipv4address' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'ipv4address' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'erl'; sortReverse = !sortReverse" style="color:black">
+										ERL
+											<span ng-show="sortType == 'erl' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'erl' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
 										Lines
 								</th>
 								<!--<th>
@@ -113,6 +127,8 @@
 								<td>{{ phone.devicepool}}</td>
 								<td>{{ phone.css}}</td>
 								<td>{{ phone.ownerid}}</td>
+								<td>{{ phone.ipv4address}}</td>
+								<td>{{ phone.erl}}</td>
 								<td>
 									
 										<!--Nested Table inside Row-->

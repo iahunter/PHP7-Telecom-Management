@@ -112,8 +112,8 @@
 			
 				<tbody>
 					<tr ng-repeat="number in vm.numberstable | orderBy:sortType:sortReverse | filter:vm.search: strict">
-						<td><a href="#/didblock/{{number.details.parent}}"><b>{{number.details.parent}}</b></td>
-						<td>{{number.number}}</td> 
+						<td><a href="#/didblock/{{number.details.parent}}" target="_blank"><b>{{number.details.parent}}</b></td>
+						<td><a href="#/line/{{number.number}}" target="_blank"><b>{{number.number}}</b></a></td> 
 						<td>{{number.details.status}}</td> 
 						<td ng-if="vm.showassignments">
 						<!--Nested Table inside Row-->
@@ -128,7 +128,7 @@
 										
 										<td>{{assignment.partition._}}</td>
 										<td>{{assignment.type}}</td>
-										<td>{{assignment.routeDetail}}</td>
+										<td><a href="#/phone/{{assignment.routeDetail}}" target="_blank"><b>{{assignment.routeDetail}}</b></a></td>
 									</tr>
 								</table>
 							</div>

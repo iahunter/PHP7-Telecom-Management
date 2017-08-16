@@ -51,6 +51,8 @@
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>
 						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+							
+							<th></th>
 							<th>
 								<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 									ID
@@ -182,9 +184,10 @@
 					
 						<!--List View
 						<td><a ui-sref="getdidblock({id: didblock.id})"><button class="btn btn-xs btn-default btn-block">{{ didblock.id}}</button></a></td>-->
-						<td><a ui-sref="getdidblock({id: didblock.id})"><button style="color: white; background-color:#555a5e;" class="btn btn-xs btn-block"><b>View</b></button></a></td>
-						<!--<td>{{ didblock.id}}</a></td>-->
-						<td   ng-show="!vm.edit[didblock.id]"><a ui-sref="getdidblock({id: didblock.id})"><b>{{ didblock.name}}</b></a></td>
+						<!--<td><a ui-sref="getdidblock({id: didblock.id})"><button style="color: white; background-color:#555a5e;" class="btn btn-xs btn-block"><b>View</b></button></a></td>-->
+						<td><a href="#/didblock/{{ didblock.id}}" target="_blank"><button style="color: white; background-color:#555a5e;" class="btn btn-xs"><b>View</b></button></a></td>
+						<td>{{ didblock.id}}</a></td>
+						<td   ng-show="!vm.edit[didblock.id]"><a href="#/didblock/{{ didblock.id}}" target="_blank"><b>{{ didblock.name}}</b></a></td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.carrier}}</a></td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.country_code}}</td>
 						<td   ng-show="!vm.edit[didblock.id]">{{ didblock.start}}</td>

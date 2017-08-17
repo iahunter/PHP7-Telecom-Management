@@ -97,6 +97,31 @@
      * )
      **/
     $api->get('/reports/phones/{sitecode}', 'App\Http\Controllers\CucmReportsController@sitePhones');
+	
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/reports/phone/{name}",
+     *     tags={"CUCM Reports"},
+     *     summary="Get Phone from Our DB",
+     *     description="",
+     *     operationId="getPhone",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="sitecode",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->get('/reports/phone/{name}', 'App\Http\Controllers\CucmReportsController@get_phone_by_name');
 
     /**
      * @SWG\Get(

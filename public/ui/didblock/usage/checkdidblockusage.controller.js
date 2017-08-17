@@ -12,8 +12,6 @@ angular
 		
 		var id = $stateParams.id;
 		
-		vm.getpage = PageService.getpage('checkdidblockusage')
-		
 		vm.showassignments = false;
 		
 		vm.toggle = function(){

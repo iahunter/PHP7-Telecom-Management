@@ -146,40 +146,7 @@ class Cucmphone extends Cucm
         return response()->json($response);
     }
 
-    public function deletePhonebyName($NAME)
-    {
-        // Try to remove device from CUCM
-        try {
-            $RESULT = $this->cucm->get_phone_by_name($NAME);
-            $TYPE = 'Phone';
-            if (is_array($RESULT) && ! empty($RESULT)) {
-                $UUID = $RESULT['uuid'];
-                $RETURN['old'] = $RESULT;
-                $RETURN['deleted_uuid'] = $this->cucm->delete_object_type_by_uuid($UUID, $TYPE);
-
-                // Create log entry
-
-                $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $RETURN,
-                    ];
-            }
-        } catch (\Exception $E) {
-            $message = "{$NAME} Does not exist in CUCM Database.".
-            "{$E->getMessage()}";
-
-            $response = [
-                    'status_code'    => 200,
-                    'success'        => false,
-                    'message'        => $message,
-                    'response'       => '',
-                    ];
-        }
-
-        return $response;
-    }
+   
 
     public function updatePhone(Request $request)
     {
@@ -256,7 +223,42 @@ class Cucmphone extends Cucm
         $NAME = $request->name;
 
         $response = $this->deletePhonebyName($NAME);
-        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $response])->log('delete object');
+        activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $response])->log('delete phone');
+
+        return $response;
+    }
+	
+	public function deletePhonebyName($NAME)
+    {
+        // Try to remove device from CUCM
+        try {
+            $RESULT = $this->cucm->get_phone_by_name($NAME);
+            $TYPE = 'Phone';
+            if (is_array($RESULT) && ! empty($RESULT)) {
+                $UUID = $RESULT['uuid'];
+                $RETURN['old'] = $RESULT;
+                $RETURN['deleted_uuid'] = $this->cucm->delete_object_type_by_uuid($UUID, $TYPE);
+
+                // Create log entry
+
+                $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $RETURN,
+                    ];
+            }
+        } catch (\Exception $E) {
+            $message = "{$NAME} Does not exist in CUCM Database.".
+            "{$E->getMessage()}";
+
+            $response = [
+                    'status_code'    => 200,
+                    'success'        => false,
+                    'message'        => $message,
+                    'response'       => '',
+                    ];
+        }
 
         return $response;
     }

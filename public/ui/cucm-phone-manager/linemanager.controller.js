@@ -40,140 +40,8 @@ angular
 			$location.path('/accessdenied');
 		}
 
-		vm.getavailablenumbers = telephonyService.getAvailableDidsbySitecode(id)
-			.then(function(res){
-				// Check if Token has expired. If so then direct them to login screen. 
-				if(res.message == "Token has expired"){
-					vm.tokenexpired = true;
-					//alert("Token has expired, Please relogin");
-					//alert(res.message);
-					$state.go('logout');
-				}
 
-				vm.availablenumbers = res.data.response;
-				
-				
-				//console.log(vm.availablenumbers);
-				
-				
-			}, function(err){
-				//Error
-			});
-		
-		vm.getphonemodels = cucmReportService.phone_model_report()
-			.then(function(res){
-				// Check if Token has expired. If so then direct them to login screen. 
-				if(res.message == "Token has expired"){
-					vm.tokenexpired = true;
-					//alert("Token has expired, Please relogin");
-					//alert(res.message);
-					$state.go('logout');
-				}
 
-				vm.phonemodels = res.data.response;
-				
-				
-				//console.log(vm.phonemodels);
-				
-				
-			}, function(err){
-				//Error
-			});
-			
-		vm.submitDevice = function(phone) {
-			console.log("Submit Triggered!")
-			
-			if(phone.device == "IP Communicator"){
-				phone.name = "CIPC_" + phone.dn;
-			}
-			console.log(phone)
-			var path = '/phone/site/'+ id + '/create/'+ phone.device + '&' + phone.name + '&' + phone.dn
-			$location.path(path);
-			
-		}
-		
-		vm.checkname = function(phone){
-			if(phone.name){
-				vm.nameinvalid = false;
-				if(phone.device != "IP Communicator"){
-					
-					// Check if valid MAC
-					var regexp = /^[0-9a-f]{1,12}$/gi;
-					if(!phone.name.match(regexp)){
-						console.log("NO REGEX MATCH FOUND ON NAME")
-						vm.nameinvalid = true;
-					}
-					// If not it should be 12 digits long. 
-					if(phone.name.length != 12){
-						vm.nameinvalid = true;
-					}
-				}
-				//console.log(vm.nameinvalid)
-			}
-			
-			if(phone.name && !vm.nameinvalid){
-				//console.log("Hitting Here")
-				
-				if(phone.device != "IP Communicator"){
-					vm.checkphoneusage('SEP'+phone.name)
-				}
-				
-			}
-			
-		}
-		
-		vm.check_ipcommunicator_usage = function(phone){
-			if(phone.device == "IP Communicator" && phone.dn){
-				vm.checkphoneusage('CIPC_'+phone.dn)
-			}
-		}
-		
-		vm.getcallforwardinfo = function(uuid){
-			//console.log(uuid)
-			var forward = false;
-			if(uuid){
-				angular.forEach(vm.phone.line_details, function(value,key) {
-					if(key == uuid){
-						//console.log("CallForward:")
-						//console.log(value.callForwardAll.destination)
-						forward = value.callForwardAll.destination
-						return forward
-						
-					}
-				});
-			}
-			//console.log(forward)
-			return forward
-			
-		}
-		
-		
-		vm.checkphoneusage = function(phone){
-			if(phone){
-				//console.log(phone)
-				
-				cucmService.getphone(phone)
-					.then(function(res){
-						result = res.data.response;
-						
-
-						//console.log(result);
-
-						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
-						if(result){
-							vm.phonereviewed = false;
-							vm.phone = result;
-							//console.log(vm.phone)
-						}else{
-							vm.phone = false;
-						}
-						
-
-					}, function(err){
-						// Error
-					});
-			}
-		}
 		
 		vm.checklineusage = function(line){
 			
@@ -261,6 +129,38 @@ angular
 										//console.log(vm.linedetails.line_details.callForwardAll)
 										vm.noCallForwardAll = true;
 									}
+									
+									if(vm.linedetails.device_details){
+										angular.forEach(vm.linedetails.device_details, function(device) {
+											
+											
+											cucmReportService.getphone(device.name)
+												.then(function(res){
+													result = res.data.response;
+													
+
+													//console.log(result);
+
+													// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+													if(result){
+														
+														device.erl = result.erl;
+														device.ipv4address = result.ipv4address;
+
+														console.log(device)
+													}
+													
+												}, function(err){
+													// Error
+												});
+											
+											
+										});
+										
+									}
+									
+									
+									
 								}
 							}
 							
@@ -278,17 +178,15 @@ angular
 		
 		vm.checklineusage(vm.line)
 		
-		
-		vm.checkAllcucmphones = function() {
-			console.log("Hitting check all")
-			angular.forEach(vm.cucmphones, function(phone) {
-			  phone.select = vm.selectAll;
+		vm.cucmphonecheckAll = function() {
+			angular.forEach(vm.linedetails.device_details, function(phone) {
+			  phone.select = vm.cucmphoneselectAll;
 			  //console.log(phone);
-			  //vm.cucmphoneselecttouched();
+			  //vm.selecttouched();
 			});
 		  };
 		  
-		
+
 		vm.deletecucmline = function(uuid) {
 			console.log("Deleting UUID: " + vm.linedetails.uuid)
 			cucmService.deletelinebyuuid(uuid)
@@ -345,13 +243,7 @@ angular
 				
 		}
 		
-		vm.cucmphonecheckAll = function() {
-			angular.forEach(vm.linedetails.device_details, function(phone) {
-			  phone.select = vm.cucmphoneselectAll;
-			  //console.log(phone);
-			  //vm.selecttouched();
-			});
-		  };
+
 
 		
 	}])

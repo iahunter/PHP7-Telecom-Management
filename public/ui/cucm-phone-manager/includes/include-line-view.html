@@ -9,7 +9,7 @@
 <div ng-if="vm.linesummary.length > 0 && !vm.noline">
 
 
-			<div class="well" style="margin-left: 5%; margin-right: 5%;">
+			<div style="margin-left: 5%; margin-right: 5%;">
 				
 					<h3>Line Details: {{vm.linedetails.line_details.pattern}}</h3>
 					<div style="margin:50px"></div>
@@ -197,6 +197,20 @@
 													<th>
 															Lines Details
 													</th>
+													<th>
+														<a href="" ng-click="sortType = 'erl'; sortReverse = !sortReverse" style="color:black">
+															ERL
+																<span ng-show="sortType == 'erl' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+																<span ng-show="sortType == 'erl' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+														</a>
+													</th>
+													<th>
+														<a href="" ng-click="sortType = 'ipv4address'; sortReverse = !sortReverse" style="color:black">
+															IP Address
+																<span ng-show="sortType == 'ipv4address' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+																<span ng-show="sortType == 'ipv4address' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+														</a>
+													</th>
 													<!--<th>
 															Actions
 													</th>-->
@@ -260,6 +274,8 @@
 															</div>
 															
 													</td>
+													<td>{{ phone.erl}}</td>
+													<td><a href="http://{{ phone.ipv4address}}" target="_blank"><b>{{ phone.ipv4address}}</b></a></td>
 													<!--<td><a class="btn btn-xs btn-danger" data-dismiss="modal" ng-click="vm.deletecucmphone(phone)">Delete</a></td>-->
 												</tr>
 											</tbody>

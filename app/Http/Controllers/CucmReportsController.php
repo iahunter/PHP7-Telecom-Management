@@ -80,6 +80,41 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
+	
+	 public function get_phone_by_name(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user->can('read', Cucmsiteconfigs::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $name = $request->name;
+
+        $count = Cucmphoneconfigs::where('name', '=', $name)->count();
+        //return $count;
+        if ($count) {
+            $phones = Cucmphoneconfigs::where('name', '=', $name)->get(); 
+
+			foreach ($phones as $phone) {
+				$phone = $phone; 
+			}
+
+        }else{
+			$phone = null;
+		}
+		
+		
+		$response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'response'             => $phone,
+
+                    ];
+
+        return response()->json($response);
+    }
 
     public function phones_in_site_erl_but_not_in_site_config(Request $request)
     {
@@ -126,8 +161,17 @@ class CucmReportsController extends Controller
                 //return $this->phones;
             });
         }
+		
+		$response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'response'             => $this->phones,
 
-        return $this->phones;
+                    ];
+
+        return response()->json($response);
+
     }
 
     public function sitePhones(Request $request)

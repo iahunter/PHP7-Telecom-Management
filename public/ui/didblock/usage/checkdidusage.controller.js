@@ -11,9 +11,7 @@ angular
 		vm.messages = 'Loading Didblocks...';
 		
 		var id = $stateParams.id;
-		
-		vm.getpage = PageService.getpage('checkdidusage')
-		
+
 		console.log($state)
 		
 		vm.showassignments = false;

@@ -9,7 +9,7 @@
 
 <div ng-if="vm.phone">
 	<div>
-		<div class="well" style="margin-left:5%; margin-right:5%;">
+		<div style="margin-left:5%; margin-right:5%;">
 			<div>
 				<div style="margin:25px;"></div>
 				<legend><h1>Real Time Phone Poller</h1></legend>
@@ -130,6 +130,35 @@
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
 												<input class="form-control" readonly ng-model='vm.phone.locationName._' name="locationName">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="erl" class="control-label">ERL</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.erl' name="erl">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="ipv4address" class="control-label">IP Address</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.ipv4address' name="ipv4address">
 											</div>
 											
 										</div>

@@ -97,7 +97,7 @@
      * )
      **/
     $api->get('/reports/phones/{sitecode}', 'App\Http\Controllers\CucmReportsController@sitePhones');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phonesbyerl/{erl}",
@@ -122,7 +122,7 @@
      * )
      **/
     $api->get('/reports/phonesbyerl/{erl}', 'App\Http\Controllers\CucmReportsController@get_phones_by_erl');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phone/{name}",

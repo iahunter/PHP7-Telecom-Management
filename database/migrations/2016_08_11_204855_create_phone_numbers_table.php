@@ -42,7 +42,7 @@ class CreatePhoneNumbersTable extends Migration
             $table->string('status');                    // Status - Active/Reserved/Available
             $table->string('system_id')->nullable();                // Future - System ID - CUCM/Lync ID
             $table->json('assignments')->nullable();                   // JSON Custom Field Data
-			$table->json('mailbox')->nullable();                   // JSON Custom Field Data
+            $table->json('mailbox')->nullable();                   // JSON Custom Field Data
             $table->string('created_by')->nullable();              // simple name to reference the account by
             $table->string('updated_by')->nullable();              // simple name to reference the account by
             $table->string('deleted_by')->nullable();              // simple name to reference the account by

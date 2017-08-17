@@ -59,14 +59,14 @@ class ADNumberUpdatesByMailboxNumber extends Command
         echo $start;
 
         $didblocks = \App\Didblock::where([['country_code', '=', 1]])->get();
-		
-		$didblocks_count = count($didblocks);
-		$didblock_count = 0;
-        
+
+        $didblocks_count = count($didblocks);
+        $didblock_count = 0;
+
         $possible_deletes = [];
         foreach ($didblocks as $didblock) {
-			$didblock_count++;
-			print "Block Count: ".$didblock_count." of ".count($didblocks).PHP_EOL;
+            $didblock_count++;
+            echo 'Block Count: '.$didblock_count.' of '.count($didblocks).PHP_EOL;
             $sitecode = $didblock->name;
 
             // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
@@ -74,129 +74,122 @@ class ADNumberUpdatesByMailboxNumber extends Command
                 $dids = \App\Did::where([['parent', '=', $didblock->id]])->get();
 
                 //$dids = json_decode(json_encode($dids, true));
-				
-				$count = 0;
+
+                $count = 0;
                 foreach ($dids as $did) {
-					
-					$count++;
-					print "Did ". $count." of ".count($dids).PHP_EOL;
+                    $count++;
+                    echo 'Did '.$count.' of '.count($dids).PHP_EOL;
                     if ($did->status == 'inuse') {
-                        
-						 // If it is inuse - Go see if it has a mailbox and update the mailbox field. 
-						try {
-							$mailbox_details = Cupi::findmailboxbyextension($did->number);
-						}catch (\Exception $e) {
-							echo $e->getMessage();
-							continue;
-						}
-						$mailbox = false;
-						$callhandler = false;
-						//print_r($mailbox_details);
-						if ($mailbox_details['response']['@total'] > 0) {
-							if ((isset($mailbox_details['response']['User']))) {
-								$mailbox = $mailbox_details['response']['User'];
-								$mailbox = ['Alias'            => $mailbox['Alias'],
-											'DisplayName'      => $mailbox['DisplayName'],
-											'FirstName'        => $mailbox['FirstName'],
-											'LastName'         => $mailbox['LastName'],
-											'DtmfAccessId'     => $mailbox['DtmfAccessId'],
-											'AD User'    	   => false,
-											];
-								
-								// Update the Did Database
-								$did->mailbox = ['User' => $mailbox];
-								$did->save();
-								if (isset($mailbox['Alias']) && $mailbox['Alias']) {
 
-									//print_r($mailbox);
+                         // If it is inuse - Go see if it has a mailbox and update the mailbox field.
+                        try {
+                            $mailbox_details = Cupi::findmailboxbyextension($did->number);
+                        } catch (\Exception $e) {
+                            echo $e->getMessage();
+                            continue;
+                        }
+                        $mailbox = false;
+                        $callhandler = false;
+                        //print_r($mailbox_details);
+                        if ($mailbox_details['response']['@total'] > 0) {
+                            if ((isset($mailbox_details['response']['User']))) {
+                                $mailbox = $mailbox_details['response']['User'];
+                                $mailbox = ['Alias'             => $mailbox['Alias'],
+                                            'DisplayName'       => $mailbox['DisplayName'],
+                                            'FirstName'         => $mailbox['FirstName'],
+                                            'LastName'          => $mailbox['LastName'],
+                                            'DtmfAccessId'      => $mailbox['DtmfAccessId'],
+                                            'AD User'           => false,
+                                            ];
 
-									$username = $mailbox['Alias'];
-									
-									//print $username.PHP_EOL;
-									try {
-										$ldap_user = $this->Auth->getUserLdapPhone($username);
-									} catch (\Exception $e) {
-										echo $e->getMessage();
-										continue;
-									}
-									
-									//print_r($ldap_user);
+                                // Update the Did Database
+                                $did->mailbox = ['User' => $mailbox];
+                                $did->save();
+                                if (isset($mailbox['Alias']) && $mailbox['Alias']) {
 
-									if ($ldap_user) {
-										//print_r($username).PHP_EOL;
-										if ($ldap_user['user']) {
-											
-											
-											$fulluser = $ldap_user['user'];
-											$fulluser = explode(',', $fulluser);
-											foreach ($fulluser as $value) {
-												if ($value == 'OU=Disabled Users') {
-													$ldap_user['disabled'] = true;
-												}
-												if (isset($ldap_user['disabled']) && $ldap_user['disabled'] != true) {
-													$ldap_user['disabled'] = false;
-												}
-											}
+                                    //print_r($mailbox);
 
-											echo "Found User for Mailbox: {$ldap_user['displayname']}".PHP_EOL;
-											
-											$mailbox['AD User'] = $ldap_user['userprincipalname'];
-											
-											// Update the Did Database
-											$did->mailbox = ['User' => $mailbox];
-											$did->save();
-											
-											//print_r($did->mailbox);
-											
-											if($ldap_user['ipphone'] != $mailbox['DtmfAccessId']){
-												
-												$DN = $mailbox['DtmfAccessId'];
-												$USERNAME = $ldap_user['userprincipalname'];
-												
-												// If the IP Phone Field doesn't match what is in Unity Connection - Update it. 
-												try{
-													$update = $this->Auth->changeLdapPhone($USERNAME, $DN);
-													print "Updated User IP Phone Field from {$ldap_user['ipphone']} to {$DN}".PHP_EOL;
-												}catch (\Exception $e) {
-													echo $e->getMessage();
-													continue;
-												}
-											}
-										}
-									}
-								}
+                                    $username = $mailbox['Alias'];
 
-								//print_r($mailbox);
-							} else {
-								
-								print "No Mailbox Found... Looking for a Call Handler";
-								$mailbox_details = Cupi::get_callhandler_by_extension($linedetails['pattern']);
+                                    //print $username.PHP_EOL;
+                                    try {
+                                        $ldap_user = $this->Auth->getUserLdapPhone($username);
+                                    } catch (\Exception $e) {
+                                        echo $e->getMessage();
+                                        continue;
+                                    }
 
-								
-								//print_r($mailbox_details);
-								if ($mailbox_details['response']['@total'] > 0) {
-									if (isset($mailbox_details['response']['Callhandler'])) {
-										$callhandler = $mailbox_details['response']['Callhandler'];
+                                    //print_r($ldap_user);
 
-										echo "Found Call Handler for Exension: {$callhandler['DisplayName']}".PHP_EOL;
+                                    if ($ldap_user) {
+                                        //print_r($username).PHP_EOL;
+                                        if ($ldap_user['user']) {
+                                            $fulluser = $ldap_user['user'];
+                                            $fulluser = explode(',', $fulluser);
+                                            foreach ($fulluser as $value) {
+                                                if ($value == 'OU=Disabled Users') {
+                                                    $ldap_user['disabled'] = true;
+                                                }
+                                                if (isset($ldap_user['disabled']) && $ldap_user['disabled'] != true) {
+                                                    $ldap_user['disabled'] = false;
+                                                }
+                                            }
 
-										$callhandler = ['Alias'            => $callhandler['Alias'],
-														'DisplayName'      => $callhandler['DisplayName'],
-														'DtmfAccessId'     => $callhandler['DtmfAccessId'],
-													];
-										
-										// Update the Did Database
-										$did->mailbox = ['Callhandler' => $mailbox];
-										$did->save();
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+                                            echo "Found User for Mailbox: {$ldap_user['displayname']}".PHP_EOL;
 
+                                            $mailbox['AD User'] = $ldap_user['userprincipalname'];
+
+                                            // Update the Did Database
+                                            $did->mailbox = ['User' => $mailbox];
+                                            $did->save();
+
+                                            //print_r($did->mailbox);
+
+                                            if ($ldap_user['ipphone'] != $mailbox['DtmfAccessId']) {
+                                                $DN = $mailbox['DtmfAccessId'];
+                                                $USERNAME = $ldap_user['userprincipalname'];
+
+                                                // If the IP Phone Field doesn't match what is in Unity Connection - Update it.
+                                                try {
+                                                    $update = $this->Auth->changeLdapPhone($USERNAME, $DN);
+                                                    echo "Updated User IP Phone Field from {$ldap_user['ipphone']} to {$DN}".PHP_EOL;
+                                                } catch (\Exception $e) {
+                                                    echo $e->getMessage();
+                                                    continue;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                //print_r($mailbox);
+                            } else {
+                                echo 'No Mailbox Found... Looking for a Call Handler';
+                                $mailbox_details = Cupi::get_callhandler_by_extension($linedetails['pattern']);
+
+                                //print_r($mailbox_details);
+                                if ($mailbox_details['response']['@total'] > 0) {
+                                    if (isset($mailbox_details['response']['Callhandler'])) {
+                                        $callhandler = $mailbox_details['response']['Callhandler'];
+
+                                        echo "Found Call Handler for Exension: {$callhandler['DisplayName']}".PHP_EOL;
+
+                                        $callhandler = ['Alias'            => $callhandler['Alias'],
+                                                        'DisplayName'      => $callhandler['DisplayName'],
+                                                        'DtmfAccessId'     => $callhandler['DtmfAccessId'],
+                                                    ];
+
+                                        // Update the Did Database
+                                        $did->mailbox = ['Callhandler' => $mailbox];
+                                        $did->save();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         echo 'Saved to file...'.PHP_EOL;
 

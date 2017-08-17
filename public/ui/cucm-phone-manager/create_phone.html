@@ -114,10 +114,10 @@
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
 												
-												<input type="text" ng-model='vm.deviceForm.ticket_number' class="form-control" data-width="100%" name="model">
+												<input type="text" required ng-model='vm.deviceForm.ticket_number' class="form-control" data-width="100%" name="model">
 											</div>
 											<div ng-messages="addDeviceForm.ticket_number.$dirty && addDeviceForm.ticket_number.$error">
-													<div ng-message='required'> ticket_number is required </div>
+													<div ng-message='required'> Ticket Number is required </div>
 
 											</div>
 										</div>

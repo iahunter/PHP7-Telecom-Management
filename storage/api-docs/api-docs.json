@@ -2067,6 +2067,36 @@
                 }
             }
         },
+        "/telephony/api/reports/phonesbyerl/{erl}": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List of Phones for Site",
+                "description": "",
+                "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "erl",
+                        "in": "path",
+                        "description": "erl",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/reports/phone/{name}": {
             "get": {
                 "tags": [

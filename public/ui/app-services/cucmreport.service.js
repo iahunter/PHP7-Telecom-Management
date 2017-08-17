@@ -90,7 +90,6 @@ angular
 			  });
 		}
 		
-		
 		// Get Phone Models in Use
 		self.phone_model_report = function() {
 			var defer = $q.defer();
@@ -125,6 +124,23 @@ angular
 			  });
 		}
 		
+		
+		// Get Site Report from the DB
+		self.get_phones_by_erl = function(erl) {
+			var defer = $q.defer();
+			return $http.get('../api/reports/phonesbyerl/'+erl)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					//console.log(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
 
 		return self
 

@@ -223,6 +223,18 @@
                 controller: 'getSite.IndexController',
                 controllerAs: 'vm'
             })
+			.state('egw_erlreport', {
+                url: '/egw_erlreport',
+                templateUrl: 'reports/erl-report.html',
+                controller: 'egwErl.Report',
+                controllerAs: 'vm'
+            })
+			.state('egw_geterlreport', {
+                url: '/egw_geterlreport/{id}',
+                templateUrl: 'erl-status-reports/get-erl-report.html',
+                controller: 'getEgwErl.Report',
+                controllerAs: 'vm'
+            })
 			.state('getsitereport', {
                 url: '/sitestatusreports/{id}',
                 templateUrl: 'site-status-reports/getsite.objects.html',

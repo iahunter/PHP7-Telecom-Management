@@ -100,6 +100,31 @@
 	
     /**
      * @SWG\Get(
+     *     path="/telephony/api/reports/phonesbyerl/{erl}",
+     *     tags={"CUCM Reports"},
+     *     summary="List of Phones for Site",
+     *     description="",
+     *     operationId="listSites",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="erl",
+     *         in="path",
+     *         description="erl",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->get('/reports/phonesbyerl/{erl}', 'App\Http\Controllers\CucmReportsController@get_phones_by_erl');
+	
+    /**
+     * @SWG\Get(
      *     path="/telephony/api/reports/phone/{name}",
      *     tags={"CUCM Reports"},
      *     summary="Get Phone from Our DB",

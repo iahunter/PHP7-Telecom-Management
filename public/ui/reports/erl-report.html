@@ -1,0 +1,163 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+<div style="margin-right:5%; margin-left:5%;">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	
+	<div style="margin:50px"></div>
+	
+	<legend>ERL Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+		
+		<div style="margin:25px"></div>
+		
+
+		
+		<div style="margin:25px"></div>
+		
+		<div class="row" style="margin-left:5px;">
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		</div>
+		
+
+
+		<div style="margin:25px"></div>
+			
+
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		
+		<div ng-if="vm.report">
+
+		
+			<h4><b>Found {{vm.report.length}} erls</b></h4>
+
+			<div style="margin:10px"></div>
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">    
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+						
+							<!--<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAllLines()"/></th>-->
+							
+							<th>
+								<a href="" ng-click="sortType = 'erl_id'; sortReverse = !sortReverse" style="color:black">
+									ERL
+										<span ng-show="sortType == 'erl_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'erl_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'building_number'; sortReverse = !sortReverse" style="color:black">
+									Building Number
+										<span ng-show="sortType == 'building_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'building_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'rd'; sortReverse = !sortReverse" style="color:black">
+									RD
+										<span ng-show="sortType == 'rd' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'rd' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'city'; sortReverse = !sortReverse" style="color:black">
+									City
+										<span ng-show="sortType == 'city' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'city' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'state'; sortReverse = !sortReverse" style="color:black">
+									State
+										<span ng-show="sortType == 'state' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'state' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'country'; sortReverse = !sortReverse" style="color:black">
+									Country
+										<span ng-show="sortType == 'country' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'country' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'zip_code'; sortReverse = !sortReverse" style="color:black">
+									Zip
+										<span ng-show="sortType == 'zip_code' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'zip_code' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'msag_status'; sortReverse = !sortReverse" style="color:black">
+									Status
+										<span ng-show="sortType == 'msag_status' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'msag_status' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<!--
+							<th>
+								<a href="" ng-click="sortType = 'uuid'; sortReverse = !sortReverse" style="color:black">
+									uuid
+										<span ng-show="sortType == 'uuid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'uuid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							-->
+
+							
+						</tr>
+					</thead>
+					<tbody>
+					
+
+					<tr ng-repeat="erl in vm.report | orderBy:sortType:sortReverse | filter:vm.search: strict">
+							<!--
+							<td>
+								<input type="checkbox" ng-model="erl.select" >
+							</td>
+							-->
+							<td><a target="_blank" href="#/egw_geterlreport/{{erl.erl_id}}"><b>{{erl.erl_id}}</b></a></td>
+							<td>{{erl.building_number}}</td>
+							<td>{{erl.rd}}</td>
+							<td>{{erl.city}}</td>
+							<td>{{erl.state}}</span></td>
+							<td>{{erl.country}}</td>
+							<td>{{erl.zip_code}}</td>
+							<td>{{erl.msag_status}}</td>
+					</tr>
+							
+					</tbody>
+				</table>
+			</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+	
+

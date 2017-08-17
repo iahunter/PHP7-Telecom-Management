@@ -115,6 +115,62 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
+	
+	
+    public function get_phones_by_erl(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user->can('read', Cucmsiteconfigs::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $count = Cucmphoneconfigs::where('erl', 'like', '%'.$request->erl.'%')->count();
+
+        $phone_array = [];
+
+        if ($count) {
+            $phone_array[] = Cucmphoneconfigs::where('erl', 'like', '%'.$request->erl.'%')->chunk(300, function ($phones) {
+                $return = [];
+                foreach ($phones as $phone) {
+                    //print_r($phone);
+                    $lines = [];
+                    foreach ($phone['lines'] as $line) {
+                        $ln = [];
+                        $ln['uuid'] = $line['uuid'];
+                        $ln['pattern'] = $line['pattern'];
+                        $ln['description'] = $line['description'];
+                        $ln['callForwardAll'] = [];
+                        $ln['callForwardAll']['destination'] = $line['callForwardAll']['destination'];
+                        $ln['css'] = $line['shareLineAppearanceCssName']['_'];
+                        $lines[$ln['uuid']] = $ln;
+                    }
+                    $phone->lines = $lines;        // replace the lines with only the fields we need for our UI.
+                    $phone->config = '';        // Scrap the config, we dont' need it.
+
+                    $this->phones[] = $phone;    // Append the phone to the array to return.
+                }
+            });
+        }
+
+        //return ($this->phones);
+
+        /*
+        if ($count) {
+            $phones = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->get();
+        }
+        */
+
+        $response = [
+                    'status_code'       => 200,
+                    'success'           => true,
+                    'message'           => '',
+                    'count'             => $count,
+                    'response'          => $this->phones,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function phones_in_site_erl_but_not_in_site_config(Request $request)
     {

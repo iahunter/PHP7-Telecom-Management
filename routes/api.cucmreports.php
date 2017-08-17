@@ -97,7 +97,7 @@
      * )
      **/
     $api->get('/reports/phones/{sitecode}', 'App\Http\Controllers\CucmReportsController@sitePhones');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phone/{name}",

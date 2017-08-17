@@ -23,6 +23,7 @@ class Did extends Model
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
             'assignments' => 'array',
+			'mailbox'	  => 'array',
         ];
 
     protected static function boot()

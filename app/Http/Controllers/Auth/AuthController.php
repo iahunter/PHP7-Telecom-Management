@@ -377,6 +377,7 @@ class AuthController extends Controller
             $this->ldapinit();
         }
         $user = $this->ldap->user()->info($username, ['*']);
+		
         if ($user[0]['dn'] == null) {
             return [
                 'user'             => '',
@@ -384,6 +385,8 @@ class AuthController extends Controller
                 'displayname'      => '',
                 'firstname'        => '',
                 'lastname'         => '',
+				'userprincipalname' => '',
+				
                 ];
             //throw new \Exception('Error getting DN for username '.$username);
         }
@@ -400,6 +403,10 @@ class AuthController extends Controller
             $firstname = $name[0];
             $lastname = $name[1];
         }
+		
+		if (isset($user[0]['userprincipalname'][0])) {
+            $user_userprincipalname = $user[0]['userprincipalname'][0];
+        }
 
         return [
                     'user'             => $user_dn,
@@ -407,6 +414,7 @@ class AuthController extends Controller
                     'displayname'      => $displayname,
                     'firstname'        => $firstname,
                     'lastname'         => $lastname,
+					'userprincipalname' => $user_userprincipalname,
                     ];
     }
 

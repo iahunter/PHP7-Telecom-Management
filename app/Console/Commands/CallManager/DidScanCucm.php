@@ -176,20 +176,20 @@ class DidScanCucm extends Command
 
         foreach ($dids as $did) {
             try {
-				// Skip over excluded numbers. These may not be part of our block. 
-				if ($did->status == 'exclude') {
-					continue;
-				}
+                // Skip over excluded numbers. These may not be part of our block.
+                if ($did->status == 'exclude') {
+                    continue;
+                }
                 // SKIP updating OR making available DID's that are RESERVED!
                 if ($did->status == 'reserved') {
-                   
-				    // If its now built in the system, mark it as inuse. 
+
+                    // If its now built in the system, mark it as inuse.
                     if (isset($didinfo[$did->number])) {
                         $did->assignments = $didinfo[$did->number];
                         $did->status = 'inuse';
                         $did->system_id = 'CUCM-Enterprise-Cluster';
                     } else {
-						// If not skip it and leave it as reserved. 
+                        // If not skip it and leave it as reserved.
                         continue;
                     }
                 }

@@ -48,7 +48,7 @@ class West911EnableEGW extends Model
             FROM `endpoint`
             LEFT JOIN locations ON endpoint.location_id = locations.location_id
             WHERE endpoint.isDiscovered = 1
-			ORDER BY locations.erl_id
+            ORDER BY locations.erl_id
         */
 
         $endpoints = DB::connection('egw')->select('SELECT device_name, mac_address, ip_address, locations.erl_id AS erl, endpoint.last_updated FROM `endpoint` LEFT JOIN locations ON endpoint.location_id = locations.location_id WHERE endpoint.isDiscovered = 1 ORDER BY locations.erl_id');
@@ -63,13 +63,13 @@ class West911EnableEGW extends Model
 
     public static function list_erls()
     {
-		/*
-		SELECT *
-		FROM `locations`
-		WHERE 'erl_id' IS NOT NULL AND TRIM(erl_id) <> ''
-		ORDER BY erl_id
-		
-		*/
+        /*
+        SELECT *
+        FROM `locations`
+        WHERE 'erl_id' IS NOT NULL AND TRIM(erl_id) <> ''
+        ORDER BY erl_id
+
+        */
         $result = DB::connection('egw')->select("select * from locations WHERE 'erl_id' IS NOT NULL AND TRIM(erl_id) <> '' ORDER BY erl_id");
 
         return $result;

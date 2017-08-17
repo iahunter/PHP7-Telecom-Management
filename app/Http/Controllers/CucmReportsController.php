@@ -80,8 +80,8 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	 public function get_phone_by_name(Request $request)
+
+    public function get_phone_by_name(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -94,18 +94,16 @@ class CucmReportsController extends Controller
         $count = Cucmphoneconfigs::where('name', '=', $name)->count();
         //return $count;
         if ($count) {
-            $phones = Cucmphoneconfigs::where('name', '=', $name)->get(); 
+            $phones = Cucmphoneconfigs::where('name', '=', $name)->get();
 
-			foreach ($phones as $phone) {
-				$phone = $phone; 
-			}
+            foreach ($phones as $phone) {
+                $phone = $phone;
+            }
+        } else {
+            $phone = null;
+        }
 
-        }else{
-			$phone = null;
-		}
-		
-		
-		$response = [
+        $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
@@ -115,8 +113,7 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	
+
     public function get_phones_by_erl(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -217,8 +214,8 @@ class CucmReportsController extends Controller
                 //return $this->phones;
             });
         }
-		
-		$response = [
+
+        $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
@@ -227,7 +224,6 @@ class CucmReportsController extends Controller
                     ];
 
         return response()->json($response);
-
     }
 
     public function sitePhones(Request $request)

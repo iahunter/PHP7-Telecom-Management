@@ -146,8 +146,6 @@ class Cucmphone extends Cucm
         return response()->json($response);
     }
 
-   
-
     public function updatePhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -227,8 +225,8 @@ class Cucmphone extends Cucm
 
         return $response;
     }
-	
-	public function deletePhonebyName($NAME)
+
+    public function deletePhonebyName($NAME)
     {
         // Try to remove device from CUCM
         try {

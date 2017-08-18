@@ -113,8 +113,8 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	public function get_phones_like_erl(Request $request)
+
+    public function get_phones_like_erl(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -537,15 +537,15 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	public function get_count_phone_by_erl()
+
+    public function get_count_phone_by_erl()
     {
-		/*
-		SELECT erl, count(erl)
-		FROM `cucmphone`
-		GROUP by erl
-		*/
-		
+        /*
+        SELECT erl, count(erl)
+        FROM `cucmphone`
+        GROUP by erl
+        */
+
         $models = DB::table('cucmphone')
             ->select('cucmphone.erl', DB::raw('count(cucmphone.erl) as count'))
             ->groupBy('erl')
@@ -561,6 +561,4 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-	
-	
 }

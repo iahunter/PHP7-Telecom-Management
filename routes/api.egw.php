@@ -139,8 +139,8 @@
      * )
      **/
     $api->get('/egw/erls/all', 'App\Http\Controllers\West911EnableEGWController@list_erls');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/egw/list_erls_and_phone_count_by_erl",
      *     tags={"Management - West 911Enable EGW"},

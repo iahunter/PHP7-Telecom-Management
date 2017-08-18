@@ -219,8 +219,8 @@
      * )
      **/
     $api->get('/reports/linecleanup', 'App\Http\Controllers\CucmReportsController@get_line_cleanup_report');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/get_count_phone_by_erl",
      *     tags={"CUCM Reports"},
@@ -237,5 +237,3 @@
      * )
      **/
     $api->get('/reports/get_count_phone_by_erl', 'App\Http\Controllers\CucmReportsController@get_count_phone_by_erl');
-	
-

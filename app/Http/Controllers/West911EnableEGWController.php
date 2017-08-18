@@ -118,4 +118,20 @@ class West911EnableEGWController extends Controller
 
         return response()->json($response);
     }
+	
+	public function list_erls_and_phone_counts(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        $result = West911EnableEGW::list_erls_and_phone_counts();
+
+        $response = [
+                    'status_code'       => 200,
+                    'success'           => true,
+                    'message'           => '',
+                    'result'            => $result,
+                    ];
+
+        return response()->json($response);
+    }
 }

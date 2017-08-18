@@ -51,7 +51,8 @@
 		<div ng-if="vm.report">
 
 		
-			<h4><b>Found {{vm.report.length}} erls</b></h4>
+			<h4><b>ERLs <span class="badge badge-info ng-binding">{{vm.report.length}} </span>
+			<br>Phones <span class="badge badge-info ng-binding">{{vm.totalphones}} </span> </b></h4>
 
 			<div style="margin:10px"></div>
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -67,6 +68,13 @@
 									ERL
 										<span ng-show="sortType == 'erl_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'erl_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'phonecount'; sortReverse = !sortReverse" style="color:black">
+									Phone Count
+										<span ng-show="sortType == 'phonecount' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'phonecount' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 							<th>
@@ -142,6 +150,7 @@
 							</td>
 							-->
 							<td><a target="_blank" href="#/egw_geterlreport/{{erl.erl_id}}"><b>{{erl.erl_id}}</b></a></td>
+							<td>{{erl.phonecount}}</td>
 							<td>{{erl.building_number}}</td>
 							<td>{{erl.rd}}</td>
 							<td>{{erl.city}}</td>

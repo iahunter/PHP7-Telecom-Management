@@ -74,4 +74,62 @@ class West911EnableEGW extends Model
 
         return $result;
     }
+	
+	
+	public static function list_erls_and_phone_counts()
+    {
+        /*
+        SELECT *
+        FROM `locations`
+        WHERE 'erl_id' IS NOT NULL AND TRIM(erl_id) <> ''
+        ORDER BY erl_id
+        */
+		
+        $erls = DB::connection('egw')->select("select * from locations WHERE 'erl_id' IS NOT NULL AND TRIM(erl_id) <> '' ORDER BY erl_id");
+		
+		/*
+		SELECT erl, count(erl)
+		FROM `cucmphone`
+		GROUP by erl
+		*/
+		// Telecom Management DB 
+		$counts = DB::table('cucmphone')
+            ->select('cucmphone.erl', DB::raw('count(cucmphone.erl) as count'))
+            ->groupBy('erl')
+            ->orderBy('count', 'DESC')
+            ->get();
+			
+			
+		$counts = json_decode(json_encode($counts, true));
+		//$counts = (array)$counts;
+		
+		$erlcounts = [];
+		foreach($counts as $count){
+			$erlcounts[$count->erl] = $count;
+		}
+		
+		//return $erlcounts;
+
+		$result = [];
+		foreach($erls as $erl){
+			//return in_array($erl->erl_id, $erlcounts);
+			//return $erl->erl_id;
+			if(array_key_exists($erl->erl_id, $erlcounts)){
+				//return $erl->erl_id;
+				$count = $erlcounts[$erl->erl_id];
+				$count = $count->count; 
+				$erl->phonecount = $count;
+				$result[] = $erl;
+			}else{
+				$erl->phonecount = 0;
+				$result[] = $erl;
+			}
+		}
+		
+		//return $erls;
+
+        return $result;
+    }
+	
+	
 }

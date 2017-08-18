@@ -25,7 +25,7 @@ angular
 			$location.path('/accessdenied');
 		}
 
-		vm.get_erl = west911EnableService.list_erls()
+		vm.get_erl = west911EnableService.list_erls_and_phone_counts()
 			.then(function(res){
 				// Check for errors and if token has expired. 
 				if(res.data.message){
@@ -36,6 +36,17 @@ angular
 					
 					vm.report = res.data.result
 					console.log(vm.report)
+					
+					vm.totalphones = 0
+					
+					angular.forEach(vm.report, function(erl){
+						vm.totalphones = vm.totalphones + erl.phonecount
+						//console.log(vm.totalphones)
+					});
+					
+					//console.log(vm.totalphones)
+					
+					
 					vm.loading = false;
 				}
 				

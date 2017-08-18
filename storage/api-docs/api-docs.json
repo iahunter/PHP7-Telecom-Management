@@ -2211,6 +2211,48 @@
                 }
             }
         },
+        "/telephony/api/reports/get_count_phone_by_erl": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List Count of Phones by ERL",
+                "description": "",
+                "operationId": "listPhoneModels",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/reports/list_erls_and_phone_count_by_erl": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List ERLs with Count of Phones by ERL",
+                "description": "",
+                "operationId": "listPhoneModels",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/cupi/user/search/{alias}": {
             "get": {
                 "tags": [

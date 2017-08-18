@@ -20,6 +20,8 @@ angular
 		
 
 		var id = $stateParams.id;
+		
+		vm.erl_id = $stateParams.id;
 
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
@@ -38,14 +40,16 @@ angular
 				}else{
 					
 					vm.report = res.data.response
+					
 					console.log(vm.report)
 					vm.loading = false;
 				}
+				
 				
 			}, function(err){
 				alert(err);
 			});
 		
-
+		
 	}])
 

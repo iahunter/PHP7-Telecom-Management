@@ -139,3 +139,21 @@
      * )
      **/
     $api->get('/egw/erls/all', 'App\Http\Controllers\West911EnableEGWController@list_erls');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/egw/list_erls_and_phone_count_by_erl",
+     *     tags={"Management - West 911Enable EGW"},
+     *     summary="List ERLs with Count of Phones by ERL",
+     *     description="",
+     *     operationId="listPhoneModels",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->get('/egw/list_erls_and_phone_count_by_erl', 'App\Http\Controllers\West911EnableEGWController@list_erls_and_phone_counts');

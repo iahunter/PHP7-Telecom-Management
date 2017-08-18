@@ -23,7 +23,7 @@ class ADNumberUpdatesByMailboxNumber extends Command
      *
      * @var string
      */
-    protected $description = 'Cleanup Numbers in Cucm that have no Devices assigned, No CallForwarding Acive, and No Mailbox in Cisco Unity';
+    protected $description = 'Update AD IP Phone Field and Did Database info with Mailbox User';
 
     /**
      * Create a new command instance.
@@ -63,9 +63,22 @@ class ADNumberUpdatesByMailboxNumber extends Command
         $didblocks_count = count($didblocks);
         $didblock_count = 0;
 
-        $possible_deletes = [];
+		$updated_did_mailbox = 0;
+		$updated_ad_ipphone = 0;
+		$updated_did_mailbox_callhandler = 0;
+		
         foreach ($didblocks as $didblock) {
+
             $didblock_count++;
+			
+			print "Block ID: {$didblock->id}".PHP_EOL;
+			
+			/* Had to fast forward because of error... will now start with IDs of greater than 373
+			if($didblock->id <= 373){
+				print $didblock->id;
+				continue;
+			}
+			*/
             echo 'Block Count: '.$didblock_count.' of '.count($didblocks).PHP_EOL;
             $sitecode = $didblock->name;
 
@@ -78,9 +91,15 @@ class ADNumberUpdatesByMailboxNumber extends Command
                 $count = 0;
                 foreach ($dids as $did) {
                     $count++;
-                    echo 'Did '.$count.' of '.count($dids).PHP_EOL;
-                    if ($did->status == 'inuse') {
-
+					
+					echo 'Did '.$count.' of '.count($dids). ": {$did->number} ".PHP_EOL;
+                    //if ($did->status == 'inuse') {
+						//************** Remove this after first run   **************/
+						/*
+						if($did->mailbox){
+							continue;
+						}
+						*/
                          // If it is inuse - Go see if it has a mailbox and update the mailbox field.
                         try {
                             $mailbox_details = Cupi::findmailboxbyextension($did->number);
@@ -93,7 +112,18 @@ class ADNumberUpdatesByMailboxNumber extends Command
                         //print_r($mailbox_details);
                         if ($mailbox_details['response']['@total'] > 0) {
                             if ((isset($mailbox_details['response']['User']))) {
+								
                                 $mailbox = $mailbox_details['response']['User'];
+								
+								if(!isset($mailbox['FirstName'])){
+									$mailbox['FirstName'] = "";
+								}
+								if(!isset($mailbox['LastName'])){
+									$mailbox['LastName'] = "";
+								}
+								
+								
+								
                                 $mailbox = ['Alias'             => $mailbox['Alias'],
                                             'DisplayName'       => $mailbox['DisplayName'],
                                             'FirstName'         => $mailbox['FirstName'],
@@ -101,10 +131,14 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                             'DtmfAccessId'      => $mailbox['DtmfAccessId'],
                                             'AD User'           => false,
                                             ];
-
+										
                                 // Update the Did Database
                                 $did->mailbox = ['User' => $mailbox];
                                 $did->save();
+								
+								$updated_did_mailbox++;
+								
+								
                                 if (isset($mailbox['Alias']) && $mailbox['Alias']) {
 
                                     //print_r($mailbox);
@@ -148,15 +182,18 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                             if ($ldap_user['ipphone'] != $mailbox['DtmfAccessId']) {
                                                 $DN = $mailbox['DtmfAccessId'];
                                                 $USERNAME = $ldap_user['userprincipalname'];
-
+											
                                                 // If the IP Phone Field doesn't match what is in Unity Connection - Update it.
-                                                try {
+												/* Uncomment to updated AD with VM DN. Should be no reason after first run to do this but just in case.... 
+												try {
                                                     $update = $this->Auth->changeLdapPhone($USERNAME, $DN);
                                                     echo "Updated User IP Phone Field from {$ldap_user['ipphone']} to {$DN}".PHP_EOL;
-                                                } catch (\Exception $e) {
+													$updated_ad_ipphone++;
+												} catch (\Exception $e) {
                                                     echo $e->getMessage();
                                                     continue;
                                                 }
+												*/
                                             }
                                         }
                                     }
@@ -164,7 +201,7 @@ class ADNumberUpdatesByMailboxNumber extends Command
 
                                 //print_r($mailbox);
                             } else {
-                                echo 'No Mailbox Found... Looking for a Call Handler';
+                                echo 'No Mailbox Found... Looking for a Call Handler'.PHP_EOL;
                                 $mailbox_details = Cupi::get_callhandler_by_extension($linedetails['pattern']);
 
                                 //print_r($mailbox_details);
@@ -182,24 +219,31 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                         // Update the Did Database
                                         $did->mailbox = ['Callhandler' => $mailbox];
                                         $did->save();
+										
+										$updated_did_mailbox_callhandler++;
                                     }
                                 }
                             }
-                        }
-                    }
+                        }else{
+							
+							// If not mailbox clear out if something is set. 
+							if($did->mailbox){
+								$did->mailbox = null;
+								$did->save();
+							}
+							
+						}
+                    //}
                 }
             }
         }
 
-        echo 'Saved to file...'.PHP_EOL;
 
         echo '###########################################################################'.PHP_EOL;
 
-        echo "lines_to_delete_count: {$lines_to_delete_count}".PHP_EOL;
-        echo "lines_with_cfa_active_count: {$lines_with_cfa_active_count}".PHP_EOL;
-        echo "lines_with_mailbox_built_count: {$lines_with_mailbox_built_count}".PHP_EOL;
-        echo "lines_with_callhandler_built_count: {$lines_with_callhandler_built_count}".PHP_EOL;
-        echo "lines_with_other_usages_count: {$lines_with_other_usages_count}".PHP_EOL;
+		echo "Updated Mailboxes: {$updated_did_mailbox}".PHP_EOL;
+		echo "Updated Mailbox with CallHandler: {$updated_did_mailbox_callhandler}".PHP_EOL;
+		echo "Updated AD IP Phones: {$updated_ad_ipphone}".PHP_EOL;
 
         $end = Carbon::now();
         echo PHP_EOL;

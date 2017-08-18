@@ -387,7 +387,6 @@
 										<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							
 							<th>
 								<a href="" ng-click="sortType = 'assignments'; sortReverse = !sortReverse" style="color:black">
 									Assignments
@@ -395,7 +394,15 @@
 										<span ng-show="sortType == 'assignments' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-
+							<th>
+								<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
+									Mailbox User
+										<span ng-show="sortType == 'system_id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							
 							<th>
 								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
 									Created At
@@ -427,6 +434,7 @@
 						<td   ng-show="!vm.edit[did.id]">{{ did.name}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.status}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.system_id}}</td>
+						
 						<td   ng-show="!vm.edit[did.id]">
 						
 							<!--Nested Table inside Row-->
@@ -448,6 +456,7 @@
 							</div>
 							
 						</td>
+						<td   ng-show="!vm.edit[did.id]">{{ did.mailbox.User.Alias}}</td>
 						
 						<td   ng-show="!vm.edit[did.id]">{{ did.created_at}}</td>
 						<td   ng-show="!vm.edit[did.id]">{{ did.updated_at}} {{ did.updated_by}}</td>
@@ -467,6 +476,7 @@
 							</select>
 						</td>
 						<td   ng-show="vm.edit[did.id]">{{ did.system_id}}</td>
+						
 						<td   ng-show="vm.edit[did.id]">
 						
 							<!--Nested Table inside Row-->
@@ -487,6 +497,7 @@
 							</div>
 						
 						</td>
+						<td   ng-show="vm.edit[did.id]">{{ did.mailbox.User.Alias}}</td>
 						<td   ng-show="vm.edit[did.id]">{{ did.created_at}}</td>
 						<td   ng-show="vm.edit[did.id]">{{ did.updated_at}}</td>
 						

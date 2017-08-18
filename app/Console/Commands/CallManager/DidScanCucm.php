@@ -213,7 +213,7 @@ class DidScanCucm extends Command
                     $did->assignments = null;
                     $did->status = 'available';
                     $did->system_id = null;
-					$did->mailbox = null;
+                    $did->mailbox = null;
                 }
                 //dd($did);
                 $did->save();

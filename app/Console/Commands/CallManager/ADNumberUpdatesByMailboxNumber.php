@@ -63,22 +63,21 @@ class ADNumberUpdatesByMailboxNumber extends Command
         $didblocks_count = count($didblocks);
         $didblock_count = 0;
 
-		$updated_did_mailbox = 0;
-		$updated_ad_ipphone = 0;
-		$updated_did_mailbox_callhandler = 0;
-		
-        foreach ($didblocks as $didblock) {
+        $updated_did_mailbox = 0;
+        $updated_ad_ipphone = 0;
+        $updated_did_mailbox_callhandler = 0;
 
+        foreach ($didblocks as $didblock) {
             $didblock_count++;
-			
-			print "Block ID: {$didblock->id}".PHP_EOL;
-			
-			/* Had to fast forward because of error... will now start with IDs of greater than 373
-			if($didblock->id <= 373){
-				print $didblock->id;
-				continue;
-			}
-			*/
+
+            echo "Block ID: {$didblock->id}".PHP_EOL;
+
+            /* Had to fast forward because of error... will now start with IDs of greater than 373
+            if($didblock->id <= 373){
+                print $didblock->id;
+                continue;
+            }
+            */
             echo 'Block Count: '.$didblock_count.' of '.count($didblocks).PHP_EOL;
             $sitecode = $didblock->name;
 
@@ -91,159 +90,153 @@ class ADNumberUpdatesByMailboxNumber extends Command
                 $count = 0;
                 foreach ($dids as $did) {
                     $count++;
-					
-					echo 'Did '.$count.' of '.count($dids). ": {$did->number} ".PHP_EOL;
+
+                    echo 'Did '.$count.' of '.count($dids).": {$did->number} ".PHP_EOL;
                     //if ($did->status == 'inuse') {
-						//************** Remove this after first run   **************/
-						/*
-						if($did->mailbox){
-							continue;
-						}
-						*/
-                         // If it is inuse - Go see if it has a mailbox and update the mailbox field.
-                        try {
-                            $mailbox_details = Cupi::findmailboxbyextension($did->number);
-                        } catch (\Exception $e) {
-                            echo $e->getMessage();
-                            continue;
-                        }
-                        $mailbox = false;
-                        $callhandler = false;
-                        //print_r($mailbox_details);
-                        if ($mailbox_details['response']['@total'] > 0) {
-                            if ((isset($mailbox_details['response']['User']))) {
-								
-                                $mailbox = $mailbox_details['response']['User'];
-								
-								if(!isset($mailbox['FirstName'])){
-									$mailbox['FirstName'] = "";
-								}
-								if(!isset($mailbox['LastName'])){
-									$mailbox['LastName'] = "";
-								}
-								
-								
-								
-                                $mailbox = ['Alias'             => $mailbox['Alias'],
+                    //************** Remove this after first run   **************/
+                    /*
+                    if($did->mailbox){
+                        continue;
+                    }
+                    */
+                    // If it is inuse - Go see if it has a mailbox and update the mailbox field.
+                    try {
+                        $mailbox_details = Cupi::findmailboxbyextension($did->number);
+                    } catch (\Exception $e) {
+                        echo $e->getMessage();
+                        continue;
+                    }
+                    $mailbox = false;
+                    $callhandler = false;
+                    //print_r($mailbox_details);
+                    if ($mailbox_details['response']['@total'] > 0) {
+                        if ((isset($mailbox_details['response']['User']))) {
+                            $mailbox = $mailbox_details['response']['User'];
+
+                            if (! isset($mailbox['FirstName'])) {
+                                $mailbox['FirstName'] = '';
+                            }
+                            if (! isset($mailbox['LastName'])) {
+                                $mailbox['LastName'] = '';
+                            }
+
+                            $mailbox = ['Alias'             => $mailbox['Alias'],
                                             'DisplayName'       => $mailbox['DisplayName'],
                                             'FirstName'         => $mailbox['FirstName'],
                                             'LastName'          => $mailbox['LastName'],
                                             'DtmfAccessId'      => $mailbox['DtmfAccessId'],
                                             'AD User'           => false,
                                             ];
-										
-                                // Update the Did Database
-                                $did->mailbox = ['User' => $mailbox];
-                                $did->save();
-								
-								$updated_did_mailbox++;
-								
-								
-                                if (isset($mailbox['Alias']) && $mailbox['Alias']) {
+
+                            // Update the Did Database
+                            $did->mailbox = ['User' => $mailbox];
+                            $did->save();
+
+                            $updated_did_mailbox++;
+
+                            if (isset($mailbox['Alias']) && $mailbox['Alias']) {
 
                                     //print_r($mailbox);
 
-                                    $username = $mailbox['Alias'];
+                                $username = $mailbox['Alias'];
 
-                                    //print $username.PHP_EOL;
-                                    try {
-                                        $ldap_user = $this->Auth->getUserLdapPhone($username);
-                                    } catch (\Exception $e) {
-                                        echo $e->getMessage();
-                                        continue;
-                                    }
+                                //print $username.PHP_EOL;
+                                try {
+                                    $ldap_user = $this->Auth->getUserLdapPhone($username);
+                                } catch (\Exception $e) {
+                                    echo $e->getMessage();
+                                    continue;
+                                }
 
-                                    //print_r($ldap_user);
+                                //print_r($ldap_user);
 
-                                    if ($ldap_user) {
-                                        //print_r($username).PHP_EOL;
-                                        if ($ldap_user['user']) {
-                                            $fulluser = $ldap_user['user'];
-                                            $fulluser = explode(',', $fulluser);
-                                            foreach ($fulluser as $value) {
-                                                if ($value == 'OU=Disabled Users') {
-                                                    $ldap_user['disabled'] = true;
-                                                }
-                                                if (isset($ldap_user['disabled']) && $ldap_user['disabled'] != true) {
-                                                    $ldap_user['disabled'] = false;
-                                                }
+                                if ($ldap_user) {
+                                    //print_r($username).PHP_EOL;
+                                    if ($ldap_user['user']) {
+                                        $fulluser = $ldap_user['user'];
+                                        $fulluser = explode(',', $fulluser);
+                                        foreach ($fulluser as $value) {
+                                            if ($value == 'OU=Disabled Users') {
+                                                $ldap_user['disabled'] = true;
                                             }
+                                            if (isset($ldap_user['disabled']) && $ldap_user['disabled'] != true) {
+                                                $ldap_user['disabled'] = false;
+                                            }
+                                        }
 
-                                            echo "Found User for Mailbox: {$ldap_user['displayname']}".PHP_EOL;
+                                        echo "Found User for Mailbox: {$ldap_user['displayname']}".PHP_EOL;
 
-                                            $mailbox['AD User'] = $ldap_user['userprincipalname'];
+                                        $mailbox['AD User'] = $ldap_user['userprincipalname'];
 
-                                            // Update the Did Database
-                                            $did->mailbox = ['User' => $mailbox];
-                                            $did->save();
+                                        // Update the Did Database
+                                        $did->mailbox = ['User' => $mailbox];
+                                        $did->save();
 
-                                            //print_r($did->mailbox);
+                                        //print_r($did->mailbox);
 
-                                            if ($ldap_user['ipphone'] != $mailbox['DtmfAccessId']) {
-                                                $DN = $mailbox['DtmfAccessId'];
-                                                $USERNAME = $ldap_user['userprincipalname'];
-											
-                                                // If the IP Phone Field doesn't match what is in Unity Connection - Update it.
-												/* Uncomment to updated AD with VM DN. Should be no reason after first run to do this but just in case.... 
-												try {
+                                        if ($ldap_user['ipphone'] != $mailbox['DtmfAccessId']) {
+                                            $DN = $mailbox['DtmfAccessId'];
+                                            $USERNAME = $ldap_user['userprincipalname'];
+
+                                            // If the IP Phone Field doesn't match what is in Unity Connection - Update it.
+                                                /* Uncomment to updated AD with VM DN. Should be no reason after first run to do this but just in case....
+                                                try {
                                                     $update = $this->Auth->changeLdapPhone($USERNAME, $DN);
                                                     echo "Updated User IP Phone Field from {$ldap_user['ipphone']} to {$DN}".PHP_EOL;
-													$updated_ad_ipphone++;
-												} catch (\Exception $e) {
+                                                    $updated_ad_ipphone++;
+                                                } catch (\Exception $e) {
                                                     echo $e->getMessage();
                                                     continue;
                                                 }
-												*/
-                                            }
+                                                */
                                         }
                                     }
                                 }
+                            }
 
-                                //print_r($mailbox);
-                            } else {
-                                echo 'No Mailbox Found... Looking for a Call Handler'.PHP_EOL;
-                                $mailbox_details = Cupi::get_callhandler_by_extension($linedetails['pattern']);
+                            //print_r($mailbox);
+                        } else {
+                            echo 'No Mailbox Found... Looking for a Call Handler'.PHP_EOL;
+                            $mailbox_details = Cupi::get_callhandler_by_extension($linedetails['pattern']);
 
-                                //print_r($mailbox_details);
-                                if ($mailbox_details['response']['@total'] > 0) {
-                                    if (isset($mailbox_details['response']['Callhandler'])) {
-                                        $callhandler = $mailbox_details['response']['Callhandler'];
+                            //print_r($mailbox_details);
+                            if ($mailbox_details['response']['@total'] > 0) {
+                                if (isset($mailbox_details['response']['Callhandler'])) {
+                                    $callhandler = $mailbox_details['response']['Callhandler'];
 
-                                        echo "Found Call Handler for Exension: {$callhandler['DisplayName']}".PHP_EOL;
+                                    echo "Found Call Handler for Exension: {$callhandler['DisplayName']}".PHP_EOL;
 
-                                        $callhandler = ['Alias'            => $callhandler['Alias'],
+                                    $callhandler = ['Alias'            => $callhandler['Alias'],
                                                         'DisplayName'      => $callhandler['DisplayName'],
                                                         'DtmfAccessId'     => $callhandler['DtmfAccessId'],
                                                     ];
 
-                                        // Update the Did Database
-                                        $did->mailbox = ['Callhandler' => $mailbox];
-                                        $did->save();
-										
-										$updated_did_mailbox_callhandler++;
-                                    }
+                                    // Update the Did Database
+                                    $did->mailbox = ['Callhandler' => $mailbox];
+                                    $did->save();
+
+                                    $updated_did_mailbox_callhandler++;
                                 }
                             }
-                        }else{
-							
-							// If not mailbox clear out if something is set. 
-							if($did->mailbox){
-								$did->mailbox = null;
-								$did->save();
-							}
-							
-						}
+                        }
+                    } else {
+
+                            // If not mailbox clear out if something is set.
+                        if ($did->mailbox) {
+                            $did->mailbox = null;
+                            $did->save();
+                        }
+                    }
                     //}
                 }
             }
         }
 
-
         echo '###########################################################################'.PHP_EOL;
 
-		echo "Updated Mailboxes: {$updated_did_mailbox}".PHP_EOL;
-		echo "Updated Mailbox with CallHandler: {$updated_did_mailbox_callhandler}".PHP_EOL;
-		echo "Updated AD IP Phones: {$updated_ad_ipphone}".PHP_EOL;
+        echo "Updated Mailboxes: {$updated_did_mailbox}".PHP_EOL;
+        echo "Updated Mailbox with CallHandler: {$updated_did_mailbox_callhandler}".PHP_EOL;
+        echo "Updated AD IP Phones: {$updated_ad_ipphone}".PHP_EOL;
 
         $end = Carbon::now();
         echo PHP_EOL;

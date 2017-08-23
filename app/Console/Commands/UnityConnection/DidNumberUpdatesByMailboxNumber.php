@@ -173,7 +173,7 @@ class DidNumberUpdatesByMailboxNumber extends Command
                                         $did->save();
 
                                         //print_r($did->mailbox);
-										/*
+                                        /*
                                         if ($ldap_user['ipphone'] != $mailbox['DtmfAccessId']) {
                                             $DN = $mailbox['DtmfAccessId'];
                                             $USERNAME = $ldap_user['userprincipalname'];
@@ -188,7 +188,7 @@ class DidNumberUpdatesByMailboxNumber extends Command
                                                     echo $e->getMessage();
                                                     continue;
                                                 }
-                                                
+
                                         }*/
                                     }
                                 }

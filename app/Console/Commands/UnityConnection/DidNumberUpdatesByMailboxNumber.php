@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\CallManager;
+namespace App\Console\Commands\UnityConnection;
 
 use App\Did;
 use App\Cupi;
@@ -9,21 +9,21 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Auth\AuthController;
 
-class ADNumberUpdatesByMailboxNumber extends Command
+class DidNumberUpdatesByMailboxNumber extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ldap:update_ipphone_from_mailbox';
+    protected $signature = 'cisco_unity_connection:didscan';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update AD IP Phone Field and Did Database info with Mailbox User - One Time Run Only Needed to Update AD. Run cisco_unity_connection:didscan in Cron to keep database updated. ';
+    protected $description = 'Update Did Database info with Mailbox User';
 
     /**
      * Create a new command instance.
@@ -173,13 +173,13 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                         $did->save();
 
                                         //print_r($did->mailbox);
-
+										/*
                                         if ($ldap_user['ipphone'] != $mailbox['DtmfAccessId']) {
                                             $DN = $mailbox['DtmfAccessId'];
                                             $USERNAME = $ldap_user['userprincipalname'];
 
                                             // If the IP Phone Field doesn't match what is in Unity Connection - Update it.
-                                                /* Uncomment to updated AD with VM DN. Should be no reason after first run to do this but just in case....
+                                                 Uncomment to updated AD with VM DN. Should be no reason after first run to do this but just in case....
                                                 try {
                                                     $update = $this->Auth->changeLdapPhone($USERNAME, $DN);
                                                     echo "Updated User IP Phone Field from {$ldap_user['ipphone']} to {$DN}".PHP_EOL;
@@ -188,8 +188,8 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                                     echo $e->getMessage();
                                                     continue;
                                                 }
-                                                */
-                                        }
+                                                
+                                        }*/
                                     }
                                 }
                             }

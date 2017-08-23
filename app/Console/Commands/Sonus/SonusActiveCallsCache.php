@@ -22,7 +22,7 @@ class SonusActiveCallsCache extends Command
      *
      * @var string
      */
-    protected $description = 'Submit Current Call Summary to Database';
+    protected $description = 'Cache Current Call Summary for UI Fast Loading - Runs this every 5 seconds by store-sonus-active-calls-to-cache.sh - Run in Cron every minute';
 
     /**
      * Create a new command instance.

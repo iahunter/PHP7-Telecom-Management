@@ -21,7 +21,9 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmNumberCleanup::class,
         Commands\CallManager\CucmPhoneScanOnDemand::class,
 
-        Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
+        //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
+		
+		Commands\UnityConnection\DidNumberUpdatesByMailboxNumber::class,
 
         Commands\West911Enable\PhoneEGWScanUpdate::class,
 

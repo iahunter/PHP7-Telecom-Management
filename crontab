@@ -37,6 +37,10 @@
 # CUCM Scheduled Jobs every day at 0100
 0 1 * * * /PATH_TO_APP/telephony/artisan callmanager:phonescan > /dev/null 2>&1
 
+
+# Unity Connection Scheduled Jobs at 0200
+0 2 * * * /PATH_TO_APP/telephony/artisan cisco_unity_connection:didscan > /dev/null 2>&1
+
 # Telecom Managment Backup at 0400
 0 4 * * * /PATH_TO_APP/telephony/artisan backup:run > /dev/null 2>&1
 

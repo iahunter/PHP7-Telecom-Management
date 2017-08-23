@@ -42,10 +42,10 @@ class PhoneMACDController extends Controller
 
         // Clear the token, we don't want to save that data.
         unset($phone['token']);
-		
-		if (!isset($phone['username'])){
-			$phone['username'] = "";
-		}
+
+        if (! isset($phone['username'])) {
+            $phone['username'] = '';
+        }
 
         $macd = PhoneMACD::create(['type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
 
@@ -54,17 +54,16 @@ class PhoneMACDController extends Controller
         $data['phone'] = $phone;
 
         // Update AD User IP Phone Field
-		if (isset($phone['username']) && $phone['username']){
-			if (isset($phone['dn']) && $phone['dn']) {
-				$task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'parent' => $macd->id, 'status' => 'job received']);
-				$tasks[] = $task;
-				$data['taskid'] = $task->id;
+        if (isset($phone['username']) && $phone['username']) {
+            if (isset($phone['dn']) && $phone['dn']) {
+                $task = PhoneMACD::create(['type' => 'Update User AD IP Phone Field', 'parent' => $macd->id, 'status' => 'job received']);
+                $tasks[] = $task;
+                $data['taskid'] = $task->id;
 
-				// Testing of Events Controller
-				event(new Create_AD_IPPhone_Event($data));
-			}
-		}
-        
+                // Testing of Events Controller
+                event(new Create_AD_IPPhone_Event($data));
+            }
+        }
 
         // Build new line first and then chain to add the phone if a new line is required.
         if (isset($phone['usenumber']) && $phone['usenumber'] == 'new') {

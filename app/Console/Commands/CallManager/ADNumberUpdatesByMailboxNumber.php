@@ -120,7 +120,7 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                 $mailbox['LastName'] = '';
                             }
 
-                            $mailbox = ['Alias'             => $mailbox['Alias'],
+                            $mailbox = ['Alias'                 => $mailbox['Alias'],
                                             'DisplayName'       => $mailbox['DisplayName'],
                                             'FirstName'         => $mailbox['FirstName'],
                                             'LastName'          => $mailbox['LastName'],
@@ -206,7 +206,7 @@ class ADNumberUpdatesByMailboxNumber extends Command
 
                                     echo "Found Call Handler for Exension: {$callhandler['DisplayName']}".PHP_EOL;
 
-                                    $callhandler = ['Alias'            => $callhandler['Alias'],
+                                    $callhandler = ['Alias'                => $callhandler['Alias'],
                                                         'DisplayName'      => $callhandler['DisplayName'],
                                                         'DtmfAccessId'     => $callhandler['DtmfAccessId'],
                                                     ];

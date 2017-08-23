@@ -428,6 +428,9 @@ angular
 			if(!phone.voicemail){
 				phone.voicemail = false;
 			}
+			if(!phone.username){
+				phone.username = "";
+			}
 			
 			macdService.create_macd_add(phone)
 				.then(function(res){

@@ -87,8 +87,8 @@ class CucmPhoneIPAddresses extends Command
                     $phone->save();
                 }
             }
-            echo 'Sleeping for 15 seconds...'.PHP_EOL;
-            sleep(15);
+            echo 'Sleeping for 20 seconds...'.PHP_EOL;
+            sleep(60);
             //die();
         });
     }

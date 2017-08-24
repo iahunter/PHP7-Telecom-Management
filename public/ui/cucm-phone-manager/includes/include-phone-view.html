@@ -12,23 +12,56 @@
 		<div style="margin-left:5%; margin-right:5%;">
 			<div>
 				<div style="margin:25px;"></div>
-				<legend><h1>Real Time Phone Poller</h1></legend>
+				<legend><h1>Phone Details: {{vm.phone.name}} </h1></legend>
 				
 
-				<div >
+				<div>
 					<div style="margin-left:5%; margin-right:5%;">
-					
-					<div class="row">
-						<h3 style="color:#337ab7;">Phone Details: {{vm.phone.name}} </h3>
-						<div style="margin:25px;"></div>
-					</div>
+
 					
 					<div class="alert alert-danger" role="alert" ng-if="vm.phone.addOnModules.addOnModule.length > 0">
 						<strong>This Device has Expansion Modules!!! Do Not Delete unless you verify this configuration is no longer needed!!!</strong>										
 					</div>
+					
+					<div class="row" >
+						<div class="well col-sm-3 pull-right" style="background-color:	#E0E0E0;">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="risdb_ipv4address" class="control-label">IP Address</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input class="form-control" readonly ng-model='vm.phone.risdb_ipv4address' name="risdb_ipv4address">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label for="risdb_registration_status" class="control-label">Status <small>(Delayed)</small></label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												<input style="color:red;" class="form-control" readonly ng-model='vm.phone.risdb_registration_status' name="risdb_registration_status">
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
 								
 					<div class="row">
 						<legend><b>Device</b></legend>
+						
+						
 						<div class="col-sm-6">
 							<div class="row">
 								<div class="col-sm-12">
@@ -154,7 +187,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group">
-										<label for="ipv4address" class="control-label">IP Address</label>
+										<label for="ipv4address" class="control-label">EGW IP Address</label>
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
@@ -165,6 +198,9 @@
 									</div>
 								</div>
 							</div>
+							
+							
+							
 							
 							<div class="row" ng-if="vm.phone.addOnModules.addOnModule.length > 0">
 
@@ -182,7 +218,9 @@
 						
 						
 					</div>
-
+					
+					
+					<div style="margin:25px"></div>
 					<div class="row" >
 						<legend><b>Lines</b></legend>
 

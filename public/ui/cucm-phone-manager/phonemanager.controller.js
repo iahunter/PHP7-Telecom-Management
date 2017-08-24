@@ -66,6 +66,8 @@ angular
 										
 										vm.phone.erl = result.erl;
 										vm.phone.ipv4address = result.ipv4address;
+										vm.phone.risdb_ipv4address = result.risdb_ipv4address;
+										vm.phone.risdb_registration_status = result.risdb_registration_status;
 
 										console.log(vm.phone)
 									}

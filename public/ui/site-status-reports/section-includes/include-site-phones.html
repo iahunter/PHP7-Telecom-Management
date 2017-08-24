@@ -92,19 +92,34 @@
 									</a>
 								</th>
 								<th>
-									<a href="" ng-click="sortType = 'ipv4address'; sortReverse = !sortReverse" style="color:black">
-										IP Address
-											<span ng-show="sortType == 'ipv4address' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-											<span ng-show="sortType == 'ipv4address' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-									</a>
-								</th>
-								<th>
 									<a href="" ng-click="sortType = 'erl'; sortReverse = !sortReverse" style="color:black">
 										ERL
 											<span ng-show="sortType == 'erl' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 											<span ng-show="sortType == 'erl' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
 								</th>
+								<th>
+									<a href="" ng-click="sortType = 'ipv4address'; sortReverse = !sortReverse" style="color:black">
+										EGW IP Address
+											<span ng-show="sortType == 'ipv4address' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'ipv4address' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'risdb_ipv4address'; sortReverse = !sortReverse" style="color:black">
+										RISDB IP Address
+											<span ng-show="sortType == 'risdb_ipv4address' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'risdb_ipv4address' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'risdb_registration_status	'; sortReverse = !sortReverse" style="color:black">
+										Registration Status
+											<span ng-show="sortType == 'risdb_registration_status	' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'risdb_registration_status	' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								
 								<th>
 										Lines
 								</th>
@@ -127,8 +142,10 @@
 								<td>{{ phone.devicepool}}</td>
 								<td>{{ phone.css}}</td>
 								<td>{{ phone.ownerid}}</td>
-								<td><a href="http://{{phone.ipv4address}}" target="_blank"><b>{{ phone.ipv4address}}</b></a></td>
 								<td>{{ phone.erl}}</td>
+								<td><a href="http://{{phone.ipv4address}}" target="_blank"><b>{{ phone.ipv4address}}</b></a></td>
+								<td><a href="http://{{phone.risdb_ipv4address}}" target="_blank"><b>{{ phone.risdb_ipv4address}}</b></a></td>
+								<td><b>{{ phone.risdb_registration_status}}</b></td>
 								<td>
 									
 										<!--Nested Table inside Row-->

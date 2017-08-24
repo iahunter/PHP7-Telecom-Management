@@ -20,8 +20,8 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\DidScanCucm::class,
         Commands\CallManager\CucmNumberCleanup::class,
         Commands\CallManager\CucmPhoneScanOnDemand::class,
-		
-		Commands\CallManager\CucmPhoneIPAddresses::class,
+
+        Commands\CallManager\CucmPhoneIPAddresses::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 

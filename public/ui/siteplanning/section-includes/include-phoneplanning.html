@@ -63,6 +63,7 @@
 							<thead>
 								<tr class="success">
 
+									<th></th>
 									<th>
 										<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
 											ID
@@ -154,7 +155,8 @@
 							<tr ng-repeat="phone in vm.phoneplans | orderBy:sortType:sortReverse | filter:vm.search: strict">
 							
 								<!--List View-->
-								<td><a ui-sref="getphoneplan({id: phone.id})"><button class="btn btn-xs btn-default btn-block">{{ phone.id}}</button></a></td>
+								<td><a ui-sref="getphoneplan({id: phone.id})"><button style="color: white; background-color:#555a5e;" class="btn btn-xs"><b>View</b></button></a></td>
+								<td>{{ phone.id}}</td>
 								<!--<td>{{ phone.parent}}</td>-->
 								<td   ng-show="!vm.edit[phone.id]"><a ui-sref="getphoneplan({id: phone.id})"><b>{{ phone.name}}</b></a></td>
 								<td   ng-show="!vm.edit[phone.id]">{{ phone.description}}</td>

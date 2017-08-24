@@ -53,7 +53,7 @@ class PhoneEGWScanUpdate extends Command
         //$result = West911EnableEGW::get();
         //print "Starting chunking...".PHP_EOL;
 
-        Cucmphoneconfigs::chunk(10, function ($phones) {
+        Cucmphoneconfigs::chunk(1000, function ($phones) {
             foreach ($phones as $phone) {
                 $erl = '';
                 $ipv4address = '';

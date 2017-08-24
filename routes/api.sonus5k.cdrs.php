@@ -1,5 +1,37 @@
 <?php
 
+
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus5kcdrs/search/{column}/{search}",
+     *     tags={"CDR - Sonus History"},
+     *     summary="List CDR Records by Date Range",
+     *     description="",
+     *     operationId="searchCDR",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="column",
+     *         in="path",
+     *         description="Column to Search",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="search",
+     *         in="path",
+     *         description="Search",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('sonus5kcdrs/search/{column}/{search}', 'App\Http\Controllers\Sonus5kCDRcontroller@searchCDR');
+
     /**
      * @SWG\Post(
      *     path="/telephony/api/sonus5kcdrs/callsbydaterange",

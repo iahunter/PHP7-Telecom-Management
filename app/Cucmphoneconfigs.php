@@ -12,7 +12,7 @@ class Cucmphoneconfigs extends Model
     //use Auditable;
     use SoftDeletes;
     protected $table = 'cucmphone';
-    protected $fillable = ['name', 'description', 'devicepool', 'css', 'model', 'ownerid', 'ipv4address', 'erl', 'risdb_ipv4address', 'risdb_registration_status','lines', 'config'];
+    protected $fillable = ['name', 'description', 'devicepool', 'css', 'model', 'ownerid', 'ipv4address', 'erl', 'risdb_ipv4address', 'risdb_registration_status', 'lines', 'config'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [

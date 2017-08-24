@@ -29,8 +29,8 @@ class Sonus5kCDRcontroller extends Controller
                         env('SONUS2'),
                         ];
     }
-	
-	public function searchCDR(Request $request, $column, $search)
+
+    public function searchCDR(Request $request, $column, $search)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -39,13 +39,13 @@ class Sonus5kCDRcontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-		$column = $request->column;
-		$search = $request->search;
+        $column = $request->column;
+        $search = $request->search;
 
         if (! \App\Sonus5kCDR::where($column, 'like', "%{$search}%")->count()) {
             abort(404, 'No records found');
         } else {
-		$result = \App\Sonus5kCDR::where($column, 'like', "%{$search}%")->orderby('start_time', 'DESC')->get();
+            $result = \App\Sonus5kCDR::where($column, 'like', "%{$search}%")->orderby('start_time', 'DESC')->get();
         }
 
         $response = [

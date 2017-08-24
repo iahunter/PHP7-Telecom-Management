@@ -34,10 +34,11 @@ class CreateCucmConfigs extends Migration
             $table->string('model')->nullable();
             $table->string('ownerid')->nullable();
             $table->string('css')->nullable();
+			$table->string('erl')->nullable();            // Future E911 Integration
             $table->string('ipv4address')->nullable();        // Future RISDB API
-            $table->string('erl')->nullable();            // Future E911 Integration
-            $table->string('risdb_ipv4address')->nullable();            // Future E911 Integration
-            $table->string('risdb_registration_status')->nullable();            // Future E911 Integration
+            
+            $table->string('risdb_ipv4address')->nullable();            // RISDB IP Address
+            $table->string('risdb_registration_status')->nullable();   	// RISDB Status
             $table->json('config')->nullable();                // JSON Details Custom Field Data
             $table->json('lines')->nullable();              // JSON Details Custom Field Data
             $table->timestamps();                            // Time Stamps

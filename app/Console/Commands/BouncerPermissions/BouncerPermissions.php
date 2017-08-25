@@ -46,7 +46,7 @@ class BouncerPermissions extends Command
         $this->assignExecGroupBouncerRoles(env('EXECS_GRP'));
         $this->assignServiceDeskBouncerRoles(env('SERVICEDESK_GRP'));
         $this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));
-		$this->assignReadOnlyGroupBouncerRoles(env('NETWORK_GRP'));
+        $this->assignReadOnlyGroupBouncerRoles(env('NETWORK_GRP'));
     }
 
     protected function assignAdminGroupBouncerRoles($group)
@@ -90,8 +90,8 @@ class BouncerPermissions extends Command
 
         echo 'Finished Assigning Permissions'.PHP_EOL;
     }
-	
-	protected function assignReadOnlyGroupBouncerRoles($group)
+
+    protected function assignReadOnlyGroupBouncerRoles($group)
     {
         // Assign Network Engineer to Admin.
 

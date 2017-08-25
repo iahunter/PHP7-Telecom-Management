@@ -68,13 +68,13 @@ class CucmSiteScan extends Command
                 echo 'DELETED: '.$dbsite.PHP_EOL;
             }
         }
-		
-		$count = 0; 
-		
+
+        $count = 0;
+
         //$sites = ['ECDONP3G'];                                     	// Comment this out to actually run this.
         foreach ($sites as $site) {
-			$count++;
-            echo $count.' of ' . count($sites) . ': Getting Site: '.$site.PHP_EOL;
+            $count++;
+            echo $count.' of '.count($sites).': Getting Site: '.$site.PHP_EOL;
             // Step 2. Get everything to do with the site for each site.
             $site_summary = $this->getSiteDetails($site);
             //print_r($site_summary);

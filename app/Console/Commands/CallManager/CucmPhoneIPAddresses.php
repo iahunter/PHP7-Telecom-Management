@@ -4,6 +4,7 @@ namespace App\Console\Commands\CallManager;
 
 use App\CucmRealTime;
 use App\Cucmphoneconfigs;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CucmPhoneIPAddresses extends Command
@@ -29,7 +30,6 @@ class CucmPhoneIPAddresses extends Command
      */
     public function __construct()
     {
-        // Construct new cucm object
         $this->CucmRealTime = new CucmRealTime();
 
         parent::__construct();
@@ -44,6 +44,12 @@ class CucmPhoneIPAddresses extends Command
      */
     public function handle()
     {
+		$start = Carbon::now();
+
+		// Go thru all phone records 1000 per chunk and update our table ip address and registration status from cucm. 
+		
+		// This will take around 1 minute per 1000k phones. 
+		
         Cucmphoneconfigs::chunk(1000, function ($phones) {
             $query = [];
 
@@ -87,17 +93,25 @@ class CucmPhoneIPAddresses extends Command
                     $phone->save();
                 }
             }
-            echo 'Sleeping for 20 seconds...'.PHP_EOL;
+			
+			// Sleep for 60 seconds due to 15 query per minute limitation on CUCM in RISDB API. There are other systems using this so we don't want to bog them down. 
+            echo 'Sleeping for 60 seconds...'.PHP_EOL;
             sleep(60);
             //die();
         });
+		
+		$end = Carbon::now();
+
+        echo 'Start: '.$start;
+        echo 'End: '.$end;
     }
 
     public function get_phone_ip($phones)
     {
+		// CUCM Limitation for RISDB querie in version 10.5.. i have heard its less in earlier versions but we do not support them. 
         $MAX_PHONE_QUERY = 1000;
 
-        //$phones = ['tlriesenberg', 'SEP00DA5527F681', 'SEP0C6803C0AFC1', 'SEP000000000000'];
+        //$phones = ['SEP00DA5527F681', 'SEP0C6803C0AFC1', 'SEP000000000000'];
 
         $count = 0;
 
@@ -110,14 +124,15 @@ class CucmPhoneIPAddresses extends Command
                 $query_result = $this->CucmRealTime->getIPAddresses($searchCriteria);
                 $result = array_merge($result, $query_result);
                 $count = 0;
+				
+				// May need to sleep if the query is to large due to the RISDB limitation of 15 queries per minute. 
+				// I added this into the handle to account for this. 
                 //sleep(15);
             }
         }
 
-        // $result = $this->CucmRealTime->getIPAddresses($searchCriteria);
-
-        print_r($result);
-        echo count($result).PHP_EOL;
+        //print_r($result);
+        //echo count($result).PHP_EOL;
 
         return $result;
     }

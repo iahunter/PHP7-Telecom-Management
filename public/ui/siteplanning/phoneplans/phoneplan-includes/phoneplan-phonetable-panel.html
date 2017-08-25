@@ -130,7 +130,7 @@
 										<span ng-show="sortType == 'notes' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-							
+							<!--
 							<th>
 								<a href="" ng-click="sortType = 'system_id'; sortReverse = !sortReverse" style="color:black">
 									System ID
@@ -138,7 +138,7 @@
 										<span ng-show="sortType == 'system_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-
+							-->
 							<th>
 								<a href="" ng-click="sortType = 'created_at'; sortReverse = !sortReverse" style="color:black">
 									Created At
@@ -189,7 +189,7 @@
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.language}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.voicemail}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.notes}}</td>
-						<td   ng-show="!vm.edit[phone.id]">{{ phone.system_id}}</td>
+						<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.system_id}}</td>-->
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.created_at}}</td>
 						<td   ng-show="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
 
@@ -267,7 +267,7 @@
 							</select>
 						</td>
 						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.notes"></td>
-						<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.system_id"></td>
+						<!--<td   ng-show="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.system_id"></td>-->
 						<td   ng-show="vm.edit[phone.id]">{{ phone.created_at}}</td>
 						<td   ng-show="vm.edit[phone.id]">{{ phone.updated_at}}</td>
 						

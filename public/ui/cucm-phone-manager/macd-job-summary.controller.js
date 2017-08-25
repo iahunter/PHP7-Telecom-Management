@@ -128,8 +128,11 @@ angular
 		vm.polldevices = function(){
 			// Only poll the systems if these variables are not set. 
 			if(!vm.aduser){
-				vm.lookupuser(vm.deviceForm.username)
-				vm.getusername(vm.deviceForm.username)
+				if(vm.deviceForm.username){
+					vm.lookupuser(vm.deviceForm.username)
+					vm.getusername(vm.deviceForm.username)
+				}
+				
 			}
 			
 			if(!vm.line_number){

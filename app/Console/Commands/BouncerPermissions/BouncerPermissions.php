@@ -46,6 +46,7 @@ class BouncerPermissions extends Command
         $this->assignExecGroupBouncerRoles(env('EXECS_GRP'));
         $this->assignServiceDeskBouncerRoles(env('SERVICEDESK_GRP'));
         $this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));
+		$this->assignReadOnlyGroupBouncerRoles(env('NETWORK_GRP'));
     }
 
     protected function assignAdminGroupBouncerRoles($group)
@@ -79,6 +80,45 @@ class BouncerPermissions extends Command
             App\Ping::class,
             App\PhoneMACD::class,
             \Spatie\Activitylog\Models\Activity::class, // Activity Log Permissions
+        ];
+
+        foreach ($types as $type) {
+            foreach ($tasks as $task) {
+                Bouncer::allow($group)->to($task, $type);
+            }
+        }
+
+        echo 'Finished Assigning Permissions'.PHP_EOL;
+    }
+	
+	protected function assignReadOnlyGroupBouncerRoles($group)
+    {
+        // Assign Network Engineer to Admin.
+
+        echo 'Starting Assigning Permissions to '.$group.PHP_EOL;
+
+        $tasks = [
+            'read',
+        ];
+
+        $types = [
+            App\Didblock::class,
+            App\Did::class,
+            App\Site::class,
+            App\Phone::class,
+            App\Phoneplan::class,
+            App\Sonus5k::class,
+            App\Sonus5kCDR::class,
+            App\Cupi::class,
+            App\Cucmclass::class,
+            App\Calls::class,
+            App\Cucmsiteconfigs::class,
+            App\Cucmphoneconfigs::class,
+            App\TelecomInfrastructure::class,
+            App\SiteMigration::class,
+            App\Ping::class,
+            App\PhoneMACD::class,
+
         ];
 
         foreach ($types as $type) {

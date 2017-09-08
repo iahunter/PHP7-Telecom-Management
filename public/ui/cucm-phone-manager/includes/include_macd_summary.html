@@ -104,7 +104,7 @@
 								<td>{{ task.parent}}</td>
 								<td>{{ task.type}}</td>
 								<td>
-									<button class="btn btn-default btn-xs" data-toggle="modal" data-target="#macd-result-modal-{{ task.id}}"><b>{{ task.status}}</b></button>
+									<button class="btn btn-default btn-xs" data-toggle="modal" data-target="#macd-result-modal-{{ task.id}}"><b><span ng-if="task.status == 'error'" style='color:red;'><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ task.status}}</span><span ng-if="task.status != 'error'">{{ task.status}}</span></b></button>
 									<ng-include src="'cucm-phone-manager/includes/include-macd-result-modal.html'"></ng-include>
 									
 								</td>

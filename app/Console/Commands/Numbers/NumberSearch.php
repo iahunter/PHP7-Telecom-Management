@@ -37,18 +37,18 @@ class NumberSearch extends Command
      */
     public function handle()
     {
-		if (! file_exists(storage_path("numbers/numberscan")) || ! is_readable(storage_path("numbers/numberscan"))) {
+        if (! file_exists(storage_path('numbers/numberscan')) || ! is_readable(storage_path('numbers/numberscan'))) {
             return 'FILE IS NOT BEING LOADED FROM: '.$location;
         }
-		
-		$data = file_get_contents(storage_path("numbers/numberscan"));
-		
-		$numbers = explode(PHP_EOL, $data);
-		
-		print_r($numbers);
-		die();
 
-		$numbers = storage_path("numbers/numberscan");
+        $data = file_get_contents(storage_path('numbers/numberscan'));
+
+        $numbers = explode(PHP_EOL, $data);
+
+        print_r($numbers);
+        die();
+
+        $numbers = storage_path('numbers/numberscan');
 
         if (! is_array($numbers)) {
             //return "true";
@@ -74,11 +74,8 @@ class NumberSearch extends Command
                     $did = [$number_search => $did];
                 }
             }
-			print_r($did);
+            print_r($did);
             $dids[] = $did;
-			
         }
-		
-		
     }
 }

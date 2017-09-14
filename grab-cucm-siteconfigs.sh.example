@@ -9,7 +9,7 @@ cd /PATH_TO_APP/
 php artisan callmanager:sitescan
 
 # Checkout your SVN Repo in this directory
-cd /PATH_TO_APP/storage/cucm/kiewit-cucm/sites/
+cd /PATH_TO_APP/storage/cucm/company-cucm/sites/
 
 echo "Commiting Configs to Subversion..."
 

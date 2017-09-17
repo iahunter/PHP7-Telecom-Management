@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Numbers;
 
 use Illuminate\Console\Command;
+use App\Did;
 
 class NumberSearch extends Command
 {
@@ -37,6 +38,8 @@ class NumberSearch extends Command
      */
     public function handle()
     {
+		// I saved a file with a number on each line as my numberscan file. This will scan each to make sure they exist in the Number DB. If not they scan CUCM to see if they are in use and tells you. 
+	
         if (! file_exists(storage_path('numbers/numberscan')) || ! is_readable(storage_path('numbers/numberscan'))) {
             return 'FILE IS NOT BEING LOADED FROM: '.$location;
         }
@@ -46,36 +49,73 @@ class NumberSearch extends Command
         $numbers = explode(PHP_EOL, $data);
 
         print_r($numbers);
-        die();
-
-        $numbers = storage_path('numbers/numberscan');
-
-        if (! is_array($numbers)) {
-            //return "true";
-            $numbers = explode(',', $numbers);
-        }
-
-        //return $numbers;
         //die();
-        $dids = [];
-        foreach ($numbers as $number_search) {
-            if ($number_search == '') {
-                unset($number_search);
-                continue;
-            }
 
+        $dids = [];
+		$dids['found'] = [];
+		$dids['notfound'] = [];
+		$count = 0;
+		$found = 0;
+		$notfound = 0;
+		
+        foreach ($numbers as $number_search) {
+			$count++;
+			$number_search = trim($number_search);
+			
+			//print $number_search.PHP_EOL; 
+
+			
             // Search for DID by numberCheck if there are any matches.
-            if (! Did::where([['number', 'like', $number_search.'%']])->count()) {
-                $did = [$number_search => false];
+            if (! Did::where('number', '=', $number_search)->count()) {
+				$notfound++;
+				print "{$count}: {$number_search} | Not Found".PHP_EOL;
+				$dids['notfound'][$number_search] = false;
             } else {
-                // Search for numbers like search.
-                $did = Did::where('number', 'like', $number_search)->get();
+                $did = Did::where('number', '=', $number_search)->get();
+				$did = json_decode(json_encode($did), true);
                 if ($did != '') {
-                    $did = [$number_search => $did];
+					$found++;
+					print "{$count}: {$number_search} | Found".PHP_EOL;
+					$dids['found'][$number_search] = $did;
                 }
             }
-            print_r($did);
-            $dids[] = $did;
+        }
+		
+		print_r($dids['notfound']);
+		print "Did not find {$notfound} Numbers".PHP_EOL;
+		
+		$numbers = [];
+		foreach($dids['notfound'] as $did => $value){
+			$cucmnumber = $this->getnumber($did);
+			$numbers[$did] = $cucmnumber;
+		}
+		
+		print_r($numbers);
+    }
+	
+	protected function getnumber($number)
+    {
+        //echo 'Getting Number: '.$number.' from CUCM...'.PHP_EOL;
+        try {
+            $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+            $didinfo = $cucm->get_route_plan_by_name($number);
+            unset($cucm);
+            
+			if($didinfo){
+				print "{$number} Found in CUCM!!! Please add to the Number Database!!!".PHP_EOL; 
+				return $didinfo;
+			}else{
+				print "{$number} Not Found in CUCM!!! Please add to the Number Database or Disconnect from Provider...".PHP_EOL; 
+				return false;
+			}
+
+        } catch (\Exception $e) {
+            echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+            dd($e->getTrace());
         }
     }
 }

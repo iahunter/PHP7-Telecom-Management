@@ -1,8 +1,8 @@
 {
     "name": "iahunter/php7-telecom-management",
     "description": "Telecom Management Server",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "keywords": ["telecom", "laravel"],
+    "license": "LGPL3.0",
     "type": "project",
     "repositories": [
       {

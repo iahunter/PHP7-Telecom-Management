@@ -1750,27 +1750,27 @@ class CucmSiteMigration extends Cucm
                     $PHONE_CONFIG = $PHONE['config'];
                     $DP = explode('_', $PHONE['devicepool']);
                     $SITE = $DP[1];
-					if ($PHONE_CONFIG['callingSearchSpaceName']['_'] == "CSS_KHONEOMA-EXEC-ADMIN") {
-						// #################################################################
-						// DO NOT UPDATE THE CSS ON THE EXEC ADMIN GRP 
-						$DATA['name'] = $PHONE_CONFIG['name'];
+                    if ($PHONE_CONFIG['callingSearchSpaceName']['_'] == 'CSS_KHONEOMA-EXEC-ADMIN') {
+                        // #################################################################
+                        // DO NOT UPDATE THE CSS ON THE EXEC ADMIN GRP
+                        $DATA['name'] = $PHONE_CONFIG['name'];
                         $DATA['description'] = $PHONE_CONFIG['description'];
                         //$DATA['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                         $DATA['subscribeCallingSearchSpaceName'] = 'CSS_DEVICE_SUBSCRIBE';
 
                         $this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
-						// #################################################################
-					}else{
-						// Else if its not the Exec Admin Group then go ahead and update. 
-						if ($PHONE_CONFIG['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
-							$DATA['name'] = $PHONE_CONFIG['name'];
-							$DATA['description'] = $PHONE_CONFIG['description'];
-							$DATA['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-							$DATA['subscribeCallingSearchSpaceName'] = 'CSS_DEVICE_SUBSCRIBE';
+                        // #################################################################
+                    } else {
+                        // Else if its not the Exec Admin Group then go ahead and update.
+                        if ($PHONE_CONFIG['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
+                            $DATA['name'] = $PHONE_CONFIG['name'];
+                            $DATA['description'] = $PHONE_CONFIG['description'];
+                            $DATA['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['subscribeCallingSearchSpaceName'] = 'CSS_DEVICE_SUBSCRIBE';
 
-							$this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
-						}
-					}
+                            $this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
+                        }
+                    }
 
                     $LINES_CONFIG = $PHONE['lines'];
 

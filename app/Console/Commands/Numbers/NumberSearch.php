@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Numbers;
 
-use App\Did;
 use Illuminate\Console\Command;
+use App\Did;
 
 class NumberSearch extends Command
 {
@@ -38,8 +38,8 @@ class NumberSearch extends Command
      */
     public function handle()
     {
-        // I saved a file with a number on each line as my numberscan file. This will scan each to make sure they exist in the Number DB. If not they scan CUCM to see if they are in use and tells you.
-
+		// I saved a file with a number on each line as my numberscan file. This will scan each to make sure they exist in the Number DB. If not they scan CUCM to see if they are in use and tells you. 
+	
         if (! file_exists(storage_path('numbers/numberscan')) || ! is_readable(storage_path('numbers/numberscan'))) {
             return 'FILE IS NOT BEING LOADED FROM: '.$location;
         }
@@ -52,47 +52,57 @@ class NumberSearch extends Command
         //die();
 
         $dids = [];
-        $dids['found'] = [];
-        $dids['notfound'] = [];
-        $count = 0;
-        $found = 0;
-        $notfound = 0;
-
+		$dids['found'] = [];
+		$dids['notfound'] = [];
+		$count = 0;
+		$found = 0;
+		$notfound = 0;
+		
         foreach ($numbers as $number_search) {
-            $count++;
-            $number_search = trim($number_search);
+			$count++;
+			$number_search = trim($number_search);
+			
+			//print $number_search.PHP_EOL; 
 
-            //print $number_search.PHP_EOL;
-
+			
             // Search for DID by numberCheck if there are any matches.
             if (! Did::where('number', '=', $number_search)->count()) {
-                $notfound++;
-                echo "{$count}: {$number_search} | Not Found".PHP_EOL;
-                $dids['notfound'][$number_search] = false;
+				$notfound++;
+				print "{$count}: {$number_search} | Not Found".PHP_EOL;
+				$dids['notfound'][$number_search] = false;
             } else {
                 $did = Did::where('number', '=', $number_search)->get();
-                $did = json_decode(json_encode($did), true);
+				$did = json_decode(json_encode($did), true);
                 if ($did != '') {
-                    $found++;
-                    echo "{$count}: {$number_search} | Found".PHP_EOL;
-                    $dids['found'][$number_search] = $did;
+					$found++;
+					print "{$count}: {$number_search} | Found".PHP_EOL;
+					$dids['found'][$number_search] = $did;
                 }
             }
         }
-
-        print_r($dids['notfound']);
-        echo "Did not find {$notfound} Numbers".PHP_EOL;
-
-        $numbers = [];
-        foreach ($dids['notfound'] as $did => $value) {
-            $cucmnumber = $this->getnumber($did);
-            $numbers[$did] = $cucmnumber;
-        }
-
-        print_r($numbers);
+		
+		// Sort by Key
+		ksort($dids['notfound']);
+		ksort($dids['found']);
+		
+		print_r($dids['notfound']);
+		
+		foreach($dids['notfound'] as $did => $value){
+			print $did.PHP_EOL;
+		}
+		
+		print "Did not find {$notfound} Numbers".PHP_EOL;
+		
+		$numbers = [];
+		foreach($dids['notfound'] as $did => $value){
+			$cucmnumber = $this->getnumber($did);
+			$numbers[$did] = $cucmnumber;
+		}
+		
+		print_r($numbers);
     }
-
-    protected function getnumber($number)
+	
+	protected function getnumber($number)
     {
         //echo 'Getting Number: '.$number.' from CUCM...'.PHP_EOL;
         try {
@@ -103,16 +113,15 @@ class NumberSearch extends Command
                                                     );
             $didinfo = $cucm->get_route_plan_by_name($number);
             unset($cucm);
+            
+			if($didinfo){
+				print "{$number} Found in CUCM!!! Please add to the Number Database!!!".PHP_EOL; 
+				return $didinfo;
+			}else{
+				print "{$number} Not in CUCM!!! Please add to the Number Database or Disconnect from Provider...".PHP_EOL; 
+				return false;
+			}
 
-            if ($didinfo) {
-                echo "{$number} Found in CUCM!!! Please add to the Number Database!!!".PHP_EOL;
-
-                return $didinfo;
-            } else {
-                echo "{$number} Not Found in CUCM!!! Please add to the Number Database or Disconnect from Provider...".PHP_EOL;
-
-                return false;
-            }
         } catch (\Exception $e) {
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());

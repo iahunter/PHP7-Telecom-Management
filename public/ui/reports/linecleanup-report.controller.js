@@ -34,8 +34,16 @@ angular
 					//console.log(vm.message);
 				}else{
 					
+					vm.report = {}
+					
 					vm.reports = res.data.response
-					vm.report = res.data.response.lines_to_delete;
+					if(res.data.response.lines_to_delete){
+						vm.report = res.data.response.lines_to_delete;
+					}else{
+						vm.reports.lines_to_delete = {};
+					}
+					
+					
 					//vm.report = res.data.response.lines_with_mailbox_built;
 					//vm.report = res.data.response.lines_with_cfa_active;
 					

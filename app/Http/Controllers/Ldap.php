@@ -55,6 +55,8 @@ class Ldap extends Controller
 
         $username = $request->username;
         $phonenumber = $request->ipphone;
+		
+		$username = trim($username);
 
         $result = $this->Auth->changeLdapPhone($username, $phonenumber);
 

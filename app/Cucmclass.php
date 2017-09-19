@@ -219,6 +219,64 @@ class Cucmclass extends Model
 
         return json_decode(json_encode($REPLY), true);
     }
+	
+	public static function updatePhoneSite($NAME, $SITE)
+    {
+		// Construct new cucm object
+        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+
+		try {
+			
+            $CSSs = $cucm->get_object_type_by_site($SITE, 'Css');
+		
+		} catch (\Exception $E) {
+            $EXCEPTION = "{$E->getMessage()}";
+            //return $EXCEPTION;
+            throw new \Exception($E->getMessage());
+        }
+		
+		print_r($CSSs);
+		
+		if(in_array('CSS_'.$SITE.'_DEVICE', $CSSs)){
+			$CSS = 'CSS_'.$SITE.'_DEVICE';
+		}elseif(in_array('CSS_'.$SITE, $CSSs)){
+			$CSS = 'CSS_'.$SITE;
+		}
+		
+		print "CSS set to: ".$CSS.PHP_EOL;
+
+		//die();
+		
+		$TYPE = 'Phone';
+		$DATA = [
+        'name'                               => $NAME,
+        'devicePoolName'                     => 'DP_'.$SITE,
+        'callingSearchSpaceName'             => $CSS,
+        'locationName'                       => 'LOC_'.$SITE,
+        'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
+		];
+		
+		
+		try {
+            $result = $cucm->update_object_type_by_assoc($DATA, $TYPE);
+			
+			$REPLY = [
+				'request'         => $DATA,
+				'response'        => $result,
+			];
+			
+        } catch (\Exception $E) {
+            $EXCEPTION = "{$E->getMessage()}";
+            //return $EXCEPTION;
+            throw new \Exception($E->getMessage());
+        }
+
+        return json_decode(json_encode($REPLY), true);
+    }
 
     public static function add_cucm_phone(
                                                 $SITE,

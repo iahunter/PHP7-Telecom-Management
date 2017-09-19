@@ -203,6 +203,48 @@ class Cucmphone extends Cucm
             return $LOG;
         }
     }
+	
+	public function updatePhoneSite(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('update', Cucmclass::class)) {
+            if (! $user->can('update', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+		
+		$REQUEST = $request->all();
+		
+		$NAME = $request->name;
+		$SITE = $request->sitecode;
+		
+		/*
+		$TYPE = 'Phone';
+		
+		$DATA = [
+        'name'                               => $NAME,
+        'devicePoolName'                     => 'DP_'.$SITE,
+        'callingSearchSpaceName'             => 'CSS_'.$SITE.'_DEVICE',
+        'locationName'                       => 'LOC_'.$SITE,
+        'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
+		];
+		*/
+		
+        $result = Cucmclass::updatePhoneSite($NAME, $SITE);
+
+        $response = [
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+			'request'         => $result['request'],
+            'response'        => $result['response'],
+            ];
+			
+		activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('update object');
+		
+        return response()->json($response);
+    }
 
     public function deletePhone(Request $request)
     {

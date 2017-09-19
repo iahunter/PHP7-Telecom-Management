@@ -358,6 +358,41 @@
 
     /**
      * @SWG\Put(
+     *     path="/telephony/api/cucm/phone/site",
+     *     tags={"Management - CUCM - Phone Provisioning"},
+     *     summary="Update Phone Site in CUCM",
+     *     description="Update Phone Site",
+     *     operationId="update phone site",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="formData",
+     *         description="Device Name - SEP0004AAAABBBB",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="formData",
+     *         description="Sitecode",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->put('cucm/phone/site', 'App\Http\Controllers\Cucmphone@updatePhoneSite');
+	
+	    /**
+     * @SWG\Put(
      *     path="/telephony/api/cucm/phone",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Update Phone in CUCM",
@@ -366,7 +401,7 @@
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
-     *         name="phone",
+     *         name="name",
      *         in="formData",
      *         description="This requires the correct values to be passed.",
      *         required=true,

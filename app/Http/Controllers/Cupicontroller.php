@@ -19,7 +19,7 @@ class Cupicontroller extends Controller
             }
         }
 
-        $alias = $request->alias;
+        $alias = trim($request->alias);
 
         $result = Cupi::finduserbyalias($alias);
 
@@ -36,7 +36,7 @@ class Cupicontroller extends Controller
             }
         }
 
-        $email = $request->email;
+        $email = trim($request->email);
 
         $result = Cupi::finduserbyemail($email);
 
@@ -53,7 +53,7 @@ class Cupicontroller extends Controller
             }
         }
 
-        $alias = $request->alias;
+        $alias = trim($request->alias);
 
         return Cupi::getLDAPUserbyAlias($alias);
     }
@@ -66,7 +66,7 @@ class Cupicontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-        $extension = $request->extension;
+        $extension = trim($request->extension);
 
         return Cupi::findmailboxbyextension($extension);
     }
@@ -84,15 +84,15 @@ class Cupicontroller extends Controller
 
         //return $request;
         if (isset($request->username) && $request->username) {
-            $username = $request->username;
+            $username = trim($request->username);
         }
 
         if (isset($request->dn) && $request->dn) {
-            $dn = $request->dn;
+            $dn = trim($request->dn);
         }
 
         if (isset($request->template) && $request->template) {
-            $template = $request->template;
+            $template = trim($request->template);
         }
 
         if (isset($request->override) && $request->override) {
@@ -148,11 +148,11 @@ class Cupicontroller extends Controller
 
         //return $request;
         if (isset($request->username) && $request->username) {
-            $username = $request->username;
+            $username = trim($request->username);
         }
 
         if (isset($request->dn) && $request->dn) {
-            $dn = $request->dn;
+            $dn = trim($request->dn);
         }
 
         return Cupi::createuser($username, $dn);

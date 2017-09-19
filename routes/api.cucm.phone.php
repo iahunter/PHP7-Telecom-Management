@@ -390,8 +390,8 @@
      * )
      **/
     $api->put('cucm/phone/site', 'App\Http\Controllers\Cucmphone@updatePhoneSite');
-	
-	    /**
+
+    /**
      * @SWG\Put(
      *     path="/telephony/api/cucm/phone",
      *     tags={"Management - CUCM - Phone Provisioning"},

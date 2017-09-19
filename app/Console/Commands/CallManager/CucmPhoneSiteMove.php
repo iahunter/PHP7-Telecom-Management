@@ -3,8 +3,8 @@
 namespace App\Console\Commands\CallManager;
 
 use DB;
-use Carbon\Carbon;
 use App\Cucmclass;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CucmPhoneSiteMove extends Command
@@ -41,32 +41,29 @@ class CucmPhoneSiteMove extends Command
     public function handle()
     {
         $site = $this->argument('site');
-        
-		print "Moving Phones to: ".$site.PHP_EOL;
-		
-		/*
-			Examples:
-			SEP0004ABCDEEEE
-			SEP0004ABCDEEEF
-		*/
-		
-		$data = file_get_contents(storage_path('cucm/working/working_file'));
-        $phones = explode(PHP_EOL, $data);
-		
-		$phones = array_filter($phones);
-		
-		foreach($phones as $phone){
-			$phone = trim($phone);
-			
-			try {
-				$result = Cucmclass::updatePhoneSite($phone, $site);
-				print_r($result);
-				
-			} catch (\Exception $E) {
-				print "{$E->getMessage()}".PHP_EOL;
-			}
-		}
-    }
 
-    
+        echo 'Moving Phones to: '.$site.PHP_EOL;
+
+        /*
+            Examples:
+            SEP0004ABCDEEEE
+            SEP0004ABCDEEEF
+        */
+
+        $data = file_get_contents(storage_path('cucm/working/working_file'));
+        $phones = explode(PHP_EOL, $data);
+
+        $phones = array_filter($phones);
+
+        foreach ($phones as $phone) {
+            $phone = trim($phone);
+
+            try {
+                $result = Cucmclass::updatePhoneSite($phone, $site);
+                print_r($result);
+            } catch (\Exception $E) {
+                echo "{$E->getMessage()}".PHP_EOL;
+            }
+        }
+    }
 }

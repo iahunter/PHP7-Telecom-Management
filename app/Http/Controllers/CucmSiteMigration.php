@@ -1647,7 +1647,7 @@ class CucmSiteMigration extends Cucm
                     $UPDATE['description'] = $OBJECT['description'];
                     $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                     $UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-					$UPDATE['automatedAlternateRoutingCssName'] = "";
+                    $UPDATE['automatedAlternateRoutingCssName'] = '';
                     $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
                 } elseif ($OBJECT['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
                     $UPDATE = [];
@@ -1655,7 +1655,7 @@ class CucmSiteMigration extends Cucm
                     $UPDATE['description'] = $OBJECT['description'];
                     $UPDATE['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                     $UPDATE['rerouteCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
-					$UPDATE['automatedAlternateRoutingCssName'] = "";
+                    $UPDATE['automatedAlternateRoutingCssName'] = '';
                     $this->UPDATE_OBJECTS[$TYPE][] = $UPDATE;
                     //$this->REVIEW_OBJECTS[$TYPE][] = $OBJECT;
                 }
@@ -1759,7 +1759,7 @@ class CucmSiteMigration extends Cucm
                         $DATA['description'] = $PHONE_CONFIG['description'];
                         //$DATA['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                         $DATA['subscribeCallingSearchSpaceName'] = 'CSS_DEVICE_SUBSCRIBE';
-						$DATA['automatedAlternateRoutingCssName'] = "";
+                        $DATA['automatedAlternateRoutingCssName'] = '';
                         $this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
                         // #################################################################
                     } else {
@@ -1769,7 +1769,7 @@ class CucmSiteMigration extends Cucm
                             $DATA['description'] = $PHONE_CONFIG['description'];
                             $DATA['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                             $DATA['subscribeCallingSearchSpaceName'] = 'CSS_DEVICE_SUBSCRIBE';
-							$DATA['automatedAlternateRoutingCssName'] = "";
+                            $DATA['automatedAlternateRoutingCssName'] = '';
                             $this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
                         }
                     }
@@ -1805,11 +1805,10 @@ class CucmSiteMigration extends Cucm
                                     ];
                             $UPDATE = true;
                         }
-						if ($CSS == "CSS-Local-10"){
-							$DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L2_LOCAL';
+                        if ($CSS == 'CSS-Local-10') {
+                            $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L2_LOCAL';
                             $UPDATE = true;
-						}
-                        elseif (! in_array('LINEONLY', $ARRAY)) {
+                        } elseif (! in_array('LINEONLY', $ARRAY)) {
                             // Update
                             $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
                             $UPDATE = true;

@@ -296,15 +296,15 @@ class Cucmclass extends Model
         $DESCRIPTION = substr($FULLNAME, 0, 45 - strlen($SHORTDN)).' - '.$SHORTDN;
         //$DESCRIPTION = $FULLNAME . " - " . $SHORTDN;
         $PRODUCT = 'Cisco '.$DEVICE;
-		$MAXCALLS = 4; 
-		$BUSYTRIGGER = 2; 
+        $MAXCALLS = 4;
+        $BUSYTRIGGER = 2;
         // add the SEP to the name
         if ($PRODUCT == 'Cisco IP Communicator') {
             $NAME = "{$NAME}";
-        } elseif($PRODUCT == "Cisco ATA 190" || $PRODUCT == "Cisco ATA 187" || $PRODUCT == "Cisco ATA 186"){
+        } elseif ($PRODUCT == 'Cisco ATA 190' || $PRODUCT == 'Cisco ATA 187' || $PRODUCT == 'Cisco ATA 186') {
             $NAME = "ATA{$NAME}";
-			$MAXCALLS = 1; 
-			$BUSYTRIGGER = 1; 
+            $MAXCALLS = 1;
+            $BUSYTRIGGER = 1;
         } else {
             $NAME = "SEP{$NAME}";
         }
@@ -328,33 +328,33 @@ class Cucmclass extends Model
         if (preg_match('/^Cisco 78..$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
-		
-		// Check protocols models that do SIP Only.
+
+        // Check protocols models that do SIP Only.
         if (preg_match('/^Cisco ATA ...$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
 
         $PHONE = [
-        'name'                               => $NAME,
-        'description'                        => $DESCRIPTION,
-        'product'                            => $PRODUCT,
-        'class'                              => 'Phone',
-        'protocol'                           => $PROTOCOL,
-        'protocolSide'                       => 'User',
-        'devicePoolName'                     => 'DP_'.$SITE,
-        'callingSearchSpaceName'             => 'CSS_'.$SITE.'_DEVICE',
-        'locationName'                       => 'LOC_'.$SITE,
-        'commonPhoneConfigName'              => 'Standard Common Phone Profile',
-        'useTrustedRelayPoint'               => 'Default',
-        'softkeyTemplateName'                => $SOFTKEYTEMPLATE,
-        'ownerUserName'                      => $USERNAME,
-        'builtInBridgeStatus'                => 'Default',
-        'packetCaptureMode'                  => 'None',
-        'certificateOperation'               => '',
-        'deviceMobilityMode'                 => '',
-        'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
-		'securityProfileName'				 => "{$PRODUCT} - Standard {$PROTOCOL} Non-Secure Profile",
-        'vendorConfig'                       => [
+        'name'                                => $NAME,
+        'description'                         => $DESCRIPTION,
+        'product'                             => $PRODUCT,
+        'class'                               => 'Phone',
+        'protocol'                            => $PROTOCOL,
+        'protocolSide'                        => 'User',
+        'devicePoolName'                      => 'DP_'.$SITE,
+        'callingSearchSpaceName'              => 'CSS_'.$SITE.'_DEVICE',
+        'locationName'                        => 'LOC_'.$SITE,
+        'commonPhoneConfigName'               => 'Standard Common Phone Profile',
+        'useTrustedRelayPoint'                => 'Default',
+        'softkeyTemplateName'                 => $SOFTKEYTEMPLATE,
+        'ownerUserName'                       => $USERNAME,
+        'builtInBridgeStatus'                 => 'Default',
+        'packetCaptureMode'                   => 'None',
+        'certificateOperation'                => '',
+        'deviceMobilityMode'                  => '',
+        'subscribeCallingSearchSpaceName'     => 'CSS_DEVICE_SUBSCRIBE',
+        'securityProfileName'                 => "{$PRODUCT} - Standard {$PROTOCOL} Non-Secure Profile",
+        'vendorConfig'                        => [
                                     'webAccess'        => 1,
             ],
         'lines'                    => [

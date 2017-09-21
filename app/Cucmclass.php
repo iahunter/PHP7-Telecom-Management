@@ -296,10 +296,15 @@ class Cucmclass extends Model
         $DESCRIPTION = substr($FULLNAME, 0, 45 - strlen($SHORTDN)).' - '.$SHORTDN;
         //$DESCRIPTION = $FULLNAME . " - " . $SHORTDN;
         $PRODUCT = 'Cisco '.$DEVICE;
-
+		$MAXCALLS = 4; 
+		$BUSYTRIGGER = 2; 
         // add the SEP to the name
         if ($PRODUCT == 'Cisco IP Communicator') {
             $NAME = "{$NAME}";
+        } elseif($PRODUCT == "Cisco ATA 190" || $PRODUCT == "Cisco ATA 187" || $PRODUCT == "Cisco ATA 186"){
+            $NAME = "ATA{$NAME}";
+			$MAXCALLS = 1; 
+			$BUSYTRIGGER = 1; 
         } else {
             $NAME = "SEP{$NAME}";
         }
@@ -323,6 +328,11 @@ class Cucmclass extends Model
         if (preg_match('/^Cisco 78..$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
+		
+		// Check protocols models that do SIP Only.
+        if (preg_match('/^Cisco ATA ...$/', $PRODUCT)) {
+            $PROTOCOL = 'SIP';
+        }
 
         $PHONE = [
         'name'                               => $NAME,
@@ -343,6 +353,7 @@ class Cucmclass extends Model
         'certificateOperation'               => '',
         'deviceMobilityMode'                 => '',
         'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
+		'securityProfileName'				 => "{$PRODUCT} - Standard {$PROTOCOL} Non-Secure Profile",
         'vendorConfig'                       => [
                                     'webAccess'        => 1,
             ],
@@ -357,8 +368,8 @@ class Cucmclass extends Model
                                                     'display'            => substr($FULLNAME, 0, 28),
                                                     'displayAscii'       => substr($FULLNAME, 0, 28),
                                                     'e164Mask'           => $DN,
-                                                    'maxNumCalls'        => 4,
-                                                    'busyTrigger'        => 2,
+                                                    'maxNumCalls'        => $MAXCALLS,
+                                                    'busyTrigger'        => $BUSYTRIGGER,
                                                     'associatedEndusers' => [
                                                                                 'enduser' => [
                                                                                                 'userId' => $USERNAME,
@@ -415,10 +426,10 @@ class Cucmclass extends Model
         try {
             $REPLY = $cucm->add_object_type_by_assoc($PHONE, $TYPE);
         } catch (\Exception $E) {
-            $EXCEPTION = "{$E->getMessage()}";
+            $EXCEPTION = [$E->getMessage(), $PHONE];
             //return $EXCEPTION;
 
-            throw new \Exception($E->getMessage());
+            throw new \Exception($EXCEPTION);
         }
 
         return json_decode(json_encode($REPLY), true);

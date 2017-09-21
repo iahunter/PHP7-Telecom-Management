@@ -183,7 +183,10 @@ angular
 			if(phone.name && !vm.nameinvalid){
 				//console.log("Hitting Here")
 				
-				if(phone.device != "IP Communicator"){
+				if(phone.device == "ATA 190" || phone.device == "ATA 187" || phone.device == "ATA 186"){
+					vm.checkphoneusage('ATA'+phone.name)
+				}
+				else if(phone.device != "IP Communicator"){
 					vm.checkphoneusage('SEP'+phone.name)
 				}
 			}

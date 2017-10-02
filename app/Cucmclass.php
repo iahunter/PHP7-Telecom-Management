@@ -2,11 +2,11 @@
 
 namespace App;
 
+use App\Did;
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
-use App\Did;
 
 class Cucmclass extends Model
 {
@@ -90,8 +90,7 @@ class Cucmclass extends Model
                                                 $EXTENSIONLENGTH,
                                                 $LANGUAGE,
                                                 $VOICEMAIL
-                                            ) 
-	{
+                                            ) {
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
         // 30 is max, off-by-1 is 29, space-dash-space is 3, shortdn length could be 4-10
@@ -122,59 +121,59 @@ class Cucmclass extends Model
                     'presenceGroupName'            => 'Standard Presence group',
 
                     // E164 Alternative Number Mask - This is currently being ignored by CUCM because of a Cisco Bug. Ver 10.5.2 - 12/8/16 TR - TAC Case Opened
-                    "e164AltNum"                => [
-                                                        "numMask"                     => "+1{$DN}",
-                                                        "isUrgent"                    => "true",
-                                                        "addLocalRoutePartition"      => "true",
-                                                        "routePartition"              => "Global-All-Lines",
-                                                        "active"                      => "true",
-                                                        "advertiseGloballyIls"        => "true",
+                    'e164AltNum'                => [
+                                                        'numMask'                     => "+1{$DN}",
+                                                        'isUrgent'                    => 'true',
+                                                        'addLocalRoutePartition'      => 'true',
+                                                        'routePartition'              => 'Global-All-Lines',
+                                                        'active'                      => 'true',
+                                                        'advertiseGloballyIls'        => 'true',
                                                     ],
 
-                    "callForwardAll"               => [
-                                                        "forwardToVoiceMail"        		 => "false",
-                                                        "callingSearchSpaceName"    		 => "CSS_LINEONLY_L3_LD",
-														"secondaryCallingSearchSpaceName"    => "CSS_{$SITE}_DEVICE",
+                    'callForwardAll'               => [
+                                                        'forwardToVoiceMail'                 => 'false',
+                                                        'callingSearchSpaceName'             => 'CSS_LINEONLY_L3_LD',
+                                                        'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardBusy"            => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardBusy'            => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardBusyInt"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardBusyInt'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardBusyInt"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardBusyInt'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoAnswer"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoAnswer'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoAnswerInt"    => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoAnswerInt'    => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoCoverage"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoCoverage'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoCoverageInt"    => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoCoverageInt'    => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardOnFailure"            => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardOnFailure'            => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNotRegistered"    => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNotRegistered'    => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNotRegisteredInt" => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNotRegisteredInt' => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
 
                 ];
@@ -206,19 +205,19 @@ class Cucmclass extends Model
 
         try {
             $REPLY = $cucm->add_object_type_by_assoc($PHONELINE, $TYPE);
-			
-			// Reserve the DID in the database. 
-			if ($REPLY && \App\Did::where('number', $DN)->count()) {
-				$did = \App\Did::where('number', $DN)->first();
-				if ($did->status == 'available') {
-					$did->status = 'reserved';
-					$did->assignments = "";
-					$did->system_id = "Reserved by MACD Tool";
-					$did->save();
-					return "DID Was Saved";
-				}
-			}
 
+            // Reserve the DID in the database.
+            if ($REPLY && \App\Did::where('number', $DN)->count()) {
+                $did = \App\Did::where('number', $DN)->first();
+                if ($did->status == 'available') {
+                    $did->status = 'reserved';
+                    $did->assignments = '';
+                    $did->system_id = 'Reserved by MACD Tool';
+                    $did->save();
+
+                    return 'DID Was Saved';
+                }
+            }
         } catch (\Exception $E) {
             $EXCEPTION = "{$E->getMessage()}";
             //return $EXCEPTION;
@@ -524,50 +523,50 @@ class Cucmclass extends Model
 
                     // Call Forward Settings
 
-                    "callForwardAll"               => [
-                                                        "forwardToVoiceMail"        		 => "false",
-                                                        "callingSearchSpaceName"    		 => "CSS_LINEONLY_L3_LD",
-														"secondaryCallingSearchSpaceName"    => "CSS_{$SITE}_DEVICE",
+                    'callForwardAll'               => [
+                                                        'forwardToVoiceMail'                 => 'false',
+                                                        'callingSearchSpaceName'             => 'CSS_LINEONLY_L3_LD',
+                                                        'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardBusy"            => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardBusy'            => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardBusyInt"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardBusyInt'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardBusyInt"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardBusyInt'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoAnswer"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoAnswer'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoAnswerInt"    => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoAnswerInt'    => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoCoverage"        => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoCoverage'        => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNoCoverageInt"    => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNoCoverageInt'    => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardOnFailure"            => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardOnFailure'            => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNotRegistered"    => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNotRegistered'    => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
-                    "callForwardNotRegisteredInt" => [
-                                                        "forwardToVoiceMail"     => "true",
-                                                        "callingSearchSpaceName" => "CSS_{$SITE}_DEVICE",
+                    'callForwardNotRegisteredInt' => [
+                                                        'forwardToVoiceMail'     => 'true',
+                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
                                                     ],
 
                 ];

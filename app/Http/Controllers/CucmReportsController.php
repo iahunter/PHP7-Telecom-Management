@@ -465,38 +465,35 @@ class CucmReportsController extends Controller
             ->get();
 
         $phone_models = [];
-		
-		$exclude = [
-					"Analog Phone",
-					"30 VIP",
-					"Dual Mode for iPhone",
-					"ATA 186",
-					"Jabber for Tablet",
-					"TelePresence Codec C40",
-					"TelePresence EX60",
-					"Unified Client Services Framework",
-					"Unified Personal Communicator",
-					"CTI Port",
-					"Third-party SIP Device (Advanced)",
-					"Third-party SIP Device (Basic)"
-					]; 
+
+        $exclude = [
+                    'Analog Phone',
+                    '30 VIP',
+                    'Dual Mode for iPhone',
+                    'ATA 186',
+                    'Jabber for Tablet',
+                    'TelePresence Codec C40',
+                    'TelePresence EX60',
+                    'Unified Client Services Framework',
+                    'Unified Personal Communicator',
+                    'CTI Port',
+                    'Third-party SIP Device (Advanced)',
+                    'Third-party SIP Device (Basic)',
+                    ];
 
         foreach ($models as $model) {
             //$phone_models[] = $model->model;
-			
-			// Strip "Cisco " out of model name.
+
+            // Strip "Cisco " out of model name.
             $type = str_replace('Cisco ', '', $model->model);
-			
-			// Exclude types we don't want to built in MACD Tool
-			if(in_array($type,$exclude)){
-				//print "EXCLUDE";
-				continue;
-			}else{
-				$phone_models[] = $type; 
-			}
-			
-			
-			
+
+            // Exclude types we don't want to built in MACD Tool
+            if (in_array($type, $exclude)) {
+                //print "EXCLUDE";
+                continue;
+            } else {
+                $phone_models[] = $type;
+            }
         }
 
         $response = [

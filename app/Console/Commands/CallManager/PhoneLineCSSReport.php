@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\CallManager;
 
-use Illuminate\Console\Command;
 use App\Cucmphoneconfigs;
+use Illuminate\Console\Command;
 
 class PhoneLineCSSReport extends Command
 {
@@ -38,19 +38,19 @@ class PhoneLineCSSReport extends Command
      */
     public function handle()
     {
-		$SITE = $this->argument('site');
-		
-		print $SITE.PHP_EOL;
-		
+        $SITE = $this->argument('site');
+
+        echo $SITE.PHP_EOL;
+
         $count = Cucmphoneconfigs::where('devicepool', 'like', '%'.$SITE.'%')->count();
 
-		print $count;
+        echo $count;
         $phone_array = [];
 
         if ($count) {
-			print "asdfi";
+            echo 'asdfi';
             $phone_array[] = Cucmphoneconfigs::where('devicepool', '=', '%'.$SITE.'%')->chunk(300, function ($phones) {
-				print_r($phone_array);
+                print_r($phone_array);
                 $return = [];
                 $TYPE = 'Phone';
                 foreach ($phones as $PHONE) {
@@ -73,7 +73,6 @@ class PhoneLineCSSReport extends Command
                         continue;
                     }
 
-					
                     $LINES_CONFIG = $PHONE['lines'];
 
                     foreach ($LINES_CONFIG as $line) {
@@ -115,7 +114,7 @@ class PhoneLineCSSReport extends Command
                         }
                         print_r($line);
                         /*
-						if (
+                        if (
                             $line['callForwardAll']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
                             $line['callForwardBusy']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
                             $line['callForwardBusyInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
@@ -146,7 +145,7 @@ class PhoneLineCSSReport extends Command
                         if ($UPDATE == true) {
                             $this->PHONEUPDATE_OBJECTS['Line'][$line['pattern']] = $DATA;
                         }
-						*/
+                        */
                     }
                 }
             });

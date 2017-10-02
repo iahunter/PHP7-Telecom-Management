@@ -208,7 +208,7 @@ class Cucmclass extends Model
             $REPLY = $cucm->add_object_type_by_assoc($PHONELINE, $TYPE);
 			
 			// Reserve the DID in the database. 
-			if (\App\Did::where('number', $DN)->count()) {
+			if ($REPLY && \App\Did::where('number', $DN)->count()) {
 				$did = \App\Did::where('number', $DN)->first();
 				if ($did->status == 'available') {
 					$did->status = 'reserved';

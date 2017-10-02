@@ -268,9 +268,66 @@ class BouncerPermissions extends Command
         $types = [
             App\Didblock::class,
             App\Did::class,
+            App\Site::class,
             App\Phone::class,
             App\Phoneplan::class,
+            App\Cucmclass::class,
+            App\Cupi::class,
             App\Calls::class,
+            //App\Sonus5k::class,
+            App\Cucmsiteconfigs::class,
+            App\Cucmphoneconfigs::class,
+            //App\TelecomInfrastructure::class,
+            App\PhoneMACD::class,
+        ];
+
+        foreach ($types as $type) {
+            foreach ($tasks as $task) {
+                Bouncer::allow($group)->to($task, $type);
+            }
+        }
+
+        $tasks = [
+            'update',
+        ];
+
+        $types = [
+            App\Didblock::class,
+            App\Did::class,
+            App\Phone::class,
+            App\Phoneplan::class,
+            App\Cucmclass::class,
+            App\Cupi::class,
+            App\PhoneMACD::class,
+        ];
+
+        foreach ($types as $type) {
+            foreach ($tasks as $task) {
+                Bouncer::allow($group)->to($task, $type);
+            }
+        }
+
+        $tasks = [
+            'create',
+        ];
+
+        $types = [
+            App\Phone::class,
+            App\Phoneplan::class,
+            App\PhoneMACD::class,
+        ];
+
+        foreach ($types as $type) {
+            foreach ($tasks as $task) {
+                Bouncer::allow($group)->to($task, $type);
+            }
+        }
+
+        $tasks = [
+            'delete',
+        ];
+
+        $types = [
             App\PhoneMACD::class,
         ];
 

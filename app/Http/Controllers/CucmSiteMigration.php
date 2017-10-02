@@ -1594,6 +1594,7 @@ class CucmSiteMigration extends Cucm
                         $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
                         $UPDATE = true;
                     }
+					/*
                     if (
                         $line['callForwardAll']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
                         $line['callForwardBusy']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
@@ -1621,6 +1622,37 @@ class CucmSiteMigration extends Cucm
                         $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
                         $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
                     }
+					*/
+					
+					if (
+                            $line['callForwardAll']['callingSearchSpaceName']['_'] !=  'CSS_LINEONLY_L3_LD' ||
+							$line['callForwardAll']['secondaryCallingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardBusy']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardBusyInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoAnswer']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoAnswerInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoCoverage']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoCoverageInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardOnFailure']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            //$line['callForwardAlternateParty']['callingSearchSpaceName']['_'] 	!= 'CSS_LINE_CFWD_LD' ||
+                            $line['callForwardNotRegistered']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNotRegisteredInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE"
+                        ) {
+                            // Update
+                            $DATA['callForwardAll']['callingSearchSpaceName'] = 'CSS_LINEONLY_L3_LD';
+							$DATA['callForwardAll']['secondaryCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardBusy']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardBusyInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoAnswer']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoAnswerInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoCoverage']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoCoverageInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardOnFailure']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            //$DATA['callForwardAlternateParty']['callingSearchSpaceName']		= 'CSS_LINE_CFWD_LD';
+                            $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $UPDATE = true;
+                        }
 
                     if ($UPDATE) {
                         $this->UPDATE_OBJECTS['Line'][$line['pattern']] = $DATA;
@@ -1753,7 +1785,8 @@ class CucmSiteMigration extends Cucm
                     $DP = explode('_', $PHONE['devicepool']);
                     $SITE = $DP[1];
                     if ($PHONE_CONFIG['callingSearchSpaceName']['_'] == 'CSS_KHONEOMA-EXEC-ADMIN') {
-                        // #################################################################
+                        /*
+						// #################################################################
                         // DO NOT UPDATE THE CSS ON THE EXEC ADMIN GRP
                         $DATA['name'] = $PHONE_CONFIG['name'];
                         $DATA['description'] = $PHONE_CONFIG['description'];
@@ -1762,6 +1795,7 @@ class CucmSiteMigration extends Cucm
                         $DATA['automatedAlternateRoutingCssName'] = '';
                         $this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
                         // #################################################################
+						*/
                     } else {
                         // Else if its not the Exec Admin Group then go ahead and update.
                         if ($PHONE_CONFIG['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE") {
@@ -1770,6 +1804,7 @@ class CucmSiteMigration extends Cucm
                             $DATA['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                             $DATA['subscribeCallingSearchSpaceName'] = 'CSS_DEVICE_SUBSCRIBE';
                             $DATA['automatedAlternateRoutingCssName'] = '';
+							$DATA['mediaResourceListName'] = '';
                             $this->PHONEUPDATE_OBJECTS[$TYPE][] = $DATA;
                         }
                     }
@@ -1813,8 +1848,10 @@ class CucmSiteMigration extends Cucm
                             $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
                             $UPDATE = true;
                         }
+						
                         //print_r($line);
-                        if (
+                        /* Have to change this because people are using 4 digits to forward. This will need specific site css assigned. 
+						if (
                             $line['callForwardAll']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
                             $line['callForwardBusy']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
                             $line['callForwardBusyInt']['callingSearchSpaceName']['_'] != 'CSS_LINE_CFWD_LD' ||
@@ -1839,6 +1876,37 @@ class CucmSiteMigration extends Cucm
                             //$DATA['callForwardAlternateParty']['callingSearchSpaceName']		= 'CSS_LINE_CFWD_LD';
                             $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
                             $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = 'CSS_LINE_CFWD_LD';
+                            $UPDATE = true;
+                        }
+						*/
+						//print_r($line);
+                        if (
+                            $line['callForwardAll']['callingSearchSpaceName']['_'] !=  'CSS_LINEONLY_L3_LD' ||
+							$line['callForwardAll']['secondaryCallingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardBusy']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardBusyInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoAnswer']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoAnswerInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoCoverage']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNoCoverageInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardOnFailure']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            //$line['callForwardAlternateParty']['callingSearchSpaceName']['_'] 	!= 'CSS_LINE_CFWD_LD' ||
+                            $line['callForwardNotRegistered']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE" ||
+                            $line['callForwardNotRegisteredInt']['callingSearchSpaceName']['_'] != "CSS_{$SITE}_DEVICE"
+                        ) {
+                            // Update
+                            $DATA['callForwardAll']['callingSearchSpaceName'] = 'CSS_LINEONLY_L3_LD';
+							$DATA['callForwardAll']['secondaryCallingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardBusy']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardBusyInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoAnswer']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoAnswerInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoCoverage']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNoCoverageInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardOnFailure']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            //$DATA['callForwardAlternateParty']['callingSearchSpaceName']		= 'CSS_LINE_CFWD_LD';
+                            $DATA['callForwardNotRegistered']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
+                            $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                             $UPDATE = true;
                         }
 

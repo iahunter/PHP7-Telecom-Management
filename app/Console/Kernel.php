@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmPhoneScanOnDemand::class,
         Commands\CallManager\CucmPhoneSiteMove::class,
 
+		Commands\CallManager\PhoneLineCSSReport::class,
         Commands\CallManager\CucmPhoneIPAddresses::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,

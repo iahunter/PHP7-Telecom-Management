@@ -113,6 +113,14 @@
 										<span ng-show="sortType == 'type' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'reserved'; sortReverse = !sortReverse" style="color:black">
+									R
+										<span ng-show="sortType == 'reserved' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'reserved' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
 							<th>
 								<a href="" ng-click="sortType = 'comment'; sortReverse = !sortReverse" style="color:black">
@@ -187,6 +195,7 @@
 						-->
 						
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
+						<td   ng-show="!vm.edit[vm.didblock.id]">{{vm.didblock.reserved}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.comment}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}} {{ vm.didblock.created_by}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>
@@ -248,6 +257,7 @@
 						<td   ng-show="vm.edit[vm.didblock.id]" ng-init="vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100">{{vm.didblock.capacity | number:0}}%</td>
 						
 						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
+						<td   ng-show="vm.edit[vm.didblock.id]">{{vm.didblock.reserved}}</td>
 						<td   ng-show="vm.edit[vm.didblock.id]"><textarea class="form-control form-control-sm" ng-model="vm.didblock.comment"></textarea></td>
 						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}} {{ vm.didblock.created_by}}</td>
 						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>

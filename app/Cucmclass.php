@@ -90,7 +90,8 @@ class Cucmclass extends Model
                                                 $EXTENSIONLENGTH,
                                                 $LANGUAGE,
                                                 $VOICEMAIL
-                                            ) {
+                                            ) 
+	{
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
         // 30 is max, off-by-1 is 29, space-dash-space is 3, shortdn length could be 4-10
@@ -104,6 +105,31 @@ class Cucmclass extends Model
                 $USERNAME = 'CallManager.Unassign';
             }
         }
+		
+
+		// Construct new cucm object
+        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+
+        $DEVICE_CSS = "CSS_{$SITE}_DEVICE";
+		
+		try {
+            $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
+            $sitecss = $sitecss['response'];
+        } catch (\Exception $e) {
+            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+        }
+
+        if ($sitecss) {
+            if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
+                $DEVICE_CSS = "CSS_{$SITE}";
+            }
+        }
+		
 
         $VOICEMAILPROFILE = 'Default';
 
@@ -133,47 +159,47 @@ class Cucmclass extends Model
                     'callForwardAll'               => [
                                                         'forwardToVoiceMail'                 => 'false',
                                                         'callingSearchSpaceName'             => 'CSS_LINEONLY_L3_LD',
-                                                        'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
+                                                        'secondaryCallingSearchSpaceName'    => $DEVICE_CSS,
                                                     ],
                     'callForwardBusy'            => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardBusyInt'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardBusyInt'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoAnswer'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoAnswerInt'    => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoCoverage'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoCoverageInt'    => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardOnFailure'            => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNotRegistered'    => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNotRegisteredInt' => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
 
                 ];
@@ -194,13 +220,6 @@ class Cucmclass extends Model
                                                     ],
                             ];
 
-        // Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
-
         $TYPE = 'Line';
 
         try {
@@ -215,7 +234,7 @@ class Cucmclass extends Model
                     $did->system_id = 'Reserved by MACD Tool';
                     $did->save();
 
-                    return 'DID Was Saved';
+                    //return 'DID Was Saved';
                 }
             }
         } catch (\Exception $E) {
@@ -244,20 +263,20 @@ class Cucmclass extends Model
                                                     env('CALLMANAGER_PASS')
                                                     );
 
-        try {
-            $CSSs = $cucm->get_object_type_by_site($SITE, 'Css');
-        } catch (\Exception $E) {
-            $EXCEPTION = "{$E->getMessage()}";
-            //return $EXCEPTION;
-            throw new \Exception($E->getMessage());
+        $DEVICE_CSS = "CSS_{$SITE}_DEVICE";
+		
+		try {
+            $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
+            $sitecss = $sitecss['response'];
+        } catch (\Exception $e) {
+            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
         }
 
-        //print_r($CSSs);
-
-        if (in_array('CSS_'.$SITE.'_DEVICE', $CSSs)) {
-            $CSS = 'CSS_'.$SITE.'_DEVICE';
-        } elseif (in_array('CSS_'.$SITE, $CSSs)) {
-            $CSS = 'CSS_'.$SITE;
+        if ($sitecss) {
+            if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
+                $DEVICE_CSS = "CSS_{$SITE}";
+            }
         }
 
         //echo 'CSS set to: '.$CSS.PHP_EOL;
@@ -268,7 +287,7 @@ class Cucmclass extends Model
         $DATA = [
         'name'                               => $NAME,
         'devicePoolName'                     => 'DP_'.$SITE,
-        'callingSearchSpaceName'             => $CSS,
+        'callingSearchSpaceName'             => $DEVICE_CSS,
         'locationName'                       => 'LOC_'.$SITE,
         'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
         ];
@@ -300,7 +319,8 @@ class Cucmclass extends Model
                                                 $EXTENSIONLENGTH,
                                                 $LANGUAGE,
                                                 $VOICEMAIL
-                                            ) {
+                                            ) 
+	{
         $NAME = strtoupper($NAME);
 
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
@@ -326,6 +346,31 @@ class Cucmclass extends Model
         if (isset($USERNAME)) {
             if (! $USERNAME) {
                 $USERNAME = 'CallManager.Unassign';
+            }
+        }
+		
+		// Construct new cucm object
+        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+
+
+		
+		$DEVICE_CSS = "CSS_{$SITE}_DEVICE";
+		
+		try {
+            $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
+            $sitecss = $sitecss['response'];
+        } catch (\Exception $e) {
+            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+        }
+
+        if ($sitecss) {
+            if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
+                $DEVICE_CSS = "CSS_{$SITE}";
             }
         }
 
@@ -357,7 +402,7 @@ class Cucmclass extends Model
         'protocol'                            => $PROTOCOL,
         'protocolSide'                        => 'User',
         'devicePoolName'                      => 'DP_'.$SITE,
-        'callingSearchSpaceName'              => 'CSS_'.$SITE.'_DEVICE',
+        'callingSearchSpaceName'              => $DEVICE_CSS,
         'locationName'                        => 'LOC_'.$SITE,
         'commonPhoneConfigName'               => 'Standard Common Phone Profile',
         'useTrustedRelayPoint'                => 'Default',
@@ -397,28 +442,7 @@ class Cucmclass extends Model
                                     ],
             ];
 
-        // Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
 
-        // Check to make sure the site has the new Css built or failback to the old one.
-
-        try {
-            $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
-            $sitecss = $sitecss['response'];
-        } catch (\Exception $e) {
-            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-            //dd($e->getTrace());
-        }
-
-        if ($sitecss) {
-            if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
-                $PHONE['callingSearchSpaceName'] = "CSS_{$SITE}";
-            }
-        }
 
         // Set back to SCCP after adding phone.
         $PROTOCOL = 'SCCP';
@@ -440,6 +464,14 @@ class Cucmclass extends Model
 
         try {
             $REPLY = $cucm->add_object_type_by_assoc($PHONE, $TYPE);
+			
+			// Reserve the DID in the database.
+			if ($REPLY) {
+				if(!\App\Cucmphoneconfigs::where('name', $PHONE['name'])->count()){
+					$phone = \App\Cucmphoneconfigs::create(['name' => $PHONE['name']]);
+				}
+			}
+			
         } catch (\Exception $E) {
             $EXCEPTION = [$E->getMessage(), $PHONE];
             //return $EXCEPTION;
@@ -461,7 +493,8 @@ class Cucmclass extends Model
                                                 $EXTENSIONLENGTH,
                                                 $LANGUAGE,
                                                 $VOICEMAIL
-                                            ) {
+                                            ) 
+	{
 
         // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
@@ -470,7 +503,8 @@ class Cucmclass extends Model
                                                     env('CALLMANAGER_PASS')
                                                     );
 
-        $NAME = strtoupper($NAME);
+
+		$NAME = strtoupper($NAME);
 
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
@@ -490,6 +524,22 @@ class Cucmclass extends Model
         if (isset($USERNAME)) {
             if (! $USERNAME) {
                 $USERNAME = 'CallManager.Unassign';
+            }
+        }
+		
+		$DEVICE_CSS = "CSS_{$SITE}_DEVICE";
+		
+		try {
+            $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
+            $sitecss = $sitecss['response'];
+        } catch (\Exception $e) {
+            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+        }
+
+        if ($sitecss) {
+            if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
+                $DEVICE_CSS = "CSS_{$SITE}";
             }
         }
 
@@ -526,47 +576,47 @@ class Cucmclass extends Model
                     'callForwardAll'               => [
                                                         'forwardToVoiceMail'                 => 'false',
                                                         'callingSearchSpaceName'             => 'CSS_LINEONLY_L3_LD',
-                                                        'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
+                                                        'secondaryCallingSearchSpaceName'    => $DEVICE_CSS,
                                                     ],
                     'callForwardBusy'            => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardBusyInt'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardBusyInt'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoAnswer'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoAnswerInt'    => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoCoverage'        => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNoCoverageInt'    => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardOnFailure'            => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNotRegistered'    => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
                     'callForwardNotRegisteredInt' => [
                                                         'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => "CSS_{$SITE}_DEVICE",
+                                                        'callingSearchSpaceName' => $DEVICE_CSS,
                                                     ],
 
                 ];
@@ -606,7 +656,7 @@ class Cucmclass extends Model
         'protocol'                           => $PROTOCOL,
         'protocolSide'                       => 'User',
         'devicePoolName'                     => 'DP_'.$SITE,
-        'callingSearchSpaceName'             => 'CSS_'.$SITE.'_DEVICE',
+        'callingSearchSpaceName'             => $DEVICE_CSS,
         'locationName'                       => 'LOC_'.$SITE,
         'commonPhoneConfigName'              => 'Standard Common Phone Profile',
         'useTrustedRelayPoint'               => 'Default',
@@ -644,22 +694,6 @@ class Cucmclass extends Model
                                                 ],
                                     ],
             ];
-
-        // Check to make sure the site has the new Css built or failback to the old one.
-
-        try {
-            $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
-            $sitecss = $sitecss['response'];
-        } catch (\Exception $e) {
-            //echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-            //dd($e->getTrace());
-        }
-
-        if ($sitecss) {
-            if (! in_array("CSS_{$SITE}_DEVICE", $sitecss)) {
-                $PHONE['callingSearchSpaceName'] = "CSS_{$SITE}";
-            }
-        }
 
         // Set back to SCCP after adding phone.
         $PROTOCOL = 'SCCP';
@@ -699,6 +733,8 @@ class Cucmclass extends Model
 
         // Add Phone
         self::wrap_add_phone_object($PHONE, 'Phone');
+		
+
 
         return json_decode(json_encode(static::$results), true);
     }

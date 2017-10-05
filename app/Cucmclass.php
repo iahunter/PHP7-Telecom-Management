@@ -476,7 +476,7 @@ class Cucmclass extends Model
             $EXCEPTION = [$E->getMessage(), $PHONE];
             //return $EXCEPTION;
 
-            throw new \Exception($EXCEPTION);
+            throw new \Exception($E->getMessage());
         }
 
         return json_decode(json_encode($REPLY), true);

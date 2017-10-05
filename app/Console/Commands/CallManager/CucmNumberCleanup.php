@@ -132,7 +132,7 @@ class CucmNumberCleanup extends Command
                                         'FirstName'        => $mailbox['FirstName'],
                                         'LastName'         => $mailbox['LastName'],
                                         'DtmfAccessId'     => $mailbox['DtmfAccessId'],
-                                        'AD User Found'    => false,
+                                        'AD_User_Found'    => false,
                                         ];
 
                             if (isset($mailbox['Alias']) && $mailbox['Alias']) {
@@ -162,7 +162,7 @@ class CucmNumberCleanup extends Command
                                         }
 
                                         echo "Found User for Mailbox: {$username['displayname']}".PHP_EOL;
-                                        $mailbox['AD User Found'] = $username['user'];
+                                        $mailbox['AD_User_Found'] = $username['user'];
                                     }
                                 }
                             }

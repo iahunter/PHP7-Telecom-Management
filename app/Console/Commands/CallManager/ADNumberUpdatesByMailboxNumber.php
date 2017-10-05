@@ -125,7 +125,7 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                             'FirstName'         => $mailbox['FirstName'],
                                             'LastName'          => $mailbox['LastName'],
                                             'DtmfAccessId'      => $mailbox['DtmfAccessId'],
-                                            'AD User'           => false,
+                                            'AD_User'            => false,
                                             ];
 
                             // Update the Did Database
@@ -166,7 +166,7 @@ class ADNumberUpdatesByMailboxNumber extends Command
 
                                         echo "Found User for Mailbox: {$ldap_user['displayname']}".PHP_EOL;
 
-                                        $mailbox['AD User'] = $ldap_user['userprincipalname'];
+                                        $mailbox['AD_User'] = $ldap_user['userprincipalname'];
 
                                         // Update the Did Database
                                         $did->mailbox = ['User' => $mailbox];

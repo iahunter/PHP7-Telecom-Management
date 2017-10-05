@@ -102,7 +102,7 @@
      * @SWG\Get(
      *     path="/telephony/api/reports/phonesbyerl/{erl}",
      *     tags={"CUCM Reports"},
-     *     summary="List of Phones for Site",
+     *     summary="List of Phones for ERL Name",
      *     description="",
      *     operationId="listSites",
      *     consumes={"application/json"},
@@ -122,6 +122,57 @@
      * )
      **/
     $api->get('/reports/phonesbyerl/{erl}', 'App\Http\Controllers\CucmReportsController@get_phones_by_erl');
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/reports/phoneslikeerl/{erl}",
+     *     tags={"CUCM Reports"},
+     *     summary="List of Phones like ERL Name",
+     *     description="",
+     *     operationId="listSites",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="erl",
+     *         in="path",
+     *         description="erl",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->get('/reports/phoneslikeerl/{erl}', 'App\Http\Controllers\CucmReportsController@get_phones_like_erl');
+	
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/reports/devicepoolfromerl/{erl}",
+     *     tags={"CUCM Reports"},
+     *     summary="Get the DevicePool with the most phones like site erl",
+     *     description="",
+     *     operationId="getdevicepool",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="erl",
+     *         in="path",
+     *         description="erl",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     * )
+     **/
+    $api->get('/reports/devicepoolfromerl/{erl}', 'App\Http\Controllers\CucmReportsController@get_devicepool_from_phones_in_erl');
 
     /**
      * @SWG\Get(

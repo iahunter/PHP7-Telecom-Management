@@ -2112,9 +2112,69 @@
                 "tags": [
                     "CUCM Reports"
                 ],
-                "summary": "List of Phones for Site",
+                "summary": "List of Phones for ERL Name",
                 "description": "",
                 "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "erl",
+                        "in": "path",
+                        "description": "erl",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/reports/phoneslikeerl/{erl}": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "List of Phones like ERL Name",
+                "description": "",
+                "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "erl",
+                        "in": "path",
+                        "description": "erl",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/reports/devicepoolfromerl/{erl}": {
+            "get": {
+                "tags": [
+                    "CUCM Reports"
+                ],
+                "summary": "Get the DevicePool with the most phones like site erl",
+                "description": "",
+                "operationId": "getdevicepool",
                 "consumes": [
                     "application/json"
                 ],

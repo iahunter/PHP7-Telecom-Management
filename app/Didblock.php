@@ -124,13 +124,13 @@ class Didblock extends Model
         /**/
         //echo PHP_EOL."1 new Start is between) ".self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->toSql();
         if (self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->count()) {
-			$block = self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->first();
-            throw new \Exception('Overlap 1: This block overlapps with existing block id: '. $block->id);
+            $block = self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->start], ['end', '>=', $this->start]])->first();
+            throw new \Exception('Overlap 1: This block overlapps with existing block id: '.$block->id);
         }
         //echo PHP_EOL."2 new End is between) ".self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->end], ['end', '>=', $this->end]])->toSql();
         if (self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->end], ['end', '>=', $this->end]])->count()) {
-			$block = self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->end], ['end', '>=', $this->end]])->first();
-            throw new \Exception('Overlap 2: This block overlapps with existing block id: '. $block->id);
+            $block = self::where([['country_code', '=', $this->country_code], ['start', '<=', $this->end], ['end', '>=', $this->end]])->first();
+            throw new \Exception('Overlap 2: This block overlapps with existing block id: '.$block->id);
         }
 
         /*
@@ -138,13 +138,13 @@ class Didblock extends Model
         /**/
         //echo PHP_EOL."3 existing start is between) ".self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->toSql();
         if (self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->count()) {
-			$block = self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->first();
-            throw new \Exception('Overlap 3: This block overlapps with existing block id: '. $block->id);
+            $block = self::where([['country_code', '=', $this->country_code]])->whereBetween('start', [$this->start, $this->end])->first();
+            throw new \Exception('Overlap 3: This block overlapps with existing block id: '.$block->id);
         }
         //echo PHP_EOL."4 existing end is between) ".self::where([['country_code', '=', $this->country_code]])->whereBetween('end', [$this->start, $this->end])->toSql();
         if (self::where([['country_code', '=', $this->country_code]])->whereBetween('end', [$this->start, $this->end])->count()) {
-			$block = self::where([['country_code', '=', $this->country_code]])->whereBetween('end', [$this->start, $this->end])->first();
-            throw new \Exception('Overlap 4: This block overlapps with existing block id: '. $block->id);
+            $block = self::where([['country_code', '=', $this->country_code]])->whereBetween('end', [$this->start, $this->end])->first();
+            throw new \Exception('Overlap 4: This block overlapps with existing block id: '.$block->id);
         }
 
         return true;

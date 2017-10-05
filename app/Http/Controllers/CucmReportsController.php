@@ -168,50 +168,43 @@ class CucmReportsController extends Controller
 
         return response()->json($response);
     }
-
-    public function get_devicepool_from_phones_in_erl(Request $request)
+	
+	public function get_devicepool_from_phones_in_erl(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', Cucmsiteconfigs::class)) {
             abort(401, 'You are not authorized');
         }
+		
+		$ERL = $request->erl;
+		
+		/*
+		SELECT devicepool, COUNT(*) as count
+		FROM cucmphone
+		WHERE erl LIKE 'SHDNEAKV%'
+		AND deleted_at IS NULL
+		GROUP BY devicepool
+		*/
 
-        $SITE = $request->erl;
-
-        /*
-        SELECT devicepool, COUNT(*) as count
-        FROM cucmphone
-        WHERE erl LIKE 'SHDNEAKV%'
-        AND deleted_at IS NULL
-        GROUP BY devicepool
-
-
-
-        SELECT MAX(devicepool)
-        FROM cucmphone
-        WHERE erl LIKE 'SHDNEAKV%'
-        AND deleted_at IS NULL
-        */
-
-        //$DP = DB::select(DB::raw("SELECT MAX(devicepool) FROM cucmphone WHERE erl LIKE '$SITE%' AND deleted_at IS NULL"));
-
-        $DPs = DB::select(DB::raw("SELECT devicepool, COUNT(*) as count FROM cucmphone WHERE erl LIKE '$SITE%' AND deleted_at IS NULL GROUP BY devicepool"));
-        $count = 0;
-        foreach ($DPs as $DP) {
-            if ($DP->count > $count) {
-                $count = $DP->count;
-                $devicepool = $DP->devicepool;
-            }
-        }
-
-        $devicepool = str_replace('DP_', '', $devicepool);
-
+		
+		$DPs = DB::select(DB::raw("SELECT devicepool, COUNT(*) as count FROM cucmphone WHERE erl LIKE '$ERL%' AND deleted_at IS NULL GROUP BY devicepool"));
+		
+		$count = 0;
+		foreach($DPs as $DP){
+			if ($DP->count > $count){
+				$count = $DP->count; 
+				$devicepool = $DP->devicepool; 
+			}
+		}
+		
+		$SITE = str_replace("DP_", "", $devicepool);
+		
         $response = [
                     'status_code'       => 200,
                     'success'           => true,
                     'message'           => '',
-                    'response'          => $devicepool,
+                    'response'          => $SITE,
                     ];
 
         return response()->json($response);

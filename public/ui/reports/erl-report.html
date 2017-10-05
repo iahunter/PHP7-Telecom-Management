@@ -70,7 +70,15 @@
 										<span ng-show="sortType == 'erl_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							<th>
+								<a href="" ng-click="sortType = 'devicepool_site'; sortReverse = !sortReverse" style="color:black">
+									Device Pool Site
+										<span ng-show="sortType == 'devicepool_site' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'devicepool_site' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 							<th>Add Phone</th>
+							
 							<th>
 								<a href="" ng-click="sortType = 'phonecount'; sortReverse = !sortReverse" style="color:black">
 									Phone Count
@@ -151,6 +159,7 @@
 							</td>
 							-->
 							<td><a target="_blank" href="#/egw_geterlreport/{{erl.erl_id}}"><b>{{erl.erl_id}}</b></a></td>
+							<td>{{erl.devicepool_site}}</td>
 							<td><a href="#/sitestatusreports/{{erl.devicepool_site}}/phone/create" ng-if="erl.devicepool_site"><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i><b> Phone</b></button></a></td>
 							<td>{{erl.phonecount}}</td>
 							<td>{{erl.building_number}}</td>

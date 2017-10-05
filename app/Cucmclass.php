@@ -90,8 +90,7 @@ class Cucmclass extends Model
                                                 $EXTENSIONLENGTH,
                                                 $LANGUAGE,
                                                 $VOICEMAIL
-                                            ) 
-	{
+                                            ) {
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
         // 30 is max, off-by-1 is 29, space-dash-space is 3, shortdn length could be 4-10
@@ -105,9 +104,8 @@ class Cucmclass extends Model
                 $USERNAME = 'CallManager.Unassign';
             }
         }
-		
 
-		// Construct new cucm object
+        // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
@@ -115,8 +113,8 @@ class Cucmclass extends Model
                                                     );
 
         $DEVICE_CSS = "CSS_{$SITE}_DEVICE";
-		
-		try {
+
+        try {
             $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
             $sitecss = $sitecss['response'];
         } catch (\Exception $e) {
@@ -129,7 +127,6 @@ class Cucmclass extends Model
                 $DEVICE_CSS = "CSS_{$SITE}";
             }
         }
-		
 
         $VOICEMAILPROFILE = 'Default';
 
@@ -264,8 +261,8 @@ class Cucmclass extends Model
                                                     );
 
         $DEVICE_CSS = "CSS_{$SITE}_DEVICE";
-		
-		try {
+
+        try {
             $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
             $sitecss = $sitecss['response'];
         } catch (\Exception $e) {
@@ -319,8 +316,7 @@ class Cucmclass extends Model
                                                 $EXTENSIONLENGTH,
                                                 $LANGUAGE,
                                                 $VOICEMAIL
-                                            ) 
-	{
+                                            ) {
         $NAME = strtoupper($NAME);
 
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
@@ -348,19 +344,17 @@ class Cucmclass extends Model
                 $USERNAME = 'CallManager.Unassign';
             }
         }
-		
-		// Construct new cucm object
+
+        // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
 
+        $DEVICE_CSS = "CSS_{$SITE}_DEVICE";
 
-		
-		$DEVICE_CSS = "CSS_{$SITE}_DEVICE";
-		
-		try {
+        try {
             $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
             $sitecss = $sitecss['response'];
         } catch (\Exception $e) {
@@ -442,8 +436,6 @@ class Cucmclass extends Model
                                     ],
             ];
 
-
-
         // Set back to SCCP after adding phone.
         $PROTOCOL = 'SCCP';
 
@@ -464,14 +456,13 @@ class Cucmclass extends Model
 
         try {
             $REPLY = $cucm->add_object_type_by_assoc($PHONE, $TYPE);
-			
-			// Reserve the DID in the database.
-			if ($REPLY) {
-				if(!\App\Cucmphoneconfigs::where('name', $PHONE['name'])->count()){
-					$phone = \App\Cucmphoneconfigs::create(['name' => $PHONE['name']]);
-				}
-			}
-			
+
+            // Reserve the DID in the database.
+            if ($REPLY) {
+                if (! \App\Cucmphoneconfigs::where('name', $PHONE['name'])->count()) {
+                    $phone = \App\Cucmphoneconfigs::create(['name' => $PHONE['name']]);
+                }
+            }
         } catch (\Exception $E) {
             $EXCEPTION = [$E->getMessage(), $PHONE];
             //return $EXCEPTION;
@@ -493,8 +484,7 @@ class Cucmclass extends Model
                                                 $EXTENSIONLENGTH,
                                                 $LANGUAGE,
                                                 $VOICEMAIL
-                                            ) 
-	{
+                                            ) {
 
         // Construct new cucm object
         $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
@@ -503,8 +493,7 @@ class Cucmclass extends Model
                                                     env('CALLMANAGER_PASS')
                                                     );
 
-
-		$NAME = strtoupper($NAME);
+        $NAME = strtoupper($NAME);
 
         $FULLNAME = implode(' ', [$FIRSTNAME, $LASTNAME]);
         $SHORTDN = substr($DN, 0 - $EXTENSIONLENGTH);
@@ -526,10 +515,10 @@ class Cucmclass extends Model
                 $USERNAME = 'CallManager.Unassign';
             }
         }
-		
-		$DEVICE_CSS = "CSS_{$SITE}_DEVICE";
-		
-		try {
+
+        $DEVICE_CSS = "CSS_{$SITE}_DEVICE";
+
+        try {
             $sitecss = $cucm->get_object_type_by_site($SITE, 'Css');
             $sitecss = $sitecss['response'];
         } catch (\Exception $e) {
@@ -733,8 +722,6 @@ class Cucmclass extends Model
 
         // Add Phone
         self::wrap_add_phone_object($PHONE, 'Phone');
-		
-
 
         return json_decode(json_encode(static::$results), true);
     }

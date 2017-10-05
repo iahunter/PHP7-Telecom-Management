@@ -10,7 +10,7 @@
 	
 	<div style="margin:50px"></div>
 	
-	<legend>ERL Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+	<legend>Location ERL Phone Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
 		
 		<div style="margin:25px"></div>
 		
@@ -70,6 +70,7 @@
 										<span ng-show="sortType == 'erl_id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							<th>Add Phone</th>
 							<th>
 								<a href="" ng-click="sortType = 'phonecount'; sortReverse = !sortReverse" style="color:black">
 									Phone Count
@@ -150,6 +151,7 @@
 							</td>
 							-->
 							<td><a target="_blank" href="#/egw_geterlreport/{{erl.erl_id}}"><b>{{erl.erl_id}}</b></a></td>
+							<td><a href="#/sitestatusreports/{{erl.devicepool_site}}/phone/create" ng-if="erl.devicepool_site"><button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i><b> Phone</b></button></a></td>
 							<td>{{erl.phonecount}}</td>
 							<td>{{erl.building_number}}</td>
 							<td>{{erl.rd}}</td>

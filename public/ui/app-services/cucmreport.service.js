@@ -141,6 +141,23 @@ angular
 					return defer.promise;
 			  });
 		}
+		
+		// Get DevicePool Site from Phones ERL in DB
+		self.get_devicepool_from_phones_in_erl = function(erl) {
+			var defer = $q.defer();
+			return $http.get('../api/reports/devicepoolfromerl/'+erl)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					
+					//console.log(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			  });
+		}
 
 		return self
 

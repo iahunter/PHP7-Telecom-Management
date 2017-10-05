@@ -41,7 +41,32 @@ angular
 					
 					angular.forEach(vm.report, function(erl){
 						vm.totalphones = vm.totalphones + erl.phonecount
-						//console.log(vm.totalphones)
+						
+						if(erl.phonecount){
+							console.log(erl)
+							
+							// Get the Device Pool that most of the phones are using in that erl. 
+							cucmReportService.get_devicepool_from_phones_in_erl(erl.erl_id)
+							.then(function(res){
+								// Check for errors and if token has expired. 
+								
+								console.log(res)
+								if(res.data.message){
+									//console.log(res);
+									vm.message = res.data.message;
+									//console.log(vm.message);
+								}else{
+									
+									erl.devicepool_site = res.data.response
+									console.log(erl.devicepool_site)
+
+								}
+								
+							}, function(err){
+								alert(err);
+							});
+						}
+						
 					});
 					
 					//console.log(vm.totalphones)

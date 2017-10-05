@@ -120,11 +120,11 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                 $mailbox['LastName'] = '';
                             }
 
-                            $mailbox = ['Alias'                 => $mailbox['Alias'],
-                                            'DisplayName'       => $mailbox['DisplayName'],
-                                            'FirstName'         => $mailbox['FirstName'],
-                                            'LastName'          => $mailbox['LastName'],
-                                            'DtmfAccessId'      => $mailbox['DtmfAccessId'],
+                            $mailbox = ['Alias'                  => $mailbox['Alias'],
+                                            'DisplayName'        => $mailbox['DisplayName'],
+                                            'FirstName'          => $mailbox['FirstName'],
+                                            'LastName'           => $mailbox['LastName'],
+                                            'DtmfAccessId'       => $mailbox['DtmfAccessId'],
                                             'AD_User'            => false,
                                             ];
 

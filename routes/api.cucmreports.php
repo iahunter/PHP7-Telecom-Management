@@ -122,8 +122,8 @@
      * )
      **/
     $api->get('/reports/phonesbyerl/{erl}', 'App\Http\Controllers\CucmReportsController@get_phones_by_erl');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phoneslikeerl/{erl}",
      *     tags={"CUCM Reports"},
@@ -147,9 +147,8 @@
      * )
      **/
     $api->get('/reports/phoneslikeerl/{erl}', 'App\Http\Controllers\CucmReportsController@get_phones_like_erl');
-	
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/devicepoolfromerl/{erl}",
      *     tags={"CUCM Reports"},

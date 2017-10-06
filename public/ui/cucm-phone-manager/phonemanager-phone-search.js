@@ -131,9 +131,11 @@ angular
 			return forward
 			
 		}
-		
+
 		
 		vm.checkphoneusage = function(form){
+			
+			vm.nophones = false;
 			var key = form.key
 			
 			if(key == 'name'){
@@ -145,6 +147,7 @@ angular
 			
 			if(search){
 				//console.log(phone)
+				vm.loading = true
 				
 				cucmService.searchphones(key, search)
 					.then(function(res){
@@ -158,13 +161,18 @@ angular
 							vm.phones = result;
 							console.log(vm.phones)
 						}else{
-							vm.phones = false;
+							vm.phones = {}
+							vm.nophones = true;
+							console.log(vm.nophones)
 						}
 						
 
 					}, function(err){
 						// Error
 					});
+					
+				vm.loading = false
+				
 			}
 		}
 		

@@ -27,8 +27,8 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/phone_search/{name}",
      *     tags={"Management - CUCM - Phone Provisioning"},
@@ -55,8 +55,8 @@
      * )
      **/
     $api->get('cucm/phone_search/{name}', 'App\Http\Controllers\Cucmphone@phone_search_by_name');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/phone_search_by_key/{key}/{search}",
      *     tags={"Management - CUCM - Phone Provisioning"},
@@ -91,7 +91,6 @@
      * )
      **/
     $api->get('cucm/phone_search_by_key/{key}/{search}', 'App\Http\Controllers\Cucmphone@phone_search');
-	
 
     /**
      * @SWG\Delete(

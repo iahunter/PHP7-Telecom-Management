@@ -145,8 +145,8 @@ class Cucmphone extends Cucm
 
         return response()->json($response);
     }
-	
-	public function phone_search_by_name(Request $request)
+
+    public function phone_search_by_name(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -178,8 +178,8 @@ class Cucmphone extends Cucm
 
         return response()->json($response);
     }
-	
-	public function phone_search(Request $request)
+
+    public function phone_search(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -189,7 +189,7 @@ class Cucmphone extends Cucm
             }
         }
 
-		$key = $request->key;
+        $key = $request->key;
         $search = $request->search;
 
         try {
@@ -201,7 +201,7 @@ class Cucmphone extends Cucm
         } catch (\Exception $e) {
             $exception = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             //dd($e->getTrace());
-			 throw new \Exception($exception);
+            throw new \Exception($exception);
         }
 
         $response = [
@@ -213,7 +213,6 @@ class Cucmphone extends Cucm
 
         return response()->json($response);
     }
-
 
     public function updatePhone(Request $request)
     {

@@ -1,0 +1,120 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+<div style="margin-left:5%; margin-right:5%;">
+<div class="well">
+<div style="margin:50px"></div>
+
+	<div class="row">
+		<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1">
+			<script type="text/ng-template" id="error-messages">
+							<div ng-message='required'> This Field is required </div>
+							<div ng-message='minlength'> Too short </div>
+							<div ng-message='maxlength'> Too long </div>
+			</script>
+				<legend><h2><i class="fa fa-pencil fa-fw"></i> Phone Search</h2></legend>
+					
+					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
+					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
+					
+						<div class="row">
+							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.key.$touched && addDeviceForm.key.$invalid, 'has-success': addDeviceForm.key.$touched && addDeviceForm.device.$valid }">
+									<label for="key" class="control-label">Search Key</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+											
+											<select class="form-control" required ng-model='vm.deviceForm.key' ng-options="key as key for key in vm.searchkeys" data-width="100%" name="keys">
+											</select>
+										</div>
+										<div ng-messages="addDeviceForm.key.$dirty && addDeviceForm.key.$error">
+												<div ng-message='required'> key is required </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							
+							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4" ng-if="vm.deviceForm.key && vm.deviceForm.key == 'name'">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.name.$touched && addDeviceForm.name.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
+										<label for="name" class="control-label">Name</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.name' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="name" placeholder="MAC Address">
+											</div>
+											<div ng-messages="addDeviceForm.name.$dirty && addDeviceForm.name.$error">
+													<div ng-message='required'> DeviceName is required </div>
+													<div ng-message='minlength'>Please enter a name at least 12 chars long</div>
+													<div ng-message='maxlength'>Name entered cannot be longer than 12 chars</div>
+													
+											</div>
+											<div ng-if="vm.nameinvalid">
+												<div class="danger"> DeviceName is invalid </div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+						
+						</div>
+						
+						<div class="row">
+							
+							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4" ng-if="vm.deviceForm.key && vm.deviceForm.key == 'description'">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.description.$touched && addDeviceForm.description.$invalid, 'has-success': addDeviceForm.description.$touched && addDeviceForm.description.$valid }">
+										<label for="description" class="control-label">Description</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-server"></i></span>
+												<input type="text" ng-model='vm.deviceForm.description' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="description" placeholder="Description">
+											</div>
+											<div ng-messages="addDeviceForm.description.$dirty && addDeviceForm.description.$error">
+													<div ng-message='required'> DeviceName is required </div>
+													<div ng-message='minlength'>Please enter a description at least 12 chars long</div>
+													<div ng-message='maxlength'>description entered cannot be longer than 12 chars</div>
+													
+											</div>
+											<div ng-if="vm.nameinvalid">
+												<div class="danger"> DeviceName is invalid </div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+						
+						</div>
+						
+						<div class="row" ng-if="vm.phone">
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+								<ng-include src="'cucm-phone-manager/includes/include-phonefound.html'"></ng-include>
+							</div>
+							<div style="margin-bottom:125px"></div>
+						</div>
+						
+						<div class="row" ng-if="vm.phones">
+							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+								<ng-include src="'cucm-phone-manager/includes/include-phone-table.html'"></ng-include>
+							</div>
+							<div style="margin-bottom:125px"></div>
+						</div>
+
+						<div style="margin:100px"></div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div style="margin:25px"></div>
+		
+	</div>
+</div>
+</div>

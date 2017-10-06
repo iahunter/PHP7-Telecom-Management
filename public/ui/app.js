@@ -278,6 +278,12 @@
                 controller: 'phoneManager.Controller',
                 controllerAs: 'vm'
             })
+			.state('phonesearch', {
+                url: '/phonesearch',
+                templateUrl: 'cucm-phone-manager/phonemanager-phone-search.html',
+                controller: 'phoneManagerSearch.Controller',
+                controllerAs: 'vm'
+            })
 			.state('line', {
                 url: '/line/{dn}',
                 templateUrl: 'cucm-phone-manager/linemanager.html',

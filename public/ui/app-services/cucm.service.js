@@ -97,6 +97,21 @@ angular
 			});
 		}
 		
+		// Get Dids by Block ID
+		self.searchphones = function(key,search) {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/phone_search_by_key/'+key+'/'+search)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
+		
 		
 		// Get CUCM Date Time Groups
 		self.getcucmdatetimegrps = function() {

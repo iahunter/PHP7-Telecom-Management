@@ -145,6 +145,75 @@ class Cucmphone extends Cucm
 
         return response()->json($response);
     }
+	
+	public function phone_search_by_name(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            if (! $user->can('read', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+
+        $name = $request->name;
+
+        try {
+            $phones = $this->cucm->phone_search_by_name($name);
+
+            if (! count($phones)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            $exception = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $phones,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function phone_search(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            if (! $user->can('read', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+
+		$key = $request->key;
+        $search = $request->search;
+
+        try {
+            $phones = $this->cucm->phone_search($key, $search);
+
+            if (! count($phones)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            $exception = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+			 throw new \Exception($exception);
+        }
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $phones,
+                    ];
+
+        return response()->json($response);
+    }
+
 
     public function updatePhone(Request $request)
     {

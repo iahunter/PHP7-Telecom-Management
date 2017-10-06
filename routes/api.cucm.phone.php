@@ -27,6 +27,71 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/phone_search/{name}",
+     *     tags={"Management - CUCM - Phone Provisioning"},
+     *     summary="List Phones by Searching Name",
+     *     description="",
+     *     operationId="searchPhoneName",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Name of Phone - Example SEP0004DEADBEEF",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/phone_search/{name}', 'App\Http\Controllers\Cucmphone@phone_search_by_name');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/phone_search_by_key/{key}/{search}",
+     *     tags={"Management - CUCM - Phone Provisioning"},
+     *     summary="List Phones by Searching Specified Key",
+     *     description="",
+     *     operationId="searchPhone",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="key",
+     *         in="path",
+     *         description="Key to Search",
+     *		   enum={"name", "description", "protocol","callingSearchSpaceName", "devicePoolName", "securityProfileName"},
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="search",
+     *         in="path",
+     *         description="String to Search",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/phone_search_by_key/{key}/{search}', 'App\Http\Controllers\Cucmphone@phone_search');
+	
 
     /**
      * @SWG\Delete(

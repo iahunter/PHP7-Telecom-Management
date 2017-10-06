@@ -793,6 +793,87 @@
                 }
             }
         },
+        "/telephony/api/cucm/phone_search/{name}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM - Phone Provisioning"
+                ],
+                "summary": "List Phones by Searching Name",
+                "description": "",
+                "operationId": "searchPhoneName",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of Phone - Example SEP0004DEADBEEF",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/phone_search_by_key/{key}/{search}": {
+            "get": {
+                "tags": [
+                    "Management - CUCM - Phone Provisioning"
+                ],
+                "summary": "List Phones by Searching Specified Key",
+                "description": "",
+                "operationId": "searchPhone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "description": "Key to Search",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "name",
+                            "description",
+                            "protocol",
+                            "callingSearchSpaceName",
+                            "devicePoolName",
+                            "securityProfileName"
+                        ]
+                    },
+                    {
+                        "name": "search",
+                        "in": "path",
+                        "description": "String to Search",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/phone_and_line": {
             "post": {
                 "tags": [

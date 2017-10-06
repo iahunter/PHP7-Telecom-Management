@@ -1,0 +1,81 @@
+	<div style="margin:25px"></div>
+				<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+					<div class="table-responsive">
+					<table class="table table-striped table-condensed table-bordered table-hover">
+						<thead>
+							<tr class="info">
+
+								<th>
+									<a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:black">
+										Device Name
+											<span ng-show="sortType == 'name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'description'; sortReverse = !sortReverse" style="color:black">
+										Description
+											<span ng-show="sortType == 'description' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'description' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'model'; sortReverse = !sortReverse" style="color:black">
+										Model
+											<span ng-show="sortType == 'model' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'model' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'devicePoolName._'; sortReverse = !sortReverse" style="color:black">
+										Device Pool
+											<span ng-show="sortType == 'devicePoolName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'devicePoolName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'callingSearchSpaceName._'; sortReverse = !sortReverse" style="color:black">
+										CSS
+											<span ng-show="sortType == 'callingSearchSpaceName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'callingSearchSpaceName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'locationName._'; sortReverse = !sortReverse" style="color:black">
+										Location
+											<span ng-show="sortType == 'locationName._' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'locationName._' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+								<th>
+									<a href="" ng-click="sortType = 'ownerid'; sortReverse = !sortReverse" style="color:black">
+										Owner ID
+											<span ng-show="sortType == 'ownerid' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'ownerid' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="phone in vm.phones | orderBy:sortType:sortReverse | filter:vm.search: strict">
+								<!--
+								<td>
+									<input type="checkbox" ng-model="phone.select" ng-click="vm.cucmphoneselecttouched()">
+								</td>
+								-->
+								<td><a href="#/phone/{{ phone.name}}" target="_blank"><b>{{ phone.name}}</b></a></td>
+								<td>{{ phone.description}}</td>
+								<td>{{ phone.product}}</td>
+								<td>{{ phone.devicePoolName._}}</td>
+								<td>{{ phone.callingSearchSpaceName._}}</td>
+								<td>{{ phone.locationName._}}</td>
+								<td>{{ phone.ownerUserName._}}</td>
+
+								
+							</tr>
+						</tbody>
+					</table>
+					</div>
+				</div>
+				<div style="margin:25px"></div>

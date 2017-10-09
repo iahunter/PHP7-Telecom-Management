@@ -62,75 +62,10 @@ angular
 		vm.searchkeys = ['name',
 							'description',
 							//'protocol',
-							//'callingSearchSpaceName',
-							//'devicePoolName',
+							'callingSearchSpaceName',
+							'devicePoolName',
 							//'securityProfileName',
 						]
-			
-		vm.submitDevice = function(phone) {
-			console.log("Submit Triggered!")
-			
-			if(phone.device == "IP Communicator"){
-				phone.name = "CIPC_" + phone.dn;
-			}
-			console.log(phone)
-			var path = '/phone/site/'+ id + '/create/'+ phone.device + '&' + phone.name + '&' + phone.dn + '&' + phone.usenumber
-			$location.path(path);
-			
-		}
-		
-		vm.checkname = function(phone){
-			
-
-			if(phone.name){
-				vm.nameinvalid = false;
-				if(phone.device != "IP Communicator"){
-					
-					// Check if valid MAC
-					var regexp = /^[0-9a-f]{1,12}$/gi;
-					if(!phone.name.match(regexp)){
-						console.log("NO REGEX MATCH FOUND ON NAME")
-						vm.nameinvalid = true;
-					}
-					if(phone.name.length != 4){
-						vm.nameinvalid = true;
-					}
-				}
-				//console.log(vm.nameinvalid)
-			}
-			
-			if(phone.name && !vm.nameinvalid){
-				//console.log("Hitting Here")
-				if(phone.device == "ATA 190" || phone.device == "ATA 187" || phone.device == "ATA 186"){
-					vm.checkphoneusage('ATA'+phone.name)
-				}
-				else if(phone.device != "IP Communicator"){
-					vm.checkphoneusage('SEP'+phone.name)
-				}
-				
-			}
-			
-		}
-		
-		
-		vm.getcallforwardinfo = function(uuid){
-			//console.log(uuid)
-			var forward = false;
-			if(uuid){
-				angular.forEach(vm.phone.line_details, function(value,key) {
-					if(key == uuid){
-						//console.log("CallForward:")
-						//console.log(value.callForwardAll.destination)
-						forward = value.callForwardAll.destination
-						return forward
-						
-					}
-				});
-			}
-			//console.log(forward)
-			return forward
-			
-		}
 
 		
 		vm.checkphoneusage = function(form){
@@ -143,6 +78,12 @@ angular
 			}
 			if(key == 'description'){
 				var search = form.description;
+			}
+			if(key == 'callingSearchSpaceName'){
+				var search = form.callingSearchSpaceName;
+			}
+			if(key == 'devicePoolName'){
+				var search = form.devicePoolName;
 			}
 			
 			if(search){

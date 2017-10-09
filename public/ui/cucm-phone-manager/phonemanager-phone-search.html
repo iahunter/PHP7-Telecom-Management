@@ -23,7 +23,7 @@
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4">
 								<div class="form-group" ng-class="{'has-error': addDeviceForm.key.$touched && addDeviceForm.key.$invalid, 'has-success': addDeviceForm.key.$touched && addDeviceForm.device.$valid }">
-									<label for="key" class="control-label">Search Key</label>
+									<label for="key" class="control-label">Search Field</label>
 									<div class="inputGroupContainer">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
@@ -47,18 +47,14 @@
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-server"></i></span>
-												<input type="text" ng-model='vm.deviceForm.name' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="name" placeholder="MAC Address">
+												<input type="text" ng-model='vm.deviceForm.name' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="name" placeholder="MAC Address" ng-minlength='4'>
 											</div>
 											<div ng-messages="addDeviceForm.name.$dirty && addDeviceForm.name.$error">
 													<div ng-message='required'> DeviceName is required </div>
-													<div ng-message='minlength'>Please enter a name at least 12 chars long</div>
+													<div ng-message='minlength'>Please enter a name at least 4 chars long</div>
 													<div ng-message='maxlength'>Name entered cannot be longer than 12 chars</div>
 													
 											</div>
-											<div ng-if="vm.nameinvalid">
-												<div class="danger"> DeviceName is invalid </div>
-											</div>
-											
 										</div>
 									</div>
 								</div>
@@ -68,26 +64,66 @@
 						<div class="row">
 							
 							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4" ng-if="vm.deviceForm.key && vm.deviceForm.key == 'description'">
-									<div class="form-group" ng-class="{'has-error': addDeviceForm.description.$touched && addDeviceForm.description.$invalid, 'has-success': addDeviceForm.description.$touched && addDeviceForm.description.$valid }">
-										<label for="description" class="control-label">Description</label>
-										<div class="inputGroupContainer">
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-server"></i></span>
-												<input type="text" ng-model='vm.deviceForm.description' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="description" placeholder="Description">
-											</div>
-											<div ng-messages="addDeviceForm.description.$dirty && addDeviceForm.description.$error">
-													<div ng-message='required'> DeviceName is required </div>
-													<div ng-message='minlength'>Please enter a description at least 12 chars long</div>
-													<div ng-message='maxlength'>description entered cannot be longer than 12 chars</div>
-													
-											</div>
-											<div ng-if="vm.nameinvalid">
-												<div class="danger"> DeviceName is invalid </div>
-											</div>
-											
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.description.$touched && addDeviceForm.description.$invalid, 'has-success': addDeviceForm.description.$touched && addDeviceForm.description.$valid }">
+									<label for="description" class="control-label">Description</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-server"></i></span>
+											<input type="text" ng-model='vm.deviceForm.description' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="description" placeholder="Description"  ng-minlength='4'>
+										</div>
+										<div ng-messages="addDeviceForm.description.$dirty && addDeviceForm.description.$error">
+												<div ng-message='required'> DeviceName is required </div>
+												<div ng-message='minlength'>Please enter a description at least 4 chars long</div>
+												<div ng-message='maxlength'>description entered cannot be longer than 12 chars</div>
+												
 										</div>
 									</div>
 								</div>
+							</div>
+						
+						</div>
+						
+						<div class="row">
+							
+							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4" ng-if="vm.deviceForm.key && vm.deviceForm.key == 'callingSearchSpaceName'">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.callingSearchSpaceName.$touched && addDeviceForm.callingSearchSpaceName.$invalid, 'has-success': addDeviceForm.callingSearchSpaceName.$touched && addDeviceForm.callingSearchSpaceName.$valid }">
+									<label for="callingSearchSpaceName" class="control-label">Calling Search Space</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-server"></i></span>
+											<input type="text" ng-model='vm.deviceForm.callingSearchSpaceName' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="callingSearchSpaceName" placeholder="callingSearchSpaceName"  ng-minlength='8'>
+										</div>
+										<div ng-messages="addDeviceForm.callingSearchSpaceName.$dirty && addDeviceForm.callingSearchSpaceName.$error">
+												<div ng-message='required'> DeviceName is required </div>
+												<div ng-message='minlength'>Please enter a callingSearchSpaceName at least 8 chars long</div>
+												<div ng-message='maxlength'>callingSearchSpaceName entered cannot be longer than 12 chars</div>
+												
+										</div>
+									</div>
+								</div>
+							</div>
+						
+						</div>
+						
+						<div class="row">
+							
+							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4" ng-if="vm.deviceForm.key && vm.deviceForm.key == 'devicePoolName'">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.devicePoolName.$touched && addDeviceForm.devicePoolName.$invalid, 'has-success': addDeviceForm.devicePoolName.$touched && addDeviceForm.devicePoolName.$valid }">
+									<label for="devicePoolName" class="control-label">Device Pool</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-server"></i></span>
+											<input type="text" ng-model='vm.deviceForm.devicePoolName' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="devicePoolName" placeholder="devicePoolName"  ng-minlength='8'>
+										</div>
+										<div ng-messages="addDeviceForm.devicePoolName.$dirty && addDeviceForm.devicePoolName.$error">
+												<div ng-message='required'> DeviceName is required </div>
+												<div ng-message='minlength'>Please enter a devicePoolName at least 8 chars long</div>
+												<div ng-message='maxlength'>devicePoolName entered cannot be longer than 12 chars</div>
+												
+										</div>
+									</div>
+								</div>
+							</div>
 						
 						</div>
 						

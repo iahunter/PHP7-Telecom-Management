@@ -18,16 +18,16 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmSiteScan::class,
         Commands\CallManager\CucmPhoneScan::class,
         Commands\CallManager\DidScanCucm::class,
-        
+
         Commands\CallManager\CucmPhoneScanOnDemand::class,
         Commands\CallManager\CucmPhoneSiteMove::class,
 
         Commands\CallManager\PhoneLineCSSReport::class,
         Commands\CallManager\CucmPhoneIPAddresses::class,
-		
-		// Cleanup
-		Commands\CallManager\CucmPhoneandNumberCleanup::class,
-		Commands\CallManager\CucmNumberCleanup::class,
+
+        // Cleanup
+        Commands\CallManager\CucmPhoneandNumberCleanup::class,
+        Commands\CallManager\CucmNumberCleanup::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 

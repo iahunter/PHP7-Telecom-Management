@@ -167,7 +167,7 @@ class CucmPhoneandNumberCleanup extends Command
                 // Delete the Phone
                 try {
                     $result = $this->cucm->delete_object_type_by_uuid($phone['uuid'], 'Phone');
-                    $results['phones'][$phone['name']] = $Phone;
+                    $results['phones'][$phone['name']] = $phone;
                 } catch (\Exception $e) {
                     echo 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
                     //dd($e->getTrace());

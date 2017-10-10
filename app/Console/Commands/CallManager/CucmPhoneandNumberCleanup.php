@@ -50,7 +50,7 @@ class CucmPhoneandNumberCleanup extends Command
 
         // Change this to true to run the cleanup after the report is generated.
         $rundelete = false;
-		$SEARCH = "available";
+        $SEARCH = 'available';
 
         try {
             $phones = $this->cucm->phone_search('description', "%{$SEARCH}%");

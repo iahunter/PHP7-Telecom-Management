@@ -94,7 +94,13 @@ angular
 					.then(function(res){
 						result = res.data.response;
 						
-
+						if(res.message == "Token has expired"){
+							vm.tokenexpired = true;
+							//alert("Token has expired, Please relogin");
+							//alert(res.message);
+							$state.go('logout');
+						}
+						
 						//console.log(result);
 
 						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 

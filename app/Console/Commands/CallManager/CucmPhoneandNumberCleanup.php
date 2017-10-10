@@ -49,10 +49,11 @@ class CucmPhoneandNumberCleanup extends Command
         $start = Carbon::now();
 
         // Change this to true to run the cleanup after the report is generated.
-        $rundelete = true;
+        $rundelete = false;
+		$SEARCH = "available";
 
         try {
-            $phones = $this->cucm->phone_search('description', '%available%');
+            $phones = $this->cucm->phone_search('description', "%{$SEARCH}%");
 
             if (! count($phones)) {
                 throw new \Exception('Indexed results from call mangler is empty');
@@ -112,7 +113,7 @@ class CucmPhoneandNumberCleanup extends Command
                         print_r($devices);
                     } else {
                         print_r($devices);
-                        $regex = '/available/';
+                        $regex = "/{$SEARCH}/";
                         if (preg_match($regex, strtolower($line_description))) {
                             echo "Match Found in {$line_description}".PHP_EOL;
                             $lines_to_delete[] = $line;

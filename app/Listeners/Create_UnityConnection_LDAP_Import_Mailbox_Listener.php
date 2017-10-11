@@ -41,12 +41,13 @@ class Create_UnityConnection_LDAP_Import_Mailbox_Listener implements ShouldQueue
         $USERNAME = $event->phone['username'];
         $DN = $event->phone['dn'];
         $TEMPLATE = $event->phone['template'];
+		$OVERRIDE = true;
 
         $CREATEDBY = $task->created_by;
 
         // Try to Do Work.
         try {
-            $LOG = Cupi::importLDAPUser($USERNAME, $DN, $TEMPLATE, $OVERRIDE = '');
+            $LOG = Cupi::importLDAPUser($USERNAME, $DN, $TEMPLATE, $OVERRIDE);
 
             // Update task to completed.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);
@@ -54,6 +55,7 @@ class Create_UnityConnection_LDAP_Import_Mailbox_Listener implements ShouldQueue
 
             // Create Log Entry
             \Log::info('createUnityMailboxLDAPUserListener', ['created_by' => $CREATEDBY, 'log' => $LOG]);
+			
         } catch (\Exception $e) {
             // Update the status with exception info.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'error', 'json' => $e->getMessage()]);

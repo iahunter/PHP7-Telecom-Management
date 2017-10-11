@@ -205,6 +205,16 @@ class Cupi extends Model
     {
         $verb = 'GET';
         $apiurl = '/import/users/ldap';
+        $query = ['query' => "(alias is {$alias})"];
+        $json = '';
+
+        return self::wrapapi($verb, $apiurl, $query);
+    }
+	
+	public static function searchLDAPUserbyAlias($alias)
+    {
+        $verb = 'GET';
+        $apiurl = '/import/users/ldap';
         $query = ['query' => "(alias startswith {$alias})"];
         $json = '';
 

@@ -210,8 +210,8 @@ class Cupi extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-	
-	public static function searchLDAPUserbyAlias($alias)
+
+    public static function searchLDAPUserbyAlias($alias)
     {
         $verb = 'GET';
         $apiurl = '/import/users/ldap';

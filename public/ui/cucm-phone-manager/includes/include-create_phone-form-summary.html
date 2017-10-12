@@ -15,8 +15,13 @@
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
-				<legend><h2>MACD Form Information</h2></legend>
-
+				<legend>
+					<h2>MACD Form Information</h2>
+					
+					
+				</legend>
+					<b class="pull-right">Add another phone for this site. <br>
+					<a href="#/sitestatusreports/{{vm.deviceForm.sitecode}}/phone/create"<button class="btn btn-primary btn-sm pull-right"><i class="glyphicon glyphicon-plus"></i> Phone</button></a></b>
 					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
 					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
 						<div class="row">

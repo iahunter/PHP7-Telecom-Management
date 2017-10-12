@@ -17,11 +17,9 @@
 			</script>
 				<legend>
 					<h2>MACD Form Information</h2>
-					
-					
 				</legend>
-					<b class="pull-right">Add another phone for this site. <br>
-					<a href="#/sitestatusreports/{{vm.deviceForm.sitecode}}/phone/create"<button class="btn btn-primary btn-sm pull-right"><i class="glyphicon glyphicon-plus"></i> Phone</button></a></b>
+					<span class="pull-right" style="color:red;">Add another phone to this site: <b>{{vm.deviceForm.sitecode}} </b></span><br>
+					<a href="#/sitestatusreports/{{vm.deviceForm.sitecode}}/phone/create"<button class="btn btn-primary btn-sm pull-right"><b><i class="glyphicon glyphicon-plus"></i> Phone</b></button></a>
 					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
 					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
 						<div class="row">

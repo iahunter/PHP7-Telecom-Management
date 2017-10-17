@@ -94,7 +94,7 @@ class West911EnableEGW extends Model
         // Telecom Management DB
         $counts = DB::table('cucmphone')
             ->select('cucmphone.erl', DB::raw('count(cucmphone.erl) as count'))
-			->where('deleted_at', '=', null)
+            ->where('deleted_at', '=', null)
             ->groupBy('erl')
             ->orderBy('count', 'DESC')
             ->get();

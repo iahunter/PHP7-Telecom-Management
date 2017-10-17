@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('Site.Migration.Summary.Controller', ['siteMigrationService', 'cucmReportService', 'siteService', 'cucmService', '$location', '$state', '$stateParams', function(siteMigrationService, cucmReportService, siteService, cucmService, $location, $state, $stateParams) {
+	.controller('Site.Migration.Summary.Controller', ['siteMigrationService', 'cucmReportService', 'siteService', 'telephonyService', 'cucmService', '$location', '$state', '$stateParams', function(siteMigrationService, cucmReportService, siteService, telephonyService, cucmService, $location, $state, $stateParams) {
 	
 		var vm = this;
 		
@@ -176,6 +176,17 @@ angular
 						}, function(err){
 							console.log(err)
 							alert(err);
+						});
+						
+						telephonyService.getDidblockbySitecode(vm.sitecode)
+							.then(function(res) {
+							//console.log(res)
+							vm.didblocks = res.data.didblocks;
+							//console.log(vm.didblocks);
+							console.log(vm.didblocks);
+
+						}, function(error) {
+							alert('An error occurred while getting user templates from unity connection')
 						});
 					}
 			});

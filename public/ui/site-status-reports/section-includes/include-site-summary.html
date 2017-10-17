@@ -160,6 +160,10 @@
 	
 		<div ng-if="vm.didblocks">
 			<h4><b># Number Blocks</b></h4>
+			<div style="margin:10px"></div>
+			<a ng-show="!vm.message && vm.permissions.create.Didblock" href="#/didblock/create" target="_blank" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Number Block</a>
+			<div style="margin:25px"></div>
+			
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 				<div class="table-responsive">    
 					<table class="table table-condensed table-striped table-bordered table-hover">

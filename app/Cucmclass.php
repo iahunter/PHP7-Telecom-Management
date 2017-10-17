@@ -222,11 +222,11 @@ class Cucmclass extends Model
         try {
             $REPLY = $cucm->add_object_type_by_assoc($PHONELINE, $TYPE);
 
-            // Reserve the DID in the database.
+            // Reserve the DID in the database by marking inuse
             if ($REPLY && \App\Did::where('number', $DN)->count()) {
                 $did = \App\Did::where('number', $DN)->first();
                 if ($did->status == 'available') {
-                    $did->status = 'reserved';
+                    $did->status = 'inuse';
                     $did->assignments = '';
                     $did->system_id = 'Reserved by MACD Tool';
                     $did->save();

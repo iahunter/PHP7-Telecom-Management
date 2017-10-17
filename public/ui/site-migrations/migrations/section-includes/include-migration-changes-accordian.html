@@ -1,14 +1,20 @@
 	<h3 ng-if="vm.migration.type">Migration Actions - Convert to Design Type {{vm.migration.type}}</h3>
 			<br>
-			<div ng-if="vm.migration.change_summary">
+			<div class="well" ng-if="vm.migration.change_summary"  style="background-color: white;">
 				<p><b>The following actions are needed in order to convert the site to the new design type.</b></p>
-				<ol>
+				<ul> <b><u>Gateway Tasks</u></b>
+					<li>Inspect the voice router if one exists for Translations, FXS/FXO ports, Oneoff Dial-Peers</li>
+				</ul>
+				<ol> <b><u>CUCM Migration Tasks</u></b>
 					<li>Add the new required objects. </li>
 					<li>Phone Updates to lines and phones. </li>
-					<li>Update Objects. </li>
+					<li>Update Objects. - <small style="color:red;">Service Affecting - Check Gateway for active calls - sh voice call status</small></li> 
 					<li>Review the ManualReview Objects to see if there are any manual changes required. </li>
-					<li>Delete old objects that are no longer required. </li>
+					<li>Delete old objects that are no longer required. - <small style="color:red;">Do this after the Porting is working - May be some dependencies that need to be manually removed.</small></li>
 				</ol>
+				<ul> <b><u>Gateway Tasks</u></b>
+					<li>Shutdown existing PRIs in the Gateway</li>
+				</ul>
 			</div>
 			<br>
 			<!--<hr>

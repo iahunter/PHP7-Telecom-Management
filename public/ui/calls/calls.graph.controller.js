@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('CallGraph.IndexController', ['CallService', '$interval', '$location', '$state', '$stateParams', '$scope', function(CallService, $interval, $location, $state, $stateParams, $scope) {
+	.controller('CallGraph.IndexController', ['CallService', 'cucmService', '$interval', '$location', '$state', '$stateParams', '$scope', function(CallService, cucmService, $interval, $location, $state, $stateParams, $scope) {
 		
 		var vm = this;
 		
@@ -19,6 +19,7 @@ angular
 		
 		dayscallstats();
 		weekscallstats();
+		daysgatewaycallstats();
 		
 		function dayscallstats() {
 			CallService.dayscallstats()
@@ -256,7 +257,7 @@ angular
 				// Enable the Options to be generated for the chart. 
 				vm.callgraph.chartoptions = { responsive: true, legend: { display: true}, title: {display:false, text:'SBC Call Summary'}};
 				
-				//console.log(vm.callgraph);
+				console.log(vm.callgraph);
 
 				return vm.calls;
 				
@@ -264,6 +265,172 @@ angular
 				//Error
 			});
 			
+		/*
+		// Cisco Gateway Call Stats
+		function daysgatewaycallstats() {
+			cucmService.daysgatewaycallstats()
+				.then(function(res){
+					
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						//console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							//alert(vm.message);
+							$state.go('logout');
+						}
+						vm.error = true;
+						return vm.message;
+					}
+
+					vm.calls = res.data.result;
+
+					vm.daysgatewaycallgraph = {};
+					
+					//console.log(block.stats);
+					vm.daysgatewaycallgraph['chartlabels'] = [];
+					vm.daysgatewaycallgraph['chartdata'] = [];
+					vm.daysgatewaycallgraph['chartseries'] = [];
+					
+					vm.sbcs = [];
+					//vm.sbcs['totalCalls'] = [];
+					
+					angular.forEach(vm.calls, function(key, value) {
+						//vm.sbcs['totalCalls'].push(key.totalCalls);
+						//console.log(key.stats);
+						angular.forEach(key.stats, function(k, v) {
+							
+							// Create the SBC arrays for individual call counts. 
+							if (vm.sbcs[v]){
+								vm.sbcs[v].push(k);
+							}else{
+								vm.sbcs[v] = [];
+								vm.sbcs[v].push(k);
+							}
+						});
+						
+						// Change time to local time. 
+						var dateString = key.created_at;
+						var created_at = moment().utc().format(dateString);
+						created_at = moment.utc(created_at).toDate();
+						key.created_at = created_at.toLocaleString()
+						
+						// Push date and time onto callgraph array for x axis labels. 
+						vm.daysgatewaycallgraph['chartlabels'].push(key.created_at);
+					});
+					
+					// Push data onto the chartgraph array
+					for (key in vm.sbcs){
+						//console.log(key);
+						var value = vm.sbcs[key];
+						//console.log(value);
+						vm.daysgatewaycallgraph['chartseries'].push(key);
+						vm.daysgatewaycallgraph['chartdata'].push(value);
+					}
+					
+					// Enable the Options to be generated for the chart. 
+					vm.daysgatewaycallgraph.chartoptions = { responsive: true, legend: { display: true}, title: {display:false, text:'H323 Gateway Call Summary'}};
+					
+					console.log(vm.daysgatewaycallgraph);
+
+					return vm.calls;
+					
+				}, function(err){
+					//Error
+				});
+		}
+		
+		*/
+		
+		// Cisco Gateway Call Stats
+		function daysgatewaycallstats() {
+			cucmService.daysgatewaycallstats()
+				.then(function(res){
+					
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						//console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							//alert(vm.message);
+							$state.go('logout');
+						}
+						vm.error = true;
+						return vm.message;
+					}
+
+					vm.calls = res.data.result;
+
+					vm.daysgatewaycallgraph = {};
+					
+					//console.log(block.stats);
+					vm.daysgatewaycallgraph['chartlabels'] = [];
+					vm.daysgatewaycallgraph['chartdata'] = [];
+					vm.daysgatewaycallgraph['chartseries'] = [];
+					
+					vm.sbcs = [];
+					vm.sbcs['totalCalls'] = [];
+
+					angular.forEach(vm.calls, function(key, value) {
+						
+						//console.log(key)
+						//console.log(value)
+						
+						
+						//var series = "totalCalls";
+						//vm.daysgatewaycallgraph['chartseries'].push(series);
+						
+						vm.sbcs['totalCalls'].push(key.totalCalls);
+						//console.log(key.stats);
+						
+						/*
+						angular.forEach(key.stats, function(k, v) {
+							
+							// Create the SBC arrays for individual call counts. 
+							if (vm.sbcs[v]){
+								vm.sbcs[v].push(k);
+							}else{
+								vm.sbcs[v] = [];
+								vm.sbcs[v].push(k);
+							}
+						});
+						*/
+						// Change time to local time. 
+						var dateString = key.created_at;
+						var created_at = moment().utc().format(dateString);
+						created_at = moment.utc(created_at).toDate();
+						key.created_at = created_at.toLocaleString()
+						
+						// Push date and time onto callgraph array for x axis labels. 
+						vm.daysgatewaycallgraph['chartlabels'].push(key.created_at);
+					});
+					
+					// Push data onto the chartgraph array
+					for (key in vm.sbcs){
+						//console.log(key);
+						var value = vm.sbcs[key];
+						//console.log(value);
+						vm.daysgatewaycallgraph['chartseries'].push(key);
+						vm.daysgatewaycallgraph['chartdata'].push(value);
+					}
+					
+					// Enable the Options to be generated for the chart. 
+					vm.daysgatewaycallgraph.chartoptions = { responsive: true, legend: { display: true}, title: {display:false, text:'H323 Gateway Call Summary'}};
+					console.log("gateway")
+					console.log(vm.daysgatewaycallgraph);
+
+					return vm.calls;
+					
+				}, function(err){
+					//Error
+				});
+		}
 		
 
 			

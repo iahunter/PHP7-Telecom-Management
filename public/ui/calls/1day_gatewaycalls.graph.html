@@ -1,0 +1,18 @@
+<!--Print Chart-->
+
+<div class="container" ng-if="!vm.error" div ng-controller="CallGraph.IndexController as vm">
+	<div class="panel panel-default"  style="box-shadow: 1px 1px 5px grey;" ng-if="vm.daysgatewaycallgraph">
+		<div class="panel-heading"><h4><b>24hr - Cisco Gateway Call Summary</b></h4></div>
+		
+		<div >
+			<canvas id="daycalls" class="chart chart-line chart-xs"
+				chart-series="vm.daysgatewaycallgraph.chartseries" 
+				chart-data="vm.daysgatewaycallgraph.chartdata" 
+				chart-labels="vm.daysgatewaycallgraph.chartlabels"
+				chart-options="vm.daysgatewaycallgraph.chartoptions">
+			</canvas> 
+		</div>
+	</div>
+</div>
+
+<div style="margin:25px"></div>

@@ -53,6 +53,7 @@ $api->version('v1', function ($api) {
     require __DIR__.'/api.cucm.ctiroutepoint.php';
     require __DIR__.'/api.cucm.line.php';
     require __DIR__.'/api.cucm.site.migration.php';
+	
 
     // CUCM Realtime API Routes
     require __DIR__.'/api.cucm.ris.php';
@@ -75,6 +76,10 @@ $api->version('v1', function ($api) {
 
     // SBC Call History
     require __DIR__.'/api.calls.php';
+	
+	// Gateway Call History
+	require __DIR__.'/api.cucm.gatewaycalls.php';
+
 
     // CUCM Reports
     require __DIR__.'/api.cucmreports.php';

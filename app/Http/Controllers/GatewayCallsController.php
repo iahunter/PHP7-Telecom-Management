@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\GatewayCalls;
 use Carbon\Carbon;
+use App\GatewayCalls;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Cache;
@@ -193,7 +193,6 @@ class GatewayCallsController extends Controller
             $date = Carbon::parse($call['created_at']);
             $date = $date->toDateString();
 
-
             if (isset($stats[$date])) {
                 if ($stats[$date]['totalGatewayCalls'] >= $call['totalGatewayCalls']) {
                     continue;
@@ -248,7 +247,6 @@ class GatewayCallsController extends Controller
             $date = $call['created_at'];
             $date = Carbon::parse($call['created_at']);
             $date = $date->toDateString();
-
 
             if (isset($stats[$date])) {
                 if ($stats[$date]['totalGatewayCalls'] >= $call['totalGatewayCalls']) {

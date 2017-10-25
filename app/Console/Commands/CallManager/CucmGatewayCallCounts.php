@@ -20,7 +20,7 @@ class CucmGatewayCallCounts extends Command
      *
      * @var string
      */
-    protected $description = 'Get Active Call Counts from each Gateway via SSH';
+    protected $description = 'Get Active Call Counts from each Cisco Voice Router via SSH and store in DB';
 
     /**
      * Create a new command instance.
@@ -47,6 +47,7 @@ class CucmGatewayCallCounts extends Command
     {
         $start = \Carbon\Carbon::now();
 
+		// Get H323 Gateways from CUCM AXL
         try {
             $gateways = $this->cucm->get_object_type_by_site('%', 'H323Gateway');
         } catch (\Exception $e) {
@@ -91,7 +92,7 @@ class CucmGatewayCallCounts extends Command
                 $ssh->connect()->exec('term len 0');
                 echo "Connected to {$gateway}...".PHP_EOL;
                 // to collect output as a string
-                $ssh->timeout = 50;
+                $ssh->timeout = 100;
                 $command = 'sh voice call status';
                 echo "Executing '{$command}' ...".PHP_EOL;
                 $output = $ssh->exec($command);
@@ -129,6 +130,7 @@ class CucmGatewayCallCounts extends Command
         echo "Started at: {$start}".PHP_EOL;
         echo "Completed at {$end}".PHP_EOL;
 
+		// Store Call Counts in the DB
         \App\GatewayCalls::create(['totalCalls' => $calls['total'], 'stats' => $calls]);
     }
 }

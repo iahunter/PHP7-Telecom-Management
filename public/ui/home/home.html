@@ -41,12 +41,15 @@
 					<ng-include src="'calls/7day_calls.graph.html'"></ng-include>
 				</div>
 				<div class="col-lg-6 col-lg-offset-0" ng-if="vm.permissions.read.Sonus5k == true">
-					<ng-include src="'calls/calls.graph.html'"></ng-include>
+					<ng-include src="'calls/7day_gatewaycalls.graph.html'"></ng-include>
 				</div>
 			</div>
 		</div>
 		<div ng-if="vm.permissions.read.Calls">
 			<div  class="row">
+				<div class="col-lg-6 col-lg-offset-0" ng-if="vm.permissions.read.Sonus5k == true">
+					<ng-include src="'calls/calls.graph.html'"></ng-include>
+				</div>
 				<div class="col-lg-6 col-lg-offset-0" ng-if="vm.permissions.read.Sonus5kCDR == true">
 					<ng-include src="'sonus-cdrs/attemptsummary.graph.html'"></ng-include>
 				</div>

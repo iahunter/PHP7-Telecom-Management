@@ -20,6 +20,7 @@ angular
 		dayscallstats();
 		weekscallstats();
 		daysgatewaycallstats();
+		weeksgatewaycallstats();
 		
 		function dayscallstats() {
 			CallService.dayscallstats()
@@ -379,28 +380,9 @@ angular
 
 					angular.forEach(vm.calls, function(key, value) {
 						
-						//console.log(key)
-						//console.log(value)
-						
-						
-						//var series = "totalCalls";
-						//vm.daysgatewaycallgraph['chartseries'].push(series);
-						
 						vm.sbcs['totalCalls'].push(key.totalCalls);
 						//console.log(key.stats);
-						
-						/*
-						angular.forEach(key.stats, function(k, v) {
-							
-							// Create the SBC arrays for individual call counts. 
-							if (vm.sbcs[v]){
-								vm.sbcs[v].push(k);
-							}else{
-								vm.sbcs[v] = [];
-								vm.sbcs[v].push(k);
-							}
-						});
-						*/
+
 						// Change time to local time. 
 						var dateString = key.created_at;
 						var created_at = moment().utc().format(dateString);
@@ -432,6 +414,86 @@ angular
 				});
 		}
 		
+		var pulldaysgatewaycallstats = $interval(daysgatewaycallstats,600000); 
+		
+		$scope.$on('$destroy', function() {
+			//console.log($scope);
+            $interval.cancel(pulldaysgatewaycallstats);
+		});
+		
+		
+		
+		function weeksgatewaycallstats() {
+			cucmService.weeksgatewaycallstats()
+				.then(function(res){
+					
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						//console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							//alert(vm.message);
+							$state.go('logout');
+						}
+						vm.error = true;
+						return vm.message;
+					}
+
+					vm.calls = res.data.result;
+
+					vm.weeksgatewaycallgraph = {};
+					
+					//console.log(block.stats);
+					vm.weeksgatewaycallgraph['chartlabels'] = [];
+					vm.weeksgatewaycallgraph['chartdata'] = [];
+					vm.weeksgatewaycallgraph['chartseries'] = [];
+					
+					vm.sbcs = [];
+					vm.sbcs['totalCalls'] = [];
+					
+					angular.forEach(vm.calls, function(key, value) {
+						vm.sbcs['totalCalls'].push(key.totalCalls);
+
+						// Change time to local time. 
+						var dateString = key.created_at;
+						var created_at = moment().utc().format(dateString);
+						created_at = moment.utc(created_at).toDate();
+						key.created_at = created_at.toLocaleString()
+						
+						// Push date and time onto callgraph array for x axis labels. 
+						vm.weeksgatewaycallgraph['chartlabels'].push(key.created_at);
+					});
+					
+					// Push data onto the chartgraph array
+					for (key in vm.sbcs){
+						//console.log(key);
+						var value = vm.sbcs[key];
+						//console.log(value);
+						vm.weeksgatewaycallgraph['chartseries'].push(key);
+						vm.weeksgatewaycallgraph['chartdata'].push(value);
+					}
+					
+					// Enable the Options to be generated for the chart. 
+					vm.weeksgatewaycallgraph.chartoptions = { responsive: true, legend: { display: true}, title: {display:false, text:'SBC Call Summary'}};
+					
+					//console.log(vm.weeksgatewaycallgraph);
+
+					return vm.calls;
+				
+				}, function(err){
+					//Error
+				});
+		}
+		
+		var pullweeksgatewaycallstats = $interval(weeksgatewaycallstats,600000); 
+		
+		$scope.$on('$destroy', function() {
+			//console.log($scope);
+            $interval.cancel(pullweeksgatewaycallstats);
+		});
 
 			
 	}]);

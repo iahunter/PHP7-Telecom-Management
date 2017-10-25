@@ -1560,10 +1560,6 @@ class CucmSiteMigration extends Cucm
                     $CSS = $line['shareLineAppearanceCssName']['_'];
                     $ARRAY = explode('_', $CSS);
 
-                    if ($line['routePartitionName']['_'] != 'Global-All-Lines') {
-                        $this->REVIEW_OBJECTS['Line'][] = $line;
-                        continue;
-                    }
 
                     // Skip 911 related CTI Route Patterns so we don't break something regarding E911.
                     if ($line['pattern'] == '911' || $line['pattern'] == '9.911' || $line['pattern'] == '*911' || $line['pattern'] == '*912') {
@@ -1573,15 +1569,12 @@ class CucmSiteMigration extends Cucm
 
                     $DATA['pattern'] = $line['pattern'];
                     $DATA['description'] = $line['description'];
-                    $DATA['routePartitionName'] = $line['routePartitionName']['_'];
-
-                    // Look at the partition for nonstandard lines.
-                    if ($line['routePartitionName']['_'] != 'Global-All-Lines') {
-                        $this->REVIEW_OBJECTS['Line'][] = $line;
-                        continue;
-                    }
-
-                    $DATA['e164AltNum'] = [
+					$DATA['routePartitionName'] = $line['routePartitionName']['_'];
+					
+					
+                    $match = "/^#/";
+					if(!preg_match($match, $line['pattern'])){
+						$DATA['e164AltNum'] = [
                                     'numMask'                     => "+1{$line['pattern']}",
                                     'isUrgent'                    => 'true',
                                     'addLocalRoutePartition'      => 'true',
@@ -1589,6 +1582,10 @@ class CucmSiteMigration extends Cucm
                                     'active'                      => 'true',
                                     'advertiseGloballyIls'        => 'true',
                                 ];
+					}
+					
+
+                    
 
                     if (! in_array('LINEONLY', $ARRAY)) {
                         $DATA['shareLineAppearanceCssName'] = 'CSS_LINEONLY_L4_INTL';
@@ -1653,6 +1650,18 @@ class CucmSiteMigration extends Cucm
                         $DATA['callForwardNotRegisteredInt']['callingSearchSpaceName'] = "CSS_{$SITE}_DEVICE";
                         $UPDATE = true;
                     }
+					
+					if ($line['routePartitionName']['_'] == "PT_{$SITE}_XLATE") {
+                        $this->SKIP_OBJECTS['Line'][] = $line;
+                        continue;
+					}elseif ($line['routePartitionName']['_'] == "PT_{$SITE}_SVC") {
+						$this->SKIP_OBJECTS['Line'][] = $line;
+                        continue;
+					}
+					elseif ($line['routePartitionName']['_'] != 'Global-All-Lines') {
+                        $this->REVIEW_OBJECTS['Line'][] = $line;
+                        continue;
+					}
 
                     if ($UPDATE) {
                         $this->UPDATE_OBJECTS['Line'][$line['pattern']] = $DATA;

@@ -17,8 +17,8 @@ class AddIndexes extends Migration
         Schema::table('gateway_calls', function (Blueprint $table) {
             $table->index('created_at');                                       // Time Stamps
         });
-		
-		// Site Code Table
+
+        // Site Code Table
         Schema::table('sbc_calls', function (Blueprint $table) {
             $table->index('created_at');                                       // Time Stamps
         });
@@ -32,10 +32,8 @@ class AddIndexes extends Migration
     public function down()
     {
         //
-		Schema::table('gateway_calls', function (Blueprint $table) {
+        Schema::table('gateway_calls', function (Blueprint $table) {
             $table->dropIndex('created_at');                                       // Time Stamps
         });
-		
-
     }
 }

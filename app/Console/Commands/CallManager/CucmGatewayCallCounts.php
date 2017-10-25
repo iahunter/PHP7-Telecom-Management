@@ -47,7 +47,7 @@ class CucmGatewayCallCounts extends Command
     {
         $start = \Carbon\Carbon::now();
 
-		// Get H323 Gateways from CUCM AXL
+        // Get H323 Gateways from CUCM AXL
         try {
             $gateways = $this->cucm->get_object_type_by_site('%', 'H323Gateway');
         } catch (\Exception $e) {
@@ -130,7 +130,7 @@ class CucmGatewayCallCounts extends Command
         echo "Started at: {$start}".PHP_EOL;
         echo "Completed at {$end}".PHP_EOL;
 
-		// Store Call Counts in the DB
+        // Store Call Counts in the DB
         \App\GatewayCalls::create(['totalCalls' => $calls['total'], 'stats' => $calls]);
     }
 }

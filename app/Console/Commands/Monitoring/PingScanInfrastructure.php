@@ -33,7 +33,7 @@ class PingScanInfrastructure extends Command
     {
         parent::__construct();
         // Construct new cucm object
-        $this->cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
@@ -47,6 +47,7 @@ class PingScanInfrastructure extends Command
      */
     public function handle()
     {
+		
         $hosts = TelecomInfrastructure::all();
 
         foreach ($hosts as $host) {
@@ -61,7 +62,7 @@ class PingScanInfrastructure extends Command
             }
 
             $host_status = Ping::pinghost($ip);
-
+			//print_r($host_status);
             $i = 1;
             while ($host_status['result'] != 'echo reply' && $i < 5) {
                 $i++;

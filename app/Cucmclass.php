@@ -34,7 +34,7 @@ class Cucmclass extends Model
     public static function wrap_add_phone_object($DATA, $TYPE)
     {
         // Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
@@ -106,7 +106,7 @@ class Cucmclass extends Model
         }
 
         // Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
@@ -254,7 +254,7 @@ class Cucmclass extends Model
     public static function updatePhoneSite($NAME, $SITE)
     {
         // Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
@@ -346,7 +346,7 @@ class Cucmclass extends Model
         }
 
         // Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
@@ -487,7 +487,7 @@ class Cucmclass extends Model
                                             ) {
 
         // Construct new cucm object
-        $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')

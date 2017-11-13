@@ -87,7 +87,7 @@ class DidScanCucm extends Command
 
         //echo 'Getting Number: '.$number.' from CUCM...'.PHP_EOL;
         try {
-            $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+            $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
@@ -127,7 +127,7 @@ class DidScanCucm extends Command
     {
         echo 'Getting NAPNXX: '.$npanxx.' numbers from CUCM...'.PHP_EOL;
         try {
-            $cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+            $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')

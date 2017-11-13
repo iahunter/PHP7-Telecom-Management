@@ -32,7 +32,7 @@ class CucmSiteScan extends Command
     public function __construct()
     {
         // Construct new cucm object
-        $this->cucm = new \CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')

@@ -47,7 +47,6 @@ class PingScanInfrastructure extends Command
      */
     public function handle()
     {
-		
         $hosts = TelecomInfrastructure::all();
 
         foreach ($hosts as $host) {
@@ -62,7 +61,7 @@ class PingScanInfrastructure extends Command
             }
 
             $host_status = Ping::pinghost($ip);
-			//print_r($host_status);
+            //print_r($host_status);
             $i = 1;
             while ($host_status['result'] != 'echo reply' && $i < 5) {
                 $i++;

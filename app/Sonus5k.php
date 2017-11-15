@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
+use GuzzleHttp\Psr7;
 
 class Sonus5k extends Model
 {
@@ -27,6 +28,12 @@ class Sonus5k extends Model
         if ($verb == 'POST') {
             $headers['data'] = $data;
         }
+		
+		try {
+			$apiRequest = $client->request($verb, $apiurl, $headers);
+		} catch (\Exception $e) {
+				return $e->getMessage();
+		}
 
         $apiRequest = $client->request($verb, $apiurl, $headers);
 

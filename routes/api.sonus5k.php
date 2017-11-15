@@ -1,6 +1,6 @@
 <?php
 
-	/**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/activecallcounts",
      *     tags={"Management - Sonus - Monitoring"},

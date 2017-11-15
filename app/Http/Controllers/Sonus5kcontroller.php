@@ -28,10 +28,10 @@ class Sonus5kcontroller extends Controller
                         env('SONUS2'),
                         ];
     }
-	
-	public function getactivecallcounts(Request $request)
-	{
-		$user = JWTAuth::parseToken()->authenticate();
+
+    public function getactivecallcounts(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
         if (! $user->can('read', Sonus5k::class)) {
             abort(401, 'You are not authorized');
@@ -43,12 +43,13 @@ class Sonus5kcontroller extends Controller
         // Check if calls exist in cache. If not then move on.
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
-			
+
             $cache = Cache::get($key);
-			$cache['cache'] = true;
-			return $cache; 
+            $cache['cache'] = true;
+
+            return $cache;
         }
-		
+
         $totalCalls = 0;
         $STATS = [];
         foreach ($this->SBCS as $SBC) {
@@ -60,7 +61,7 @@ class Sonus5kcontroller extends Controller
         }
         $CALLS['totalCalls'] = $totalCalls;
         $CALLS['stats'] = $STATS;
-		
+
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
         $time = Carbon::now()->addSeconds(7);
         Cache::put($key, $CALLS, $time);
@@ -76,18 +77,18 @@ class Sonus5kcontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-		
         // Name of Cache key.
         $key = 'listactivecalls';
-		
+
         // Check if calls exist in cache. If not then move on.
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             $cache = Cache::get($key);
-			$cache['cache'] = true;
-			return $cache; 
+            $cache['cache'] = true;
+
+            return $cache;
         }
-		
+
         //Log::info(__METHOD__.' Did not Use Cache');
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
@@ -108,8 +109,6 @@ class Sonus5kcontroller extends Controller
         if (! $user->can('read', Sonus5k::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		
 
         // Name of Cache key.
         $key = 'listcallDetailStatus';
@@ -118,14 +117,15 @@ class Sonus5kcontroller extends Controller
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             $cache = Cache::get($key);
-			$cache['cache'] = true;
-			return $cache; 
+            $cache['cache'] = true;
+
+            return $cache;
         }
         //Log::info(__METHOD__.' Did not Use Cache');
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
             $calls = Sonus5k::listcallDetailStatus($SBC);
-			//print_r(count($calls));
+            //print_r(count($calls));
             $return = [];
             $calls = (array) $calls['sonusActiveCall:callDetailStatus'];
             //return $calls;
@@ -137,7 +137,6 @@ class Sonus5kcontroller extends Controller
             }
 
             $CALLS[$SBC] = $return;
-			
         }
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
@@ -163,10 +162,9 @@ class Sonus5kcontroller extends Controller
 
     public function merge_calldetails_with_mediadetails($request)
     {
-		// This can be very taxing on the SBC CPU. Not recommended using in production. Sonus limits the result to 100 records. 
-		
-		
-         // Name of Cache key.
+        // This can be very taxing on the SBC CPU. Not recommended using in production. Sonus limits the result to 100 records.
+
+        // Name of Cache key.
         $cache_key = 'merge_calldetails_with_mediadetails';
 
         // Check if calls exist in cache. If not then move on.
@@ -174,8 +172,9 @@ class Sonus5kcontroller extends Controller
             //Log::info(__METHOD__.' Used Cache');
             //print "returned cache".PHP_EOL;
             $cache = Cache::get($cache_key);
-			$cache['cache'] = true;
-			return $cache; 
+            $cache['cache'] = true;
+
+            return $cache;
         } else {
             //Log::info(__METHOD__.' Did not Use Cache');
             $RETURN = [];
@@ -192,12 +191,10 @@ class Sonus5kcontroller extends Controller
                 $indexedMedia = $this->indexAssocByKey($media, 'GCID');
                 //return $indexedMedia;
                 foreach ($indexedCalls as $key => $value) {
-
-					if (array_key_exists($key, $indexedMedia)){
-						// Merge our Call Details and our Media Details into a single array for each GCID.
-						$callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
-					}
-
+                    if (array_key_exists($key, $indexedMedia)) {
+                        // Merge our Call Details and our Media Details into a single array for each GCID.
+                        $callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
+                    }
                 }
                 // Add the original key back on so the UI doesn't get jacked up.
                 if ($callsMedia) {
@@ -234,7 +231,6 @@ class Sonus5kcontroller extends Controller
                 }
             }
 
-            
             $time = Carbon::now()->addSeconds(30);
             Cache::put($cache_key, $RETURN, $time);
 
@@ -252,26 +248,23 @@ class Sonus5kcontroller extends Controller
 
         $RETURN = $this->merge_calldetails_with_mediadetails($request);
 
-		if($RETURN){
-			// Cache Calls for 15 seconds - Put the $CALLS as value of cache.
-			$count = count($RETURN); 
-			$nulls = 0; 
-			foreach($RETURN as $SBC => $VALUE){
-				if($VALUE == null){
-					$count++; 
-				}
-			}
-			if ($nulls == $count){
-				return "No results found."; 
-			}else{
-				return $RETURN;
-			}
-		}else{
-			throw new \Exception("Nothing Returned..."); 
-		}
-		
-			
-        
+        if ($RETURN) {
+            // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
+            $count = count($RETURN);
+            $nulls = 0;
+            foreach ($RETURN as $SBC => $VALUE) {
+                if ($VALUE == null) {
+                    $count++;
+                }
+            }
+            if ($nulls == $count) {
+                return 'No results found.';
+            } else {
+                return $RETURN;
+            }
+        } else {
+            throw new \Exception('Nothing Returned...');
+        }
     }
 
     public function listcallMediaStatus(Request $request)
@@ -289,8 +282,9 @@ class Sonus5kcontroller extends Controller
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             $cache = Cache::get($key);
-			$cache['cache'] = true;
-			return $cache; 
+            $cache['cache'] = true;
+
+            return $cache;
         }
         //Log::info(__METHOD__.' Did not Use Cache');
         $CALLS = [];
@@ -321,8 +315,9 @@ class Sonus5kcontroller extends Controller
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             $cache = Cache::get($key);
-			$cache['cache'] = true;
-			return $cache; 
+            $cache['cache'] = true;
+
+            return $cache;
         }
 
         $CALLS = [];

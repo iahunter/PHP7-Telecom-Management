@@ -47,9 +47,26 @@ angular
 			vm.loading = true;
 			var numbers = {};
 			numbers['blocks'] = "";
-			numbers['blocks'] = form.blocks.split("\n");
+			//numbers['blocks'] = form.blocks.split("\n");
 			numbers['delimiter'] = vm.selectedOption.name;
 			
+			
+			var blocks = form.blocks.split("\n");
+			console.log("Blocks")
+			var format = [];
+			for(i in blocks){
+				var v = blocks[i];
+				format.push(v.replace(/[()-]/g, ""));
+			}
+			
+			console.log(format)
+
+			numbers['blocks'] = format
+			numbers['delimiter'] = vm.selectedOption.name;
+
+			console.log(numbers);
+			
+			vm.count = 0;
 			
 			console.log(numbers);
 			

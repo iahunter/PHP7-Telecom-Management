@@ -127,7 +127,6 @@
 					<tr ng-repeat="number in vm.numberstable | orderBy:sortType:sortReverse | filter:vm.search: strict">
 						<td><a href="#/didblock/{{number.details.parent}}"><b>{{number.details.parent}}</b></td>
 						<td><a href="#/line/{{number.number}}" target="_blank"><b>{{number.number}}</b></a></td> 
-						<td>{{number.number}}</td> 
 						<td>{{number.details.status}}</td> 
 						<td ng-if="vm.showassignments">
 						<!--Nested Table inside Row-->

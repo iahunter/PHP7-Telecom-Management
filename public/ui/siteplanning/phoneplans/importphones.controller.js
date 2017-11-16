@@ -14,7 +14,6 @@ angular
 		
 		var id = $stateParams.id;
 		
-		vm.getpage = PageService.getpage('importIntoPhonePlan-' + id)
 		
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
@@ -149,7 +148,9 @@ angular
 					}
 				}
 				
-				phonearray['dn'] = phones[phone][5];
+				//phonearray['dn'] = phones[phone][5];
+				phonearray['dn'] = phones[phone][5].replace(/[()-]/g, "");
+				
 				phonearray['language'] = phones[phone][6];
 				
 				phonearray['language'] = phonearray['language'].trim()

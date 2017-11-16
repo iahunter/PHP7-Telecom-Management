@@ -36,8 +36,12 @@ angular
 			vm.loading = true;
 			var numbers = form.numbers.trim();
 			
+			
+			
 			numbers = numbers.replace(/(\r\n|\n|\r)/gm,",");
 			//console.log(numbers);
+			
+			numbers = numbers.replace(/[()-]/g, "");
 			
 			var numbers = numbers.split(',');
 			//console.log(numbers);

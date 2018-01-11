@@ -208,7 +208,7 @@ class DidScanCucm extends Command
                     $did->assignments = $didinfo[$did->number];
                     $did->status = 'inuse';
                     $did->system_id = 'CUCM-Enterprise-Cluster';
-                    // OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
+                // OTHERWISE if the number is NOT in the CUCM results, set it as AVAILABLE
                 } else {
                     $did->assignments = null;
                     $did->status = 'available';
@@ -256,7 +256,7 @@ class DidScanCucm extends Command
                     //return $numberusage;
                     if ($numberusage['status'] == 'inuse') {
                         continue;
-                        //unset($numbers[$number['uuid']]);
+                    //unset($numbers[$number['uuid']]);
                         //return $number['pattern'];
                     } else {
                         unset($numbers[$number['uuid']]);

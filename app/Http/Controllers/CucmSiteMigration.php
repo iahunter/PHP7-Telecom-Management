@@ -118,7 +118,7 @@ class CucmSiteMigration extends Cucm
 
         if (isset($request->srstip) && $request->srstip && ! filter_var($request->srstip, FILTER_VALIDATE_IP)) {
             throw new \Exception('Error: SRST invalid');
-            //return 'Error: SRST invalid';
+        //return 'Error: SRST invalid';
         } elseif (isset($request->srstip) && $request->srstip) {
             $SRSTIP = $request->srstip;
         } else {
@@ -2063,7 +2063,7 @@ class CucmSiteMigration extends Cucm
 
             //echo 'Saving Site with current config...'.PHP_EOL;
             $phone->save();
-            //echo 'Saved '.$newphone['name'].PHP_EOL;
+        //echo 'Saved '.$newphone['name'].PHP_EOL;
         } else {
             // Create Phone
             //echo 'Creating Phone: '.$newphone['name'].PHP_EOL;

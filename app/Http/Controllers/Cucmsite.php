@@ -128,7 +128,7 @@ class Cucmsite extends Cucm
         // If the SRST IP is set, has contents, and validates as an IP address
         if (isset($request->srstip) && ! filter_var($request->srstip, FILTER_VALIDATE_IP)) {
             throw new \Exception('Error: SRST invalid');
-            //return 'Error: SRST invalid';
+        //return 'Error: SRST invalid';
         } elseif (isset($request->srstip)) {
             $SRSTIP = $request->srstip;
         } else {
@@ -227,11 +227,11 @@ class Cucmsite extends Cucm
         if (substr($SITECODE, 0, 2) == 'KHO') {
             $CUCM1 = 'KHONEMDCVCS02';
             $CUCM2 = 'KHONESDCVCS06';
-            // Otherwise if they are KOS, dump them there
+        // Otherwise if they are KOS, dump them there
         } elseif (substr($SITECODE, 0, 2) == 'KOS') {
             $CUCM1 = 'KHONESDCVCS04';
             $CUCM2 = 'KHONEMDCVCS05';
-            // Otherwise if they are EAST or CENTRAL time
+        // Otherwise if they are EAST or CENTRAL time
         } elseif (preg_match('/(eastern|central)+/i', $TIMEZONE)) {
             $CUCM1 = 'KHONEMDCVCS01';
             $CUCM2 = 'KHONESDCVCS06';

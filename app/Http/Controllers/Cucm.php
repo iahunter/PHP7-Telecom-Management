@@ -631,7 +631,7 @@ class Cucm extends Controller
                             $MEMBER['name'] = $partition['routePartitionName']['_'];
                             $MEMBER['index'] = $partition['index'];
 
-                            //echo $partition['routePartitionName']['_'];
+                        //echo $partition['routePartitionName']['_'];
                         } else {
                             return $RESULTS;
                         }

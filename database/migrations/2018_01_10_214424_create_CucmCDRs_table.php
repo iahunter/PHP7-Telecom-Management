@@ -17,26 +17,26 @@ class CreateCucmCDRsTable extends Migration
             $table->increments('id');
             $table->integer('globalCallID_callId');
             $table->integer('dateTimeConnect');
-			$table->integer('dateTimeDisconnect');
-			$table->integer('duration');
-			
+            $table->integer('dateTimeDisconnect');
+            $table->integer('duration');
+
             $table->string('callingPartyNumber');
             $table->string('originalCalledPartyNumber');
-			$table->string('finalCalledPartyNumber');
-			$table->string('origDeviceName');
-			$table->string('destDeviceName');
+            $table->string('finalCalledPartyNumber');
+            $table->string('origDeviceName');
+            $table->string('destDeviceName');
 
-			$table->string('origIpv4v6Addr');
-			$table->string('destIpv4v6Addr');
-			
-			$table->string('originalCalledPartyPattern');
-			$table->string('finalCalledPartyPattern');
-			$table->string('lastRedirectingPartyPattern');
+            $table->string('origIpv4v6Addr');
+            $table->string('destIpv4v6Addr');
 
-			$table->json('raw')->nullable();
+            $table->string('originalCalledPartyPattern');
+            $table->string('finalCalledPartyPattern');
+            $table->string('lastRedirectingPartyPattern');
+
+            $table->json('raw')->nullable();
             $table->json('cdr_json')->nullable();                       // JSON Custom Field Data
 
-			$table->timestamps();                                   // Time Stamps
+            $table->timestamps();                                   // Time Stamps
         });
 
         //DB::update('ALTER TABLE acme_accounts AUTO_INCREMENT = 10;');

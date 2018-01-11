@@ -75,7 +75,7 @@ class PhoneMACDController extends Controller
             // Testing of Events Controller
             event(new Create_Line_Event($data));
 
-            // Build new line first and then chain to add the phone if a new line is required.
+        // Build new line first and then chain to add the phone if a new line is required.
         } elseif (isset($phone['usenumber']) && $phone['usenumber'] == 'existing') {
             $result = $this->cucm->get_route_plan_by_name($phone['dn']);
 

@@ -29,6 +29,9 @@ class Kernel extends ConsoleKernel
         // Cleanup
         Commands\CallManager\CucmPhoneandNumberCleanup::class,
         Commands\CallManager\CucmNumberCleanup::class,
+		
+		// CDRs
+		Commands\CallManager\GetCucmCDRs::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 

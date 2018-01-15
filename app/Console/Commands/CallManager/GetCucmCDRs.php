@@ -1,19 +1,19 @@
 <?php
 
 /*
-This command is using an SFTP Server as a middle man to upload and download CDR files from CUCM.
+This command is using an SFTP Server as a middle man to upload and download CDR files from CUCM. 
 
-CUCM is configured to upload CDR Records to the SFTP Server under Cisco Unified Serviceability.
-Tools > CDR Management
-    Add a New Billing server and add the IP or Hostname of your SFTP Server, username, password, and directory to store and fetch the CDR and CMR Files.
+CUCM is configured to upload CDR Records to the SFTP Server under Cisco Unified Serviceability. 
+Tools > CDR Management 
+	Add a New Billing server and add the IP or Hostname of your SFTP Server, username, password, and directory to store and fetch the CDR and CMR Files. 
 
-Enter these settings in the .env file of the TMS Application Root Directory.
-    CUCMCDR_SERVER=1.1.1.1
-    CUCMCDR_USER=admin
-    CUCMCDR_PASS=password
-    CUCMCDR_DIR=/home/USER/CDR/
-
-This Command Deletes the file off the server after it extracts the Call Records and inserts it into the Database as a cleanup.
+Enter the SFTP Server settings in the .env file of the TMS Application Root Directory. 
+	CUCMCDR_SERVER=1.1.1.1
+	CUCMCDR_USER=admin
+	CUCMCDR_PASS=password
+	CUCMCDR_DIR=/home/USER/CDR/
+	
+This Command Deletes the file off the server after it extracts the Call Records and inserts it into the Database as a cleanup. 
 
 If that result is not desired, comment out $sftp->deletes from this file
 

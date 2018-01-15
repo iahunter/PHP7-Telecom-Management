@@ -3,6 +3,7 @@
 namespace App\Console\Commands\CallManager;
 
 use App\CucmCDR;
+use App\CucmCMR; 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use phpseclib\Net\SFTP as Net_SFTP;
@@ -40,20 +41,30 @@ class GetCucmCDRs extends Command
      */
     public function handle()
     {
-        //
-        $this->get_cdrs_from_file();
+		$logs = CucmCDR::get_log_names(); // Get Logs from SFTP Server
+		// Add logic to check if keys exist for cmr and cdr. 
+		if($logs){
+			if(array_key_exists('cdrs', $logs)){
+				//print Carbon::now()." Found: ".count($logs['cdrs'])." CDR Logs".PHP_EOL; 
+				$this->get_cdrs_from_file($logs);	// Parse and insert each CDR record into DB. 
+			}
+			if(array_key_exists('cmrs', $logs)){
+				//print Carbon::now()." Found: ".count($logs['cmrs'])." CMR Logs".PHP_EOL; 
+				$this->get_cmrs_from_file($logs);	// Parse and insert each CMR record into DB.
+			}
+		}
     }
 
-    public static function get_cdrs_from_file()
+    public static function get_cdrs_from_file($logs)
     {
         $sftp = new Net_SFTP(env('CUCMCDR_SERVER'));
         if (! $sftp->login(env('CUCMCDR_USER'), env('CUCMCDR_PASS'))) {
             exit('Login Failed');
         }
 
-        $logs = CucmCDR::get_cdr_log_names();
+		//print_r($logs); 
 
-        foreach ($logs as $location) {
+        foreach ($logs['cdrs'] as $location) {
             $currentfile = $sftp->get($location);
 
             $currentfile = explode(PHP_EOL, $currentfile);
@@ -66,8 +77,8 @@ class GetCucmCDRs extends Command
             array_pop($currentfile); // Trim off the last line which is blank.
 
             $count = count($currentfile);
-            echo "Found {$count} Records... ".PHP_EOL;
-            print_r($currentfile);
+            //echo "Found {$count} Records... ".PHP_EOL;
+            //print_r($currentfile);
 
             foreach ($currentfile as $callrecord) {
                 $raw = $callrecord;
@@ -79,63 +90,172 @@ class GetCucmCDRs extends Command
 
                 if (count($callrecord) > 1) {
 
-                    //try{
+                    try{
 
-                    $callrecord_array = [];
-                    $callrecord_array = CucmCDR::cdr_key_map_to_headers($headers, $callrecord);
+						$callrecord_array = [];
+						$callrecord_array = CucmCDR::cdr_key_map_to_headers($headers, $callrecord);
 
-                    $INSERT = [];
+						$INSERT = [];
 
-                    $INSERT['globalCallID_callId'] = $callrecord_array['globalCallID_callId'];
+						$INSERT['globalCallID_callId'] = $callrecord_array['globalCallID_callId'];
+						$INSERT['origLegCallIdentifier'] = $callrecord_array['origLegCallIdentifier'];
 
-                    $INSERT['dateTimeConnect'] = $callrecord_array['dateTimeConnect'];
-                    $INSERT['dateTimeDisconnect'] = $callrecord_array['dateTimeDisconnect'];
-                    $INSERT['duration'] = $callrecord_array['duration'];
-                    $INSERT['callingPartyNumber'] = $callrecord_array['callingPartyNumber'];
+						//$INSERT['dateTimeConnect'] = $callrecord_array['dateTimeConnect'];
+						$INSERT['dateTimeConnect'] = CucmCDR::timedateformat($callrecord_array['dateTimeConnect']); 	// Carbon format datetime
+						
+						//$INSERT['dateTimeDisconnect'] = $callrecord_array['dateTimeDisconnect'];
+						$INSERT['dateTimeDisconnect'] = CucmCDR::timedateformat($callrecord_array['dateTimeDisconnect']); 	// Carbon format datetime
+						
+						$INSERT['duration'] = $callrecord_array['duration'];
+						$INSERT['callingPartyNumber'] = $callrecord_array['callingPartyNumber'];
 
-                    $INSERT['originalCalledPartyNumber'] = $callrecord_array['originalCalledPartyNumber'];
-                    $INSERT['finalCalledPartyNumber'] = $callrecord_array['finalCalledPartyNumber'];
+						$INSERT['originalCalledPartyNumber'] = $callrecord_array['originalCalledPartyNumber'];
+						$INSERT['finalCalledPartyNumber'] = $callrecord_array['finalCalledPartyNumber'];
 
-                    $INSERT['origDeviceName'] = $callrecord_array['origDeviceName'];
-                    $INSERT['destDeviceName'] = $callrecord_array['destDeviceName'];
-                    $INSERT['origIpv4v6Addr'] = $callrecord_array['origIpv4v6Addr'];
-                    $INSERT['destIpv4v6Addr'] = $callrecord_array['destIpv4v6Addr'];
+						$INSERT['origDeviceName'] = $callrecord_array['origDeviceName'];
+						$INSERT['destDeviceName'] = $callrecord_array['destDeviceName'];
+						$INSERT['origIpv4v6Addr'] = $callrecord_array['origIpv4v6Addr'];
+						$INSERT['destIpv4v6Addr'] = $callrecord_array['destIpv4v6Addr'];
 
-                    $INSERT['originalCalledPartyPattern'] = $callrecord_array['originalCalledPartyPattern'];
-                    $INSERT['finalCalledPartyPattern'] = $callrecord_array['finalCalledPartyPattern'];
-                    $INSERT['lastRedirectingPartyPattern'] = $callrecord_array['lastRedirectingPartyPattern'];
+						$INSERT['originalCalledPartyPattern'] = $callrecord_array['originalCalledPartyPattern'];
+						$INSERT['finalCalledPartyPattern'] = $callrecord_array['finalCalledPartyPattern'];
+						$INSERT['lastRedirectingPartyPattern'] = $callrecord_array['lastRedirectingPartyPattern'];
+						
 
-                    $INSERT['raw'] = $raw;
-                    print_r($INSERT);
-                    //return $STATS;
+						$INSERT['cdrraw'] = $raw;
+						
+						//print_r($INSERT);
 
-                    $result = CucmCDR::create($INSERT);
+						$result = CucmCDR::create($INSERT);
 
-                    print_r($callrecord_array);
-                /*
-                }catch (\Exception $e) {
-                    print "Error: ";
-                    print $e->getMessage();
-                }
-                */
+						//print_r($callrecord_array);
+                
+					}catch (\Exception $e) {
+						print Carbon::now()." Error: ";
+						print $e->getMessage().PHP_EOL;
+					}
+                
                 } else {
-                    echo 'Count not greater than 1... Discarding record...'.PHP_EOL;
+                    //echo 'Count not greater than 1... Discarding record...'.PHP_EOL;
                 }
             }
 
             // Delete the file when we are done with it.
-            echo 'Attempting to Delete: '.$location.PHP_EOL;
+            //echo 'Attempting to Delete: '.$location.PHP_EOL;
             $deleted = $sftp->delete($location, false);
             if ($deleted) {
-                echo 'Deleted: '.$location.PHP_EOL;
+                //echo 'Deleted: '.$location.PHP_EOL;
             } else {
                 echo 'Failed to Delete: '.$location.PHP_EOL;
             }
 
             //die();
         }
+	}	
+	
+	public static function get_cmrs_from_file($logs)
+    {
+        $sftp = new Net_SFTP(env('CUCMCDR_SERVER'));
+        if (! $sftp->login(env('CUCMCDR_USER'), env('CUCMCDR_PASS'))) {
+            exit('Login Failed');
+        }
 
-        // Return the raw comma seperated Log entries not an array for the last 2 days.
-        //return implode(PHP_EOL, $lasttwodays_calls);
+		//print_r($logs); 
+
+        foreach ($logs['cmrs'] as $location) {
+            $currentfile = $sftp->get($location);
+
+            $currentfile = explode(PHP_EOL, $currentfile);
+
+            $headers = array_shift($currentfile);  // Trim off the Headers
+            $headers = explode(',', $headers); // Convert to Array
+
+            //print_r($headers);
+            array_shift($currentfile); // Trim off the Types
+            array_pop($currentfile); // Trim off the last line which is blank.
+
+            $count = count($currentfile);
+            //echo "Found {$count} Records... ".PHP_EOL;
+            //print_r($currentfile);
+
+            foreach ($currentfile as $callrecord) {
+                $raw = $callrecord;
+
+                // Parse record to the the record type.
+                $callrecord = explode(',', $callrecord);
+
+                //print_r($callrecord);
+
+				
+                if (count($callrecord) > 1) {
+
+                    try{
+
+						$callrecord_array = [];
+						$callrecord_array = CucmCMR::cmr_key_map_to_headers($headers, $callrecord);
+
+						//print_r($callrecord_array);
+						//die();
+						
+						$INSERT = [];
+
+						$INSERT['globalCallID_callId'] = $callrecord_array['globalCallID_callId'];
+
+						
+						//$INSERT['dateTimeConnect'] = $callrecord_array['dateTimeConnect'];
+						$INSERT['dateTimeStamp'] = CucmCMR::timedateformat($callrecord_array['dateTimeStamp']); 	// Carbon format datetime
+
+						$INSERT['directoryNum'] = $callrecord_array['directoryNum'];
+						$INSERT['callIdentifier'] = $callrecord_array['callIdentifier'];
+
+						$INSERT['directoryNumPartition'] = $callrecord_array['directoryNumPartition'];
+						$INSERT['deviceName'] = $callrecord_array['deviceName'];
+
+						$INSERT['varVQMetrics'] = $callrecord_array['varVQMetrics'];
+
+						$INSERT['numberPacketsSent'] = $callrecord_array['numberPacketsSent'];
+						$INSERT['numberPacketsReceived'] = $callrecord_array['numberPacketsReceived'];
+						$INSERT['jitter'] = $callrecord_array['jitter'];
+						$INSERT['numberPacketsLost'] = $callrecord_array['numberPacketsLost'];
+						
+						// Calculate Percentage of Loss
+						if($callrecord_array['numberPacketsReceived']){
+							$INSERT['packetLossPercent'] = ($callrecord_array['numberPacketsLost'] / ($callrecord_array['numberPacketsLost'] + $callrecord_array['numberPacketsReceived'])) * 100;
+						}else{
+							$INSERT['packetLossPercent'] = 0; 
+							//print "{$callrecord_array['globalCallID_callId']}: PacketLoss = 0".PHP_EOL;
+						}
+						
+						//print $INSERT['packetLossPercent'].PHP_EOL; 
+						
+						$INSERT['cmrraw'] = $raw;
+						
+						//print_r($INSERT);
+
+						$result = CucmCMR::create($INSERT);
+
+						//print_r($callrecord_array);
+					
+					}catch (\Exception $e) {
+						print Carbon::now()." Error: ";
+						print $e->getMessage().PHP_EOL;
+					}
+                
+                } else {
+                    //echo 'Count not greater than 1... Discarding record...'.PHP_EOL;
+                }
+            }
+
+            // Delete the file when we are done with it.
+            //echo 'Attempting to Delete: '.$location.PHP_EOL;
+            $deleted = $sftp->delete($location, false);
+            if ($deleted) {
+                //echo 'Deleted: '.$location.PHP_EOL;
+            } else {
+                echo 'Failed to Delete: '.$location.PHP_EOL;
+            }
+
+        }
+
     }
 }

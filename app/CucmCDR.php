@@ -11,6 +11,7 @@ class CucmCDR extends Model
 {
     protected $table = 'cucm_cdrs';
     protected $fillable = ['globalCallID_callId',
+							'origLegCallIdentifier',
                             'dateTimeConnect',
                             'dateTimeDisconnect',
                             'duration',
@@ -24,18 +25,18 @@ class CucmCDR extends Model
                             'originalCalledPartyPattern',
                             'finalCalledPartyPattern',
                             'lastRedirectingPartyPattern',
-
-                            'raw',
+						
+                            'cdrraw',
                             'json',
                         ];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'raw'  => 'array',
+            'cdrraw'  => 'array',
             'json' => 'array',
         ];
 
-    public static function get_cdr_log_names()
+    public static function get_log_names()
     {
         $time = \Carbon\Carbon::now();
 
@@ -44,7 +45,7 @@ class CucmCDR extends Model
             exit('Login Failed');
         }
 
-        $sftp->chdir('/home/telecom/CDR/');
+        $sftp->chdir(env('CUCMCDR_DIR'));
 
         $fileobject = $sftp->rawlist();
 
@@ -53,18 +54,24 @@ class CucmCDR extends Model
 
         //print_r($files);
 
-        $regex = '/^cdr/';
+        $cdrregex = '/^cdr/';
+		$cmrregex = '/^cmr/';
 
         $cdr_files = [];
-
+		$cmr_files = [];
+		
         foreach ($files as $file) {
             if (array_key_exists('filename', $file)) {
                 $filename = $file['filename'];
 
                 //return $type;
-                if (preg_match($regex, $filename)) {
+                if (preg_match($cdrregex, $filename)) {
                     //$cdr_files[] = $files[$filename];
                     $cdr_files[] = $file['filename'];
+                    //print($filename).PHP_EOL;
+                }elseif (preg_match($cmrregex, $filename)) {
+                    //$cdr_files[] = $files[$filename];
+                    $cmr_files[] = $file['filename'];
                     //print($filename).PHP_EOL;
                 }
             } else {
@@ -73,71 +80,15 @@ class CucmCDR extends Model
         }
         $files = [];
 
-        //print_r($cdr_files);
-        /*
-        $cdr_files_array = $cdr_files;
-        $cdr_files = [];
-        foreach ($cdr_files_array as $file) {
-            $cdr_files[$file['atime']] = $file;
-        }
-
-        krsort($cdr_files);
-        //print_r($cdr_files);
-        */
         $locations = [];
         foreach ($cdr_files as $file) {
-            $locations[] = "/home/telecom/CDR/{$file}";
+            $locations['cdrs'][] = env('CUCMCDR_DIR').$file;
+        }
+		foreach ($cmr_files as $file) {
+            $locations['cmrs'][] = env('CUCMCDR_DIR').$file;
         }
 
         //print_r($locations);
-        return $locations;
-    }
-
-    public static function get_cmr_log_names()
-    {
-        $time = \Carbon\Carbon::now();
-
-        $sftp = new Net_SFTP(env('CUCMCDR_SERVER'), 22);
-        if (! $sftp->login(env('CUCMCDR_USER'), env('CUCMCDR_PASS'))) {
-            exit('Login Failed');
-        }
-
-        $sftp->chdir('/home/telecom/CDR/');
-
-        $fileobject = $sftp->rawlist();
-
-        $files = (array) $fileobject;
-        $fileobject = '';
-
-        $regex = '/cmr$/';
-
-        $cdr_files = [];
-
-        foreach ($files as $file) {
-            $filename = $file['filename'];
-
-            $type = explode('.', $filename);
-            //return $type;
-            if (isset($type[1]) && $type[1] == 'ACT') {
-                $cdr_files[] = $files[$filename];
-            }
-        }
-        $files = [];
-
-        $cdr_files_array = $cdr_files;
-        $cdr_files = [];
-        foreach ($cdr_files_array as $file) {
-            $cdr_files[$file['atime']] = $file;
-        }
-
-        krsort($cdr_files);
-        //print_r($cdr_files);
-
-        $locations = [];
-        foreach ($cdr_files as $file) {
-            $locations[] = "/home/telecom/CDR/{$file['filename']}";
-        }
-
         return $locations;
     }
 
@@ -153,19 +104,15 @@ class CucmCDR extends Model
         //var_dump($header);
         return array_combine($header, $callrecord);
     }
-
-    /*
-    // Depricated.
-    public static function cdr_key_map_to_headers($header, $callrecord)
+	
+	
+	public static function timedateformat($time)
     {
-        // Converts each record into an associative array and maps to header keys.
-        $newcallrecord = [];
-        foreach($callrecord as $key => $value){
-            $newcallrecord[$header[$key]] = $callrecord[$key];
-        }
-        return $newcallrecord;
+        // This returns Y-m-d format.
+        $date = Carbon::createFromTimestamp($time)->toDateTimeString();
+
+        return $date;
     }
-    */
 
     // Depricated.
     public static function cdr_key_map($callrecord)

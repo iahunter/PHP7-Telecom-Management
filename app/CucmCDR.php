@@ -1,17 +1,17 @@
 <?php
 
 /*
-This class is using an SFTP Server as a middle man to upload and download CDR files from CUCM. 
+This class is using an SFTP Server as a middle man to upload and download CDR files from CUCM.
 
-CUCM is configured to upload CDR Records to the SFTP Server under Cisco Unified Serviceability. 
-Tools > CDR Management 
-	Add a New Billing server and add the IP or Hostname of your SFTP Server, username, password, and directory to store and fetch the CDR and CMR Files. 
-	
-Enter the SFTP Server settings in the .env file of the TMS Application Root Directory. 
-	CUCMCDR_SERVER=1.1.1.1
-	CUCMCDR_USER=admin
-	CUCMCDR_PASS=password
-	CUCMCDR_DIR=/home/USER/CDR/
+CUCM is configured to upload CDR Records to the SFTP Server under Cisco Unified Serviceability.
+Tools > CDR Management
+    Add a New Billing server and add the IP or Hostname of your SFTP Server, username, password, and directory to store and fetch the CDR and CMR Files.
+
+Enter the SFTP Server settings in the .env file of the TMS Application Root Directory.
+    CUCMCDR_SERVER=1.1.1.1
+    CUCMCDR_USER=admin
+    CUCMCDR_PASS=password
+    CUCMCDR_DIR=/home/USER/CDR/
 
 */
 

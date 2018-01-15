@@ -11,7 +11,7 @@ class CucmCDR extends Model
 {
     protected $table = 'cucm_cdrs';
     protected $fillable = ['globalCallID_callId',
-							'origLegCallIdentifier',
+                            'origLegCallIdentifier',
                             'dateTimeConnect',
                             'dateTimeDisconnect',
                             'duration',
@@ -25,7 +25,7 @@ class CucmCDR extends Model
                             'originalCalledPartyPattern',
                             'finalCalledPartyPattern',
                             'lastRedirectingPartyPattern',
-						
+
                             'cdrraw',
                             'json',
                         ];
@@ -33,7 +33,7 @@ class CucmCDR extends Model
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
             'cdrraw'  => 'array',
-            'json' => 'array',
+            'json'    => 'array',
         ];
 
     public static function get_log_names()
@@ -55,11 +55,11 @@ class CucmCDR extends Model
         //print_r($files);
 
         $cdrregex = '/^cdr/';
-		$cmrregex = '/^cmr/';
+        $cmrregex = '/^cmr/';
 
         $cdr_files = [];
-		$cmr_files = [];
-		
+        $cmr_files = [];
+
         foreach ($files as $file) {
             if (array_key_exists('filename', $file)) {
                 $filename = $file['filename'];
@@ -68,8 +68,8 @@ class CucmCDR extends Model
                 if (preg_match($cdrregex, $filename)) {
                     //$cdr_files[] = $files[$filename];
                     $cdr_files[] = $file['filename'];
-                    //print($filename).PHP_EOL;
-                }elseif (preg_match($cmrregex, $filename)) {
+                //print($filename).PHP_EOL;
+                } elseif (preg_match($cmrregex, $filename)) {
                     //$cdr_files[] = $files[$filename];
                     $cmr_files[] = $file['filename'];
                     //print($filename).PHP_EOL;
@@ -84,7 +84,7 @@ class CucmCDR extends Model
         foreach ($cdr_files as $file) {
             $locations['cdrs'][] = env('CUCMCDR_DIR').$file;
         }
-		foreach ($cmr_files as $file) {
+        foreach ($cmr_files as $file) {
             $locations['cmrs'][] = env('CUCMCDR_DIR').$file;
         }
 
@@ -104,9 +104,8 @@ class CucmCDR extends Model
         //var_dump($header);
         return array_combine($header, $callrecord);
     }
-	
-	
-	public static function timedateformat($time)
+
+    public static function timedateformat($time)
     {
         // This returns Y-m-d format.
         $date = Carbon::createFromTimestamp($time)->toDateTimeString();

@@ -18,24 +18,23 @@ class CucmCMR extends Model
                             'deviceName',
                             'varVQMetrics',
 
-							'numberPacketsSent',
-							'numberPacketsReceived',
-							'jitter', 
-							'numberPacketsLost',
-							'packetLossPercent',
+                            'numberPacketsSent',
+                            'numberPacketsReceived',
+                            'jitter',
+                            'numberPacketsLost',
+                            'packetLossPercent',
 
-							'cmrraw',
+                            'cmrraw',
                             'json',
                         ];
 
-	// Cast data type conversions. Converting one type of data to another.
+    // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-			'cmrraw'  => 'array',
-            'json' => 'array',
+            'cmrraw'  => 'array',
+            'json'    => 'array',
         ];
-		
-		
-	public static function get_log_names()
+
+    public static function get_log_names()
     {
         $time = \Carbon\Carbon::now();
 
@@ -54,11 +53,11 @@ class CucmCMR extends Model
         //print_r($files);
 
         $cdrregex = '/^cdr/';
-		$cmrregex = '/^cmr/';
+        $cmrregex = '/^cmr/';
 
         $cdr_files = [];
-		$cmr_files = [];
-		
+        $cmr_files = [];
+
         foreach ($files as $file) {
             if (array_key_exists('filename', $file)) {
                 $filename = $file['filename'];
@@ -67,8 +66,8 @@ class CucmCMR extends Model
                 if (preg_match($cdrregex, $filename)) {
                     //$cdr_files[] = $files[$filename];
                     $cdr_files[] = $file['filename'];
-                    //print($filename).PHP_EOL;
-                }elseif (preg_match($cmrregex, $filename)) {
+                //print($filename).PHP_EOL;
+                } elseif (preg_match($cmrregex, $filename)) {
                     //$cdr_files[] = $files[$filename];
                     $cmr_files[] = $file['filename'];
                     //print($filename).PHP_EOL;
@@ -83,15 +82,15 @@ class CucmCMR extends Model
         foreach ($cdr_files as $file) {
             $locations['cdrs'][] = env('CUCMCDR_DIR').$file;
         }
-		foreach ($cmr_files as $file) {
+        foreach ($cmr_files as $file) {
             $locations['cmrs'][] = env('CUCMCDR_DIR').$file;
         }
 
         //print_r($locations);
         return $locations;
     }
-	
-	// Use this function instead of statically mapping
+
+    // Use this function instead of statically mapping
     public static function cmr_key_map_to_headers($header, $callrecord)
     {
         foreach ($header as $key => $value) {
@@ -103,8 +102,8 @@ class CucmCMR extends Model
         //var_dump($header);
         return array_combine($header, $callrecord);
     }
-	
-	public static function timedateformat($time)
+
+    public static function timedateformat($time)
     {
         // This returns Y-m-d format.
         $date = Carbon::createFromTimestamp($time)->toDateTimeString();

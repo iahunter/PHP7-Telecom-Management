@@ -15,7 +15,7 @@ class CreateCucmCDRsTable extends Migration
     {
         Schema::create('cucm_cdrs', function (Blueprint $table) {
             $table->increments('id');
-			$table->integer('globalCallID_callId');
+            $table->integer('globalCallID_callId');
             $table->integer('origLegCallIdentifier');
 
             $table->timestamp('dateTimeConnect')->nullable();
@@ -36,7 +36,7 @@ class CreateCucmCDRsTable extends Migration
             $table->string('lastRedirectingPartyPattern');
 
             $table->json('cdrraw')->nullable();
-			
+
             $table->json('json')->nullable();                       // JSON Custom Field Data
 
             $table->timestamps();                                   // Time Stamps

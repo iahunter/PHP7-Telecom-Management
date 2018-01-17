@@ -393,6 +393,11 @@ class Cucmclass extends Model
         $PROTOCOL = 'SCCP';
         $SOFTKEYTEMPLATE = 'Standard Feature - Kiewit';
 
+		// Check protocols models that do SIP Only.
+        if (preg_match('/^Cisco 99..$/', $PRODUCT)) {
+            $PROTOCOL = 'SIP';
+        }
+		
         // Check protocols models that do SIP Only.
         if (preg_match('/^Cisco 88..$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
@@ -648,12 +653,22 @@ class Cucmclass extends Model
         // Add the line  first
 
         // Check protocols models that do SIP Only.
+        if (preg_match('/^Cisco 99..$/', $PRODUCT)) {
+            $PROTOCOL = 'SIP';
+        }
+		
+        // Check protocols models that do SIP Only.
         if (preg_match('/^Cisco 88..$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
 
         // Check protocols models that do SIP Only.
         if (preg_match('/^Cisco 78..$/', $PRODUCT)) {
+            $PROTOCOL = 'SIP';
+        }
+
+        // Check protocols models that do SIP Only.
+        if (preg_match('/^Cisco ATA ...$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
 

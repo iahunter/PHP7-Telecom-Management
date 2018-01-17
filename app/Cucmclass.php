@@ -29,6 +29,28 @@ class Cucmclass extends Model
     }
 
     public static $results = [];
+	
+	// CUCM Add Phone Wrapper
+    public static function reset_phone($NAME)
+    {
+        // Construct new cucm object
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+
+        try {
+			
+            $REPLY = $cucm->reset_phone($NAME);
+            //return $REPLY;
+			return true;
+			
+        } catch (\Exception $E) {
+            //return $E->getMessage(); 
+			return false;
+        }
+    }
 
     // CUCM Add Phone Wrapper
     public static function wrap_add_phone_object($DATA, $TYPE)

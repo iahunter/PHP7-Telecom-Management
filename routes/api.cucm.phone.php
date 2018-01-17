@@ -27,6 +27,34 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
+	
+	 /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/resetphone/{name}",
+     *     tags={"Management - CUCM - Phone Provisioning"},
+     *     summary="Reset Phone Details by Name",
+     *     description="",
+     *     operationId="resetPhone",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Name of Phone - Example SEP0004DEADBEEF",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/resetphone/{name}', 'App\Http\Controllers\Cucmphone@reset_phone');
 
     /**
      * @SWG\Get(

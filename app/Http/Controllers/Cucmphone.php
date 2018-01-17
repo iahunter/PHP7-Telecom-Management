@@ -12,6 +12,30 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class Cucmphone extends Cucm
 {
     public $phones;
+	
+	public function reset_phone(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            if (! $user->can('read', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+
+        $name = $request->name;
+        
+		$result = Cucmclass::reset_phone($name); 
+
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $result,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function uploadPhones(Request $request)
     {

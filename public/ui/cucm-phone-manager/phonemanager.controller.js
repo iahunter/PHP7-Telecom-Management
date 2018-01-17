@@ -35,6 +35,34 @@ angular
 		if(!vm.permissions.read.PhoneMACD){
 			$location.path('/accessdenied');
 		}
+		
+		vm.resetphone = function(phone){
+			if(phone){
+				console.log(phone)
+				
+				cucmService.resetphone(phone.name)
+					.then(function(res){
+						result = res.data.response;
+						
+
+						console.log(result);
+
+						// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
+						if(result){
+							
+							console.log(vm.phone)			
+							alert('Phone has been reset: '+ phone.name)
+							
+						}else{
+							vm.phone = false;
+							vm.nophone = true;
+						}
+						
+					}, function(err){
+						// Error
+					});
+			}
+		}
 
 
 		vm.checkphoneusage = function(phone){

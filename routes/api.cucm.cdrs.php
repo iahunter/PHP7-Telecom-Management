@@ -93,8 +93,8 @@
      * )
      **/
     $api->post('cucmcdrs/calls_with_loss_by_daterange', 'App\Http\Controllers\CucmCdrCmrController@list_calls_by_date_range_with_loss');
-	
-	 /**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucmcdrs/list_last_24hr_calls_by_number_search",
      *     tags={"CDR - CUCM History"},

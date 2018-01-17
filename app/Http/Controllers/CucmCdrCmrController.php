@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\CucmCDR;
 use App\CucmCMR;
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Log;
@@ -14,12 +13,12 @@ use Illuminate\Support\Facades\Cache;
 
 class CucmCdrCmrController extends Controller
 {
-	public function __construct()
+    public function __construct()
     {
         // Only authenticated users can make these calls
         $this->middleware('jwt.auth');
     }
-	
+
     public function searchCDR(Request $request, $column, $search)
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -48,7 +47,7 @@ class CucmCdrCmrController extends Controller
 
         return response()->json($response);
     }
-	
+
     public function list_last_24hr_calls_by_number_search(Request $request)
     {
         // Historical Log Query
@@ -59,20 +58,18 @@ class CucmCdrCmrController extends Controller
             abort(401, 'You are not authorized');
         }
 
-		$search = $request->search;
+        $search = $request->search;
         $start = Carbon::now()->subHours(24);
         $end = Carbon::now()->addHours(6);
 
-
-		$calls = \App\CucmCDR::whereBetween('dateTimeConnect', [$start, $end])
-					->where(function ($query) {
-							$query->where('callingPartyNumber', 'like', "%{$search}%")
-									  ->orWhere('originalCalledPartyNumber', 'like', "%{$search}%")
-									  ->orWhere('finalCalledPartyNumber', 'like', "%{$search}%");
-						})
-					->orderby('dateTimeConnect')
-					->get();
-
+        $calls = \App\CucmCDR::whereBetween('dateTimeConnect', [$start, $end])
+                    ->where(function ($query) {
+                        $query->where('callingPartyNumber', 'like', "%{$search}%")
+                                      ->orWhere('originalCalledPartyNumber', 'like', "%{$search}%")
+                                      ->orWhere('finalCalledPartyNumber', 'like', "%{$search}%");
+                    })
+                    ->orderby('dateTimeConnect')
+                    ->get();
 
         $response = [
                     'status_code'          => 200,

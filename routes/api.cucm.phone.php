@@ -27,8 +27,8 @@
      * )
      **/
     $api->get('cucm/phone/{name}', 'App\Http\Controllers\Cucmphone@getPhone');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/resetphone/{name}",
      *     tags={"Management - CUCM - Phone Provisioning"},

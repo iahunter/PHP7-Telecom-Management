@@ -56,8 +56,8 @@ $api->version('v1', function ($api) {
 
     // CUCM Realtime API Routes
     require __DIR__.'/api.cucm.ris.php';
-	
-	// CUCM CDR and CMR Routes
+
+    // CUCM CDR and CMR Routes
     require __DIR__.'/api.cucm.cdrs.php';
 
     // Phone MACD Routes

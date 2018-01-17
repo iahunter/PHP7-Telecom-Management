@@ -29,8 +29,8 @@ class Cucmclass extends Model
     }
 
     public static $results = [];
-	
-	// CUCM Add Phone Wrapper
+
+    // CUCM Add Phone Wrapper
     public static function reset_phone($NAME)
     {
         // Construct new cucm object
@@ -41,14 +41,12 @@ class Cucmclass extends Model
                                                     );
 
         try {
-			
             $REPLY = $cucm->reset_phone($NAME);
             //return $REPLY;
-			return true;
-			
+            return true;
         } catch (\Exception $E) {
-            //return $E->getMessage(); 
-			return false;
+            //return $E->getMessage();
+            return false;
         }
     }
 

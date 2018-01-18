@@ -421,6 +421,12 @@
                 templateUrl: 'sonus-cdrs/attemptsummary.graph.html',
                 controller: 'Sonus.AttemptSummary.CDR.Controller',
                 controllerAs: 'vm'
+            })
+			.state('cucm/cdr/todays_calls_with_pkt_loss', {
+                url: "/cucm/cdr/todays_calls_with_pkt_loss",
+                templateUrl: 'cucm-cdrs/cucm.cdr.todays-pkt-loss-report.html',
+                controller: 'Cucm.Pktloss.CDR.Controller',
+                controllerAs: 'vm'
             });
 
     }

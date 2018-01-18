@@ -1,0 +1,252 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+
+
+<div style="margin-left:5%; margin-right:5%;">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	<!--Include the SBC Summary Section on Home Page. -->
+	<ng-include src="'sonus/sonus.splashpage.html'"></ng-include>
+	
+	<div style="margin:50px"></div>
+	
+	<legend>CUCM CDR Report - Last 24hrs - Calls with Packet Loss <div class="pull-right">{{vm.datetime}}</div><div style="margin:10px"></div>
+		
+	</legend>
+		
+		<!--<ng-include src="'sonus-cdrs/pktloss.summary.graph.html'"></ng-include>-->
+		
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		
+		
+		<div style="margin:25px"></div>
+
+		<button class="btn btn-default btn-sm" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> 
+			
+		<div style="margin:25px"></div>
+		
+
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		<div ng-if="vm.noactivecalls;" class="well">
+			<div class="row">
+				<h4>No Calls Found</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		
+		<div ng-if="!vm.loading && !vm.noactivecalls">
+			
+			<h4>Found {{vm.callarray.length}} calls with packet loss greater than 1%</h4>
+			
+			<p>This will auto update every 5 mins</p>
+			
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">  
+				<table class="table table-striped table-condensed table-bordered table-hover" >
+					<thead>
+						<tr style="background-color: #cce6ff;">
+						
+							<th>
+								<a href="" ng-click="sortType = 'start_time_local'; sortReverse = !sortReverse" style="color:black">
+									start_time_local
+										<span ng-show="sortType == 'start_time_local' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'start_time_local' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'callIdentifier'; sortReverse = !sortReverse" style="color:black">
+									callIdentifier
+										<span ng-show="sortType == 'callIdentifier' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'callIdentifier' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'packetLossPercent'; sortReverse = !sortReverse" style="color:black">
+									packetLossPercent
+										<span ng-show="sortType == 'packetLossPercent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'packetLossPercent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'numberPacketsLost'; sortReverse = !sortReverse" style="color:black">
+									numberPacketsLost
+										<span ng-show="sortType == 'numberPacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'numberPacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'deviceName'; sortReverse = !sortReverse" style="color:black">
+									deviceName
+										<span ng-show="sortType == 'deviceName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'deviceName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'directoryNum'; sortReverse = !sortReverse" style="color:black">
+									directoryNum
+										<span ng-show="sortType == 'directoryNum' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'directoryNum' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'callingPartyNumber'; sortReverse = !sortReverse" style="color:black">
+									callingPartyNumber
+										<span ng-show="sortType == 'callingPartyNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'callingPartyNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'finalCalledPartyNumber'; sortReverse = !sortReverse" style="color:black">
+									finalCalledPartyNumber
+										<span ng-show="sortType == 'finalCalledPartyNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'finalCalledPartyNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'origDeviceName'; sortReverse = !sortReverse" style="color:black">
+									origDeviceName
+										<span ng-show="sortType == 'origDeviceName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'origDeviceName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'origIpv4v6Addr'; sortReverse = !sortReverse" style="color:black">
+									origIpv4v6Addr
+										<span ng-show="sortType == 'origIpv4v6Addr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'origIpv4v6Addr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'destIpv4v6Addr'; sortReverse = !sortReverse" style="color:black">
+									destIpv4v6Addr
+										<span ng-show="sortType == 'destIpv4v6Addr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'destIpv4v6Addr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'destDeviceName'; sortReverse = !sortReverse" style="color:black">
+									destDeviceName
+										<span ng-show="sortType == 'destDeviceName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'destDeviceName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+
+							<th>
+								<a href="" ng-click="sortType = 'numberPacketsLost'; sortReverse = !sortReverse" style="color:black">
+									numberPacketsLost
+										<span ng-show="sortType == 'numberPacketsLost' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'numberPacketsLost' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'jitter'; sortReverse = !sortReverse" style="color:black">
+									jitter
+										<span ng-show="sortType == 'jitter' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'jitter' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'numberPacketsReceived'; sortReverse = !sortReverse" style="color:black">
+									numberPacketsReceived
+										<span ng-show="sortType == 'numberPacketsReceived' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'numberPacketsReceived' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'numberPacketsSent'; sortReverse = !sortReverse" style="color:black">
+									numberPacketsSent
+										<span ng-show="sortType == 'numberPacketsSent' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'numberPacketsSent' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'varVQMetrics'; sortReverse = !sortReverse" style="color:black">
+									varVQMetrics
+										<span ng-show="sortType == 'varVQMetrics' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'varVQMetrics' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							
+							
+														
+
+						</tr>
+					</thead>
+					<tbody style="font-size: 12px;">
+					<tr ng-repeat="call in vm.callarray | orderBy:sortType:sortReverse | filter:vm.search: strict">
+						<!--<td>{{call}}</td>-->
+						
+						<td>{{ call.start_time_local}}</td>
+						<td>{{ call.callIdentifier}}</td>
+						<td>{{ call.packetLossPercent}} % </td>
+						<td>{{ call.numberPacketsLost}}</td>
+						
+						<td>{{ call.deviceName}}</td>
+						<td>{{ call.directoryNum}}</td>
+						
+						<td>{{ call.callingPartyNumber}}</td>
+						<td>{{ call.finalCalledPartyNumber}}</td>
+						
+						<td>{{ call.origDeviceName}}</td>
+						<td>{{ call.origIpv4v6Addr}}</td>
+						<td>{{ call.destIpv4v6Addr}}</td>
+						<td>{{ call.destDeviceName}}</td>
+						
+						<td>{{ call.numberPacketsLost}}</td>
+						<td>{{ call.jitter}}</td>
+						<td>{{ call.numberPacketsReceived}}</td>
+						<td>{{ call.numberPacketsSent}}</td>
+						
+						<td>{{ call.varVQMetrics}}</td>
+						
+
+					</tr>
+					</tbody>
+				</table>
+			</div> 
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+

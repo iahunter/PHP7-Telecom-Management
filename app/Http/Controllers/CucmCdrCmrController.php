@@ -61,15 +61,91 @@ class CucmCdrCmrController extends Controller
         $search = $request->search;
         $start = Carbon::now()->subHours(24);
         $end = Carbon::now()->addHours(6);
-
+		
         $calls = \App\CucmCDR::whereBetween('dateTimeConnect', [$start, $end])
-                    ->where(function ($query) {
+                    ->where(function ($query) use ($search) {
                         $query->where('callingPartyNumber', 'like', "%{$search}%")
                                       ->orWhere('originalCalledPartyNumber', 'like', "%{$search}%")
                                       ->orWhere('finalCalledPartyNumber', 'like', "%{$search}%");
                     })
                     ->orderby('dateTimeConnect')
                     ->get();
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'count'                => count($calls),
+                    'request'              => $request->all(),
+                    'result'               => $calls,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function list_last_24hr_calls_with_loss(Request $request)
+    {
+        // Historical Log Query
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('read', CucmCMR::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $start = Carbon::now()->subHours(24);
+        $end = Carbon::now()->addHours(6);
+		
+        if (
+            ! \App\CucmCMR::whereBetween('dateTimeStamp', [$start, $end])->where('packetLossPercent', '>', 1)->where('packetLossPercent', '<=', 100)->count()
+        ) {
+            abort(404, 'No records found');
+        } else {
+            $calls = \App\CucmCMR::whereBetween('dateTimeStamp', [$start, $end])
+
+                ->where('packetLossPercent', '>', 1)
+				->where('packetLossPercent', '<=', 100)
+				->where('numberPacketsReceived', '>', 500)
+                ->orderby('dateTimeStamp', 'desc')
+                ->get();
+        }
+		
+		
+		$call_cmrs = [];
+		
+		foreach($calls as $call){
+			
+			//print_r($call['globalCallID_callId']);
+			$call_cdr = \App\CucmCDR::where('globalCallID_callId', $call['globalCallID_callId'])->first();
+			
+			if($call_cdr){
+				//print_r($call_cdr);
+				
+				$call['callingPartyNumber'] = $call_cdr['callingPartyNumber']; 
+				$call['originalCalledPartyNumber'] = $call_cdr['originalCalledPartyNumber']; 
+				$call['finalCalledPartyNumber'] = $call_cdr['finalCalledPartyNumber']; 
+				$call['origIpv4v6Addr'] = $call_cdr['origIpv4v6Addr']; 
+				$call['destIpv4v6Addr'] = $call_cdr['destIpv4v6Addr']; 
+				$call['origDeviceName'] = $call_cdr['origDeviceName']; 
+				$call['destDeviceName'] = $call_cdr['destDeviceName']; 
+				$call['cdr'] = $call_cdr; 
+				
+			}else{
+				$call['callingPartyNumber'] = ""; 
+				$call['originalCalledPartyNumber'] = ""; 
+				$call['finalCalledPartyNumber'] = ""; 
+				$call['origIpv4v6Addr'] = ""; 
+				$call['destIpv4v6Addr'] = ""; 
+				$call['origDeviceName'] = ""; 
+				$call['destDeviceName'] = ""; 
+				$call['cdr'] = ""; 
+			}
+			
+			
+			$call_cmrs[] = $call; 
+		}
+		
+		$calls = $call_cmrs; 
 
         $response = [
                     'status_code'          => 200,
@@ -89,7 +165,7 @@ class CucmCdrCmrController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         // Check Role of user
-        if (! $user->can('read', CucmCDR::class)) {
+        if (! $user->can('read', CucmCMR::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -97,18 +173,16 @@ class CucmCdrCmrController extends Controller
         $end = Carbon::parse($request->end)->addDay()->addHours(6);
 
         if (
-            ! \App\CucmCDR::whereBetween('dateTimeConnect', [$start, $end])->where('ingress_lost_ptks', '>', 100)->count() &&
-            ! \App\CucmCDR::whereBetween('dateTimeConnect', [$start, $end])->where('egress_lost_ptks', '>', 100)->count()
+            ! \App\CucmCMR::whereBetween('dateTimeStamp', [$start, $end])->where('packetLossPercent', '>', 1)->where('packetLossPercent', '<=', 100)->count()
         ) {
             abort(404, 'No records found');
         } else {
-            $calls = \App\CucmCDR::whereBetween('dateTimeConnect', [$start, $end])
+            $calls = \App\CucmCMR::whereBetween('dateTimeStamp', [$start, $end])
 
-                ->where(function ($query) {
-                    $query->where('ingress_lost_ptks', '>', 100)
-                              ->orWhere('egress_lost_ptks', '>', 100);
-                })
-                ->orderby('dateTimeConnect')
+                ->where('packetLossPercent', '>', 1)
+				->where('packetLossPercent', '<=', 100)
+				->where('numberPacketsReceived', '>', 500)
+                ->orderby('dateTimeStamp')
                 ->get();
         }
 
@@ -123,4 +197,5 @@ class CucmCdrCmrController extends Controller
 
         return response()->json($response);
     }
+	
 }

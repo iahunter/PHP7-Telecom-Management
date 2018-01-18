@@ -135,17 +135,38 @@
 				</li>
 			  </ul>
 			  
+			  
+			  <ul class="nav navbar-nav" ng-show="vm.permissions.read.CucmCDR == true">
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CUCM</a>
+				  <ul class="dropdown-menu">
+					
+					
+					<li><a href="#/cucm/cdr/todays_calls_with_pkt_loss">24hr Call Packet Loss Report</a></li>
+
+					
+					<!--<li><a href="{{vm.sbcrepo}}" target="_blank">SBC Config Repo</a></li>-->
+					
+					<!--
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">Separated link</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="#/didblock">One more separated link</a></li>
+					-->
+				  </ul>
+				</li>
+			  </ul>
 			 
 			  
 			  <!--
 			  <ul class="nav navbar-nav">
 					<li><a href="#/reports">Reports</a></li>
 			  </ul>
-			  -->
 			  
 			  
 			  
-			  <ng-include src="'company-content/company.navbar.html'"></ng-include>
+			  
+			  <ng-include src="'company-content/company.navbar.html'"></ng-include>-->
 			  <!--
 			  <ul class="nav navbar-nav">
 					<li><a href="https://e911manager">E911</a></li>

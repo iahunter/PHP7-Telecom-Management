@@ -54,12 +54,13 @@ angular
 							alert('Phone has been reset: '+ phone.name)
 							
 						}else{
-							vm.phone = false;
-							vm.nophone = true;
+							console.log(vm.phone)
+							alert('Error trying to reset phone: '+ phone.name)
 						}
 						
 					}, function(err){
-						// Error
+						console.log(err)
+						alert('Error trying to reset phone: '+ phone.name)
 					});
 			}
 		}

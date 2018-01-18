@@ -176,6 +176,16 @@ class User extends Authenticatable implements \Tymon\JWTAuth\Contracts\JWTSubjec
         if ($this->can('read', Cupi::class)) {
             $claims['permissions']['read']['Cupi'] = true;
         }
+		
+		// CUCM CDR Permissions
+
+        if ($this->can('read', CucmCDR::class)) {
+            $claims['permissions']['read']['CucmCDR'] = true;
+        }
+
+        if ($this->can('read', CucmCMR::class)) {
+            $claims['permissions']['read']['CucmCMR'] = true;
+        }
 
         // Sonus5k Permissions
 

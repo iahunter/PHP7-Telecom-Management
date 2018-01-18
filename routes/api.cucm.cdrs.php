@@ -32,7 +32,6 @@
      **/
     $api->get('cucmcdrs/search/{column}/{search}', 'App\Http\Controllers\CucmCdrCmrController@searchCDR');
 
-
     /**
      * @SWG\Post(
      *     path="/telephony/api/cucmcdrs/calls_with_loss_by_daterange",
@@ -87,8 +86,6 @@
      * )
      **/
     $api->post('cucmcdrs/list_last_24hr_calls_by_number_search', 'App\Http\Controllers\CucmCdrCmrController@list_last_24hr_calls_by_number_search');
-
-
 
     /**
      * @SWG\Get(

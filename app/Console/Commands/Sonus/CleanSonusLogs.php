@@ -54,39 +54,38 @@ class CleanSonusLogs extends Command
 
                 echo "{$time} - Starting Sonus Config Script for {$sbc}".PHP_EOL;
                 $ssh = new \phpseclib\Net\SSH2($sbc, 2024);
-				
-				$connected = $ssh->login(env('SONUSSSHUSER'), env('SONUSSSHPASS'));
-				
-				if(!$connected){
-					print "Connection Failed...";
-				}else{
-					echo "Connected to {$sbc}...".PHP_EOL;
-				}
-				
-                echo "Connecting to {$sbc}...".PHP_EOL;
-				
-				// Needed to edit the visudo file in order to allow deletes without sudo pass. 
-				
-				// Get and print the files exist that are older than 30 days
-				$command = "find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.ACT'";
-                $output = $ssh->exec($command);
-				print $output; 
-				
-				// Delete the files older than 30 days
-				$command = "sudo find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.ACT' -execdir rm -- '{}' \;";
-                $output = $ssh->exec($command);
-				print $output; 
-				
-				// Get and print the files exist that are older than 30 days
-				$command = "find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.DBG'";
-                $output = $ssh->exec($command);
-				print $output; 
-				
-				// Delete the files older than 30 days
-				$command = "sudo find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.DBG' -execdir rm -- '{}' \;";
-                $output = $ssh->exec($command);
-				print $output; 
 
+                $connected = $ssh->login(env('SONUSSSHUSER'), env('SONUSSSHPASS'));
+
+                if (! $connected) {
+                    echo 'Connection Failed...';
+                } else {
+                    echo "Connected to {$sbc}...".PHP_EOL;
+                }
+
+                echo "Connecting to {$sbc}...".PHP_EOL;
+
+                // Needed to edit the visudo file in order to allow deletes without sudo pass.
+
+                // Get and print the files exist that are older than 30 days
+                $command = "find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.ACT'";
+                $output = $ssh->exec($command);
+                echo $output;
+
+                // Delete the files older than 30 days
+                $command = "sudo find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.ACT' -execdir rm -- '{}' \;";
+                $output = $ssh->exec($command);
+                echo $output;
+
+                // Get and print the files exist that are older than 30 days
+                $command = "find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.DBG'";
+                $output = $ssh->exec($command);
+                echo $output;
+
+                // Delete the files older than 30 days
+                $command = "sudo find /var/log/sonus/sbx/evlog/ -type f -mtime +30 -name '*.DBG' -execdir rm -- '{}' \;";
+                $output = $ssh->exec($command);
+                echo $output;
             } catch (\Exception $e) {
                 echo 'Encountered exception: '.$e->getMessage().PHP_EOL;
             }

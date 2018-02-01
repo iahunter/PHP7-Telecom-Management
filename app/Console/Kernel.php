@@ -44,6 +44,7 @@ class Kernel extends ConsoleKernel
         Commands\Sonus\GetSonusCDRs::class,
         Commands\Sonus\GetSonusCallReports::class,
         Commands\Sonus\SonusActiveCallsCache::class,
+		Commands\Sonus\CleanSonusLogs::class,
 
         Commands\OnCall\OnCallPermissions::class,
 

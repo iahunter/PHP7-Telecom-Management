@@ -25,8 +25,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\PhoneLineCSSReport::class,
         Commands\CallManager\CucmPhoneIPAddresses::class,
         Commands\CallManager\CucmGatewayCallCounts::class,
-		Commands\CallManager\CucmSIPPhoneReport::class,
-
+        Commands\CallManager\CucmSIPPhoneReport::class,
 
         // Cleanup
         Commands\CallManager\CucmPhoneandNumberCleanup::class,

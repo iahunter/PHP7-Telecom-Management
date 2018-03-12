@@ -30,7 +30,7 @@ class CucmSIPPhoneReport extends Command
      */
     public function __construct()
     {
-		// Construct new cucm object
+        // Construct new cucm object
         $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
@@ -47,20 +47,18 @@ class CucmSIPPhoneReport extends Command
      */
     public function handle()
     {
-		$search = '%sip%';
-		
+        $search = '%sip%';
+
         $count = Cucmphoneconfigs::where('model', 'LIKE', $search)->count();
-		//print $count; 
+        //print $count;
         if ($count) {
             $phones = Cucmphoneconfigs::where('model', 'LIKE', $search)->get();
-			
-			//print_r($phones);
+
+            //print_r($phones);
 
             foreach ($phones as $phone) {
-				
-                print $phone['name']. ",".$phone['ownerid']. ",". $phone['config']['digestUser']. "," .$phone['description']. "," .$phone['devicepool']. "," .$phone['model'].PHP_EOL; 				
+                echo $phone['name'].','.$phone['ownerid'].','.$phone['config']['digestUser'].','.$phone['description'].','.$phone['devicepool'].','.$phone['model'].PHP_EOL;
             }
-		}
-		
+        }
     }
 }

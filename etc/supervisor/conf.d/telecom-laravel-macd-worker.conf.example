@@ -1,0 +1,12 @@
+
+
+[program:telecom-laravel-macd-worker]
+process_name=%(program_name)s_%(process_num)02d
+
+command=php /PATH_TO_APP/telephony/artisan queue:work --daemon --tries=3
+autostart=true
+autorestart=true
+
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/PATH_TO_APP/telephony/storage/logs/worker.log

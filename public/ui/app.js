@@ -22,7 +22,7 @@
 			// Look at checking date expire and renew automatically. 
 			var date = jwtHelper.getTokenExpirationDate($localStorage.currentUser.token);
 			
-			console.log(date);
+			//console.log(date);
 			
 			if (jwtHelper.isTokenExpired($localStorage.currentUser.token)) {
 				console.log('Cached token is expired, logging out');
@@ -30,7 +30,7 @@
 				$http.defaults.headers.common.Authorization = '';
 				$location.path('/logout');
 			}else{
-				console.log('app.js Cached token is still valid');
+				//console.log('app.js Cached token is still valid');
 				$http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
 				
 				// Attempt to Renew Token

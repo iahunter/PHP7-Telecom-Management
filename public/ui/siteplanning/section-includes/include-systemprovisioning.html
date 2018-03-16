@@ -162,19 +162,34 @@
 							</div>	
 					</div>
 					-->
-
-				<div ng-if="vm.usertemplatedeploybutton">
-					<div class="well col-lg-6 pull-right">
-						<h4>Unity Connection - Site Not Found.</h4>
-						Deploy a User Template for Employees and Partners for each language selected for site. <br><br>
-						<br>
-						<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
-						<hr>
-						
-						<button ng-show="vm.usertemplatedeploybutton" class="btn btn-primary btn-sm" ng-click="vm.create_cupi_usertemplates()"><i class="glyphicon glyphicon-save"></i>  Deploy User Templates</button>
+				
+					<div ng-if="!vm.unityloading">
+						<div ng-if="vm.usertemplatedeploybutton">
+							<div class="well col-lg-6 pull-right">
+								<h4>Unity Connection - Site Not Found.</h4>
+								Deploy a User Template for Employees and Partners for each language selected for site. <br><br>
+								<br>
+								<p><b style="color:red">Warning! </b>Provisioning production systems.</p>
+								<hr>
+								
+								<button ng-show="vm.usertemplatedeploybutton" class="btn btn-primary btn-sm" ng-click="vm.create_cupi_usertemplates()"><i class="glyphicon glyphicon-save"></i>  Deploy User Templates</button>
+							
+							</div>
+						</div>
 					</div>
-				</div>
 					
+					<div style="margin:25px"></div>
+					
+					<div ng-if="vm.unityloading" class="well col-lg-6 pull-right">
+						<legend >Creating User Templates - Please wait... </legend>
+						<div class="well">
+							<div class="row">
+								<div class="container loader"></div>
+							</div>
+							<div style="margin:25px"></div>
+						</div>
+					</div>
+				
 
 				<div ng-if="vm.siteusertemplates.length > 0">
 				

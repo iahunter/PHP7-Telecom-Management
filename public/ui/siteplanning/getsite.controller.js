@@ -17,8 +17,6 @@ angular
 		};
 		
 		
-		
-		
 		vm.isArray = angular.isArray;
 		
 		vm.loading = true;
@@ -45,7 +43,7 @@ angular
 			.then(function(res){
 				// Check for errors and if token has expired. 
 				if(res.data.message){
-					console.log(res);
+					//console.log(res);
 					vm.message = res.data.message;
 					console.log(vm.message);
 					
@@ -184,6 +182,7 @@ angular
 		// Create User Templates - ######## THIS NEEDS WORK!!! ########
 		vm.create_cupi_usertemplates = function() {
 			var language = [];
+			vm.unityloading = true; 
 			if(!vm.site.languages){
 				language.push("english");
 				//console.log(language);
@@ -203,15 +202,25 @@ angular
 				
 				//console.log(template)
 				
-				cupiService.createusertemplatesforsite(template).then(function(data) {
-
+				cupiService.createusertemplatesforsite(template)
+					.then(function(data) {
+					
+					var templates = data.data
+					
+					console.log(templates)
+										
 					// Do something here to pring out results for user. 
+					//alert('Template: ' + template.sitecode + ' has been added to Unity Connection. ')
+
+					siteunitytemplates(); 
+					vm.unityloading = false
+					vm.usertemplatedeploybutton = false
 
 				}, function(error) {
 					alert('An error occurred creating the user templates')
 				});
 
-				return $state.reload();
+				//return $state.reload();
 			});
 
 			/*
@@ -251,6 +260,14 @@ angular
 			});
 			//$state.reload();
 			*/
+			
+			console.log(created_templates)
+			//return $state.reload();
+			
+			//alert('Please refresh your page. ')
+
+			//$timeout(vm.getvmusertemplates,5000); 
+			
 		}
 
 		
@@ -264,7 +281,7 @@ angular
 					
 					// Check for errors and if token has expired. 
 					if(res.data.message){
-						console.log(res);
+						//console.log(res);
 						vm.message = res.data.message;
 						console.log(vm.message);
 						
@@ -296,7 +313,7 @@ angular
 								}else{
 									cucmsitesummary = res.data.response;
 								}
-								console.log(cucmsitesummary);
+								//console.log(cucmsitesummary);
 								
 								vm.cucmsite = {};
 								vm.cucmsite.summary = {};
@@ -324,7 +341,7 @@ angular
 													}
 													
 												}
-												console.log(object)
+												//console.log(object)
 												
 												// Get object details for popover
 												cucmService.get_object_type_by_uuid(object, v)
@@ -358,29 +375,13 @@ angular
 								}
 								
 								//console.log(vm.cucmsite.details)
-								console.log(vm.cucmsite.summary)
+								//console.log(vm.cucmsite.summary)
 							}, function(err){
 								//Error
 							});
 							
 							
-						cupiService.listusertemplatesbysite(vm.sitecode)
-							.then(function(res) {
-								
-								vm.siteusertemplates = res.data;
-								//console.log(vm.siteusertemplates);
-								
-								if(vm.siteusertemplates.length > 0){
-									vm.usertemplatedeploybutton = false;
-								}
-								if(vm.siteusertemplates.length == 0){
-									vm.usertemplatedeploybutton = true;
-								}
-								
-
-							}, function(error) {
-								alert('An error occurred while getting user templates from unity connection')
-							});
+						siteunitytemplates()
 					
 					
 				}, function(err){
@@ -391,6 +392,26 @@ angular
 				
 
 		};
+		
+		function siteunitytemplates(){
+			cupiService.listusertemplatesbysite(vm.sitecode)
+				.then(function(res) {
+					
+					vm.siteusertemplates = res.data;
+					//console.log(vm.siteusertemplates);
+					
+					if(vm.siteusertemplates.length > 0){
+						vm.usertemplatedeploybutton = false;
+					}
+					if(vm.siteusertemplates.length == 0){
+						vm.usertemplatedeploybutton = true;
+					}
+					
+
+				}, function(error) {
+					alert('An error occurred while getting user templates from unity connection')
+				});
+		}
 		
 		vm.cucm_object_details = {};
 		vm.get_cucm_object_type_by_name = function (name, type) {

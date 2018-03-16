@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ExampleAPI - Laravel API example with enterprise directory authentication.
  *
@@ -14,9 +13,7 @@
  * @copyright 2015-2016 @authors
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-
 namespace App\Http\Controllers\Auth;
-
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
@@ -26,7 +23,6 @@ use App\Http\Controllers\Controller;
 use Spatie\Activitylog\Models\Activity;
 // Logger
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-
 class AuthController extends Controller
 {
     /*
@@ -39,9 +35,7 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-
     use ThrottlesLogins;
-
     /**
      * Where to redirect users after login / registration.
      *
@@ -49,7 +43,6 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
     private $ldap = 0;
-
     /**
      * Create a new authentication controller instance.
      *
@@ -60,13 +53,11 @@ class AuthController extends Controller
         // Let unauthenticated users attempt to authenticate, all other functions are blocked
         $this->middleware('jwt.auth', ['except' => ['authenticate']]);
     }
-
     // Added by 3, try to cert auth, if that fails try to post ldap username/password auth, if that fails go away.
     public function authenticate(Request $request)
     {
         // Testing
         //activity()->withProperties($request)->log("User attempting to Authenticate");
-
         $error = '';
         // Only authenticate users based on CERTIFICATE info passed from webserver
         if ($_SERVER['SSL_CLIENT_VERIFY'] == 'SUCCESS') {
@@ -86,14 +77,11 @@ class AuthController extends Controller
                 $error .= "\tError with LDAP authentication. {$e->getMessage()}\n";
             }
         }
-
         // Log activity
         //activity()->withProperties($request)->log("All authentication methods available have failed, ".$error);
         activity('authlog')->withProperties(['username' => $request->username])->log('Auth Error:, '.$error);
-
         abort(401, 'Authentication failed. '.$error);
     }
-
     public function renew(Request $request)
     {
         $response = [];
@@ -117,10 +105,8 @@ class AuthController extends Controller
             $response['success'] = false;
             $response['message'] = 'Encountered exception: '.$e->getMessage();
         }
-
         return response()->json($response);
     }
-
     protected function certauth()
     {
         // Make sure we got a client certificate from the web server
@@ -137,10 +123,8 @@ class AuthController extends Controller
         if (! $cn) {
             throw new \Exception('Authentication failure, could not extract CN from TLS client certificate');
         }
-
         // Get UPN
         $extensions = $cert['tbsCertificate']['extensions'];
-
         foreach ($extensions as $extension) {
             if ($extension['extnId'] == 'id-ce-subjectAltName') {
                 $ext = $extension['extnValue'];
@@ -154,10 +138,8 @@ class AuthController extends Controller
                 }
             }
         }
-
         // Get DN
         $dnparts = $x509->getDN();
-
         //print_r($dnparts);
         $parts = [];
         foreach ($dnparts['rdnSequence'] as $part) {
@@ -177,16 +159,13 @@ class AuthController extends Controller
             }
         }
         $dnstring = implode(',', array_reverse($parts));
-
         // TODO write some checking to make sure the cert DN matches the user DN in AD
-
         return [
                 'username'             => $cn,
                 'dn'                   => $dnstring,
                 'userprincipalname'    => $upn,
                 ];
     }
-
     protected function ldapauth(Request $request)
     {
         if (! $request->has('username') || ! $request->has('password')) {
@@ -201,7 +180,6 @@ class AuthController extends Controller
         }
         // get the username and DN and return them in the data array
         $ldapuser = $this->ldap->user()->info($username, ['*'])[0];
-
         return [
                 'username'          => $ldapuser['cn'][0],
                 'dn'                => $ldapuser['dn'],
@@ -209,7 +187,6 @@ class AuthController extends Controller
                 'userprincipalname' => $ldapuser['userprincipalname'][0],
                 ];
     }
-
     // This is called when any good authentication path succeeds, and creates a user in our table if they have not been seen before
     protected function goodauth(array $data)
     {
@@ -228,7 +205,6 @@ class AuthController extends Controller
         } else {
             $user = $this->create($data);
         }
-
         // IF we are using LDAP, place them into LDAP groups as Bouncer roles
         if (env('LDAP_AUTH')) {
             $userldapinfo = $this->getLdapUserByName($user->username);
@@ -281,7 +257,6 @@ class AuthController extends Controller
                 }
             }
         }
-
         // We maintain a user table for permissions building and group lookup, NOT authentication and credentials
         $credentials = ['dn' => $data['dn'], 'password' => ''];
         try {
@@ -292,21 +267,16 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-
         // Log successfull Login by User
         activity('authlog')->causedBy($user)->withProperties(['username' => $user->username])->log('Authenticated');
-
         return response()->json(compact('token'));
     }
-
     // dump all the known users in our table out
     public function listusers()
     {
         $users = User::all();
-
         return $users;
     }
-
     protected function ldapinit()
     {
         if (! $this->ldap) {
@@ -326,7 +296,6 @@ class AuthController extends Controller
             }
         }
     }
-
     public function changeLdapPhone($username, $phonenumber)
     {
         if (! $this->ldap) {
@@ -342,7 +311,6 @@ class AuthController extends Controller
         if (isset($user[0]['ipphone'][0])) {
             $user_ipphone = $user[0]['ipphone'][0];
         }
-
         $ldapshost = 'ldaps:/'.'/'.env('LDAP_HOST');
         $ad = ldap_connect($ldapshost);
         if (! $ad) {
@@ -361,7 +329,6 @@ class AuthController extends Controller
             throw new \Exception('Error modifying AD attribute for DN '.$user_dn);
         }
         ldap_unbind($ad);
-
         return [
                     'user'    => $user_dn,
                     'ipphone' => [
@@ -370,14 +337,12 @@ class AuthController extends Controller
                                 ],
                     ];
     }
-
     public function getUserLdapPhone($username)
     {
         if (! $this->ldap) {
             $this->ldapinit();
         }
         $user = $this->ldap->user()->info($username, ['*']);
-
         if ($user[0]['dn'] == null) {
             return [
                 'user'              => '',
@@ -386,7 +351,6 @@ class AuthController extends Controller
                 'firstname'         => '',
                 'lastname'          => '',
                 'userprincipalname' => '',
-
                 ];
             //throw new \Exception('Error getting DN for username '.$username);
         }
@@ -396,18 +360,15 @@ class AuthController extends Controller
         if (isset($user[0]['ipphone'][0])) {
             $user_ipphone = $user[0]['ipphone'][0];
         }
-
         if (isset($user[0]['displayname']) && $user[0]['displayname'][0]) {
             $displayname = $user[0]['displayname'][0];
             $name = explode('.', $displayname);
             $firstname = $name[0];
             $lastname = $name[1];
         }
-
         if (isset($user[0]['userprincipalname'][0])) {
             $user_userprincipalname = $user[0]['userprincipalname'][0];
         }
-
         return [
                     'user'              => $user_dn,
                     'ipphone'           => $user_ipphone,
@@ -417,7 +378,6 @@ class AuthController extends Controller
                     'userprincipalname' => $user_userprincipalname,
                     ];
     }
-
     public function getLdapUserByName($username)
     {
         $this->ldapinit();
@@ -461,12 +421,10 @@ class AuthController extends Controller
         //$ldapuser = \Metaclassing\Utility::encodeArrayUTF8($ldapuser);
         return $ldapuser;
     }
-
     public function check_if_app_user($user)
     {
         // Adding Telecom Group Checks.
         $app_groups = [env('ADMIN_GRP'), env('READ_UPDATE_GRP'), env('READ_ONLY_GRP')];
-
         if ((isset($user['memberof'])) && $user['memberof']) {
             foreach ($user['memberof'] as $group) {
                 if (in_array($group, $app_groups)) {
@@ -475,7 +433,6 @@ class AuthController extends Controller
             }
         }
     }
-
     public function userinfo()
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -483,21 +440,17 @@ class AuthController extends Controller
         if (env('LDAP_AUTH')) {
             $userinfo = $this->getLdapUserByName($user->username);
         }
-
         /* For legacy...
         if (! $userinfo) {
             $userinfo = $this->getLdapUserByName($user->samaccountname);
         }
         */
-
         // Use User Pricipal Name instead of samaccountname
         if (! $userinfo) {
             $userinfo = $this->getLdapUserByName($user->userprincipalname);
         }
-
         return response()->json($userinfo);
     }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -513,7 +466,6 @@ class AuthController extends Controller
             'password' => 'required|min:0',
         ]);
     }
-
     /**
      * Create a new user instance after a valid registration.
      *

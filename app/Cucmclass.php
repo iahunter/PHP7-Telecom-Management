@@ -407,6 +407,11 @@ class Cucmclass extends Model
         if (preg_match('/^Cisco 78..$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
+		
+		// Check protocols models that do SIP Only.
+        if (preg_match('/^Cisco Spark/', $PRODUCT)) {
+            $PROTOCOL = 'SIP';
+        }
 
         // Check protocols models that do SIP Only.
         if (preg_match('/^Cisco ATA ...$/', $PRODUCT)) {
@@ -664,6 +669,11 @@ class Cucmclass extends Model
 
         // Check protocols models that do SIP Only.
         if (preg_match('/^Cisco 78..$/', $PRODUCT)) {
+            $PROTOCOL = 'SIP';
+        }
+		
+		// Check protocols models that do SIP Only.
+        if (preg_match('/^Cisco Spark/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
 

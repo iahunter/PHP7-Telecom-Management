@@ -39,33 +39,32 @@ class CleanupOldSonusCDRSInDB extends Command
     public function handle()
     {
         //
-		$start = \Carbon\Carbon::now();
-		
-		print "Starting Sonus CDR DB Cleanup at {$start}..".PHP_EOL;
-		
-		// Only store this many days of CDRs in the DB. 
-		$cutoffdate = $start->subDays(90);
+        $start = \Carbon\Carbon::now();
 
-		$count = 1; 
-		$maxdeletecount = 1000; 
-		
-		while($count > 0){
-			// While count is greater than 0 keep running
-			$count = \App\Sonus5kCDR::where('start_time', '<', $cutoffdate)->count();
-			print "Found {$count} records prior to cutoff date: {$cutoffdate}...".PHP_EOL; 
-			
-			//$cdrs = \App\Sonus5kCDR::where('start_time', '<', $cutoffdate)->limit($maxdeletecount)->get();
+        echo "Starting Sonus CDR DB Cleanup at {$start}..".PHP_EOL;
 
-			//print_r($cdrs); 
-			
-			$delete = \App\Sonus5kCDR::where('start_time', '<', $cutoffdate)->limit($maxdeletecount)->delete();
+        // Only store this many days of CDRs in the DB.
+        $cutoffdate = $start->subDays(90);
 
-			print "Deleted {$delete} records...".PHP_EOL; 
-			
-			//$count = 0; 
-		}
-		
-		print "Ding! Fries are done!".PHP_EOL; 
-		
+        $count = 1;
+        $maxdeletecount = 1000;
+
+        while ($count > 0) {
+            // While count is greater than 0 keep running
+            $count = \App\Sonus5kCDR::where('start_time', '<', $cutoffdate)->count();
+            echo "Found {$count} records prior to cutoff date: {$cutoffdate}...".PHP_EOL;
+
+            //$cdrs = \App\Sonus5kCDR::where('start_time', '<', $cutoffdate)->limit($maxdeletecount)->get();
+
+            //print_r($cdrs);
+
+            $delete = \App\Sonus5kCDR::where('start_time', '<', $cutoffdate)->limit($maxdeletecount)->delete();
+
+            echo "Deleted {$delete} records...".PHP_EOL;
+
+            //$count = 0;
+        }
+
+        echo 'Ding! Fries are done!'.PHP_EOL;
     }
 }

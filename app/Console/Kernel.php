@@ -33,6 +33,7 @@ class Kernel extends ConsoleKernel
 
         // CDRs
         Commands\CallManager\GetCucmCDRs::class,
+		Commands\CallManager\CleanupOldCucmCDRSInDB::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 

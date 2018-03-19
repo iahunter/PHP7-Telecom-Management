@@ -38,18 +38,18 @@ class CleanupOldCucmCDRSInDB extends Command
      */
     public function handle()
     {
-		$start = \Carbon\Carbon::now();
-		$cutoffdate = $start->subDays(90);
-		
-        $this->cleanup_cdr_table($cutoffdate); 
-        $this->cleanup_cmr_table($cutoffdate); 
-		
-		$end = \Carbon\Carbon::now();
-		
+        $start = \Carbon\Carbon::now();
+        $cutoffdate = $start->subDays(90);
+
+        $this->cleanup_cdr_table($cutoffdate);
+        $this->cleanup_cmr_table($cutoffdate);
+
+        $end = \Carbon\Carbon::now();
+
         echo "{$end} Ding! Fries are done!".PHP_EOL;
     }
-	
-	public function cleanup_cdr_table($cutoffdate)
+
+    public function cleanup_cdr_table($cutoffdate)
     {
         //
         $start = \Carbon\Carbon::now();
@@ -77,8 +77,8 @@ class CleanupOldCucmCDRSInDB extends Command
 
         echo 'Ding! Fries are done!'.PHP_EOL;
     }
-	
-	public function cleanup_cmr_table($cutoffdate)
+
+    public function cleanup_cmr_table($cutoffdate)
     {
         //
         $start = \Carbon\Carbon::now();

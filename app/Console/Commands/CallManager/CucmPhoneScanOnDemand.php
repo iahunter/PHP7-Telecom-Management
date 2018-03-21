@@ -38,10 +38,10 @@ class CucmPhoneScanOnDemand extends Command
                                                     );
 
         $this->svn = env('CUCM_SVN');
-		
-		// Print these out for manual commit
-		$this->svnuser = env('SVN_USER'); 
-		$this->svnpass = env('SVN_PASS'); 
+
+        // Print these out for manual commit
+        $this->svnuser = env('SVN_USER');
+        $this->svnpass = env('SVN_PASS');
 
         parent::__construct();
     }
@@ -147,13 +147,13 @@ class CucmPhoneScanOnDemand extends Command
         $end = Carbon::now();
         echo PHP_EOL;
         echo 'Start Time: '.$start.PHP_EOL;
-        echo 'End Time: '.$end.PHP_EOL . PHP_EOL;
-	
-		echo 'To Commit changes to SVN Repo manually, use the following inside the svn folder...'.$end.PHP_EOL;
-		echo 'cd storage/cucm/kiewit-cucm/phones/'.PHP_EOL;
-		echo 'svn add --force ./* '.PHP_EOL;
-		echo 'svn status'.PHP_EOL;
-		echo "svn commit --username {$this->svnuser} --password {$this->svnpass} -m 'autoupdated'".PHP_EOL;
+        echo 'End Time: '.$end.PHP_EOL.PHP_EOL;
+
+        echo 'To Commit changes to SVN Repo manually, use the following inside the svn folder...'.$end.PHP_EOL;
+        echo 'cd storage/cucm/kiewit-cucm/phones/'.PHP_EOL;
+        echo 'svn add --force ./* '.PHP_EOL;
+        echo 'svn status'.PHP_EOL;
+        echo "svn commit --username {$this->svnuser} --password {$this->svnpass} -m 'autoupdated'".PHP_EOL;
     }
 
     protected function getPhonesNamesbySite($site)

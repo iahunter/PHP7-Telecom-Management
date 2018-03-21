@@ -19,7 +19,7 @@ class NumberSearch extends Command
      *
      * @var string
      */
-    protected $description = 'Scan Number Database for Numbers';
+    protected $description = 'Scan Number Database for Numbers - used in sip ports to verify all numbers are in tms database';
 
     /**
      * Create a new command instance.

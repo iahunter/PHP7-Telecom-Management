@@ -23,7 +23,7 @@ class CucmNumberCleanup extends Command
      *
      * @var string
      */
-    protected $description = 'Cleanup Numbers in Cucm that have no Devices assigned, No CallForwarding Acive, and No Mailbox in Cisco Unity';
+    protected $description = 'Runs Report - In Cucm that have no Devices assigned, No CallForwarding Acive, and No Mailbox in Cisco Unity';
 
     /**
      * Create a new command instance.

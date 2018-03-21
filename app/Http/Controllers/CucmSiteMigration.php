@@ -1922,12 +1922,18 @@ class CucmSiteMigration extends Cucm
         }
 
         // Define Delete Order.
-        $DELETEORDER = ['CalledPartyTransformationPattern',
+        $DELETEORDER = [
+					'CallPark',
+                    'RemoteDestinationProfile',
+                    'HuntPilot',
+                    'CtiRoutePoint',
+                    'CalledPartyTransformationPattern',
                     'CallingPartyTransformationPattern',
+                    'ApplicationDialRules',
                     'TransPattern',
                     'updateDevicePool',
-                    'RoutePattern',
-                    'RouteList',
+					'RoutePattern',
+					'RouteList',
                     'RouteGroup',
                     'H323Gateway',
                     'MediaResourceList',
@@ -2198,11 +2204,42 @@ class CucmSiteMigration extends Cucm
             if (! count($site_array)) {
                 throw new \Exception('Indexed results from call mangler is empty');
             }
-            activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $site_array])->log('get_site_details');
+            //return $site_array; 
+			
+			/*foreach($site_array as $object){
+				return $object;
+				activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $object])->log('get_site_details');
+			}
+			*/
+			
         } catch (\Exception $e) {
             return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
         }
 
+		// Try to log each object type. 
+		foreach($site_array as $object){
+			if($object){
+				try {
+					// Try to insert a log for each object we are deleting. 
+					activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $object])->log('get_site_details');
+				} catch (\Exception $e) {
+					//print 'Logging Failed for object: '.$e->getMessage().PHP_EOL;
+					
+						if(is_array($object)){
+							foreach($object as $value){
+								try {
+									// Try to insert a log for each object we are deleting. 
+									activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'data' => $value])->log('get_site_details');
+								} catch (\Exception $e) {
+									//print 'Logging Failed for object: '.$e->getMessage().PHP_EOL;
+								}
+							}
+						}
+						
+				}
+			}
+		}
+		
         //return $site_array;
 
         try {

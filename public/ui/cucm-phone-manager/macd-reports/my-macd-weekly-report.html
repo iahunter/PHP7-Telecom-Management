@@ -170,8 +170,11 @@
 							<td>{{log.id}}</td>
 							<td>{{log.type}}</td>
 							<td>{{log.form_data.ticket_number}}</td>
-							<td ng-if="log.status != 'complete'"style="color:red;"><b>{{log.status}}</b></td>
-							<td ng-if="log.status == 'complete'"><b>{{log.status}}</b></td>
+							<td>
+								<a href="#/macd/jobsummary/{{log.id}}" ng-if="log.status != 'complete'"style="color:red;">
+								<a href="#/macd/jobsummary/{{log.id}}" style="color:black;">
+								<b>{{log.status}}</b>
+							</td>
 							<td>{{log.form_data.sitecode}}</td>
 							<td>{{log.form_data.device}}</td>
 							<td>{{log.form_data.name}}</td>

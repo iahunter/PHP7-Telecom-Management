@@ -18,7 +18,7 @@ class CreatePhoneMacTable extends Migration
             $table->integer('parent')->unsigned()->index()->nullable();    // Parent Block ID
                 $table->foreign('parent')->references('id')->on('phone_mac')->onDelete('cascade');        // Create foreign key and try cascade deletes
 
-            $table->string('type')->nullable();                      // simple name to reference the account by
+            $table->string('type')->index()->nullable();                      // simple name to reference the account by
             $table->string('status')->nullable();                      // simple name to reference the account by
 
             $table->string('created_by')->nullable();              // simple name to reference the account by

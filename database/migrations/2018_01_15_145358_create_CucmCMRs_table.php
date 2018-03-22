@@ -16,7 +16,7 @@ class CreateCucmCMRsTable extends Migration
         Schema::create('cucm_cmrs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('globalCallID_callId');
-            $table->timestamp('dateTimeStamp')->nullable();
+            $table->timestamp('dateTimeStamp')->index()->nullable();
             $table->string('directoryNum');
             $table->string('callIdentifier');
 
@@ -25,10 +25,10 @@ class CreateCucmCMRsTable extends Migration
 
             $table->string('varVQMetrics');
             $table->integer('numberPacketsSent')->nullable();
-            $table->integer('numberPacketsReceived')->nullable();
+            $table->integer('numberPacketsReceived')->index()->nullable();
             $table->integer('jitter')->nullable();
             $table->integer('numberPacketsLost')->nullable();
-            $table->float('packetLossPercent', 8, 2)->nullable();
+            $table->float('packetLossPercent', 8, 2)->index()->nullable();
 
             $table->json('cmrraw')->nullable();
 

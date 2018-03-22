@@ -17,7 +17,7 @@ class CreateGatewayCallsTable extends Migration
         Schema::create('gateway_calls', function (Blueprint $table) {
             $table->timestamps();                                       // Time Stamps
             $table->increments('id');
-            $table->integer('totalCalls');                                // Calls
+            $table->integer('totalCalls')->index();                                // Calls
             $table->json('stats')->nullable();                            // JSON Details Custom Field Data
             $table->softDeletes();                                      // Soft Deletes
         });

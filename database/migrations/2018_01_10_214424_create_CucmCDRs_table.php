@@ -15,15 +15,15 @@ class CreateCucmCDRsTable extends Migration
     {
         Schema::create('cucm_cdrs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('globalCallID_callId');
+            $table->integer('globalCallID_callId')->index();
             $table->integer('origLegCallIdentifier');
 
-            $table->timestamp('dateTimeConnect')->nullable();
-            $table->timestamp('dateTimeDisconnect')->nullable();
+            $table->timestamp('dateTimeConnect')->index()->nullable();
+            $table->timestamp('dateTimeDisconnect')->index()->nullable();
             $table->integer('duration');
 
-            $table->string('callingPartyNumber');
-            $table->string('originalCalledPartyNumber');
+            $table->string('callingPartyNumber')->index();
+            $table->string('originalCalledPartyNumber')->index();
             $table->string('finalCalledPartyNumber');
             $table->string('origDeviceName');
             $table->string('destDeviceName');

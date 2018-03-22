@@ -27,4 +27,39 @@ class PhoneMACD extends Model
             PhoneMACD::where('parent', $macd->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
         });
     }
+	
+	// Try to get status of all the children and return the job status of the worst status. 
+	public static function get_parent_status($id)
+    {
+
+		$children = PhoneMACD::where('parent', $id)
+					->get();
+		
+		$statuss = []; 
+		
+		foreach($children as $child){
+			// Get all the children status's
+			$statuss[] = $child['status']; 
+		}
+		
+		// Count the number each status shows up. 
+		$statuss = array_count_values($statuss); 		
+		//return $statuss;
+		
+		if(in_array('error', $statuss)){
+			$status = 'error'; 
+		}
+		elseif(in_array('entered queue', $statuss)){
+			$status = 'entered queue'; 
+		}
+		elseif(in_array('job recieved', $statuss)){
+			$status = 'job recieved'; 
+		}
+		else{
+			// Get the value that appears most if none of the previous status's exist. 
+			$status = array_search(max($statuss),$statuss); 
+		}
+		
+		return $status; 
+    }
 }

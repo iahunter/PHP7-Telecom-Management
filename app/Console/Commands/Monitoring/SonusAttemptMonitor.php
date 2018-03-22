@@ -85,8 +85,8 @@ class SonusAttemptMonitor extends Command
                 $percentage = round($stat / $totalcalls * 100, 0);
 
                 //print $percentage." %".PHP_EOL;
-				
-				// Only alert if total calls is greater than 500. 
+
+                // Only alert if total calls is greater than 500.
                 if ($totalcalls > 500) {
                     if ($percentage > $this->THRESHOLD_PERCENT) {
                         $thresholds[$key] = [];

@@ -183,11 +183,11 @@ class PhoneMACDController extends Controller
         $macs = PhoneMACD::whereBetween('created_at', [$end, $start])
             ->orderby('created_at', 'desc')->get();
 
-		// Try to get status of all the children and set the job status of the worst status. 
-        foreach($macs as $key => $mac){
-			$mac['status'] = PhoneMACD::get_parent_status($mac['id']); 
-			$macs[$key] = $mac; 
-		}
+        // Try to get status of all the children and set the job status of the worst status.
+        foreach ($macs as $key => $mac) {
+            $mac['status'] = PhoneMACD::get_parent_status($mac['id']);
+            $macs[$key] = $mac;
+        }
 
         $response = [
                     'status_code'          => 200,
@@ -227,13 +227,12 @@ class PhoneMACDController extends Controller
             ->orderby('created_at', 'desc')
             ->get();
 
-			
-		// Try to get status of all the children and set the job status of the worst status. 
-        foreach($macs as $key => $mac){
-			$mac['status'] = PhoneMACD::get_parent_status($mac['id']); 
-			$macs[$key] = $mac; 
-		}
-		
+        // Try to get status of all the children and set the job status of the worst status.
+        foreach ($macs as $key => $mac) {
+            $mac['status'] = PhoneMACD::get_parent_status($mac['id']);
+            $macs[$key] = $mac;
+        }
+
         $response = [
                     'status_code'          => 200,
                     'success'              => true,
@@ -271,12 +270,12 @@ class PhoneMACDController extends Controller
             ->limit(1000)
             ->orderby('created_at', 'desc')
             ->get();
-			
-		// Try to get status of all the children and set the job status of the worst status. 
-        foreach($macs as $key => $mac){
-			$mac['status'] = PhoneMACD::get_parent_status($mac['id']); 
-			$macs[$key] = $mac; 
-		}
+
+        // Try to get status of all the children and set the job status of the worst status.
+        foreach ($macs as $key => $mac) {
+            $mac['status'] = PhoneMACD::get_parent_status($mac['id']);
+            $macs[$key] = $mac;
+        }
 
         $response = [
                     'status_code'          => 200,
@@ -315,11 +314,11 @@ class PhoneMACDController extends Controller
             ->whereBetween('created_at', [$end, $start])
             ->get();
 
-        // Try to get status of all the children and set the job status of the worst status. 
-        foreach($macs as $key => $mac){
-			$mac['status'] = PhoneMACD::get_parent_status($mac['id']); 
-			$macs[$key] = $mac; 
-		}
+        // Try to get status of all the children and set the job status of the worst status.
+        foreach ($macs as $key => $mac) {
+            $mac['status'] = PhoneMACD::get_parent_status($mac['id']);
+            $macs[$key] = $mac;
+        }
 
         $response = [
                     'status_code'          => 200,
@@ -361,11 +360,11 @@ class PhoneMACDController extends Controller
             ->orderby('created_at', 'desc')
             ->get();
 
-		// Try to get status of all the children and set the job status of the worst status. 
-        foreach($macs as $key => $mac){
-			$mac['status'] = PhoneMACD::get_parent_status($mac['id']); 
-			$macs[$key] = $mac; 
-		}
+        // Try to get status of all the children and set the job status of the worst status.
+        foreach ($macs as $key => $mac) {
+            $mac['status'] = PhoneMACD::get_parent_status($mac['id']);
+            $macs[$key] = $mac;
+        }
 
         $response = [
                     'status_code'          => 200,

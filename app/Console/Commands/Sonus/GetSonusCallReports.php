@@ -42,30 +42,29 @@ class GetSonusCallReports extends Command
      */
     public function handle()
     {
-		print Carbon::now()." Starting: ".PHP_EOL; 
+        echo Carbon::now().' Starting: '.PHP_EOL;
 
-		print Carbon::now()." Starting: list_last_hour_top_attempt_counts_by_called_number_report ".PHP_EOL; 
-		$this->list_last_hour_top_attempt_counts_by_called_number_report();
-		print Carbon::now()." Starting: list_todays_top_attempt_counts_by_called_number_report ".PHP_EOL; 
-		$this->list_todays_top_attempt_counts_by_called_number_report();
-		print Carbon::now()." Starting: list_todays_top_attempt_counts_by_calling_number_report ".PHP_EOL; 
-		$this->list_todays_top_attempt_counts_by_calling_number_report();
-        print Carbon::now()." Starting: get_todays_attempt_report ".PHP_EOL; 
-		$this->get_todays_attempt_report();
-		print Carbon::now()." Starting: list_last_7days_callstats ".PHP_EOL; 
+        echo Carbon::now().' Starting: list_last_hour_top_attempt_counts_by_called_number_report '.PHP_EOL;
+        $this->list_last_hour_top_attempt_counts_by_called_number_report();
+        echo Carbon::now().' Starting: list_todays_top_attempt_counts_by_called_number_report '.PHP_EOL;
+        $this->list_todays_top_attempt_counts_by_called_number_report();
+        echo Carbon::now().' Starting: list_todays_top_attempt_counts_by_calling_number_report '.PHP_EOL;
+        $this->list_todays_top_attempt_counts_by_calling_number_report();
+        echo Carbon::now().' Starting: get_todays_attempt_report '.PHP_EOL;
+        $this->get_todays_attempt_report();
+        echo Carbon::now().' Starting: list_last_7days_callstats '.PHP_EOL;
         $this->list_last_7days_callstats();
-		print Carbon::now()." Starting: list_3_month_daily_call_peak_stats ".PHP_EOL; 
+        echo Carbon::now().' Starting: list_3_month_daily_call_peak_stats '.PHP_EOL;
         $this->list_3_month_daily_call_peak_stats();
-		print Carbon::now()." Starting: list_3_month_daily_call_peak_stats_sql ".PHP_EOL; 
+        echo Carbon::now().' Starting: list_3_month_daily_call_peak_stats_sql '.PHP_EOL;
         $this->list_3_month_daily_call_peak_stats_sql();
-		print Carbon::now()." Starting: list_todays_pkt_loss_summary_report ".PHP_EOL; 
+        echo Carbon::now().' Starting: list_todays_pkt_loss_summary_report '.PHP_EOL;
         $this->list_todays_pkt_loss_summary_report();
-		
-		print Carbon::now()." Complete: ".PHP_EOL; 
-		
+
+        echo Carbon::now().' Complete: '.PHP_EOL;
     }
-	
-	protected function list_last_hour_top_attempt_counts_by_called_number_report()
+
+    protected function list_last_hour_top_attempt_counts_by_called_number_report()
     {
         $return = Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report();
 
@@ -86,8 +85,8 @@ class GetSonusCallReports extends Command
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $return, $time);
     }
-	
-	protected function list_todays_top_attempt_counts_by_called_number_report()
+
+    protected function list_todays_top_attempt_counts_by_called_number_report()
     {
         $return = Sonus5kCDR::list_todays_top_attempt_counts_by_called_number_report();
 
@@ -108,8 +107,8 @@ class GetSonusCallReports extends Command
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $return, $time);
     }
-	
-	protected function list_todays_top_attempt_counts_by_calling_number_report()
+
+    protected function list_todays_top_attempt_counts_by_calling_number_report()
     {
         $return = Sonus5kCDR::list_todays_top_attempt_counts_by_calling_number_report();
 
@@ -240,7 +239,7 @@ class GetSonusCallReports extends Command
 
     protected function list_last_month_daily_call_peak_stats()
     {
-		// Only used for 1 month. we are using the last 3 month graph instead.
+        // Only used for 1 month. we are using the last 3 month graph instead.
         $currentDate = \Carbon\Carbon::now();
         $end = $currentDate->toDateTimeString();
         $start = $currentDate->subMonth(3)->toDateTimeString();
@@ -310,6 +309,4 @@ class GetSonusCallReports extends Command
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $stats, $time);
     }
-	
-
 }

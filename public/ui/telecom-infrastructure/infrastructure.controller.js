@@ -118,7 +118,7 @@ angular
 			console.log(form);
 			
 			telecomInfrastructureService.createDevice(angular.copy(form)).then(function(data) {
-				alert("site Added Succesfully" + data);
+				//alert("site Added Succesfully" + data);
 				$state.go('infrastructure');
 			}, function(error) {
 				console.log(error)
@@ -137,7 +137,7 @@ angular
 			device.hostname = device.hostname.toUpperCase();
 			
 			telecomInfrastructureService.updateDevice(device.id, device).then(function(data) {
-			  alert('Device Updated Successfully!')
+			  //alert('Device Updated Successfully!')
 			  $location.path('/infrastructure');
 			}, function(error) {
 				alert('An error occurred while updating the site')

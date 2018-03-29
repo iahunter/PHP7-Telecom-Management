@@ -156,7 +156,71 @@
      * )
      **/
     $api->get('sonus/list_todays_attempts_summary_report', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_attempts_summary_report');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/list_last_hour_top_attempt_counts_by_called_number_report",
+     *     tags={"CDR - Sonus History"},
+     *     summary="Get Todays Top Call Report",
+     *     description="",
+     *     operationId="attempts",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/list_last_hour_top_attempt_counts_by_called_number_report', 'App\Http\Controllers\Sonus5kCDRcontroller@list_last_hour_top_attempt_counts_by_called_number_report');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/list_todays_top_attempt_counts_by_called_number_report",
+     *     tags={"CDR - Sonus History"},
+     *     summary="Get Todays Top Call Report",
+     *     description="",
+     *     operationId="attempts",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/list_todays_top_attempt_counts_by_called_number_report', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_top_attempt_counts_by_called_number_report');
 
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/sonus/list_todays_top_attempt_counts_by_calling_number_report",
+     *     tags={"CDR - Sonus History"},
+     *     summary="Get Todays Top Call Report",
+     *     description="",
+     *     operationId="attempts",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('sonus/list_todays_top_attempt_counts_by_calling_number_report', 'App\Http\Controllers\Sonus5kCDRcontroller@list_todays_top_attempt_counts_by_calling_number_report');
+	
+	
     /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/list_todays_pkt_loss_summary_report",

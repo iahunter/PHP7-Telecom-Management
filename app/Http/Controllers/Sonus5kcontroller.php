@@ -174,7 +174,7 @@ class Sonus5kcontroller extends Controller
             $cache = Cache::get($cache_key);
             $cache['cache'] = true;
 
-            return $cache;
+            //return $cache;
         } else {
             //Log::info(__METHOD__.' Did not Use Cache');
             $RETURN = [];
@@ -184,6 +184,13 @@ class Sonus5kcontroller extends Controller
                 $calls = Sonus5k::listcallDetailStatus($SBC);
                 $media = Sonus5k::listcallMediaStatus($SBC);
 
+				if(!$calls){
+					return null;
+				}
+				if(!$media){
+					return null;
+				}
+				
                 $calls = (array) $calls['sonusActiveCall:callDetailStatus'];
                 $media = (array) $media['sonusActiveCall:callMediaStatus'];
 
@@ -263,6 +270,7 @@ class Sonus5kcontroller extends Controller
                 return $RETURN;
             }
         } else {
+			return 'No results found.';
             throw new \Exception('Nothing Returned...');
         }
     }

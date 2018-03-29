@@ -45,7 +45,7 @@ angular
 
 					var callarray = res.data.result;
 					vm.callarray = callarray
-					//console.log(vm.callarray)
+					console.log(vm.callarray)
 
 					// Convert DB Timestamp to local PC Time. 
 					angular.forEach(callarray, function(call) {
@@ -78,6 +78,7 @@ angular
 					//$timeout(initController,5000); 
 						
 				}, function(err){
+					console.log(err)
 					alert(err);
 				});
 		}

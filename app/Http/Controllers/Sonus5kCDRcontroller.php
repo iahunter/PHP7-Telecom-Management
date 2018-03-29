@@ -147,7 +147,7 @@ class Sonus5kCDRcontroller extends Controller
         $end = Carbon::now()->toDateTimeString();
         //return $start;
         if (! \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
-			->where('type', 'STOP')
+            ->where('type', 'STOP')
             ->where(function ($query) {
                 $query->where('ingress_lost_ptks', '>', 100)
                 ->orWhere('egress_lost_ptks', '>', 100)
@@ -157,7 +157,7 @@ class Sonus5kCDRcontroller extends Controller
             abort(404, 'No records found');
         } else {
             $calls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])
-				->where('type', 'STOP')
+                ->where('type', 'STOP')
                 ->where(function ($query) {
                     $query->where('ingress_lost_ptks', '>', 100)
                     ->orWhere('egress_lost_ptks', '>', 100);
@@ -226,17 +226,17 @@ class Sonus5kCDRcontroller extends Controller
         $end = Carbon::now()->toDateTimeString();
         //return $start;
         if (! \App\Sonus5kCDR::whereBetween('disconnect_time', [$start, $end])
-				->where('type', 'ATTEMPT')
-				->count()
+                ->where('type', 'ATTEMPT')
+                ->count()
             ) {
             abort(404, 'No records found');
         } else {
             $calls = \App\Sonus5kCDR::whereBetween('disconnect_time', [$start, $end])
-				->where('type', 'ATTEMPT')
+                ->where('type', 'ATTEMPT')
                 ->orderby('disconnect_time')
                 ->get();
         }
-		
+
         $return = [];
 
         foreach ($calls as $call) {
@@ -301,8 +301,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_last_hour_top_attempt_counts_by_called_number_report(Request $request)
+
+    public function list_last_hour_top_attempt_counts_by_called_number_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
@@ -341,8 +341,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_todays_top_attempt_counts_by_called_number_report(Request $request)
+
+    public function list_todays_top_attempt_counts_by_called_number_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();
@@ -381,8 +381,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_todays_top_attempt_counts_by_calling_number_report(Request $request)
+
+    public function list_todays_top_attempt_counts_by_calling_number_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();

@@ -58,6 +58,7 @@ class Kernel extends ConsoleKernel
         Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
         Commands\Monitoring\SonusAttemptMonitor::class,
+		Commands\Monitoring\MACDJobMonitor::class,
 
         Commands\Numbers\NumberSearch::class,
 

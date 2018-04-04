@@ -43,8 +43,8 @@ class PhoneMACD extends Model
 
         // Count the number each status shows up.
         $statuss = array_count_values($statuss);
-       
-		// Check these in order to determine status. 
+
+        // Check these in order to determine status.
         if (array_key_exists('error', $statuss)) {
             $status = 'error';
         } elseif (array_key_exists('entered queue', $statuss)) {

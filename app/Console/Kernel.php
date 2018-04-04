@@ -46,13 +46,12 @@ class Kernel extends ConsoleKernel
         Commands\Sonus\GetSonusCallReports::class,
         Commands\Sonus\SonusActiveCallsCache::class,
         Commands\Sonus\CleanSonusLogs::class,
-		
 
         // CDRs
         Commands\Sonus\GetSonusCDRs::class,
         Commands\Sonus\CleanupOldSonusCDRSInDB::class,
-		Commands\Sonus\CleanupLoopCDRS::class,
-		
+        Commands\Sonus\CleanupLoopCDRS::class,
+
         Commands\OnCall\OnCallPermissions::class,
 
         Commands\BouncerPermissions\BouncerPermissions::class,
@@ -60,9 +59,8 @@ class Kernel extends ConsoleKernel
         Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
         Commands\Monitoring\SonusAttemptMonitor::class,
-		Commands\Monitoring\CucmSonusLoopMitigator::class,
-		Commands\Monitoring\MACDJobMonitor::class,
-		
+        Commands\Monitoring\CucmSonusLoopMitigator::class,
+        Commands\Monitoring\MACDJobMonitor::class,
 
         Commands\Numbers\NumberSearch::class,
 

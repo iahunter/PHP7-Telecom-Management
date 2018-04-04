@@ -389,7 +389,11 @@ class PhoneMACDController extends Controller
         }
 
         $macd = PhoneMACD::find($id);
+		
+		// Get status of MACD
+		$macd->status = PhoneMACD::get_parent_status($id);
 
+		//return PhoneMACD::get_parent_status($id);
         // Search for DID by numberCheck if there are any matches.
         if (! PhoneMACD::where('parent', '=', $id)
                 ->count()) {

@@ -22,7 +22,7 @@ class MACDJobMonitor extends Command
      *
      * @var string
      */
-    protected $description = 'Montitor for Stuck MACD Work and restart supervisor';
+    protected $description = 'Montitor for Stuck MACD Work and restart supervisor - Run every 30 mins in Cron';
 
     /**
      * Create a new command instance.
@@ -42,15 +42,24 @@ class MACDJobMonitor extends Command
     public function handle()
     {
         //
+		$now = Carbon::now(); 
+		print $now." monitoring:macd_job_monitor - Starting... ".PHP_EOL;
 		$jobs = $this->check_for_stuck_jobs();
 		//$jobs = json_decode($jobs, true); 			// Convert Collection to an array
-		print_r($jobs); 
-		
-		sleep(600); // Wait for 10 mins and then check the queue again to see if any of these are still stuck in there. 
+		if(count($jobs)){
+			print_r($jobs); 
+		}else{
+			print $now." monitoring:macd_job_monitor - Complete. ".PHP_EOL;
+			die(); 	// Kill the script if no jobs in queue. 
+		}
+
+		sleep(60); // Wait for 1 mins and then check the queue again to see if any of these are still stuck in there. 
 		
 		$newjobs = $this->check_for_stuck_jobs();
 		
-		print_r($newjobs); 
+		if(count($newjobs)){
+			print_r($newjobs); 
+		}
 		
 		$sup_restart = false;
 		
@@ -61,14 +70,19 @@ class MACDJobMonitor extends Command
 			}
 		}
 		
-		print "Supervisor Restart: ".$sup_restart.PHP_EOL . PHP_EOL;
+		//print "Supervisor Restart: ".$sup_restart.PHP_EOL . PHP_EOL;
 		
 		// If we set supervisor restart above, Restart the supervisor service. 
 		if ($sup_restart){
-			print "Restarting Supervisor...".PHP_EOL;
-			shell_exec('service supervisor restart'); 
-			print "Supervisor Restart Complete.".PHP_EOL;
+			$now = Carbon::now()->toDateTimeString();
+			
+			print $now. " Restarting Supervisor...".PHP_EOL;
+			shell_exec('sudo service supervisor restart'); 
+			print $now. " Supervisor Restart Complete.".PHP_EOL;
 		}
+		
+		$now = Carbon::now(); 
+		print $now." monitoring:macd_job_monitor - Complete. ".PHP_EOL;
 		
     }
 	

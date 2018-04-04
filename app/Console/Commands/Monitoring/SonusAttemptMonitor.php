@@ -113,7 +113,7 @@ class SonusAttemptMonitor extends Command
             // If we have some alerts that have met the threshold, send an email alert.
             print_r($data);
             $this->sendemail($data);
-            $this->send_text_to_oncall($data);
+            //$this->send_text_to_oncall($data);
         }
     }
 

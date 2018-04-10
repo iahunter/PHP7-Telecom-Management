@@ -67,8 +67,8 @@ class CucmSonusLoopMitigator extends Command
         $cdrs = Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report();
 
         $cdrs_array = json_decode(json_encode($cdrs), true);
-
-        print_r($cdrs_array);
+		
+		//print_r($cdrs_array); 
 
         $threashold = $average * 3; // Normal call volume is only 8hr of the day so we multiply by 3 to get full average per hour.
 
@@ -120,7 +120,7 @@ class CucmSonusLoopMitigator extends Command
                             if (preg_match("/9{$number}/", $cfa) || preg_match("/91{$number}/", $cfa)) {
                                 echo 'WARNING!!!! This line is forwarded to itself!!!!'.PHP_EOL;
                                 $loops++;
-                                print_r($line);
+                                //print_r($line);
                                 $new_cfa = [
                                             'pattern'            => $line['pattern'],
                                             'routePartitionName' => $line['routePartitionName']['_'],
@@ -189,14 +189,14 @@ class CucmSonusLoopMitigator extends Command
             $now = Carbon::now()->toDateTimeString();
             echo $now.'cucm_sonus_loop_mitigator: Did work'.PHP_EOL;
 
-            $cdrs_json = json_encode($cdrs);
+            $cdrs_json = json_encode($cdrs, JSON_PRETTY_PRINT);
 
             $data = [
                         'time'                         	=> $now,
                         'loops'                 		      => $loops,
                         'fixed_loops'                   => $fixed_loops,
                         'unfixed_loops'        			      => $unfixed_loops,
-                        'attempt_counts'					           => $cdrs_array,
+						'attempt_counts'					=> $cdrs_array,
                         'cdrs'                       	  => $cdrs,
                         'cdrs_json'						               => $cdrs_json,
                         ];
@@ -222,7 +222,7 @@ class CucmSonusLoopMitigator extends Command
                         ->bcc([env('BACKUP_EMAIL_TO')]);
         });
 
-        //echo 'Email sent to '.env('ONCALL_EMAIL_TO').PHP_EOL;
+        echo 'Email sent to '.env('ONCALL_EMAIL_TO').PHP_EOL;
         echo 'Email sent to '.env('BACKUP_EMAIL_TO').PHP_EOL;
     }
 }

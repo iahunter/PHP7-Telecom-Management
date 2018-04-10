@@ -41,9 +41,9 @@ Bouncer roles manage rights to the numbers databases via the application http co
 #Frontend UI 
 There is also a Frontend UI that is included using Bootstrap3, AngularJS 1.5, Angular-Chart.js and angular-jwt. 
 
-* Bootstrap is at http://getbootstrap.com. 
+* Bootstrap is at http://getbootstrap.com/docs/3.3/ 
 
-* AngularJS is at https://docs.angularjs.org/api
+* AngularJS v1.5.8 is at https://docs.angularjs.org/api
 
 * Angular Chart is at https://jtblin.github.io/angular-chart.js/
 

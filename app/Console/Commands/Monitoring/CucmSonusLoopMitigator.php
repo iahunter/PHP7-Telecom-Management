@@ -67,8 +67,8 @@ class CucmSonusLoopMitigator extends Command
         $cdrs = Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report();
 
         $cdrs_array = json_decode(json_encode($cdrs), true);
-		
-		//print_r($cdrs_array); 
+
+        //print_r($cdrs_array);
 
         $threashold = $average * 3; // Normal call volume is only 8hr of the day so we multiply by 3 to get full average per hour.
 
@@ -196,7 +196,7 @@ class CucmSonusLoopMitigator extends Command
                         'loops'                 		      => $loops,
                         'fixed_loops'                   => $fixed_loops,
                         'unfixed_loops'        			      => $unfixed_loops,
-						'attempt_counts'					=> $cdrs_array,
+                        'attempt_counts'					           => $cdrs_array,
                         'cdrs'                       	  => $cdrs,
                         'cdrs_json'						               => $cdrs_json,
                         ];

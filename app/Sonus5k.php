@@ -37,7 +37,7 @@ class Sonus5k extends Model
 
         $apiRequest = $client->request($verb, $apiurl, $headers);
 
-		//return json_decode($apiRequest->getBody()); 
+        //return json_decode($apiRequest->getBody());
         return json_decode($apiRequest->getBody()->getContents(), true);
     }
 

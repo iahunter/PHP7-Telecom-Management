@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Sonus5kCDR;
 use Illuminate\Console\Command;
 use phpseclib\Net\SFTP as Net_SFTP;
+use Illuminate\Support\Facades\Log;
 
 class GetSonusCDRs extends Command
 {
@@ -120,39 +121,42 @@ class GetSonusCDRs extends Command
                     } else {
                         echo 'Creating New Record: '.$RECORD['accounting_id'].PHP_EOL;
                         \App\Sonus5kCDR::firstOrCreate($RECORD);
-
-                        // Insert into Kafka
-                        if (getenv('KAFKA_BROKERS')) {
-                            // instantiate a Kafka producer config and set the broker IP
-                            $config = \Kafka\ProducerConfig::getInstance();
-                            $config->setMetadataBrokerList(getenv('KAFKA_BROKERS'));
-                            // instantiate new Kafka producer
-                            $producer = new \Kafka\Producer();
-
-                            // ship data to Kafka
-                            try {
-                                // Try to send to Kafka
-                                $result = $producer->send([
-                                    [
-                                        'topic' => 'sonus_cdr',
-                                        'value' => json_encode($RECORD),
-                                    ],
-                                ]);
-
-                                // check for and log errors
-                                if ($result[0]['data'][0]['partitions'][0]['errorCode']) {
-                                    print_r($result);
-                                    Log::error('[!] [KAFKA_WARNING] Error sending CDR alert to Kafka: '.$result[0]['data'][0]['partitions'][0]['errorCode']);
-                                } else {
-                                    //Log::info('[+] CAS high alert successfully sent to Kafka: '.$alert['alert_id']);
-                                }
-
-                                //print_r($result);
-                            } catch (\Exception $E) {
-                                //echo "{$E->getMessage()}".PHP_EOL;
-                            }
-                        }
-
+						
+						// Insert into Kafka
+						if(getenv('KAFKA_BROKERS')){
+							// instantiate a Kafka producer config and set the broker IP
+							$config = \Kafka\ProducerConfig::getInstance();
+							$config->setMetadataBrokerList(getenv('KAFKA_BROKERS'));
+							// instantiate new Kafka producer
+							$producer = new \Kafka\Producer();
+							
+							// ship data to Kafka
+							try{
+								// Try to send to Kafka
+								$result = $producer->send([
+									[
+										'topic' => 'sonus_cdr',
+										'value' => json_encode($RECORD),
+									],
+								]);
+								
+								// check for and log errors
+								if ($result[0]['data'][0]['partitions'][0]['errorCode']) {
+									print_r($result); 
+									Log::error('[!] [KAFKA_WARNING] Error sending CDR alert to Kafka: '.$result[0]['data'][0]['partitions'][0]['errorCode']);
+								} else {
+									//Log::info('[+] CAS high alert successfully sent to Kafka: '.$alert['alert_id']);
+								}
+								
+								//print_r($result); 
+								
+							} catch (\Exception $E) {
+								//echo "{$E->getMessage()}".PHP_EOL;
+							}
+						}
+						
+						//Log::error('[!] [KAFKA_WARNING] Error sending CDR alert to Kafka: '.$result[0]['data'][0]['partitions'][0]['errorCode']);
+						
                         //print_r($RECORD);
                     }
                 }

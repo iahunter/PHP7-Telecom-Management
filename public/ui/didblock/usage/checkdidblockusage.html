@@ -111,6 +111,14 @@
 										<span ng-show="sortType == 'details.status' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'details.details.mailbox.User.Alias'; sortReverse = !sortReverse" style="color:black">
+									Mailbox Alias
+										<span ng-show="sortType == 'details.details.mailbox.User.Alias' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'details.details.mailbox.User.Alias' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
 
 							<th ng-if="vm.showassignments">
 								<a href="" ng-click="sortType = 'assignments'; sortReverse = !sortReverse" style="color:black">
@@ -128,6 +136,7 @@
 						<td><a href="#/didblock/{{number.details.parent}}"><b>{{number.details.parent}}</b></td>
 						<td><a href="#/line/{{number.number}}" target="_blank"><b>{{number.number}}</b></a></td> 
 						<td>{{number.details.status}}</td> 
+						<td>{{number.details.mailbox.User.Alias}}</td> 
 						<td ng-if="vm.showassignments">
 						<!--Nested Table inside Row-->
 							<div ng-show="number.details.assignments" class="panel panel-default" style="background-color: transparent;">

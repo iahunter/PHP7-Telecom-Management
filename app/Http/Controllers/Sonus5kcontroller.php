@@ -237,8 +237,27 @@ class Sonus5kcontroller extends Controller
                         } else {
                             $call['egress_pkt_loss_percent'] = 0;
                         }
-						//return $call; 
-                        $calls[] = $call;
+						//return $call;
+						
+						//$calls[] = $return;
+
+						// Create a new Array for only the details we need to use for the UI. Other stuff is just using memory and not needed. 
+						$return = []; 
+						$return['GCID'] = $call['GCID']; 
+						$return['state'] = $call['state']; 
+						$return['callDuration'] = $call['callDuration']; 
+						$return['callingNumber'] = $call['callingNumber']; 
+						$return['calledNumber'] = $call['calledNumber']; 
+						$return['ingressMediaStream1PacketsLost'] = $call['ingressMediaStream1PacketsLost']; 
+						$return['ingress_pkt_loss_percent'] = $call['ingress_pkt_loss_percent']; 
+						$return['egressMediaStream1PacketsLost'] = $call['egressMediaStream1PacketsLost']; 
+						$return['egress_pkt_loss_percent'] = $call['egress_pkt_loss_percent']; 
+						$return['ingressMediaStream1RemoteIpSockAddr'] = $call['ingressMediaStream1RemoteIpSockAddr']; 
+						$return['ingressMediaStream1LocalIpSockAddr'] = $call['ingressMediaStream1LocalIpSockAddr']; 
+						$return['egressMediaStream1LocalIpSockAddr'] = $call['egressMediaStream1LocalIpSockAddr']; 
+						$return['egressMediaStream1RemoteIpSockAddr'] = $call['egressMediaStream1RemoteIpSockAddr']; 
+
+                        $calls[] = $return;
                     }
 
                     $RETURN[$SBC] = $calls;

@@ -160,40 +160,6 @@
 										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
-														
-							<th>
-								<a href="" ng-click="sortType = 'ingressRFactorInbound'; sortReverse = !sortReverse" style="color:black">
-									ingressRFactorIn
-										<span ng-show="sortType == 'ingressRFactorInbound' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'ingressRFactorInbound' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>								
-							<th>
-								<a href="" ng-click="sortType = 'ingressRFactorOutbound'; sortReverse = !sortReverse" style="color:black">
-									ingressRFactorOut
-										<span ng-show="sortType == 'ingressRFactorOutbound' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'ingressRFactorOutbound' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'egressMediaStream1LocalIpSockAddr'; sortReverse = !sortReverse" style="color:black">
-									egressRFactorIn
-										<span ng-show="sortType == 'egressMediaStream1LocalIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'egressMediaStream1LocalIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>	
-							<th>
-								<a href="" ng-click="sortType = 'egressMediaStream1RemoteIpSockAddr'; sortReverse = !sortReverse" style="color:black">
-									egressRFactorOut
-										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-show="sortType == 'egressMediaStream1RemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>	
-							
-							
-							
-							
 
 						</tr>
 					</thead>
@@ -218,15 +184,7 @@
 						<td>{{ call.ingressMediaStream1LocalIpSockAddr}}</td>
 						<td>{{ call.egressMediaStream1LocalIpSockAddr}}</td>
 						<td>{{ call.egressMediaStream1RemoteIpSockAddr}}</td>
-						
-						
-						<!-- Media Statistics RFactor doesn't seem to be changing much. May phase this out.-->
-						<td>{{ call.ingressRFactorInbound}}</td>
-						<td>{{ call.ingressRFactorOutbound}}</td>
-						<td>{{ call.egressRFactorInbound}}</td>
-						<td>{{ call.egressRFactorOutbound}}</td>
-						
-						
+
 						
 						
 

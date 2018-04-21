@@ -36,4 +36,8 @@ JSON;
 
 print $HTML;
 
+print "<br><br>"; 
+print "<h1>Array</h1>"; 
+print_r(json_decode($json, true)); 
+
 ?>

@@ -124,6 +124,10 @@ class GetSonusCDRs extends Command
 
                         // Insert into Kafka
                         if (getenv('KAFKA_BROKERS')) {
+							
+							//$RECORD['disconnect_time'] = Carbon::parse($RECORD['disconnect_time']); 
+							
+							
                             // instantiate a Kafka producer config and set the broker IP
                             $config = \Kafka\ProducerConfig::getInstance();
                             $config->setMetadataBrokerList(getenv('KAFKA_BROKERS'));

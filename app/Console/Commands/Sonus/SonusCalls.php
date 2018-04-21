@@ -49,7 +49,8 @@ class SonusCalls extends Command
         $STATS = [];
         foreach ($this->SBCS as $SBC) {
             $STAT = Sonus5k::getactivecallstats($SBC);
-            $STAT = $STAT['sonusActiveCall:callCountStatus'];
+			print_r($STAT); 
+            //$STAT = $STAT['sonusActiveCall:callCountStatus']; 		// Removed 042118 when changing to xml
             $sbccalls = $STAT['totalCalls'];
             $totalCalls = $totalCalls + $sbccalls;
             $STATS[$SBC] = $STAT;

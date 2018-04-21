@@ -30,7 +30,7 @@ angular
 					
 					// Check for errors and if token has expired. 
 					if(res.data.message){
-						console.log(res);
+						//console.log(res);
 						vm.message = res.data.message;
 						console.log(vm.message);
 						
@@ -45,7 +45,7 @@ angular
 					
 					var calls = res.data;
 					
-					console.log(calls)
+					//console.log(calls)
 					
 					vm.totalcallcount = calls.totalCalls
 
@@ -57,15 +57,15 @@ angular
 					// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
 					angular.forEach(calls.stats, function(value, key) {
 
-						  console.log(key)
+						  //console.log(key)
 						  vm.callcounts[key] = value.totalCalls
 					});
 					
 					
 					//console.log(vm.callarray);
 					
-					console.log(vm.totalcallcount);
-					console.log(vm.callcounts);
+					//console.log(vm.totalcallcount);
+					//console.log(vm.callcounts);
 					
 					if(vm.callarray.length == 0){
 						// If no active calls returned then set the noactivecalls variable to display the message to the user. 
@@ -86,9 +86,9 @@ angular
 					
 					// Check for errors and if token has expired. 
 					if(res.data.message){
-						console.log(res);
+						//console.log(res);
 						vm.message = res.data.message;
-						console.log(vm.message);
+						//console.log(vm.message);
 						
 						if(vm.message == "Token has expired"){
 							// Send user to login page if token expired. 
@@ -105,19 +105,20 @@ angular
 					// Create our blank simple array for datatimegrps 
 					vm.calldetailsarray = [];
 					vm.callcountsummary = {};
-					
+					console.log("CallDetails:");
 					console.log(calldetails);
 					// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
 					angular.forEach(calldetails, function(value, key) {
 						  //vm.callcountsummary[key] = 0;
-						  angular.forEach(value, function(v, k) {
-								  if (v == null){
+						  //console.log(key); 
+
+								  if (key == null){
 									  //alert("No Active Calls");
 									  vm.loading = false;
 								  }
 								  
 								  else{
-									  angular.forEach(v, function(call, object) {
+									  angular.forEach(value, function(call, object) {
 										  //console.log(call.calledNumber);
 										  //console.log(call);
 										  call['SBC'] = key;
@@ -126,7 +127,7 @@ angular
 									  });
 								  }
 							  
-							});
+
 					});
 					
 					

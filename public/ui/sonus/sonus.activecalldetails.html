@@ -31,6 +31,13 @@
 			
 		<div style="margin:25px"></div>
 		
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
 
 		<div ng-if="vm.message;" class="well">
 			<div class="row">
@@ -39,9 +46,9 @@
 			<div style="margin:65px"></div>
 		</div>
 		
-		<div>
+		<div ng-if="vm.callcount && !vm.loading">
 			
-			<h3>Found {{vm.callcount}} Active Calls <small>Updates every 30 seconds. Max records is 100 calls</small></h3>
+			<h3>Found {{vm.callcount}} Active Calls <small>Updates every 30 seconds.</small></h3>
 			
 			
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">

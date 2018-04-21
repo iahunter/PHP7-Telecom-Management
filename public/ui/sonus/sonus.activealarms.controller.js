@@ -52,14 +52,14 @@ angular
 					//console.log(alarms);
 					// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
 					angular.forEach(alarms, function(value, key) {
-						  angular.forEach(value, function(v, k) {
-								  if (v == null){
+
+								  if (value == null){
 									  //alert("No Active Calls");
 									  vm.loading = false;
 								  }
 								  
 								  else{
-									  angular.forEach(v, function(alarm, object) {
+									  angular.forEach(value, function(alarm, object) {
 										  //console.log(alarm.alarmedNumber);
 										  //console.log(alarm);
 										  alarm['SBC'] = key;
@@ -69,7 +69,7 @@ angular
 									  });
 								  }
 							  
-							});
+
 					});
 					
 					

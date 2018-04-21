@@ -50,16 +50,14 @@ class SonusActiveCallsCache extends Command
         //Log::info(__METHOD__.' Did not Use Cache');
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
-            $calls = Sonus5k::listactivecalls($SBC);
-            print_r($calls);
-            echo count($calls);
-            $CALLS[$SBC] = $calls;
+			$CALLS[$SBC] = Sonus5k::listactivecalls($SBC);
         }
 
         // Name of Cache key.
         $key = 'listactivecalls';
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
+		print_r($CALLS);
         $time = Carbon::now()->addSeconds(10);
         Cache::put($key, $CALLS, $time);
     }

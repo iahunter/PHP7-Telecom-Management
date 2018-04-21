@@ -22,7 +22,7 @@ class Sonus5k extends Model
                             'verify'  => false,
                             'headers' => [
                                         'Content-Type'     => 'application/vnd.yang.data+json',
-                                        'Accept'           => 'application/vnd.yang.data+json',
+                                        'Accept'           => 'application/vnd.yang.data+xml',			// Changed to xml because Sonus is not supporting JSON - 042118 - TR
                                     ],
                         ];
         if ($verb == 'POST') {
@@ -35,10 +35,16 @@ class Sonus5k extends Model
             return $e->getMessage();
         }
 
-        $apiRequest = $client->request($verb, $apiurl, $headers);
+		// Sonus is not supporting JSON at this time so we have to use XML - they are limiting the return on JSON to 100 records. 
+		$xml = $apiRequest->getBody()->getContents(); 
+		
 
-        //return json_decode($apiRequest->getBody());
-        return json_decode($apiRequest->getBody()->getContents(), true);
+		// Try to convert the xml into an array. 
+		$xml = simplexml_load_string($xml);
+		$json = json_encode($xml);
+		return json_decode($json,TRUE);
+		
+        //return json_decode($apiRequest->getBody()->getContents(), true);
     }
 
     public static function configbackup($SBC)
@@ -84,23 +90,54 @@ class Sonus5k extends Model
         $verb = 'GET';
         $apiurl = "https://{$SBC}/api/operational/global/callSummaryStatus/";
 
-        return self::wrapapi($verb, $apiurl);
+		$response = self::wrapapi($verb, $apiurl);
+		
+		// We just want to return an array of calls. 
+		if(($response['callSummaryStatus']) && array_key_exists("GCID", $response['callSummaryStatus'])) {
+			// Wrap the single object in an array - found GCID key inside CallSummaryStatus
+			return [$response['callSummaryStatus']];
+		}else{
+			return $response['callSummaryStatus'];
+		}
+        
+		//return self::wrapapi($verb, $apiurl);
     }
 
     public static function listactivealarms($SBC)
     {
         $verb = 'GET';
         $apiurl = "https://{$SBC}/api/operational/alarms/currentStatus";
+		
+		$response = self::wrapapi($verb, $apiurl);
+		
+		// We just want to return an array of alarms. 
+		if(($response['currentStatus']) && array_key_exists("alarmId", $response['currentStatus'])) {
+			// Wrap the single object in an array - found GCID key inside CallSummaryStatus
+			return [$response['currentStatus']];
+		}else{
+			return $response['currentStatus'];
+		}
 
-        return self::wrapapi($verb, $apiurl);
+        //return self::wrapapi($verb, $apiurl);
     }
 
     public static function listcallDetailStatus($SBC)
     {
         $verb = 'GET';
         $apiurl = "https://{$SBC}/api/operational/global/callDetailStatus";
+		
+		$response = self::wrapapi($verb, $apiurl); 
+		//return $response; 
+		
+		// We just want to return an array of calls. 
+		if(($response['callDetailStatus']) && array_key_exists("GCID", $response['callDetailStatus'])) {
+			// Wrap the single object in an array - found GCID key inside CallSummaryStatus
+			return [$response['callDetailStatus']];
+		}else{
+			return $response['callDetailStatus'];
+		}
 
-        return self::wrapapi($verb, $apiurl);
+        //return self::wrapapi($verb, $apiurl);
     }
 
     public static function listcallMediaStatus($SBC)
@@ -111,7 +148,17 @@ class Sonus5k extends Model
         // Example Call by GCID
         // $apiurl = https://{$SBC}/api/operational/global/callMediaStatus/34782
 
-        return self::wrapapi($verb, $apiurl);
+        //return self::wrapapi($verb, $apiurl);
+		
+		$response = self::wrapapi($verb, $apiurl); 
+
+		// We just want to return an array of calls. 
+		if(($response['callMediaStatus']) && array_key_exists("GCID", $response['callMediaStatus'])) {
+			// Wrap the single object in an array - found GCID key inside CallSummaryStatus
+			return [$response['callMediaStatus']];
+		}else{
+			return $response['callMediaStatus'];
+		}
     }
 
     /*

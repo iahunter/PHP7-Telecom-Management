@@ -31,6 +31,13 @@
 			
 		<div style="margin:25px"></div>
 		
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
 
 		<div ng-if="vm.message;" class="well">
 			<div class="row">
@@ -39,7 +46,7 @@
 			<div style="margin:65px"></div>
 		</div>
 
-		<div>
+		<div ng-if="!vm.loading">
 			<h3>Found {{vm.calldetailsarray.length}} Active Calls </h3>
 			
 			

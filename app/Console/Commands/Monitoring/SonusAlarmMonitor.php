@@ -34,7 +34,8 @@ class SonusAlarmMonitor extends Command
 
     // Discard these Sonus alarms from alerting emails.
     public $ALARMDISCARDS = [
-                                'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.',
+                                'System Policer Alarm Level: Minor, Policer Type Media, Previous Level No Alarm.',
+								'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.',
                                 'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level Minor Alarm.',
                             ];
 
@@ -78,11 +79,11 @@ class SonusAlarmMonitor extends Command
             $alarms = Sonus5k::listactivealarms($SBC);
             //$alarms = null;
 
-            if ($alarms['currentStatus']) {
+            if ($alarms) {
                 // Alarms exist
                 $current_alarms = [];
                 // index our alarms array by id
-                foreach ($alarms['currentStatus'] as $alarm) {
+                foreach ($alarms as $alarm) {
                     if (in_array($alarm['desc'], $this->ALARMDISCARDS)) {
                         continue;
                     }

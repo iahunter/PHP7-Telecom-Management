@@ -53,14 +53,13 @@ angular
 					// Loop thru and append to a simple array so we can do a simple select on it with ng-options.
 					angular.forEach(calls, function(value, key) {
 						  vm.callcountsummary[key] = 0;
-						  angular.forEach(value, function(v, k) {
-								  if (v == null){
+								  if (value == null){
 									  //alert("No Active Calls");
 									  vm.loading = false;
 								  }
 								  
 								  else{
-									  angular.forEach(v, function(call, object) {
+									  angular.forEach(value, function(call, object) {
 										  //console.log(call.calledNumber);
 										  //console.log(call);
 										  call['SBC'] = key;
@@ -70,8 +69,6 @@ angular
 										  vm.noactivecalls = false;
 									  });
 								  }
-							  
-							});
 					});
 					
 					

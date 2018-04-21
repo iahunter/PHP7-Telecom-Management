@@ -46,12 +46,12 @@
 			<div style="margin:65px"></div>
 		</div>
 		
-		<div ng-if="vm.callcount && !vm.loading">
+		<div ng-if="!vm.loading">
 			
 			<h3>Found {{vm.callcount}} Active Calls <small>Updates every 30 seconds.</small></h3>
 			
 			
-			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div ng-if="vm.callcount" class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 			<div class="table-responsive">  
 				<table class="table table-striped table-condensed table-bordered table-hover">
 					<thead>

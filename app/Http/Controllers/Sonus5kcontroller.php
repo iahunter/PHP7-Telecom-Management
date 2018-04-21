@@ -265,7 +265,7 @@ class Sonus5kcontroller extends Controller
 
         $RETURN = $this->merge_calldetails_with_mediadetails($request);
 		
-		return $RETURN; 
+		//return $RETURN; 
 
         if ($RETURN) {
             // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
@@ -277,12 +277,12 @@ class Sonus5kcontroller extends Controller
                 }
             }
             if ($nulls == $count) {
-                return 'nulls equals count. No results found.';
+                return 'No results found.';
             } else {
                 return $RETURN;
             }
         } else {
-            return 'Else: No results found.';
+            return 'Nothing Returned...';
             throw new \Exception('Nothing Returned...');
         }
     }

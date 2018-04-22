@@ -1,5 +1,6 @@
 <?php
-$string = <<<XML
+
+$string = <<<'XML'
 <?xml version='1.0'?> 
 <document>
  <title>Forty What?</title>
@@ -19,25 +20,22 @@ $string = <<<XML
 </document>
 XML;
 
-
 $xml = simplexml_load_string($string);
 
-print "<h1>XML</h1>"; 
-print "<br><br>"; 
+echo '<h1>XML</h1>';
+echo '<br><br>';
 print_r($xml);
-print "<br><br>"; 
+echo '<br><br>';
 
-$json = json_encode($xml, JSON_PRETTY_PRINT); 
+$json = json_encode($xml, JSON_PRETTY_PRINT);
 
 $HTML = <<<JSON
 <h1>JSON</h1>
 <pre>{$json}</pre>
 JSON;
 
-print $HTML;
+echo $HTML;
 
-print "<br><br>"; 
-print "<h1>Array</h1>"; 
-print_r(json_decode($json, true)); 
-
-?>
+echo '<br><br>';
+echo '<h1>Array</h1>';
+print_r(json_decode($json, true));

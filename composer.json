@@ -30,7 +30,8 @@
         "spatie/laravel-activitylog": "^1.12",
         "metaclassing/php7-sshwrapper": "dev-master",
         "doctrine/dbal": "^2.5",
-        "nmred/kafka-php": "v0.2.0.8"
+       	"guzzlehttp/guzzle": "^6.3",
+		"nmred/kafka-php": "v0.2.0.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

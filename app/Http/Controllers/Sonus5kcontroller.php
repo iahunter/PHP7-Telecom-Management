@@ -81,7 +81,7 @@ class Sonus5kcontroller extends Controller
         $key = 'listactivecalls';
 
         // Check if calls exist in cache. If not then move on.
-		
+
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
             $cache = Cache::get($key);
@@ -89,11 +89,11 @@ class Sonus5kcontroller extends Controller
 
             return $cache;
         }
-		
+
         //Log::info(__METHOD__.' Did not Use Cache');
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
-			$CALLS[$SBC] = Sonus5k::listactivecalls($SBC);
+            $CALLS[$SBC] = Sonus5k::listactivecalls($SBC);
         }
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
@@ -111,7 +111,6 @@ class Sonus5kcontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-		
         // Name of Cache key.
         $key = 'listcallDetailStatus';
 
@@ -127,7 +126,8 @@ class Sonus5kcontroller extends Controller
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
             $calls = Sonus5k::listcallDetailStatus($SBC);
-			return $calls; 
+
+            return $calls;
             //print_r(count($calls));
             $return = [];
             //$calls = (array) $calls['callDetailStatus']; 		// Changed 042118 when changing to xml
@@ -177,8 +177,7 @@ class Sonus5kcontroller extends Controller
             $cache = Cache::get($cache_key);
             $cache['cache'] = true;
 
-			return $cache;
-			
+            return $cache;
         } else {
             //Log::info(__METHOD__.' Did not Use Cache');
             $RETURN = [];
@@ -189,18 +188,18 @@ class Sonus5kcontroller extends Controller
                 $media = Sonus5k::listcallMediaStatus($SBC);
 
                 if (! $calls) {
-                    $RETURN[$SBC] = []; 
-					continue; 
+                    $RETURN[$SBC] = [];
+                    continue;
                 }
                 if (! $media) {
                     $RETURN[$SBC] = [];
-					continue; 
+                    continue;
                 }
 
                 //$calls = (array) $calls['callDetailStatus'];  		// Changed 042118 when changing to xml
                 //$media = (array) $media['callMediaStatus'];  		// Changed 042118 when changing to xml
 
-                $indexedCalls = $this->indexAssocByKey($calls, 'GCID'); 
+                $indexedCalls = $this->indexAssocByKey($calls, 'GCID');
                 $indexedMedia = $this->indexAssocByKey($media, 'GCID');
                 //return $indexedCalls;
                 foreach ($indexedCalls as $key => $value) {
@@ -209,7 +208,7 @@ class Sonus5kcontroller extends Controller
                         $callsMedia[$key] = array_merge($indexedCalls[$key], $indexedMedia[$key]);
                     }
                 }
-				//return $callsMedia; 
+                //return $callsMedia;
                 // Add the original key back on so the UI doesn't get jacked up.
                 if ($callsMedia) {
                     $calls = [];
@@ -237,38 +236,38 @@ class Sonus5kcontroller extends Controller
                         } else {
                             $call['egress_pkt_loss_percent'] = 0;
                         }
-						//return $call;
-						
-						//$calls[] = $return;
+                        //return $call;
 
-						// Create a new Array for only the details we need to use for the UI. Other stuff is just using memory and not needed. 
-						$return = []; 
-						$return['GCID'] = $call['GCID']; 
-						$return['state'] = $call['state']; 
-						$return['callDuration'] = $call['callDuration']; 
-						$return['callingNumber'] = $call['callingNumber']; 
-						$return['calledNumber'] = $call['calledNumber']; 
-						$return['ingressMediaStream1PacketsLost'] = $call['ingressMediaStream1PacketsLost']; 
-						$return['ingress_pkt_loss_percent'] = $call['ingress_pkt_loss_percent']; 
-						$return['egressMediaStream1PacketsLost'] = $call['egressMediaStream1PacketsLost']; 
-						$return['egress_pkt_loss_percent'] = $call['egress_pkt_loss_percent']; 
-						$return['ingressMediaStream1RemoteIpSockAddr'] = $call['ingressMediaStream1RemoteIpSockAddr']; 
-						$return['ingressMediaStream1LocalIpSockAddr'] = $call['ingressMediaStream1LocalIpSockAddr']; 
-						$return['egressMediaStream1LocalIpSockAddr'] = $call['egressMediaStream1LocalIpSockAddr']; 
-						$return['egressMediaStream1RemoteIpSockAddr'] = $call['egressMediaStream1RemoteIpSockAddr']; 
+                        //$calls[] = $return;
+
+                        // Create a new Array for only the details we need to use for the UI. Other stuff is just using memory and not needed.
+                        $return = [];
+                        $return['GCID'] = $call['GCID'];
+                        $return['state'] = $call['state'];
+                        $return['callDuration'] = $call['callDuration'];
+                        $return['callingNumber'] = $call['callingNumber'];
+                        $return['calledNumber'] = $call['calledNumber'];
+                        $return['ingressMediaStream1PacketsLost'] = $call['ingressMediaStream1PacketsLost'];
+                        $return['ingress_pkt_loss_percent'] = $call['ingress_pkt_loss_percent'];
+                        $return['egressMediaStream1PacketsLost'] = $call['egressMediaStream1PacketsLost'];
+                        $return['egress_pkt_loss_percent'] = $call['egress_pkt_loss_percent'];
+                        $return['ingressMediaStream1RemoteIpSockAddr'] = $call['ingressMediaStream1RemoteIpSockAddr'];
+                        $return['ingressMediaStream1LocalIpSockAddr'] = $call['ingressMediaStream1LocalIpSockAddr'];
+                        $return['egressMediaStream1LocalIpSockAddr'] = $call['egressMediaStream1LocalIpSockAddr'];
+                        $return['egressMediaStream1RemoteIpSockAddr'] = $call['egressMediaStream1RemoteIpSockAddr'];
 
                         $calls[] = $return;
                     }
 
                     $RETURN[$SBC] = $calls;
-					//return $RETURN; 
+                    //return $RETURN;
                 }
             }
 
-			if($RETURN){
-				$time = Carbon::now()->addSeconds(30);
-				Cache::put($cache_key, $RETURN, $time);
-			}
+            if ($RETURN) {
+                $time = Carbon::now()->addSeconds(30);
+                Cache::put($cache_key, $RETURN, $time);
+            }
 
             return $RETURN;
         }
@@ -283,8 +282,8 @@ class Sonus5kcontroller extends Controller
         }
 
         $RETURN = $this->merge_calldetails_with_mediadetails($request);
-		
-		//return $RETURN; 
+
+        //return $RETURN;
 
         if ($RETURN) {
             // Cache Calls for 15 seconds - Put the $CALLS as value of cache.
@@ -350,7 +349,7 @@ class Sonus5kcontroller extends Controller
         // Name of Cache key.
         $key = 'listactivealarms';
 
-		/*
+        /*
         // Check if calls exist in cache. If not then move on.
         if (Cache::has($key)) {
             //Log::info(__METHOD__.' Used Cache');
@@ -359,7 +358,7 @@ class Sonus5kcontroller extends Controller
 
             return $cache;
         }
-	*/
+    */
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {
             $CALLS[$SBC] = Sonus5k::listactivealarms($SBC);

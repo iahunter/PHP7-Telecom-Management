@@ -1,6 +1,6 @@
 preset: laravel
 
-linting: true
+#linting: true
 
 enabled:
  - align_double_arrow

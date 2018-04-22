@@ -1,6 +1,6 @@
 {
     "name": "iahunter/php7-telecom-management",
-    "description": "Telecom Management Server",
+    "description": "Telecom Management System",
     "keywords": ["telecom", "laravel"],
     "license": "LGPL3.0",
     "type": "project",

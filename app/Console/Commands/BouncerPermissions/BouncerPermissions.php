@@ -132,8 +132,8 @@ class BouncerPermissions extends Command
                 Bouncer::allow($group)->to($task, $type);
             }
         }
-		
-		$tasks = [
+
+        $tasks = [
             'create',
             'read',
             'update',
@@ -147,7 +147,7 @@ class BouncerPermissions extends Command
             App\Phone::class,
             App\Phoneplan::class,
             App\Cupi::class,
-			App\Cucmclass::class,
+            App\Cucmclass::class,
             App\PhoneMACD::class,
         ];
 

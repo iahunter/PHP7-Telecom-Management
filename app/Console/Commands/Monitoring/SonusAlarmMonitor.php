@@ -35,6 +35,8 @@ class SonusAlarmMonitor extends Command
     // Discard these Sonus alarms from alerting emails.
     public $ALARMDISCARDS = [
                                 'System Policer Alarm Level: Minor, Policer Type Media, Previous Level No Alarm.',
+								'System Policer Alarm Level: Minor, Policer Type ACL, Previous Level No Alarm.', 
+								'System Policer Alarm Level: Major, Policer Type Discard Rule, Previous Level No Alarm.',
                                 'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.',
                                 'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level Minor Alarm.',
                             ];

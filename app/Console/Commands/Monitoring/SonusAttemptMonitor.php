@@ -98,6 +98,8 @@ class SonusAttemptMonitor extends Command
         }
 
         $count = count($thresholds);
+		
+		$top_numbers = $this->list_last_hour_top_attempt_counts_by_called_number_report(); 
 
         $data = [
                     'time'                         => $time,
@@ -105,6 +107,7 @@ class SonusAttemptMonitor extends Command
                     'thresholds'                   => $thresholds,
                     'configured_threshold'         => $this->THRESHOLD_PERCENT,
                     'stats'                        => $stats,
+					'top_numbers'				   => $top_numbers,
                     ];
 
         print_r($data);
@@ -177,6 +180,16 @@ class SonusAttemptMonitor extends Command
 
         return $forward_number;
     }
+	
+	public function list_last_hour_top_attempt_counts_by_called_number_report()
+    {
+		// Get Sonus SBC top 10 Attempt Counts by Called Number.
+		$cdrs = Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report();
+
+		$cdrs_array = json_decode(json_encode($cdrs), true);
+		
+		return $cdrs_array; 
+	}
 
     public function list_todays_attempts_summary_report()
     {

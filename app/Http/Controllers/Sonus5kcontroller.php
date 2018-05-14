@@ -98,7 +98,7 @@ class Sonus5kcontroller extends Controller
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
         $time = Carbon::now()->addSeconds(7);
-        Cache::put($key, $CALLS, $time);
+        //Cache::put($key, $CALLS, $time);
 
         return $CALLS;
     }

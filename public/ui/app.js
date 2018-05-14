@@ -244,8 +244,16 @@
 			// This just gives the option for Type, MAC, and Select Number... It then passes those variables in the URL in createphone. 
 			.state('createsitephone', {
                 url: '/sitestatusreports/{id}/phone/create',
+				
+				//
+				//AccessDenied.IndexController
                 templateUrl: 'cucm-phone-manager/create_phone_plan.html',
                 controller: 'phoneManagerPlan.Controller',
+				
+				//templateUrl: 'home/maintenance.html',				// Uncomment When in maintenance. 
+				//controller: 'Maintenance.IndexController',			// Uncomment When in maintenance. 
+				
+				
                 controllerAs: 'vm'
             })
 			.state('createphone', {

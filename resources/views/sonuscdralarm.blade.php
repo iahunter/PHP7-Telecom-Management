@@ -58,7 +58,7 @@
 									<table class="table table-striped table-condensed table-bordered table-hover">
 										<thead>
 											<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
-												<th>Time: {{$key}}</span></th>
+												<th>Time: {{$key}} UTC</span></th>
 											</tr>
 										</thead>
 										<tbody style="font-size: 12px;">
@@ -71,6 +71,38 @@
 							</div>
 						@endif
 					@endforeach
+					
+					<h3>Top 10 Attempt Counts by Called Number</h3>
+
+					
+							<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+								<div class="table-responsive">   
+									<table class="table table-striped table-condensed table-bordered table-hover">
+										<thead>
+											<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+												<th>Called Number</th>
+												<th>Attempt Count</th>
+											</tr>
+										</thead>
+									@foreach ($top_numbers as $key => $value)
+										@if($value) 
+										<tbody style="font-size: 12px;">
+											
+												<tr>
+													<td>{{$value['called_number']}}</td>
+													<td>{{$value['total']}}</td>
+												</tr>
+											
+										</tbody>
+										@endif
+									@endforeach
+									
+									</table>
+									
+									
+								</div>
+							</div>
+						
 
 			</div>
 		</div>

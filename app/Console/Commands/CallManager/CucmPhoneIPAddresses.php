@@ -117,7 +117,7 @@ class CucmPhoneIPAddresses extends Command
 
         $result = [];
         foreach ($phones as $phone) {
-            $searchCriteria["SelectItem[$count]"]['Item'] = $phone;
+            $searchCriteria["SelectItem[{$count}]"]['Item'] = $phone;
             $count++;
 
             if ($count >= $MAX_PHONE_QUERY || $count >= count($phones)) {

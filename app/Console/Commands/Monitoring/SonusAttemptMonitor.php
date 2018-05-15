@@ -99,21 +99,27 @@ class SonusAttemptMonitor extends Command
 
         $count = count($thresholds);
 
-        $top_numbers = $this->list_last_hour_top_attempt_counts_by_called_number_report();
 
-        $data = [
-                    'time'                         => $time,
-                    'alarms_count'                 => $count,
-                    'thresholds'                   => $thresholds,
-                    'configured_threshold'         => $this->THRESHOLD_PERCENT,
-                    'stats'                        => $stats,
-                    'top_numbers'				              => $top_numbers,
-                    ];
-
-        print_r($data);
 
         if ($count) {
             // If we have some alerts that have met the threshold, send an email alert.
+			
+			// Get last hour attempt count report for called and calling numbers
+			$top_numbers = $this->list_last_hour_top_attempt_counts_by_called_number_report();
+			$top_calling_numbers = $this->list_last_hour_top_attempt_counts_by_calling_number_report();
+
+			$data = [
+						'time'                         => $time,
+						'alarms_count'                 => $count,
+						'thresholds'                   => $thresholds,
+						'configured_threshold'         => $this->THRESHOLD_PERCENT,
+						'stats'                        => $stats,
+						'top_numbers'				              => $top_numbers,
+						'top_calling_numbers'		   => $top_calling_numbers,
+						];
+
+			//print_r($data);
+			
             print_r($data);
             $this->sendemail($data);
             //$this->send_text_to_oncall($data);
@@ -185,6 +191,16 @@ class SonusAttemptMonitor extends Command
     {
         // Get Sonus SBC top 10 Attempt Counts by Called Number.
         $cdrs = Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report();
+
+        $cdrs_array = json_decode(json_encode($cdrs), true);
+
+        return $cdrs_array;
+    }
+	
+	public function list_last_hour_top_attempt_counts_by_calling_number_report()
+    {
+        // Get Sonus SBC top 10 Attempt Counts by Called Number.
+        $cdrs = Sonus5kCDR::list_last_hour_top_attempt_counts_by_calling_number_report();
 
         $cdrs_array = json_decode(json_encode($cdrs), true);
 

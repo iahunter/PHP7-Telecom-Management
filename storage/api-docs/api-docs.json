@@ -6382,7 +6382,31 @@
                 "tags": [
                     "CDR - Sonus History"
                 ],
-                "summary": "Get Todays Top Call Report",
+                "summary": "Get Last Hour Top Attempts by Called Nubmer Report",
+                "description": "",
+                "operationId": "attempts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/sonus/list_last_hour_top_attempt_counts_by_calling_number_report": {
+            "get": {
+                "tags": [
+                    "CDR - Sonus History"
+                ],
+                "summary": "Get Last Hour Top Attempts by Calling Nubmer Report",
                 "description": "",
                 "operationId": "attempts",
                 "consumes": [
@@ -6406,7 +6430,7 @@
                 "tags": [
                     "CDR - Sonus History"
                 ],
-                "summary": "Get Todays Top Call Report",
+                "summary": "Get Todays Top Attempts by Called Number Report",
                 "description": "",
                 "operationId": "attempts",
                 "consumes": [
@@ -6430,7 +6454,7 @@
                 "tags": [
                     "CDR - Sonus History"
                 ],
-                "summary": "Get Todays Top Call Report",
+                "summary": "Get Todays Top Attempts by Calling Number Report",
                 "description": "",
                 "operationId": "attempts",
                 "consumes": [

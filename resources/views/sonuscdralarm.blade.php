@@ -102,6 +102,37 @@
 									
 								</div>
 							</div>
+							
+					<h3>Top 10 Attempt Counts by Calling Number</h3>
+
+					
+							<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+								<div class="table-responsive">   
+									<table class="table table-striped table-condensed table-bordered table-hover">
+										<thead>
+											<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+												<th>Calling Number</th>
+												<th>Attempt Count</th>
+											</tr>
+										</thead>
+									@foreach ($top_calling_numbers as $key => $value)
+										@if($value) 
+										<tbody style="font-size: 12px;">
+											
+												<tr>
+													<td>{{$value['calling_number']}}</td>
+													<td>{{$value['total']}}</td>
+												</tr>
+											
+										</tbody>
+										@endif
+									@endforeach
+									
+									</table>
+									
+									
+								</div>
+							</div>
 						
 
 			</div>

@@ -1362,6 +1362,31 @@ class Sonus5kCDR extends Model
         //return $report->getBindings();
         return $report;
     }
+	
+	public static function list_last_hour_top_attempt_counts_by_calling_number_report()
+    {
+        //DB::connection()->enableQueryLog();
+        $return = [];
+
+        $hours = 1;
+
+        $now = Carbon::now()->setTimezone('UTC');
+        $start = $now->subHours($hours);
+        $end = Carbon::now()->setTimezone('UTC');
+
+        // Get all the active attempt disconnet reasons in use in last 24s.
+        $report = \App\Sonus5kCDR::groupBy('calling_number')
+                ->select('calling_number', DB::raw('count(id) as total'))
+                ->whereBetween('disconnect_time', [$start, $end])
+                ->where('type', 'ATTEMPT')
+                ->orderBy('total', 'desc')
+                ->take(10)
+                ->get();
+
+        //return DB::getQueryLog();
+        //return $report->getBindings();
+        return $report;
+    }
 
     public static function list_todays_top_attempt_counts_by_called_number_report()
     {

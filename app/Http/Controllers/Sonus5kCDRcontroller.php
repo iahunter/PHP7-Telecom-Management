@@ -341,6 +341,46 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	public function list_last_hour_top_attempt_counts_by_calling_number_report(Request $request)
+    {
+        // Historical Log Query
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check Role of user
+        if (! $user->can('read', Sonus5kCDR::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        // Name of Cache key.
+        $key = 'Sonus5kCDR::list_last_hour_top_attempt_counts_by_calling_number_report()';
+
+        // Check if we have this report in cache.
+        if (Cache::has($key)) {
+            $return = Cache::get($key);
+
+            $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'cached'               => true,
+                    'result'               => $return,
+                    ];
+
+            return response()->json($response);
+        }
+
+        $return = Sonus5kCDR::list_last_hour_top_attempt_counts_by_calling_number_report();
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'result'               => $return,
+                    ];
+
+        return response()->json($response);
+    }
 
     public function list_todays_top_attempt_counts_by_called_number_report(Request $request)
     {

@@ -144,6 +144,7 @@ angular
 							device = device[1]
 							device = device.trim()
 							phonearray['device'] = device;
+							phonearray['device'] = phonearray['device'].trim()
 						}
 					}
 				}

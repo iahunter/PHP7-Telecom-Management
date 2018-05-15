@@ -350,7 +350,8 @@ class Cucmclass extends Model
         $MAXCALLS = 4;
         $BUSYTRIGGER = 2;
         // add the SEP to the name
-        if ($PRODUCT == 'Cisco IP Communicator') {
+		$PRODUCT = trim($PRODUCT); 
+        if ($PRODUCT == 'Cisco IP Communicator' || $PRODUCT == 'IP Communicator' ) {
             $NAME = "{$NAME}";
         } elseif ($PRODUCT == 'Cisco ATA 190' || $PRODUCT == 'Cisco ATA 187' || $PRODUCT == 'Cisco ATA 186') {
             $NAME = "ATA{$NAME}";
@@ -535,6 +536,7 @@ class Cucmclass extends Model
         $PRODUCT = 'Cisco '.$DEVICE;
 
         // add the SEP to the name
+		$PRODUCT = trim($PRODUCT); 
         if ($PRODUCT == 'Cisco IP Communicator') {
             $NAME = "{$NAME}";
         } else {

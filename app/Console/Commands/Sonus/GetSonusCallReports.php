@@ -47,6 +47,9 @@ class GetSonusCallReports extends Command
 
         echo Carbon::now().' Starting: list_last_hour_top_attempt_counts_by_called_number_report '.PHP_EOL;
         $this->list_last_hour_top_attempt_counts_by_called_number_report();
+		
+		echo Carbon::now().' Starting: list_last_hour_top_attempt_counts_by_calling_number_report '.PHP_EOL;
+        $this->list_last_hour_top_attempt_counts_by_calling_number_report();
 
         echo Carbon::now().' Starting: list_todays_top_attempt_counts_by_called_number_report '.PHP_EOL;
         $this->list_todays_top_attempt_counts_by_called_number_report();
@@ -80,6 +83,28 @@ class GetSonusCallReports extends Command
 
         // Name of Cache key.
         $key = 'Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report()';
+
+        /* Call this from the controller to fetch the data in the cache*/
+        /*
+        if (Cache::has($key)) {
+            //Log::info(__METHOD__.' Used Cache');
+            return Cache::get($key);
+        }
+        */
+
+        // Cache Calls for 10 Minutes - Put the $CALLS as value of cache.
+        $time = Carbon::now()->addMinutes(10);
+        Cache::put($key, $return, $time);
+    }
+	
+	protected function list_last_hour_top_attempt_counts_by_calling_number_report()
+    {
+        $return = Sonus5kCDR::list_last_hour_top_attempt_counts_by_calling_number_report();
+
+        //print_r($return);
+
+        // Name of Cache key.
+        $key = 'Sonus5kCDR::list_last_hour_top_attempt_counts_by_calling_number_report()';
 
         /* Call this from the controller to fetch the data in the cache*/
         /*

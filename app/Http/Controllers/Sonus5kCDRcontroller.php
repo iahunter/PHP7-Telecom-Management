@@ -341,8 +341,8 @@ class Sonus5kCDRcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_last_hour_top_attempt_counts_by_calling_number_report(Request $request)
+
+    public function list_last_hour_top_attempt_counts_by_calling_number_report(Request $request)
     {
         // Historical Log Query
         $user = JWTAuth::parseToken()->authenticate();

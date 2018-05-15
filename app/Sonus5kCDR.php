@@ -1362,8 +1362,8 @@ class Sonus5kCDR extends Model
         //return $report->getBindings();
         return $report;
     }
-	
-	public static function list_last_hour_top_attempt_counts_by_calling_number_report()
+
+    public static function list_last_hour_top_attempt_counts_by_calling_number_report()
     {
         //DB::connection()->enableQueryLog();
         $return = [];

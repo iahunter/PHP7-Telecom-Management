@@ -177,8 +177,8 @@
      * )
      **/
     $api->get('sonus/list_last_hour_top_attempt_counts_by_called_number_report', 'App\Http\Controllers\Sonus5kCDRcontroller@list_last_hour_top_attempt_counts_by_called_number_report');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/sonus/list_last_hour_top_attempt_counts_by_calling_number_report",
      *     tags={"CDR - Sonus History"},

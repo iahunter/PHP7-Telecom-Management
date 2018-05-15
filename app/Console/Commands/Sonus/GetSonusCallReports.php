@@ -47,8 +47,8 @@ class GetSonusCallReports extends Command
 
         echo Carbon::now().' Starting: list_last_hour_top_attempt_counts_by_called_number_report '.PHP_EOL;
         $this->list_last_hour_top_attempt_counts_by_called_number_report();
-		
-		echo Carbon::now().' Starting: list_last_hour_top_attempt_counts_by_calling_number_report '.PHP_EOL;
+
+        echo Carbon::now().' Starting: list_last_hour_top_attempt_counts_by_calling_number_report '.PHP_EOL;
         $this->list_last_hour_top_attempt_counts_by_calling_number_report();
 
         echo Carbon::now().' Starting: list_todays_top_attempt_counts_by_called_number_report '.PHP_EOL;
@@ -96,8 +96,8 @@ class GetSonusCallReports extends Command
         $time = Carbon::now()->addMinutes(10);
         Cache::put($key, $return, $time);
     }
-	
-	protected function list_last_hour_top_attempt_counts_by_calling_number_report()
+
+    protected function list_last_hour_top_attempt_counts_by_calling_number_report()
     {
         $return = Sonus5kCDR::list_last_hour_top_attempt_counts_by_calling_number_report();
 

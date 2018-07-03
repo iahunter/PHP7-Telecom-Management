@@ -174,7 +174,7 @@ class Sonus5kCDR extends Model
 
             foreach ($currentfile as $callrecord) {
 
-                    // Parse record to the the record type.
+                // Parse record to the record type.
                 $callrecord = explode(',', $callrecord);
                 if ($callrecord[0] == 'STOP') {
 

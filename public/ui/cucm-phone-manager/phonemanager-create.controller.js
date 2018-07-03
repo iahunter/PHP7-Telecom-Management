@@ -57,6 +57,31 @@ angular
 				name: 'french'
 			}];
 		
+		// Added check to see if there is a VMbox that is assigned to that extension by request from Service Desk. 
+		if(vm.deviceForm.dn){
+			cupiService.getmailboxbyextension(vm.deviceForm.dn)
+					.then(function(res){
+						user = [];
+						//console.log(res);
+						//user.username = username;
+						
+						
+						result = res.data.response;
+						if(result['@total'] == 0){
+							vm.unity_mailbox_extension_inuse = null;
+						}else{
+							vm.unity_mailbox_extension_inuse = result['User'];
+							vm.unity_mailbox_extension_inuse.Alias = angular.lowercase(result['User']['Alias']);
+							console.log("vm.unity_mailbox_extension_inuse")
+							console.log(vm.unity_mailbox_extension_inuse)
+						}
+						
+					}, function(err){
+						// Error
+					});
+			
+		}
+		
 		
 		vm.lookupuser = function(username){
 			vm.nouserfound = false;

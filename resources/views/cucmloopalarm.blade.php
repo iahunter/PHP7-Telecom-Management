@@ -24,6 +24,8 @@
 				
 					<h3><i style="color:red;">WARNING!</i> Action was taken by Telecom Management System to mitigate a detected routing loop. </h3>
 					
+					<h4><i style="color:orange;">WARNING!</i>The provider may block this number because of the detected loop. Please check with the provider to see if the numbers are blocked via the web portal.</h4>
+					
 					
                     <div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 						<h2>Loop Detection Summary</h2>

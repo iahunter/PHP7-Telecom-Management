@@ -34,6 +34,9 @@ class Kernel extends ConsoleKernel
         // CDRs
         Commands\CallManager\GetCucmCDRs::class,
         Commands\CallManager\CleanupOldCucmCDRSInDB::class,
+		
+		// Phone
+		Commands\CallManager\CiscoWirelessPhoneCert::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 

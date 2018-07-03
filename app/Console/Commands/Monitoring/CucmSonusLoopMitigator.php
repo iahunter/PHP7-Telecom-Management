@@ -103,7 +103,7 @@ class CucmSonusLoopMitigator extends Command
                         }
                     }
 
-					// Need to figure out why i did it this way... $cucm_array... wtf...
+                    // Need to figure out why i did it this way... $cucm_array... wtf...
                     foreach ($lines as $line) {
                         $cucm_array[$line['uuid']] = []; // Create new Array with the UUID as key
 
@@ -135,32 +135,32 @@ class CucmSonusLoopMitigator extends Command
 
                                 $cucm_array[$line['uuid']]['callForwardAll_Update'] = $new_cfa;
                             }
-							
-							//Check if the line is forwarded to one of the other numbers in the attempt alarms and may be creating a loop. 
-                            else{
-								foreach($cdrs_array as $number){
-									$number = $number['called_number']; 
-									//print "Checking if forwarded to: {$number}"; 
-									
-									if (preg_match("/{$number}/", $cfa)) {
-										echo "WARNING!!!! This line is forwarded to {$cfa} and creating a loop!!!!".PHP_EOL;
-										$loops++;
-										//print_r($line);
-										$new_cfa = [
-													'pattern'            => $line['pattern'],
-													'routePartitionName' => $line['routePartitionName']['_'],
-													'callForwardAll'     => [
-																	'destination' 						               => '',
-																	'callingSearchSpaceName' 			       => $line['callForwardAll']['callingSearchSpaceName']['_'],
-																	'secondaryCallingSearchSpaceName' 	=> $line['callForwardAll']['secondaryCallingSearchSpaceName']['_'],
-																],
-													'uuid' => $line['uuid'],
-													];
 
-										$cucm_array[$line['uuid']]['callForwardAll_Update'] = $new_cfa;
-									}
-								}
-							}
+                            //Check if the line is forwarded to one of the other numbers in the attempt alarms and may be creating a loop.
+                            else {
+                                foreach ($cdrs_array as $number) {
+                                    $number = $number['called_number'];
+                                    //print "Checking if forwarded to: {$number}";
+
+                                    if (preg_match("/{$number}/", $cfa)) {
+                                        echo "WARNING!!!! This line is forwarded to {$cfa} and creating a loop!!!!".PHP_EOL;
+                                        $loops++;
+                                        //print_r($line);
+                                        $new_cfa = [
+                                                    'pattern'            => $line['pattern'],
+                                                    'routePartitionName' => $line['routePartitionName']['_'],
+                                                    'callForwardAll'     => [
+                                                                    'destination' 						               => '',
+                                                                    'callingSearchSpaceName' 			       => $line['callForwardAll']['callingSearchSpaceName']['_'],
+                                                                    'secondaryCallingSearchSpaceName' 	=> $line['callForwardAll']['secondaryCallingSearchSpaceName']['_'],
+                                                                ],
+                                                    'uuid' => $line['uuid'],
+                                                    ];
+
+                                        $cucm_array[$line['uuid']]['callForwardAll_Update'] = $new_cfa;
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -178,7 +178,7 @@ class CucmSonusLoopMitigator extends Command
         $fixed_loops = 0;
         $unfixed_loops = 0;
         $didwork = false;
-		$actions = []; 
+        $actions = [];
         foreach ($cdrs as $number => $cdr) {
             if (isset($cdr['cucm']) && count($cdr['cucm'])) {
                 foreach ($cdr['cucm'] as $cucmupdate) {
@@ -198,7 +198,7 @@ class CucmSonusLoopMitigator extends Command
                                     $cdr['cucm'][$cucmupdate['uuid']]['update_time'] = $now;
                                     $cdr['cucm'][$cucmupdate['uuid']]['update_confirm'] = $REPLY;
                                     $didwork = true;
-									$actions[$number] = $cdr; 
+                                    $actions[$number] = $cdr;
                                 } else {
                                     $unfixed_loops++;
                                 }

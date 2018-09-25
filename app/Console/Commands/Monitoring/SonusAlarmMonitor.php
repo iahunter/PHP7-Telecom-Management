@@ -39,6 +39,7 @@ class SonusAlarmMonitor extends Command
                                 'System Policer Alarm Level: Major, Policer Type Discard Rule, Previous Level No Alarm.',
                                 'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.',
                                 'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level Minor Alarm.',
+								'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level Major Alarm.',
                             ];
 
     public function __construct()

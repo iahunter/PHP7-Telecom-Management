@@ -53,13 +53,12 @@ class PhoneMACD extends Model
             $status = 'job recieved';
         } else {
             // Get the value that appears most if none of the previous status's exist.
-			//return $statuss;
-			if($statuss){
-				$status = array_search(max($statuss), $statuss);
-			}else{
-				$status = "system error"; 
-			}
-            
+            //return $statuss;
+            if ($statuss) {
+                $status = array_search(max($statuss), $statuss);
+            } else {
+                $status = 'system error';
+            }
         }
 
         return $status;

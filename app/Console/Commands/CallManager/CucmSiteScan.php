@@ -40,7 +40,7 @@ class CucmSiteScan extends Command
 
         $this->svn = env('CUCM_SVN');
         $this->extnlength = [];
-        $this->shortext_exclude = ['KMXFDMDO'];
+        $this->shortext_exclude = ['KMXFDMDO', 'TUSGASAV'];
 
         parent::__construct();
     }

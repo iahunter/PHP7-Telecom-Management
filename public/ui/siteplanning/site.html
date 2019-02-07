@@ -266,25 +266,25 @@
 						</td>
 
 						<!--Edit View-->
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.sitecode"></td>
-						<td   ng-show="vm.edit[site.id]">{{ site.cucmprovisioned }}</td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.comment"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.srstip"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.h323ip"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.timezone"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.npa"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.nxx"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.didrange"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.didblocks"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.operator"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.trunking"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.e911"></td>
-						<td   ng-show="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.languages"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.sitecode"></td>
+						<td   ng-if="vm.edit[site.id]">{{ site.cucmprovisioned }}</td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.comment"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.srstip"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.h323ip"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.timezone"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.npa"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.nxx"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.didrange"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.didblocks"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.operator"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.trunking"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.e911"></td>
+						<td   ng-if="vm.edit[site.id]"><input type="text" class="form-control form-control-sm" ng-model="site.languages"></td>
 						
-						<td   ng-show="vm.edit[site.id]">{{ site.created_at}} {{site.created_by}}</td>
-						<td   ng-show="vm.edit[site.id]">{{ site.updated_at}} {{site.updated_by}}</td>
+						<td   ng-if="vm.edit[site.id]">{{ site.created_at}} {{site.created_by}}</td>
+						<td   ng-if="vm.edit[site.id]">{{ site.updated_at}} {{site.updated_by}}</td>
 						
-						<td  ng-show="vm.edit[site.id]">
+						<td  ng-if="vm.edit[site.id]">
 							<button class="btn btn-xs btn-primary"  ng-click="vm.update(site);vm.edit[site.id] = !vm.edit[site.id]"> Save </button>
 							<button class="btn btn-xs btn-warning"  ng-click="vm.edit[site.id] = !vm.edit[site.id]"> Undo </button>
 						</td>

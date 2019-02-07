@@ -104,7 +104,8 @@ angular
 				
 				
 				vm.didblocks = res.data.didblocks
-				
+				console.log("Here is the blocks")
+				/*
 				vm.blocktypes = {};		// Initialilze Object for Type Counting
 				
 				//** Loop thru and create chart data for each block. 
@@ -138,12 +139,13 @@ angular
 					// End of Block Type Counting
 					
 				})
-				
+				*/
 				//console.log(vm.blocktypes);
 				
 				vm.loading = false;
-				vm.messages = JSON.stringify(vm.didblocks, null, "    ");
+				//vm.messages = JSON.stringify(vm.didblocks, null, "    ");
 				
+				console.log(vm.didblocks)
 				
 			}, function(err){
 				console.log(err)

@@ -198,7 +198,7 @@
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{vm.didblock.reserved}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.comment}}</td>
 						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}} {{ vm.didblock.created_by}}</td>
-						<td   ng-show="!vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>
+						<td   ng-if="!vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>
 							<td ng-if="vm.permissions.update.Didblock || vm.permissions.delete.Didblock" ng-show="!vm.edit[vm.didblock.id]">
 								<button class="btn btn-primary btn-xs "  ng-if="vm.permissions.update.Didblock" ng-click="vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"><i class="glyphicon glyphicon glyphicon-pencil"></i> Edit </button>
 								
@@ -245,24 +245,24 @@
 								
 							</td>
 						<!--Edit View-->
-						<td   ng-show="vm.edit[vm.didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="vm.didblock.name"></td>
-						<td   ng-show="vm.edit[vm.didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="vm.didblock.carrier"></td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.country_code}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.start}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.end}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]" ng-init="vm.didblock.size = vm.didblock.end - vm.didblock.start + 1;">{{vm.didblock.size}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.available}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.inuse}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.reserved}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]" ng-init="vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100">{{vm.didblock.capacity | number:0}}%</td>
+						<td   ng-if="vm.edit[vm.didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="vm.didblock.name"></td>
+						<td   ng-if="vm.edit[vm.didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="vm.didblock.carrier"></td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.country_code}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.start}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.end}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]" ng-init="vm.didblock.size = vm.didblock.end - vm.didblock.start + 1;">{{vm.didblock.size}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.available}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.inuse}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.stats.reserved}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]" ng-init="vm.didblock.capacity = vm.didblock.stats.inuse / vm.didblock.size * 100">{{vm.didblock.capacity | number:0}}%</td>
 						
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{vm.didblock.reserved}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]"><textarea class="form-control form-control-sm" ng-model="vm.didblock.comment"></textarea></td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}} {{ vm.didblock.created_by}}</td>
-						<td   ng-show="vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.type}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{vm.didblock.reserved}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]"><textarea class="form-control form-control-sm" ng-model="vm.didblock.comment"></textarea></td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.created_at}} {{ vm.didblock.created_by}}</td>
+						<td   ng-if="vm.edit[vm.didblock.id]">{{ vm.didblock.updated_at}} {{ vm.didblock.updated_by}}</td>
 						
-						<td  ng-show="vm.edit[vm.didblock.id]">
+						<td  ng-if="vm.edit[vm.didblock.id]">
 							<button class="btn btn-xs btn-primary"  ng-click="vm.update(vm.didblock);vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"> Save </button>
 							<button class="btn btn-xs btn-warning"  ng-click="vm.edit[vm.didblock.id] = !vm.edit[vm.didblock.id]"> Undo </button>
 						</td>
@@ -476,7 +476,7 @@
 
 						<!--Edit View-->
 						<td   ng-show="vm.edit[did.id]">{{ did.number}}</td>
-						<td   ng-show="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.name"></td>
+						<td   ng-if="vm.edit[did.id]"><input type="text" class="form-control form-control-sm" ng-model="did.name"></td>
 						<td ng-show="vm.edit[did.id]">
 							<select class="form-control" ng-model='did.status' data-width="100%" name="statusCategory">
 								<option value="available">available</option>

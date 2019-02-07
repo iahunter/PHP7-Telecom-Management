@@ -168,7 +168,11 @@ class DidScanCucm extends Command
 
         // Get the DID records matching $npanxx.'%' - Only Valid for NANP Numbers
         if (\App\Did::where([['number', 'like', $npanxx.'%']])->count()) {
-            $dids = \App\Did::where([['country_code', '=', 1], ['number', 'like', $npanxx.'%']])->get();
+            //$dids = \App\Did::where([['country_code', '=', 1], ['number', 'like', $npanxx.'%']])->get();
+			// Removed country code from the search to fix Mexico numbers - 010219 - TR
+			$dids = \App\Did::where([['country_code', '=', 1], ['number', 'like', $npanxx.'%']])
+					->orWhere([['country_code', '=', 52], ['number', 'like', $npanxx.'%']])
+					->get();
         }
 
         // Go through all the mathcing DID's and update them, OR set them to available

@@ -154,6 +154,12 @@
                 templateUrl: 'oncall/oncall.html',
                 controller: 'Oncall.IndexController',
                 controllerAs: 'vm'
+            })
+			.state('oncallreport', {
+                url: '/reports/oncall',
+                templateUrl: 'oncall-report/oncall-report.html',
+                controller: 'Oncall-Report.IndexController',
+                controllerAs: 'vm'
             });
     }
 })();

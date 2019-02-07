@@ -44,6 +44,9 @@
 			<div style="margin:65px"></div>
 		</div>
 		
+		<div style="margin:25px"></div>
+		
+		
 		<div ng-if="vm.didblocks.length > 0">
 		
 			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
@@ -187,7 +190,7 @@
 
 					
 					<!-- Allow you to edit and delete Blocks with new buttons -->
-					<!--<tr ng-repeat="didblock in vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
+					<!--tr ng-repeat="didblock in vm.didblocks"-->
 					<tr ng-repeat="didblock in vm.resultValue=(vm.didblocks | orderBy:sortType:sortReverse | filter:vm.search: strict)">
 					
 						<!--List View
@@ -265,8 +268,10 @@
 								
 							</td>
 						<!--Edit View-->
-						<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.name"></td>
-						<td   ng-show="vm.edit[didblock.id]"><input type="text" class="form-control form-control-sm" ng-model="didblock.carrier"></td>
+						<!-- Had to change to ng-if instead of ng-show because it was very slow to load... WTF?!?!?-->
+						
+						<td   ng-if="vm.edit[didblock.id]"><textarea type="text" class="form-control form-control-sm" ng-model="didblock.name"></textarea></td>
+						<td   ng-if="vm.edit[didblock.id]"><textarea type="text" class="form-control form-control-sm" ng-model="didblock.carrier"></textarea></td-->
 						<td   ng-show="vm.edit[didblock.id]">{{ didblock.country_code}}</td>
 						<td   ng-show="vm.edit[didblock.id]">{{ didblock.start}}</td>
 						<td   ng-show="vm.edit[didblock.id]">{{ didblock.end}}</td>

@@ -1,0 +1,115 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+
+<div style="margin-right:5%; margin-left:5%;">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	
+	<div style="margin:50px"></div>
+	
+	<legend>OnCall Report  <div style="margin:10px"></div></legend>
+		
+		<div style="margin:25px"></div>
+		
+
+		
+		<div style="margin:25px"></div>
+		
+		<div class="row" style="margin-left:5px;">
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		</div>
+		
+
+
+		<div style="margin:25px"></div>
+			
+
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		
+		<div ng-if="vm.oncallnumbers">
+
+
+			<div style="margin:10px"></div>
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">    
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+						
+							<!--<th><input type="checkbox" ng-model="vm.selectAll" ng-click="vm.checkAllLines()"/></th>-->
+							
+							<th>
+								<a href="" ng-click="sortType = 'pattern'; sortReverse = !sortReverse" style="color:black">
+									Number
+										<span ng-show="sortType == 'pattern' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'pattern' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'description'; sortReverse = !sortReverse" style="color:black">
+									Description
+										<span ng-show="sortType == 'description' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'description' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'currentoncallnum'; sortReverse = !sortReverse" style="color:black">
+									Forwarded Number
+										<span ng-show="sortType == 'currentoncallnum' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'currentoncallnum' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+
+							
+						</tr>
+					</thead>
+					<tbody>
+					
+
+
+					<tr ng-repeat="number in vm.oncallnumbers | orderBy:sortType:sortReverse | filter:vm.search: strict">
+							<!--
+							<td>
+								<input type="checkbox" ng-model="erl.select" >
+							</td>
+							-->
+							<td><a target="_blank" href="#/teams/edit/{{number.pattern}}"><b>{{number.pattern}}</b></a></td>
+							<td>{{number.description}}</td>
+							<td>{{number.currentoncallnum}}</td>
+					</tr>
+							
+					</tbody>
+				</table>
+			</div>
+			
+			</div> 
+		</div>
+	</div>
+</div>
+
+	
+

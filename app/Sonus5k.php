@@ -2,8 +2,8 @@
 
 namespace App;
 
-use GuzzleHttp\Psr7;
 use Illuminate\Database\Eloquent\Model;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;

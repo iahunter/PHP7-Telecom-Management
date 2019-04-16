@@ -1,51 +1,29 @@
 <?php
 
-namespace App\Console\Commands\BouncerPermissions;
+namespace App\Http\Controllers;
 
-use App;
-use Bouncer;
-use Illuminate\Console\Command;
+use DB;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Cache;
 
-class ReviewGroupPermissions extends Command
+
+
+class BouncerPermissionsController extends Controller
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'bouncer:check_permissions  {username?}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Check User Permissions - provide optional username argument';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function getUsersPermissions()
     {
-        parent::__construct();
-    }
+		
+        $user = JWTAuth::parseToken()->authenticate();
+		
+		//return $user;
+        if (! $user->can('read', User::class)) {
+            //abort(401, 'You are not authorized');
+        }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
-
-		// Check if User argument is provided.
-		if($this->argument('username')){
-			$users = App\User::where('username',$this->argument('username'))->get(); 
-		}else{
-			$users = App\User::get(); 
-		}
+        $users = \App\User::get(); 
 
 		$user_permissions = []; 
 		
@@ -79,7 +57,8 @@ class ReviewGroupPermissions extends Command
 				// Check for specific entity ids and add them to the class they are part of. This is for Oncall permissions
 				if($ability->entity_id){
 					//print $ability->entity_id.PHP_EOL; 
-					$permissions[$ability->name][$ability->entity_type][] = $ability->entity_id;
+					//$permissions[$ability->name][$ability->entity_type][] = $ability->entity_id;
+					//$permissions[$ability->name][$ability->entity_type]['Oncall Line IDs'][] = $ability->entity_id;
 				}
 				
 				
@@ -90,7 +69,15 @@ class ReviewGroupPermissions extends Command
 		}
 		
 		// Print User permissions.
-		print_r($user_permissions); 
-		
+		//print_r($user_permissions); 
+        
+		$response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'result'         => $user_permissions,
+                    ];
+
+        return response()->json($response);
     }
 }

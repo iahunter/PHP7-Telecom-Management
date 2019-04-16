@@ -236,6 +236,10 @@ angular
 			form.type = this.selectedtype.name;
 			//console.log("Category: " + form.category);
 			
+			if(!vm.permissions.create.Didblock){
+				$location.path('/accessdenied');
+			}
+			
 			
 			telephonyService.createDidblock(angular.copy(form)).then(function(data) {
 				alert("Didblock Added Succesfully" + data);

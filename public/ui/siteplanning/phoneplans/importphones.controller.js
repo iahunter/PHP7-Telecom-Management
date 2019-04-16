@@ -126,6 +126,7 @@ angular
 				phonearray['lastname'] = phones[phone][1];
 				phonearray['username'] = phones[phone][2];
 				phonearray['name'] = phones[phone][3];
+				phonearray['name'] = phonearray['name'].trim()
 				phonearray['device'] = phones[phone][4];
 				
 				// Trim the Cisco off of the device type as this is auto added in the backend. 

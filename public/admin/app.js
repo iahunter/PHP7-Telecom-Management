@@ -154,6 +154,12 @@
                 controller: 'LogReport.24hr.Pagelogs.Controller',
                 controllerAs: 'vm'
             })
+			.state('userpermissions', {
+                url: '/reports/userpermissions',
+                templateUrl: 'permissions/users.permissions.html',
+                controller: 'Users.Permissions.Controller',
+                controllerAs: 'vm'
+            })
 			.state('reportshome', {
                 url: '/reports',
                 templateUrl: 'reports/reports.home.html',

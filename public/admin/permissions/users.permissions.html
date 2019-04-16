@@ -1,0 +1,147 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+<div class="container">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	
+	<div style="margin:50px"></div>
+	
+	<legend>User Permissions Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+		
+		<div style="margin:25px"></div>
+
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		
+		
+
+		<div style="margin:25px"></div>
+		
+		
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+
+		
+		<div ng-if="vm.users">
+		
+			<b>Found {{vm.users.length}} Users</b>
+			<b class="pull-right">{{vm.datetime}}</b>
+			<div style="margin:10px"></div>
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">    
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+							<th>
+								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+									Username
+										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse" style="color:black">
+									Read
+										<span ng-show="sortType == 'username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'create'; sortReverse = !sortReverse" style="color:black">
+									create
+										<span ng-show="sortType == 'create' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'create' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'update'; sortReverse = !sortReverse" style="color:black">
+									update
+										<span ng-show="sortType == 'update' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'update' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'permissions.delete'; sortReverse = !sortReverse" style="color:black">
+									delete
+										<span ng-show="sortType == 'permissions.delete' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'permissions.delete' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							
+						</tr>
+					</thead>
+					<tbody>
+					
+					<!-- Allow you to edit and delete Blocks with new buttons -->
+					<!--<tr ng-repeat="log in vm.logs | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
+					<tr ng-repeat="log in vm.users | orderBy:sortType:sortReverse | filter:vm.search: strict">
+							
+							
+							<td>{{log.username}}</td>
+
+							<td> 
+								<table>
+									<tr ng-repeat="class in log.permissions.read">
+										<td>{{class}}</td>
+									</tr>
+								</table>
+							</td>
+							
+							<td> 
+								<table>
+									<tr ng-repeat="class in log.permissions.create">
+										<td>{{class}}</td>
+									</tr>
+								</table>
+							</td>
+							<td> 
+								<table>
+									<tr ng-repeat="class in log.permissions.update">
+										<td>{{class}}</td>
+									</tr>
+								</table>
+							</td>
+							<td> 
+								<table>
+									<tr ng-repeat="class in log.permissions.delete">
+										<td>{{class}}</td>
+									</tr>
+								</table>
+							</td>
+					</tr>
+							
+					</tbody>
+				</table>
+			</div>
+			</div> <!--npa of Panel
+			
+			<a href="#/site/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+			-->
+		</div>
+	</div>
+</div>
+
+	
+

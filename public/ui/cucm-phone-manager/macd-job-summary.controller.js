@@ -494,8 +494,9 @@ angular
 			
 		}
 		
+		/*
 		vm.submitDevice = function(phone) {
-			//console.log(phone)
+			console.log(phone)
 			
 			macdService.create_macd_add(phone)
 				.then(function(res){
@@ -522,6 +523,58 @@ angular
 										
 						vm.loading = false;
 						
+					}
+					
+				}, function(err){
+					console.log(err)
+					alert(err);
+				});
+			
+		}
+		*/
+		vm.submitDevice = function(phone) {
+			console.log(phone)
+			
+			if(!phone.voicemail){
+				phone.voicemail = false;
+			}
+			if(!phone.username){
+				phone.username = "";
+			}
+			
+			macdService.create_macd_add(phone)
+				.then(function(res){
+					
+					
+					console.log(res)
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							//alert("Token has expired, Please relogin");
+							$state.go('logout');
+						}
+
+						return vm.message;
+					}else{
+						
+						vm.macobjects = res.data.result;
+						
+						console.log(vm.macobjects)
+										
+						vm.loading = false;
+						
+						
+						if(vm.macobjects.macd.id){
+							$timeout(function(){
+								$location.path('/macd/jobsummary/'+ vm.macobjects.macd.id);
+							}, 500);
+							
+						}
 					}
 					
 				}, function(err){

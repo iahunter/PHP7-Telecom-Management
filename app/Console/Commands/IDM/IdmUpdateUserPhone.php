@@ -38,33 +38,33 @@ class IdmUpdateUserPhone extends Command
      */
     public function handle()
     {
-		// Set the argument variables. 
-		$userid = $this->argument('userid');
-		$newdn = $this->argument('newdn');
-		
-		$guid = env('IDM_GUID'); 
-		
-		// Create new API Client with Required arguments
-		$client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS')); 
-		
-		// Get User ID from username. 
-		$id = $client->getUserID($userid); 
-		
-		// Check what hte current phone number is set to. 
-		$number = $client->getUserPhone($id, $guid); 
-		
-		// Update the User Phone
-		$number2 = $client->updateUserPhone($id, $guid, $newdn); 
-		
-		// Check what hte current phone number is after the change
-		$number3 = $client->getUserPhone($id, $guid); 
-		
-		// Print out what the old number was and what it is now. 
-		print "OLD: ".$number.PHP_EOL; 
-		print "NEW: ".$number3.PHP_EOL; 
+        // Set the argument variables.
+        $userid = $this->argument('userid');
+        $newdn = $this->argument('newdn');
 
-		if($number3 != $newdn){
-			throw new \Exception("The current number {$number3} after the change doesn't match the New Number: {$newdn}."); 
-		}
+        $guid = env('IDM_GUID');
+
+        // Create new API Client with Required arguments
+        $client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS'));
+
+        // Get User ID from username.
+        $id = $client->getUserID($userid);
+
+        // Check what hte current phone number is set to.
+        $number = $client->getUserPhone($id, $guid);
+
+        // Update the User Phone
+        $number2 = $client->updateUserPhone($id, $guid, $newdn);
+
+        // Check what hte current phone number is after the change
+        $number3 = $client->getUserPhone($id, $guid);
+
+        // Print out what the old number was and what it is now.
+        echo 'OLD: '.$number.PHP_EOL;
+        echo 'NEW: '.$number3.PHP_EOL;
+
+        if ($number3 != $newdn) {
+            throw new \Exception("The current number {$number3} after the change doesn't match the New Number: {$newdn}.");
+        }
     }
 }

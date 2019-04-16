@@ -3,11 +3,10 @@
 namespace App\Listeners;
 
 use App\PhoneMACD;
-use App\Events\Update_IDM_PhoneNumber_Event;
 use App\SAP\IDM\RestApiClient;
-
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\Update_IDM_PhoneNumber_Event;
 
 class Update_IDM_PhoneNumber_Listener
 {
@@ -18,10 +17,10 @@ class Update_IDM_PhoneNumber_Listener
      */
     public function __construct()
     {
-		$this->guid = env('IDM_GUID'); 
-			
-		// Create new API Client with Required arguments
-		$this->client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS')); 
+        $this->guid = env('IDM_GUID');
+
+        // Create new API Client with Required arguments
+        $this->client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS'));
     }
 
     /**
@@ -47,29 +46,28 @@ class Update_IDM_PhoneNumber_Listener
         $newdn = $event->phone['dn'];
 
         $createdby = $task->created_by;
-		
-		$guid = $this->guid; 
-		
+
+        $guid = $this->guid;
 
         // Try to Do Work.
         try {
-			// Get User ID from username. 
-			$id = $this->client->getUserID($username); 
-			
-			// Check what hte current phone number is set to. 
-			$number = $this->client->getUserPhone($id, $guid); 
-			
-			// Update the User Phone
-			$number2 = $this->client->updateUserPhone($id, $guid, $newdn); 
-			
-			// Check what hte current phone number is after the change
-			$number3 = $this->client->getUserPhone($id, $guid); 
-			
-			// Print out what the old number was and what it is now. 
-			$LOG['old'] = $number; 
-			$LOG['new'] = $number3; 
-			
-			$LOG = json_encode($LOG, true); 
+            // Get User ID from username.
+            $id = $this->client->getUserID($username);
+
+            // Check what hte current phone number is set to.
+            $number = $this->client->getUserPhone($id, $guid);
+
+            // Update the User Phone
+            $number2 = $this->client->updateUserPhone($id, $guid, $newdn);
+
+            // Check what hte current phone number is after the change
+            $number3 = $this->client->getUserPhone($id, $guid);
+
+            // Print out what the old number was and what it is now.
+            $LOG['old'] = $number;
+            $LOG['new'] = $number3;
+
+            $LOG = json_encode($LOG, true);
 
             // Update task to completed.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);

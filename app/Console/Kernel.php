@@ -58,6 +58,7 @@ class Kernel extends ConsoleKernel
         Commands\OnCall\OnCallPermissions::class,
 
         Commands\BouncerPermissions\BouncerPermissions::class,
+		Commands\BouncerPermissions\ReviewGroupPermissions::class,
 
         Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
@@ -66,6 +67,9 @@ class Kernel extends ConsoleKernel
         Commands\Monitoring\MACDJobMonitor::class,
 
         Commands\Numbers\NumberSearch::class,
+		
+		// IDM 
+		Commands\IDM\IdmUpdateUserPhone::class,
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

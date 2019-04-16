@@ -16,7 +16,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Create_AD_IPPhone_Event' => [
             'App\Listeners\Create_AD_IPPhone_Listener',
         ],
-		'App\Events\Update_IDM_PhoneNumber_Event' => [
+        'App\Events\Update_IDM_PhoneNumber_Event' => [
             'App\Listeners\Update_IDM_PhoneNumber_Listener',
         ],
         'App\Events\Create_Line_Event' => [
@@ -31,7 +31,6 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event' => [
             'App\Listeners\Create_UnityConnection_LDAP_Import_Mailbox_Listener',
         ],
-		
 
     ];
 

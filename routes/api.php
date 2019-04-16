@@ -31,9 +31,9 @@ $api->version('v1', function ($api) {
 
     // Auth routes
     require __DIR__.'/api.auth.php';
-	
-	// Bouncer Routes
-	require __DIR__.'/api.bouncer.permissions.php';
+
+    // Bouncer Routes
+    require __DIR__.'/api.bouncer.permissions.php';
 
     // Page Logging
     require __DIR__.'/api.page.php';

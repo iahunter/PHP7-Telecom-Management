@@ -47,12 +47,12 @@ class PhoneMACDController extends Controller
         if (! isset($phone['username'])) {
             $phone['username'] = '';
         }
-		
-		if (isset($phone['phoneplan_id'])) {
+
+        if (isset($phone['phoneplan_id'])) {
             $phoneplan_id = $phone['phoneplan_id'];
-        }else{
-			$phoneplan_id = null; 
-		}
+        } else {
+            $phoneplan_id = null;
+        }
 
         $macd = PhoneMACD::create(['phoneplan_id' => $phoneplan_id, 'type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
 
@@ -399,8 +399,8 @@ class PhoneMACDController extends Controller
 
         return response()->json($response);
     }
-	
-	public function list_macd_parents_by_phoneplan_id(Request $request, $id)
+
+    public function list_macd_parents_by_phoneplan_id(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -415,9 +415,9 @@ class PhoneMACDController extends Controller
         if (! PhoneMACD::where([['phoneplan_id', $id]])
                 ->where('type', 'MACD')
                 ->count()) {
-            
-			// Changing response for better UI display. 
-			$response = [
+
+            // Changing response for better UI display.
+            $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',
@@ -425,7 +425,7 @@ class PhoneMACDController extends Controller
                     'result'               => [],
                     ];
 
-			return response()->json($response);
+            return response()->json($response);
         }
 
         // Search for numbers like search.

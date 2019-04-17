@@ -1,0 +1,178 @@
+<div ng-if="vm.macds.length < 1" class="well" style="background-color: #e6e6e6">
+	<legend>No MACDs found for Phone Plan</legend>
+	<p>Click Deploy to create MACDs for your phone Plan. <br>
+	This will create a queue job for item in the plan and display status as it moves thru the deployment cycle. </p>
+	<button ng-if="vm.macds.length == 0" class="btn btn-primary"  ng-click="vm.submitmacds(vm.phones)">Deploy</button>
+</div>
+<div ng-if="vm.macds.length > 0">
+<legend ng-if="vm.macds.length == 1">{{vm.macds.length}} Job</legend>
+<legend ng-if="vm.macds.length != 1">{{vm.macds.length}} Jobs</legend>
+	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+		<div class="table-responsive">
+		<table class="table table-striped table-condensed table-bordered table-hover">
+			<thead>
+					
+					<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+						<th></th>
+						<th><input type="checkbox" ng-model="vm.macdselectAll" ng-click="vm.macdcheckAll()"/></th>
+						
+						<th>
+							<a href="" ng-click="sortType = 'id'; sortReverse = !sortReverse" style="color:black">
+								ID
+									<span ng-show="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'type'; sortReverse = !sortReverse" style="color:black">
+								Type
+									<span ng-show="sortType == 'type' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'type' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.ticket_number'; sortReverse = !sortReverse" style="color:black">
+								Ticket Number
+									<span ng-show="sortType == 'form_data.ticket_number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.ticket_number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse" style="color:black">
+								Status
+									<span ng-show="sortType == 'status' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'status' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.sitecode'; sortReverse = !sortReverse" style="color:black">
+								Sitecode
+									<span ng-show="sortType == 'form_data.sitecode' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.sitecode' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.device'; sortReverse = !sortReverse" style="color:black">
+								Device
+									<span ng-show="sortType == 'form_data.device' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.device' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.name'; sortReverse = !sortReverse" style="color:black">
+								Name
+									<span ng-show="sortType == 'form_data.name' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.name' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.dn'; sortReverse = !sortReverse" style="color:black">
+								Number
+									<span ng-show="sortType == 'form_data.dn' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.dn' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.usenumber'; sortReverse = !sortReverse" style="color:black">
+								Usenumber
+									<span ng-show="sortType == 'form_data.usenumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.usenumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.username'; sortReverse = !sortReverse" style="color:black">
+								Username
+									<span ng-show="sortType == 'form_data.username' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.username' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.firstname'; sortReverse = !sortReverse" style="color:black">
+								Firstname
+									<span ng-show="sortType == 'form_data.firstname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.firstname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.lastname'; sortReverse = !sortReverse" style="color:black">
+								Lastname
+									<span ng-show="sortType == 'form_data.lastname' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.lastname' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.voicemail'; sortReverse = !sortReverse" style="color:black">
+								Voicemail
+									<span ng-show="sortType == 'form_data.voicemail' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.voicemail' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+							<a href="" ng-click="sortType = 'form_data.template'; sortReverse = !sortReverse" style="color:black">
+								Template
+									<span ng-show="sortType == 'form_data.template' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'form_data.template' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						<th>
+								<a href="" ng-click="sortType = 'created_by'; sortReverse = !sortReverse" style="color:black">
+									Created By
+										<span ng-show="sortType == 'created_by' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'created_by' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+						<th>
+							<a href="" ng-click="sortType = 'created_at_local'; sortReverse = !sortReverse" style="color:black">
+								Time
+									<span ng-show="sortType == 'created_at_local' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+									<span ng-show="sortType == 'created_at_local' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+							</a>
+						</th>
+						
+						
+					</tr>
+				</thead>
+			<tbody>
+				<tr ng-repeat="log in vm.macds | orderBy:sortType:sortReverse | filter:vm.search: strict">
+							
+						<td><a href="#/macd/jobsummary/{{log.id}}"><button style="color: white; background-color:#555a5e;" class="btn btn-xs"><b>View</b></button></a></td>
+						
+						<td>
+							<input type="checkbox" ng-model="log.select" ng-click="vm.cucmphoneselecttouched()">
+						</td>
+						
+						<td>{{log.id}}</td>
+						<td>{{log.type}}</td>
+						<td>{{log.form_data.ticket_number}}</td>
+						<td>
+							<a href="#/macd/jobsummary/{{log.id}}" ng-if="log.status != 'complete'"style="color:red;">
+							<a href="#/macd/jobsummary/{{log.id}}" style="color:black;">
+							<b>{{log.status}}</b>
+						</td>
+						<td>{{log.form_data.sitecode}}</td>
+						<td>{{log.form_data.device}}</td>
+						<td>{{log.form_data.name}}</td>
+						<td>{{log.form_data.dn}}</td>
+						<td>{{log.form_data.usenumber}}</td>
+						<td>{{log.form_data.username}}</td>
+						<td>{{log.form_data.firstname}}</td>
+						<td>{{log.form_data.lastname}}</td>
+						<td>{{log.form_data.voicemail}}</td>
+						<td>{{log.form_data.template}}</td>
+						<td>{{log.created_by}}</td>
+						<td>{{log.created_at_local}}</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		</div>
+	</div>
+	<div style="margin:25px"></div>
+	
+	<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.macddeleteselected(vm.macds)">Delete Selected</a>
+	
+	<button ng-if="vm.macds.length == 0" class="btn btn-primary"  ng-click="">Deploy</button>
+</div>
+
+
+

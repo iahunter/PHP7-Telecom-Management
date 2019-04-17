@@ -91,6 +91,13 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
+     *         name="phoneplan_id",
+     *         in="formData",
+     *         description="Phone Plan ID this MAC is associated to. For use inside Phone plans only",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
      *         name="template",
      *         in="formData",
      *         description="Voicemail Template - Required of voicemail is true",
@@ -205,6 +212,30 @@
      * )
      **/
     $api->get('cucm/macd/parentlist', 'App\Http\Controllers\PhoneMACDController@list_macd_parents');
+	
+    /**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/macd/phoneplan/{id}",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="List of Phone MACD Parents by Phone Plan ID",
+     *     description="",
+     *     operationId="listMACDbyPhonePlanId",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of Parent",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('/cucm/macd/phoneplan/{id}', 'App\Http\Controllers\PhoneMACDController@list_macd_parents_by_phoneplan_id');
 
     /**
      * @SWG\Get(

@@ -96,10 +96,41 @@ angular
 					return defer.promise;
 			});
 		}
+		
+		// Get Dids by Block ID
+		self.list_macds_by_phoneplan_id = function(id) {
+			var defer = $q.defer();
+			return $http.get('../api/cucm/macd/phoneplan/' + id)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
+		}
 
 		// Create
 		self.create_macd_add = function(data){
 			return $http.post('../api/cucm/macd/add', data);
+		}
+		
+		// Delete Line by UUID
+		self.delete_macd_by_id = function(id) {
+			var defer = $q.defer();
+			console.log('Service - Deleting MACD ID: '+ id);
+			return $http.delete('../api/cucm/macd/'+id, id)
+				.then(function successCallback(response) {
+					defer.resolve(response);
+					// Must return the promise to the controller. 
+					return defer.promise;
+					
+			  }, function errorCallback(response) {
+					defer.resolve(response);
+					return defer.promise;
+			});
 		}
 
 		return self

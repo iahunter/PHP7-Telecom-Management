@@ -47,8 +47,14 @@ class PhoneMACDController extends Controller
         if (! isset($phone['username'])) {
             $phone['username'] = '';
         }
+		
+		if (isset($phone['phoneplan_id'])) {
+            $phoneplan_id = $phone['phoneplan_id'];
+        }else{
+			$phoneplan_id = null; 
+		}
 
-        $macd = PhoneMACD::create(['type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
+        $macd = PhoneMACD::create(['phoneplan_id' => $phoneplan_id, 'type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
 
         $tasks = [];
 
@@ -375,6 +381,57 @@ class PhoneMACDController extends Controller
             ->where('type', 'MACD')
             ->whereBetween('created_at', [$end, $start])
             ->orderby('created_at', 'desc')
+            ->get();
+
+        // Try to get status of all the children and set the job status of the worst status.
+        foreach ($macs as $key => $mac) {
+            $mac['status'] = PhoneMACD::get_parent_status($mac['id']);
+            $macs[$key] = $mac;
+        }
+
+        $response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'result'               => $macs,
+                    ];
+
+        return response()->json($response);
+    }
+	
+	public function list_macd_parents_by_phoneplan_id(Request $request, $id)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        // Check user permissions
+        if (! $user->can('read', PhoneMACD::class)) {
+            if (! $user->can('read', Cucmclass::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+
+        // Search for DID by numberCheck if there are any matches.
+        if (! PhoneMACD::where([['phoneplan_id', $id]])
+                ->where('type', 'MACD')
+                ->count()) {
+            
+			// Changing response for better UI display. 
+			$response = [
+                    'status_code'          => 200,
+                    'success'              => true,
+                    'message'              => '',
+                    'request'              => $request->all(),
+                    'result'               => [],
+                    ];
+
+			return response()->json($response);
+        }
+
+        // Search for numbers like search.
+        $macs = PhoneMACD::where([['phoneplan_id', $id]])
+            ->where('type', 'MACD')
+            //->orderby('created_at', 'desc')
             ->get();
 
         // Try to get status of all the children and set the job status of the worst status.

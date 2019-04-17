@@ -4936,6 +4936,13 @@
                         ]
                     },
                     {
+                        "name": "phoneplan_id",
+                        "in": "formData",
+                        "description": "Phone Plan ID this MAC is associated to. For use inside Phone plans only",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "template",
                         "in": "formData",
                         "description": "Voicemail Template - Required of voicemail is true",
@@ -5057,6 +5064,36 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/macd/phoneplan/{id}": {
+            "get": {
+                "tags": [
+                    "Management - Cisco Voice - MACD"
+                ],
+                "summary": "List of Phone MACD Parents by Phone Plan ID",
+                "description": "",
+                "operationId": "listMACDbyPhonePlanId",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Parent",
+                        "required": true,
+                        "type": "integer"
+                    }
                 ],
                 "responses": {
                     "200": {

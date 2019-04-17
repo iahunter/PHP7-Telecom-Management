@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'macdService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, macdService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
 		
 		// This controller does planning and systems provisioning. 
 		
@@ -475,7 +475,8 @@ angular
 					}
 				});
 		}
-		
+
+
 		vm.getusernames = function(phones){
 			vm.users = [];
 			
@@ -729,7 +730,7 @@ angular
 			}, 2000);
 				
 		}
-		
+
 		
 		vm.cucmphonecheckAll = function() {
 			angular.forEach(vm.cucmphones, function(phone) {
@@ -800,6 +801,184 @@ angular
 		};
 		
 		
+				
+		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
+				
+		vm.getphoneplanmacds = macdService.list_macds_by_phoneplan_id(id)
+			.then(function(res){
+					// Check for errors and if token has expired. 
+					console.log(res)
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						//console.log(vm.message);
+						if(vm.message == "Token has expired"){
+						// Send user to login page if token expired. 
+							alert(vm.message);
+							$state.go('logout');
+						}
+					}else{
+						//console.log(res)
+						vm.macds = res.data.result;
+						console.log(vm.macds)
+						
+						// Convert DB Timestamp to local PC Time. 
+						angular.forEach(vm.macds, function(log) {
+
+							// Convert UTC to local time
+							var dateString = log.created_at;
+							//console.log(dateString)
+							created_at = moment().utc().format(dateString);
+							created_at = moment.utc(created_at).toDate();
+							log.created_at_local = created_at.toLocaleString()
+							//console.log(log.created_at_local)
+
+						});
+						
+						vm.loading = false;
+
+					}
+					
+				}, function(err){
+					alert(err);
+				});
+		
+		vm.macdcheckAll = function() {
+			angular.forEach(vm.macds, function(macd) {
+			  macd.select = vm.macdselectAll;
+			  console.log(macd);
+			  //vm.selecttouched();
+			});
+		};
+		
+		vm.deletemacd = function(macd) {
+			
+			id = macd.id;
+			macdService.delete_macd_by_id(id)
+				.then(function(res) {
+					
+					
+					if(res.data.deleted_at){
+						console.log(id + " Successfully Deleted")
+						macd = null;
+					}
+					//console.log(res)
+			  }, function(error) {
+					alert('An error occurred');
+			  });
+			
+		}
+		
+		vm.macddeleteselected = function(macd){
+			angular.forEach(macd, function(macd) {
+				if(macd.select == true){
+					//console.log(macd);
+					vm.deletemacd(macd);
+				}
+				
+			});
+			
+			$timeout(function(){
+				//vm.getphoneplanmacds(id)
+			}, 2000);
+				
+		}
+		
+		vm.submitmacd = function(phone) {
+			console.log(phone)
+			
+			if(!phone.username){
+				phone.username = "";
+			}
+			if(!phone.voicemail){
+				phone.voicemail = false;
+			}
+			
+			
+			var object = {}
+			
+			object.sitecode = vm.site.sitecode
+			object.device = phone.device
+			object.name = phone.name
+			object.firstname = phone.firstname
+			object.lastname = phone.lastname
+			object.dn = phone.dn
+			object.usenumber = "new"
+			object.extlength = vm.site.extlen
+			object.language =  phone.language
+			
+			if(phone.voicemail){
+				object.voicemail = true
+				
+				if(phone.username){
+					object.username = phone.username;
+					object.template = vm.phoneplan.employee_vm_user_template
+				}else{
+					object.username = ""; 
+					object.template = vm.phoneplan.nonemployee_vm_user_template; 
+				}
+			}else{
+				object.voicemail = false; 
+			}
+
+			object.phoneplan_id = phone.phoneplan
+			
+			console.log(object)
+			
+			macdService.create_macd_add(object)
+				.then(function(res){
+					
+					
+					console.log(res)
+					// Check for errors and if token has expired. 
+					if(res.data.message){
+						//console.log(res);
+						vm.message = res.data.message;
+						console.log(vm.message);
+						
+						if(vm.message == "Token has expired"){
+							// Send user to login page if token expired. 
+							//alert("Token has expired, Please relogin");
+							$state.go('logout');
+						}
+						return vm.message;
+					}else{
+						// Do Nothing
+						/*
+						vm.macobjects = res.data.result;
+						
+						console.log(vm.macobjects)
+										
+						vm.loading = false;
+						
+						
+						if(vm.macobjects.macd.id){
+							$timeout(function(){
+								$location.path('/macd/jobsummary/'+ vm.macobjects.macd.id);
+							}, 500);
+							
+						}
+						*/ 
+					}
+					
+				}, function(err){
+					console.log(err)
+					alert(err);
+				});
+		}
+		
+		vm.submitmacds = function(jobs){
+			console.log("Button Pushed")
+			angular.forEach(jobs, function(job) {
+				vm.submitmacd(job); 
+			});
+			
+			$timeout(function(){
+				// vm.getphoneplanmacds(id)
+			}, 2000);
+				
+		}
+
 		
 	}])
 	

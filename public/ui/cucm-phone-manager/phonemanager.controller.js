@@ -139,7 +139,6 @@ angular
 			}
 			//console.log(forward)
 			return forward
-			
 		}
 		
 		vm.deletephone = function(phone){

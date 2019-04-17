@@ -212,7 +212,7 @@
      * )
      **/
     $api->get('cucm/macd/parentlist', 'App\Http\Controllers\PhoneMACDController@list_macd_parents');
-	
+
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/macd/phoneplan/{id}",

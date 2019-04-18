@@ -4936,6 +4936,13 @@
                         ]
                     },
                     {
+                        "name": "template",
+                        "in": "formData",
+                        "description": "Voicemail Template - Required of voicemail is true",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "phoneplan_id",
                         "in": "formData",
                         "description": "Phone Plan ID this MAC is associated to. For use inside Phone plans only",
@@ -4943,9 +4950,9 @@
                         "type": "string"
                     },
                     {
-                        "name": "template",
+                        "name": "ticket_number",
                         "in": "formData",
-                        "description": "Voicemail Template - Required of voicemail is true",
+                        "description": "Ticket Number",
                         "required": false,
                         "type": "string"
                     },

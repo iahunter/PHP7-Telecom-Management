@@ -179,7 +179,7 @@
 						-->
 						
 						<td   ng-show="!vm.edit[phone.id] && !phone.inuse && !phone.nameinvalid">{{ phone.name}}</td>
-						<td   ng-show="!vm.edit[phone.id] && phone.inuse" style="color:orange">{{ phone.name}}</td>
+						<td   ng-show="!vm.edit[phone.id] && phone.inuse"><a href="#/phone/{{phone.name}}" target="_blank" style="color:orange">{{ phone.name}}</a></td>
 						<td   ng-show="!vm.edit[phone.id] && phone.nameinvalid" style="color:red">{{ phone.name}}</td>
 						
 						<!--<td   ng-show="!vm.edit[phone.id]">{{ phone.name}}</td>-->

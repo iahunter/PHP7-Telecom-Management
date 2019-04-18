@@ -91,6 +91,13 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
+     *         name="template",
+     *         in="formData",
+     *         description="Voicemail Template - Required of voicemail is true",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
      *         name="phoneplan_id",
      *         in="formData",
      *         description="Phone Plan ID this MAC is associated to. For use inside Phone plans only",
@@ -98,9 +105,9 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
-     *         name="template",
+     *         name="ticket_number",
      *         in="formData",
-     *         description="Voicemail Template - Required of voicemail is true",
+     *         description="Ticket Number",
      *         required=false,
      *         type="string"
      *     ),

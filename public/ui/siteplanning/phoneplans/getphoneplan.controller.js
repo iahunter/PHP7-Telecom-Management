@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'macdService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, macdService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
+	.controller('getPhonePlan.IndexController', ['LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'macdService', 'PageService', 'cucmReportService', '$interval', '$timeout', '$location', '$state', '$stateParams', '$scope', function(LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, macdService, PageService, cucmReportService, $interval, $timeout, $location, $state, $stateParams, $scope) {
 		
 		// This controller does planning and systems provisioning. 
 		
@@ -800,12 +800,13 @@ angular
 			
 		};
 		
+		// Pull the phone plan macd when loading the page. 
+		getphoneplanmacds(); 
 		
-				
-		// This still needs work. Needed to execute in series vs. parallel or CUCM blew up. 
-				
-		vm.getphoneplanmacds = macdService.list_macds_by_phoneplan_id(id)
-			.then(function(res){
+		
+		function getphoneplanmacds(){
+			macdService.list_macds_by_phoneplan_id(id)
+				.then(function(res){
 					// Check for errors and if token has expired. 
 					console.log(res)
 					if(res.data.message){
@@ -821,7 +822,7 @@ angular
 						//console.log(res)
 						vm.macds = res.data.result;
 						console.log(vm.macds)
-						
+						vm.getmacds = false
 						// Convert DB Timestamp to local PC Time. 
 						angular.forEach(vm.macds, function(log) {
 
@@ -832,16 +833,33 @@ angular
 							created_at = moment.utc(created_at).toDate();
 							log.created_at_local = created_at.toLocaleString()
 							//console.log(log.created_at_local)
+							console.log(log)
 
+							//log.status = "job received" 	// Test Gif Loader
+							if(log.status != "error" && log.status != "complete"){
+								// Keep polling the macds until these status are met. 
+								console.log("getmacs = true")
+								vm.getmacds = true
+							}
+							
+							
 						});
+						
+						if(vm.getmacds == false){
+							console.log("Cancel Pull interval of MACDs")
+							console.log(vm.getmacds)
+							$interval.cancel(vm.pull);
+						}
+
 						
 						vm.loading = false;
 
 					}
 					
 				}, function(err){
-					alert(err);
+					console.log(err);
 				});
+		};
 		
 		vm.macdcheckAll = function() {
 			angular.forEach(vm.macds, function(macd) {
@@ -853,13 +871,13 @@ angular
 		
 		vm.deletemacd = function(macd) {
 			
-			id = macd.id;
-			macdService.delete_macd_by_id(id)
+			macd = macd.id;
+			macdService.delete_macd_by_id(macd)
 				.then(function(res) {
 					
 					
 					if(res.data.deleted_at){
-						console.log(id + " Successfully Deleted")
+						console.log(macd + " Successfully Deleted")
 						macd = null;
 					}
 					//console.log(res)
@@ -869,23 +887,28 @@ angular
 			
 		}
 		
-		vm.macddeleteselected = function(macd){
-			angular.forEach(macd, function(macd) {
+		vm.macddeleteselected = function(macds){
+			vm.loading = true
+			angular.forEach(macds, function(macd) {
 				if(macd.select == true){
+					macd.hide = true; 
+					//delete macds.macd;
 					//console.log(macd);
 					vm.deletemacd(macd);
 				}
-				
 			});
 			
+			// vm.loading = false
+			
 			$timeout(function(){
-				//vm.getphoneplanmacds(id)
-			}, 2000);
+				console.log("Getting MACDs for Plan ID: " + id)
+				getphoneplanmacds(); 
+			}, 1000);
 				
 		}
 		
 		vm.submitmacd = function(phone) {
-			console.log(phone)
+			//console.log(phone)
 			
 			if(!phone.username){
 				phone.username = "";
@@ -908,8 +931,12 @@ angular
 			object.language =  phone.language
 			
 			if(phone.voicemail){
-				object.voicemail = true
-				
+				phone.voicemail.toLowerCase();
+				if(phone.voicemail == "y" || phone.voicemail == "yes" || phone.voicemail == "yes" || phone.voicemail == "true"){
+					object.voicemail = "true"
+				}else{
+					object.voicemail = "false"; 
+				}
 				if(phone.username){
 					object.username = phone.username;
 					object.template = vm.phoneplan.employee_vm_user_template
@@ -918,12 +945,14 @@ angular
 					object.template = vm.phoneplan.nonemployee_vm_user_template; 
 				}
 			}else{
-				object.voicemail = false; 
+				object.voicemail = "false"; 
 			}
 
 			object.phoneplan_id = phone.phoneplan
+			object.ticket_number =  "Phone Plan: " + object.phoneplan_id
 			
-			console.log(object)
+			//console.log(object)
+			
 			
 			macdService.create_macd_add(object)
 				.then(function(res){
@@ -951,33 +980,36 @@ angular
 										
 						vm.loading = false;
 						
-						
-						if(vm.macobjects.macd.id){
-							$timeout(function(){
-								$location.path('/macd/jobsummary/'+ vm.macobjects.macd.id);
-							}, 500);
-							
-						}
 						*/ 
+						
+						
 					}
 					
 				}, function(err){
 					console.log(err)
-					alert(err);
+					
 				});
 		}
 		
 		vm.submitmacds = function(jobs){
-			console.log("Button Pushed")
+			console.log("MACD Deploy Button Pushed.. Start polling MACDs for Plan")
+			
+			vm.loading = true; 
+			vm.pull = $interval(getphoneplanmacds,1000); 
+			
 			angular.forEach(jobs, function(job) {
 				vm.submitmacd(job); 
 			});
 			
-			$timeout(function(){
-				// vm.getphoneplanmacds(id)
-			}, 2000);
-				
+			//vm.loading = false; 
+
 		}
+		
+		$scope.$on('$destroy', function() {
+				//console.log($scope);
+				$interval.cancel(vm.pull);
+			});
+
 
 		
 	}])

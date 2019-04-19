@@ -117,6 +117,11 @@ angular
 			return $http.post('../api/cucm/macd/add', data);
 		}
 		
+		// Create
+		self.create_macd_batch = function(data){
+			return $http.post('../api/cucm/macd/batch', data);
+		}
+		
 		// Delete Line by UUID
 		self.delete_macd_by_id = function(id) {
 			var defer = $q.defer();

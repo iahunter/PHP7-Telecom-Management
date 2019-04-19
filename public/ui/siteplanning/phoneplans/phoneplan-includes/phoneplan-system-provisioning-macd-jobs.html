@@ -13,6 +13,8 @@
 		<p>Click below to deploy your Phone Plan. <br>
 		This will create a queue job for each item in the plan and display status as it moves thru the deployment cycle. </p>
 		<button ng-if="vm.macds.length == 0" class="btn btn-primary"  ng-click="vm.submitmacds(vm.phones)">Deploy</button>
+		<button ng-if="vm.macds.length == 0" class="btn btn-primary"  ng-click="vm.submitmacdsbulk(vm.phones)">Bulk Deploy</button>
+		<button ng-if="vm.macds.length == 0" class="btn btn-default"  ng-click="vm.phonecheck(vm.phones)">PhoneCheck</button>
 	</div>
 	<div ng-if="vm.macds.length > 0">
 	<legend ng-if="vm.macds.length == 1">{{vm.macds.length}} Job</legend>

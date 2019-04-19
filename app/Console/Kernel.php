@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmPhoneIPAddresses::class,
         Commands\CallManager\CucmGatewayCallCounts::class,
         Commands\CallManager\CucmSIPPhoneReport::class,
+		Commands\CallManager\CucmPhoneNamesCache::class,
 
         // Cleanup
         Commands\CallManager\CucmPhoneandNumberCleanup::class,

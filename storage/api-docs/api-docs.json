@@ -1684,6 +1684,46 @@
                 }
             }
         },
+        "/telephony/api/cucm/phonecheck": {
+            "post": {
+                "tags": [
+                    "Management - CUCM - Phone Provisioning"
+                ],
+                "summary": "Check if Phones are provisioned. Send array of phones to check. Return phones that are provisioned",
+                "description": "",
+                "operationId": "check phones",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "phones",
+                        "in": "formData",
+                        "description": "Phone Array",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "description": "MACDs",
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
         "/telephony/api/cucm/ldap/start": {
             "get": {
                 "tags": [
@@ -4822,6 +4862,46 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/cucm/macd/batch": {
+            "post": {
+                "tags": [
+                    "Management - Cisco Voice - MACD"
+                ],
+                "summary": "Create New MACD Batch - Updates AD, CUCM, and Unity Connection",
+                "description": "This sends the variables to the queue where they get worked. The results are stored in the PhoneMACD Table.",
+                "operationId": "createSite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "macds",
+                        "in": "formData",
+                        "description": "Phone MACD Array",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "description": "MACDs",
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }

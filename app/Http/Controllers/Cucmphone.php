@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;	// Cache
 // Add Dummy CUCM class for permissions use for now.
 use App\Cucmclass;
 use App\PhoneMACD;
@@ -236,6 +237,70 @@ class Cucmphone extends Cucm
                     ];
 
         return response()->json($response);
+    }
+	
+	// CUCM Add Phone Wrapper
+    public function check_if_phones_provisioned(Request $request)
+    {
+		$user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            if (! $user->can('read', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+		
+		$PHONES = $request->phones; 
+		
+		if(!is_array($PHONES)){
+			throw new \Exception("Expecting Array"); 
+		}
+		//return $PHONES; 
+		
+		// Name of Cache key. This should get polled by cron every min. 
+        $key = 'callmanager:phone_names_cache';
+
+        // Check if calls exist in cache. If not then move on.
+        if (Cache::has($key)) {
+            $CUCM_PHONES = Cache::get($key);
+        }else{
+			try {
+				$CUCM_PHONES = $this->cucm->get_phone_names();
+			} catch (\Exception $E) {
+				return $E->getMessage();
+			}
+		}
+		
+		//return "cashed"; 
+		//return $CUCM_PHONES; 
+		// Loop thru Phones and see if they in the array we get back from CUCM. 
+		$REPLY = []; 
+		foreach($PHONES as $PHONE){
+			$PHONE = strtoupper($PHONE); 
+			if(in_array($PHONE, $CUCM_PHONES)){
+				//return "in array"; 
+				$REPLY[$PHONE] = array_search($PHONE, $CUCM_PHONES); 
+			}
+		}
+		
+		$PHONES = []; 
+		// Put the key back to UUID
+		foreach($REPLY as $PHONE => $UUID){
+			$PHONES[$UUID] = $PHONE; 
+		}
+		
+		
+		return $PHONES;
+		
+		$response = [
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+            'request'         => $request->all(),
+            'response'        => $PHONES,
+            ];
+		
+		return response()->json($response);
     }
 
     public function updatePhone(Request $request)

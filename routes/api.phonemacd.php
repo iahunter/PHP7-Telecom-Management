@@ -2,6 +2,41 @@
 
     /**
      * @SWG\Post(
+     *     path="/telephony/api/cucm/macd/batch",
+     *     tags={"Management - Cisco Voice - MACD"},
+     *     summary="Create New MACD Batch - Updates AD, CUCM, and Unity Connection",
+     *     description="This sends the variables to the queue where they get worked. The results are stored in the PhoneMACD Table.",
+     *     operationId="createSite",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="macds",
+     *         in="formData",
+     *         description="Phone MACD Array",
+     *         required=true,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="array",
+	 *				 	@SWG\Items(
+	 *					type="string",
+     *             		description="MACDs",
+	 *				),
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->post('cucm/macd/batch', 'App\Http\Controllers\PhoneMACDController@createPhoneMacdBatch');
+
+    /**
+     * @SWG\Post(
      *     path="/telephony/api/cucm/macd/add",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="Create New MACD - Updates AD, CUCM, and Unity Connection",

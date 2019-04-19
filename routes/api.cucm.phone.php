@@ -595,3 +595,40 @@
      * )
      **/
     $api->post('cucm/paste/phones', 'App\Http\Controllers\Cucmphone@pastePhones');
+	
+	/**
+     * @SWG\Post(
+     *     path="/telephony/api/cucm/phonecheck",
+     *     tags={"Management - CUCM - Phone Provisioning"},
+     *     summary="Check if Phones are provisioned. Send array of phones to check. Return phones that are provisioned",
+     *     description="",
+     *     operationId="check phones",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="phones",
+     *         in="formData",
+     *         description="Phone Array",
+     *         required=true,
+     *         type="array",
+     *         @SWG\Items(
+     *             type="array",
+	 *				 	@SWG\Items(
+	 *					type="string",
+     *             		description="MACDs",
+	 *				),
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->post('cucm/phonecheck', 'App\Http\Controllers\Cucmphone@check_if_phones_provisioned');
+	
+

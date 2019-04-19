@@ -46,6 +46,8 @@
 # Update Phone Database with CUCM Risdb scan every 15 mins - Note Depends on amount of phones you have. increase 1 min per 1000 phones more than 15k. 
 */15 * * * * /PATH_TO_APP/telephony/artisan callmanager:phone_ip_address_and_status_scan > /dev/null 2>&1
 
+# Cache the CUCM Phone Names for Phone Plan Lookups
+*/1 * * * * /PATH_TO_APP/telephony/artisan callmanager:phone_names_cache > /dev/null 2>&1
 
 # CUCM Scheduled Jobs every hour
 0 * * * * /PATH_TO_APP/telephony/artisan callmanager:sitescan > /dev/null 2>&1

@@ -260,6 +260,11 @@ angular
 			return $http.post('../api/cucm/line', line);
 		}
 		
+		// Create Block
+		self.phonecheck = function(phones){
+			return $http.post('../api/cucm/phonecheck', phones);
+		}
+		
 		
 		// Create phones - Had to make the posts in series or Informix was throwing errors. 
 		self.clearphoneadds = function(){

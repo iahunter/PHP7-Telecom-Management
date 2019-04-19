@@ -29,7 +29,7 @@ class Cucmclass extends Model
     }
 
     public static $results = [];
-
+	
     // CUCM Add Phone Wrapper
     public static function reset_phone($NAME)
     {

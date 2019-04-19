@@ -17,10 +17,10 @@
      *         type="array",
      *         @SWG\Items(
      *             type="array",
-	 *				 	@SWG\Items(
-	 *					type="string",
+     *				 	@SWG\Items(
+     *					type="string",
      *             		description="MACDs",
-	 *				),
+     *				),
      *         ),
      *     ),
      *     @SWG\Response(

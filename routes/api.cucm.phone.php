@@ -595,8 +595,8 @@
      * )
      **/
     $api->post('cucm/paste/phones', 'App\Http\Controllers\Cucmphone@pastePhones');
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/phonecheck",
      *     tags={"Management - CUCM - Phone Provisioning"},
@@ -613,10 +613,10 @@
      *         type="array",
      *         @SWG\Items(
      *             type="array",
-	 *				 	@SWG\Items(
-	 *					type="string",
+     *				 	@SWG\Items(
+     *					type="string",
      *             		description="MACDs",
-	 *				),
+     *				),
      *         ),
      *     ),
      *     @SWG\Response(
@@ -630,5 +630,3 @@
      * )
      **/
     $api->post('cucm/phonecheck', 'App\Http\Controllers\Cucmphone@check_if_phones_provisioned');
-	
-

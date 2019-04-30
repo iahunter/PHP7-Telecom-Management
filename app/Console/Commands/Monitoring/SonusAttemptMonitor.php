@@ -46,12 +46,7 @@ class SonusAttemptMonitor extends Command
     public function __construct()
     {
         parent::__construct();
-        // Construct new cucm object
-        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
+
     }
 
     /**
@@ -168,6 +163,12 @@ class SonusAttemptMonitor extends Command
 
     public function getoncallphonenumber($DN)
     {
+		// Construct new cucm object
+        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
 
         // this function gets the callforward all from the Oncall number from CUCM. This is optional.
         $number = $this->cucm->get_object_type_by_pattern_and_partition($DN, 'Global-All-Lines', 'Line');

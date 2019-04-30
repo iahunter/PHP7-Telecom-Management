@@ -10,9 +10,10 @@
 	<div class="panel-body panel-collapse collapse  collapse in" role="tabpanel" id="collapse_phoneplan"  aria-labelledby="PhonesHeading" style="background-color:#F8F8F8;">
 			
 		<button class="btn btn-default active" ><span class="badge">{{vm.phones.length}}</span> Entries Found</button>
-		<button class="btn btn-warning active"  ng-if="vm.phonecheckresult.length > 0"><span class="badge">{{vm.phonecheckresult.length}}</span> Phones Found in CUCM</button>
+		<button class="btn btn-warning active"  ng-if="vm.phonecheckresult.length > 0"><span class="badge">{{vm.phonecheckresult.length}}</span> Phones Found in CUCM <i class="fa fa-phone-square"></i></button>
 		<div style="margin:25px"></div>
 		
+		<p><b style="color:red"><i>Note! </i></b>Phones in CUCM can take up to 5 minutes to update. Be Patient...</p>
 
 		<div class="input-group col-md-3 ">
 			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 10 }" placeholder="Search" name="srch-term" id="srch-term">
@@ -23,11 +24,13 @@
 		</div>
 		
 		<div style="margin:25px"></div>
-
+			<button ng-if="vm.deleteall && vm.permissions.delete.Phone" class="btn btn-danger btn-sm"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
 			<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
 			<button class="btn btn-primary btn-sm" ng-if="vm.permissions.create.Phone" ng-click="vm.phoneaddtoggle(vm.showaddrow)"><i class="glyphicon glyphicon-plus"></i> Add</button>
 			<!--<button class="btn btn-primary btn-sm" ng-click="vm.phonebulkaddtoggle(vm.showbulkaddrows)"><i class="glyphicon glyphicon-plus"></i> Bulk Add - Needs work</button>-->
 			<a href="#/phoneplan/{{ vm.phoneplan.id}}/importphones" ng-if="vm.permissions.create.Phone" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Bulk Add</a>
+			
+			<button class="btn btn-default btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 			
 			<div style="margin-top:10px; margin-botton:10px">
 				<ng-include src="'siteplanning/phoneplans/createphone.html'"></ng-include>
@@ -174,7 +177,7 @@
 							<input type="checkbox" ng-model="phone.select" ng-click="vm.selecttouched()">
 						</td>
 						<td>{{ phone.id}}</td>
-						<td><a href="#/phone/{{phone.realname}}" target="_blank"><i class="fa fa-phone-square" ng-if="phone.cucmfound"></i></a></td>
+						<td><a href="#/phone/{{phone.realname}}" target="_blank" ng-if="phone.cucmfound"><i class="fa fa-phone-square"></i></a></td>
 						<!--<td>{{ phone.parent}}</td>-->
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.firstname}}</td>
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.lastname}}</td>
@@ -187,8 +190,10 @@
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.adipphone}}</td>
 						-->
 						
-						<td   ng-if="!vm.edit[phone.id] && !phone.nameinvalid">{{ phone.name}}</a></td>
-						<td   ng-if="!vm.edit[phone.id] && phone.nameinvalid" style="color:red">{{ phone.name}}</td>
+						<td  ng-if="!vm.edit[phone.id]">
+							<span ng-if="!phone.nameinvalid">{{ phone.name}}</span>
+							<span ng-if="phone.nameinvalid" style="color:red">{{ phone.name}}</span>
+						</td>
 						
 						<!--<td   ng-if="!vm.edit[phone.id]">{{ phone.name}}</td>-->
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.device}}</td>
@@ -202,7 +207,7 @@
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.updated_at}}</td>
 
 						
-						<td  ng-if="vm.permissions.update.Phone || vm.permissions.delete.Phone" ng-if="!vm.edit[phone.id]">
+						<td  ng-if="vm.permissions.update.Phone || vm.permissions.delete.Phone" ng-show="!vm.edit[phone.id]">
 							<button class="btn btn-xs btn-primary" ng-if="vm.permissions.update.Phone" ng-click="vm.edit[phone.id] = !vm.edit[phone.id]"> Edit </button>
 
 							<!-- Function moved ot modal...
@@ -251,8 +256,8 @@
 							
 							
 						</td>
-
 						<!--Edit View-->
+						
 						<td   ng-if="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.firstname"></td>
 						<td   ng-if="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.lastname"></td>
 						<td   ng-if="vm.edit[phone.id]"><input type="text" class="form-control form-control-sm" ng-model="phone.username"></td>
@@ -292,7 +297,7 @@
 			<div style="margin:25px"></div>
 			<!--<a href="#/phone/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>-->
 			<button ng-if="vm.deleteall && vm.permissions.delete.Phone" class="btn btn-danger btn-sm"  ng-click="vm.deleteselected(vm.phones)">Delete Selected</button>
-			<button class="btn btn-primary btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
+			<button class="btn btn-default btn-sm" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 			
 			<div style="margin:50px"></div>
 	</div>

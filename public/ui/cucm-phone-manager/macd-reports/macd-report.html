@@ -179,8 +179,9 @@
 							<td>{{log.type}}</td>
 							<td>{{log.form_data.ticket_number}}</td>
 							<td>
-								<a href="#/macd/jobsummary/{{log.id}}" ng-if="log.status != 'complete'" style="color:red;"><b>{{log.status}}</b></a>
-								<a href="#/macd/jobsummary/{{log.id}}" ng-if="log.status == 'complete'" style="color:black;"><b>{{log.status}}</b></a>
+								<a href="#/macd/jobsummary/{{log.id}}" ng-if="log.status != 'error' && log.status != 'complete'"style="color:orange;" target="_blank"><img src="app-content/images/ajax-loader.gif" style="max-height: 20px; margin-top: 0px;"></i></a>
+								<a href="#/macd/jobsummary/{{log.id}}" ng-if="log.status == 'error'"style="color:black;" target="_blank"><i class="fa fa-exclamation-triangle" style="color:red"></i><b style="color:red"> {{log.status}}</b></a>
+								<a href="#/macd/jobsummary/{{log.id}}" ng-if="log.status == 'complete'"style="color:black;" target="_blank"><i class="glyphicon glyphicon-ok" style="color:green"></i><b> {{log.status}}</b></a>
 							</td>
 							<td>{{log.form_data.sitecode}}</td>
 							<td>{{log.form_data.device}}</td>

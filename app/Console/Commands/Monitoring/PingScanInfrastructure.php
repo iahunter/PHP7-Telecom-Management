@@ -32,12 +32,6 @@ class PingScanInfrastructure extends Command
     public function __construct()
     {
         parent::__construct();
-        // Construct new cucm object
-        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
     }
 
     /**
@@ -47,6 +41,11 @@ class PingScanInfrastructure extends Command
      */
     public function handle()
     {
+        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
         $hosts = TelecomInfrastructure::all();
 
         foreach ($hosts as $host) {
@@ -144,7 +143,7 @@ class PingScanInfrastructure extends Command
                         ];
 
                 $this->sendemail($data);
-                $this->send_text_to_oncall($data);
+                //$this->send_text_to_oncall($data);
 
                 $device->updated_by = 'Monitoring Change';
                 $device->save();

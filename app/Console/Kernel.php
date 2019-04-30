@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
+		
         Commands\CallManager\Ldapsync::class,
         Commands\CallManager\CucmSiteScan::class,
         Commands\CallManager\CucmPhoneScan::class,
@@ -27,7 +28,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmGatewayCallCounts::class,
         Commands\CallManager\CucmSIPPhoneReport::class,
 		Commands\CallManager\CucmPhoneNamesCache::class,
-
+		//
         // Cleanup
         Commands\CallManager\CucmPhoneandNumberCleanup::class,
         Commands\CallManager\CucmNumberCleanup::class,
@@ -42,9 +43,8 @@ class Kernel extends ConsoleKernel
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 
         Commands\UnityConnection\DidNumberUpdatesByMailboxNumber::class,
-
         Commands\West911Enable\PhoneEGWScanUpdate::class,
-
+		
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
         Commands\Sonus\GetSonusCallReports::class,
@@ -60,15 +60,15 @@ class Kernel extends ConsoleKernel
 
         Commands\BouncerPermissions\BouncerPermissions::class,
         Commands\BouncerPermissions\ReviewGroupPermissions::class,
-
-        Commands\Monitoring\PingScanInfrastructure::class,
+			
+		Commands\Monitoring\PingScanInfrastructure::class,
         Commands\Monitoring\SonusAlarmMonitor::class,
         Commands\Monitoring\SonusAttemptMonitor::class,
         Commands\Monitoring\CucmSonusLoopMitigator::class,
         Commands\Monitoring\MACDJobMonitor::class,
-
-        Commands\Numbers\NumberSearch::class,
-
+      
+		Commands\Numbers\NumberSearch::class,
+	
         // IDM
         Commands\IDM\IdmUpdateUserPhone::class,
 
@@ -83,7 +83,7 @@ class Kernel extends ConsoleKernel
         //Commands\CallManager\LdapUserUpdate::class,
 
         //Commands\UnityConnection\UnityConnMB::class,
-
+		
     ];
 
     /**

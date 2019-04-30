@@ -2,11 +2,23 @@
 <ng-include src="'app-content/navbar.html'"></ng-include>
 
 
+<div style="margin:50px"></div>
+			
+			<div ng-if="vm.phoneplan_loading">
+				<legend >Loading... Please be patient... </legend>
+				<div class="well">
+					<div class="row">
+						<div class="container loader"></i></div>
+					</div>
+					<div style="margin:25px"></div>
+				</div>
+			</div>
+			
 <div style="margin:10px"></div>
 
 <!--<div style="margin-left:80px; margin-right:80px;">-->
 <div style="margin-left:5%; margin-right:5%;">
-	<div class="well form-horizontal" style="margin-top:10px;" >
+	<div class="well form-horizontal" style="margin-top:10px;" ng-if="vm.phones">
 	
 		<div style="margin:50px"></div>
 
@@ -34,7 +46,7 @@
 				<legend >Loading... Please be patient... </legend>
 				<div class="well">
 					<div class="row">
-						<div class="container loader"></div>
+						<div class="container loader"></i></div>
 					</div>
 					<div style="margin:25px"></div>
 				</div>
@@ -44,7 +56,7 @@
 			<div style="margin:25px"></div>
 				
 			<!--After done loading phones, print out the rest of the page-->
-			<div ng-if="vm.phones">		
+			<div ng-if="!vm.phoneplan_loading">		
 					
 				<div style="margin:50px"></div>
 

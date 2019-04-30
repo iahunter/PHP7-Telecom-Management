@@ -32,12 +32,6 @@ class DidNumberUpdatesByMailboxNumber extends Command
      */
     public function __construct()
     {
-        // Construct new cucm object
-        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
 
         $this->svn = env('CUCM_SVN');
 
@@ -66,18 +60,12 @@ class DidNumberUpdatesByMailboxNumber extends Command
         $updated_did_mailbox = 0;
         $updated_ad_ipphone = 0;
         $updated_did_mailbox_callhandler = 0;
-
+		
         foreach ($didblocks as $didblock) {
             $didblock_count++;
 
             echo "Block ID: {$didblock->id}".PHP_EOL;
 
-            /* Had to fast forward because of error... will now start with IDs of greater than 373
-            if($didblock->id <= 373){
-                print $didblock->id;
-                continue;
-            }
-            */
             echo 'Block Count: '.$didblock_count.' of '.count($didblocks).PHP_EOL;
             $sitecode = $didblock->name;
 
@@ -92,13 +80,7 @@ class DidNumberUpdatesByMailboxNumber extends Command
                     $count++;
 
                     echo 'Did '.$count.' of '.count($dids).": {$did->number} ".PHP_EOL;
-                    //if ($did->status == 'inuse') {
-                    //************** Remove this after first run   **************/
-                    /*
-                    if($did->mailbox){
-                        continue;
-                    }
-                    */
+
                     // If it is inuse - Go see if it has a mailbox and update the mailbox field.
                     try {
                         $mailbox_details = Cupi::findmailboxbyextension($did->number);
@@ -172,24 +154,6 @@ class DidNumberUpdatesByMailboxNumber extends Command
                                         $did->mailbox = ['User' => $mailbox];
                                         $did->save();
 
-                                        //print_r($did->mailbox);
-                                        /*
-                                        if ($ldap_user['ipphone'] != $mailbox['DtmfAccessId']) {
-                                            $DN = $mailbox['DtmfAccessId'];
-                                            $USERNAME = $ldap_user['userprincipalname'];
-
-                                            // If the IP Phone Field doesn't match what is in Unity Connection - Update it.
-                                                 Uncomment to updated AD with VM DN. Should be no reason after first run to do this but just in case....
-                                                try {
-                                                    $update = $this->Auth->changeLdapPhone($USERNAME, $DN);
-                                                    echo "Updated User IP Phone Field from {$ldap_user['ipphone']} to {$DN}".PHP_EOL;
-                                                    $updated_ad_ipphone++;
-                                                } catch (\Exception $e) {
-                                                    echo $e->getMessage();
-                                                    continue;
-                                                }
-
-                                        }*/
                                     }
                                 }
                             }

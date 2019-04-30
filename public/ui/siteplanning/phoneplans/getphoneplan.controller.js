@@ -101,8 +101,10 @@ angular
 				//Error
 			});
 		
+		getphoneplanphones()
 		
-		vm.getphoneplanphones = sitePhonePlanService.getphoneplanphones(id)
+		function getphoneplanphones(){
+		sitePhonePlanService.getphoneplanphones(id)
 			.then(function(res){
 				// Check if Token has expired. If so then direct them to login screen. 
 				if(res.message == "Token has expired"){
@@ -116,7 +118,11 @@ angular
 				
 				vm.phones = res.data.result;
 				
-				vm.phonecheck(vm.phones); 
+				if(vm.phones){
+					phonecheck()
+				}
+
+				//vm.phonecheck(vm.phones); 
 
 				//vm.getphonesfromcucm(vm.phones);
 				
@@ -198,13 +204,20 @@ angular
 			}, function(err){
 				//Error
 			});
-			
+		}
 			
 		vm.getusername = function(username){
 			//console.log(username);
 			var user = {};
 			LDAPService.getusername(username)
 				.then(function(res){
+					// Check if Token has expired. If so then direct them to login screen. 
+					if(res.message == "Token has expired"){
+						vm.tokenexpired = true;
+						//alert("Token has expired, Please relogin");
+						//alert(res.message);
+						$state.go('logout');
+					}
 					result = res.data.result;
 
 					//console.log(result.user);
@@ -223,9 +236,22 @@ angular
 				});
 		}
 		
-
 		
-		vm.phonecheck = function(phones){
+		vm.phonecheck = $interval(phonecheck,10000); 
+		
+		$scope.$on('$destroy', function() {
+				//console.log($scope);
+				$interval.cancel(vm.phonecheck);
+			});
+		
+		
+		function phonecheck(){
+		//vm.phonecheck = function(phones){
+			if(!vm.phones.length){
+				console.log("No Phones Found")
+				$interval.cancel(vm.phonecheck);
+			}
+			phones = vm.phones
 			console.log("Phone Check initiated")
 			var phonecheck = {};
 			phonecheck.phones = [];
@@ -249,6 +275,14 @@ angular
 			cucmService.phonecheck(phonecheck)
 				.then(function(res){
 					
+					// Check if Token has expired. If so then direct them to login screen. 
+					if(res.message == "Token has expired"){
+						vm.tokenexpired = true;
+						//alert("Token has expired, Please relogin");
+						//alert(res.message);
+						$state.go('logout');
+					}
+					
 					//console.log(res)
 
 					result = res.data;
@@ -269,7 +303,6 @@ angular
 								vm.phonecheckresult.push(name)
 								
 							}
-
 						})
 					});
 					
@@ -298,6 +331,13 @@ angular
 				
 				cucmService.getphone(name)
 				.then(function(res){
+					// Check if Token has expired. If so then direct them to login screen. 
+					if(res.message == "Token has expired"){
+						vm.tokenexpired = true;
+						//alert("Token has expired, Please relogin");
+						//alert(res.message);
+						$state.go('logout');
+					}
 					user = [];
 					//console.log(res);
 					//user.username = username;
@@ -310,9 +350,11 @@ angular
 
 					// Must do the push inline inside the API Call or callbacks can screw you with black objects!!!! 
 					if(result != ""){
-						result.phoneid = phone.id;
-						phone.inuse = true;
-						vm.cucmphones.push(result);
+						if(phone.id){
+							result.phoneid = phone.id;
+							phone.inuse = true;
+							vm.cucmphones.push(result);
+						}
 					}
 					if(result == ""){
 						phone.inuse = false;
@@ -732,13 +774,32 @@ angular
 		}
 		
 		vm.deleteselected = function(phones){
+			console.log("loading")
+			vm.phoneplan_loading = true
+			
 			angular.forEach(phones, function(phone) {
 				if(phone.select == true){
 					//console.log(phone);
-					vm.delete(phone);
+					//vm.delete(phone);
+					sitePhonePlanService.deletephone(phone.id).then(function(res) {
+						
+						}, function(error) {
+							//alert('An error occurred');
+						});
 				}
 				
 			});
+			
+			console.log("No more loading")
+			vm.phoneplan_loading = false
+			
+			$timeout(function(){
+				console.log("Getting MACDs for Plan ID: " + id)
+				vm.refresh();
+			}, 5000);
+
+			
+			//vm.refresh()
 		}
 		
 		vm.checkAll = function() {
@@ -959,12 +1020,12 @@ angular
 				}
 			});
 			
-			// vm.loading = false
+			//vm.loading = false
 			
 			$timeout(function(){
 				console.log("Getting MACDs for Plan ID: " + id)
 				getphoneplanmacds(); 
-			}, 1000);
+			},10000);
 				
 		}
 		
@@ -973,46 +1034,7 @@ angular
 		vm.submitmacd = function(phone) {
 			//console.log(phone)
 			
-			if(!phone.username){
-				phone.username = "";
-			}
-			if(!phone.voicemail){
-				phone.voicemail = false;
-			}
-			
-			
-			var object = {}
-			
-			object.sitecode = vm.site.sitecode
-			object.device = phone.device
-			object.name = phone.name
-			object.firstname = phone.firstname
-			object.lastname = phone.lastname
-			object.dn = phone.dn
-			object.usenumber = "new"
-			object.extlength = vm.site.extlen
-			object.language =  phone.language
-			
-			if(phone.voicemail){
-				phone.voicemail.toLowerCase();
-				if(phone.voicemail == "y" || phone.voicemail == "yes" || phone.voicemail == "yes" || phone.voicemail == "true"){
-					object.voicemail = "true"
-				}else{
-					object.voicemail = "false"; 
-				}
-				if(phone.username){
-					object.username = phone.username;
-					object.template = vm.phoneplan.employee_vm_user_template
-				}else{
-					object.username = ""; 
-					object.template = vm.phoneplan.nonemployee_vm_user_template; 
-				}
-			}else{
-				object.voicemail = "false"; 
-			}
-
-			object.phoneplan_id = phone.phoneplan
-			object.ticket_number =  "Phone Plan: " + object.phoneplan_id
+			object = vm.buildphoneobject(phone)
 			
 			//console.log(object)
 			
@@ -1108,7 +1130,7 @@ angular
 			console.log("MACD Deploy Button Pushed.. Start polling MACDs for Plan")
 			
 			vm.loading = true; 
-			vm.pull = $interval(getphoneplanmacds,1000); 
+			//vm.pull = $interval(getphoneplanmacds,1000); 
 			
 			angular.forEach(jobs, function(job) {
 				vm.submitmacd(job); 
@@ -1122,7 +1144,7 @@ angular
 			console.log("MACD Deploy Button Pushed.. Start polling MACDs for Plan")
 			
 			vm.loading = true; 
-			vm.pull = $interval(getphoneplanmacds,1000); 
+			vm.pull = $interval(getphoneplanmacds,10000); 
 			var array = []; 
 			angular.forEach(jobs, function(job) {
 				array.push(vm.buildphoneobject(job)); 
@@ -1157,13 +1179,14 @@ angular
 				});
 		}
 		
+		
+		vm.pull = $interval(getphoneplanmacds,5000); 
+		
 		$scope.$on('$destroy', function() {
 				//console.log($scope);
 				$interval.cancel(vm.pull);
 			});
 
-
-			
 		$timeout(function(){
 				console.log("Getting MACDs for Plan ID: " + id)
 				//vm.getphonesfromcucm(vm.phones);

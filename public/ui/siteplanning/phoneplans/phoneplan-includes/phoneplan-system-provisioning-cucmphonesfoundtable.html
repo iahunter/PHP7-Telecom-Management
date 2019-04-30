@@ -3,6 +3,10 @@
 </div>
 <div ng-if="vm.cucmphones.length > 0">
 <legend>{{vm.cucmphones.length}} Phones Exist in CUCM</legend>
+
+	<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.cucmphonedeleteselected(vm.cucmphones)">Delete Selected</a>
+	<div style="margin:25px"></div>
+	
 	<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
 		<div class="table-responsive">
 		<table class="table table-striped table-condensed table-bordered table-hover">

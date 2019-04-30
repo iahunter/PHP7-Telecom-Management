@@ -45,7 +45,7 @@ class PhoneEGWScanUpdate extends Command
         $this->egw_endpoints = West911EnableEGW::get_all_endpoints_ip_erl();
         if (! count($this->egw_endpoints)) {
             //print "No Endpoints...".PHP_EOL;
-            die();
+            //die();
         }
 
         //print_r($this->egw_endpoints);

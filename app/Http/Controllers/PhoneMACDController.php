@@ -28,15 +28,14 @@ class PhoneMACDController extends Controller
                                                     env('CALLMANAGER_PASS')
                                                     );
     }
-	
-	public function queueMACD($user, $phone)
-    {
 
-		\Log::info('createPhoneMACD_Phone', ['data' => $phone]);
-		
-		if(is_array($phone)){
-			\Log::info('createPhoneMACD_Phone', ['data' => "Phone is an array"]);
-		}
+    public function queueMACD($user, $phone)
+    {
+        \Log::info('createPhoneMACD_Phone', ['data' => $phone]);
+
+        if (is_array($phone)) {
+            \Log::info('createPhoneMACD_Phone', ['data' => 'Phone is an array']);
+        }
 
         // Clear the token, we don't want to save that data.
         unset($phone['token']);
@@ -167,8 +166,8 @@ class PhoneMACDController extends Controller
         $result = ['macd'     => $macd,
                    'tasks'    => $tasks,
                     ];
-		
-		return $result; 
+
+        return $result;
     }
 
     public function createPhoneMACD_Phone(Request $request)
@@ -182,8 +181,8 @@ class PhoneMACDController extends Controller
         }
 
         $macd = $request->all();
-		
-		$result = $this->queueMACD($user, $macd); 
+
+        $result = $this->queueMACD($user, $macd);
 
         $response = [
                     'status_code'          => 200,
@@ -195,8 +194,8 @@ class PhoneMACDController extends Controller
 
         return response()->json($response);
     }
-	
-	public function createPhoneMacdBatch(Request $request)
+
+    public function createPhoneMacdBatch(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -206,25 +205,25 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-		// Expect an array only. 
-		$macds = $request->macds; 
-		
-		if(!is_array($macds)){
-			throw new \Exception("Expecting an array");
-		}
-		
-		/*
-			$result = ['macd'     => $macd,
-					   'tasks'    => $tasks,
-						];
-		*/
-		$result = []; 
-		foreach($macds as $macd){
-			$result[] = $this->queueMACD($user, $macd); 
-		}
 
-		$response = [
+        // Expect an array only.
+        $macds = $request->macds;
+
+        if (! is_array($macds)) {
+            throw new \Exception('Expecting an array');
+        }
+
+        /*
+            $result = ['macd'     => $macd,
+                       'tasks'    => $tasks,
+                        ];
+        */
+        $result = [];
+        foreach ($macds as $macd) {
+            $result[] = $this->queueMACD($user, $macd);
+        }
+
+        $response = [
                     'status_code'          => 200,
                     'success'              => true,
                     'message'              => '',

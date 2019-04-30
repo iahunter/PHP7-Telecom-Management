@@ -46,7 +46,6 @@ class SonusAttemptMonitor extends Command
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**
@@ -163,7 +162,7 @@ class SonusAttemptMonitor extends Command
 
     public function getoncallphonenumber($DN)
     {
-		// Construct new cucm object
+        // Construct new cucm object
         $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),

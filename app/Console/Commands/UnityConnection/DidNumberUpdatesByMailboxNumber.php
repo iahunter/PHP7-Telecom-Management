@@ -32,7 +32,6 @@ class DidNumberUpdatesByMailboxNumber extends Command
      */
     public function __construct()
     {
-
         $this->svn = env('CUCM_SVN');
 
         // Create new Auth Controller for LDAP functions.
@@ -60,7 +59,7 @@ class DidNumberUpdatesByMailboxNumber extends Command
         $updated_did_mailbox = 0;
         $updated_ad_ipphone = 0;
         $updated_did_mailbox_callhandler = 0;
-		
+
         foreach ($didblocks as $didblock) {
             $didblock_count++;
 
@@ -153,7 +152,6 @@ class DidNumberUpdatesByMailboxNumber extends Command
                                         // Update the Did Database
                                         $did->mailbox = ['User' => $mailbox];
                                         $did->save();
-
                                     }
                                 }
                             }

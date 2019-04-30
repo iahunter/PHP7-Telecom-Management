@@ -3,8 +3,8 @@
 namespace App\Console\Commands\CallManager;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class CucmPhoneNamesCache extends Command
 {
@@ -29,13 +29,13 @@ class CucmPhoneNamesCache extends Command
      */
     public function __construct()
     {
-		// Construct new cucm object
+        // Construct new cucm object
         $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-													
+
         parent::__construct();
     }
 
@@ -44,18 +44,17 @@ class CucmPhoneNamesCache extends Command
      *
      * @return mixed
      */
-	 
-	public function handle()
+    public function handle()
     {
         try {
-			$CUCM_PHONES = $this->cucm->get_phone_names();
+            $CUCM_PHONES = $this->cucm->get_phone_names();
         } catch (\Exception $E) {
             return $E->getMessage();
         }
-		
-		foreach($CUCM_PHONES as $UUID => $PHONE){
-			$CUCM_PHONES[$UUID] = strtoupper($PHONE); 
-		}
+
+        foreach ($CUCM_PHONES as $UUID => $PHONE) {
+            $CUCM_PHONES[$UUID] = strtoupper($PHONE);
+        }
 
         // Name of Cache key.
         $key = 'callmanager:phone_names_cache';

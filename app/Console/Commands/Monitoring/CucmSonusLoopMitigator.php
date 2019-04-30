@@ -41,7 +41,7 @@ class CucmSonusLoopMitigator extends Command
      */
     public function handle()
     {
-		// Construct new cucm object
+        // Construct new cucm object
         $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),

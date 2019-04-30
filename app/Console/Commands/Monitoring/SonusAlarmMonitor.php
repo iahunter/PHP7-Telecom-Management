@@ -61,7 +61,6 @@ class SonusAlarmMonitor extends Command
      */
     public function handle()
     {
-								
         foreach ($this->SBCS as $SBC) {
             $change = false;
             $device = TelecomInfrastructure::where('hostname', $SBC)->first();
@@ -185,13 +184,13 @@ class SonusAlarmMonitor extends Command
     public function getoncallphonenumber($DN)
     {
 
-		// Construct new cucm object
+        // Construct new cucm object
         $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-													
+
         // this function gets the callforward all from the Oncall number from CUCM. This is optional.
         $number = $this->cucm->get_object_type_by_pattern_and_partition($DN, 'Global-All-Lines', 'Line');
         $forward_number = $number['callForwardAll']['destination'];

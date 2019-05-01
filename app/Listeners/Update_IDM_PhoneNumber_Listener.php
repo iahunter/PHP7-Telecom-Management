@@ -67,7 +67,6 @@ class Update_IDM_PhoneNumber_Listener
             $LOG['old'] = $number;
             $LOG['new'] = $number3;
 
-            $LOG = json_encode($LOG, true);
 
             // Update task to completed.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);

@@ -43,7 +43,7 @@ class RestApiClient
         $this->username = $username;
         $this->password = $password;
 
-        $this->baseurl = 'http://'.$this->idm;
+        $this->baseurl = $this->idm;
         $this->headers = [
             'Accept'       => 'application/json',
             'X-CSRF-Token' => 'Fetch',

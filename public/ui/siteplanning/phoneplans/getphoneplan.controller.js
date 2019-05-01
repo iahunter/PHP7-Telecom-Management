@@ -1077,16 +1077,7 @@ angular
 		}
 		
 		vm.buildphoneobject = function(phone) {
-			//console.log(phone)
-			
-			if(!phone.username){
-				phone.username = "";
-			}
-			if(!phone.voicemail){
-				phone.voicemail = false;
-			}
-			
-			
+			// Build phone object from phone
 			var object = {}
 			
 			object.sitecode = vm.site.sitecode
@@ -1100,10 +1091,13 @@ angular
 			object.language =  phone.language
 			
 			if(phone.voicemail){
-				phone.voicemail.toLowerCase();
-				if(phone.voicemail == "y" || phone.voicemail == "yes" || phone.voicemail == "yes" || phone.voicemail == "true"){
+				
+				phone.voicemail = phone.voicemail.toLowerCase();
+				
+				if(phone.voicemail == "y" || phone.voicemail == "yes" || phone.voicemail == true || phone.voicemail == "true"){
 					object.voicemail = "true"
 				}else{
+					console.log("Else does not match one of above voicemail")
 					object.voicemail = "false"; 
 				}
 				if(phone.username){
@@ -1114,6 +1108,7 @@ angular
 					object.template = vm.phoneplan.nonemployee_vm_user_template; 
 				}
 			}else{
+				console.log("Else no voicemail")
 				object.voicemail = "false"; 
 			}
 

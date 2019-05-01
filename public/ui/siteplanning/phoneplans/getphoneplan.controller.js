@@ -984,12 +984,19 @@ angular
 		};
 		
 		vm.macdcheckAll = function() {
+			vm.macdselecttouched()
 			angular.forEach(vm.macds, function(macd) {
 			  macd.select = vm.macdselectAll;
 			  //console.log(macd);
 			  //vm.selecttouched();
 			});
 		};
+		
+		vm.macdselecttouched = function(){
+			vm.macddeleteall = true;
+		}
+		
+		
 		
 		vm.deletemacd = function(macd) {
 			

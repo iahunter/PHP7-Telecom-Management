@@ -946,6 +946,9 @@ angular
 						//console.log(vm.macds)
 						vm.getmacds = false
 						// Convert DB Timestamp to local PC Time. 
+						var errors = 0
+						var complete = 0
+						var working = 0
 						angular.forEach(vm.macds, function(log) {
 
 							// Convert UTC to local time
@@ -962,10 +965,23 @@ angular
 								// Keep polling the macds until these status are met. 
 								console.log("getmacs = true")
 								vm.getmacds = true
+								working += 1
+							}else{
+								if(log.status == "error"){
+									errors += 1
+								}
+								if(log.status == "complete"){
+									complete += 1
+								}
 							}
 							
 							
 						});
+						
+						vm.macdworking = working
+						vm.macderrors = errors
+						vm.macdcomplete = complete
+						
 						
 						if(vm.getmacds == false){
 							console.log("Cancel Pull interval of MACDs")

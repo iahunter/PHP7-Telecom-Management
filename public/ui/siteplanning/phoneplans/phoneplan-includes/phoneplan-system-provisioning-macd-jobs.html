@@ -19,8 +19,14 @@
 	<div ng-if="vm.macds.length > 0">
 	<legend ng-if="vm.macds.length == 1">{{vm.macds.length}} Job</legend>
 	<legend ng-if="vm.macds.length != 1">{{vm.macds.length}} Jobs</legend>
+
 	<p>You may see some errors and the system will try to try to fix those for 5 attempts. Be patient... We have to slow things down for Call Mangler</p>
 
+		<div style="margin:25px"></div>
+		<button class="btn btn-default active" ng-if="vm.macdworking"><span class="badge ng-binding">{{vm.macdworking}}</span> Working</button>
+		<button class="btn btn-danger active" ng-if="vm.macderrors"><span class="badge ng-binding">{{vm.macderrors}}</span> Errors</button>
+		<button class="btn btn-success active" ng-if="vm.macdcomplete"><span class="badge ng-binding">{{vm.macdcomplete}}</span> Complete</button>
+		<div style="margin:25px"></div>
 		<a class="btn btn-danger" data-dismiss="modal" ng-click="vm.macddeleteselected(vm.macds)" ng-if="vm.macddeleteall">Delete Selected</a>
 		<div style="margin:25px"></div>
 		<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">

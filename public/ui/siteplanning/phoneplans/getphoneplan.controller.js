@@ -924,7 +924,7 @@ angular
 		
 		// Pull the phone plan macd when loading the page. 
 		getphoneplanmacds(); 
-		
+		vm.getmacdscount = 0
 		
 		function getphoneplanmacds(){
 			macdService.list_macds_by_phoneplan_id(id)
@@ -966,6 +966,7 @@ angular
 								console.log("getmacs = true")
 								vm.getmacds = true
 								working += 1
+								vm.getmacdscount = 0 // Reset to 0 if still working jobs. 
 							}else{
 								if(log.status == "error"){
 									errors += 1
@@ -984,9 +985,13 @@ angular
 						
 						
 						if(vm.getmacds == false){
-							console.log("Cancel Pull interval of MACDs")
-							console.log(vm.getmacds)
-							$interval.cancel(vm.pull);
+							vm.getmacdscount +=1 // Allow this to run 2 additional polls to make sure all errors are done being cleaned up. 
+							console.log(vm.getmacdscount)
+							if(vm.getmacdscount > 2){
+								console.log("Cancel Pull interval of MACDs")
+								console.log(vm.getmacds)
+								$interval.cancel(vm.pull);
+							}
 						}
 
 						

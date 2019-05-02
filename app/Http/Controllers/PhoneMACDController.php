@@ -68,19 +68,24 @@ class PhoneMACDController extends Controller
                 $data['taskid'] = $task->id;
 
                 // Testing of Events Controller
-                event(new Create_AD_IPPhone_Event($data));
+				try{
+					event(new Create_AD_IPPhone_Event($data));
 
-                // If IDM is set to true then create an event to update Telephone for user in SAP IDM.
-                if (env('IDM')) {
-                    $task = PhoneMACD::create([
-                                                'type'   => 'Update User IDM Telephone Number',
-                                                'parent' => $macd->id,
-                                                'status' => 'job received',
-                                            ]);
-                    $tasks[] = $task;
-                    $data['taskid'] = $task->id;
-                    event(new Update_IDM_PhoneNumber_Event($data));
-                }
+					// If IDM is set to true then create an event to update Telephone for user in SAP IDM.
+					if (env('IDM')) {
+						$task = PhoneMACD::create([
+													'type'   => 'Update User IDM Telephone Number',
+													'parent' => $macd->id,
+													'status' => 'job received',
+												]);
+						$tasks[] = $task;
+						$data['taskid'] = $task->id;
+						event(new Update_IDM_PhoneNumber_Event($data));
+					}
+				}catch (\Exception $e) {
+					
+				}
+                
             }
         }
 

@@ -10,8 +10,8 @@
 	<div class="panel-body panel-collapse collapse  collapse in" role="tabpanel" id="collapse_phoneplan"  aria-labelledby="PhonesHeading" style="background-color:#F8F8F8;">
 			
 		<button class="btn btn-default active" ><span class="badge">{{vm.phones.length}}</span> Entries Found</button>
-		<button class="btn btn-primary active"><span class="badge">{{vm.phonecheckresult.length}}</span> Phones Found in CUCM <i class="fa fa-phone-square"></i></button>
-		<button class="btn btn-primary active"><span class="badge">{{vm.phonenumbercheckresult.length}}</span> Numbers Found in CUCM <i class="fa fa-phone-square"></i></button>
+		<button class="btn btn-primary active"  ng-if="vm.phonecheckresult.length > 0"><span class="badge">{{vm.phonecheckresult.length}}</span> Phones Found in CUCM <i class="fa fa-phone-square"></i></button>
+		<button class="btn btn-primary active"  ng-if="vm.phonenumbercheckresult.length > 0"><span class="badge">{{vm.phonenumbercheckresult.length}}</span> Numbers Found in CUCM <i class="fa fa-phone-square"></i></button>
 		<div style="margin:25px"></div>
 		
 		<p><b style="color:red"><i>Note! </i></b>Phones in CUCM can take up to 5 minutes to update. Be Patient...</p>

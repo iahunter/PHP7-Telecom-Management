@@ -255,10 +255,18 @@ angular
 			console.log("Phone Check initiated")
 			var phonecheck = {};
 			phonecheck.phones = [];
+			phonecheck.numbers = [];
 			angular.forEach(phones, function(phone) {
 				// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
+				//console.log(phone.dn.substr(0,6))
+				number = phone.dn.substr(0,6)
+				if(!phonecheck.numbers.includes(number)){
+					phonecheck.numbers.push(number)
+				}
 				
-				//console.log(phone);
+				//_.uniq(phonecheck.numbers)
+				//console.log(phonecheck.numbers);
+				
 				if(phone.device == "ATA190"){
 					phone.realname = "ATA"+ phone.name
 				}
@@ -301,6 +309,45 @@ angular
 								phone.cucmfound = true;
 								//console.log(phone)
 								vm.phonecheckresult.push(name)
+								
+							}
+						})
+					});
+					
+				}, function(err){
+					// Error
+				});
+				
+
+				cucmService.getNumberbyRoutePlan(phonecheck.numbers + "%")
+				.then(function(res){
+					
+					// Check if Token has expired. If so then direct them to login screen. 
+					if(res.message == "Token has expired"){
+						vm.tokenexpired = true;
+						//alert("Token has expired, Please relogin");
+						//alert(res.message);
+						$state.go('logout');
+					}
+					
+					//console.log(res)
+
+					result = res.data.response;
+					//console.log(result);
+
+					vm.phonenumbercheckresult = []
+					
+					angular.forEach(phones, function(phone) {
+						phone.numberfound = false;
+
+						angular.forEach(result, function(number) {
+							//console.log(number)
+							number = number.dnOrPattern
+							if (number == phone.dn) {
+								//console.log("Found phone: "+phone.dn)
+								phone.numberfound = true;
+								//console.log(phone)
+								vm.phonenumbercheckresult.push(number)
 								
 							}
 						})

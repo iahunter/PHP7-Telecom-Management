@@ -10,7 +10,8 @@
 	<div class="panel-body panel-collapse collapse  collapse in" role="tabpanel" id="collapse_phoneplan"  aria-labelledby="PhonesHeading" style="background-color:#F8F8F8;">
 			
 		<button class="btn btn-default active" ><span class="badge">{{vm.phones.length}}</span> Entries Found</button>
-		<button class="btn btn-warning active"  ng-if="vm.phonecheckresult.length > 0"><span class="badge">{{vm.phonecheckresult.length}}</span> Phones Found in CUCM <i class="fa fa-phone-square"></i></button>
+		<button class="btn btn-primary active"  ng-if="vm.phonecheckresult.length > 0"><span class="badge">{{vm.phonecheckresult.length}}</span> Phones Found in CUCM <i class="fa fa-phone-square"></i></button>
+		<button class="btn btn-primary active"  ng-if="vm.phonecheckresult.length > 0"><span class="badge">{{vm.phonenumbercheckresult.length}}</span> Numbers Found in CUCM <i class="fa fa-phone-square"></i></button>
 		<div style="margin:25px"></div>
 		
 		<p><b style="color:red"><i>Note! </i></b>Phones in CUCM can take up to 5 minutes to update. Be Patient...</p>
@@ -48,14 +49,6 @@
 									ID
 										<span ng-if="sortType == 'id' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-if="sortType == 'id' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
-								</a>
-							</th>
-							
-							<th>
-								<a href="" ng-click="sortType = 'cucmfound'; sortReverse = !sortReverse" style="color:black">
-									CUCM
-										<span ng-if="sortType == 'cucmfound' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
-										<span ng-if="sortType == 'cucmfound' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>
 
@@ -177,7 +170,6 @@
 							<input type="checkbox" ng-model="phone.select" ng-click="vm.selecttouched()">
 						</td>
 						<td>{{ phone.id}}</td>
-						<td><a href="#/phone/{{phone.realname}}" target="_blank" ng-if="phone.cucmfound"><i class="fa fa-phone-square"></i></a></td>
 						<!--<td>{{ phone.parent}}</td>-->
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.firstname}}</td>
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.lastname}}</td>
@@ -191,14 +183,16 @@
 						-->
 						
 						<td  ng-if="!vm.edit[phone.id]">
-							<span ng-if="!phone.nameinvalid">{{ phone.name}}</span>
-							<span ng-if="phone.nameinvalid" style="color:red">{{ phone.name}}</span>
+							<span ng-if="!phone.nameinvalid">{{ phone.name}} </span>
+							<span ng-if="phone.nameinvalid" style="color:red">{{ phone.name}} </span>
+							<a href="#/phone/{{phone.realname}}" target="_blank" ng-if="phone.cucmfound"><i class="fa fa-phone-square"></i></a>
 						</td>
 						
 						<!--<td   ng-if="!vm.edit[phone.id]">{{ phone.name}}</td>-->
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.device}}</td>
 						<td   ng-if="!vm.edit[phone.id] && !phone.dnint" style="color:red">{{ phone.dn}}</td>
-						<td   ng-if="!vm.edit[phone.id] && phone.dnint">{{ phone.dn}}</td>
+						
+						<td   ng-if="!vm.edit[phone.id] && phone.dnint">{{ phone.dn}}  <a href="#/line/{{phone.dn}}" target="_blank" ng-if="phone.numberfound"><i class="fa fa-phone-square"></i></a></td>
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.language}}</td>
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.voicemail}}</td>
 						<td   ng-if="!vm.edit[phone.id]">{{ phone.notes}}</td>

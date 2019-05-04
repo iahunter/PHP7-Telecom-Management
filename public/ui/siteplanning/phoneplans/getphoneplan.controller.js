@@ -335,10 +335,10 @@ angular
 							$state.go('logout');
 						}
 						
-						console.log(res)
+						//console.log(res)
 
 						result = res.data.response;
-						console.log(result)
+						//console.log(result)
 						if(result){
 							angular.forEach(phones, function(phone) {
 								
@@ -347,12 +347,12 @@ angular
 									phone.numberfound = false;
 								
 									angular.forEach(result, function(number) {
-										console.log(number)
+										//console.log(number)
 										number = number.dnOrPattern
 										if (number == phone.dn) {
 											//console.log("Found phone: "+phone.dn)
 											phone.numberfound = true;
-											console.log(number)
+											//console.log(number)
 											if(!vm.phonenumbercheckresult.includes(number)){
 												vm.phonenumbercheckresult.push(number)
 											}
@@ -375,7 +375,7 @@ angular
 						// Error
 					});
 				})
-				console.log("asdfa")
+
 				//console.log(vm.phonenumbercheckresult)
 			
 		}

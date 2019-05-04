@@ -86,7 +86,7 @@
 									<td><i>Call Forwarding</i></td>
 									-->
 									<tr ng-repeat="line in phone.line_details">
-										<td ng-if="line.pattern != ''">{{line.pattern}}</td>
+										<td ng-if="line.pattern != ''"><a href="#/line/{{line.pattern}}" target="_blank">{{line.pattern}}</a></td>
 										<td ng-if="line.description != ''">{{line.description}}</td>
 										<td ng-if="line.callForwardAll.destination != ''" style="color:red">Forwarded to: {{line.callForwardAll.destination}}</td>
 									</tr>

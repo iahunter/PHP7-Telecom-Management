@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\UnityConnection;
 
-use App\Didblock;
 use App\Did;
+use App\Didblock;
 use App\SAP\IDM\RestApiClient;
 use Illuminate\Console\Command;
 
@@ -40,118 +40,117 @@ class UnityMBNumberPopulateIDM extends Command
      */
     public function handle()
     {
-		// Get users to update. 
-		$users = $this->get_users_to_update(); 
-		print_r($users); 
-		$updates = []; 
-		foreach($users as $user){
-			print_r($user); 
-			$username = $user['username']; 
-			$number = $user['number']; 
+        // Get users to update.
+        $users = $this->get_users_to_update();
+        print_r($users);
+        $updates = [];
+        foreach ($users as $user) {
+            print_r($user);
+            $username = $user['username'];
+            $number = $user['number'];
 
-			$updates[] = $this->update_idm_users($username, $number); 
-		}
-		
-		print_r($updates); 
-		
-		foreach($updates as $update){
-			print $update['username']. "Old Number: ". $update['current']. "New Number: " . $update['current'].PHP_EOL; 
-		}
+            $updates[] = $this->update_idm_users($username, $number);
+        }
+
+        print_r($updates);
+
+        foreach ($updates as $update) {
+            echo $update['username'].'Old Number: '.$update['current'].'New Number: '.$update['current'].PHP_EOL;
+        }
     }
-	
-	public function get_users_to_update()
-	{
-		$userstoupdate = []; 
+
+    public function get_users_to_update()
+    {
+        $userstoupdate = [];
         $blocks = Didblock::all();
-		foreach($blocks as $block){
-			//print $block['name'].PHP_EOL; 
-			$dids = Did::where('parent', $block['id'])->get(); 
-			foreach($dids as $did){
-				//print_r($did['mailbox']); 
-				$mailbox = $did['mailbox']; 
-				
-				if(isset($mailbox['User']) ){
-					if($mailbox['User']['AD User']){
-						print $mailbox['User']['Alias'].PHP_EOL; 
-						
-						if($mailbox['User']['Alias'])
-						// Set the argument variables.
-						$userid = $mailbox['User']['Alias'];
-						$newdn = $mailbox['User']['DtmfAccessId'];
+        foreach ($blocks as $block) {
+            //print $block['name'].PHP_EOL;
+            $dids = Did::where('parent', $block['id'])->get();
+            foreach ($dids as $did) {
+                //print_r($did['mailbox']);
+                $mailbox = $did['mailbox'];
 
-						$guid = env('IDM_GUID');
-						
-						// Create new API Client with Required arguments
-						$client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS'));
+                if (isset($mailbox['User'])) {
+                    if ($mailbox['User']['AD User']) {
+                        echo $mailbox['User']['Alias'].PHP_EOL;
 
-						// Get User ID from username.
-						$id = $client->getUserID($userid);
-													
-						if(!$id){
-							continue; 
-						}
+                        if ($mailbox['User']['Alias']) {
+                            // Set the argument variables.
+                            $userid = $mailbox['User']['Alias'];
+                        }
+                        $newdn = $mailbox['User']['DtmfAccessId'];
 
-						// Check what hte current phone number is set to.
-						$number = $client->getUserPhone($id, $guid);
-						print $number.PHP_EOL;
+                        $guid = env('IDM_GUID');
 
-						$update = []; 
-						if($number == null){
-							print "**** Number is Null ****".PHP_EOL; 
-							$update['username'] = $userid; 
-							$update['number'] = $newdn; 
-							$userstoupdate[] = $update; 
-						}
-					}
-				}
+                        // Create new API Client with Required arguments
+                        $client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS'));
 
-				
-			}
-			
-		}
-		// Return Array of UserId and Number of users that phonenumber is null and needs updated. 
-		return $userstoupdate; 
+                        // Get User ID from username.
+                        $id = $client->getUserID($userid);
+
+                        if (! $id) {
+                            continue;
+                        }
+
+                        // Check what hte current phone number is set to.
+                        $number = $client->getUserPhone($id, $guid);
+                        echo $number.PHP_EOL;
+
+                        $update = [];
+                        if ($number == null) {
+                            echo '**** Number is Null ****'.PHP_EOL;
+                            $update['username'] = $userid;
+                            $update['number'] = $newdn;
+                            $userstoupdate[] = $update;
+                        }
+                    }
+                }
+            }
+        }
+        // Return Array of UserId and Number of users that phonenumber is null and needs updated.
+        return $userstoupdate;
     }
-	
-	public function update_idm_users($user, $number){
-		$userid = $user;
-		$newdn = $number; 
 
-		$guid = env('IDM_GUID');
+    public function update_idm_users($user, $number)
+    {
+        $userid = $user;
+        $newdn = $number;
 
-		// Create new API Client with Required arguments
-		$client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS'));
+        $guid = env('IDM_GUID');
 
-		// Get User ID from username.
-		$id = $client->getUserID($userid);
-									
-		if(!$id){
-			return []; 
-		}
+        // Create new API Client with Required arguments
+        $client = new RestApiClient(env('IDM_URL'), env('IDM_USER'), env('IDM_PASS'));
 
-		// Check what hte current phone number is set to.
-		$number = $client->getUserPhone($id, $guid);
+        // Get User ID from username.
+        $id = $client->getUserID($userid);
 
-		// Update the User Phone
-		$number2 = $client->updateUserPhone($id, $guid, $newdn);
+        if (! $id) {
+            return [];
+        }
 
-		// Check what hte current phone number is after the change
-		$number3 = $client->getUserPhone($id, $guid);
+        // Check what hte current phone number is set to.
+        $number = $client->getUserPhone($id, $guid);
 
-		// Print out what the old number was and what it is now.
-		echo 'OLD: '.$number.PHP_EOL;
-		echo 'NEW: '.$number3.PHP_EOL;
+        // Update the User Phone
+        $number2 = $client->updateUserPhone($id, $guid, $newdn);
 
-		if ($number3 != $newdn) {
-			throw new \Exception("The current number {$number3} after the change doesn't match the New Number: {$newdn}.");
-		}
-		
-		$update = []; 
-		$update['username'] = $user; 
-		$update['new'] = $newdn; 
-		$update['old'] = $number; 
-		$update['current'] = $number3; 
-		
-		return $update; 
-	}
+        // Check what hte current phone number is after the change
+        $number3 = $client->getUserPhone($id, $guid);
+
+        // Print out what the old number was and what it is now.
+        echo 'OLD: '.$number.PHP_EOL;
+        echo 'NEW: '.$number3.PHP_EOL;
+
+        if ($number3 != $newdn) {
+            throw new \Exception("The current number {$number3} after the change doesn't match the New Number: {$newdn}.");
+        }
+
+        $update = [];
+        $update['username'] = $user;
+        $update['new'] = $newdn;
+        $update['old'] = $number;
+        $update['current'] = $number3;
+
+        return $update;
+    }
 }

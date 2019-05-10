@@ -121,7 +121,8 @@ class RestApiClient
         $count = count($results['d']['results']);
 
         if ($count != 1) {
-            throw new \Exception("We recieved a count of {$count} while expecting 1 record. The username you submitted is not correct");
+			return null; 
+            throw new \Exception("We recieved a count of {$count} while expecting 1 record. The username, {$alias}, is not valid");
         }
 
         $userid = $results['d']['results'][0]['ID'];

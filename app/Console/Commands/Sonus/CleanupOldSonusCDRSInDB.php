@@ -44,7 +44,7 @@ class CleanupOldSonusCDRSInDB extends Command
         echo "Starting Sonus CDR DB Cleanup at {$start}..".PHP_EOL;
 
         // Only store this many days of CDRs in the DB.
-        $cutoffdate = $start->subDays(90);
+        $cutoffdate = $start->subDays(60);
 
         $count = 1;
         $maxdeletecount = 1000;

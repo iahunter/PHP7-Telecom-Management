@@ -52,7 +52,7 @@ class CucmSonusLoopMitigator extends Command
         echo $now.' cucm_sonus_loop_mitigator: Starting...'.PHP_EOL;
 
         // Number days to figure in average.
-        $days = 90;
+        $days = 60;
 
         $now = Carbon::now()->setTimezone('UTC');
         $start = $now->subDays($days);
@@ -61,7 +61,7 @@ class CucmSonusLoopMitigator extends Command
         // Get the count of the total number of calls in specified time frame.
         $count = \App\Sonus5kCDR::whereBetween('disconnect_time', [$start, $end])->count();
 
-        $average = $count / 90 / 24; 		// Get average over that time frame per hour.
+        $average = $count / $days / 24; 		// Get average over that time frame per hour.
 
         // Get Sonus SBC top 10 Attempt Counts by Called Number.
         $cdrs = Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report();

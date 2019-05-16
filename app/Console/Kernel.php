@@ -84,6 +84,8 @@ class Kernel extends ConsoleKernel
 
         //Commands\UnityConnection\UnityConnMB::class,
         Commands\UnityConnection\UnityMBNumberPopulateIDM::class,
+		
+		Commands\Ldap\TestLdapPhoneUpdate::class,
 
     ];
 

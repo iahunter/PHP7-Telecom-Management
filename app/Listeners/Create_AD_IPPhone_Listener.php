@@ -17,8 +17,7 @@ class Create_AD_IPPhone_Listener implements ShouldQueue
      */
     public function __construct()
     {
-        // Create new Auth Controller for LDAP functions.
-        $this->Auth = new AuthController();
+
     }
 
     /**
@@ -38,15 +37,18 @@ class Create_AD_IPPhone_Listener implements ShouldQueue
         // Update the status in the MACD Table.
         $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'entered queue']);
         $task->save();
-
+		
         $USERNAME = $event->phone['username'];
         $DN = $event->phone['dn'];
-
+		\Log::info('createAdPhoneListener', ['username' => $USERNAME, 'dn' => $DN]);
         $CREATEDBY = $task->created_by;
 
         // Try to Do Work.
         try {
-            $LOG = $this->Auth->changeLdapPhone($USERNAME, $DN);
+			// Create new Auth Controller for LDAP functions.
+			$this->Auth = new AuthController();
+            
+			$LOG = $this->Auth->changeLdapPhone($USERNAME, $DN);
 
             // Update task to completed.
             $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'complete', 'json' => $LOG]);

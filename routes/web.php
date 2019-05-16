@@ -39,6 +39,5 @@ Route::get('/ldap', function (Illuminate\Http\Request $request) {
     } else {
         return 'Your query must have a user= or group=';
     }
-/**/
+    /**/
 });
-

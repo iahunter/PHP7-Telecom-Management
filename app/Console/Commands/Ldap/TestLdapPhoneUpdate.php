@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Ldap;
 
-use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Console\Command;
+use App\Http\Controllers\Auth\AuthController;
 
 class TestLdapPhoneUpdate extends Command
 {
@@ -38,14 +38,13 @@ class TestLdapPhoneUpdate extends Command
      */
     public function handle()
     {
-		// Create new Auth Controller for LDAP functions.
+        // Create new Auth Controller for LDAP functions.
         $this->Auth = new AuthController();
-		
-		
-		$USERNAME = $this->argument('username'); 
-		$DN = $this->argument('number'); 
+
+        $USERNAME = $this->argument('username');
+        $DN = $this->argument('number');
         $LOG = $this->Auth->changeLdapPhone($USERNAME, $DN);
-		
-		print_r($LOG); 
+
+        print_r($LOG);
     }
 }

@@ -412,8 +412,13 @@ class Sonus5kCDR extends Model
                 */
                 $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
                 $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
-                $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
-                $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+				if($ingress_pkts_recieved){
+					$ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
+					$ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+				}else{
+					$ingress_pkt_loss_percent = 0; 
+				}
+                
                 $call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
                 $egress_pkt_loss = $call['cdr_json']['Egress Number of Packets Recorded as Lost'];
                 $egress_pkts_recieved = $call['cdr_json']['Egress Number of Audio Packets Received'];
@@ -505,8 +510,13 @@ class Sonus5kCDR extends Model
 
                 $ingress_pkt_loss = $call['cdr_json']['Ingress Number of Packets Recorded as Lost'];
                 $ingress_pkts_recieved = $call['cdr_json']['Ingress Number of Audio Packets Received'];
-                $ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
-                $ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+				if($ingress_pkts_recieved){
+					$ingress_pkt_loss_percent = $ingress_pkt_loss / ($ingress_pkts_recieved + $ingress_pkt_loss) * 100;
+					$ingress_pkt_loss_percent = round($ingress_pkt_loss_percent, 2, PHP_ROUND_HALF_UP);
+				}else{
+					$ingress_pkt_loss_percent = 0; 
+				}
+                
                 $call['ingress_pkt_loss_percent'] = $ingress_pkt_loss_percent;
 
                 $egress_pkt_loss = $call['cdr_json']['Egress Number of Packets Recorded as Lost'];

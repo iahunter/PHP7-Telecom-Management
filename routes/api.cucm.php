@@ -301,3 +301,31 @@
      * )
      **/
     $api->get('cucm/searchuuid/{type}/{uuid}', 'App\Http\Controllers\Cucm@getObjectTypebyUUID');
+	
+	/**
+     * @SWG\Get(
+     *     path="/telephony/api/cucm/user/{username}",
+     *     tags={"Management - CUCM"},
+     *     summary="Get User by Username",
+     *     description="",
+     *     operationId="getUser",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="username",
+     *         in="path",
+     *         description="Username",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('cucm/user/{username}', 'App\Http\Controllers\Cucmphone@getUserbyUsername');

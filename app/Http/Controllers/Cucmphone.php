@@ -130,6 +130,7 @@ class Cucmphone extends Cucm
         return $PHONES;
     }
 
+
     public function getPhone(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();

@@ -521,8 +521,8 @@ class CucmReportsController extends Controller
                     'Unified Client Services Framework',
                     'Unified Personal Communicator',
                     'CTI Port',
-                    'Third-party SIP Device (Advanced)',
-                    'Third-party SIP Device (Basic)',
+                    //'Third-party SIP Device (Advanced)',
+                    //'Third-party SIP Device (Basic)',
                     ];
 
         foreach ($models as $model) {

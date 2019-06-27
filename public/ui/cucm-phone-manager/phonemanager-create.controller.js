@@ -41,6 +41,21 @@ angular
 
 		vm.deploybutton = false;
 		
+		if(vm.deviceForm.device == "Third-party SIP Device (Advanced)" || vm.deviceForm.device == "Third-party SIP Device (Basic)"){
+			vm.showcreateuser = true; 
+		}
+		
+		// Function to update the local user with first.last when they are changed. 
+		vm.updatelocaluser = function(deviceForm){
+			if(!deviceForm.firstname){
+				deviceForm.firstname = ""
+			}
+			if(!deviceForm.lastname){
+				deviceForm.lastname = ""
+			}
+			vm.deviceForm.localuser = deviceForm.firstname + "." + deviceForm.lastname; 
+		}
+		
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
 		vm.permissions = window.telecom_mgmt_permissions;
 
@@ -456,6 +471,8 @@ angular
 			if(!phone.username){
 				phone.username = "";
 			}
+			
+			console.log(phone)
 			
 			macdService.create_macd_add(phone)
 				.then(function(res){

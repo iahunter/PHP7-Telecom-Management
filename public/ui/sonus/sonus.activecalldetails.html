@@ -171,8 +171,9 @@
 						<td>{{ call.GCID}}</td>
 						<td>{{ call.state}}</td>
 						<td>{{ call.callDuration}}</td>
-						<td>{{ call.callingNumber}}</td>
-						<td>{{ call.calledNumber}}</td>
+
+						<td><a href="#/line/{{call.callingNumber}}" target="_blank">{{ call.callingNumber}}</a></td>
+						<td><a href="#/line/{{call.calledNumber}}" target="_blank">{{ call.calledNumber}}</a></td>
 						
 						<!-- Media Statistics -->
 						

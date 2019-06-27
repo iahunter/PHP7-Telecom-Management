@@ -94,6 +94,18 @@
 									</div>
 								</div>
 								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.showcreateuser">
+									<div class="form-group"  ng-class="{'has-error': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$invalid, 'has-success': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$valid }">
+										<label for="createuser" class="control-label">Create Local End User Account for SIP Endpoint (In Development)</label>
+										<br>
+										<input type="checkbox"  ng-model='vm.deviceForm.createuser' style="width: 17px; height: 17px;" name="createuser" >
+
+										<div ng-messages="addDidblockForm.createuser.$dirty && addDidblockForm.createuser.$error">
+											<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
+								
 																	
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.dn && vm.unity_mailbox_extension_inuse">
 									<div >
@@ -125,7 +137,23 @@
 								</div>
 
 							</div>
-							<div class="row">	
+							
+							<div class="row" ng-if="vm.deviceForm.createuser">	
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.localuser.$touched && addDeviceForm.localuser.$invalid, 'has-success': addDeviceForm.localuser.$touched && addDeviceForm.localuser.$valid }">
+										<label for="localuser" class="control-label">Local User Account</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+												
+												<input type="text" readonly ng-model='vm.deviceForm.localuser' class="form-control" data-width="100%" name="model">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row" ng-if="!vm.deviceForm.createuser && vm.showcreateuser">	
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.username.$touched && addDeviceForm.username.$invalid, 'has-success': addDeviceForm.username.$touched && addDeviceForm.username.$valid }">
 										<label for="username" class="control-label">samAccountName <small> (Employees Only)</small></label>
@@ -138,6 +166,18 @@
 												<div ng-message='minlength'>Please enter a dn at least 6 chars long</div>
 												<div ng-message='maxlength'>Name entered cannot be longer than 50 chars</div>
 											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+									<div class="form-group"  ng-class="{'has-error': addDidblockForm.addisable.$touched && addDidblockForm.addisable.$invalid, 'has-success': addDidblockForm.addisable.$touched && addDidblockForm.addisable.$valid }">
+										<label for="addisable" class="control-label">Disable AD Update</label>
+										<br>
+										<input type="checkbox"  ng-model='vm.deviceForm.addisable' ng-change="vm.getusersfromcupi(vm.deviceForm)" style="width: 17px; height: 17px;" name="addisable" >
+
+										<div ng-messages="addDidblockForm.addisable.$dirty && addDidblockForm.addisable.$error">
+											<div ng-messages-include="error-messages"></div>
 										</div>
 									</div>
 								</div>
@@ -160,7 +200,7 @@
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-												<input type="text" required ng-model='vm.deviceForm.firstname' class="form-control"  name="firstname" placeholder="First Name" ng-minlength='1' ng-maxlength='50'>
+												<input type="text" required ng-model='vm.deviceForm.firstname' ng-change="vm.updatelocaluser(vm.deviceForm)" class="form-control"  name="firstname" placeholder="First Name" ng-minlength='1' ng-maxlength='50'>
 											</div>
 											<div ng-messages="addDeviceForm.firstname.$dirty && addDeviceForm.firstname.$error">
 											</div>
@@ -175,7 +215,7 @@
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-												<input type="text" required ng-model='vm.deviceForm.lastname' class="form-control"  name="lastname" placeholder="Last Name" ng-minlength='1' ng-maxlength='50'>
+												<input type="text" required ng-model='vm.deviceForm.lastname' ng-change="vm.updatelocaluser(vm.deviceForm)" class="form-control"  name="lastname" placeholder="Last Name" ng-minlength='1' ng-maxlength='50'>
 											</div>
 											<div ng-messages="addDeviceForm.lastname.$dirty && addDeviceForm.lastname.$error">
 											</div>

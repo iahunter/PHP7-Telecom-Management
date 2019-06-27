@@ -87,8 +87,8 @@ class Cucm extends Controller
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
         }
     }
-	
-	public function getUserbyUsername(Request $request, $username)
+
+    public function getUserbyUsername(Request $request, $username)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -97,20 +97,20 @@ class Cucm extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-		//return $username; 
-		
+
+        //return $username;
+
         $user = '';
         try {
             $user = $this->cucm->get_user_by_username($username);
-			
+
             if (! count($user)) {
                 throw new \Exception('Indexed results from call mangler is empty');
             }
         } catch (\Exception $e) {
             $exception = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             //dd($e->getTrace());
-        } 
+        }
 
         $response = [
                     'status_code'    => 200,

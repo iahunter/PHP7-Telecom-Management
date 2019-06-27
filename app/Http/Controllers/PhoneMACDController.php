@@ -56,51 +56,49 @@ class PhoneMACDController extends Controller
 
         $data['phone'] = $phone;
 
-		// Check to see if addisable is true. 
-		if(isset($phone['addisable'])){
-			if($phone['addisable']){
-				$adupdate = false; 
-			}
-			else{
-				$adupdate = true; 
-			}
-		}else{
-			$adupdate = true; 
-		}
-		
-		if($adupdate){
-			// Update AD User IP Phone Field
-			if (isset($phone['username']) && $phone['username']) {
-				if (isset($phone['dn']) && $phone['dn']) {
-					$task = PhoneMACD::create([
-												'type'   => 'Update User AD IP Phone Field',
-												'parent' => $macd->id,
-												'status' => 'job received',
-											]);
-					$tasks[] = $task;
-					$data['taskid'] = $task->id;
+        // Check to see if addisable is true.
+        if (isset($phone['addisable'])) {
+            if ($phone['addisable']) {
+                $adupdate = false;
+            } else {
+                $adupdate = true;
+            }
+        } else {
+            $adupdate = true;
+        }
 
-					// Testing of Events Controller
-					try {
-						event(new Create_AD_IPPhone_Event($data));
+        if ($adupdate) {
+            // Update AD User IP Phone Field
+            if (isset($phone['username']) && $phone['username']) {
+                if (isset($phone['dn']) && $phone['dn']) {
+                    $task = PhoneMACD::create([
+                                                'type'   => 'Update User AD IP Phone Field',
+                                                'parent' => $macd->id,
+                                                'status' => 'job received',
+                                            ]);
+                    $tasks[] = $task;
+                    $data['taskid'] = $task->id;
 
-						// If IDM is set to true then create an event to update Telephone for user in SAP IDM.
-						if (env('IDM')) {
-							$task = PhoneMACD::create([
-														'type'   => 'Update User IDM Telephone Number',
-														'parent' => $macd->id,
-														'status' => 'job received',
-													]);
-							$tasks[] = $task;
-							$data['taskid'] = $task->id;
-							event(new Update_IDM_PhoneNumber_Event($data));
-						}
-					} catch (\Exception $e) {
-					}
-				}
-			}
-		}
+                    // Testing of Events Controller
+                    try {
+                        event(new Create_AD_IPPhone_Event($data));
 
+                        // If IDM is set to true then create an event to update Telephone for user in SAP IDM.
+                        if (env('IDM')) {
+                            $task = PhoneMACD::create([
+                                                        'type'   => 'Update User IDM Telephone Number',
+                                                        'parent' => $macd->id,
+                                                        'status' => 'job received',
+                                                    ]);
+                            $tasks[] = $task;
+                            $data['taskid'] = $task->id;
+                            event(new Update_IDM_PhoneNumber_Event($data));
+                        }
+                    } catch (\Exception $e) {
+                    }
+                }
+            }
+        }
 
         // Build new line first and then chain to add the phone if a new line is required.
         if (isset($phone['usenumber']) && $phone['usenumber'] == 'new') {

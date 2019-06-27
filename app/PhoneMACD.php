@@ -24,7 +24,7 @@ class PhoneMACD extends Model
 
         // Cascade Soft Deletes Child Dids
         static::deleting(function ($macd) {
-            PhoneMACD::where('parent', $macd->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
+            self::where('parent', $macd->id)->delete();                // query did children of the didblock and delete them. Much faster than foreach!!!
         });
     }
 

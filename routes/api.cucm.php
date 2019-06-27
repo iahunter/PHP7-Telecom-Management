@@ -301,8 +301,8 @@
      * )
      **/
     $api->get('cucm/searchuuid/{type}/{uuid}', 'App\Http\Controllers\Cucm@getObjectTypebyUUID');
-	
-	/**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/user/{username}",
      *     tags={"Management - CUCM"},

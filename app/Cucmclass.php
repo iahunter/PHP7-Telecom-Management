@@ -49,8 +49,8 @@ class Cucmclass extends Model
             return false;
         }
     }
-	
-	public static function get_user_by_userid($USERNAME)
+
+    public static function get_user_by_userid($USERNAME)
     {
         // Construct new cucm object
         $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
@@ -61,6 +61,7 @@ class Cucmclass extends Model
 
         try {
             $REPLY = $cucm->get_user_by_userid($USERNAME);
+
             return $REPLY;
         } catch (\Exception $E) {
             return $E->getMessage();
@@ -363,7 +364,7 @@ class Cucmclass extends Model
         // 50 is max, off-by-1 is 49, space-dash-space is 3, shortdn length could be 4-10
         $DESCRIPTION = substr($FULLNAME, 0, 45 - strlen($SHORTDN)).' - '.$SHORTDN;
         //$DESCRIPTION = $FULLNAME . " - " . $SHORTDN;
-		$PRODUCT = 'Cisco '.$DEVICE;
+        $PRODUCT = 'Cisco '.$DEVICE;
         $MAXCALLS = 4;
         $BUSYTRIGGER = 2;
         // add the SEP to the name
@@ -377,7 +378,7 @@ class Cucmclass extends Model
         } else {
             $NAME = "SEP{$NAME}";
         }
-		$USERNAME = trim($USERNAME);
+        $USERNAME = trim($USERNAME);
         if (isset($USERNAME)) {
             if (! $USERNAME) {
                 $USERNAME = 'CallManager.Unassign';
@@ -436,7 +437,6 @@ class Cucmclass extends Model
         if (preg_match('/^Cisco ATA ...$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
-		
 
         $PHONE = [
         'name'                                => $NAME,
@@ -501,50 +501,47 @@ class Cucmclass extends Model
             $PHONE['cgpnTransformationCssName'] = 'CSS_GLOBAL_GW_CALLED_XFORM';
             $PHONE['useDevicePoolCgpnTransformCss'] = 'false';
         }
-		
-		// Set the Calling Part Transformation CSS on 7940 and 7960 phones because they do not support E164 + redialing. This will replace +1 with a 9
+
+        // Set the Calling Part Transformation CSS on 7940 and 7960 phones because they do not support E164 + redialing. This will replace +1 with a 9
         if (($PRODUCT == 'Cisco 7940') || ($PRODUCT == 'Cisco 7960')) {
             $PHONE['cgpnTransformationCssName'] = 'CSS_GLOBAL_GW_CALLED_XFORM';
             $PHONE['useDevicePoolCgpnTransformCss'] = 'false';
         }
-		
-		// Add support for Third-party SIP Devices
-        if (preg_match('/^Third-party SIP Device/', $DEVICE)) {
 
-			$PHONE['product'] = $DEVICE;
+        // Add support for Third-party SIP Devices
+        if (preg_match('/^Third-party SIP Device/', $DEVICE)) {
+            $PHONE['product'] = $DEVICE;
             $PHONE['protocol'] = 'SIP';
-			//$PHONE['digestUser'] = $PHONE['ownerUserName']; // Found out this field is case sensitive. 
-			$PHONE['digestUser'] = $USERNAME;
-			
-			// Try to verify username with End User table from CUCM to make sure user exists. 
-			try {
-				$RESPONSE = $cucm->get_user_by_username($USERNAME);
-				\Log::info('getUser', [$RESPONSE]);
-				if($RESPONSE['userid']){
-					$USERNAME = $RESPONSE['userid'];
-					$PHONE['digestUser'] = $USERNAME;
-				}else{
-					// Create a local User in CUCM. 
-					
-				}
-				
-			} catch (\Exception $e) {
-				//return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-				//return $e->getTrace());
-			}
-			
-			if($DEVICE == 'Third-party SIP Device (Advanced)'){
-				$PHONE['securityProfileName'] =  "Third-party SIP Device Advanced - Digest Required"; 
-				//$securityProfileName =  "Third-party SIP Device Advanced - Digest Required"; 
-				//$securityProfileName =  "{$PRODUCT} - Digest Required"; 
-			}
-			if($DEVICE == 'Third-party SIP Device (Basic)'){
-				$PHONE['securityProfileName'] =  "Third-party SIP Device Basic - Digest Required"; 
-				//$securityProfileName =  "Third-party SIP Device Basic - Digest Required"; 
-				//$securityProfileName =  "{$PRODUCT} - Digest Required"; 
-			}
+            //$PHONE['digestUser'] = $PHONE['ownerUserName']; // Found out this field is case sensitive.
+            $PHONE['digestUser'] = $USERNAME;
+
+            // Try to verify username with End User table from CUCM to make sure user exists.
+            try {
+                $RESPONSE = $cucm->get_user_by_username($USERNAME);
+                \Log::info('getUser', [$RESPONSE]);
+                if ($RESPONSE['userid']) {
+                    $USERNAME = $RESPONSE['userid'];
+                    $PHONE['digestUser'] = $USERNAME;
+                } else {
+                    // Create a local User in CUCM.
+                }
+            } catch (\Exception $e) {
+                //return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+                //return $e->getTrace());
+            }
+
+            if ($DEVICE == 'Third-party SIP Device (Advanced)') {
+                $PHONE['securityProfileName'] = 'Third-party SIP Device Advanced - Digest Required';
+                //$securityProfileName =  "Third-party SIP Device Advanced - Digest Required";
+                //$securityProfileName =  "{$PRODUCT} - Digest Required";
+            }
+            if ($DEVICE == 'Third-party SIP Device (Basic)') {
+                $PHONE['securityProfileName'] = 'Third-party SIP Device Basic - Digest Required';
+                //$securityProfileName =  "Third-party SIP Device Basic - Digest Required";
+                //$securityProfileName =  "{$PRODUCT} - Digest Required";
+            }
         }
-		
+
         $TYPE = 'Phone';
 
         try {

@@ -393,7 +393,7 @@ class Sonus5kCDR extends Model
             $start = $starthour;
             $end = $subhour;
             $hours--; // Subtract an hour from hours when looping.
-            $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
+            $totalcalls = self::whereBetween('start_time', [$start, $end])->count();
             $pktlosscalls = self::whereBetween('start_time', [$start, $end])
                                 ->where(function ($query) {
                                     $query->where('ingress_lost_ptks', '>', 100)
@@ -456,7 +456,7 @@ class Sonus5kCDR extends Model
         $end = Carbon::now()->setTimezone('UTC');
 
         // Get all the active attempt disconnet reasons in use in last 24s.
-        $codes = \App\Sonus5kCDR::groupBy('disconnect_reason')
+        $codes = self::groupBy('disconnect_reason')
                 ->select('disconnect_reason', DB::raw('count(*) as total'))
                 ->whereBetween('start_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
@@ -477,7 +477,7 @@ class Sonus5kCDR extends Model
 
             //DB::enableQueryLog();
 
-            $calls = \App\Sonus5kCDR::groupBy('disconnect_reason')
+            $calls = self::groupBy('disconnect_reason')
                 ->select('disconnect_reason', DB::raw('count(*) as total'))
                 ->whereBetween('start_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
@@ -485,7 +485,7 @@ class Sonus5kCDR extends Model
 
             //return DB::getQueryLog();
 
-            $totalcalls = \App\Sonus5kCDR::whereBetween('start_time', [$start, $end])->count();
+            $totalcalls = self::whereBetween('start_time', [$start, $end])->count();
 
             $pktlosscalls = self::whereBetween('start_time', [$start, $end])
                                 ->where(function ($query) {
@@ -1360,7 +1360,7 @@ class Sonus5kCDR extends Model
         $end = Carbon::now()->setTimezone('UTC');
 
         // Get all the active attempt disconnet reasons in use in last 24s.
-        $report = \App\Sonus5kCDR::groupBy('called_number')
+        $report = self::groupBy('called_number')
                 ->select('called_number', DB::raw('count(id) as total'))
                 ->whereBetween('disconnect_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
@@ -1385,7 +1385,7 @@ class Sonus5kCDR extends Model
         $end = Carbon::now()->setTimezone('UTC');
 
         // Get all the active attempt disconnet reasons in use in last 24s.
-        $report = \App\Sonus5kCDR::groupBy('calling_number')
+        $report = self::groupBy('calling_number')
                 ->select('calling_number', DB::raw('count(id) as total'))
                 ->whereBetween('disconnect_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
@@ -1410,7 +1410,7 @@ class Sonus5kCDR extends Model
         $end = Carbon::now()->setTimezone('UTC');
 
         // Get all the active attempt disconnet reasons in use in last 24s.
-        $report = \App\Sonus5kCDR::groupBy('called_number')
+        $report = self::groupBy('called_number')
                 ->select('called_number', DB::raw('count(id) as total'))
                 ->whereBetween('disconnect_time', [$start, $end])
                 ->where('type', 'ATTEMPT')
@@ -1435,7 +1435,7 @@ class Sonus5kCDR extends Model
         $end = Carbon::now()->setTimezone('UTC');
 
         // Get all the active attempt disconnet reasons in use in last 24s.
-        $report = \App\Sonus5kCDR::groupBy('calling_number')
+        $report = self::groupBy('calling_number')
                 ->select('calling_number', DB::raw('count(id) as total'))
                 ->whereBetween('disconnect_time', [$start, $end])
                 ->where('type', 'ATTEMPT')

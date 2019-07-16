@@ -1,7 +1,6 @@
 <?php
 
-	
-	/**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/cucm/user/{username}",
      *     tags={"Management - CUCM - User Provisioning"},
@@ -28,9 +27,8 @@
      * )
      **/
     $api->get('cucm/user/{username}', 'App\Http\Controllers\CucmUser@getUserbyUsername');
-	
-	
-	/**
+
+    /**
      * @SWG\Post(
      *     path="/telephony/api/cucm/user",
      *     tags={"Management - CUCM - User Provisioning"},

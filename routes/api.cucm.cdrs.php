@@ -1,6 +1,5 @@
 <?php
 
-
     /**
      * @SWG\Get(
      *     path="/telephony/api/cucmcdrs/search/{column}/{search}",

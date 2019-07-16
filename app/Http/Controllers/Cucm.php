@@ -87,8 +87,6 @@ class Cucm extends Controller
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
         }
     }
-	
-
 
     // CUCM Add Wrapper
     public function wrap_add_object($DATA, $TYPE)

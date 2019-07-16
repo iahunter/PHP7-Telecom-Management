@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Cache;
 
 class CucmUser extends Cucm
 {
-
-	public function getUserbyUsername(Request $request, $username)
+    public function getUserbyUsername(Request $request, $username)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions
@@ -22,8 +21,8 @@ class CucmUser extends Cucm
                 abort(401, 'You are not authorized');
             }
         }
-		
-		$user = Cucmclass::get_user_by_userid($username); 
+
+        $user = Cucmclass::get_user_by_userid($username);
 
         $response = [
                     'status_code'    => 200,
@@ -34,7 +33,6 @@ class CucmUser extends Cucm
 
         return response()->json($response);
     }
-	
 
     // Create New Phone
     public function createUser(Request $request)
@@ -47,12 +45,12 @@ class CucmUser extends Cucm
                 abort(401, 'You are not authorized');
             }
         }
-		
-		//return $request->all(); 
+
+        //return $request->all();
 
         $errors = [];
 
-		$data = []; 
+        $data = [];
         // Check if firstname is Set
         if (! isset($request->firstname) || ! $request->firstname) {
             $errors[] = 'Error, no firstname set';
@@ -69,22 +67,21 @@ class CucmUser extends Cucm
         if (! isset($request->username) || ! $request->username) {
             $errors[] = 'Error, no username set';
         }
-		$data['username'] = $request->username;
-		
-		if (isset($request->dn) && $request->dn) {
+        $data['username'] = $request->username;
+
+        if (isset($request->dn) && $request->dn) {
             $data['dn'] = $request->dn;
         }
 
-		$user = Cucmclass::add_user($data); 
+        $user = Cucmclass::add_user($data);
 
-		$response = [
-					'status_code'    => 200,
-					'success'        => true,
-					'message'        => '',
-					'response'       => $user,
-					];
+        $response = [
+                    'status_code'    => 200,
+                    'success'        => true,
+                    'message'        => '',
+                    'response'       => $user,
+                    ];
 
-		return response()->json($response);
-	}
-
+        return response()->json($response);
+    }
 }

@@ -10,8 +10,8 @@ use App\Events\Create_Line_Event;
 use App\Events\Create_Phone_Event;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Events\Create_AD_IPPhone_Event;
-use App\Events\Create_Cucm_Local_EndUser_Event;
 use App\Events\Update_IDM_PhoneNumber_Event;
+use App\Events\Create_Cucm_Local_EndUser_Event;
 use App\Events\Create_UnityConnection_Mailbox_Event;
 use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
 
@@ -57,79 +57,75 @@ class PhoneMACDController extends Controller
 
         $data['phone'] = $phone;
 
-		// Check to see if addisable is true. 
-		if(isset($phone['addisable'])){
-			if($phone['addisable']){
-				$adupdate = false; 
-			}
-			else{
-				$adupdate = true; 
-			}
-		}else{
-			$adupdate = true; 
-		}
-		
-		// Testing User Account Creation. 
-		if(isset($phone['createuser']) && $phone['createuser']){
-			if(isset($phone['localuser']) && $phone['localuser']){
-				
-				$data['phone']['username'] = $phone['localuser']; 
-				\Log::info('##################### Changed Username ', ['data' => "Changed Username to {$phone['username']} "]);
-				
-				$adupdate = false;
-				
-				// Create Local End user
-				$task = PhoneMACD::create([
-											'type'   => 'Create CUCM Local End User',
-											'parent' => $macd->id,
-											'status' => 'job received',
-										]);
-				$tasks[] = $task;
-				$data['taskid'] = $task->id;
+        // Check to see if addisable is true.
+        if (isset($phone['addisable'])) {
+            if ($phone['addisable']) {
+                $adupdate = false;
+            } else {
+                $adupdate = true;
+            }
+        } else {
+            $adupdate = true;
+        }
 
-				// Create Local Account 
-				try {
-					event(new Create_Cucm_Local_EndUser_Event($data));
-				} catch (\Exception $e) {
-					//
-				}
-				
-			}
-		}
-		
-		if($adupdate){
-			// Update AD User IP Phone Field
-			if (isset($phone['username']) && $phone['username']) {
-				if (isset($phone['dn']) && $phone['dn']) {
-					$task = PhoneMACD::create([
-												'type'   => 'Update User AD IP Phone Field',
-												'parent' => $macd->id,
-												'status' => 'job received',
-											]);
-					$tasks[] = $task;
-					$data['taskid'] = $task->id;
+        // Testing User Account Creation.
+        if (isset($phone['createuser']) && $phone['createuser']) {
+            if (isset($phone['localuser']) && $phone['localuser']) {
+                $data['phone']['username'] = $phone['localuser'];
+                \Log::info('##################### Changed Username ', ['data' => "Changed Username to {$phone['username']} "]);
 
-					// Testing of Events Controller
-					try {
-						event(new Create_AD_IPPhone_Event($data));
+                $adupdate = false;
 
-						// If IDM is set to true then create an event to update Telephone for user in SAP IDM.
-						if (env('IDM')) {
-							$task = PhoneMACD::create([
-														'type'   => 'Update User IDM Telephone Number',
-														'parent' => $macd->id,
-														'status' => 'job received',
-													]);
-							$tasks[] = $task;
-							$data['taskid'] = $task->id;
-							event(new Update_IDM_PhoneNumber_Event($data));
-						}
-					} catch (\Exception $e) {
-					}
-				}
-			}
-		}
+                // Create Local End user
+                $task = PhoneMACD::create([
+                                            'type'   => 'Create CUCM Local End User',
+                                            'parent' => $macd->id,
+                                            'status' => 'job received',
+                                        ]);
+                $tasks[] = $task;
+                $data['taskid'] = $task->id;
 
+                // Create Local Account
+                try {
+                    event(new Create_Cucm_Local_EndUser_Event($data));
+                } catch (\Exception $e) {
+                    //
+                }
+            }
+        }
+
+        if ($adupdate) {
+            // Update AD User IP Phone Field
+            if (isset($phone['username']) && $phone['username']) {
+                if (isset($phone['dn']) && $phone['dn']) {
+                    $task = PhoneMACD::create([
+                                                'type'   => 'Update User AD IP Phone Field',
+                                                'parent' => $macd->id,
+                                                'status' => 'job received',
+                                            ]);
+                    $tasks[] = $task;
+                    $data['taskid'] = $task->id;
+
+                    // Testing of Events Controller
+                    try {
+                        event(new Create_AD_IPPhone_Event($data));
+
+                        // If IDM is set to true then create an event to update Telephone for user in SAP IDM.
+                        if (env('IDM')) {
+                            $task = PhoneMACD::create([
+                                                        'type'   => 'Update User IDM Telephone Number',
+                                                        'parent' => $macd->id,
+                                                        'status' => 'job received',
+                                                    ]);
+                            $tasks[] = $task;
+                            $data['taskid'] = $task->id;
+                            event(new Update_IDM_PhoneNumber_Event($data));
+                        }
+                    } catch (\Exception $e) {
+                    }
+                }
+            }
+        }
 
         // Build new line first and then chain to add the phone if a new line is required.
         if (isset($phone['usenumber']) && $phone['usenumber'] == 'new') {

@@ -19,7 +19,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Update_IDM_PhoneNumber_Event' => [
             'App\Listeners\Update_IDM_PhoneNumber_Listener',
         ],
-		'App\Events\Create_Cucm_Local_EndUser_Event' => [
+        'App\Events\Create_Cucm_Local_EndUser_Event' => [
             'App\Listeners\Create_Cucm_Local_EndUser_Listener',
         ],
         'App\Events\Create_Line_Event' => [

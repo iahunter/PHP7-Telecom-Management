@@ -521,8 +521,10 @@ class CucmReportsController extends Controller
                     'Unified Client Services Framework',
                     'Unified Personal Communicator',
                     'CTI Port',
+					'Syn-Apps Virtual Phone',
+					'Spark Room Kit',
                     //'Third-party SIP Device (Advanced)',
-                    //'Third-party SIP Device (Basic)',
+                    'Third-party SIP Device (Basic)', // Need to do testing on this one. Leaving unsuported for now. 
                     ];
 
         foreach ($models as $model) {

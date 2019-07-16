@@ -96,9 +96,9 @@
 								
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.showcreateuser">
 									<div class="form-group"  ng-class="{'has-error': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$invalid, 'has-success': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$valid }">
-										<label for="createuser" class="control-label">Create Local End User Account for SIP Endpoint (In Development)</label>
+										<label for="createuser" class="control-label" style="color:grey">Create Local End User Account for SIP Endpoint (In Development)</label>
 										<br>
-										<input type="checkbox"  ng-model='vm.deviceForm.createuser' style="width: 17px; height: 17px;" name="createuser" >
+										<input type="checkbox"   ng-model='vm.deviceForm.createuser' style="width: 17px; height: 17px;" name="createuser" >
 
 										<div ng-messages="addDidblockForm.createuser.$dirty && addDidblockForm.createuser.$error">
 											<div ng-messages-include="error-messages"></div>
@@ -153,7 +153,7 @@
 								</div>
 							</div>
 							
-							<div class="row" ng-if="!vm.deviceForm.createuser && vm.showcreateuser">	
+							<div class="row" ng-if="!vm.deviceForm.createuser">	
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.username.$touched && addDeviceForm.username.$invalid, 'has-success': addDeviceForm.username.$touched && addDeviceForm.username.$valid }">
 										<label for="username" class="control-label">samAccountName <small> (Employees Only)</small></label>
@@ -170,7 +170,7 @@
 									</div>
 								</div>
 								
-								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.showcreateuser">
 									<div class="form-group"  ng-class="{'has-error': addDidblockForm.addisable.$touched && addDidblockForm.addisable.$invalid, 'has-success': addDidblockForm.addisable.$touched && addDidblockForm.addisable.$valid }">
 										<label for="addisable" class="control-label">Disable AD Update</label>
 										<br>

@@ -131,8 +131,8 @@
 							
 							
 							<hr>
-							<div class="row">	
-								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+							<div class="row"  ng-if="vm.deviceForm.username">	
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.username">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.username.$touched && addDeviceForm.username.$invalid, 'has-success': addDeviceForm.username.$touched && addDeviceForm.username.$valid }">
 										<label for="username" class="control-label">samAccountName <small> (Employees Only)</small></label>
 										<div class="inputGroupContainer">
@@ -142,6 +142,24 @@
 											
 											</div>
 											<div ng-messages="addDeviceForm.username.$dirty && addDeviceForm.username.$error">
+												<div ng-message='minlength'>Please enter a dn at least 6 chars long</div>
+												<div ng-message='maxlength'>Name entered cannot be longer than 50 chars</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row" ng-if="vm.deviceForm.createuser && vm.deviceForm.localuser">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.createuser && vm.deviceForm.localuser">
+									<div class="form-group" ng-class="{'has-error': addDeviceForm.localuser.$touched && addDeviceForm.localuser.$invalid, 'has-success': addDeviceForm.localuser.$touched && addDeviceForm.localuser.$valid }">
+										<label for="localuser" class="control-label">Local User Account</label>
+										<div class="inputGroupContainer">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+												<input type="text" readonly ng-model='vm.deviceForm.localuser' class="form-control"  name="localuser" placeholder="localuser" ng-minlength='6' ng-maxlength='50'>
+											
+											</div>
+											<div ng-messages="addDeviceForm.localuser.$dirty && addDeviceForm.localuser.$error">
 												<div ng-message='minlength'>Please enter a dn at least 6 chars long</div>
 												<div ng-message='maxlength'>Name entered cannot be longer than 50 chars</div>
 											</div>

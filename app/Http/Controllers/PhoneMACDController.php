@@ -10,6 +10,7 @@ use App\Events\Create_Line_Event;
 use App\Events\Create_Phone_Event;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Events\Create_AD_IPPhone_Event;
+use App\Events\Create_Cucm_Local_EndUser_Event;
 use App\Events\Update_IDM_PhoneNumber_Event;
 use App\Events\Create_UnityConnection_Mailbox_Event;
 use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
@@ -66,6 +67,34 @@ class PhoneMACDController extends Controller
 			}
 		}else{
 			$adupdate = true; 
+		}
+		
+		// Testing User Account Creation. 
+		if(isset($phone['createuser']) && $phone['createuser']){
+			if(isset($phone['localuser']) && $phone['localuser']){
+				
+				$data['phone']['username'] = $phone['localuser']; 
+				\Log::info('##################### Changed Username ', ['data' => "Changed Username to {$phone['username']} "]);
+				
+				$adupdate = false;
+				
+				// Create Local End user
+				$task = PhoneMACD::create([
+											'type'   => 'Create CUCM Local End User',
+											'parent' => $macd->id,
+											'status' => 'job received',
+										]);
+				$tasks[] = $task;
+				$data['taskid'] = $task->id;
+
+				// Create Local Account 
+				try {
+					event(new Create_Cucm_Local_EndUser_Event($data));
+				} catch (\Exception $e) {
+					//
+				}
+				
+			}
 		}
 		
 		if($adupdate){

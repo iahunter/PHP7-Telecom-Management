@@ -88,39 +88,7 @@ class Cucm extends Controller
         }
     }
 	
-	public function getUserbyUsername(Request $request, $username)
-    {
-        $user = JWTAuth::parseToken()->authenticate();
-        // Check user permissions
-        if (! $user->can('read', Cucmclass::class)) {
-            if (! $user->can('read', PhoneMACD::class)) {
-                abort(401, 'You are not authorized');
-            }
-        }
-		
-		//return $username; 
-		
-        $user = '';
-        try {
-            $user = $this->cucm->get_user_by_username($username);
-			
-            if (! count($user)) {
-                throw new \Exception('Indexed results from call mangler is empty');
-            }
-        } catch (\Exception $e) {
-            $exception = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-            //dd($e->getTrace());
-        } 
 
-        $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $user,
-                    ];
-
-        return response()->json($response);
-    }
 
     // CUCM Add Wrapper
     public function wrap_add_object($DATA, $TYPE)

@@ -50,22 +50,6 @@ class Cucmclass extends Model
         }
     }
 	
-	public static function get_user_by_userid($USERNAME)
-    {
-        // Construct new cucm object
-        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
-
-        try {
-            $REPLY = $cucm->get_user_by_userid($USERNAME);
-            return $REPLY;
-        } catch (\Exception $E) {
-            return $E->getMessage();
-        }
-    }
 
     // CUCM Add Phone Wrapper
     public static function wrap_add_phone_object($DATA, $TYPE)
@@ -377,6 +361,7 @@ class Cucmclass extends Model
         } else {
             $NAME = "SEP{$NAME}";
         }
+		 \Log::info('############ Username', ['data' => $USERNAME]);
 		$USERNAME = trim($USERNAME);
         if (isset($USERNAME)) {
             if (! $USERNAME) {
@@ -525,12 +510,13 @@ class Cucmclass extends Model
 					$PHONE['digestUser'] = $USERNAME;
 				}else{
 					// Create a local User in CUCM. 
-					
+					sleep(5); 
 				}
 				
 			} catch (\Exception $e) {
 				//return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
 				//return $e->getTrace());
+				throw new \Exception($e->getMessage());
 			}
 			
 			if($DEVICE == 'Third-party SIP Device (Advanced)'){
@@ -834,4 +820,75 @@ class Cucmclass extends Model
 
         return json_decode(json_encode(static::$results), true);
     }
+	
+	public static function get_user_by_userid($USERNAME)
+    {
+        // Construct new cucm object
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+
+        try {
+            $REPLY = $cucm->get_user_by_username($USERNAME);
+            return $REPLY;
+        } catch (\Exception $E) {
+            return $E->getMessage();
+        }
+    }
+	
+	// Add End User
+	public static function add_user(array $data) 
+	{
+		$FIRSTNAME = $data['firstname']; 
+		$LASTNAME = $data['lastname']; 
+		$USERNAME = $data['username']; 
+		
+		// Construct new cucm object
+        $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+        
+		$USER = [	
+					'firstName'				=> $FIRSTNAME, 
+					'lastName'				=> $LASTNAME, 
+					'userid'				=> $USERNAME, 
+					'presenceGroupName'		=> ["_"	=> "Standard Presence group"], 
+					'associatedGroups' 		=> ['userGroup'	=> 	[	
+																		[
+																			"name" => "Standard CTI Enabled",
+																			
+																		],
+																		[
+																			"name" => "Standard CCM End Users",
+																		],
+																]
+												],
+					'enableCti'				=> true, 
+					//"digestCredentials" => "Summer2019",
+					
+				]; 
+				
+		if (isset($data['digestCredentials']) && $data['digestCredentials']) {
+            $USER['digestCredentials'] = $data['digestCredentials'];
+        }elseif(env('CALLMANAGER_SIP_DIGEST')){
+				$USER['digestCredentials'] = env('CALLMANAGER_SIP_DIGEST'); 
+		}
+	
+		if (isset($data['dn']) && $data['dn']) {
+            $USER['telephoneNumber'] = $data['dn'];
+        }
+		
+		//return $USER; 
+		try {
+            $REPLY = $cucm->add_user($USER);
+            return $REPLY;
+        } catch (\Exception $E) {
+            return $E->getMessage();
+        }
+	}
+	
 }

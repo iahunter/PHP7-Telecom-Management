@@ -301,6 +301,3 @@
      * )
      **/
     $api->get('cucm/searchuuid/{type}/{uuid}', 'App\Http\Controllers\Cucm@getObjectTypebyUUID');
-	
-
-	

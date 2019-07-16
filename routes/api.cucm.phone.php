@@ -630,4 +630,3 @@
      * )
      **/
     $api->post('cucm/phonecheck', 'App\Http\Controllers\Cucmphone@check_if_phones_provisioned');
-	

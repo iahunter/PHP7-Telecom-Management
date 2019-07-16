@@ -1,6 +1,5 @@
 <?php
 
-
     /**
      * @SWG\Get(
      *     path="/telephony/api/sonus5kcdrs/search/{column}/{search}",

@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,7 +52,7 @@ $api->version('v1', function ($api) {
     require __DIR__.'/api.cucm.php';
     require __DIR__.'/api.cucm.site.php';
     require __DIR__.'/api.cucm.phone.php';
-	require __DIR__.'/api.cucm.user.php';
+    require __DIR__.'/api.cucm.user.php';
     require __DIR__.'/api.cucm.ctiroutepoint.php';
     require __DIR__.'/api.cucm.line.php';
     require __DIR__.'/api.cucm.site.migration.php';

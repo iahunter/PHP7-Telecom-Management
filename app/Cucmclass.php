@@ -49,7 +49,6 @@ class Cucmclass extends Model
             return false;
         }
     }
-	
 
     // CUCM Add Phone Wrapper
     public static function wrap_add_phone_object($DATA, $TYPE)
@@ -347,7 +346,7 @@ class Cucmclass extends Model
         // 50 is max, off-by-1 is 49, space-dash-space is 3, shortdn length could be 4-10
         $DESCRIPTION = substr($FULLNAME, 0, 45 - strlen($SHORTDN)).' - '.$SHORTDN;
         //$DESCRIPTION = $FULLNAME . " - " . $SHORTDN;
-		$PRODUCT = 'Cisco '.$DEVICE;
+        $PRODUCT = 'Cisco '.$DEVICE;
         $MAXCALLS = 4;
         $BUSYTRIGGER = 2;
         // add the SEP to the name
@@ -361,8 +360,8 @@ class Cucmclass extends Model
         } else {
             $NAME = "SEP{$NAME}";
         }
-		 \Log::info('############ Username', ['data' => $USERNAME]);
-		$USERNAME = trim($USERNAME);
+        \Log::info('############ Username', ['data' => $USERNAME]);
+        $USERNAME = trim($USERNAME);
         if (isset($USERNAME)) {
             if (! $USERNAME) {
                 $USERNAME = 'CallManager.Unassign';
@@ -421,7 +420,6 @@ class Cucmclass extends Model
         if (preg_match('/^Cisco ATA ...$/', $PRODUCT)) {
             $PROTOCOL = 'SIP';
         }
-		
 
         $PHONE = [
         'name'                                => $NAME,
@@ -486,51 +484,49 @@ class Cucmclass extends Model
             $PHONE['cgpnTransformationCssName'] = 'CSS_GLOBAL_GW_CALLED_XFORM';
             $PHONE['useDevicePoolCgpnTransformCss'] = 'false';
         }
-		
-		// Set the Calling Part Transformation CSS on 7940 and 7960 phones because they do not support E164 + redialing. This will replace +1 with a 9
+
+        // Set the Calling Part Transformation CSS on 7940 and 7960 phones because they do not support E164 + redialing. This will replace +1 with a 9
         if (($PRODUCT == 'Cisco 7940') || ($PRODUCT == 'Cisco 7960')) {
             $PHONE['cgpnTransformationCssName'] = 'CSS_GLOBAL_GW_CALLED_XFORM';
             $PHONE['useDevicePoolCgpnTransformCss'] = 'false';
         }
-		
-		// Add support for Third-party SIP Devices
-        if (preg_match('/^Third-party SIP Device/', $DEVICE)) {
 
-			$PHONE['product'] = $DEVICE;
+        // Add support for Third-party SIP Devices
+        if (preg_match('/^Third-party SIP Device/', $DEVICE)) {
+            $PHONE['product'] = $DEVICE;
             $PHONE['protocol'] = 'SIP';
-			//$PHONE['digestUser'] = $PHONE['ownerUserName']; // Found out this field is case sensitive. 
-			$PHONE['digestUser'] = $USERNAME;
-			
-			// Try to verify username with End User table from CUCM to make sure user exists. 
-			try {
-				$RESPONSE = $cucm->get_user_by_username($USERNAME);
-				\Log::info('getUser', [$RESPONSE]);
-				if($RESPONSE['userid']){
-					$USERNAME = $RESPONSE['userid'];
-					$PHONE['digestUser'] = $USERNAME;
-				}else{
-					// Create a local User in CUCM. 
-					sleep(5); 
-				}
-				
-			} catch (\Exception $e) {
-				//return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
-				//return $e->getTrace());
-				throw new \Exception($e->getMessage());
-			}
-			
-			if($DEVICE == 'Third-party SIP Device (Advanced)'){
-				$PHONE['securityProfileName'] =  "Third-party SIP Device Advanced - Digest Required"; 
-				//$securityProfileName =  "Third-party SIP Device Advanced - Digest Required"; 
-				//$securityProfileName =  "{$PRODUCT} - Digest Required"; 
-			}
-			if($DEVICE == 'Third-party SIP Device (Basic)'){
-				$PHONE['securityProfileName'] =  "Third-party SIP Device Basic - Digest Required"; 
-				//$securityProfileName =  "Third-party SIP Device Basic - Digest Required"; 
-				//$securityProfileName =  "{$PRODUCT} - Digest Required"; 
-			}
+            //$PHONE['digestUser'] = $PHONE['ownerUserName']; // Found out this field is case sensitive.
+            $PHONE['digestUser'] = $USERNAME;
+
+            // Try to verify username with End User table from CUCM to make sure user exists.
+            try {
+                $RESPONSE = $cucm->get_user_by_username($USERNAME);
+                \Log::info('getUser', [$RESPONSE]);
+                if ($RESPONSE['userid']) {
+                    $USERNAME = $RESPONSE['userid'];
+                    $PHONE['digestUser'] = $USERNAME;
+                } else {
+                    // Create a local User in CUCM.
+                    sleep(5);
+                }
+            } catch (\Exception $e) {
+                //return 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
+                //return $e->getTrace());
+                throw new \Exception($e->getMessage());
+            }
+
+            if ($DEVICE == 'Third-party SIP Device (Advanced)') {
+                $PHONE['securityProfileName'] = 'Third-party SIP Device Advanced - Digest Required';
+                //$securityProfileName =  "Third-party SIP Device Advanced - Digest Required";
+                //$securityProfileName =  "{$PRODUCT} - Digest Required";
+            }
+            if ($DEVICE == 'Third-party SIP Device (Basic)') {
+                $PHONE['securityProfileName'] = 'Third-party SIP Device Basic - Digest Required';
+                //$securityProfileName =  "Third-party SIP Device Basic - Digest Required";
+                //$securityProfileName =  "{$PRODUCT} - Digest Required";
+            }
         }
-		
+
         $TYPE = 'Phone';
 
         try {
@@ -820,8 +816,8 @@ class Cucmclass extends Model
 
         return json_decode(json_encode(static::$results), true);
     }
-	
-	public static function get_user_by_userid($USERNAME)
+
+    public static function get_user_by_userid($USERNAME)
     {
         // Construct new cucm object
         $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
@@ -832,63 +828,64 @@ class Cucmclass extends Model
 
         try {
             $REPLY = $cucm->get_user_by_username($USERNAME);
+
             return $REPLY;
         } catch (\Exception $E) {
             return $E->getMessage();
         }
     }
-	
-	// Add End User
-	public static function add_user(array $data) 
-	{
-		$FIRSTNAME = $data['firstname']; 
-		$LASTNAME = $data['lastname']; 
-		$USERNAME = $data['username']; 
-		
-		// Construct new cucm object
+
+    // Add End User
+    public static function add_user(array $data)
+    {
+        $FIRSTNAME = $data['firstname'];
+        $LASTNAME = $data['lastname'];
+        $USERNAME = $data['username'];
+
+        // Construct new cucm object
         $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
-        
-		$USER = [	
-					'firstName'				=> $FIRSTNAME, 
-					'lastName'				=> $LASTNAME, 
-					'userid'				=> $USERNAME, 
-					'presenceGroupName'		=> ["_"	=> "Standard Presence group"], 
-					'associatedGroups' 		=> ['userGroup'	=> 	[	
-																		[
-																			"name" => "Standard CTI Enabled",
-																			
-																		],
-																		[
-																			"name" => "Standard CCM End Users",
-																		],
-																]
-												],
-					'enableCti'				=> true, 
-					//"digestCredentials" => "Summer2019",
-					
-				]; 
-				
-		if (isset($data['digestCredentials']) && $data['digestCredentials']) {
+
+        $USER = [
+                    'firstName'				      => $FIRSTNAME,
+                    'lastName'				       => $LASTNAME,
+                    'userid'				         => $USERNAME,
+                    'presenceGroupName'		=> ['_'	=> 'Standard Presence group'],
+                    'associatedGroups' 		=> ['userGroup'	=> [
+                                                                        [
+                                                                            'name' => 'Standard CTI Enabled',
+
+                                                                        ],
+                                                                        [
+                                                                            'name' => 'Standard CCM End Users',
+                                                                        ],
+                                                                ],
+                                                ],
+                    'enableCti'				=> true,
+                    //"digestCredentials" => "Summer2019",
+
+                ];
+
+        if (isset($data['digestCredentials']) && $data['digestCredentials']) {
             $USER['digestCredentials'] = $data['digestCredentials'];
-        }elseif(env('CALLMANAGER_SIP_DIGEST')){
-				$USER['digestCredentials'] = env('CALLMANAGER_SIP_DIGEST'); 
-		}
-	
-		if (isset($data['dn']) && $data['dn']) {
+        } elseif (env('CALLMANAGER_SIP_DIGEST')) {
+            $USER['digestCredentials'] = env('CALLMANAGER_SIP_DIGEST');
+        }
+
+        if (isset($data['dn']) && $data['dn']) {
             $USER['telephoneNumber'] = $data['dn'];
         }
-		
-		//return $USER; 
-		try {
+
+        //return $USER;
+        try {
             $REPLY = $cucm->add_user($USER);
+
             return $REPLY;
         } catch (\Exception $E) {
             return $E->getMessage();
         }
-	}
-	
+    }
 }

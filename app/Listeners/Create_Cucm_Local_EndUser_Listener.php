@@ -4,9 +4,9 @@ namespace App\Listeners;
 
 use App\Cucmclass;
 use App\PhoneMACD;
-use App\Events\Create_Cucm_Local_EndUser_Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\Create_Cucm_Local_EndUser_Event;
 
 class Create_Cucm_Local_EndUser_Listener implements ShouldQueue
 {
@@ -37,7 +37,7 @@ class Create_Cucm_Local_EndUser_Listener implements ShouldQueue
         $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'entered queue']);
         $task->save();
 
-		$data = []; 
+        $data = [];
         $data['firstname'] = $event->phone['firstname'];
         $data['lastname'] = $event->phone['lastname'];
         $data['username'] = $event->phone['localuser'];

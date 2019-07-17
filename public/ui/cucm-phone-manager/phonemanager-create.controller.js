@@ -54,6 +54,13 @@ angular
 				deviceForm.lastname = ""
 			}
 			vm.deviceForm.localuser = deviceForm.firstname + "." + deviceForm.lastname; 
+			
+			
+			if(deviceForm.createuser){
+				vm.localuserid = ""
+				vm.lookuplocaluser(deviceForm.localuser)
+			}
+			
 		}
 		
 		// Match the window permission set in login.js and app.js - may want to user a service or just do an api call to get these. will decide later. 
@@ -156,6 +163,33 @@ angular
 				//console.log(phone)
 				vm.aduser = phone
 				console.log(vm.aduser)
+			
+			}
+		}
+		
+		
+		vm.lookuplocaluser = function(username){
+			console.log("Lookup Local User: " + username)
+
+			if(username.length >= 6){
+				//console.log(username)
+					if((username != "") && (username != null)){
+						cucmService.getLocalUser(username)
+						.then(function(res){
+							user = [];
+							console.log(res);
+							//user.username = username;
+							
+							user = res.data.response;
+							
+							if(user.userid){
+								vm.localuserid = user.userid; 
+								console.log("Local User found: "+vm.localuserid);
+							}
+							console.log(result);
+							
+						});
+					}
 			
 			}
 		}

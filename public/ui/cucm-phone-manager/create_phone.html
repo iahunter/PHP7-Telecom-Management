@@ -96,7 +96,7 @@
 								
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.showcreateuser">
 									<div class="form-group"  ng-class="{'has-error': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$invalid, 'has-success': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$valid }">
-										<label for="createuser" class="control-label" style="color:grey">Create Local End User Account for SIP Endpoint (In Development)</label>
+										<label for="createuser" class="control-label">Create Local End User Account for SIP Endpoint (In Development)</label>
 										<br>
 										<input type="checkbox"   ng-model='vm.deviceForm.createuser' style="width: 17px; height: 17px;" name="createuser" >
 
@@ -146,10 +146,13 @@
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
 												
-												<input type="text" readonly ng-model='vm.deviceForm.localuser' class="form-control" data-width="100%" name="model">
+												<input type="text" readonly ng-model='vm.deviceForm.localuser' ng-model-options='{ debounce: 1500 }' ng-change="vm.lookuplocaluser(vm.deviceForm.localuser)" class="form-control" data-width="100%" name="model">
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 alert alert-danger" ng-if="vm.localuserid">
+									{{vm.localuserid}} already exists in CUCM. Please use a different name. 
 								</div>
 							</div>
 							
@@ -207,6 +210,8 @@
 										</div>
 									</div>
 								</div>
+								
+								
 							</div>
 							<div class="row">	
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">

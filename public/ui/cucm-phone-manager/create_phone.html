@@ -94,17 +94,7 @@
 									</div>
 								</div>
 								
-								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.showcreateuser">
-									<div class="form-group"  ng-class="{'has-error': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$invalid, 'has-success': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$valid }">
-										<label for="createuser" class="control-label">Create Local End User Account for SIP Endpoint (In Development)</label>
-										<br>
-										<input type="checkbox"   ng-model='vm.deviceForm.createuser' style="width: 17px; height: 17px;" name="createuser" >
-
-										<div ng-messages="addDidblockForm.createuser.$dirty && addDidblockForm.createuser.$error">
-											<div ng-messages-include="error-messages"></div>
-										</div>
-									</div>
-								</div>
+								
 								
 																	
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.dn && vm.unity_mailbox_extension_inuse">
@@ -135,13 +125,25 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.showcreateuser">
+									<div class="form-group"  ng-class="{'has-error': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$invalid, 'has-success': addDidblockForm.createuser.$touched && addDidblockForm.createuser.$valid }">
+										<label for="createuser" class="control-label">Create Local End User Account</label>
+										<br>
+										<input type="checkbox"   ng-model='vm.deviceForm.createuser' style="width: 17px; height: 17px;" name="createuser" >
+
+										<div ng-messages="addDidblockForm.createuser.$dirty && addDidblockForm.createuser.$error">
+											<div ng-messages-include="error-messages"></div>
+										</div>
+									</div>
+								</div>
 
 							</div>
 							
 							<div class="row" ng-if="vm.deviceForm.createuser">	
 								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.localuser.$touched && addDeviceForm.localuser.$invalid, 'has-success': addDeviceForm.localuser.$touched && addDeviceForm.localuser.$valid }">
-										<label for="localuser" class="control-label">Local User Account</label>
+										<label for="localuser" class="control-label">Local End User Account</label>
 										<div class="inputGroupContainer">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>

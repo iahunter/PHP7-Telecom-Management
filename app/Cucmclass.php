@@ -478,13 +478,13 @@ class Cucmclass extends Model
             $PHONE['userLocale'] = 'French Canada';
             $PHONE['networkLocale'] = 'Canada';
         }
-		
-		// Reduce max calls for the 7936 phone. 
-		if ($PRODUCT == 'Cisco 7936') {
-			//return $PHONE; 
+
+        // Reduce max calls for the 7936 phone.
+        if ($PRODUCT == 'Cisco 7936') {
+            //return $PHONE;
             $PHONE['lines']['line']['maxNumCalls'] = 2;
             $PHONE['lines']['line']['busyTrigger'] = 1;
-			//return $PHONE; 
+            //return $PHONE;
         }
 
         // Set the Calling Part Transformation CSS on 7940 and 7960 phones because they do not support E164 + redialing. This will replace +1 with a 9
@@ -792,10 +792,10 @@ class Cucmclass extends Model
             $PHONE['userLocale'] = 'French Canada';
             $PHONE['networkLocale'] = 'Canada';
         }
-		//return $PHONE;
-		
+        //return $PHONE;
+
         if ($PRODUCT == 'Cisco 7936') {
-			return $PHONE; 
+            return $PHONE;
             $PHONE['lines'][0]['line'][0]['maxNumCalls'] = 2;
             $PHONE['lines'][0]['line'][0]['busyTrigger'] = 1;
         }

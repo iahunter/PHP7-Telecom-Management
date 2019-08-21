@@ -328,6 +328,12 @@
                 //controller: 'siteTrunking911Report.IndexController',
                 controllerAs: 'vm'
             })
+			.state('ciscoconfigs', {
+                url: '/cucm/configrepo',
+                templateUrl: 'company-content/ciscoconfigrepo.html',
+                //controller: 'siteTrunking911Report.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('reportshome', {
                 url: '/reports',
                 templateUrl: 'reports/reports.home.html',

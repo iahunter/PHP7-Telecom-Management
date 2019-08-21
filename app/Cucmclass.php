@@ -478,9 +478,9 @@ class Cucmclass extends Model
             $PHONE['userLocale'] = 'French Canada';
             $PHONE['networkLocale'] = 'Canada';
         }
-		
-		// Reduce max calls for the 7936 phone. Update
-		if ($PRODUCT == 'Cisco 7936') {
+
+        // Reduce max calls for the 7936 phone. Update
+        if ($PRODUCT == 'Cisco 7936') {
             $PHONE['lines']['line']['maxNumCalls'] = 2;
             $PHONE['lines']['line']['busyTrigger'] = 1;
         }
@@ -790,9 +790,9 @@ class Cucmclass extends Model
             $PHONE['userLocale'] = 'French Canada';
             $PHONE['networkLocale'] = 'Canada';
         }
-		
+
         // Reduce max calls for the 7936 phone. Update
-		if ($PRODUCT == 'Cisco 7936') {
+        if ($PRODUCT == 'Cisco 7936') {
             $PHONE['lines']['line']['maxNumCalls'] = 2;
             $PHONE['lines']['line']['busyTrigger'] = 1;
         }

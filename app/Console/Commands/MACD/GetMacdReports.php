@@ -38,7 +38,6 @@ class GetMacdReports extends Command
      */
     public function handle()
     {
-		
-		print "Hi".PHP_EOL;
+        echo 'Hi'.PHP_EOL;
     }
 }

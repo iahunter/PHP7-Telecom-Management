@@ -39,7 +39,7 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-		"iahunter/PHP5-CallManager-AXL": "dev-master",
+		"iahunter/php5-callmanager-axl": "dev-master",
         "geerlingguy/ping": "^1.1"
     },
     "autoload": {

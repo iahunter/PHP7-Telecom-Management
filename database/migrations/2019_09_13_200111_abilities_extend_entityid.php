@@ -11,19 +11,19 @@ class AbilitiesExtendEntityid extends Migration
      *
      * @return void
      */
-	 
-	/* Fix for error:
-		[Doctrine\DBAL\DBALException]                                                                    
-		Unknown database type json requested, Doctrine\DBAL\Platforms\MySqlPlatform may not support it. 
-		https://stackoverflow.com/questions/48256476/unknown-database-type-json-requested-doctrine-dbal-platforms-mysql57platform-m
-	*/
-	public function __construct()
-	{
-		DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('json', 'string');
-	}
-	
-	/* This migration changes entity_id from integer to string for using CUCM UUID as entity_id. */
-	
+
+    /* Fix for error:
+        [Doctrine\DBAL\DBALException]
+        Unknown database type json requested, Doctrine\DBAL\Platforms\MySqlPlatform may not support it.
+        https://stackoverflow.com/questions/48256476/unknown-database-type-json-requested-doctrine-dbal-platforms-mysql57platform-m
+    */
+    public function __construct()
+    {
+        DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('json', 'string');
+    }
+
+    /* This migration changes entity_id from integer to string for using CUCM UUID as entity_id. */
+
     public function up()
     {
         //

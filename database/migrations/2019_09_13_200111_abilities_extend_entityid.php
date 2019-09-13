@@ -22,6 +22,8 @@ class AbilitiesExtendEntityid extends Migration
 		DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('json', 'string');
 	}
 	
+	/* This migration changes entity_id from integer to string for using CUCM UUID as entity_id. */
+	
     public function up()
     {
         //

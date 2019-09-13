@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
+        "laravel/framework": "5.3.x-dev",
         "dingo/api": "^1.0",
         "metaclassing/utility": "dev-master",
         "phpseclib/phpseclib": "2.0.*",

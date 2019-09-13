@@ -33,7 +33,7 @@ class AddIndexes extends Migration
     {
         //
         Schema::table('gateway_calls', function (Blueprint $table) {
-            $table->dropIndex('created_at');                                       // Time Stamps
+            //$table->dropIndex('created_at');                                       // Time Stamps
         });
     }
 }

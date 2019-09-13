@@ -39,8 +39,8 @@ class Kernel extends ConsoleKernel
 
         // Phone
         Commands\CallManager\CiscoWirelessPhoneCert::class,
-		
-		Commands\MACD\GetMacdReports::class,
+
+        Commands\MACD\GetMacdReports::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 

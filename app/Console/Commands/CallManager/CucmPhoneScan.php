@@ -102,7 +102,10 @@ class CucmPhoneScan extends Command
 
                 // Get the Line details
                 $phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
-                echo $phonecount = $phonecount + 1 .' of '.count($phonenames).' ';
+                if($phonenames){
+					echo $phonecount = $phonecount + 1 .' of '.count($phonenames).' ';
+				}
+				
                 $this->create_update_phone($phone);
                 //die();
             }

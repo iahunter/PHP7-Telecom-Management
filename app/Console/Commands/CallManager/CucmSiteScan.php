@@ -31,7 +31,6 @@ class CucmSiteScan extends Command
      */
     public function __construct()
     {
-
         $this->svn = env('CUCM_SVN');
         $this->extnlength = [];
         $this->shortext_exclude = ['KMXFDMDO', 'TUSGASAV'];
@@ -46,7 +45,7 @@ class CucmSiteScan extends Command
      */
     public function handle()
     {
-		// Construct new cucm object
+        // Construct new cucm object
         $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),

@@ -31,12 +31,6 @@ class CucmSiteScan extends Command
      */
     public function __construct()
     {
-        // Construct new cucm object
-        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
 
         $this->svn = env('CUCM_SVN');
         $this->extnlength = [];
@@ -52,6 +46,13 @@ class CucmSiteScan extends Command
      */
     public function handle()
     {
+		// Construct new cucm object
+        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+
         $start = Carbon::now();
         echo 'Starting Site Scan at: '.$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.

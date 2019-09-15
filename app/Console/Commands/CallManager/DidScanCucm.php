@@ -235,8 +235,8 @@ class DidScanCucm extends Command
     {
 
         // This report can be added to the hourly scan to update the json for the Cleanup Report. This is to remove lines that have been deleted from the report.
-		$location = 'cucm/linecleanup/report.json'; 
-		
+        $location = 'cucm/linecleanup/report.json';
+
         if (! file_exists(storage_path('cucm/linecleanup/report.json')) || ! is_readable(storage_path('cucm/linecleanup/report.json'))) {
             return 'FILE IS NOT BEING LOADED FROM: '.$location;
         }

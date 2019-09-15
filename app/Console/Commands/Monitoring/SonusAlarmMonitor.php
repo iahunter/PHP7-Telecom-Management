@@ -64,78 +64,79 @@ class SonusAlarmMonitor extends Command
         foreach ($this->SBCS as $SBC) {
             $change = false;
             $device = TelecomInfrastructure::where('hostname', $SBC)->first();
+			if($device){
+				$json = $device->json;
+				if (! isset($json['sonusalarms'])) {
+					$json['sonusalarms'] = [];
+					$device->json = $json;
+				}
 
-            $json = $device->json;
-            if (! isset($json['sonusalarms'])) {
-                $json['sonusalarms'] = [];
-                $device->json = $json;
-            }
+				//print_r($device->json);
 
-            //print_r($device->json);
+				$alarms = Sonus5k::listactivealarms($SBC);
+				//$alarms = null;
 
-            $alarms = Sonus5k::listactivealarms($SBC);
-            //$alarms = null;
+				if ($alarms) {
+					// Alarms exist
+					$current_alarms = [];
+					// index our alarms array by id
+					foreach ($alarms as $alarm) {
+						if (in_array($alarm['desc'], $this->ALARMDISCARDS)) {
+							continue;
+						}
+						$current_alarms[$alarm['alarmId']] = $alarm;
+					}
 
-            if ($alarms) {
-                // Alarms exist
-                $current_alarms = [];
-                // index our alarms array by id
-                foreach ($alarms as $alarm) {
-                    if (in_array($alarm['desc'], $this->ALARMDISCARDS)) {
-                        continue;
-                    }
-                    $current_alarms[$alarm['alarmId']] = $alarm;
-                }
+					// compare our current db alarms to the new alarms array
+					$diff = array_diff_key($current_alarms, $json['sonusalarms']);
 
-                // compare our current db alarms to the new alarms array
-                $diff = array_diff_key($current_alarms, $json['sonusalarms']);
+					//print_r($diff);
 
-                //print_r($diff);
+					if ($diff) {
+						// update our database if there is a difference and send an email.
+						print_r($json['sonusalarms']);
+						print_r($current_alarms);
+						$json['sonusalarms'] = $current_alarms;
+						$change = 'Alarm';
+					}
+				} else {
+					// No alarms exist
+					// Check dababase to make sure there aren't any set. if there are then delete them and send an email with updates.
+					if ($alarms == null) {
+						$alarms = [];
+					}
 
-                if ($diff) {
-                    // update our database if there is a difference and send an email.
-                    print_r($json['sonusalarms']);
-                    print_r($current_alarms);
-                    $json['sonusalarms'] = $current_alarms;
-                    $change = 'Alarm';
-                }
-            } else {
-                // No alarms exist
-                // Check dababase to make sure there aren't any set. if there are then delete them and send an email with updates.
-                if ($alarms == null) {
-                    $alarms = [];
-                }
+					$diff = array_diff_key($json['sonusalarms'], $alarms);
+					//print_r($diff);
+					if ($diff) {
 
-                $diff = array_diff_key($json['sonusalarms'], $alarms);
-                //print_r($diff);
-                if ($diff) {
+						// update the database.
+						print_r($json['sonusalarms']);
+						print_r($alarms);
 
-                    // update the database.
-                    print_r($json['sonusalarms']);
-                    print_r($alarms);
+						$json['sonusalarms'] = $alarms;
+						$change = 'Alarm Cleared';
+					}
+				}
 
-                    $json['sonusalarms'] = $alarms;
-                    $change = 'Alarm Cleared';
-                }
-            }
+				if ($change) {
+					// If we had a change update send an update.
+					$time = Carbon::now().PHP_EOL;
+					echo $time;
+					$data = [
+							'time'          => $time,
+							'host'          => $device,
+							'hostname'      => $SBC,
+							'alarms'        => $json['sonusalarms'],
+							'status'        => $change,
+							];
 
-            if ($change) {
-                // If we had a change update send an update.
-                $time = Carbon::now().PHP_EOL;
-                echo $time;
-                $data = [
-                        'time'          => $time,
-                        'host'          => $device,
-                        'hostname'      => $SBC,
-                        'alarms'        => $json['sonusalarms'],
-                        'status'        => $change,
-                        ];
-
-                $this->sendemail($data);
-                $this->send_text_to_oncall($data);
-                $device->json = $json;
-                $device->save();
-            }
+					$this->sendemail($data);
+					$this->send_text_to_oncall($data);
+					$device->json = $json;
+					$device->save();
+				}
+			}
         }
     }
 

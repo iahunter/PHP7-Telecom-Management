@@ -135,9 +135,10 @@ class CucmSiteScan extends Command
 
     protected function deletesitecode($sitecode)
     {
-        if (file_exists("storage/cucm/{$this->svn}/sites/{$sitecode}")) {
-            unlink("storage/cucm/{$this->svn}/sites/{$sitecode}");
+		if (file_exists(storage_path("cucm/{$this->svn}/sites/{$sitecode}"))) {
+            unlink(storage_path("cucm/{$this->svn}/sites/{$sitecode}"));
         }
+		
         echo 'ENTERED deletesitecode function';
         $record = Cucmsiteconfigs::where('sitecode', $sitecode)->first();
         //print_r($record);
@@ -199,7 +200,7 @@ class CucmSiteScan extends Command
         // Save Site Config as JSON and upload to subversion for change tracking.
         $svn_save = json_encode($INSERT, JSON_PRETTY_PRINT);
         echo "Saving {$sitecode} json to file...".PHP_EOL;
-        file_put_contents("storage/cucm/{$this->svn}/sites/{$sitecode}", $svn_save);
+        file_put_contents(storage_path("/cucm/{$this->svn}/sites/{$sitecode}"), $svn_save);
         //echo "Saved to file...".PHP_EOL;
 
         // Check if Site exists in the database

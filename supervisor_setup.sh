@@ -29,7 +29,7 @@ command=php "$_mydir/"artisan queue:work --daemon --tries=3
 autostart=true
 autorestart=true
 
-numprocs=8
+numprocs=3
 redirect_stderr=true
 stdout_logfile="$_mydir"/storage/logs/worker.log" > $_mydir/etc/supervisor/conf.d/telecom-laravel-macd-worker.conf
 

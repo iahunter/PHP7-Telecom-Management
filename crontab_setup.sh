@@ -102,7 +102,7 @@ echo "Creating Cron Jobs : $now"
 # Use shell script in Production only
 (crontab -l ; echo "")| crontab -
 (crontab -l ; echo "# CUCM - Site Scan Configs every hour")| crontab -
-(crontab -l ; echo "0 * * * * "$_mydir"/artisan callmanager:sitescan > /dev/null 2>&1")| crontab -
+(crontab -l ; echo "0 * * * * "$_mydir"/artisan callmanager:sitescan >> "$_mydir"/storage/logs/sitescan.log 2>&1")| crontab -
 (crontab -l ; echo "#0 * * * * "$_mydir"/grab-cucm-siteconfigs.sh >> "$_mydir"/storage/logs/grab-cucm-siteconfigs.log 2>&1")| crontab -
 
 # Use shell script in Production only
@@ -131,12 +131,12 @@ echo "Creating Cron Jobs : $now"
 # Cleanup Sonus CDRs from MySQL DB
 (crontab -l ; echo "")| crontab -
 (crontab -l ; echo "# Sonus - Cleanup old CDR Records from DB")| crontab -
-(crontab -l ; echo "#0 0 * * * "$_mydir"/artisan sonus:cleanup_cdr_db > "$_mydir"/storage/logs/sonus_db_cdr_cleanup.log 2>&1")| crontab -
+(crontab -l ; echo "#0 0 * * * "$_mydir"/artisan sonus:cleanup_cdr_db >> "$_mydir"/storage/logs/sonus_db_cdr_cleanup.log 2>&1")| crontab -
 
 # Cleanup CUCM CDRs from MySQL DB
 (crontab -l ; echo "")| crontab -
 (crontab -l ; echo "# CUCM - Cleanup old CDR Records from DB")| crontab -
-(crontab -l ; echo "#0 22 * * * "$_mydir"/artisan callmanager:cleanup_cdr_db > "$_mydir"/storage/logs/cucm_db_cdr_cleanup.log 2>&1")| crontab -
+(crontab -l ; echo "#0 22 * * * "$_mydir"/artisan callmanager:cleanup_cdr_db >> "$_mydir"/storage/logs/cucm_db_cdr_cleanup.log 2>&1")| crontab -
 
 now=$(date +"%T")
 echo "Done with Cron Jobs : $now"

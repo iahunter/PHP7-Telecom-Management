@@ -30,16 +30,8 @@ class CucmPhoneScanOnDemand extends Command
      */
     public function __construct()
     {
-        // Construct new cucm object
-        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
-                                                    storage_path(env('CALLMANAGER_WSDL')),
-                                                    env('CALLMANAGER_USER'),
-                                                    env('CALLMANAGER_PASS')
-                                                    );
-
-        $this->svn = env('CUCM_SVN');
-
         // Print these out for manual commit
+		$this->svn = env('CUCM_SVN');
         $this->svnuser = env('SVN_USER');
         $this->svnpass = env('SVN_PASS');
 
@@ -53,6 +45,16 @@ class CucmPhoneScanOnDemand extends Command
      */
     public function handle()
     {
+		// Construct new cucm object
+        $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
+                                                    storage_path(env('CALLMANAGER_WSDL')),
+                                                    env('CALLMANAGER_USER'),
+                                                    env('CALLMANAGER_PASS')
+                                                    );
+
+        
+		
+		
         $site = $this->argument('site');
         $sites = [$site];
         $this->scanPhones($sites);
@@ -65,30 +67,6 @@ class CucmPhoneScanOnDemand extends Command
         $start = Carbon::now();
         echo 'Starting Site Scan at: '.$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.
-
-        /*
-        $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
-
-        print_r($sites);
-
-        echo 'Enter array key or Sitecode: ';
-        $handle = fopen('php://stdin', 'r');
-        $line = fgets($handle);
-        $site = trim($line);
-        echo $site.PHP_EOL;
-        if (is_numeric($site)) {
-            if ($sites[$site]) {
-                $site = $sites[$site];
-            }
-        } elseif (! in_array($site, $sites)) {
-            echo "ABORTING! Sitecode not found in existing site array\n";
-            exit;
-        }
-        fclose($handle);
-        echo "\n";
-        echo "Thank you, Scanning sitecode {$site}...\n";
-
-        */
 
         //$sites = ['TRAVIS01'];
         $sitetotalcount = count($sites);
@@ -132,7 +110,10 @@ class CucmPhoneScanOnDemand extends Command
 
                 // Get the Line details
                 $phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
-                echo $phonecount = $phonecount + 1 .' of '.count($phonenames).' ';
+
+				$phonecount = $phonecount + 1; 
+                echo $phonecount .' of '.count($phonenames).' ';
+				
                 $this->create_update_phone($phone);
                 //die();
             }
@@ -149,11 +130,6 @@ class CucmPhoneScanOnDemand extends Command
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL.PHP_EOL;
 
-        echo 'To Commit changes to SVN Repo manually, use the following inside the svn folder...'.$end.PHP_EOL;
-        echo 'cd storage/cucm/kiewit-cucm/phones/'.PHP_EOL;
-        echo 'svn add --force ./* '.PHP_EOL;
-        echo 'svn status'.PHP_EOL;
-        echo "svn commit --username {$this->svnuser} --password {$this->svnpass} -m 'autoupdated'".PHP_EOL;
     }
 
     protected function getPhonesNamesbySite($site)

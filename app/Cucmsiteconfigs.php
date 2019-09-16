@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cucmsiteconfigs extends Model
 {
-    //
+
     //use Auditable;
     use SoftDeletes;
     protected $table = 'cucmsite';
-    protected $fillable = ['sitecode', 'sitesummary', 'sitedetails', 'trunking', 'e911'];
+    protected $fillable = ['sitecode', 'sitesummary', 'sitedetails', 'trunking', 'e911', 'shortextenlength'];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [

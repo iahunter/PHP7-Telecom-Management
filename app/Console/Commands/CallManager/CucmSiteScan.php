@@ -156,7 +156,7 @@ class CucmSiteScan extends Command
         $INSERT['sitedetails'] = $site_details;
         $INSERT['e911'] = $e911;
         $INSERT['trunking'] = $trunking;
-        //$INSERT['shortextenlength'] = 4;
+        $INSERT['shortextenlength'] = 4;
 
         $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$sitecode.'%')->count();
 
@@ -192,11 +192,9 @@ class CucmSiteScan extends Command
                 echo 'Found Extension Length: '.$extnlength.PHP_EOL;
             } else {
                 echo 'Did not Find Extension Length... Leaving Site at Default value of 4... '.PHP_EOL;
-                $INSERT['shortextenlength'] = 4;
             }
         } else {
             echo 'Found Site in short extension excluded list. Leaving Site at Default value of 4...'.PHP_EOL;
-            $INSERT['shortextenlength'] = 4;
         }
 
         // Save Site Config as JSON and upload to subversion for change tracking.

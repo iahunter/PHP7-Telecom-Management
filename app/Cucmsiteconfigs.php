@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cucmsiteconfigs extends Model
 {
-
     //use Auditable;
     use SoftDeletes;
     protected $table = 'cucmsite';

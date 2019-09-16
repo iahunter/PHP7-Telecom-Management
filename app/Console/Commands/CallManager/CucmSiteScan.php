@@ -135,10 +135,10 @@ class CucmSiteScan extends Command
 
     protected function deletesitecode($sitecode)
     {
-		if (file_exists(storage_path("cucm/{$this->svn}/sites/{$sitecode}"))) {
+        if (file_exists(storage_path("cucm/{$this->svn}/sites/{$sitecode}"))) {
             unlink(storage_path("cucm/{$this->svn}/sites/{$sitecode}"));
         }
-		
+
         echo 'ENTERED deletesitecode function';
         $record = Cucmsiteconfigs::where('sitecode', $sitecode)->first();
         //print_r($record);

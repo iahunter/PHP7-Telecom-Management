@@ -1,0 +1,8 @@
+frontend ldap_service_front
+    mode                  tcp
+    bind                  127.0.0.1:3268
+    default_backend       ldap_service_back
+
+backend ldap_service_back
+    server                ldaps ldaps.domain.com:3269 ssl verify none
+    mode                  tcp

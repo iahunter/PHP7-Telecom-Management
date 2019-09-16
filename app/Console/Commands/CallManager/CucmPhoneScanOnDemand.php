@@ -31,7 +31,7 @@ class CucmPhoneScanOnDemand extends Command
     public function __construct()
     {
         // Print these out for manual commit
-		$this->svn = env('CUCM_SVN');
+        $this->svn = env('CUCM_SVN');
         $this->svnuser = env('SVN_USER');
         $this->svnpass = env('SVN_PASS');
 
@@ -45,16 +45,13 @@ class CucmPhoneScanOnDemand extends Command
      */
     public function handle()
     {
-		// Construct new cucm object
+        // Construct new cucm object
         $this->cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
                                                     env('CALLMANAGER_USER'),
                                                     env('CALLMANAGER_PASS')
                                                     );
 
-        
-		
-		
         $site = $this->argument('site');
         $sites = [$site];
         $this->scanPhones($sites);
@@ -111,9 +108,9 @@ class CucmPhoneScanOnDemand extends Command
                 // Get the Line details
                 $phone['lines'] = $this->get_lines_details_by_phone_name($phonename);
 
-				$phonecount = $phonecount + 1; 
-                echo $phonecount .' of '.count($phonenames).' ';
-				
+                $phonecount = $phonecount + 1;
+                echo $phonecount.' of '.count($phonenames).' ';
+
                 $this->create_update_phone($phone);
                 //die();
             }
@@ -129,7 +126,6 @@ class CucmPhoneScanOnDemand extends Command
         echo PHP_EOL;
         echo 'Start Time: '.$start.PHP_EOL;
         echo 'End Time: '.$end.PHP_EOL.PHP_EOL;
-
     }
 
     protected function getPhonesNamesbySite($site)

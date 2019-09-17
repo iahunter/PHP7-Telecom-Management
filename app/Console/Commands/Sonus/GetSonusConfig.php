@@ -40,16 +40,15 @@ class GetSonusConfig extends Command
     {
         $sbcs = [env('SONUS1'), env('SONUS2')];
         $svn = env('SONUS_SVN');
-        
-		// Foreach SBC go get config and save it in our SVN Repo directory - This will be commited by Cron
+
+        // Foreach SBC go get config and save it in our SVN Repo directory - This will be commited by Cron
         foreach ($sbcs as $sbc) {
-			
-			if(env('SONUS_DOMAIN_NAME')){
-				$hostname = $sbc.".".env('SONUS_DOMAIN_NAME'); 
-			}else{
-				$hostname = $sbc; 
-			}
-			
+            if (env('SONUS_DOMAIN_NAME')) {
+                $hostname = $sbc.'.'.env('SONUS_DOMAIN_NAME');
+            } else {
+                $hostname = $sbc;
+            }
+
             $params = [
                         'host'     => $hostname,
                         'username' => env('SONUSUSER'),

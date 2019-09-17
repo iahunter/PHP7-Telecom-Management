@@ -40,12 +40,11 @@ class GetSonusCDRs extends Command
         // Populate SBC list
     }
 
-    /** 
+    /**
      * Execute the console command.
-     * add a comment here
+     * add a comment here.
      * @return mixed
      */
-	 
     public function handle()
     {
         foreach ($this->SBCS as $SBC) {
@@ -61,7 +60,7 @@ class GetSonusCDRs extends Command
                 $cdr_array = Sonus5kCDR::parse_cdr($cdrs);
                 //print_r($cdr_array);
                 foreach ($cdr_array as $cdr) {
-					//print_r($cdr); 
+                    //print_r($cdr);
                     $RECORD = [];
                     $RECORD['gw_name'] = $cdr['Gateway Name'];
                     $RECORD['type'] = $cdr['Record Type'];
@@ -183,10 +182,8 @@ class GetSonusCDRs extends Command
     public static function get_cdrs_from_file($SBC, $location)
     {
         $lasttwodays_calls = [];
-		
-		
 
-        $sftp = new Net_SFTP($SBC.".kiewitplaza.com", 2024);
+        $sftp = new Net_SFTP($SBC.'.kiewitplaza.com', 2024);
         if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
             exit('Login Failed');
         }

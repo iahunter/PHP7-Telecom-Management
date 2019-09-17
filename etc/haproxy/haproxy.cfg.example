@@ -6,3 +6,13 @@ frontend ldap_service_front
 backend ldap_service_back
     server                ldaps ldaps.domain.com:3269 ssl verify none
     mode                  tcp
+
+
+frontend ldaps_service_front
+    mode                  tcp
+    bind                  127.0.0.1:636
+    default_backend       ldaps_service_back
+
+backend ldaps_service_back
+    server                ldaps ldaps.domain.com:636                
+    mode                  tcp

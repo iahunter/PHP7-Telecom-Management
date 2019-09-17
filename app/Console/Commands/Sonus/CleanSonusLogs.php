@@ -43,13 +43,12 @@ class CleanSonusLogs extends Command
 
         // Foreach SBC go get config and save it in our SVN Repo directory - This will be commited by Cron
         foreach ($sbcs as $sbc) {
-			
-			if(env('SONUS_DOMAIN_NAME')){
-				$hostname = $sbc.".".env('SONUS_DOMAIN_NAME'); 
-			}else{
-				$hostname = $sbc; 
-			}
-			
+            if (env('SONUS_DOMAIN_NAME')) {
+                $hostname = $sbc.'.'.env('SONUS_DOMAIN_NAME');
+            } else {
+                $hostname = $sbc;
+            }
+
             $params = [
                         'host'     => $hostname,
                         'username' => env('SONUSSSHUSER'),

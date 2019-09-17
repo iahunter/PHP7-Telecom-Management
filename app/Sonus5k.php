@@ -56,11 +56,10 @@ class Sonus5k extends Model
         return $result;
     }
 
-
     public static function getactivecallstats($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callCountStatus/activeCalls";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/global/callCountStatus/activeCalls';
 
         return self::wrapapi($verb, $apiurl);
     }
@@ -68,7 +67,7 @@ class Sonus5k extends Model
     public static function listactivecalls($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callSummaryStatus/";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/global/callSummaryStatus/';
 
         $response = self::wrapapi($verb, $apiurl);
         // We just want to return an array of calls.
@@ -85,7 +84,7 @@ class Sonus5k extends Model
     public static function listactivealarms($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/alarms/currentStatus";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/alarms/currentStatus';
 
         $response = self::wrapapi($verb, $apiurl);
 
@@ -103,7 +102,7 @@ class Sonus5k extends Model
     public static function listcallDetailStatus($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callDetailStatus";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/global/callDetailStatus';
 
         $response = self::wrapapi($verb, $apiurl);
         //return $response;
@@ -122,7 +121,7 @@ class Sonus5k extends Model
     public static function listcallMediaStatus($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callMediaStatus";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/global/callMediaStatus';
 
         // Example Call by GCID
         // $apiurl = https://{$SBC}/api/operational/global/callMediaStatus/34782

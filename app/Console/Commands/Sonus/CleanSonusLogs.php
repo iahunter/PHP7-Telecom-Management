@@ -43,8 +43,15 @@ class CleanSonusLogs extends Command
 
         // Foreach SBC go get config and save it in our SVN Repo directory - This will be commited by Cron
         foreach ($sbcs as $sbc) {
+			
+			if(env('SONUS_DOMAIN_NAME')){
+				$hostname = $sbc.".".env('SONUS_DOMAIN_NAME'); 
+			}else{
+				$hostname = $sbc; 
+			}
+			
             $params = [
-                        'host'     => $sbc,
+                        'host'     => $hostname,
                         'username' => env('SONUSSSHUSER'),
                         'password' => env('SONUSSSHPASS'),
                         ];
@@ -53,7 +60,7 @@ class CleanSonusLogs extends Command
                 $time = \Carbon\Carbon::now();
 
                 echo "{$time} - Starting Sonus Log Cleanup for {$sbc}".PHP_EOL;
-                $ssh = new \phpseclib\Net\SSH2($sbc, 2024);
+                $ssh = new \phpseclib\Net\SSH2($hostname, 2024);
 
                 $connected = $ssh->login(env('SONUSSSHUSER'), env('SONUSSSHPASS'));
 

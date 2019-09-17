@@ -50,37 +50,17 @@ class Sonus5k extends Model
     public static function configbackup($SBC)
     {
         $verb = 'POST';
-        $apiurl = "https://{$SBC}/api/config/system/admin/{$SBC}/_operations/saveConfig";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/config/system/admin/{$SBC}/_operations/saveConfig";
         $result = self::wrapapi($verb, $apiurl);
 
         return $result;
     }
 
-    /*
-    public static function listactivecalls()
-    {
-        $SBCS = [
-                    env('SONUS1'),
-                    env('SONUS2'),
-        ];
-
-        $CALLS = [];
-        foreach ($SBCS as $SBC) {
-            $URL = $SBC;
-            $verb = "GET";
-            $apiurl = "https://{$SBC}/api/operational/global/callSummaryStatus/";
-            $result = self::wrapapi($verb, $apiurl);
-            $CALLS[$SBC] = $result ;
-        }
-
-        return $CALLS;
-    }
-    */
 
     public static function getactivecallstats($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}/api/operational/global/callCountStatus/activeCalls";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callCountStatus/activeCalls";
 
         return self::wrapapi($verb, $apiurl);
     }
@@ -88,10 +68,9 @@ class Sonus5k extends Model
     public static function listactivecalls($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}/api/operational/global/callSummaryStatus/";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callSummaryStatus/";
 
         $response = self::wrapapi($verb, $apiurl);
-
         // We just want to return an array of calls.
         if (($response['callSummaryStatus']) && array_key_exists('GCID', $response['callSummaryStatus'])) {
             // Wrap the single object in an array - found GCID key inside CallSummaryStatus
@@ -106,7 +85,7 @@ class Sonus5k extends Model
     public static function listactivealarms($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}/api/operational/alarms/currentStatus";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/alarms/currentStatus";
 
         $response = self::wrapapi($verb, $apiurl);
 
@@ -124,7 +103,7 @@ class Sonus5k extends Model
     public static function listcallDetailStatus($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}/api/operational/global/callDetailStatus";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callDetailStatus";
 
         $response = self::wrapapi($verb, $apiurl);
         //return $response;
@@ -143,7 +122,7 @@ class Sonus5k extends Model
     public static function listcallMediaStatus($SBC)
     {
         $verb = 'GET';
-        $apiurl = "https://{$SBC}/api/operational/global/callMediaStatus";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/operational/global/callMediaStatus";
 
         // Example Call by GCID
         // $apiurl = https://{$SBC}/api/operational/global/callMediaStatus/34782
@@ -166,7 +145,7 @@ class Sonus5k extends Model
     {
         $LOCATION = ['data' => $LOCATION];
         $verb = "POST";
-        $apiurl = "https://{$SBC}/api/config/system/admin/{$SBC}/_operations/saveConfig";
+        $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME')."/api/config/system/admin/{$SBC}/_operations/saveConfig";
         $result = self::wrapapi($verb, $apiurl, $LOCATION);
         print "REMOVED ".$LOCATION;
         print_r($result);

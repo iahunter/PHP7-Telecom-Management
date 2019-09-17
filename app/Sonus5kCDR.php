@@ -103,8 +103,14 @@ class Sonus5kCDR extends Model
     public static function get_cdr_log_names($SBC)
     {
         $time = \Carbon\Carbon::now();
-
-        $sftp = new Net_SFTP($SBC, 2024);
+		
+		if(env('SONUS_DOMAIN_NAME')){
+			$hostname = $SBC.".".env('SONUS_DOMAIN_NAME'); 
+		}else{
+			$hostname = $SBC; 
+		}
+		print_r($hostname); 
+        $sftp = new Net_SFTP($hostname, 2024);
         if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
             exit('Login Failed');
         }
@@ -150,6 +156,14 @@ class Sonus5kCDR extends Model
 
     public static function get_last_two_days_cdr_completed_calls($SBC)
     {
+		if(env('SONUS_DOMAIN_NAME')){
+			$hostname = $SBC.".".env('SONUS_DOMAIN_NAME'); 
+		}else{
+			$hostname = $SBC; 
+		}
+
+        $sftp = new Net_SFTP($hostname, 2024);
+		
         $lasttwodays_calls = [];
 
         // Get latest CDR File.
@@ -159,7 +173,7 @@ class Sonus5kCDR extends Model
         $locations = array_slice($locations, 0, 1);
 
         foreach ($locations as $location) {
-            $sftp = new Net_SFTP($SBC, 2024);
+            $sftp = new Net_SFTP($hostname, 2024);
             if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
                 exit('Login Failed');
             }
@@ -204,7 +218,14 @@ class Sonus5kCDR extends Model
         $locations = array_slice($locations, 0, 1);
 
         foreach ($locations as $location) {
-            $sftp = new Net_SFTP($SBC, 2024);
+			
+			if(env('SONUS_DOMAIN_NAME')){
+				$hostname = $SBC.".".env('SONUS_DOMAIN_NAME'); 
+			}else{
+				$hostname = $SBC; 
+			}
+				
+            $sftp = new Net_SFTP($hostname, 2024);
             if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
                 exit('Login Failed');
             }

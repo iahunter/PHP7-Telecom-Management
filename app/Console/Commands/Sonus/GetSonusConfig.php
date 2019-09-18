@@ -85,10 +85,7 @@ class GetSonusConfig extends Command
 
                 echo 'Got Config... Saving to file...'.PHP_EOL;
 
-                //file_put_contents("storage/sonus/{$sbc}", $output);
-
-                file_put_contents("storage/sonus/{$svn}/{$sbc}", $output);
-                //file_put_contents('storage/sonus/sonus.config', $output);
+                file_put_contents(storage_path("sonus/{$svn}/{$sbc}"), $output);
 
                 $time = \Carbon\Carbon::now();
 

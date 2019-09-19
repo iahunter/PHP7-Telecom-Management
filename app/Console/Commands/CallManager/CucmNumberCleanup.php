@@ -60,14 +60,14 @@ class CucmNumberCleanup extends Command
 
         $didblocks = \App\Didblock::where([['country_code', '=', 1]])->get();
 
-		// Quit if no blocks found. 
-		if(!$didblocks || !count($didblocks)){
-			return; 
-		}
-		
+        // Quit if no blocks found.
+        if (! $didblocks || ! count($didblocks)) {
+            return;
+        }
+
         $count = 0;
         $possible_deletes = [];
-		
+
         foreach ($didblocks as $didblock) {
             $sitecode = $didblock->name;
 
@@ -277,7 +277,7 @@ class CucmNumberCleanup extends Command
         $svn_save = json_encode($results, JSON_PRETTY_PRINT);
 
         echo 'Saving output json to file...'.PHP_EOL;
-		
+
         file_put_contents(storage_path('cucm/linecleanup/report.json'), $svn_save);
 
         echo 'Saved to file...'.PHP_EOL;

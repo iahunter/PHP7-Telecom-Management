@@ -22,7 +22,7 @@ class GetSonusCDRs extends Command
      *
      * @var string
      */
-    protected $description = 'Fetch new CDRs from SBC and write to Database';
+    protected $description = 'Fetch new CDRs from Sonus SBC and write to Database';
 
     /**
      * Create a new command instance.
@@ -47,8 +47,17 @@ class GetSonusCDRs extends Command
      */
     public function handle()
     {
+		
+		$this->SBCS = array_filter($this->SBCS); 
+		// print_r($this->SBCS); 
+		
+		if(!count($this->SBCS)){
+			print "No SBCs Configured. Killing job.".PHP_EOL; 
+			return; 
+		}
+		
         foreach ($this->SBCS as $SBC) {
-
+			
             // Get latest CDR File.
             $locations = Sonus5kCDR::get_cdr_log_names($SBC);
 
@@ -181,9 +190,15 @@ class GetSonusCDRs extends Command
 
     public static function get_cdrs_from_file($SBC, $location)
     {
+		if (env('SONUS_DOMAIN_NAME')) {
+			$hostname = $SBC.'.'.env('SONUS_DOMAIN_NAME');
+		} else {
+			$hostname = $SBC;
+		}
+		
         $lasttwodays_calls = [];
 
-        $sftp = new Net_SFTP($SBC.'.kiewitplaza.com', 2024);
+        $sftp = new Net_SFTP($hostname, 2024);
         if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
             exit('Login Failed');
         }

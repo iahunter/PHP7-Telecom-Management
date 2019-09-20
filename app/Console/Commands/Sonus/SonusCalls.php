@@ -45,6 +45,14 @@ class SonusCalls extends Command
      */
     public function handle()
     {
+		$this->SBCS = array_filter($this->SBCS); 
+		// print_r($this->SBCS); 
+		
+		if(!count($this->SBCS)){
+			print "No SBCs Configured. Killing job.".PHP_EOL; 
+			return; 
+		}
+		
         $totalCalls = 0;
         $STATS = [];
         foreach ($this->SBCS as $SBC) {

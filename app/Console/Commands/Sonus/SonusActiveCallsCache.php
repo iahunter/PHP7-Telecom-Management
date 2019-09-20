@@ -47,6 +47,14 @@ class SonusActiveCallsCache extends Command
      */
     public function handle()
     {
+		$this->SBCS = array_filter($this->SBCS); 
+		// print_r($this->SBCS); 
+		
+		if(!count($this->SBCS)){
+			print "No SBCs Configured. Killing job.".PHP_EOL; 
+			return; 
+		}
+		
         //Log::info(__METHOD__.' Did not Use Cache');
         $CALLS = [];
         foreach ($this->SBCS as $SBC) {

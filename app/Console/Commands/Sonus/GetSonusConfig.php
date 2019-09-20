@@ -40,14 +40,15 @@ class GetSonusConfig extends Command
     {
         $sbcs = [env('SONUS1'), env('SONUS2')];
         $svn = env('SONUS_SVN');
-		
-		$sbcs = array_filter($sbcs); 
-		// print_r($this->SBCS); 
-		
-		if(!count($sbcs)){
-			print "No SBCs Configured. Killing job.".PHP_EOL; 
-			return; 
-		}
+
+        $sbcs = array_filter($sbcs);
+        // print_r($this->SBCS);
+
+        if (! count($sbcs)) {
+            echo 'No SBCs Configured. Killing job.'.PHP_EOL;
+
+            return;
+        }
 
         // Foreach SBC go get config and save it in our SVN Repo directory - This will be commited by Cron
         foreach ($sbcs as $sbc) {

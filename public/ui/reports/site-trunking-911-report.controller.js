@@ -36,10 +36,17 @@ angular
 					//console.log(vm.message);
 				}else{
 					vm.sites = res.data.response;
-					
+					vm.phonecount = 0
 					// Use this to change chart colors. 
 					//Chart.defaults.global.colors = ['#FD1F5E','#1EF9A1','#7FFD1F','#68F000'];
 					vm.e911stats = res.data.e911stats
+					
+					//console.log(vm.sites)
+					
+					angular.forEach(vm.sites, function(site) {
+						//console.log(site.phonecount)
+						vm.phonecount =  vm.phonecount + site.phonecount; 
+					})
 					
 					//console.log(block.stats);
 					vm.e911 = [];
@@ -101,6 +108,8 @@ angular
 					console.log(vm.trunking)
 					vm.loading = false;
 				}
+				
+				console.log(vm.phonecount)
 				
 			}, function(err){
 				alert(err);

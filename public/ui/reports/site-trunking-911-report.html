@@ -17,6 +17,11 @@
 			
 			<!--Line Horizontal Chart-->
 			<div class="container" ng-if="vm.e911" style="margin-left:5%;margin-right:5%">
+				<div ng-if="vm.sites">
+					<h4><b>Sites <span class="badge badge-info ng-binding">{{vm.sites.length}} </span>
+					<br>Phones <span class="badge badge-info ng-binding">{{vm.phonecount}} </span> </b></h4>
+				</div>
+				
 				<div class="row">
 				<div class="col-lg-5 col-sm-offset-0">
 					<div class="panel panel-default">
@@ -85,8 +90,8 @@
 		
 		
 		<div ng-if="vm.sites">
-		
-			<b>Found {{vm.sites.length}} Sites & {{vm.phonecount}} Phones Configured</b><br><br>
+			
+			<div style="margin:25px"></div>
 			
 			<b style="color:red">Note! </b>If you cannot find your site for a MACD click the button below:<br><a href="#/egw_erlreport"><button class="btn btn-primary btn-xs"><b>  MACD Site Search <i class="glyphicon glyphicon-search"></i></b></button></a>
 			<div style="margin:25px"></div>

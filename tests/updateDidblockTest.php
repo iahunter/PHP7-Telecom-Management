@@ -13,10 +13,10 @@
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 use App\Did;
-use App\User;
 use App\Didblock;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class updateDidblockTest extends TestCase
 {

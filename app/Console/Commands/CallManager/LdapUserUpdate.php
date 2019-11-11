@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\CallManager;
 
-use App\Http\Controllers\Cucm;
-use Illuminate\Console\Command;
-use App\Http\Controllers\Cucmphone;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Cucm;
+use App\Http\Controllers\Cucmphone;
+use Illuminate\Console\Command;
 
 class LdapUserUpdate extends Command
 {

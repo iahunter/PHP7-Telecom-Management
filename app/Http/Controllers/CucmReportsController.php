@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use App\Did;
-use App\Cucmsiteconfigs;
 use App\Cucmphoneconfigs;
+use App\Cucmsiteconfigs;
+use App\Did;
+use DB;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
-// Include the JWT Facades shortcut
 use Illuminate\Support\Facades\Storage;
+// Include the JWT Facades shortcut
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 //use Dingo\Api\Routing\Helpers;
 

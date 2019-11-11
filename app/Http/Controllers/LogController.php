@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Carbon\Carbon;
-use Silber\Bouncer\Bouncer;
+use DB;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
-// Activity Logger
 use Illuminate\Support\Facades\Log;
+use Silber\Bouncer\Bouncer;
+// Activity Logger
 use Spatie\Activitylog\Models\Activity;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LogController extends Controller
 {

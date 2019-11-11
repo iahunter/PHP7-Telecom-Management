@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Sonus;
 
-use Carbon\Carbon;
 use App\Sonus5kCDR;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use phpseclib\Net\SFTP as Net_SFTP;

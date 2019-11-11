@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands\Monitoring;
 
-use Mail;
 use App\Ping;
-use Carbon\Carbon;
 use App\TelecomInfrastructure;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Mail;
 
 class PingScanInfrastructure extends Command
 {

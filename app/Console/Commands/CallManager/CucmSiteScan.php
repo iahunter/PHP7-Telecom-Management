@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\CallManager;
 
-use DB;
-use Carbon\Carbon;
-use App\Cucmsiteconfigs;
 use App\Cucmphoneconfigs;
+use App\Cucmsiteconfigs;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Console\Command;
 
 class CucmSiteScan extends Command

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\CallManager;
 
-use Carbon\Carbon;
 use App\Cucmphoneconfigs;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CucmPhoneandNumberCleanup extends Command

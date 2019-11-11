@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands\Monitoring;
 
-use DB;
-use Mail;
-use Carbon\Carbon;
 use App\Sonus5kCDR;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Console\Command;
+use Mail;
 
 class CucmSonusLoopMitigator extends Command
 {

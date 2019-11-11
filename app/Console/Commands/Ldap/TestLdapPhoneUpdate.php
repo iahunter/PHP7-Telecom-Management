@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Ldap;
 
-use Illuminate\Console\Command;
 use App\Http\Controllers\Auth\AuthController;
+use Illuminate\Console\Command;
 
 class TestLdapPhoneUpdate extends Command
 {

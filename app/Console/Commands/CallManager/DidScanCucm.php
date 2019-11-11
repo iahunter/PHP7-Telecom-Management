@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\CallManager;
 
-use DB;
 use App\Did;
 use App\Didblock;
+use DB;
 use Illuminate\Console\Command;
 
 class DidScanCucm extends Command

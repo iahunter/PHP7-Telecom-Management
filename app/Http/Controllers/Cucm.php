@@ -6,9 +6,9 @@ namespace App\Http\Controllers;
 use App\Cucmclass;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
-use Tymon\JWTAuth\Facades\JWTAuth;
-// Activity Logger
 use Spatie\Activitylog\Models\Activity;
+// Activity Logger
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Cucm extends Controller
 {

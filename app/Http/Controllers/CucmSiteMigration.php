@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 // Add Dummy CUCM class for permissions use for now.
 use App\Cucmclass;
-use App\Cucmsiteconfigs;
 use App\Cucmphoneconfigs;
+use App\Cucmsiteconfigs;
 use Illuminate\Http\Request;
 // Include the JWT Facades shortcut
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Artisan;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 //error_reporting(E_ALL);
 

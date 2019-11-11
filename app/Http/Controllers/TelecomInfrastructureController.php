@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\TelecomInfrastructure;
 use DB;
 use Illuminate\Http\Request;
-use App\TelecomInfrastructure;
 // Include the JWT Facades shortcut
 use Tymon\JWTAuth\Facades\JWTAuth;
 

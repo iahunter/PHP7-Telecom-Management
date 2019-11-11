@@ -3,10 +3,10 @@
 namespace App;
 
 use App\Did;
-use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client as GuzzleHttpClient;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Database\Eloquent\Model;
 
 class Cucmclass extends Model
 {

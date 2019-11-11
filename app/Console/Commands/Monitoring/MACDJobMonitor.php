@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Monitoring;
 
-use DB;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Console\Command;
 
 class MACDJobMonitor extends Command

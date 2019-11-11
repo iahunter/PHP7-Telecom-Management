@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\CallManager;
 
-use DB;
 use App\Cucmclass;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Console\Command;
 
 class CucmPhoneSiteMove extends Command

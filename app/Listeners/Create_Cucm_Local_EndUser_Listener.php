@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Cucmclass;
-use App\PhoneMACD;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Events\Create_Cucm_Local_EndUser_Event;
+use App\PhoneMACD;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
 class Create_Cucm_Local_EndUser_Listener implements ShouldQueue
 {

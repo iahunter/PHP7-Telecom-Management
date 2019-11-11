@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Cucmclass;
+use App\Http\Controllers\Auth\AuthController;
 use App\PhoneMACD;
 use Illuminate\Http\Request;
 use OwenIt\Auditing\Auditable;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\Http\Controllers\Auth\AuthController;
 
 class Ldap extends Controller
 {

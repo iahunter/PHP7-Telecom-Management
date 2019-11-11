@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client as GuzzleHttpClient;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Database\Eloquent\Model;
 
 class Cupi extends Model
 {

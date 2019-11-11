@@ -2,11 +2,11 @@
 
 namespace App;
 
+use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use Illuminate\Database\Eloquent\Model;
-use GuzzleHttp\Client as GuzzleHttpClient;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Cookie\FileCookieJar as FileCookieJar;
 
 class Sonus5k extends Model
 {

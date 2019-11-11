@@ -16,15 +16,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
-// added by 3
 use App\Http\Controllers\Controller;
-use Spatie\Activitylog\Models\Activity;
-// Logger
+use App\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Http\Request;
+// added by 3
+use Spatie\Activitylog\Models\Activity;
+use Tymon\JWTAuth\Facades\JWTAuth;
+// Logger
+use Validator;
 
 class AuthController extends Controller
 {

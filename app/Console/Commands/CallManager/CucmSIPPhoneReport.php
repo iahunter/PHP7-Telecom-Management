@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\CallManager;
 
-use DB;
-use Carbon\Carbon;
 use App\Cucmphoneconfigs;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Console\Command;
 
 class CucmSIPPhoneReport extends Command

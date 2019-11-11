@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Callmanager;
 
-use Carbon\Carbon;
 use App\GatewayCalls;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CucmGatewayCallCounts extends Command

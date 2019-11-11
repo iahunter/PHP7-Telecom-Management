@@ -17,10 +17,10 @@ Enter the SFTP Server settings in the .env file of the TMS Application Root Dire
 
 namespace App;
 
-use DB;
 use Carbon\Carbon;
-use phpseclib\Net\SFTP as Net_SFTP;
+use DB;
 use Illuminate\Database\Eloquent\Model;
+use phpseclib\Net\SFTP as Net_SFTP;
 
 class CucmCMR extends Model
 {

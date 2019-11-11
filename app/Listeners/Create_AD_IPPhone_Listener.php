@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\PhoneMACD;
 use App\Events\Create_AD_IPPhone_Event;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Http\Controllers\Auth\AuthController;
+use App\PhoneMACD;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
 class Create_AD_IPPhone_Listener implements ShouldQueue
 {

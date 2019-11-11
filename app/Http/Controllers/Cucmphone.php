@@ -6,9 +6,9 @@ use App\Cucmclass;	// Cache
 // Add Dummy CUCM class for permissions use for now.
 use App\PhoneMACD;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
-// Include the JWT Facades shortcut
 use Illuminate\Support\Facades\Cache;
+// Include the JWT Facades shortcut
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Cucmphone extends Cucm
 {

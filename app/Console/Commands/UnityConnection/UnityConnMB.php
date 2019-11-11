@@ -3,8 +3,8 @@
 namespace App\Console\Commands\UnityConnection;
 
 use App\Cupi;
-use Illuminate\Console\Command;
 use App\Http\Controllers\Cucmphone;
+use Illuminate\Console\Command;
 
 class UnityConnMB extends Command
 {

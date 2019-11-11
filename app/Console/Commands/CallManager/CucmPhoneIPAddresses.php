@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\CallManager;
 
-use Carbon\Carbon;
-use App\CucmRealTime;
 use App\Cucmphoneconfigs;
+use App\CucmRealTime;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CucmPhoneIPAddresses extends Command

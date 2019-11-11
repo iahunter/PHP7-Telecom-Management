@@ -3,8 +3,8 @@
 namespace App\Console\Commands\CallManager;
 
 use App\Http\Controllers\Cucm;
-use Illuminate\Console\Command;
 use App\Http\Controllers\Cucmphone;
+use Illuminate\Console\Command;
 
 class AddPhones extends Command
 {

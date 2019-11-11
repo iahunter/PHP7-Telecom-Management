@@ -2,11 +2,11 @@
 
 namespace App;
 
-use OwenIt\Auditing\Auditable;
-// Add Softdeletes
 use Illuminate\Database\Eloquent\Model;
-// Include Parent DID Block
+// Add Softdeletes
 use Illuminate\Database\Eloquent\SoftDeletes;
+// Include Parent DID Block
+use OwenIt\Auditing\Auditable;
 
 /*
 * Create Did Model Here

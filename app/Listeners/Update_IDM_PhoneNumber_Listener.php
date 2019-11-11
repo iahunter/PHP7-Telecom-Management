@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
+use App\Events\Update_IDM_PhoneNumber_Event;
 use App\PhoneMACD;
 use App\SAP\IDM\RestApiClient;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Events\Update_IDM_PhoneNumber_Event;
+use Illuminate\Queue\InteractsWithQueue;
 
 class Update_IDM_PhoneNumber_Listener
 {

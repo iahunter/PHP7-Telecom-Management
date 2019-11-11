@@ -4,8 +4,8 @@ namespace App\Providers;
 
 // Include MACD App for failed job updates.
 use App\PhoneMACD;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

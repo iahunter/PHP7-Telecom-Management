@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands\CallManager;
 
-use App\Did;
 use App\Cupi;
+use App\Did;
 use App\Didblock;
+use App\Http\Controllers\Auth\AuthController;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Http\Controllers\Auth\AuthController;
 
 class CucmNumberCleanup extends Command
 {

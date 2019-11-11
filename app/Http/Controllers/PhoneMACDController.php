@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 // Add Dummy CUCM class for permissions use for now.
 use App\Cucmclass;
-use App\PhoneMACD;
-use Illuminate\Http\Request;
+use App\Events\Create_AD_IPPhone_Event;
+use App\Events\Create_Cucm_Local_EndUser_Event;
 use App\Events\Create_Line_Event;
 use App\Events\Create_Phone_Event;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use App\Events\Create_AD_IPPhone_Event;
-use App\Events\Update_IDM_PhoneNumber_Event;
-use App\Events\Create_Cucm_Local_EndUser_Event;
-use App\Events\Create_UnityConnection_Mailbox_Event;
 use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
+use App\Events\Create_UnityConnection_Mailbox_Event;
+use App\Events\Update_IDM_PhoneNumber_Event;
+use App\PhoneMACD;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PhoneMACDController extends Controller
 {

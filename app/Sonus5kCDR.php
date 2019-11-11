@@ -2,10 +2,10 @@
 
 namespace App;
 
-use DB;
 use Carbon\Carbon;
-use phpseclib\Net\SFTP as Net_SFTP;
+use DB;
 use Illuminate\Database\Eloquent\Model;
+use phpseclib\Net\SFTP as Net_SFTP;
 
 class Sonus5kCDR extends Model
 {

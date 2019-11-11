@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Sonus5k;
-use Carbon\Carbon;
 use App\Sonus5kCDR;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use phpseclib\Net\SFTP as Net_SFTP;
-use Illuminate\Support\Facades\Cache;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Sonus5kCDRcontroller extends Controller
 {

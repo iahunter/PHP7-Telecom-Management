@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Cupi;
-use App\PhoneMACD;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
+use App\PhoneMACD;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
 class Create_UnityConnection_LDAP_Import_Mailbox_Listener implements ShouldQueue
 {

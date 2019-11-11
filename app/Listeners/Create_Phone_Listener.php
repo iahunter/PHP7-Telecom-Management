@@ -3,10 +3,10 @@
 namespace App\Listeners;
 
 use App\Cucmclass;
-use App\PhoneMACD;
 use App\Events\Create_Phone_Event;
-use Illuminate\Queue\InteractsWithQueue;
+use App\PhoneMACD;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
 class Create_Phone_Listener implements ShouldQueue
 {

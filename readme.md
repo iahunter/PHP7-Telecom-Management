@@ -2,9 +2,8 @@
 
 * Used to manage phone number inventory and tracking of reserved, available, and inuse status. 
 
-* Additional System Management Tools are being added for Cisco Call Manager but are custom settings for the author's specific environment. 
-	* Custom changes are needed if being used outside of author's environment.
-	* Use at your own risk. 
+* Some System Management Tools are included for Cisco, 911Enable, and Sonus 5k Voice Platforms but are custom settings for the author's environment. 
+	* This system is not meant to be used outside of our specific environement. 
 
 #App Summary
 

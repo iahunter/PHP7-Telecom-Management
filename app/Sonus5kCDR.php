@@ -105,10 +105,10 @@ class Sonus5kCDR extends Model
         $time = \Carbon\Carbon::now();
 
         $sftp = new Net_SFTP($hostname, 2024);
-		
-		if (! $sftp->login($username, $password)) {
+
+        if (! $sftp->login($username, $password)) {
             echo $sftp->getSFTPLog();
-			exit('Login Failed');
+            exit('Login Failed');
         }
 
         $sftp->chdir('/var/log/sonus/sbx/evlog/');
@@ -135,7 +135,7 @@ class Sonus5kCDR extends Model
 
         $cdr_files_array = $cdr_files;
         $cdr_files = [];
-		
+
         foreach ($cdr_files_array as $file) {
             $cdr_files[$file['mtime']] = $file;
         }
@@ -149,10 +149,9 @@ class Sonus5kCDR extends Model
 
         return $locations;
     }
-	
-	public static function get_file_from_location($hostname, $username, $password, $location)
-	{
 
+    public static function get_file_from_location($hostname, $username, $password, $location)
+    {
         $sftp = new Net_SFTP($hostname, 2024);
         if (! $sftp->login($username, $password)) {
             exit('Login Failed');
@@ -160,236 +159,233 @@ class Sonus5kCDR extends Model
 
         $currentfile = $sftp->get($location);
 
-        return $currentfile; 
-    }
-	
-	public static function parse_cdr_file_into_array($file)
-	{
-		// Parse the cdr log file and return usable array. 
-		$file_array = explode(PHP_EOL, $file);
-        
-		$fileheader = array_shift($file_array);  // Trim off first line of file. 
-		
-		$file_array = array_filter($file_array); // Filter blanks. 
-		
-		print "Found ".count($file_array)." Records in File ".PHP_EOL; 
-		
-		$lastline = end($file_array); // Get last line of file
-		
-		if(preg_match('/File administratively closed/', $lastline)){
-			
-			array_pop($file_array); // Get rid of last line. 
-			
-			$lastline = end($file_array); // Get last line of file
-		}
-		
-		return $file_array; 
-	}
-	
-	public static function check_db_for_record($record)
-	{
-		// Check if record exists in Database. 
-		
-		if(isset($record['accounting_id']) && isset($record['gw_name'])){			// Check if have mapped keys already. 
-			$accounting_id = $record['accounting_id']; 
-			$gw_name = $record['gw_name']; 
-		}else{																		// If no mapped keys then use parsed fields.  
-			$accounting_id = $record['Accounting ID']; 
-			$gw_name = $record['Gateway Name']; 
-		}
-		
-		$check = \App\Sonus5kCDR::where([['accounting_id', $accounting_id], ['gw_name', $gw_name]])->count(); 
-		//print $check.PHP_EOL; 
-		return $check; 
+        return $currentfile;
     }
 
-	public static function divide_and_conquer($records, $min, $max){
-		
-		// Cut the results in half and check to see if middle record is found. This uses the array keys to do the division and checks the cdr record with that key to see if it exists or not. 
-		$half = ceil((($max - $min) / 2) + $min); 
-		
-		//print "Found Half of {$max} and {$min} is {$half}.".PHP_EOL; 
-		
-		// Check if the record with the key value of $half exists in the DB. 
-		if(Sonus5kCDR::check_db_for_record($records[$half])){
-			//print "Found Record {$half} in the DB... Setting as the minimum record.";
-			// If found set that key to the minimum array key record.
-			$min = $half;
-		}else{
-			// If not found then set that as the max array key record.
-			$max = $half; 
-		}
-		
-		// Return the min and max keys in the array for the search. 
-		return ['min' => $min, 'max' => $max]; 
-	}
-	
-	/* 	
-		Using Divide an Conquer to find last record inserted into the DB from large arrays. 
-		Pass in an array of CDR records. It will check to see where the script left off if it stopped inside the array and pass pack remaining records to be inserted. 
-		If the last record in the array is found in the DB, it assumes everything before it has alredy been inserted. 
-	*/
-	public static function check_db_for_records_return_records_to_insert(array $records)
-	{
-		print "Checking ". count($records) ." Records in Array"	.PHP_EOL; 
+    public static function parse_cdr_file_into_array($file)
+    {
+        // Parse the cdr log file and return usable array.
+        $file_array = explode(PHP_EOL, $file);
 
-		$min = 0; 
-		$max = count($records) - 1; 
-		$last = count($records); 
-		
-		/* Debugging
-		print "Min key: ".$min.PHP_EOL; 
-		print "Max key: ".$max.PHP_EOL; 
-		print "Last: ".$last.PHP_EOL; 
-		*/
-		
-		// Check if last record exists in Database. 
-		if(Sonus5kCDR::check_db_for_record($records[$max])){
-			print "Found last record in the DB: {$records[$max]['Accounting ID']}".PHP_EOL; 
-			return; 															// return nothing because we assume all records are now in the DB. 
-		}
-		// Check if first record exists. 
-		if(!Sonus5kCDR::check_db_for_record($records[$min])){
-			print "Did not find record in the DB. Sending all records back for insertion... ".PHP_EOL;
-			return $records; 
-		}
-		// If first record exits, it tries to find out where the script left off last time or if new lines have been added after it ran last. 
-		elseif(Sonus5kCDR::check_db_for_record($records[$min])){
-			
-			print "Found {$records[$min]['Accounting ID']} record in the DB. Trying to find last record entered... ".PHP_EOL;
+        $fileheader = array_shift($file_array);  // Trim off first line of file.
 
-			// Find last record inserted into the DB. 
-			while(($max - $min) > 1){
-				
-				// Use divide and conquer to find last record 
-				$result = Sonus5kCDR::divide_and_conquer($records, $min, $max); 
-				
-				$min = $result['min']; 				// Update the minimum record array key found. 
-				$max = $result['max']; 				// Update the maximum record array key found. 
-				
-				/* Debugging
-				print "Min = {$min}".PHP_EOL; 
-				print "Max = {$max}".PHP_EOL; 
-				print "Continue Searching for the last record inserted... ".PHP_EOL; 
-				*/
-			}
-			
-			$output = array_slice($records, $min, $last, true); 			// Get the minimum starting record and trim everyting before it off the array. 
-			
-			return $output; 
-		}
+        $file_array = array_filter($file_array); // Filter blanks.
 
-		print "Found nothing... Stopping... ".PHP_EOL; 
-		return; 
+        echo 'Found '.count($file_array).' Records in File '.PHP_EOL;
+
+        $lastline = end($file_array); // Get last line of file
+
+        if (preg_match('/File administratively closed/', $lastline)) {
+            array_pop($file_array); // Get rid of last line.
+
+            $lastline = end($file_array); // Get last line of file
+        }
+
+        return $file_array;
     }
-	
-	public static function get_completed_cdrs_from_array($cdr_array)
-	{
-		// This only returns Stop and Attempt Records. 
-		
-		$completed_calls_array = []; 
+
+    public static function check_db_for_record($record)
+    {
+        // Check if record exists in Database.
+
+        if (isset($record['accounting_id']) && isset($record['gw_name'])) {			// Check if have mapped keys already.
+            $accounting_id = $record['accounting_id'];
+            $gw_name = $record['gw_name'];
+        } else {																		// If no mapped keys then use parsed fields.
+            $accounting_id = $record['Accounting ID'];
+            $gw_name = $record['Gateway Name'];
+        }
+
+        $check = self::where([['accounting_id', $accounting_id], ['gw_name', $gw_name]])->count();
+        //print $check.PHP_EOL;
+        return $check;
+    }
+
+    public static function divide_and_conquer($records, $min, $max)
+    {
+
+        // Cut the results in half and check to see if middle record is found. This uses the array keys to do the division and checks the cdr record with that key to see if it exists or not.
+        $half = ceil((($max - $min) / 2) + $min);
+
+        //print "Found Half of {$max} and {$min} is {$half}.".PHP_EOL;
+
+        // Check if the record with the key value of $half exists in the DB.
+        if (self::check_db_for_record($records[$half])) {
+            //print "Found Record {$half} in the DB... Setting as the minimum record.";
+            // If found set that key to the minimum array key record.
+            $min = $half;
+        } else {
+            // If not found then set that as the max array key record.
+            $max = $half;
+        }
+
+        // Return the min and max keys in the array for the search.
+        return ['min' => $min, 'max' => $max];
+    }
+
+    /*
+        Using Divide an Conquer to find last record inserted into the DB from large arrays.
+        Pass in an array of CDR records. It will check to see where the script left off if it stopped inside the array and pass pack remaining records to be inserted.
+        If the last record in the array is found in the DB, it assumes everything before it has alredy been inserted.
+    */
+    public static function check_db_for_records_return_records_to_insert(array $records)
+    {
+        echo 'Checking '.count($records).' Records in Array'.PHP_EOL;
+
+        $min = 0;
+        $max = count($records) - 1;
+        $last = count($records);
+
+        /* Debugging
+        print "Min key: ".$min.PHP_EOL;
+        print "Max key: ".$max.PHP_EOL;
+        print "Last: ".$last.PHP_EOL;
+        */
+
+        // Check if last record exists in Database.
+        if (self::check_db_for_record($records[$max])) {
+            echo "Found last record in the DB: {$records[$max]['Accounting ID']}".PHP_EOL;
+
+            return; 															// return nothing because we assume all records are now in the DB.
+        }
+        // Check if first record exists.
+        if (! self::check_db_for_record($records[$min])) {
+            echo 'Did not find record in the DB. Sending all records back for insertion... '.PHP_EOL;
+
+            return $records;
+        }
+        // If first record exits, it tries to find out where the script left off last time or if new lines have been added after it ran last.
+        elseif (self::check_db_for_record($records[$min])) {
+            echo "Found {$records[$min]['Accounting ID']} record in the DB. Trying to find last record entered... ".PHP_EOL;
+
+            // Find last record inserted into the DB.
+            while (($max - $min) > 1) {
+
+                // Use divide and conquer to find last record
+                $result = self::divide_and_conquer($records, $min, $max);
+
+                $min = $result['min']; 				// Update the minimum record array key found.
+                $max = $result['max']; 				// Update the maximum record array key found.
+
+                /* Debugging
+                print "Min = {$min}".PHP_EOL;
+                print "Max = {$max}".PHP_EOL;
+                print "Continue Searching for the last record inserted... ".PHP_EOL;
+                */
+            }
+
+            $output = array_slice($records, $min, $last, true); 			// Get the minimum starting record and trim everyting before it off the array.
+
+            return $output;
+        }
+
+        echo 'Found nothing... Stopping... '.PHP_EOL;
+    }
+
+    public static function get_completed_cdrs_from_array($cdr_array)
+    {
+        // This only returns Stop and Attempt Records.
+
+        $completed_calls_array = [];
 
         foreach ($cdr_array as $callrecord) {
             $callrecord = str_getcsv($callrecord);									// Get comman seperated values - don't explode by "," because it doesn't account for "text,text"
-			
-			$cdr_type = $callrecord[0]; 											// Get CDR Type
-				
+
+            $cdr_type = $callrecord[0]; 											// Get CDR Type
+
             if ($cdr_type == 'STOP' || $cdr_type == 'ATTEMPT') {					// Add only Stop and Attemps to the new Array.
-				
-				$cdr = Sonus5kCDR::cdr_array_to_mapped_keys_cdr_array($callrecord); // Map keys for the call record. 
-				
-				if($cdr){
-					$completed_calls_array[] = $cdr; 								// Append to array. 
-				}
+
+                $cdr = self::cdr_array_to_mapped_keys_cdr_array($callrecord); // Map keys for the call record.
+
+                if ($cdr) {
+                    $completed_calls_array[] = $cdr; 								// Append to array.
+                }
             }
 
             array_shift($cdr_array);												// Pop off the first member of the array to reduce memory usage.
         }
-		
-		return $completed_calls_array; 
+
+        return $completed_calls_array;
     }
-	
-	
-	public static function cdr_array_to_mapped_keys_cdr_array($CDR_ARRAY)
-	{
-		// Maps single line cdr to mapped key array. 
-		
-		$CDRFIELDS = Sonus5kCDR::get_sonus_cdr_keys_array(); 		// Get the CDR Fields for each Type of record. 
-		
-		$i = 0; 									
 
-		$CDRTYPE = $CDR_ARRAY[0];                        			// The first field type is always the CDR type
-		
-		if (isset($CDRFIELDS[$CDRTYPE])) {        					// If the CDR type is known:
-			$CDR = [];                            					// Container for our final CDR with mapped key,value pairs
-			foreach ($CDRFIELDS[$CDRTYPE] as $FIELD) {    			// Loop through CDR fields and associate them with known values
-				$VALUE = $CDR_ARRAY[$i++];                			// Get the value for this field
-				if (strpos($VALUE, ',') !== false) {    			// IF our final parsed value contains commas, it is a SUB RECORD!!!
-					$VALUE = explode(',', $VALUE);					// Create an array from csv field. 
-				}
-				$CDR[$FIELD] = $VALUE;                				// assign the new CDR field a value and increment our position in the parsed array
-			}
-			
-			return $CDR;                     						// return CDR. 
-		} else {
-			return; 												// Return nothing if doesn't match type. 
-		}
-	}
-	
-	
-	public static function get_db_format_from_cdr($cdr)
+    public static function cdr_array_to_mapped_keys_cdr_array($CDR_ARRAY)
     {
-		$RECORD = [];
-		$RECORD['gw_name'] = $cdr['Gateway Name'];
-		$RECORD['type'] = $cdr['Record Type'];
-		$RECORD['accounting_id'] = $cdr['Accounting ID'];
-		$RECORD['gcid'] = $cdr['Global Call ID (GCID)'];
+        // Maps single line cdr to mapped key array.
 
-		// Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
-		$date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
-		$RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'];
-		
-		$date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
-		$RECORD['disconnect_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
+        $CDRFIELDS = self::get_sonus_cdr_keys_array(); 		// Get the CDR Fields for each Type of record.
 
-		$RECORD['disconnect_initiator'] = $cdr['Disconnect Initiator'];
-		$RECORD['disconnect_reason'] = $cdr['Call Disconnect Reason'];
+        $i = 0;
 
-		$RECORD['calling_name'] = $cdr['Calling Name'];
-		$RECORD['calling_number'] = $cdr['Calling Number'];
-		$RECORD['dialed_number'] = $cdr['Dialed Number'];
-		$RECORD['called_number'] = $cdr['Called Number'];
+        $CDRTYPE = $CDR_ARRAY[0];                        			// The first field type is always the CDR type
 
-		$RECORD['route_label'] = $cdr['Route Label'];
-		$RECORD['ingress_trunkgrp'] = $cdr['Ingress Trunk Group Name'];
-		$RECORD['ingress_media'] = $cdr['Ingress IP Circuit End Point'];
+        if (isset($CDRFIELDS[$CDRTYPE])) {        					// If the CDR type is known:
+            $CDR = [];                            					// Container for our final CDR with mapped key,value pairs
+            foreach ($CDRFIELDS[$CDRTYPE] as $FIELD) {    			// Loop through CDR fields and associate them with known values
+                $VALUE = $CDR_ARRAY[$i++];                			// Get the value for this field
+                if (strpos($VALUE, ',') !== false) {    			// IF our final parsed value contains commas, it is a SUB RECORD!!!
+                    $VALUE = explode(',', $VALUE);					// Create an array from csv field.
+                }
+                $CDR[$FIELD] = $VALUE;                				// assign the new CDR field a value and increment our position in the parsed array
+            }
 
-		$RECORD['egress_trunkgrp'] = $cdr['Egress Trunk Group Name'];
-		$RECORD['egress_media'] = $cdr['Egress IP Circuit End Point'];
+            return $CDR;                     						// return CDR.
+        } else {
+            return; 												// Return nothing if doesn't match type.
+        }
+    }
 
-		if ($RECORD['type'] == 'STOP') {
-			$RECORD['call_duration'] = $cdr['Call Service Duration'];
+    public static function get_db_format_from_cdr($cdr)
+    {
+        $RECORD = [];
+        $RECORD['gw_name'] = $cdr['Gateway Name'];
+        $RECORD['type'] = $cdr['Record Type'];
+        $RECORD['accounting_id'] = $cdr['Accounting ID'];
+        $RECORD['gcid'] = $cdr['Global Call ID (GCID)'];
 
-			if (isset($cdr['Media Stream Stats']) && $cdr['Media Stream Stats']) {
-				$RECORD['ingress_lost_ptks'] = $cdr['Media Stream Stats'][7];
-				$RECORD['egress_lost_ptks'] = $cdr['Media Stream Stats'][13];
-			}
-		}
+        // Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
+        $date = self::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
+        $RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'];
 
-		if (isset($cdr['Ingress Protocol Variant Specific Data']) && $cdr['Ingress Protocol Variant Specific Data']) {
-			$RECORD['ingress_callid'] = $cdr['Ingress Protocol Variant Specific Data'][1];
-			$RECORD['disconnect_ingress_sip_response'] = $cdr['Ingress Protocol Variant Specific Data'][18];
-		}
-		if (isset($cdr['Egress Protocol Variant Specific Data']) && $cdr['Egress Protocol Variant Specific Data']) {
-			$RECORD['egress_callid'] = $cdr['Egress Protocol Variant Specific Data'][1];
-			$RECORD['disconnect_egress_sip_response'] = $cdr['Egress Protocol Variant Specific Data'][18];
-		}
+        $date = self::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
+        $RECORD['disconnect_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
 
-		$RECORD['cdr_json'] = $cdr;
-		
-		return $RECORD; 
-	}
+        $RECORD['disconnect_initiator'] = $cdr['Disconnect Initiator'];
+        $RECORD['disconnect_reason'] = $cdr['Call Disconnect Reason'];
 
+        $RECORD['calling_name'] = $cdr['Calling Name'];
+        $RECORD['calling_number'] = $cdr['Calling Number'];
+        $RECORD['dialed_number'] = $cdr['Dialed Number'];
+        $RECORD['called_number'] = $cdr['Called Number'];
+
+        $RECORD['route_label'] = $cdr['Route Label'];
+        $RECORD['ingress_trunkgrp'] = $cdr['Ingress Trunk Group Name'];
+        $RECORD['ingress_media'] = $cdr['Ingress IP Circuit End Point'];
+
+        $RECORD['egress_trunkgrp'] = $cdr['Egress Trunk Group Name'];
+        $RECORD['egress_media'] = $cdr['Egress IP Circuit End Point'];
+
+        if ($RECORD['type'] == 'STOP') {
+            $RECORD['call_duration'] = $cdr['Call Service Duration'];
+
+            if (isset($cdr['Media Stream Stats']) && $cdr['Media Stream Stats']) {
+                $RECORD['ingress_lost_ptks'] = $cdr['Media Stream Stats'][7];
+                $RECORD['egress_lost_ptks'] = $cdr['Media Stream Stats'][13];
+            }
+        }
+
+        if (isset($cdr['Ingress Protocol Variant Specific Data']) && $cdr['Ingress Protocol Variant Specific Data']) {
+            $RECORD['ingress_callid'] = $cdr['Ingress Protocol Variant Specific Data'][1];
+            $RECORD['disconnect_ingress_sip_response'] = $cdr['Ingress Protocol Variant Specific Data'][18];
+        }
+        if (isset($cdr['Egress Protocol Variant Specific Data']) && $cdr['Egress Protocol Variant Specific Data']) {
+            $RECORD['egress_callid'] = $cdr['Egress Protocol Variant Specific Data'][1];
+            $RECORD['disconnect_egress_sip_response'] = $cdr['Egress Protocol Variant Specific Data'][18];
+        }
+
+        $RECORD['cdr_json'] = $cdr;
+
+        return $RECORD;
+    }
 
     public static function get_last_two_days_cdr_completed_calls($SBC)
     {
@@ -818,611 +814,609 @@ class Sonus5kCDR extends Model
 
         return $return;
     }
-	
-	
-	public static function get_sonus_cdr_keys_array()
+
+    public static function get_sonus_cdr_keys_array()
     {
-		// Return the Array Mappings for the CDR Type. 
-		
-			$CDRFIELDS['START'] = [
-				'Record Type',
-				'Gateway Name',
-				'Accounting ID',
-				'Start Time(System Ticks)',
-				'Node Time Zone',
-				'Start Time (MM/DD/YYYY)',
-				'Start Time (HH/MM/SS.s)',
-				'Ticks from Setup Msg to Policy Response',
-				'Ticks from Setup Msg to Alert/Proc/Prog',
-				'Ticks from Setup Msg to Service Est',
-				'Service Delivered',
-				'Call Direction',
-				'Service Provider',
-				'Transit Network Selection Code (TNS)',
-				'Calling Number',
-				'Called Number',
-				'Extra Called Address Digits',
-				'Number of Called Num Translations',
-				'Called Number Before Translation #1',
-				'Translation Type #1',
-				'Called Number Before Translation #2',
-				'Translation Type #2',
-				'Billing Number',
-				'Route Label',
-				'Route Attempt Number',
-				'Route Selected',
-				'Egress Local Signaling IP Address',
-				'Egress Remote Signaling IP Address',
-				'Ingress Trunk Group Name',
-				'Ingress PSTN Circuit End Point',
-				'Ingress IP Circuit End Point',
-				'Egress PSTN Circuit End Point',
-				'Egress IP Circuit End Point',
-				'Originating Line Information (OLIP)',
-				'Jurisdiction Information Parameter (JIP)',
-				'Carrier Code',
-				'Call Group ID',
-				'Ticks from Setup Msg to Rx of EXM',
-				'Ticks from Setup Msg to Generation of EXM',
-				'Calling Party Nature of Address',
-				'Called Party Nature of Address',
-				'Ingress Protocol Variant Specific Data',
-				'Ingress Signaling Type',
-				'Egress Signaling Type',
-				'Ingress Far End Switch Type',
-				'Egress Far End Switch Type',
-				'Carrier Code of Carrier who Owns iTG Far End',
-				'Carrier Code of Carrier who Owns eTG Far End',
-				'Calling Party Category',
-				'Dialed Number',
-				'Carrier Selection Information',
-				'Called Number Numbering Plan',
-				'Generic Address Parameter',
-				'Egress Trunk Group Name',
-				'Egress Protocol Variant Specific Data',
-				'Incoming Calling Number',
-				'AMA Call Type',
-				'Message Billing Indicator (MBI)',
-				'LATA',
-				'Route Index Used',
-				'Calling Party Presentation Restriction',
-				'Incoming ISUP Charge Number',
-				'Incoming ISUP Nature Of Address',
-				'Dialed Number Nature of Address',
-				'Global Call ID (GCID)',
-				'Charge Flag',
-				'AMA slp ID',
-				'AMA BAF Module',
-				'AMA Set Hex AB Indication',
-				'Service Feature ID',
-				'FE Parameter',
-				'Satellite Indicator',
-				'PSX Billing Info',
-				'Originating TDM Trunk Group Type',
-				'Terminating TDM Trunk Group Type',
-				'Ingress Trunk Member Number',
-				'Egress Trunk Group ID',
-				'Egress Switch ID',
-				'Ingress Local ATM Address',
-				'Ingress Remote ATM Address',
-				'Egress Local ATM Address',
-				'Egress Remote ATM Address',
-				'PSX Call Type',
-				'Outgoing Route Trunk Group ID',
-				'Outgoing Route Message ID',
-				'Incoming Route ID',
-				'Calling Name',
-				'Calling Name Type',
-				'Incoming Calling Party Numbering Plan',
-				'Outgoing Calling Party Numbering Plan',
-				'Calling Party Business Group ID',
-				'Called Party Business Group ID',
-				'Calling Party PPDN',
-				'Ticks from Setup Msg to Last Route Attempt',
-				'Billing Number Nature of Address',
-				'Incoming Calling Number Nature of Address',
-				'Egress Trunk Member Number',
-				'Selected Route Type',
-				'Cumulative Route Index',
-				'ISDN PRI Calling Party Subaddress',
-				'Outgoing Trunk Group Number in EXM',
-				'Ingress Local Signaling IP Address',
-				'Ingress Remote Signaling IP Address',
-				'Record Sequence Number',
-				'Transmission Medium Requirement',
-				'Information Transfer Rate',
-				'USI User Info Layer 1',
-				'Unrecognized Raw ISUP Calling Party Category',
-				'FSD: Egress Release Link Trunking',
-				'FSD: Two B-Channel Transfer',
-				'Calling Party Business Unit',
-				'Called Party Business Unit',
-				'FSD: Redirecting',
-				'FSD: Ingress Release Link Trunking',
-				'PSX ID',
-				'PSX Congestion Level',
-				'PSX Processing Time (milliseconds)',
-				'Script Name',
-				'Ingress External Accounting Data',
-				'Egress External Accounting Data',
-				'Answer Supervision Type',
-				'Ingress Sip Refer or Sip Replaces Feature Specific Data',
-				'Egress Sip Refer or Sip Replaces Feature Specific Data',
-				'Network Transfers Feature Specific Data',
-				'Call Condition',
-				'Toll Indicator',
-				'Generic Number (Number)',
-				'Generic Number Presentation Restriction Indicator',
-				'Generic Number Numbering Plan',
-				'Generic Number Nature of Address',
-				'Generic Number Type',
-				'Originating Trunk Type',
-				'Terminating Trunk Type',
-				'VPN Calling Public Presence Number',
-				'VPN Calling Private Presence Number',
-				'External Furnish Charging Info',
-				'Announcement Id',
-				'Network Data - Source Information',
-				'Network Data - Partition ID',
-				'Network Data - Network ID',
-				'Network Data - NCOS',
-				'ISDN access Indicator',
-				'Network Call Reference - Call Identity',
-				'Network Call Reference - Signaling Point Code',
-				'Ingress MIME Protocol Variant Specific Data',
-				'Egress MIME Protocol Variant Specific Data',
-				'Video Data - Video Bandwidth, Video Call Duration,Ingress/Egress IP video Endpoint',
-				'SVS Customer',
-				'SVS Vendor - Deprecated in 7.2.2 as part of Pcr1624',
-				'Remote GSX Billing Indicator (PCR1216 - GSX 6.4 for KDDI special V3)',
-				'Call To Test PSX',
-				'PSX Overlap Route Requests',
-				'Call Setup Delay',
-				'Overload Status',
-				'reserved',
-				'reserved',
-				'MLPP Precedence Level',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'Global Charge Reference',
+        // Return the Array Mappings for the CDR Type.
 
-			];
-			$CDRFIELDS['STOP'] = [
-				'Record Type',
-				'Gateway Name',
-				'Accounting ID',
-				'Start Time (system ticks)',
-				'Node Time Zone',
-				'Start Time (MM/DD/YYYY)',
-				'Start Time (HH/MM/SS.s)',
-				'Ticks from Setup Msg to Policy Response',
-				'Ticks from Setup Msg to Alert/Proc/Prog',
-				'Ticks from Setup Msg to Service Est',
-				'Disconnect Time (MM/DD/YYYY)',
-				'Disconnect Time (HH:MM:SS.s)',
-				'Ticks from Disconnect to Call Termination',
-				'Call Service Duration',
-				'Call Disconnect Reason',
-				'Service Delivered',
-				'Call Direction',
-				'Service Provider',
-				'Transit Network Selection Code (TNS)',
-				'Calling Number',
-				'Called Number',
-				'Extra Called Address Digits',
-				'Number of Called Num Translations',
-				'Called Number Before Translation #1',
-				'Translation Type #1',
-				'Called Number Before Translation #2',
-				'Translation Type #2',
-				'Billing Number',
-				'Route Label',
-				'Route Attempt Number',
-				'Route Selected',
-				'Egress Local Signaling IP Address',
-				'Egress Remote Signaling IP Address',
-				'Ingress Trunk Group Name',
-				'Ingress PSTN Circuit End Point',
-				'Ingress IP Circuit End Point',
-				'Egress PSTN Circuit End Point',
-				'Egress IP Circuit End Point',
-				'Ingress Number of Audio Bytes Sent',
-				'Ingress Number of Audio Packets Sent',
-				'Ingress Number of Audio Bytes Received',
-				'Ingress Number of Audio Packets Received',
-				'Originating Line Information (OLIP)',
-				'Jurisdiction Information Parameter (JIP)',
-				'Carrier Code',
-				'Call Group ID',
-				'Script Log Data',
-				'Ticks from Setup Msg to Rx of EXM',
-				'Ticks from Setup Msg to Generation of EXM',
-				'Calling Party Nature of Address',
-				'Called Party Nature of Address',
-				'Ingress Protocol Variant Specific Data',
-				'Ingress Signaling Type',
-				'Egress Signaling Type',
-				'Ingress Far End Switch Type',
-				'Egress Far End Switch Type',
-				'Carrier Code of Carrier who Owns iTG Far End',
-				'Carrier Code of Carrier who Owns eTG Far End',
-				'Calling Party Category',
-				'Dialed Number',
-				'Carrier Selection Information',
-				'Called Number Numbering Plan',
-				'Generic Address Parameter',
-				'Disconnect Initiator',
-				'Ingress Number of Packets Recorded as Lost',
-				'Ingress Interarrival Packet Jitter',
-				'Ingress Last Measurement for Latency',
-				'Egress Trunk Group Name',
-				'Egress Protocol Variant Specific Data',
-				'Incoming Calling Number',
-				'AMA Call Type',
-				'Message Billing Indicator (MBI)',
-				'LATA',
-				'Route Index Used',
-				'Calling Party Presentation Restriction',
-				'Incoming ISUP Charge Number',
-				'Incoming ISUP Nature Of Address',
-				'Dialed Number Nature of Address',
-				'Ingress Codec Info',
-				'Egress Codec Info',
-				'Ingress RTP Packetization Time',
-				'Global Call ID (GCID)',
-				'Originator Echo Cancellation',
-				'Terminator Echo Cancellation',
-				'Charge Flag',
-				'AMA slp ID',
-				'AMA BAF Module',
-				'AMA Set Hex AB Indication',
-				'Service Feature ID',
-				'FE Parameter',
-				'Satellite Indicator',
-				'PSX Billing Info',
-				'Originating TDM Trunk Group Type',
-				'Terminating TDM Trunk Group Type',
-				'Ingress Trunk Member Number',
-				'Egress Trunk Group ID',
-				'Egress Switch ID',
-				'Ingress Local ATM Address',
-				'Ingress Remote ATM Address',
-				'Egress Local ATM Address',
-				'Egress Remote ATM Address',
-				'PSX Call Type',
-				'Outgoing Route Trunk Group ID',
-				'Outgoing Route Message ID',
-				'Incoming Route ID',
-				'Calling Name',
-				'Calling Name Type',
-				'Incoming Calling Party Numbering Plan',
-				'Outgoing Calling Party Numbering Plan',
-				'Calling Party Business Group ID',
-				'Called Party Business Group ID',
-				'Calling Party PPDN',
-				'Ticks from Setup Msg to Last Route Attempt',
-				'Billing Number Nature of Address',
-				'Incoming Calling Number Nature of Address',
-				'Egress Trunk Member Number',
-				'Selected Route Type',
-				'Telcordia Long Duration Record Type',
-				'Ticks From Previous Record',
-				'Cumulative Route Index',
-				'Call Disconnect Reason Sent to Ingress',
-				'Call Disconnect Reason Sent to Egress',
-				'ISDN PRI Calling Party Subaddress',
-				'Outgoing Trunk Group Number in EXM',
-				'Ingress Local Signaling IP Address',
-				'Ingress Remote Signaling IP Address',
-				'Record Sequence Number',
-				'Transmission Medium Requirement',
-				'Information Transfer Rate',
-				'USI User Info Layer 1',
-				'Unrecognized Raw ISUP Calling Party Category',
-				'FSD: Egress Release Link Trunking',
-				'FSD: Two B-Channel Transfer',
-				'Calling Party Business Unit',
-				'Called Party Business Unit',
-				'FSD: Redirecting',
-				'FSD: Ingress Release Link Trunking',
-				'PSX Index',
-				'PSX Congestion Level',
-				'PSX Processing Time (milliseconds)',
-				'Script Name',
-				'Ingress External Accounting Data',
-				'Egress External Accounting Data',
-				'Egress RTP Packetization Time',
-				'Egress Number of Audio Bytes Sent',
-				'Egress Number of Audio Packets Sent',
-				'Egress Number of Audio Bytes Received',
-				'Egress Number of Audio Packets Received',
-				'Egress Number of Packets Recorded as Lost',
-				'Egress Interarrival Packet Jitter',
-				'Egress Last Measurement for Latency',
-				'Ingress Maximum Packet Outage',
-				'Egress Maximum Packet Outage',
-				'Ingress Packet Playout Buffer Quality',
-				'Egress Packet Playout Buffer Quality',
-				'Answer Supervision Type',
-				'Ingress Sip Refer or Sip Replaces Feature Specific Data',
-				'Egress Sip Refer or Sip Replaces Feature Specific Data',
-				'Network Transfers Feature Specific Data',
-				'Call Condition',
-				'Toll Indicator',
-				'Generic Number ( Number )',
-				'Generic Number Presentation Restriction Indicator',
-				'Generic Number Numbering Plan',
-				'Generic Number Nature of Address',
-				'Generic Number Type',
-				'Originating Trunk Type',
-				'Terminating Trunk Type',
-				'Remote GSX Billing Indicator',
-				'VPN Calling Private Presence Number',
-				'VPN Calling Public Presence Number',
-				'External Furnish Charging Info',
-				'Ingress Policing Discards',
-				'Egress Policing Discards',
-				'Announcement Id',
-				'Network Data - Source Information',
-				'Network Data - Partition ID',
-				'Network Data - Network ID',
-				'Network Data - NCOS',
-				'Ingress SRTP (Secure RTP/RTCP',
-				'Egress SRTP (Secure RTP/RTCP)',
-				'ISDN access Indicator',
-				'Call Disconnect Location',
-				'Call Disconnect Location Transmitted to Ingress',
-				'Call Disconnect Location Transmitted to Egress',
-				'Network Call Reference - Call Identity',
-				'Network Call Reference - Signaling Point Code',
-				'Ingress MIME Protocol Variant Specific Data',
-				'Egress MIME Protocol Variant Specific Data',
-				'Modem Tone Type',
-				'Modem Tone Signal Level',
-				'Video Data - Video Bandwidth, Video Call Duration, ',
-				'Video Statistics - Ingress/Egress Video Statistics.',
-				'SVS Customer',
-				'SVS Vendor - Deprecated in 7.2.2 as part of Pcr1624',
-				'Call To Test PSX',
-				'Psx Overlap Route Requests',
-				'Call Setup Delay',
-				'Overload Status',
-				'reserved',
-				'reserved',
-				'Ingress DSP Data Bitmap',
-				'Egress DSP Data Bitmap',
-				'Call Recorded Indicator',
-				'Call Recorded RTP Tx Ip Address',
-				'Call Recorded RTP Tx Port Number',
-				'Call Recorded RTP Rv Ip Address',
-				'Call Recorded RTP Rv Port Number',
-				'Mlpp Precedence Level',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'Global Charge Reference',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'Ingress Inbound R-Factor',
-				'Ingress Outbount R-Factor',
-				'Egress Inbound R-Factor',
-				'Egress Outbount R-Factor',
-				'Media Stream Data',
-				'Media Stream Stats',
-				'Transcoded Indicator',
-				'HD Codec Rate',
-				'Remote Ingress Audio RTCP Learned Metrics',
-				'Remote Egress Audio RTCP Learned Metrics',
-			];
-			$CDRFIELDS['ATTEMPT'] = [
-				'Record Type',
-				'Gateway Name',
-				'Accounting ID',
-				'Start Time (system ticks)',
-				'Node Time Zone',
-				'Start Time (MM/DD/YYYY)',
-				'Start Time (HH/MM/SS.s)',
-				'Ticks from Setup Msg to Policy Response',
-				'Ticks from Setup Msg to Alert/Proc/Prog',
-				'Disconnect Time (HH:MM:SS.s)',
-				'Ticks from Disconnect to Call Termination',
-				'Call Disconnect Reason',
-				'Service Delivered',
-				'Call Direction',
-				'Service Provider',
-				'Transit Network Selection Code (TNS)',
-				'Calling Number',
-				'Called Number',
-				'Extra Called Address Digits',
-				'Number of Called Num Translations',
-				'Called Number Before Translation #1',
-				'Translation Type #1',
-				'Called Number Before Translation #2',
-				'Translation Type #2',
-				'Billing Number',
-				'Route Label',
-				'Route Attempt Number',
-				'Route Selected',
-				'Egress Local Signaling IP Address',
-				'Egress Remote Signaling IP Address',
-				'Ingress Trunk Group Name',
-				'Ingress PSTN Circuit End Point',
-				'Ingress IP Circuit End Point',
-				'Egress PSTN Circuit End Point',
-				'Egress IP Circuit End Point',
-				'Originating Line Information (OLIP)',
-				'Jurisdiction Information Parameter (JIP)',
-				'Carrier Code',
-				'Call Group ID',
-				'Script Log Data',
-				'Ticks from Setup Msg to Rx of EXM',
-				'Ticks from Setup Msg to Generation of EXM',
-				'Calling Party Nature of Address',
-				'Called Party Nature of Address',
-				'Ingress Protocol Variant Specific Data',
-				'Ingress Signaling Type',
-				'Egress Signaling Type',
-				'Ingress Far End Switch Type',
-				'Egress Far End Switch Type',
-				'Carrier Code of Carrier who Owns iTG Far End',
-				'Carrier Code of Carrier who Owns eTG Far End',
-				'Calling Party Category',
-				'Dialed Number',
-				'Carrier Selection Information',
-				'Called Number Numbering Plan',
-				'Generic Address Parameter',
-				'Disconnect Initiator',
-				'Egress Trunk Group Name',
-				'Egress Protocol Variant Specific Data',
-				'Incoming Calling Number',
-				'AMA Call Type',
-				'Message Billing Indicator (MBI)',
-				'LATA',
-				'Route Index Used',
-				'Calling Party Presentation Restriction',
-				'Incoming ISUP Charge Number',
-				'Incoming ISUP Nature Of Address',
-				'Dialed Number Nature of Address',
-				'Ingress Codec Info',
-				'Egress Codec Info',
-				'Ingress RTP Packetization Time',
-				'Global Call ID (GCID)',
-				'Terminated With Script Execution',
-				'Originator Echo Cancellation',
-				'Terminator Echo Cancellation',
-				'Charge Flag',
-				'AMA slp ID',
-				'AMA BAF Module',
-				'AMA Set Hex AB Indication',
-				'Service Feature ID',
-				'FE Parameter',
-				'Satellite Indicator',
-				'PSX Billing Info',
-				'Originating TDM Trunk Group Type',
-				'Terminating TDM Trunk Group Type',
-				'Ingress Trunk Member Number',
-				'Egress Trunk Group ID',
-				'Egress Switch ID',
-				'Ingress Local ATM Address',
-				'Ingress Remote ATM Address',
-				'Egress Local ATM Address',
-				'Egress Remote ATM Address',
-				'PSX Call Type',
-				'Outgoing Route Trunk Group ID',
-				'Outgoing Route Message ID',
-				' Incoming Route ID',
-				'Calling Name',
-				'Calling Name Type',
-				'Incoming Calling Party Numbering Plan',
-				'Outgoing Calling Party Numbering Plan',
-				'Calling Party Business Group ID',
-				'Called Party Business Group ID',
-				'Calling Party PPDN',
-				'Ticks from Setup Msg to Last Route Attempt',
-				'Disconnect Time (MM/DD/YYYY)',
-				'Billing Number Nature of Address',
-				'Incoming Calling Number Nature of Address',
-				'Egress Trunk Member Number',
-				'Selected Route Type',
-				'Cumulative Route Index',
-				'Call Disconnect Reason Sent to Ingress',
-				'Call Disconnect Reason Sent to Egress',
-				'ISDN PRI Calling Party Subaddress',
-				'Outgoing Trunk Group Number in EXM',
-				'Ingress Local Signaling IP Address',
-				'Ingress Remote Signaling IP Address',
-				'Record Sequence Number',
-				'Transmission Medium Requirement',
-				'Information Transfer Rate',
-				'USI User Info Layer 1',
-				'Unrecognized Raw ISUP Calling Party Category',
-				'FSD: Release Link Trunking',
-				'FSD: Two B-Channel Transfer',
-				'Calling Party Business Unit',
-				'Called Party Business Unit',
-				'FSD: Redirecting',
-				'FSD: Ingress Release Link Trunking',
-				'PSX Index',
-				'PSX Congestion Level',
-				'PSX Processing Time (milliseconds)',
-				'Script Name',
-				'Ingress External Accounting Data',
-				'Egress External Accounting Data',
-				'Egress RTP Packetization Time',
-				'Answer Supervision Type',
-				'Ingress Sip Refer & Replaces Feature Specific Data',
-				'Egress Sip Refer Feature Specific Data',
-				'Network Transfers Feature Specific Data',
-				'Call Condition',
-				'Toll Indicator',
-				'Generic Number (Number)',
-				'Generic Number Presentation Restriction Indicator',
-				'Generic Number Numbering Plan',
-				'Generic Number Nature of Address',
-				'Generic Number Type',
-				'Final Attempt Indicator',
-				'Originating Trunk Type',
-				'Terminating Trunk Type',
-				'Remote GSX Billing Indicator',
-				'Extra Disconnect Reason',
-				'VPN Calling Private Presence Number',
-				'VPN Calling Public Presence Number',
-				'External Furnish Charging Info',
-				'Announcement Id',
-				'Network Data - Source Information',
-				'Network Data - Partition ID',
-				'Network Data - Network ID',
-				'Network Data - NCOS',
-				'ISDN access Indicator',
-				'Call Disconnect Location',
-				'Call Disconnect Location Transmitted to Ingress',
-				'Call Disconnect Location Transmitted to Egress',
-				'Network Call Reference - Call Identity',
-				'Network Call Reference - Signaling Point Code',
-				'Ingress MIME Protocol Variant Specific Data',
-				'Egress MIME Protocol Variant Specific Data',
-				'Video Data - Video Bandwidth, Video Call Duration, ',
-				'Ingress/Egress IP video Endpoint',
-				'SVS Customer',
-				'SVS Vendor - Deprecated in 7.2.2 as part of Pcr1624',
-				'Call To Test PSX',
-				'Psx Overlap Route Requests',
-				'Call Setup Delay',
-				'Overload Status',
-				'reserved',
-				'reserved',
-				'Mlpp Precedence Level',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'reserved',
-				'Global Charge Reference',
+        $CDRFIELDS['START'] = [
+                'Record Type',
+                'Gateway Name',
+                'Accounting ID',
+                'Start Time(System Ticks)',
+                'Node Time Zone',
+                'Start Time (MM/DD/YYYY)',
+                'Start Time (HH/MM/SS.s)',
+                'Ticks from Setup Msg to Policy Response',
+                'Ticks from Setup Msg to Alert/Proc/Prog',
+                'Ticks from Setup Msg to Service Est',
+                'Service Delivered',
+                'Call Direction',
+                'Service Provider',
+                'Transit Network Selection Code (TNS)',
+                'Calling Number',
+                'Called Number',
+                'Extra Called Address Digits',
+                'Number of Called Num Translations',
+                'Called Number Before Translation #1',
+                'Translation Type #1',
+                'Called Number Before Translation #2',
+                'Translation Type #2',
+                'Billing Number',
+                'Route Label',
+                'Route Attempt Number',
+                'Route Selected',
+                'Egress Local Signaling IP Address',
+                'Egress Remote Signaling IP Address',
+                'Ingress Trunk Group Name',
+                'Ingress PSTN Circuit End Point',
+                'Ingress IP Circuit End Point',
+                'Egress PSTN Circuit End Point',
+                'Egress IP Circuit End Point',
+                'Originating Line Information (OLIP)',
+                'Jurisdiction Information Parameter (JIP)',
+                'Carrier Code',
+                'Call Group ID',
+                'Ticks from Setup Msg to Rx of EXM',
+                'Ticks from Setup Msg to Generation of EXM',
+                'Calling Party Nature of Address',
+                'Called Party Nature of Address',
+                'Ingress Protocol Variant Specific Data',
+                'Ingress Signaling Type',
+                'Egress Signaling Type',
+                'Ingress Far End Switch Type',
+                'Egress Far End Switch Type',
+                'Carrier Code of Carrier who Owns iTG Far End',
+                'Carrier Code of Carrier who Owns eTG Far End',
+                'Calling Party Category',
+                'Dialed Number',
+                'Carrier Selection Information',
+                'Called Number Numbering Plan',
+                'Generic Address Parameter',
+                'Egress Trunk Group Name',
+                'Egress Protocol Variant Specific Data',
+                'Incoming Calling Number',
+                'AMA Call Type',
+                'Message Billing Indicator (MBI)',
+                'LATA',
+                'Route Index Used',
+                'Calling Party Presentation Restriction',
+                'Incoming ISUP Charge Number',
+                'Incoming ISUP Nature Of Address',
+                'Dialed Number Nature of Address',
+                'Global Call ID (GCID)',
+                'Charge Flag',
+                'AMA slp ID',
+                'AMA BAF Module',
+                'AMA Set Hex AB Indication',
+                'Service Feature ID',
+                'FE Parameter',
+                'Satellite Indicator',
+                'PSX Billing Info',
+                'Originating TDM Trunk Group Type',
+                'Terminating TDM Trunk Group Type',
+                'Ingress Trunk Member Number',
+                'Egress Trunk Group ID',
+                'Egress Switch ID',
+                'Ingress Local ATM Address',
+                'Ingress Remote ATM Address',
+                'Egress Local ATM Address',
+                'Egress Remote ATM Address',
+                'PSX Call Type',
+                'Outgoing Route Trunk Group ID',
+                'Outgoing Route Message ID',
+                'Incoming Route ID',
+                'Calling Name',
+                'Calling Name Type',
+                'Incoming Calling Party Numbering Plan',
+                'Outgoing Calling Party Numbering Plan',
+                'Calling Party Business Group ID',
+                'Called Party Business Group ID',
+                'Calling Party PPDN',
+                'Ticks from Setup Msg to Last Route Attempt',
+                'Billing Number Nature of Address',
+                'Incoming Calling Number Nature of Address',
+                'Egress Trunk Member Number',
+                'Selected Route Type',
+                'Cumulative Route Index',
+                'ISDN PRI Calling Party Subaddress',
+                'Outgoing Trunk Group Number in EXM',
+                'Ingress Local Signaling IP Address',
+                'Ingress Remote Signaling IP Address',
+                'Record Sequence Number',
+                'Transmission Medium Requirement',
+                'Information Transfer Rate',
+                'USI User Info Layer 1',
+                'Unrecognized Raw ISUP Calling Party Category',
+                'FSD: Egress Release Link Trunking',
+                'FSD: Two B-Channel Transfer',
+                'Calling Party Business Unit',
+                'Called Party Business Unit',
+                'FSD: Redirecting',
+                'FSD: Ingress Release Link Trunking',
+                'PSX ID',
+                'PSX Congestion Level',
+                'PSX Processing Time (milliseconds)',
+                'Script Name',
+                'Ingress External Accounting Data',
+                'Egress External Accounting Data',
+                'Answer Supervision Type',
+                'Ingress Sip Refer or Sip Replaces Feature Specific Data',
+                'Egress Sip Refer or Sip Replaces Feature Specific Data',
+                'Network Transfers Feature Specific Data',
+                'Call Condition',
+                'Toll Indicator',
+                'Generic Number (Number)',
+                'Generic Number Presentation Restriction Indicator',
+                'Generic Number Numbering Plan',
+                'Generic Number Nature of Address',
+                'Generic Number Type',
+                'Originating Trunk Type',
+                'Terminating Trunk Type',
+                'VPN Calling Public Presence Number',
+                'VPN Calling Private Presence Number',
+                'External Furnish Charging Info',
+                'Announcement Id',
+                'Network Data - Source Information',
+                'Network Data - Partition ID',
+                'Network Data - Network ID',
+                'Network Data - NCOS',
+                'ISDN access Indicator',
+                'Network Call Reference - Call Identity',
+                'Network Call Reference - Signaling Point Code',
+                'Ingress MIME Protocol Variant Specific Data',
+                'Egress MIME Protocol Variant Specific Data',
+                'Video Data - Video Bandwidth, Video Call Duration,Ingress/Egress IP video Endpoint',
+                'SVS Customer',
+                'SVS Vendor - Deprecated in 7.2.2 as part of Pcr1624',
+                'Remote GSX Billing Indicator (PCR1216 - GSX 6.4 for KDDI special V3)',
+                'Call To Test PSX',
+                'PSX Overlap Route Requests',
+                'Call Setup Delay',
+                'Overload Status',
+                'reserved',
+                'reserved',
+                'MLPP Precedence Level',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'Global Charge Reference',
 
-			];
-		
-		return $CDRFIELDS; 
-	}
-	
+            ];
+        $CDRFIELDS['STOP'] = [
+                'Record Type',
+                'Gateway Name',
+                'Accounting ID',
+                'Start Time (system ticks)',
+                'Node Time Zone',
+                'Start Time (MM/DD/YYYY)',
+                'Start Time (HH/MM/SS.s)',
+                'Ticks from Setup Msg to Policy Response',
+                'Ticks from Setup Msg to Alert/Proc/Prog',
+                'Ticks from Setup Msg to Service Est',
+                'Disconnect Time (MM/DD/YYYY)',
+                'Disconnect Time (HH:MM:SS.s)',
+                'Ticks from Disconnect to Call Termination',
+                'Call Service Duration',
+                'Call Disconnect Reason',
+                'Service Delivered',
+                'Call Direction',
+                'Service Provider',
+                'Transit Network Selection Code (TNS)',
+                'Calling Number',
+                'Called Number',
+                'Extra Called Address Digits',
+                'Number of Called Num Translations',
+                'Called Number Before Translation #1',
+                'Translation Type #1',
+                'Called Number Before Translation #2',
+                'Translation Type #2',
+                'Billing Number',
+                'Route Label',
+                'Route Attempt Number',
+                'Route Selected',
+                'Egress Local Signaling IP Address',
+                'Egress Remote Signaling IP Address',
+                'Ingress Trunk Group Name',
+                'Ingress PSTN Circuit End Point',
+                'Ingress IP Circuit End Point',
+                'Egress PSTN Circuit End Point',
+                'Egress IP Circuit End Point',
+                'Ingress Number of Audio Bytes Sent',
+                'Ingress Number of Audio Packets Sent',
+                'Ingress Number of Audio Bytes Received',
+                'Ingress Number of Audio Packets Received',
+                'Originating Line Information (OLIP)',
+                'Jurisdiction Information Parameter (JIP)',
+                'Carrier Code',
+                'Call Group ID',
+                'Script Log Data',
+                'Ticks from Setup Msg to Rx of EXM',
+                'Ticks from Setup Msg to Generation of EXM',
+                'Calling Party Nature of Address',
+                'Called Party Nature of Address',
+                'Ingress Protocol Variant Specific Data',
+                'Ingress Signaling Type',
+                'Egress Signaling Type',
+                'Ingress Far End Switch Type',
+                'Egress Far End Switch Type',
+                'Carrier Code of Carrier who Owns iTG Far End',
+                'Carrier Code of Carrier who Owns eTG Far End',
+                'Calling Party Category',
+                'Dialed Number',
+                'Carrier Selection Information',
+                'Called Number Numbering Plan',
+                'Generic Address Parameter',
+                'Disconnect Initiator',
+                'Ingress Number of Packets Recorded as Lost',
+                'Ingress Interarrival Packet Jitter',
+                'Ingress Last Measurement for Latency',
+                'Egress Trunk Group Name',
+                'Egress Protocol Variant Specific Data',
+                'Incoming Calling Number',
+                'AMA Call Type',
+                'Message Billing Indicator (MBI)',
+                'LATA',
+                'Route Index Used',
+                'Calling Party Presentation Restriction',
+                'Incoming ISUP Charge Number',
+                'Incoming ISUP Nature Of Address',
+                'Dialed Number Nature of Address',
+                'Ingress Codec Info',
+                'Egress Codec Info',
+                'Ingress RTP Packetization Time',
+                'Global Call ID (GCID)',
+                'Originator Echo Cancellation',
+                'Terminator Echo Cancellation',
+                'Charge Flag',
+                'AMA slp ID',
+                'AMA BAF Module',
+                'AMA Set Hex AB Indication',
+                'Service Feature ID',
+                'FE Parameter',
+                'Satellite Indicator',
+                'PSX Billing Info',
+                'Originating TDM Trunk Group Type',
+                'Terminating TDM Trunk Group Type',
+                'Ingress Trunk Member Number',
+                'Egress Trunk Group ID',
+                'Egress Switch ID',
+                'Ingress Local ATM Address',
+                'Ingress Remote ATM Address',
+                'Egress Local ATM Address',
+                'Egress Remote ATM Address',
+                'PSX Call Type',
+                'Outgoing Route Trunk Group ID',
+                'Outgoing Route Message ID',
+                'Incoming Route ID',
+                'Calling Name',
+                'Calling Name Type',
+                'Incoming Calling Party Numbering Plan',
+                'Outgoing Calling Party Numbering Plan',
+                'Calling Party Business Group ID',
+                'Called Party Business Group ID',
+                'Calling Party PPDN',
+                'Ticks from Setup Msg to Last Route Attempt',
+                'Billing Number Nature of Address',
+                'Incoming Calling Number Nature of Address',
+                'Egress Trunk Member Number',
+                'Selected Route Type',
+                'Telcordia Long Duration Record Type',
+                'Ticks From Previous Record',
+                'Cumulative Route Index',
+                'Call Disconnect Reason Sent to Ingress',
+                'Call Disconnect Reason Sent to Egress',
+                'ISDN PRI Calling Party Subaddress',
+                'Outgoing Trunk Group Number in EXM',
+                'Ingress Local Signaling IP Address',
+                'Ingress Remote Signaling IP Address',
+                'Record Sequence Number',
+                'Transmission Medium Requirement',
+                'Information Transfer Rate',
+                'USI User Info Layer 1',
+                'Unrecognized Raw ISUP Calling Party Category',
+                'FSD: Egress Release Link Trunking',
+                'FSD: Two B-Channel Transfer',
+                'Calling Party Business Unit',
+                'Called Party Business Unit',
+                'FSD: Redirecting',
+                'FSD: Ingress Release Link Trunking',
+                'PSX Index',
+                'PSX Congestion Level',
+                'PSX Processing Time (milliseconds)',
+                'Script Name',
+                'Ingress External Accounting Data',
+                'Egress External Accounting Data',
+                'Egress RTP Packetization Time',
+                'Egress Number of Audio Bytes Sent',
+                'Egress Number of Audio Packets Sent',
+                'Egress Number of Audio Bytes Received',
+                'Egress Number of Audio Packets Received',
+                'Egress Number of Packets Recorded as Lost',
+                'Egress Interarrival Packet Jitter',
+                'Egress Last Measurement for Latency',
+                'Ingress Maximum Packet Outage',
+                'Egress Maximum Packet Outage',
+                'Ingress Packet Playout Buffer Quality',
+                'Egress Packet Playout Buffer Quality',
+                'Answer Supervision Type',
+                'Ingress Sip Refer or Sip Replaces Feature Specific Data',
+                'Egress Sip Refer or Sip Replaces Feature Specific Data',
+                'Network Transfers Feature Specific Data',
+                'Call Condition',
+                'Toll Indicator',
+                'Generic Number ( Number )',
+                'Generic Number Presentation Restriction Indicator',
+                'Generic Number Numbering Plan',
+                'Generic Number Nature of Address',
+                'Generic Number Type',
+                'Originating Trunk Type',
+                'Terminating Trunk Type',
+                'Remote GSX Billing Indicator',
+                'VPN Calling Private Presence Number',
+                'VPN Calling Public Presence Number',
+                'External Furnish Charging Info',
+                'Ingress Policing Discards',
+                'Egress Policing Discards',
+                'Announcement Id',
+                'Network Data - Source Information',
+                'Network Data - Partition ID',
+                'Network Data - Network ID',
+                'Network Data - NCOS',
+                'Ingress SRTP (Secure RTP/RTCP',
+                'Egress SRTP (Secure RTP/RTCP)',
+                'ISDN access Indicator',
+                'Call Disconnect Location',
+                'Call Disconnect Location Transmitted to Ingress',
+                'Call Disconnect Location Transmitted to Egress',
+                'Network Call Reference - Call Identity',
+                'Network Call Reference - Signaling Point Code',
+                'Ingress MIME Protocol Variant Specific Data',
+                'Egress MIME Protocol Variant Specific Data',
+                'Modem Tone Type',
+                'Modem Tone Signal Level',
+                'Video Data - Video Bandwidth, Video Call Duration, ',
+                'Video Statistics - Ingress/Egress Video Statistics.',
+                'SVS Customer',
+                'SVS Vendor - Deprecated in 7.2.2 as part of Pcr1624',
+                'Call To Test PSX',
+                'Psx Overlap Route Requests',
+                'Call Setup Delay',
+                'Overload Status',
+                'reserved',
+                'reserved',
+                'Ingress DSP Data Bitmap',
+                'Egress DSP Data Bitmap',
+                'Call Recorded Indicator',
+                'Call Recorded RTP Tx Ip Address',
+                'Call Recorded RTP Tx Port Number',
+                'Call Recorded RTP Rv Ip Address',
+                'Call Recorded RTP Rv Port Number',
+                'Mlpp Precedence Level',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'Global Charge Reference',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'Ingress Inbound R-Factor',
+                'Ingress Outbount R-Factor',
+                'Egress Inbound R-Factor',
+                'Egress Outbount R-Factor',
+                'Media Stream Data',
+                'Media Stream Stats',
+                'Transcoded Indicator',
+                'HD Codec Rate',
+                'Remote Ingress Audio RTCP Learned Metrics',
+                'Remote Egress Audio RTCP Learned Metrics',
+            ];
+        $CDRFIELDS['ATTEMPT'] = [
+                'Record Type',
+                'Gateway Name',
+                'Accounting ID',
+                'Start Time (system ticks)',
+                'Node Time Zone',
+                'Start Time (MM/DD/YYYY)',
+                'Start Time (HH/MM/SS.s)',
+                'Ticks from Setup Msg to Policy Response',
+                'Ticks from Setup Msg to Alert/Proc/Prog',
+                'Disconnect Time (HH:MM:SS.s)',
+                'Ticks from Disconnect to Call Termination',
+                'Call Disconnect Reason',
+                'Service Delivered',
+                'Call Direction',
+                'Service Provider',
+                'Transit Network Selection Code (TNS)',
+                'Calling Number',
+                'Called Number',
+                'Extra Called Address Digits',
+                'Number of Called Num Translations',
+                'Called Number Before Translation #1',
+                'Translation Type #1',
+                'Called Number Before Translation #2',
+                'Translation Type #2',
+                'Billing Number',
+                'Route Label',
+                'Route Attempt Number',
+                'Route Selected',
+                'Egress Local Signaling IP Address',
+                'Egress Remote Signaling IP Address',
+                'Ingress Trunk Group Name',
+                'Ingress PSTN Circuit End Point',
+                'Ingress IP Circuit End Point',
+                'Egress PSTN Circuit End Point',
+                'Egress IP Circuit End Point',
+                'Originating Line Information (OLIP)',
+                'Jurisdiction Information Parameter (JIP)',
+                'Carrier Code',
+                'Call Group ID',
+                'Script Log Data',
+                'Ticks from Setup Msg to Rx of EXM',
+                'Ticks from Setup Msg to Generation of EXM',
+                'Calling Party Nature of Address',
+                'Called Party Nature of Address',
+                'Ingress Protocol Variant Specific Data',
+                'Ingress Signaling Type',
+                'Egress Signaling Type',
+                'Ingress Far End Switch Type',
+                'Egress Far End Switch Type',
+                'Carrier Code of Carrier who Owns iTG Far End',
+                'Carrier Code of Carrier who Owns eTG Far End',
+                'Calling Party Category',
+                'Dialed Number',
+                'Carrier Selection Information',
+                'Called Number Numbering Plan',
+                'Generic Address Parameter',
+                'Disconnect Initiator',
+                'Egress Trunk Group Name',
+                'Egress Protocol Variant Specific Data',
+                'Incoming Calling Number',
+                'AMA Call Type',
+                'Message Billing Indicator (MBI)',
+                'LATA',
+                'Route Index Used',
+                'Calling Party Presentation Restriction',
+                'Incoming ISUP Charge Number',
+                'Incoming ISUP Nature Of Address',
+                'Dialed Number Nature of Address',
+                'Ingress Codec Info',
+                'Egress Codec Info',
+                'Ingress RTP Packetization Time',
+                'Global Call ID (GCID)',
+                'Terminated With Script Execution',
+                'Originator Echo Cancellation',
+                'Terminator Echo Cancellation',
+                'Charge Flag',
+                'AMA slp ID',
+                'AMA BAF Module',
+                'AMA Set Hex AB Indication',
+                'Service Feature ID',
+                'FE Parameter',
+                'Satellite Indicator',
+                'PSX Billing Info',
+                'Originating TDM Trunk Group Type',
+                'Terminating TDM Trunk Group Type',
+                'Ingress Trunk Member Number',
+                'Egress Trunk Group ID',
+                'Egress Switch ID',
+                'Ingress Local ATM Address',
+                'Ingress Remote ATM Address',
+                'Egress Local ATM Address',
+                'Egress Remote ATM Address',
+                'PSX Call Type',
+                'Outgoing Route Trunk Group ID',
+                'Outgoing Route Message ID',
+                ' Incoming Route ID',
+                'Calling Name',
+                'Calling Name Type',
+                'Incoming Calling Party Numbering Plan',
+                'Outgoing Calling Party Numbering Plan',
+                'Calling Party Business Group ID',
+                'Called Party Business Group ID',
+                'Calling Party PPDN',
+                'Ticks from Setup Msg to Last Route Attempt',
+                'Disconnect Time (MM/DD/YYYY)',
+                'Billing Number Nature of Address',
+                'Incoming Calling Number Nature of Address',
+                'Egress Trunk Member Number',
+                'Selected Route Type',
+                'Cumulative Route Index',
+                'Call Disconnect Reason Sent to Ingress',
+                'Call Disconnect Reason Sent to Egress',
+                'ISDN PRI Calling Party Subaddress',
+                'Outgoing Trunk Group Number in EXM',
+                'Ingress Local Signaling IP Address',
+                'Ingress Remote Signaling IP Address',
+                'Record Sequence Number',
+                'Transmission Medium Requirement',
+                'Information Transfer Rate',
+                'USI User Info Layer 1',
+                'Unrecognized Raw ISUP Calling Party Category',
+                'FSD: Release Link Trunking',
+                'FSD: Two B-Channel Transfer',
+                'Calling Party Business Unit',
+                'Called Party Business Unit',
+                'FSD: Redirecting',
+                'FSD: Ingress Release Link Trunking',
+                'PSX Index',
+                'PSX Congestion Level',
+                'PSX Processing Time (milliseconds)',
+                'Script Name',
+                'Ingress External Accounting Data',
+                'Egress External Accounting Data',
+                'Egress RTP Packetization Time',
+                'Answer Supervision Type',
+                'Ingress Sip Refer & Replaces Feature Specific Data',
+                'Egress Sip Refer Feature Specific Data',
+                'Network Transfers Feature Specific Data',
+                'Call Condition',
+                'Toll Indicator',
+                'Generic Number (Number)',
+                'Generic Number Presentation Restriction Indicator',
+                'Generic Number Numbering Plan',
+                'Generic Number Nature of Address',
+                'Generic Number Type',
+                'Final Attempt Indicator',
+                'Originating Trunk Type',
+                'Terminating Trunk Type',
+                'Remote GSX Billing Indicator',
+                'Extra Disconnect Reason',
+                'VPN Calling Private Presence Number',
+                'VPN Calling Public Presence Number',
+                'External Furnish Charging Info',
+                'Announcement Id',
+                'Network Data - Source Information',
+                'Network Data - Partition ID',
+                'Network Data - Network ID',
+                'Network Data - NCOS',
+                'ISDN access Indicator',
+                'Call Disconnect Location',
+                'Call Disconnect Location Transmitted to Ingress',
+                'Call Disconnect Location Transmitted to Egress',
+                'Network Call Reference - Call Identity',
+                'Network Call Reference - Signaling Point Code',
+                'Ingress MIME Protocol Variant Specific Data',
+                'Egress MIME Protocol Variant Specific Data',
+                'Video Data - Video Bandwidth, Video Call Duration, ',
+                'Ingress/Egress IP video Endpoint',
+                'SVS Customer',
+                'SVS Vendor - Deprecated in 7.2.2 as part of Pcr1624',
+                'Call To Test PSX',
+                'Psx Overlap Route Requests',
+                'Call Setup Delay',
+                'Overload Status',
+                'reserved',
+                'reserved',
+                'Mlpp Precedence Level',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'reserved',
+                'Global Charge Reference',
+
+            ];
+
+        return $CDRFIELDS;
+    }
 
     public static function get_disconnect_initiator_code($code)
     {

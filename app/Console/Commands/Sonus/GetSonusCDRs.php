@@ -47,92 +47,100 @@ class GetSonusCDRs extends Command
      */
     public function handle()
     {
-        $this->SBCS = array_filter($this->SBCS);
-        // print_r($this->SBCS);
+		$starttime = Carbon::now(); 
+		
+		$this->SBCS = array_filter($this->SBCS);
 
         if (! count($this->SBCS)) {
             echo 'No SBCs Configured. Killing job.'.PHP_EOL;
 
             return;
         }
+		
+		// SBC SFTP Creds
+		$username = env('SONUSSFTPUSER'); 
+		$password = env('SONUSSFTPPASS'); 
+		
+		$cutoff_hours = 48; 				// Number of hours to insert into the DB. Anything past that ignore it. 
+		
+		$now = Carbon::now(); 
+		print "Starting - " . $now.PHP_EOL; 
+		
 
         foreach ($this->SBCS as $SBC) {
+			
+			if (env('SONUS_DOMAIN_NAME')) {
+				$hostname = $SBC.'.'.env('SONUS_DOMAIN_NAME');
+			} else {
+				$hostname = $SBC;
+			}
 
             // Get latest CDR File.
-            $locations = Sonus5kCDR::get_cdr_log_names($SBC);
+			print "Starting - {$SBC} - " . $now.PHP_EOL; 
+			print "Fetching CDR Files from {$SBC}".PHP_EOL; 
+		
+            $locations = Sonus5kCDR::get_cdr_log_names($hostname, $username, $password);
+			
+            foreach ($locations as $key => $location) {
 
-            // Trim off the two most recent files and set them to the locations.
-            // $locations = array_slice($locations, 0, 1);
+				$timestamp = Carbon::createFromTimestamp($key)->toDateTimeString(); 
+				//print "File Timestamp: ".$timestamp.PHP_EOL; 
+				
+				$cutoff = $now->copy()->subHours($cutoff_hours); 
+				//print "Cutoff Timestamp: ".$cutoff.PHP_EOL; 
 
-            foreach ($locations as $location) {
-                $cdrs = $this->get_cdrs_from_file($SBC, $location);
-                $cdr_array = Sonus5kCDR::parse_cdr($cdrs);
-                //print_r($cdr_array);
+				if($cutoff >= $timestamp){
+					//print $timestamp." Is less than 48 hrs ago. Skipping... ".PHP_EOL; 
+					continue; 
+				}else{
+					print PHP_EOL; 
+					print "Filename: ".$location.PHP_EOL; 
+					print "Opening File to inspect contents...".PHP_EOL; 
+				}
+				
+				// Login to Sonus and get File via SFTP
+				$file = file_get_contents(storage_path("sonus/TEST.ACT"), true);
+				$file = Sonus5kCDR::get_file_from_location($hostname, $username, $password, $location);
+				
+				
+				$cdr_array = Sonus5kCDR::parse_cdr_file_into_array($file); 							// Parse CSV into workable Array
+				$cdr_array = Sonus5kCDR::get_completed_cdrs_from_array($cdr_array); 				// Get Stop and Attempts records only from array
+				
+				$record_count = count($cdr_array); 													// Get the number of records in the array. 
+				
+				print "Found ".$record_count." completed records to check db".PHP_EOL; 	
+				
+				$cdr_array = Sonus5kCDR::check_db_for_records_return_records_to_insert($cdr_array); // Find starting place if some records already exist in the array... divide and conquer!!!!!
+				
+				if($cdr_array){
+					print "Insert ".(count($cdr_array))." cdr records into the DB... ".PHP_EOL; 
+				}else{
+					print "Nothing to insert... Moving on...".PHP_EOL; 
+					continue;		
+				}
+				
+				$count_total = count($cdr_array); 
+				$i = 0; 
+				
+				// We could use array_chunk here if we needed to for speed... However I'm not sure if this could lead to duplicates. Also not sure if I could do that with Kafka. Would also need to move formating above. Avoiding for now... 
+				/* Example: 
+					foreach (array_chunk($cdr_array, 1000) as $chunk) {
+						Sonus5kCDR::insert($chunk);            // insert the array into the database. Much faster than inserting individual rows.
+					}
+				*/
                 foreach ($cdr_array as $cdr) {
-                    //print_r($cdr);
-                    $RECORD = [];
-                    $RECORD['gw_name'] = $cdr['Gateway Name'];
-                    $RECORD['type'] = $cdr['Record Type'];
-                    $RECORD['accounting_id'] = $cdr['Accounting ID'];
-                    $RECORD['gcid'] = $cdr['Global Call ID (GCID)'];
+					$i++; 																// Count for display purposes. 
+					$RECORD = Sonus5kCDR::get_db_format_from_cdr($cdr);
 
-                    // Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
-                    //$RECORD['start_date'] = $cdr['Start Time (MM/DD/YYYY)'];
-                    //$RECORD['start_time'] = $cdr['Start Time (HH/MM/SS.s)'];
-                    $date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
-                    $RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'];
-
-                    // Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
-                    //$RECORD['disconnect_date'] = $cdr['Disconnect Time (MM/DD/YYYY)'];
-                    //$RECORD['disconnect_time'] = $cdr['Disconnect Time (HH:MM:SS.s)'];
-                    //$date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
-                    $date = Sonus5kCDR::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
-                    $RECORD['disconnect_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
-
-                    $RECORD['disconnect_initiator'] = $cdr['Disconnect Initiator'];
-                    $RECORD['disconnect_reason'] = $cdr['Call Disconnect Reason'];
-
-                    $RECORD['calling_name'] = $cdr['Calling Name'];
-                    $RECORD['calling_number'] = $cdr['Calling Number'];
-                    $RECORD['dialed_number'] = $cdr['Dialed Number'];
-                    $RECORD['called_number'] = $cdr['Called Number'];
-
-                    $RECORD['route_label'] = $cdr['Route Label'];
-                    $RECORD['ingress_trunkgrp'] = $cdr['Ingress Trunk Group Name'];
-                    $RECORD['ingress_media'] = $cdr['Ingress IP Circuit End Point'];
-
-                    $RECORD['egress_trunkgrp'] = $cdr['Egress Trunk Group Name'];
-                    $RECORD['egress_media'] = $cdr['Egress IP Circuit End Point'];
-
-                    if ($RECORD['type'] == 'STOP') {
-                        $RECORD['call_duration'] = $cdr['Call Service Duration'];
-
-                        if (isset($cdr['Media Stream Stats']) && $cdr['Media Stream Stats']) {
-                            $RECORD['ingress_lost_ptks'] = $cdr['Media Stream Stats'][7];
-                            $RECORD['egress_lost_ptks'] = $cdr['Media Stream Stats'][13];
-                        }
-                    }
-
-                    if (isset($cdr['Ingress Protocol Variant Specific Data']) && $cdr['Ingress Protocol Variant Specific Data']) {
-                        $RECORD['ingress_callid'] = $cdr['Ingress Protocol Variant Specific Data'][1];
-                        $RECORD['disconnect_ingress_sip_response'] = $cdr['Ingress Protocol Variant Specific Data'][18];
-                    }
-                    if (isset($cdr['Egress Protocol Variant Specific Data']) && $cdr['Egress Protocol Variant Specific Data']) {
-                        $RECORD['egress_callid'] = $cdr['Egress Protocol Variant Specific Data'][1];
-                        $RECORD['disconnect_egress_sip_response'] = $cdr['Egress Protocol Variant Specific Data'][18];
-                    }
-
-                    $RECORD['cdr_json'] = $cdr;
-
-                    //print_r($RECORD);
-                    ///if(\App\Sonus5kCDR::where('accounting_id', $RECORD['accounting_id'])->count()){
-                    if (\App\Sonus5kCDR::where([['accounting_id', $RECORD['accounting_id']], ['gw_name', $RECORD['gw_name']]])->count()) {
-                        //print "Found Record Matching Accounting ID:".$RECORD['accounting_id']." | ".$RECORD['start_time'].PHP_EOL;
+                    if (Sonus5kCDR::check_db_for_record($RECORD)) {																								// Check if record exists in the db. 
+                        print "Found Record {$i} of {$count_total}: Accounting ID:".$RECORD['accounting_id']." | ".$RECORD['start_time'].PHP_EOL;
+						continue; 
                     } else {
-                        echo 'Creating New Record: '.$RECORD['accounting_id'].PHP_EOL;
-                        \App\Sonus5kCDR::firstOrCreate($RECORD);
-
-                        // Insert into Kafka
+						echo "Creating New Record: {$i} of {$count_total}: ".$RECORD['accounting_id'].PHP_EOL;
+                        
+						\App\Sonus5kCDR::firstOrCreate($RECORD);			// Try to create the new record in the db. 
+						
+                        // Ship cdr record to Kafka for Elastic Search capabilities. 
                         if (getenv('KAFKA_BROKERS')) {
 
                             //$RECORD['disconnect_time'] = Carbon::parse($RECORD['disconnect_time']);
@@ -161,75 +169,17 @@ class GetSonusCDRs extends Command
                                     //Log::info('[+] CAS high alert successfully sent to Kafka: '.$alert['alert_id']);
                                 }
 
-                                //print_r($result);
                             } catch (\Exception $E) {
                                 //echo "{$E->getMessage()}".PHP_EOL;
                             }
                         }
-
-                        //Log::error('[!] [KAFKA_WARNING] Error sending CDR alert to Kafka: '.$result[0]['data'][0]['partitions'][0]['errorCode']);
-
-                        //print_r($RECORD);
                     }
                 }
             }
         }
-
-        /*
-        $INSERT['totalCalls'] = $totalCalls;
-        $INSERT['stats'] = json_encode($STATS, true);
-        print_r($INSERT);
-        //return $STATS;
-
-        $result = Sonus5kCDR::create($INSERT);
-
-        print_r($result);
-
-        */
+		
+		print "Start Time: ".$starttime.PHP_EOL; 
+		print "Stop Time: ". Carbon::now().PHP_EOL; 
     }
 
-    public static function get_cdrs_from_file($SBC, $location)
-    {
-        if (env('SONUS_DOMAIN_NAME')) {
-            $hostname = $SBC.'.'.env('SONUS_DOMAIN_NAME');
-        } else {
-            $hostname = $SBC;
-        }
-
-        $lasttwodays_calls = [];
-
-        $sftp = new Net_SFTP($hostname, 2024);
-        if (! $sftp->login(env('SONUSSFTPUSER'), env('SONUSSFTPPASS'))) {
-            exit('Login Failed');
-        }
-
-        $currentfile = $sftp->get($location);
-
-        $currentfile = explode(PHP_EOL, $currentfile);
-        array_shift($currentfile);
-
-        $today = Sonus5kCDR::get_today_in_sonus_format();
-        $yesterday = Sonus5kCDR::get_yesterday_in_sonus_format();
-        $daybefore = Sonus5kCDR::get_daybeforelast_in_sonus_format();
-        foreach ($currentfile as $callrecord) {
-
-            // Parse record to the the record type.
-            $callrecord = explode(',', $callrecord);
-            if ($callrecord[0] == 'STOP' || $callrecord[0] == 'ATTEMPT') {
-
-                // Only Return entries that are in the last two days.
-                //if ($callrecord[5] == $today || $callrecord[5] == $yesterday || $callrecord[5] == $daybefore) {
-                if ($callrecord[5] == $today || $callrecord[5] == $yesterday) {
-                    $callrecord = implode(',', $callrecord);
-                    $lasttwodays_calls[] = $callrecord;
-                }
-            }
-
-            // Pop off the first member of the array to reduce memory usage.
-            array_shift($currentfile);
-        }
-
-        // Return the raw comma seperated Log entries not an array for the last 2 days.
-        return implode(PHP_EOL, $lasttwodays_calls);
-    }
 }

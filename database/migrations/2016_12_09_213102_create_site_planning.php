@@ -16,7 +16,7 @@ class CreateSitePlanning extends Migration
         // Site Code Table
         Schema::create('site', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('sitecode');                         // Name
+            $table->string('sitecode')->index();                         // Name
             $table->text('comment')->nullable();            // Comment
             $table->text('system_id')->nullable();          // Comment
             //$table->text('type')->nullable();                  // Comment

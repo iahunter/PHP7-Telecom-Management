@@ -40,7 +40,7 @@ class AbilitiesExtendEntityid extends Migration
     public function down()
     {
         Schema::table('abilities', function ($table) {
-            $table->integer('entity_id')->unsigned()->nullable()->change();
+            //$table->integer('entity_id')->unsigned()->nullable()->change();
         });
     }
 }

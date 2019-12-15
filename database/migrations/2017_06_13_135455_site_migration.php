@@ -16,7 +16,7 @@ class SiteMigration extends Migration
         // Create Site Migration Table
         Schema::create('site_migration', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('sitecode');
+            $table->string('sitecode')->index();
             $table->text('comment')->nullable();            // Comment
             $table->text('trunking')->nullable();           // Comment
             $table->text('e911')->nullable();               // Comment

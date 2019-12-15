@@ -16,9 +16,9 @@ class CreateCucmConfigs extends Migration
         // Site Code Table
         Schema::create('cucmsite', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('sitecode');                         // Name
-            $table->string('trunking')->nullable();           // Comment
-            $table->string('e911')->nullable();                  // Comment
+            $table->string('sitecode')->index();                         // Name
+            $table->string('trunking')->nullable()->index();           // Comment
+            $table->string('e911')->nullable()->index();                  // Comment
             $table->integer('shortextenlength')->nullable();      // Comment
             $table->json('sitesummary')->nullable();           // JSON Details ID of DID Blocks used for the site.
             $table->json('sitedetails')->nullable();           // JSON Details ID of DID Blocks used for the site.
@@ -29,13 +29,13 @@ class CreateCucmConfigs extends Migration
         // Child Phone Plan - parent site
         Schema::create('cucmphone', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('description')->nullable();
-            $table->string('devicepool')->nullable();
-            $table->string('model')->nullable();
+            $table->string('devicepool')->nullable()->index();
+            $table->string('model')->nullable()->index();
             $table->string('ownerid')->nullable();
-            $table->string('css')->nullable();
-            $table->string('erl')->nullable();            // Future E911 Integration
+            $table->string('css')->nullable()->index();
+            $table->string('erl')->nullable()->index();            // Future E911 Integration
             $table->string('ipv4address')->nullable();        // Future RISDB API
 
             $table->string('risdb_ipv4address')->nullable();            // RISDB IP Address

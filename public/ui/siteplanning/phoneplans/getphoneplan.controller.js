@@ -91,7 +91,20 @@ angular
 					$state.go('logout');
 				}
 
-				vm.phonemodels = res.data.response;
+				vm.models = res.data.response;
+				
+				vm.phonemodels = []
+				
+				// remove SIP Phones from Bulk tool. Too much complexity for that. 
+				angular.forEach(vm.models, function(key,model) {
+					// Had to call the API directly inside the loop because the call backs weren't coming back fast enough to set the object. 
+					//console.log(key)
+					if(key != "Third-party SIP Device (Advanced)"){
+						//console.log(key)
+						vm.phonemodels.push(key)
+					}
+					
+					});
 				
 				
 				//console.log(vm.phonemodels);

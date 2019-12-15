@@ -45,8 +45,25 @@ class BouncerPermissions extends Command
         $this->assignAdminGroupBouncerRoles(env('ADMIN_GRP'));
         $this->assignExecGroupBouncerRoles(env('EXECS_GRP'));
         $this->assignServiceDeskBouncerRoles(env('SERVICEDESK_GRP'));
-        $this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));
         $this->assignPMBouncerRoles(env('NETWORK_GRP'));
+		
+		// $this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));
+		// To assign more than one group we can format the groups in JSON format in the .env
+		if(json_decode(env('FIELD_TECH_GRP', true))){
+			// If valid JSON
+			echo "Found multiple groups in JSON... Attempting to assign roles for each group...".PHP_EOL; 
+			
+			// Get groups from JSON .env variable. 
+			$groups = json_decode(env('FIELD_TECH_GRP', true));
+			
+			foreach($groups as $group){
+				$this->assignFieldTechsBouncerRoles($group);
+			}
+		}
+		else{
+			// If not in JSON format then just assign the role from string. 
+			$this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));
+		}
     }
 
     protected function assignAdminGroupBouncerRoles($group)

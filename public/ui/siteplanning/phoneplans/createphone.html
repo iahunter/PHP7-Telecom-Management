@@ -8,9 +8,10 @@
 		<tr class="info">
 			<th>Firstname</th>							
 			<th>Lastname</th>
-			<th>Username</th>
+			<th>Username (optional - employees only)</th>
 			<th>Device Name</th>
 			<th>Device Type</th>
+			<!--th>Create Local End User</th>-->
 			<th>Directory Number</th>
 			<th>Language</th>
 			<th>Voicemail</th>
@@ -25,7 +26,7 @@
 	<!-- Allow you to edit and delete Blocks with new buttons -->
 	<tr>
 		
-		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.firstname"></td>
+		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.firstname" required></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.lastname"></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.username"></td>
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.name"></td>
@@ -35,6 +36,10 @@
 			<select class="form-control" ng-model='newphone.device' ng-options="model as model for model in vm.phonemodels" data-width="100%" name="model">
 			</select>
 		</td>
+		<!-- SIP Phones suck... so wanted to look at building a local end user account for the phone. Issue is error checking in a table and validation isn't the easiest thing to do. Pointed user to use MACD form under site management for SIP Phones. 
+		<td   ng-show="vm.showaddrow && newphone.device != 'Third-party SIP Device (Advanced)'"><input type="checkbox" disabled style="width: 17px; height: 17px;" class="form-control form-control-sm" ng-model="newphone.createuser"></td>
+		<td   ng-show="vm.showaddrow && newphone.device == 'Third-party SIP Device (Advanced)'"><input type="checkbox"  style="width: 17px; height: 17px;" class="form-control form-control-sm" ng-model="newphone.createuser"></td>
+		-->
 		<td   ng-show="vm.showaddrow"><input type="text" class="form-control form-control-sm" ng-model="newphone.dn"></td>
 		<td   ng-show="vm.showaddrow">
 			<!--<input type="text" class="form-control form-control-sm" ng-model="newphone.language">-->
@@ -51,7 +56,7 @@
 		
 		<td  ng-show="vm.showaddrow">
 			<!--<button class="btn btn-xs btn-primary"  ng-click="vm.createphone(phone);vm.edit[phone.id] = !vm.edit[phone.id]"> Save </button>-->
-			<button class="btn btn-xs btn-primary"  ng-click="vm.createphone(newphone)"> Save </button>
+			<button class="btn btn-xs btn-primary" submit ng-click="vm.createphone(newphone)"> Save </button>
 			<button class="btn btn-xs btn-default"  ng-click="vm.phoneaddtoggle(vm.showaddrow)"> Undo </button>
 		</td>
 	</tr>

@@ -23,7 +23,7 @@ class Sonus5kCDRs extends Migration
             $table->timestamp('disconnect_time')->nullable()->index();
             $table->integer('call_duration')->nullable();
 
-            $table->string('calling_name')->nullable(); 
+            $table->string('calling_name')->nullable();
             $table->string('calling_number')->nullable()->index();
             $table->string('called_number')->nullable()->index();
             $table->string('dialed_number')->nullable()->index();

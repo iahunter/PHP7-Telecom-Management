@@ -47,8 +47,12 @@ class Sonus5kCDR extends Model
     public static function convert_sonus_date_format_to_carbon($mm_dd_yyyy)
     {
         // This returns Y-m-d format.
-        $date = Carbon::createFromFormat('m/d/Y', $mm_dd_yyyy)->format('Y-m-d');
-
+		if($mm_dd_yyyy){
+			$date = Carbon::createFromFormat('m/d/Y', $mm_dd_yyyy)->format('Y-m-d');
+		}else{
+			return null; 
+		}
+		
         return $date;
     }
 
@@ -98,6 +102,33 @@ class Sonus5kCDR extends Model
         $format = 'm/d/Y';
 
         return Carbon::parse($yesterday)->format('m/d/Y');
+    }
+	
+	public static function filter_out_cdrs_older_than_cutoff($cdr_array, $cutoff_hours)
+    {
+
+		//print "Checking Start Dates vs Cutoff".PHP_EOL; 
+        $cutoff = \Carbon\Carbon::now()->subHours($cutoff_hours);
+        $format = 'm/d/Y';
+
+        $cutoff = Carbon::parse($cutoff)->format($format);
+		
+		$return = []; 
+		foreach($cdr_array as $cdr){
+			if($cdr['Start Time (MM/DD/YYYY)']){
+				$start_date = $cdr['Start Time (MM/DD/YYYY)']; 
+				if($start_date >= $cutoff){
+					//print "CDR is after cutoff date {$cutoff}... Return for insertion. {$start_date}".PHP_EOL; 
+					//print_r($cdr); 
+					$return[] = $cdr; 
+				}else{
+					//print "CDR is to old to be added. Past cutoff Date of {$cutoff}... Skipping... {$start_date}".PHP_EOL; 
+				}
+			}
+			 
+		}
+		
+		return $return; 
     }
 
     public static function get_cdr_log_names($hostname, $username, $password)
@@ -295,7 +326,7 @@ class Sonus5kCDR extends Model
 
             if ($cdr_type == 'STOP' || $cdr_type == 'ATTEMPT') {					// Add only Stop and Attemps to the new Array.
 
-                $cdr = self::cdr_array_to_mapped_keys_cdr_array($callrecord); // Map keys for the call record.
+                $cdr = self::cdr_array_to_mapped_keys_cdr_array($callrecord); 		// Map keys for the call record.
 
                 if ($cdr) {
                     $completed_calls_array[] = $cdr; 								// Append to array.
@@ -343,9 +374,14 @@ class Sonus5kCDR extends Model
         $RECORD['gcid'] = $cdr['Global Call ID (GCID)'];
 
         // Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
-        $date = self::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
-        $RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'];
-
+		if($cdr['Start Time (MM/DD/YYYY)'] && $cdr['Start Time (HH/MM/SS.s)']){
+			$date = self::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
+			$RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'];
+		}else{
+			$date = self::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
+			$RECORD['start_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
+		}
+        
         $date = self::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
         $RECORD['disconnect_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
 
@@ -365,7 +401,13 @@ class Sonus5kCDR extends Model
         $RECORD['egress_media'] = $cdr['Egress IP Circuit End Point'];
 
         if ($RECORD['type'] == 'STOP') {
-            $RECORD['call_duration'] = $cdr['Call Service Duration'];
+			
+			if($cdr['Call Service Duration']){
+				 $RECORD['call_duration'] = $cdr['Call Service Duration'];
+			}else{
+				$RECORD['call_duration'] = 0;
+			}
+            
 
             if (isset($cdr['Media Stream Stats']) && $cdr['Media Stream Stats']) {
                 $RECORD['ingress_lost_ptks'] = $cdr['Media Stream Stats'][7];

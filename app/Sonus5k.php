@@ -71,17 +71,17 @@ class Sonus5k extends Model
 
         $response = self::wrapapi($verb, $apiurl);
         // We just want to return an array of calls.
-		if(isset($response['callSummaryStatus'])){
-			if (($response['callSummaryStatus']) && array_key_exists('GCID', $response['callSummaryStatus'])) {
-				// Wrap the single object in an array - found GCID key inside CallSummaryStatus
-				return [$response['callSummaryStatus']];
-			} else {
-				return $response['callSummaryStatus'];
-			}
-		}else{
-			return null;
-		}
-        
+        if (isset($response['callSummaryStatus'])) {
+            if (($response['callSummaryStatus']) && array_key_exists('GCID', $response['callSummaryStatus'])) {
+                // Wrap the single object in an array - found GCID key inside CallSummaryStatus
+                return [$response['callSummaryStatus']];
+            } else {
+                return $response['callSummaryStatus'];
+            }
+        } else {
+            return;
+        }
+
         //return self::wrapapi($verb, $apiurl);
     }
 
@@ -93,17 +93,16 @@ class Sonus5k extends Model
         $response = self::wrapapi($verb, $apiurl);
 
         // We just want to return an array of alarms.
-		if(isset($response['currentStatus'])){
-			if (($response['currentStatus']) && array_key_exists('alarmId', $response['currentStatus'])) {
-				// Wrap the single object in an array - found GCID key inside CallSummaryStatus
-				return [$response['currentStatus']];
-			} else {
-				return $response['currentStatus'];
-			}
-		}else{
-			return null; 
-		}
-        
+        if (isset($response['currentStatus'])) {
+            if (($response['currentStatus']) && array_key_exists('alarmId', $response['currentStatus'])) {
+                // Wrap the single object in an array - found GCID key inside CallSummaryStatus
+                return [$response['currentStatus']];
+            } else {
+                return $response['currentStatus'];
+            }
+        } else {
+            return;
+        }
 
         //return self::wrapapi($verb, $apiurl);
     }

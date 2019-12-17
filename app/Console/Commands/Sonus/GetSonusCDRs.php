@@ -74,7 +74,7 @@ class GetSonusCDRs extends Command
             }
 
             // Get latest CDR File.
-			echo "##############################################".PHP_EOL; 
+            echo '##############################################'.PHP_EOL;
             echo "Starting - {$SBC} - ".$now.PHP_EOL;
             echo "Fetching CDR Files from {$SBC}".PHP_EOL;
 
@@ -101,14 +101,14 @@ class GetSonusCDRs extends Command
 
                 $cdr_array = Sonus5kCDR::parse_cdr_file_into_array($file); 								// Parse CSV into workable Array
                 $cdr_array = Sonus5kCDR::get_completed_cdrs_from_array($cdr_array); 					// Get Stop and Attempts records only from array
-				
-				$record_count = count($cdr_array); 	
-				echo 'Found '.$record_count.' completed records.. Filter out records older than cutoff of: '.$cutoff_hours." hours. ".PHP_EOL;
-				
-				$cdr_array = Sonus5kCDR::filter_out_cdrs_older_than_cutoff($cdr_array, $cutoff_hours); 	// Filter out records older than cutoff date. 
-				
-				$record_count = count($cdr_array); 	
-				echo 'Found '.$record_count.' completed records after the cutoff date to check db for insertion'.PHP_EOL;
+
+                $record_count = count($cdr_array);
+                echo 'Found '.$record_count.' completed records.. Filter out records older than cutoff of: '.$cutoff_hours.' hours. '.PHP_EOL;
+
+                $cdr_array = Sonus5kCDR::filter_out_cdrs_older_than_cutoff($cdr_array, $cutoff_hours); 	// Filter out records older than cutoff date.
+
+                $record_count = count($cdr_array);
+                echo 'Found '.$record_count.' completed records after the cutoff date to check db for insertion'.PHP_EOL;
 
                 $cdr_array = Sonus5kCDR::check_db_for_records_return_records_to_insert($cdr_array); // Find starting place if some records already exist in the array... divide and conquer!!!!!
 
@@ -121,7 +121,7 @@ class GetSonusCDRs extends Command
 
                 $count_total = count($cdr_array);
                 $i = 0;
-				
+
                 // We could use array_chunk here if we needed to for speed... However I'm not sure if this could lead to duplicates. Also not sure if I could do that with Kafka. Would also need to move formating above. Avoiding for now...
                 /* Example:
                     foreach (array_chunk($cdr_array, 1000) as $chunk) {

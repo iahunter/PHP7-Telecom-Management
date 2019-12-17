@@ -255,12 +255,12 @@ class Sonus5kCDR extends Model
 
     /*
         Using Divide an Conquer to find last record inserted into the DB from large arrays.
-        Pass in an array of CDR records. It will check to see where the script left off if it stopped inside the array and pass pack remaining records to be inserted.
-        If the last record in the array is found in the DB, it assumes everything before it has alredy been inserted.
+        Pass in an array of CDR records. It will check to see where the script left off if it stopped inside the array and pass back remaining records to be inserted.
+        If the last record in the array is found in the DB, it assumes everything before it has already been inserted.
     */
     public static function check_db_for_records_return_records_to_insert(array $records)
     {
-        echo 'Checking '.count($records).' Records in Array'.PHP_EOL;
+        echo 'Checking '.count($records).' records in the cdr array to find last record in the DB...'.PHP_EOL;
 
         $min = 0;
         $max = count($records) - 1;

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddLastRegisteredFieldToCucmphoneTable extends Migration
 {
@@ -14,8 +14,8 @@ class AddLastRegisteredFieldToCucmphoneTable extends Migration
     public function up()
     {
         Schema::table('cucmphone', function (Blueprint $table) {
-			$table->timestamp('last_registered')->nullable();
-		});
+            $table->timestamp('last_registered')->nullable();
+        });
     }
 
     /**
@@ -26,7 +26,7 @@ class AddLastRegisteredFieldToCucmphoneTable extends Migration
     public function down()
     {
         Schema::table('cucmphone', function (Blueprint $table) {
-			$table->dropColumn('last_registered');
-		});
+            $table->dropColumn('last_registered');
+        });
     }
 }

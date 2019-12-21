@@ -81,11 +81,16 @@ class CucmPhoneIPAddresses extends Command
 
                     if ($risdb_registration_status) {
                         $phone->fill(['risdb_registration_status' => $risdb_registration_status]);
+						
+						if($risdb_registration_status == "Registered"){
+							$now = Carbon::now();
+							$phone->fill(['last_registered' => $now]);
+						}
                     }
                     if ($risdb_ipv4address) {
                         $phone->fill(['risdb_ipv4address' => $risdb_ipv4address]);
                     }
-
+					
                     $phone->save();
                 } else {
                     $phone->fill(['risdb_registration_status' => null]);

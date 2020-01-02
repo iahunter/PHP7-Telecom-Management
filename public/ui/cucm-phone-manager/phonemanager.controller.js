@@ -97,6 +97,19 @@ angular
 										vm.phone.ipv4address = result.ipv4address;
 										vm.phone.risdb_ipv4address = result.risdb_ipv4address;
 										vm.phone.risdb_registration_status = result.risdb_registration_status;
+										
+										// Convert UTC to local time
+										console.log(result)
+										if(result.last_registered){
+											var dateString = result.last_registered;
+											last_registered = moment().utc().format(dateString);
+											last_registered = moment.utc(last_registered).toDate();
+											last_registered_local = last_registered.toLocaleString()
+											vm.phone.last_registered = last_registered_local;
+										}else{
+											vm.phone.last_registered = "NA"
+										}
+										
 
 										console.log(vm.phone)
 									}

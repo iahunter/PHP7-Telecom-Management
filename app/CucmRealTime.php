@@ -58,6 +58,7 @@ class CucmRealTime extends Model
                         if ($node->ReturnCode == 'Ok') {
                             //echo "Node $node->Name returned " . count($node->CmDevices) . " phones".PHP_EOL;
                             foreach ($node->CmDevices as $device) {
+								//print_r($device); 
                                 if ($device->Status == 'Registered' || $device->Status == 'PartiallyRegistered') {
                                     $output[$device->Name]['ipAddress'] = $device->IpAddress;
                                 }

@@ -101,10 +101,18 @@ class GetSonusCDRs extends Command
 
                 $cdr_array = Sonus5kCDR::parse_cdr_file_into_array($file); 								// Parse CSV into workable Array
                 $cdr_array = Sonus5kCDR::get_completed_cdrs_from_array($cdr_array); 					// Get Stop and Attempts records only from array
-
+				
                 $record_count = count($cdr_array);
                 echo 'Found '.$record_count.' completed records.. Filter out records older than cutoff of: '.$cutoff_hours.' hours. '.PHP_EOL;
-
+				
+				/*
+				foreach($cdr_array as $cdr){
+					//print_r($cdr); 
+					print "{$cdr['Record Type']} {$cdr['Gateway Name']} {$cdr['Accounting ID']} {$cdr['Start Time (MM/DD/YYYY)']} {$cdr['Start Time (HH/MM/SS.s)']}" . PHP_EOL; 
+					
+				}
+				*/
+				
                 $cdr_array = Sonus5kCDR::filter_out_cdrs_older_than_cutoff($cdr_array, $cutoff_hours); 	// Filter out records older than cutoff date.
 
                 $record_count = count($cdr_array);

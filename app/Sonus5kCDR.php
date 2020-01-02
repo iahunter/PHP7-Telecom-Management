@@ -112,13 +112,21 @@ class Sonus5kCDR extends Model
         $format = 'm/d/Y';
 
         $cutoff = Carbon::parse($cutoff)->format($format);
+		$cutoff_unixtimestamp = Carbon::parse($cutoff)->timestamp; 
+		
 
         $return = [];
         foreach ($cdr_array as $cdr) {
+			//print "{$cdr['Start Time (MM/DD/YYYY)']} {$cdr['Accounting ID']}".PHP_EOL; 
             if ($cdr['Start Time (MM/DD/YYYY)']) {
-                $start_date = $cdr['Start Time (MM/DD/YYYY)'];
-                if ($start_date >= $cutoff) {
+				$start_unixtime = Carbon::parse($cdr['Start Time (MM/DD/YYYY)'])->timestamp; 
+               
+				$start_date = $cdr['Start Time (MM/DD/YYYY)'];
+				//print "Start: {$start_date} {$start_unixtime} | Cutoff: {$cutoff} {$cutoff_unixtimestamp}".PHP_EOL;  
+               
+				if ($start_unixtime >= $cutoff_unixtimestamp) {		// convert to unix timestamp for compair
                     //print "CDR is after cutoff date {$cutoff}... Return for insertion. {$start_date}".PHP_EOL;
+					//print $cdr['Accounting ID'].PHP_EOL;
                     //print_r($cdr);
                     $return[] = $cdr;
                 } else {

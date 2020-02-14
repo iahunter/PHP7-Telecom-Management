@@ -119,6 +119,13 @@
 											<span ng-show="sortType == 'risdb_registration_status	' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 									</a>
 								</th>
+								<th>
+									<a href="" ng-click="sortType = 'last_registered	'; sortReverse = !sortReverse" style="color:black">
+										Last Seen Registered
+											<span ng-show="sortType == 'last_registered	' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+											<span ng-show="sortType == 'last_registered	' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+									</a>
+								</th>
 								
 								<th>
 										Lines
@@ -146,6 +153,7 @@
 								<td><a href="http://{{phone.ipv4address}}" target="_blank"><b>{{ phone.ipv4address}}</b></a></td>
 								<td><a href="http://{{phone.risdb_ipv4address}}" target="_blank"><b>{{ phone.risdb_ipv4address}}</b></a></td>
 								<td><b>{{ phone.risdb_registration_status}}</b></td>
+								<td>{{ phone.last_registered}}</td>
 								<td>
 									
 										<!--Nested Table inside Row-->

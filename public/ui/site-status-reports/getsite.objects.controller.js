@@ -414,9 +414,28 @@ angular
 		cucmReportService.getsitephones(id)
 						.then(function(res) {
 							//console.log(res)
-							vm.phones = res.data.response;
-							//console.log(vm.phones);
 							
+							phones = res.data.response;
+							
+							//console.log(vm.phones);
+							var phone_array = []; 
+							angular.forEach(phones, function(phone) {
+								console.log(phone)
+									if(phone.last_registered){
+										var dateString = phone.last_registered;
+
+										last_registered = moment().utc().format(dateString);
+										moment.defaultFormat = "DD.MM.YYYY HH:mm";
+										last_registered = moment.utc(last_registered).toDate();
+										last_registered_local = last_registered.toLocaleString()
+										phone.last_registered = last_registered_local;
+									}
+								phone_array.push(phone)
+							})
+								
+							//console.log(phone_array)
+							//vm.phones = res.data.response;
+							vm.phones = phone_array
 
 						}, function(error) {
 							alert('An error occurred while getting user templates from unity connection')

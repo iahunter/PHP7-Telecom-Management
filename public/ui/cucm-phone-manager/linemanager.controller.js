@@ -208,6 +208,29 @@ angular
 			  });
 			
 		}
+		
+		vm.updatecucmlinecfa = function(line) {
+			console.log(line)
+			console.log("Update CFA: " + line.uuid)
+			
+			var line_update = {};
+			line_update.cfa_destination = {};
+			line_update.cfa_destination = line.newcfa; 
+			line_update.pattern = line.line_details.pattern;
+			
+			cucmService.updatelinecfa(line_update)
+				.then(function(res) {
+					
+					
+					if(res.data.response){
+						vm.refresh()
+					}
+					//console.log(res)
+			  }, function(error) {
+					alert('An error occurred');
+			  });
+			
+		}
 		  
 		
 		vm.deletecucmphone = function(phone) {

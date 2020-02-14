@@ -116,6 +116,7 @@
 										</div>
 									</div>
 								</div>
+								
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="form-group">
@@ -129,6 +130,21 @@
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">New Call Forwarding Number</label>
+											<div class="inputGroupContainer">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+													<input class="form-control" ng-model="vm.linedetails.newcfa">
+												</div>
+											</div>
+										</div>
+										<a class="btn btn-primary" ng-click="vm.updatecucmlinecfa(vm.linedetails)">Update CFA</a>
+									</div>
+									
 								</div>
 							</div>
 						</div>

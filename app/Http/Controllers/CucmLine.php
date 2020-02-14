@@ -44,13 +44,29 @@ class CucmLine extends Cucm
             $DN = $request->pattern;
         }
 
-        $regex = "/^\+1(.*)/";
+        
 
         if (! isset($request->cfa_destination) || ! $request->cfa_destination) {
             //abort(401, 'No CFA Destination');
             $CFA_DESTINATION = '';
         } else {
             $CFA_DESTINATION = $request->cfa_destination;
+			
+			$regex = "/^91(.*)/";
+			
+			if (preg_match($regex, $CFA_DESTINATION)) {
+				$CFA_DESTINATION = substr($CFA_DESTINATION, 2); 
+                $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+            }
+			
+			$regex = "/^1(.*)/";
+			
+			if (preg_match($regex, $CFA_DESTINATION)) {
+				$CFA_DESTINATION = substr($CFA_DESTINATION, 1); 
+                $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+            }
+			
+			$regex = "/^\+1(.*)/";
             if (! preg_match($regex, $CFA_DESTINATION)) {
                 $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
             }

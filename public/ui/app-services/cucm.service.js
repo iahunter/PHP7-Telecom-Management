@@ -460,6 +460,15 @@ angular
 			});
 		}
 		
+		// Update by passing array of full object containing pattern and cfa_destination
+		self.updatelinecfa = function(update) {
+			return $http.put('../api/cucm/line/cfa', update)
+				.then(function(response) {
+					return response;
+				}, function(error) {
+						return error;
+				});
+		}
 
 		return self
 

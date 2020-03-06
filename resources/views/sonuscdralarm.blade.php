@@ -89,7 +89,7 @@
 										<tbody style="font-size: 12px;">
 											
 												<tr>
-													<td>{{$value['called_number']}}</td>
+													<td><a href="{{ url('/telephony/ui/#/line').'/'.$value['called_number']}}">{{$value['called_number']}}</a></td>
 													<td>{{$value['total']}}</td>
 												</tr>
 											
@@ -120,7 +120,7 @@
 										<tbody style="font-size: 12px;">
 											
 												<tr>
-													<td>{{$value['calling_number']}}</td>
+													<td><a href="{{ url('/telephony/ui/#/line').'/'.$value['calling_number']}}">{{$value['calling_number']}}</a></td>
 													<td>{{$value['total']}}</td>
 												</tr>
 											

@@ -236,7 +236,7 @@ class CucmSiteScan extends Command
             //$sites = ["TRAVIS01"];
 
             // Array of DP we don't want to include.
-            $discard = ['TEST', 'Self_Provisioning', 'ECD', '911Enable', 'ATT_SIP', 'Travis', 'CENCOLIT', 'TEMPLATE', 'CENTRAL_SBC_SIPTRUNKS'];
+            $discard = ['911Enable', 'CENTRAL_SBC_SIPTRUNKS'];
 
             if (! $sites) {
                 // Return blank array if no results in $didinfo.

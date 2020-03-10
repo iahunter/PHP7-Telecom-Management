@@ -175,7 +175,7 @@ angular
 					//alert('phone was added successfully');
 					//return $state.reload();
 				}, function(error) {
-					alert('An error occurred while adding phone' + error.data.message)
+					alert('An error occurred while adding number block. ' + error.data.message)
 					console.log(error)
 				});
 			//$state.reload();

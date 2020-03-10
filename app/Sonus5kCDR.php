@@ -383,14 +383,17 @@ class Sonus5kCDR extends Model
         // Convert the Sonus record time to Carbon Y/m/d so we can sort by date and time easier.
         if ($cdr['Start Time (MM/DD/YYYY)'] && $cdr['Start Time (HH/MM/SS.s)']) {
             $date = self::convert_sonus_date_format_to_carbon($cdr['Start Time (MM/DD/YYYY)']);
-            $RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'];
+            $RECORD['start_time'] = $date.' '.$cdr['Start Time (HH/MM/SS.s)'] . " UTC";
+			$RECORD['start_time'] = new \Carbon\Carbon($RECORD['start_time']); 
         } else {
             $date = self::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
-            $RECORD['start_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
+            $RECORD['start_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)']. " UTC";
+			$RECORD['start_time'] = new \Carbon\Carbon($RECORD['start_time']); 
         }
 
         $date = self::convert_sonus_date_format_to_carbon($cdr['Disconnect Time (MM/DD/YYYY)']);
-        $RECORD['disconnect_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)'];
+        $RECORD['disconnect_time'] = $date.' '.$cdr['Disconnect Time (HH:MM:SS.s)']. " UTC";
+		$RECORD['disconnect_time'] = new \Carbon\Carbon($RECORD['disconnect_time']); 
 
         $RECORD['disconnect_initiator'] = $cdr['Disconnect Initiator'];
         $RECORD['disconnect_reason'] = $cdr['Call Disconnect Reason'];

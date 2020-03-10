@@ -64,6 +64,7 @@ return [
             'prefix'    => '',
             'strict'    => true,
             'engine'    => null,
+			//'timezone'  => '+00:00',		// Change timezone for the App. 
         ],
 
         'pgsql' => [

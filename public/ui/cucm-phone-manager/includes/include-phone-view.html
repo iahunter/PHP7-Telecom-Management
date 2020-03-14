@@ -11,8 +11,13 @@
 	<div>
 		<div style="margin-left:5%; margin-right:5%;">
 			<div>
-				<div style="margin:25px;"></div>
-				<legend><h3>Phone Details: {{vm.phone.name}} </h3></legend>
+
+				<legend>
+					<h3>Phone Details: {{vm.phone.name}} </h3> 
+					<div style="margin:15px"></div>
+				</legend>
+				
+				<a href="#/phone/{{vm.phone.name}}/config" ng-if="vm.permissions.read.Cucmsiteconfigs"><button class="btn btn-primary btn-sm"><b> <i class="fa fa-history"></i> Config Repo</b></button> </a>
 				
 
 				<div>

@@ -43,14 +43,24 @@ class CucmLine extends Cucm
         } else {
             $DN = $request->pattern;
         }
-
-        
+		
+		if ($request->pattern == $request->cfa_destination) {
+            abort(401, 'Error! You cannot set the forwarding number the same as the line number');
+        }
 
         if (! isset($request->cfa_destination) || ! $request->cfa_destination) {
             //abort(401, 'No CFA Destination');
             $CFA_DESTINATION = '';
         } else {
             $CFA_DESTINATION = $request->cfa_destination;
+			
+			
+			$regex = "/^91........$/";
+			
+			if (preg_match($regex, $CFA_DESTINATION)) {
+				//$CFA_DESTINATION = substr($CFA_DESTINATION, 2); 
+                $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+            }
 			
 			$regex = "/^91(.*)/";
 			
@@ -71,6 +81,10 @@ class CucmLine extends Cucm
                 $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
             }
             //$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+			
+			if ($request->pattern == substr($CFA_DESTINATION, 2)) {
+				abort(401, 'Error! You cannot set the forwarding number the same as the line number');
+			}
         }
 
         $line = '';

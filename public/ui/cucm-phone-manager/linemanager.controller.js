@@ -221,11 +221,14 @@ angular
 			cucmService.updatelinecfa(line_update)
 				.then(function(res) {
 					
+					if(res.data.message){
+						alert(res.data.message)
+					}
 					
 					if(res.data.response){
 						vm.refresh()
 					}
-					//console.log(res)
+
 			  }, function(error) {
 					alert('An error occurred');
 			  });

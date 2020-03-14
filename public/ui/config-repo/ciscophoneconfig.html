@@ -1,0 +1,6 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+<div ng-if="vm.permissions.read.Cucmsiteconfigs">
+	<iframe height="1000px" width="100%" src="{{vm.iframe}}" name="iframe_a"></iframe>
+</div>

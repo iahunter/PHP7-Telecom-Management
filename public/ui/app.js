@@ -325,13 +325,23 @@
 			.state('sonusconfigs', {
                 url: '/sonus/configrepo',
                 templateUrl: 'company-content/sonusconfigrepo.html',
-                //controller: 'siteTrunking911Report.IndexController',
                 controllerAs: 'vm'
             })
 			.state('ciscoconfigs', {
                 url: '/cucm/configrepo',
                 templateUrl: 'company-content/ciscoconfigrepo.html',
-                //controller: 'siteTrunking911Report.IndexController',
+                controllerAs: 'vm'
+            })
+			.state('ciscositeconfig', {
+                url: '/sitestatusreports/{id}/config',
+                templateUrl: 'config-repo/ciscositeconfig.html',
+				controller: 'ConfigRepo.Controller',
+                controllerAs: 'vm'
+            })
+			.state('ciscophoneconfig', {
+                url: '/phone/{id}/config',
+                templateUrl: 'config-repo/ciscophoneconfig.html',
+				controller: 'ConfigRepo.Controller',
                 controllerAs: 'vm'
             })
 			.state('reportshome', {

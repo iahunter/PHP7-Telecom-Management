@@ -322,25 +322,27 @@
                 controller: 'EditSite.Migration.Controller',
                 controllerAs: 'vm'
             })
-			.state('sonusconfigs', {
+			.state('sonusconfigrepo', {
                 url: '/sonus/configrepo',
-                templateUrl: 'company-content/sonusconfigrepo.html',
-                controllerAs: 'vm'
-            })
-			.state('ciscoconfigs', {
-                url: '/cucm/configrepo',
-                templateUrl: 'company-content/ciscoconfigrepo.html',
-                controllerAs: 'vm'
-            })
-			.state('ciscositeconfig', {
-                url: '/sitestatusreports/{id}/config',
-                templateUrl: 'config-repo/ciscositeconfig.html',
+                templateUrl: 'config-repo/configrepo.html',
 				controller: 'ConfigRepo.Controller',
                 controllerAs: 'vm'
             })
-			.state('ciscophoneconfig', {
+			.state('cucmconfigrepo', {
+                url: '/cucm/configrepo',
+                templateUrl: 'config-repo/configrepo.html',
+				controller: 'ConfigRepo.Controller',
+                controllerAs: 'vm'
+            })
+			.state('cucmsiteconfig', {
+                url: '/sitestatusreports/{id}/config',
+                templateUrl: 'config-repo/configrepo.html',
+				controller: 'ConfigRepo.Controller',
+                controllerAs: 'vm'
+            })
+			.state('cucmphoneconfig', {
                 url: '/phone/{id}/config',
-                templateUrl: 'config-repo/ciscophoneconfig.html',
+                templateUrl: 'config-repo/configrepo.html',
 				controller: 'ConfigRepo.Controller',
                 controllerAs: 'vm'
             })

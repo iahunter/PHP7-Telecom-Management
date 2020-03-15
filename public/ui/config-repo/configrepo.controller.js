@@ -54,7 +54,7 @@ angular
 			vm.getcompanycontent = CompanyService.getcompanycontent()
 				.then(function(res){
 					
-					// "cucmsiteconfig": "//svnserver.domain.com/websvn/filedetails.php?repname=Kiewit+Cisco+CallManager+Repository&path=%2Fsites%2F",
+					// "cucmsiteconfig": "//svnserver.domain.com/websvn/log.php?repname=Cisco+CallManager+Repository&path=%2Fsites%2F",
 					
 					var url = res.data.cucmsiteconfig;
 
@@ -72,7 +72,7 @@ angular
 			vm.getcompanycontent = CompanyService.getcompanycontent()
 				.then(function(res){
 					
-					// "cucmphoneconfig": "//svnserver.domain.com/websvn/filedetails.php?repname=Cisco+CallManager+Repository&path=%2Fphones%2F"
+					// "cucmphoneconfig": "//svnserver.domain.com/websvn/log.php?repname=Cisco+CallManager+Repository&path=%2Fphones%2F"
 	
 					var url = res.data.cucmphoneconfig;
 					

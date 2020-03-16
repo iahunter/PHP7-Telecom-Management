@@ -60,6 +60,11 @@ class Cucmphoneconfigs extends Model
 		
 		foreach($models as $model){
 			//print $model->model . PHP_EOL; 
+			
+			if(!$model->model){
+				continue;
+			}
+			
 			$count = Cucmphoneconfigs::where('model', $model->model)
 										->where('risdb_registration_status', 'Registered')
 										->count(); 

@@ -21,6 +21,7 @@ class CreateCucmPhoneStatsTable extends Migration
 			$table->json('stats')->nullable();                      // JSON Custom Field Data
 			$table->json('json')->nullable();                       // JSON Custom Field Data
 			$table->timestamps();                       			// Time Stamps
+		});
     }
 
     /**

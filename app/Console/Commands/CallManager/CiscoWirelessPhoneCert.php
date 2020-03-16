@@ -40,9 +40,9 @@ class CiscoWirelessPhoneCert extends Command
         $cookieJar = new \GuzzleHttp\Cookie\CookieJar(true);
 
         $params = [
-                    'cookies' => $cookieJar,
-                    'verify'	 => false,
-                    ];
+            'cookies' => $cookieJar,
+            'verify'	 => false,
+        ];
 
         $base_url = 'https://10.252.210.69:8443';
 
@@ -70,12 +70,12 @@ class CiscoWirelessPhoneCert extends Command
         // Login to the Phone Webpage
         $url = $base_url.'/CGI/Java/Serviceability?adapter=loginPost';
         $form_data = ['form_params' => [
-                            ['username'    => 'admin',
-                            'userPassword' => env('CALLMANAGER_PASS'),
-                            'CSRFToken'    => $csrf, ],
-                            ],
-                        'cookie' => $cookieJar,
-                    ];
+            ['username'        => 'admin',
+                'userPassword' => env('CALLMANAGER_PASS'),
+                'CSRFToken'    => $csrf, ],
+        ],
+            'cookie' => $cookieJar,
+        ];
 
         $response = $client->post($url, $form_data);
 

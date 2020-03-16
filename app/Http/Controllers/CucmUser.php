@@ -25,11 +25,11 @@ class CucmUser extends Cucm
         $user = Cucmclass::get_user_by_userid($username);
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $user,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $user,
+        ];
 
         return response()->json($response);
     }
@@ -76,11 +76,11 @@ class CucmUser extends Cucm
         $user = Cucmclass::add_user($data);
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $user,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $user,
+        ];
 
         return response()->json($response);
     }

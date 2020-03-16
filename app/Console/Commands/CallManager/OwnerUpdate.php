@@ -117,8 +117,8 @@ class OwnerUpdate extends Command
                         // Update Phone with new Owner ID.
 
                         $DATA = ['name'             => $phone['name'],
-                                    'ownerUserName' => $new_owner,
-                                ];
+                            'ownerUserName'         => $new_owner,
+                        ];
 
                         echo $count.". {$phone['name']} New Owner ID: ".$new_owner.PHP_EOL;
                         echo 'Updating Phone...'.PHP_EOL;
@@ -156,8 +156,8 @@ class OwnerUpdate extends Command
                         // Update Phone with new Owner ID.
 
                         $DATA = ['name'             => $phone['name'],
-                                    'ownerUserName' => $new_owner,
-                                ];
+                            'ownerUserName'         => $new_owner,
+                        ];
 
                         echo $count.". {$phone['name']} New Owner ID: ".$new_owner.PHP_EOL;
                         echo 'Updating Phone...'.PHP_EOL;

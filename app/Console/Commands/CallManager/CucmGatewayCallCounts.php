@@ -76,10 +76,10 @@ class CucmGatewayCallCounts extends Command
             echo "Starting {$count} of {$total}".PHP_EOL;
 
             $params = [
-                        'host'     => $gateway,
-                        'username' => env('LDAP_USER'),
-                        'password' => env('LDAP_PASS'),
-                        ];
+                'host'     => $gateway,
+                'username' => env('LDAP_USER'),
+                'password' => env('LDAP_PASS'),
+            ];
             // Try to connect and run some commands
             try {
                 $time = \Carbon\Carbon::now();

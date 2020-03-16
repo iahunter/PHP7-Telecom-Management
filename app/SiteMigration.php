@@ -15,7 +15,7 @@ class SiteMigration extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'h323ip'      => 'array',
-            'backups'     => 'array',
-        ];
+        'h323ip'      => 'array',
+        'backups'     => 'array',
+    ];
 }

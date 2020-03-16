@@ -13,29 +13,29 @@ class TelecomInfrastructure extends Model
 
     protected $table = 'telecom_infrastructure';
     protected $fillable = ['hostname',
-                            'comment',
-                            'role',
-                            'function',
-                            'manufacturer',
-                            'application',
-                            'software_version',
-                            'os',
-                            'ip_address',
-                            'mgmt_url',
-                            'location',
-                            'json',
-                            'ip_reachable',
-                            'monitor',
-                            'created_by',
-                            'updated_by',
-                            'deleted_by',
-                        ];
+        'comment',
+        'role',
+        'function',
+        'manufacturer',
+        'application',
+        'software_version',
+        'os',
+        'ip_address',
+        'mgmt_url',
+        'location',
+        'json',
+        'ip_reachable',
+        'monitor',
+        'created_by',
+        'updated_by',
+        'deleted_by',
+    ];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'json' => 'array',
+        'json' => 'array',
 
-        ];
+    ];
 
     protected $attributes = [
         'json' => '{}',

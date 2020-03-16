@@ -491,11 +491,11 @@ class SiteLocal911 extends Command
             'callManagerGroupName'            => "CMG_{$SITE}",
             'routeListEnabled'                => 'true',
             'members'                         => ['member' => ['routeGroupName'     => $SLRG,
-                                                                'selectionOrder'    => 1,
-                                                            ],
-                                                ],
+                'selectionOrder'                                                    => 1,
+            ],
+            ],
 
-            ];
+        ];
 
         echo "Building Site 911 Route List with {$SLRG} in CUCM...".PHP_EOL;
         try {
@@ -519,12 +519,12 @@ class SiteLocal911 extends Command
 
         // Build Array of Patitions
         $DATA = [
-                    [
-                        'name'                            => 'PT_'.$SITE.'_911',
-                        'description'                     => $SITE.' 911 Calling',
-                        'useOriginatingDeviceTimeZone'    => 'true',
-                    ],
-                ];
+            [
+                'name'                            => 'PT_'.$SITE.'_911',
+                'description'                     => $SITE.' 911 Calling',
+                'useOriginatingDeviceTimeZone'    => 'true',
+            ],
+        ];
 
         return $DATA;
     }
@@ -536,14 +536,14 @@ class SiteLocal911 extends Command
 
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
-                    'name'                => $CSS,
-                    'addMembers'          => [
-                                                'member' => [
-                                                            'routePartitionName'       => $PARTITION,
-                                                            'index'                    => $CSS_NEXT_INDEX,
-                                                            ],
-                                            ],
-                ];
+            'name'                => $CSS,
+            'addMembers'          => [
+                'member' => [
+                    'routePartitionName'       => $PARTITION,
+                    'index'                    => $CSS_NEXT_INDEX,
+                ],
+            ],
+        ];
 
         return $DATA;
     }
@@ -555,20 +555,20 @@ class SiteLocal911 extends Command
 
         // Build Array of Route List
         $DATA = [
-                    'name'                        => "RL_{$SITE}_911",
-                    'description'                 => "{$SITE} - 911 Calling Route List",
-                    'callManagerGroupName'        => $CCMGRP,
-                    'routeListEnabled'            => true,
-                    'runOnEveryNode'              => true,
+            'name'                        => "RL_{$SITE}_911",
+            'description'                 => "{$SITE} - 911 Calling Route List",
+            'callManagerGroupName'        => $CCMGRP,
+            'routeListEnabled'            => true,
+            'runOnEveryNode'              => true,
 
-                    'members'                    => [
-                                                        'member' => [
-                                                                    'routeGroupName'                         => $SLRG,
-                                                                    'selectionOrder'                         => 1,
-                                                                    'useFullyQualifiedCallingPartyNumber'    => 'Default',
-                                                                    ],
-                                                    ],
-                ];
+            'members'                    => [
+                'member' => [
+                    'routeGroupName'                         => $SLRG,
+                    'selectionOrder'                         => 1,
+                    'useFullyQualifiedCallingPartyNumber'    => 'Default',
+                ],
+            ],
+        ];
 
         return $DATA;
     }
@@ -579,37 +579,37 @@ class SiteLocal911 extends Command
         echo 'Building Site 911 Route Patterns Array...'.PHP_EOL;
 
         $DATA = [
-                    [
-                        'pattern'                     => '911',
-                        'description'                 => "{$SITE} 911 - Emergency Services",
-                        'routePartitionName'          => "PT_{$SITE}_911",
-                        'blockEnable'                 => 'false',
-                        'useCallingPartyPhoneMask'    => 'Default',
-                        'networkLocation'             => 'OffNet',
-                        //"routeFilterName"			=> "",
-                        'patternUrgency'            => 'false',
+            [
+                'pattern'                     => '911',
+                'description'                 => "{$SITE} 911 - Emergency Services",
+                'routePartitionName'          => "PT_{$SITE}_911",
+                'blockEnable'                 => 'false',
+                'useCallingPartyPhoneMask'    => 'Default',
+                'networkLocation'             => 'OffNet',
+                //"routeFilterName"			=> "",
+                'patternUrgency'            => 'false',
 
-                        'destination'                    => [
-                                                            'routeListName' => "RL_{$SITE}_911",
+                'destination'                    => [
+                    'routeListName' => "RL_{$SITE}_911",
 
-                                                        ],
-                    ],
-                    [
-                        'pattern'                     => '9.911',
-                        'description'                 => "{$SITE} 911 - Emergency Services",
-                        'routePartitionName'          => "PT_{$SITE}_911",
-                        'blockEnable'                 => 'false',
-                        'useCallingPartyPhoneMask'    => 'Default',
-                        'networkLocation'             => 'OffNet',
-                        //"routeFilterName"			=> "",
-                        'patternUrgency'            => 'false',
+                ],
+            ],
+            [
+                'pattern'                     => '9.911',
+                'description'                 => "{$SITE} 911 - Emergency Services",
+                'routePartitionName'          => "PT_{$SITE}_911",
+                'blockEnable'                 => 'false',
+                'useCallingPartyPhoneMask'    => 'Default',
+                'networkLocation'             => 'OffNet',
+                //"routeFilterName"			=> "",
+                'patternUrgency'            => 'false',
 
-                        'destination'                    => [
-                                                            'routeListName' => "RL_{$SITE}_911",
+                'destination'                    => [
+                    'routeListName' => "RL_{$SITE}_911",
 
-                                                        ],
-                    ],
-                ];
+                ],
+            ],
+        ];
 
         return $DATA;
     }

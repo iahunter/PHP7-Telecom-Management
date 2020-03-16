@@ -38,12 +38,12 @@ class CucmCdrCmrController extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'result'               => $result,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'request'              => $request->all(),
+            'result'               => $result,
+        ];
 
         return response()->json($response);
     }
@@ -72,13 +72,13 @@ class CucmCdrCmrController extends Controller
                     ->get();
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'count'                => count($calls),
-                    'request'              => $request->all(),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'count'                => count($calls),
+            'request'              => $request->all(),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }
@@ -145,13 +145,13 @@ class CucmCdrCmrController extends Controller
         $calls = $call_cmrs;
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'count'                => count($calls),
-                    'request'              => $request->all(),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'count'                => count($calls),
+            'request'              => $request->all(),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }
@@ -184,13 +184,13 @@ class CucmCdrCmrController extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'count'                => count($calls),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'request'              => $request->all(),
+            'count'                => count($calls),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }

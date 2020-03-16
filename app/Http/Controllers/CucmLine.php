@@ -43,8 +43,8 @@ class CucmLine extends Cucm
         } else {
             $DN = $request->pattern;
         }
-		
-		if ($request->pattern == $request->cfa_destination) {
+
+        if ($request->pattern == $request->cfa_destination) {
             abort(401, 'Error! You cannot set the forwarding number the same as the line number');
         }
 
@@ -53,38 +53,37 @@ class CucmLine extends Cucm
             $CFA_DESTINATION = '';
         } else {
             $CFA_DESTINATION = $request->cfa_destination;
-			
-			
-			$regex = "/^91........$/";
-			
-			if (preg_match($regex, $CFA_DESTINATION)) {
-				//$CFA_DESTINATION = substr($CFA_DESTINATION, 2); 
+
+            $regex = '/^91........$/';
+
+            if (preg_match($regex, $CFA_DESTINATION)) {
+                //$CFA_DESTINATION = substr($CFA_DESTINATION, 2);
                 $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
             }
-			
-			$regex = "/^91(.*)/";
-			
-			if (preg_match($regex, $CFA_DESTINATION)) {
-				$CFA_DESTINATION = substr($CFA_DESTINATION, 2); 
+
+            $regex = '/^91(.*)/';
+
+            if (preg_match($regex, $CFA_DESTINATION)) {
+                $CFA_DESTINATION = substr($CFA_DESTINATION, 2);
                 $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
             }
-			
-			$regex = "/^1(.*)/";
-			
-			if (preg_match($regex, $CFA_DESTINATION)) {
-				$CFA_DESTINATION = substr($CFA_DESTINATION, 1); 
+
+            $regex = '/^1(.*)/';
+
+            if (preg_match($regex, $CFA_DESTINATION)) {
+                $CFA_DESTINATION = substr($CFA_DESTINATION, 1);
                 $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
             }
-			
-			$regex = "/^\+1(.*)/";
+
+            $regex = "/^\+1(.*)/";
             if (! preg_match($regex, $CFA_DESTINATION)) {
                 $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
             }
             //$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
-			
-			if ($request->pattern == substr($CFA_DESTINATION, 2)) {
-				abort(401, 'Error! You cannot set the forwarding number the same as the line number');
-			}
+
+            if ($request->pattern == substr($CFA_DESTINATION, 2)) {
+                abort(401, 'Error! You cannot set the forwarding number the same as the line number');
+            }
         }
 
         $line = '';
@@ -129,21 +128,21 @@ class CucmLine extends Cucm
         $LINECSS = 'CSS_LINEONLY_L3_LD';
 
         $PHONELINE_UPDATE = [
-                            'pattern'                          => $DN,
-                            'routePartitionName'               => 'Global-All-Lines',
+            'pattern'                          => $DN,
+            'routePartitionName'               => 'Global-All-Lines',
 
-                            'callForwardAll'                => $callForwardAll,
+            'callForwardAll'                => $callForwardAll,
 
-                            // E164 Alternative Number Mask - This is currently being ignored by CUCM because of a Cisco Bug. Ver 10.5.2 - 12/8/16 TR - TAC Case Opened
-                            // updateLine works so we need to add this portion with an update after the Line has been added to the system.
+            // E164 Alternative Number Mask - This is currently being ignored by CUCM because of a Cisco Bug. Ver 10.5.2 - 12/8/16 TR - TAC Case Opened
+            // updateLine works so we need to add this portion with an update after the Line has been added to the system.
 
-                            /*
+            /*
                             'callForwardAll'                => [
                                                                 'destination'                        => "+1{$CFA_DESTINATION}",
                                                                 'callingSearchSpaceName'             => $LINECSS,
                                                                 'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
                                                             ],*/
-                            ];
+        ];
 
         // Update Line E164 Alternative Number Mask - workaround for Cisco Bug when adding Line
         $RESULT = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, 'Line');
@@ -154,11 +153,11 @@ class CucmLine extends Cucm
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'update' => $PHONELINE_UPDATE, 'return' => $RESULT])->log('update object');
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $RESULT,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $RESULT,
+        ];
 
         return response()->json($response);
     }
@@ -233,11 +232,11 @@ class CucmLine extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $line,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $line,
+        ];
 
         return response()->json($response);
     }
@@ -345,22 +344,22 @@ class CucmLine extends Cucm
         try {
             $REPLY = $this->cucm->update_object_type_by_pattern_and_partition($PHONELINE_UPDATE, $TYPE);
             $LOG = [
-                        'type'       => $TYPE,
-                        'object'     => $DN,
-                        'status'     => 'success',
-                        'reply'      => $REPLY,
-                        'request'    => $PHONELINE_UPDATE,
+                'type'       => $TYPE,
+                'object'     => $DN,
+                'status'     => 'success',
+                'reply'      => $REPLY,
+                'request'    => $PHONELINE_UPDATE,
 
-                    ];
+            ];
         } catch (\Exception $e) {
             $EXCEPTION = 'Callmanager blew up: '.$e->getMessage().PHP_EOL;
             $LOG = [
-                                        'type'         => $TYPE,
-                                        'object'       => $DN,
-                                        'status'       => 'error',
-                                        'request'      => $PHONELINE_UPDATE,
-                                        'exception'    => $EXCEPTION,
-                                    ];
+                'type'         => $TYPE,
+                'object'       => $DN,
+                'status'       => 'error',
+                'request'      => $PHONELINE_UPDATE,
+                'exception'    => $EXCEPTION,
+            ];
         }
 
         // Create log entry
@@ -368,11 +367,11 @@ class CucmLine extends Cucm
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'update' => $PHONELINE_UPDATE, 'return' => $LOG])->log('update object');
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $REPLY,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $REPLY,
+        ];
 
         return response()->json($LOG);
     }
@@ -416,11 +415,11 @@ class CucmLine extends Cucm
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'delete' => $LINE])->log('delete line');
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $REPLY,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $REPLY,
+        ];
 
         return response()->json($response);
     }

@@ -24,11 +24,11 @@ class GatewayCallsController extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -48,12 +48,12 @@ class GatewayCallsController extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -69,11 +69,11 @@ class GatewayCallsController extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -93,12 +93,12 @@ class GatewayCallsController extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -114,11 +114,11 @@ class GatewayCallsController extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -141,11 +141,11 @@ class GatewayCallsController extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -166,12 +166,12 @@ class GatewayCallsController extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -202,11 +202,11 @@ class GatewayCallsController extends Controller
             $stats[$date] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -226,12 +226,12 @@ class GatewayCallsController extends Controller
         if (Cache::has($key)) {
             $stats = Cache::get($key);
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -257,11 +257,11 @@ class GatewayCallsController extends Controller
             $stats[$date] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -283,11 +283,11 @@ class GatewayCallsController extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -311,11 +311,11 @@ class GatewayCallsController extends Controller
                 ->get();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -337,11 +337,11 @@ class GatewayCallsController extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -365,11 +365,11 @@ class GatewayCallsController extends Controller
                 ->get();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -394,13 +394,13 @@ class GatewayCallsController extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'count'                => count($GatewayCalls),
-                    'request'              => $request->all(),
-                    'result'               => $GatewayCalls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'count'                => count($GatewayCalls),
+            'request'              => $request->all(),
+            'result'               => $GatewayCalls,
+        ];
 
         return response()->json($response);
     }

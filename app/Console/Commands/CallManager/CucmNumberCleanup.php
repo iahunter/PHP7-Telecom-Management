@@ -134,12 +134,12 @@ class CucmNumberCleanup extends Command
                         if ((isset($mailbox_details['response']['User']))) {
                             $mailbox = $mailbox_details['response']['User'];
                             $mailbox = ['Alias'            => $mailbox['Alias'],
-                                        'DisplayName'      => $mailbox['DisplayName'],
-                                        'FirstName'        => $mailbox['FirstName'],
-                                        'LastName'         => $mailbox['LastName'],
-                                        'DtmfAccessId'     => $mailbox['DtmfAccessId'],
-                                        'AD_User_Found'    => false,
-                                        ];
+                                'DisplayName'              => $mailbox['DisplayName'],
+                                'FirstName'                => $mailbox['FirstName'],
+                                'LastName'                 => $mailbox['LastName'],
+                                'DtmfAccessId'             => $mailbox['DtmfAccessId'],
+                                'AD_User_Found'            => false,
+                            ];
 
                             if (isset($mailbox['Alias']) && $mailbox['Alias']) {
 
@@ -185,9 +185,9 @@ class CucmNumberCleanup extends Command
                                     echo "Found Call Handler for Exension: {$callhandler['DisplayName']}".PHP_EOL;
 
                                     $callhandler = ['Alias'            => $callhandler['Alias'],
-                                                    'DisplayName'      => $callhandler['DisplayName'],
-                                                    'DtmfAccessId'     => $callhandler['DtmfAccessId'],
-                                                ];
+                                        'DisplayName'                  => $callhandler['DisplayName'],
+                                        'DtmfAccessId'                 => $callhandler['DtmfAccessId'],
+                                    ];
                                 }
                             }
                         }
@@ -196,16 +196,16 @@ class CucmNumberCleanup extends Command
                     // Check if CFA is set.
 
                     $line_summary = [
-                                        'uuid'                       => $linedetails['uuid'],
-                                        'pattern'                    => $linedetails['pattern'],
-                                        'callForwardAll'             => $linedetails['callForwardAll']['destination'],
-                                        'description'                => $linedetails['description'],
-                                        'associatedDevices'          => $linedetails['associatedDevices'],
-                                        'mailbox'                    => $mailbox,
-                                        'callhandler'                => $callhandler,
-                                        'sitecode'                   => $sitecode,
-                                        'usage'                      => $linedetails['usage'],
-                                        ];
+                        'uuid'                       => $linedetails['uuid'],
+                        'pattern'                    => $linedetails['pattern'],
+                        'callForwardAll'             => $linedetails['callForwardAll']['destination'],
+                        'description'                => $linedetails['description'],
+                        'associatedDevices'          => $linedetails['associatedDevices'],
+                        'mailbox'                    => $mailbox,
+                        'callhandler'                => $callhandler,
+                        'sitecode'                   => $sitecode,
+                        'usage'                      => $linedetails['usage'],
+                    ];
 
                     // Only look at lines that are assigned a usage value of Device.
                     if ($linedetails['usage'] == 'Device') {

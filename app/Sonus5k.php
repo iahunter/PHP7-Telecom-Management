@@ -18,13 +18,13 @@ class Sonus5k extends Model
         $client = new GuzzleHttpClient();
 
         $headers = [
-                            'auth'    => [env('SONUSUSER'), env('SONUSPASS')],
-                            'verify'  => false,
-                            'headers' => [
-                                        'Content-Type'     => 'application/vnd.yang.data+json',
-                                        'Accept'           => 'application/vnd.yang.data+xml',			// Changed to xml because Sonus is not supporting JSON - 042118 - TR
-                                    ],
-                        ];
+            'auth'    => [env('SONUSUSER'), env('SONUSPASS')],
+            'verify'  => false,
+            'headers' => [
+                'Content-Type'     => 'application/vnd.yang.data+json',
+                'Accept'           => 'application/vnd.yang.data+xml',			// Changed to xml because Sonus is not supporting JSON - 042118 - TR
+            ],
+        ];
         if ($verb == 'POST') {
             $headers['data'] = $data;
         }

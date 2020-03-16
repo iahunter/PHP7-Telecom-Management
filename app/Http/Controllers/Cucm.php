@@ -109,12 +109,12 @@ class Cucm extends Controller
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
 
             $LOG = [
-                    'type'       => $TYPE,
-                    'object'     => $OBJECT,
-                    'status'     => 'success',
-                    'reply'      => $REPLY,
-                    'request'    => $DATA,
-                ];
+                'type'       => $TYPE,
+                'object'     => $OBJECT,
+                'status'     => 'success',
+                'reply'      => $REPLY,
+                'request'    => $DATA,
+            ];
 
             $this->results[$TYPE][] = $LOG;
 
@@ -131,12 +131,12 @@ class Cucm extends Controller
             //$delimiter = "Stack trace:";
             //explode ($delimiter , $EXCEPTION);
             $this->results[$TYPE][] = [
-                                        'type'             => $TYPE,
-                                        'object'           => $OBJECT,
-                                        'status'           => 'error',
-                                        'reply'            => $EXCEPTION,
-                                        'request'          => $DATA,
-                                    ];
+                'type'             => $TYPE,
+                'object'           => $OBJECT,
+                'status'           => 'error',
+                'reply'            => $EXCEPTION,
+                'request'          => $DATA,
+            ];
         }
     }
 
@@ -179,11 +179,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $CSS_LIST,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $CSS_LIST,
+        ];
 
         return response()->json($response);
     }
@@ -231,11 +231,11 @@ class Cucm extends Controller
         */
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $list,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $list,
+        ];
 
         return response()->json($response);
     }
@@ -264,11 +264,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $css,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $css,
+        ];
 
         return response()->json($response);
     }
@@ -293,11 +293,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }
@@ -324,11 +324,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }
@@ -353,11 +353,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }
@@ -382,11 +382,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }
@@ -411,11 +411,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }
@@ -453,11 +453,11 @@ class Cucm extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }
@@ -748,11 +748,11 @@ class Cucm extends Controller
             'callManagerGroupName'            => "CMG_{$SITE}",
             'routeListEnabled'                => 'true',
             'members'                         => ['member' => ['routeGroupName'     => $SLRG,
-                                                                'selectionOrder'    => 1,
-                                                            ],
-                                                ],
+                'selectionOrder'                                                    => 1,
+            ],
+            ],
 
-            ];
+        ];
 
         //echo "Building Site 911 Route List with {$SLRG} in CUCM...".PHP_EOL;
         try {
@@ -776,12 +776,12 @@ class Cucm extends Controller
 
         // Build Array of Patitions
         $DATA = [
-                    [
-                        'name'                            => 'PT_'.$SITE.'_911',
-                        'description'                     => $SITE.' 911 Calling',
-                        'useOriginatingDeviceTimeZone'    => 'true',
-                    ],
-                ];
+            [
+                'name'                            => 'PT_'.$SITE.'_911',
+                'description'                     => $SITE.' 911 Calling',
+                'useOriginatingDeviceTimeZone'    => 'true',
+            ],
+        ];
 
         return $DATA;
     }
@@ -790,9 +790,9 @@ class Cucm extends Controller
     {
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
-                            'routePartitionName'       => $PARTITION,
-                            'index'                    => $CSS_NEXT_INDEX,
-                ];
+            'routePartitionName'       => $PARTITION,
+            'index'                    => $CSS_NEXT_INDEX,
+        ];
 
         return $DATA;
     }
@@ -804,14 +804,14 @@ class Cucm extends Controller
 
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
-                    'name'                => $CSS,
-                    'addMembers'          => [
-                                                'member' => [
-                                                            'routePartitionName'       => $PARTITION,
-                                                            'index'                    => $INDEX,
-                                                            ],
-                                            ],
-                ];
+            'name'                => $CSS,
+            'addMembers'          => [
+                'member' => [
+                    'routePartitionName'       => $PARTITION,
+                    'index'                    => $INDEX,
+                ],
+            ],
+        ];
 
         return $DATA;
     }
@@ -823,14 +823,14 @@ class Cucm extends Controller
 
         // Build Array of CSS adding new Partition with index of 15.
         $DATA = [
-                    'name'                   => $CSS,
-                    'removeMembers'          => [
-                                                'member' => [
-                                                            'routePartitionName'       => $PARTITION,
-                                                            'index'                    => $INDEX,
-                                                            ],
-                                            ],
-                ];
+            'name'                   => $CSS,
+            'removeMembers'          => [
+                'member' => [
+                    'routePartitionName'       => $PARTITION,
+                    'index'                    => $INDEX,
+                ],
+            ],
+        ];
 
         return $DATA;
     }
@@ -839,14 +839,14 @@ class Cucm extends Controller
     {
         // Build Array of MRGL adding new MRG.
         $DATA = [
-                    'name'                => $MRGL,
-                    'addMembers'          => [
-                                                'member' => [
-                                                            'mediaResourceGroupName'           => $MRG,
-                                                            'order'                            => $ORDER,
-                                                            ],
-                                            ],
-                ];
+            'name'                => $MRGL,
+            'addMembers'          => [
+                'member' => [
+                    'mediaResourceGroupName'           => $MRG,
+                    'order'                            => $ORDER,
+                ],
+            ],
+        ];
 
         return $DATA;
     }
@@ -855,14 +855,14 @@ class Cucm extends Controller
     {
         // Build Array of MRGL adding new MRG.
         $DATA = [
-                    'name'                   => $MRGL,
-                    'removeMembers'          => [
-                                                'member' => [
-                                                            'mediaResourceGroupName'           => $MRG,
-                                                            'order'                            => $ORDER,
-                                                            ],
-                                            ],
-                ];
+            'name'                   => $MRGL,
+            'removeMembers'          => [
+                'member' => [
+                    'mediaResourceGroupName'           => $MRG,
+                    'order'                            => $ORDER,
+                ],
+            ],
+        ];
 
         return $DATA;
     }
@@ -874,20 +874,20 @@ class Cucm extends Controller
 
         // Build Array of Route List
         $DATA = [
-                    'name'                        => "RL_{$SITE}_911",
-                    'description'                 => "{$SITE} - 911 Calling Route List",
-                    'callManagerGroupName'        => $CCMGRP,
-                    'routeListEnabled'            => true,
-                    'runOnEveryNode'              => true,
+            'name'                        => "RL_{$SITE}_911",
+            'description'                 => "{$SITE} - 911 Calling Route List",
+            'callManagerGroupName'        => $CCMGRP,
+            'routeListEnabled'            => true,
+            'runOnEveryNode'              => true,
 
-                    'members'                    => [
-                                                        'member' => [
-                                                                    'routeGroupName'                         => $SLRG,
-                                                                    'selectionOrder'                         => 1,
-                                                                    'useFullyQualifiedCallingPartyNumber'    => 'Default',
-                                                                    ],
-                                                    ],
-                ];
+            'members'                    => [
+                'member' => [
+                    'routeGroupName'                         => $SLRG,
+                    'selectionOrder'                         => 1,
+                    'useFullyQualifiedCallingPartyNumber'    => 'Default',
+                ],
+            ],
+        ];
 
         return $DATA;
     }
@@ -898,37 +898,37 @@ class Cucm extends Controller
         //echo 'Building Site 911 Route Patterns Array...'.PHP_EOL;
 
         $DATA = [
-                    [
-                        'pattern'                     => '911',
-                        'description'                 => "{$SITE} 911 - Emergency Services",
-                        'routePartitionName'          => "PT_{$SITE}_911",
-                        'blockEnable'                 => 'false',
-                        'useCallingPartyPhoneMask'    => 'Default',
-                        'networkLocation'             => 'OffNet',
-                        //"routeFilterName"			=> "",
-                        'patternUrgency'            => 'false',
+            [
+                'pattern'                     => '911',
+                'description'                 => "{$SITE} 911 - Emergency Services",
+                'routePartitionName'          => "PT_{$SITE}_911",
+                'blockEnable'                 => 'false',
+                'useCallingPartyPhoneMask'    => 'Default',
+                'networkLocation'             => 'OffNet',
+                //"routeFilterName"			=> "",
+                'patternUrgency'            => 'false',
 
-                        'destination'                    => [
-                                                            'routeListName' => "RL_{$SITE}_911",
+                'destination'                    => [
+                    'routeListName' => "RL_{$SITE}_911",
 
-                                                        ],
-                    ],
-                    [
-                        'pattern'                     => '9.911',
-                        'description'                 => "{$SITE} 911 - Emergency Services",
-                        'routePartitionName'          => "PT_{$SITE}_911",
-                        'blockEnable'                 => 'false',
-                        'useCallingPartyPhoneMask'    => 'Default',
-                        'networkLocation'             => 'OffNet',
-                        //"routeFilterName"			=> "",
-                        'patternUrgency'            => 'false',
+                ],
+            ],
+            [
+                'pattern'                     => '9.911',
+                'description'                 => "{$SITE} 911 - Emergency Services",
+                'routePartitionName'          => "PT_{$SITE}_911",
+                'blockEnable'                 => 'false',
+                'useCallingPartyPhoneMask'    => 'Default',
+                'networkLocation'             => 'OffNet',
+                //"routeFilterName"			=> "",
+                'patternUrgency'            => 'false',
 
-                        'destination'                    => [
-                                                            'routeListName' => "RL_{$SITE}_911",
+                'destination'                    => [
+                    'routeListName' => "RL_{$SITE}_911",
 
-                                                        ],
-                    ],
-                ];
+                ],
+            ],
+        ];
 
         return $DATA;
     }

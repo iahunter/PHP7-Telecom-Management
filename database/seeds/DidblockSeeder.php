@@ -30,13 +30,13 @@ class DidblockSeeder extends Seeder
 
             //Insert using Model.
             Didblock::create(['country_code' => 1,
-                                'name'       => 'TEST DID Block '.str_random(10),
-                                'carrier'    => str_random(10),
-                                'start'      => $start,
-                                'end'        => $end,
-                                'comment'    => str_random(10),
-                                'type'       => 'public',
-                                ]
+                'name'                       => 'TEST DID Block '.str_random(10),
+                'carrier'                    => str_random(10),
+                'start'                      => $start,
+                'end'                        => $end,
+                'comment'                    => str_random(10),
+                'type'                       => 'public',
+            ]
             );
 
             $start = $start + 10;

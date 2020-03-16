@@ -29,11 +29,11 @@ class SiteMigrationController extends Controller
             }
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'sites'          => $show,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'sites'          => $show,
+        ];
 
         return response()->json($response);
     }
@@ -54,12 +54,12 @@ class SiteMigrationController extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'result'         => $migration,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'result'         => $migration,
+        ];
 
         return response()->json($response);
     }
@@ -91,12 +91,12 @@ class SiteMigrationController extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'result'         => $migrations_array,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'result'         => $migrations_array,
+        ];
 
         return response()->json($response);
     }
@@ -118,12 +118,12 @@ class SiteMigrationController extends Controller
         $result = SiteMigration::create($request->all());
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'result'         => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'result'         => $result,
+        ];
 
         return response()->json($response);
     }
@@ -145,12 +145,12 @@ class SiteMigrationController extends Controller
         $site->save();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'site'           => $site,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'site'           => $site,
+        ];
 
         return response()->json($response);
     }
@@ -172,10 +172,10 @@ class SiteMigrationController extends Controller
 
         $site->delete();                                                            // Delete the Phone block.
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => 'Site Migration '.$id.' successfully deleted',
-                    'deleted_at'     => $site->deleted_at, ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => 'Site Migration '.$id.' successfully deleted',
+            'deleted_at'     => $site->deleted_at, ];
 
         return response()->json($response);
     }

@@ -41,11 +41,11 @@ class CucmRealTimeController extends Controller
         $result = $this->CucmRealTime->getIPAddresses($searchCriteria);
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }

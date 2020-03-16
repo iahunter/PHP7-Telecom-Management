@@ -61,15 +61,15 @@ class updateDidblockTest extends TestCase
     {
         echo PHP_EOL.__METHOD__.' | Creating the update test Did block';
         $input = [
-                'country_code'            => 1,
-                'name'                    => 'TEST DID BLOCK',
-                'carrier'                 => 'TEST CARRIER',
-                'start'                   => 1004560800,
-                'end'                     => 1004560809,
-                'type'                    => 'private',
-                'comment'                 => 'Test Comment',
-                'reserved'                => '',
-                ];
+            'country_code'            => 1,
+            'name'                    => 'TEST DID BLOCK',
+            'carrier'                 => 'TEST CARRIER',
+            'start'                   => 1004560800,
+            'end'                     => 1004560809,
+            'type'                    => 'private',
+            'comment'                 => 'Test Comment',
+            'reserved'                => '',
+        ];
 
         //dd($input);
         $response = $this->call('POST',

@@ -103,9 +103,9 @@ class RestApiClient
             'auth'    => $this->auth,
             'headers' => $this->headers,
             'query' 	 => ['$filter'   => "SV_Z_KIEWITID eq '$alias'",
-                            '$format' => 'json',
-                            '$select' => 'ID',
-                            ],
+                '$format'             => 'json',
+                '$select'             => 'ID',
+            ],
         ];
         // send the request
         $response = $this->guzzle->request('GET', $url, $options);
@@ -142,9 +142,9 @@ class RestApiClient
             'auth'    => $this->auth,
             'headers' => $this->headers,
             'query' 	 => [
-                            '$format' => 'json',
-                            '$select' => 'SV_MX_PHONE_PRIMARY',
-                            ],
+                '$format' => 'json',
+                '$select' => 'SV_MX_PHONE_PRIMARY',
+            ],
         ];
         // send the request
         $response = $this->guzzle->request('GET', $url, $options);
@@ -179,8 +179,8 @@ class RestApiClient
 
         // build our body.
         $body = [
-                'SV_MX_PHONE_PRIMARY' => $number,
-                ];
+            'SV_MX_PHONE_PRIMARY' => $number,
+        ];
 
         $jsonbody = json_encode($body);
 

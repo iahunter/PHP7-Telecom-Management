@@ -34,14 +34,14 @@ class SonusAlarmMonitor extends Command
 
     // Discard these Sonus alarms from alerting emails.
     public $ALARMDISCARDS = [
-                                'System Policer Alarm Level: Minor, Policer Type Media, Previous Level No Alarm.',
-                                'System Policer Alarm Level: Minor, Policer Type ACL, Previous Level No Alarm.',
-                                'System Policer Alarm Level: Major, Policer Type Discard Rule, Previous Level No Alarm.',
-                                'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.',
-                                'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level Minor Alarm.',
-                                'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level Major Alarm.',
-                                'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level No Alarm.',
-                            ];
+        'System Policer Alarm Level: Minor, Policer Type Media, Previous Level No Alarm.',
+        'System Policer Alarm Level: Minor, Policer Type ACL, Previous Level No Alarm.',
+        'System Policer Alarm Level: Major, Policer Type Discard Rule, Previous Level No Alarm.',
+        'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level No Alarm.',
+        'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level Minor Alarm.',
+        'System Policer Alarm Level: Minor, Policer Type Rogue Media, Previous Level Major Alarm.',
+        'System Policer Alarm Level: Major, Policer Type Rogue Media, Previous Level No Alarm.',
+    ];
 
     public function __construct()
     {
@@ -49,9 +49,9 @@ class SonusAlarmMonitor extends Command
 
         // Populate SBC list
         $this->SBCS = [
-                        env('SONUS1'),
-                        env('SONUS2'),
-                        ];
+            env('SONUS1'),
+            env('SONUS2'),
+        ];
     }
 
     /**
@@ -124,12 +124,12 @@ class SonusAlarmMonitor extends Command
                     $time = Carbon::now().PHP_EOL;
                     echo $time;
                     $data = [
-                            'time'          => $time,
-                            'host'          => $device,
-                            'hostname'      => $SBC,
-                            'alarms'        => $json['sonusalarms'],
-                            'status'        => $change,
-                            ];
+                        'time'          => $time,
+                        'host'          => $device,
+                        'hostname'      => $SBC,
+                        'alarms'        => $json['sonusalarms'],
+                        'status'        => $change,
+                    ];
 
                     $this->sendemail($data);
                     $this->send_text_to_oncall($data);

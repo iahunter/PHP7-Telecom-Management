@@ -16,8 +16,8 @@ class Phoneplan extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'json' => 'array',
-        ];
+        'json' => 'array',
+    ];
 
     protected static function boot()
     {

@@ -32,11 +32,11 @@ class Callcontroller extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -56,12 +56,12 @@ class Callcontroller extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -78,11 +78,11 @@ class Callcontroller extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -102,12 +102,12 @@ class Callcontroller extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -124,11 +124,11 @@ class Callcontroller extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -152,11 +152,11 @@ class Callcontroller extends Controller
             $stats[] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -177,12 +177,12 @@ class Callcontroller extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -215,11 +215,11 @@ class Callcontroller extends Controller
             $stats[$date] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -239,12 +239,12 @@ class Callcontroller extends Controller
         if (Cache::has($key)) {
             $stats = Cache::get($key);
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'cached'         => true,
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'cached'         => true,
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -272,11 +272,11 @@ class Callcontroller extends Controller
             $stats[$date] = $call;
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -298,11 +298,11 @@ class Callcontroller extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -326,11 +326,11 @@ class Callcontroller extends Controller
                 ->get();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -352,11 +352,11 @@ class Callcontroller extends Controller
             $stats = Cache::get($key);
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'result'         => $stats,
+            ];
 
             return response()->json($response);
         }
@@ -380,11 +380,11 @@ class Callcontroller extends Controller
                 ->get();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $stats,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $stats,
+        ];
 
         return response()->json($response);
     }
@@ -409,13 +409,13 @@ class Callcontroller extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'count'                => count($calls),
-                    'request'              => $request->all(),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'count'                => count($calls),
+            'request'              => $request->all(),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }

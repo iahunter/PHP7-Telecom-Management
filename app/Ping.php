@@ -22,8 +22,8 @@ class Ping extends Model
         }
 
         return    [
-                    'result'         => $return,
-                    'latency'        => $latency,
-                ];
+            'result'         => $return,
+            'latency'        => $latency,
+        ];
     }
 }

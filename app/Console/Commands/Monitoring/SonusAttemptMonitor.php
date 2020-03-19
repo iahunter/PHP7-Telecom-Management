@@ -38,10 +38,10 @@ class SonusAttemptMonitor extends Command
 
     // Discard these Sonus alarms from alerting emails.
     public $DISCARD_ATTEMPT_TYPES = [
-                                    '16 - NORMAL ROUTE CLEARING',
-                                    '1 - UNALLOCATED NUMBER',
-                                    '17 - USER BUSY',
-                                    ];
+        '16 - NORMAL ROUTE CLEARING',
+        '1 - UNALLOCATED NUMBER',
+        '17 - USER BUSY',
+    ];
 
     public function __construct()
     {
@@ -101,14 +101,14 @@ class SonusAttemptMonitor extends Command
             $top_calling_numbers = $this->list_last_hour_top_attempt_counts_by_calling_number_report();
 
             $data = [
-                        'time'                         => $time,
-                        'alarms_count'                 => $count,
-                        'thresholds'                   => $thresholds,
-                        'configured_threshold'         => $this->THRESHOLD_PERCENT,
-                        'stats'                        => $stats,
-                        'top_numbers'				              => $top_numbers,
-                        'top_calling_numbers'		        => $top_calling_numbers,
-                        ];
+                'time'                         => $time,
+                'alarms_count'                 => $count,
+                'thresholds'                   => $thresholds,
+                'configured_threshold'         => $this->THRESHOLD_PERCENT,
+                'stats'                        => $stats,
+                'top_numbers'				              => $top_numbers,
+                'top_calling_numbers'		        => $top_calling_numbers,
+            ];
 
             //print_r($data);
 

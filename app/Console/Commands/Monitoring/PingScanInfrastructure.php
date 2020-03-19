@@ -78,10 +78,10 @@ class PingScanInfrastructure extends Command
             if (! $device->json) {
                 // Build Monitoring Ping Counter if it doesn't exist.
                 $json = ['ping' => [
-                                        'state'   => true,
-                                        'counter' => 0,
-                                    ],
-                        ];
+                    'state'   => true,
+                    'counter' => 0,
+                ],
+                ];
 
                 $device->json = $json;
 
@@ -137,10 +137,10 @@ class PingScanInfrastructure extends Command
                 echo $time.$hostdata.$change;
 
                 $data = [
-                        'time'        => $time,
-                        'host'        => $host,
-                        'status'      => $friendly_status,
-                        ];
+                    'time'        => $time,
+                    'host'        => $host,
+                    'status'      => $friendly_status,
+                ];
 
                 $this->sendemail($data);
                 //$this->send_text_to_oncall($data);

@@ -59,10 +59,10 @@ class CleanSonusLogs extends Command
             }
 
             $params = [
-                        'host'     => $hostname,
-                        'username' => env('SONUSSSHUSER'),
-                        'password' => env('SONUSSSHPASS'),
-                        ];
+                'host'     => $hostname,
+                'username' => env('SONUSSSHUSER'),
+                'password' => env('SONUSSSHPASS'),
+            ];
             // Try to connect and run some commands
             try {
                 $time = \Carbon\Carbon::now();

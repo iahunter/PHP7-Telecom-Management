@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\CallManager;
 
-use Illuminate\Console\Command;
-use Carbon\Carbon;
 use App\Cucmphoneconfigs;
 use App\CucmPhoneStats;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class GetCucmPhoneStats extends Command
 {
@@ -40,22 +40,21 @@ class GetCucmPhoneStats extends Command
      */
     public function handle()
     {
-		$start = Carbon::now();
+        $start = Carbon::now();
         echo 'Starting - cisco_phone:get_phone_stats - '.$start.PHP_EOL;
-		
-        // Get Phone Totals
-		$insert = []; 
-		$insert['type'] = 'phonereport';
-		$insert['total'] = Cucmphoneconfigs::get_active_phone_count(); 
-		$insert['registered'] = Cucmphoneconfigs::get_phone_registered_count(); 
-		$insert['stats'] = Cucmphoneconfigs::get_phone_registered_count_by_type(); 
-		
-		// Insert new Record
-		$record = CucmPhoneStats::create($insert); 
-		
-		$end = Carbon::now();
 
-		echo 'Completed - cisco_phone:get_phone_stats - '.$end.PHP_EOL;
-		
+        // Get Phone Totals
+        $insert = [];
+        $insert['type'] = 'phonereport';
+        $insert['total'] = Cucmphoneconfigs::get_active_phone_count();
+        $insert['registered'] = Cucmphoneconfigs::get_phone_registered_count();
+        $insert['stats'] = Cucmphoneconfigs::get_phone_registered_count_by_type();
+
+        // Insert new Record
+        $record = CucmPhoneStats::create($insert);
+
+        $end = Carbon::now();
+
+        echo 'Completed - cisco_phone:get_phone_stats - '.$end.PHP_EOL;
     }
 }

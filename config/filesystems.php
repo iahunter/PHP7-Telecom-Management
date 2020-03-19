@@ -65,7 +65,7 @@ return [
         'backup' => [
             'driver' => 'local',
             'root'   => env('BACKUP_PATH'),
-         ],
+        ],
 
     ],
 

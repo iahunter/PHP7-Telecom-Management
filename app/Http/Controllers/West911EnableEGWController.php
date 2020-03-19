@@ -26,11 +26,11 @@ class West911EnableEGWController extends Controller
         $result = West911EnableEGW::get_egw_phones();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'result'            => $result,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'result'            => $result,
+        ];
 
         return response()->json($response);
     }
@@ -44,11 +44,11 @@ class West911EnableEGWController extends Controller
         $result = West911EnableEGW::get_cisco_phone_by_name($name);
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'result'            => $result,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'result'            => $result,
+        ];
 
         return response()->json($response);
     }
@@ -60,11 +60,11 @@ class West911EnableEGWController extends Controller
         $result = West911EnableEGW::get_all_endpoints();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'result'            => $result,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'result'            => $result,
+        ];
 
         return response()->json($response);
     }
@@ -78,11 +78,11 @@ class West911EnableEGWController extends Controller
         $result = West911EnableEGW::get_endpoint_by_name($name);
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'result'            => $result,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'result'            => $result,
+        ];
 
         return response()->json($response);
     }
@@ -94,11 +94,11 @@ class West911EnableEGWController extends Controller
         $result = West911EnableEGW::get_all_endpoints_ip_erl();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'result'            => $result,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'result'            => $result,
+        ];
 
         return response()->json($response);
     }
@@ -110,11 +110,11 @@ class West911EnableEGWController extends Controller
         $result = West911EnableEGW::list_erls();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'result'            => $result,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'result'            => $result,
+        ];
 
         return response()->json($response);
     }
@@ -126,11 +126,11 @@ class West911EnableEGWController extends Controller
         $result = West911EnableEGW::list_erls_and_phone_counts();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'result'            => $result,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'result'            => $result,
+        ];
 
         return response()->json($response);
     }

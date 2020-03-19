@@ -16,12 +16,12 @@ class Site extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'h323ip'      => 'array',
-            'didrange'    => 'array',
-            'didblocks'   => 'array',
-            'details'     => 'array',
-            'languages'   => 'array',
-        ];
+        'h323ip'      => 'array',
+        'didrange'    => 'array',
+        'didblocks'   => 'array',
+        'details'     => 'array',
+        'languages'   => 'array',
+    ];
 
     public function didblocks()
     {

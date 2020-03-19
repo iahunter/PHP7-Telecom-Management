@@ -15,9 +15,9 @@ class Cucmsiteconfigs extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'sitesummary'      => 'array',
-            'sitedetails'      => 'array',
-        ];
+        'sitesummary'      => 'array',
+        'sitedetails'      => 'array',
+    ];
 
     protected static function boot()
     {

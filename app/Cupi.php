@@ -19,15 +19,15 @@ class Cupi extends Model
         $apiurl = $URL.$apiurl;
 
         $headers = [
-                            'auth'    => [env('UNITYCONNECTION_USER'), env('UNITYCONNECTION_PASS')],
-                            'verify'  => false,
-                            'headers' => [
-                                        'Content-Type'     => 'application/json',
-                                        'Accept'           => 'application/json',
-                                    ],
-                            //'debug' => true,
-                            //'http_errors' => true,
-                        ];
+            'auth'    => [env('UNITYCONNECTION_USER'), env('UNITYCONNECTION_PASS')],
+            'verify'  => false,
+            'headers' => [
+                'Content-Type'     => 'application/json',
+                'Accept'           => 'application/json',
+            ],
+            //'debug' => true,
+            //'http_errors' => true,
+        ];
         if ($query != '') {
             $headers['query'] = $query;
         }
@@ -45,10 +45,10 @@ class Cupi extends Model
             $result = json_decode($apiRequest->getBody()->getContents(), true);
 
             $response = [
-                        'success'        => true,
-                        'message'        => '',
-                        'response'       => $result,
-                        ];
+                'success'        => true,
+                'message'        => '',
+                'response'       => $result,
+            ];
         } catch (\Exception $e) {
             $response['message'] = $e->getMessage();
             $response['success'] = false;
@@ -126,9 +126,9 @@ class Cupi extends Model
         $templatenames = [];
         foreach ($templates as $template) {
             $templatenames[] = [
-                                    'Alias'    => $template['Alias'],
-                                    'ObjectId' => $template['ObjectId'],
-                                ];
+                'Alias'    => $template['Alias'],
+                'ObjectId' => $template['ObjectId'],
+            ];
         }
 
         return $templatenames;
@@ -140,9 +140,9 @@ class Cupi extends Model
         $apiurl = '/users';
         $query = ['templateAlias' => $template];
         $json = [
-                    'Alias'           => $username,
-                    'DtmfAccessId'    => $dn,
-                ];
+            'Alias'           => $username,
+            'DtmfAccessId'    => $dn,
+        ];
 
         $import = self::wrapapi($verb, $apiurl, $query, $json);
 
@@ -540,13 +540,13 @@ class Cupi extends Model
         $apiurl = "/callhandlerprimarytemplates/{$objectid}/menuentries/0";
         $query = '';
         $json = [
-                  'Locked'                => 'false',
-                  'Action'                => '7',
-                  'TransferNumber'        => "{$operator}",
-                  'DisplayName'           => "{$sitecode} Operator",
-                  'TransferType'          => '0',
-                  'TransferRings'         => '4',
-                ];
+            'Locked'                => 'false',
+            'Action'                => '7',
+            'TransferNumber'        => "{$operator}",
+            'DisplayName'           => "{$sitecode} Operator",
+            'TransferType'          => '0',
+            'TransferRings'         => '4',
+        ];
 
         $return = self::wrapapi($verb, $apiurl, $query, $json);
 
@@ -559,9 +559,9 @@ class Cupi extends Model
         $apiurl = "/usertemplates/{$objectid}";
         $query = '';
         $json = [
-                  'TimeZone'                => $timezone,
-                  'Language'                => $language,
-                ];
+            'TimeZone'                => $timezone,
+            'Language'                => $language,
+        ];
 
         $return = self::wrapapi($verb, $apiurl, $query, $json);
 

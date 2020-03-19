@@ -121,12 +121,12 @@ class ADNumberUpdatesByMailboxNumber extends Command
                             }
 
                             $mailbox = ['Alias'                  => $mailbox['Alias'],
-                                            'DisplayName'        => $mailbox['DisplayName'],
-                                            'FirstName'          => $mailbox['FirstName'],
-                                            'LastName'           => $mailbox['LastName'],
-                                            'DtmfAccessId'       => $mailbox['DtmfAccessId'],
-                                            'AD_User'            => false,
-                                            ];
+                                'DisplayName'                    => $mailbox['DisplayName'],
+                                'FirstName'                      => $mailbox['FirstName'],
+                                'LastName'                       => $mailbox['LastName'],
+                                'DtmfAccessId'                   => $mailbox['DtmfAccessId'],
+                                'AD_User'                        => false,
+                            ];
 
                             // Update the Did Database
                             $did->mailbox = ['User' => $mailbox];
@@ -207,9 +207,9 @@ class ADNumberUpdatesByMailboxNumber extends Command
                                     echo "Found Call Handler for Exension: {$callhandler['DisplayName']}".PHP_EOL;
 
                                     $callhandler = ['Alias'                => $callhandler['Alias'],
-                                                        'DisplayName'      => $callhandler['DisplayName'],
-                                                        'DtmfAccessId'     => $callhandler['DtmfAccessId'],
-                                                    ];
+                                        'DisplayName'                      => $callhandler['DisplayName'],
+                                        'DtmfAccessId'                     => $callhandler['DtmfAccessId'],
+                                    ];
 
                                     // Update the Did Database
                                     $did->mailbox = ['Callhandler' => $mailbox];

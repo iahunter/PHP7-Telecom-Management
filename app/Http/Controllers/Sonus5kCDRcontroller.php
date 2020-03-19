@@ -25,9 +25,9 @@ class Sonus5kCDRcontroller extends Controller
 
         // Populate SBC list
         $this->SBCS = [
-                        env('SONUS1'),
-                        env('SONUS2'),
-                        ];
+            env('SONUS1'),
+            env('SONUS2'),
+        ];
     }
 
     public function searchCDR(Request $request, $column, $search)
@@ -49,12 +49,12 @@ class Sonus5kCDRcontroller extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'result'               => $result,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'request'              => $request->all(),
+            'result'               => $result,
+        ];
 
         return response()->json($response);
     }
@@ -79,13 +79,13 @@ class Sonus5kCDRcontroller extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'count'                => count($calls),
-                    'request'              => $request->all(),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'count'                => count($calls),
+            'request'              => $request->all(),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }
@@ -120,13 +120,13 @@ class Sonus5kCDRcontroller extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'count'                => count($calls),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'request'              => $request->all(),
+            'count'                => count($calls),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }
@@ -199,13 +199,13 @@ class Sonus5kCDRcontroller extends Controller
         $calls = array_reverse($return);
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'count'                => count($calls),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'request'              => $request->all(),
+            'count'                => count($calls),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }
@@ -251,13 +251,13 @@ class Sonus5kCDRcontroller extends Controller
         $calls = array_reverse($return);
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'count'                => count($calls),
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'request'              => $request->all(),
+            'count'                => count($calls),
+            'result'               => $calls,
+        ];
 
         return response()->json($response);
     }
@@ -280,12 +280,12 @@ class Sonus5kCDRcontroller extends Controller
             $return = Cache::get($key);
 
             $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'cached'               => true,
-                    'result'               => $return,
-                    ];
+                'status_code'          => 200,
+                'success'              => true,
+                'message'              => '',
+                'cached'               => true,
+                'result'               => $return,
+            ];
 
             return response()->json($response);
         }
@@ -293,11 +293,11 @@ class Sonus5kCDRcontroller extends Controller
         $return = Sonus5kCDR::list_todays_attempts_summary_report();
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $return,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $return,
+        ];
 
         return response()->json($response);
     }
@@ -320,12 +320,12 @@ class Sonus5kCDRcontroller extends Controller
             $return = Cache::get($key);
 
             $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'cached'               => true,
-                    'result'               => $return,
-                    ];
+                'status_code'          => 200,
+                'success'              => true,
+                'message'              => '',
+                'cached'               => true,
+                'result'               => $return,
+            ];
 
             return response()->json($response);
         }
@@ -333,11 +333,11 @@ class Sonus5kCDRcontroller extends Controller
         $return = Sonus5kCDR::list_last_hour_top_attempt_counts_by_called_number_report();
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $return,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $return,
+        ];
 
         return response()->json($response);
     }
@@ -360,12 +360,12 @@ class Sonus5kCDRcontroller extends Controller
             $return = Cache::get($key);
 
             $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'cached'               => true,
-                    'result'               => $return,
-                    ];
+                'status_code'          => 200,
+                'success'              => true,
+                'message'              => '',
+                'cached'               => true,
+                'result'               => $return,
+            ];
 
             return response()->json($response);
         }
@@ -373,11 +373,11 @@ class Sonus5kCDRcontroller extends Controller
         $return = Sonus5kCDR::list_last_hour_top_attempt_counts_by_calling_number_report();
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $return,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $return,
+        ];
 
         return response()->json($response);
     }
@@ -400,12 +400,12 @@ class Sonus5kCDRcontroller extends Controller
             $return = Cache::get($key);
 
             $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'cached'               => true,
-                    'result'               => $return,
-                    ];
+                'status_code'          => 200,
+                'success'              => true,
+                'message'              => '',
+                'cached'               => true,
+                'result'               => $return,
+            ];
 
             return response()->json($response);
         }
@@ -413,11 +413,11 @@ class Sonus5kCDRcontroller extends Controller
         $return = Sonus5kCDR::list_todays_top_attempt_counts_by_called_number_report();
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $return,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $return,
+        ];
 
         return response()->json($response);
     }
@@ -440,12 +440,12 @@ class Sonus5kCDRcontroller extends Controller
             $return = Cache::get($key);
 
             $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'cached'               => true,
-                    'result'               => $return,
-                    ];
+                'status_code'          => 200,
+                'success'              => true,
+                'message'              => '',
+                'cached'               => true,
+                'result'               => $return,
+            ];
 
             return response()->json($response);
         }
@@ -453,11 +453,11 @@ class Sonus5kCDRcontroller extends Controller
         $return = Sonus5kCDR::list_todays_top_attempt_counts_by_calling_number_report();
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $return,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $return,
+        ];
 
         return response()->json($response);
     }
@@ -479,12 +479,12 @@ class Sonus5kCDRcontroller extends Controller
             $return = Cache::get($key);
 
             $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'cached'               => true,
-                    'result'               => $return,
-                    ];
+                'status_code'          => 200,
+                'success'              => true,
+                'message'              => '',
+                'cached'               => true,
+                'result'               => $return,
+            ];
 
             return response()->json($response);
         }
@@ -492,11 +492,11 @@ class Sonus5kCDRcontroller extends Controller
         $return = Sonus5kCDR::list_todays_pkt_loss_summary_report();
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $return,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $return,
+        ];
 
         return response()->json($response);
     }

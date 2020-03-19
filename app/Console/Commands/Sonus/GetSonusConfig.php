@@ -59,10 +59,10 @@ class GetSonusConfig extends Command
             }
 
             $params = [
-                        'host'     => $hostname,
-                        'username' => env('SONUSUSER'),
-                        'password' => env('SONUSPASS'),
-                        ];
+                'host'     => $hostname,
+                'username' => env('SONUSUSER'),
+                'password' => env('SONUSPASS'),
+            ];
             // Try to connect and run some commands
             try {
                 $time = \Carbon\Carbon::now();

@@ -37,11 +37,11 @@ class CucmReportsController extends Controller
         $sites = Cucmsiteconfigs::all();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'response'          => $sites,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $sites,
+        ];
 
         return response()->json($response);
     }
@@ -72,11 +72,11 @@ class CucmReportsController extends Controller
         //print_r($site);
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'response'          => $site,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $site,
+        ];
 
         return response()->json($response);
     }
@@ -104,12 +104,12 @@ class CucmReportsController extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'response'             => $phone,
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'response'             => $phone,
 
-                    ];
+        ];
 
         return response()->json($response);
     }
@@ -159,12 +159,12 @@ class CucmReportsController extends Controller
         */
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'count'             => $count,
-                    'response'          => $this->phones,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'count'             => $count,
+            'response'          => $this->phones,
+        ];
 
         return response()->json($response);
     }
@@ -204,11 +204,11 @@ class CucmReportsController extends Controller
         }
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'response'          => $SITE,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $SITE,
+        ];
 
         return response()->json($response);
     }
@@ -258,12 +258,12 @@ class CucmReportsController extends Controller
         */
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'count'             => $count,
-                    'response'          => $this->phones,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'count'             => $count,
+            'response'          => $this->phones,
+        ];
 
         return response()->json($response);
     }
@@ -315,12 +315,12 @@ class CucmReportsController extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'response'             => $this->phones,
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'response'             => $this->phones,
 
-                    ];
+        ];
 
         return response()->json($response);
     }
@@ -370,13 +370,13 @@ class CucmReportsController extends Controller
         */
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'count'             => $count,
-                    //'response'          => $phones,
-                    'response'          => $this->phones,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'count'             => $count,
+            //'response'          => $phones,
+            'response'          => $this->phones,
+        ];
 
         return response()->json($response);
     }
@@ -427,14 +427,14 @@ class CucmReportsController extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'trunkingstats'        => $trunkcount,
-                    'e911stats'            => $e911count,
-                    'response'             => $sites,
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'trunkingstats'        => $trunkcount,
+            'e911stats'            => $e911count,
+            'response'             => $sites,
 
-                    ];
+        ];
 
         return response()->json($response);
     }
@@ -489,14 +489,14 @@ class CucmReportsController extends Controller
         //return $sites;
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'trunkingstats'        => $trunkcount,
-                    'e911stats'            => $e911count,
-                    'response'             => $sites,
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'trunkingstats'        => $trunkcount,
+            'e911stats'            => $e911count,
+            'response'             => $sites,
 
-                    ];
+        ];
 
         return response()->json($response);
     }
@@ -511,21 +511,21 @@ class CucmReportsController extends Controller
         $phone_models = [];
 
         $exclude = [
-                    'Analog Phone',
-                    '30 VIP',
-                    'Dual Mode for iPhone',
-                    'ATA 186',
-                    'Jabber for Tablet',
-                    'TelePresence Codec C40',
-                    'TelePresence EX60',
-                    'Unified Client Services Framework',
-                    'Unified Personal Communicator',
-                    'CTI Port',
-                    'Syn-Apps Virtual Phone',
-                    'Spark Room Kit',
-                    //'Third-party SIP Device (Advanced)',
-                    'Third-party SIP Device (Basic)', // Need to do testing on this one. Leaving unsuported for now.
-                    ];
+            'Analog Phone',
+            '30 VIP',
+            'Dual Mode for iPhone',
+            'ATA 186',
+            'Jabber for Tablet',
+            'TelePresence Codec C40',
+            'TelePresence EX60',
+            'Unified Client Services Framework',
+            'Unified Personal Communicator',
+            'CTI Port',
+            'Syn-Apps Virtual Phone',
+            'Spark Room Kit',
+            //'Third-party SIP Device (Advanced)',
+            'Third-party SIP Device (Basic)', // Need to do testing on this one. Leaving unsuported for now.
+        ];
 
         foreach ($models as $model) {
             //$phone_models[] = $model->model;
@@ -543,11 +543,11 @@ class CucmReportsController extends Controller
         }
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'response'          => $phone_models,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $phone_models,
+        ];
 
         return response()->json($response);
     }
@@ -561,11 +561,11 @@ class CucmReportsController extends Controller
             ->get();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'response'          => $models,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $models,
+        ];
 
         return response()->json($response);
     }
@@ -598,11 +598,11 @@ class CucmReportsController extends Controller
         //$data = Storage::disk('local')->get('marquee.json');
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'response'          => $data,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $data,
+        ];
 
         return response()->json($response);
     }
@@ -622,11 +622,11 @@ class CucmReportsController extends Controller
             ->get();
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'response'          => $models,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $models,
+        ];
 
         return response()->json($response);
     }

@@ -42,11 +42,11 @@ class CucmCtiRoutePoint extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $phone,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $phone,
+        ];
 
         return response()->json($response);
     }
@@ -99,13 +99,13 @@ class CucmCtiRoutePoint extends Cucm
             $REPLY = $this->cucm->add_object_type_by_assoc($DATA, $TYPE);
 
             $LOG = [
-                    'type'       => $TYPE,
-                    'object'     => $OBJECT,
-                    'status'     => 'success',
-                    'reply'      => $REPLY,
-                    'request'    => $DATA,
+                'type'       => $TYPE,
+                'object'     => $OBJECT,
+                'status'     => 'success',
+                'reply'      => $REPLY,
+                'request'    => $DATA,
 
-                ];
+            ];
 
             // Create log entry
             activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $LOG])->log('add object');
@@ -120,12 +120,12 @@ class CucmCtiRoutePoint extends Cucm
             //$delimiter = "Stack trace:";
             //explode ($delimiter , $EXCEPTION);
             $this->results[$TYPE] = [
-                                        'type'         => $TYPE,
-                                        'object'       => $OBJECT,
-                                        'status'       => 'error',
-                                        'request'      => $DATA,
-                                        'exception'    => $EXCEPTION,
-                                    ];
+                'type'         => $TYPE,
+                'object'       => $OBJECT,
+                'status'       => 'error',
+                'request'      => $DATA,
+                'exception'    => $EXCEPTION,
+            ];
         }
     }
 
@@ -213,19 +213,19 @@ class CucmCtiRoutePoint extends Cucm
 
         if ((isset($errors)) && ! empty($errors)) {
             $result['Phone'] = [
-                        'type'         => 'Phone',
-                        'object'       => $request->name,
-                        'status'       => 'error',
-                        'request'      => $request->all,
-                        'exception'    => $errors,
-                    ];
+                'type'         => 'Phone',
+                'object'       => $request->name,
+                'status'       => 'error',
+                'request'      => $request->all,
+                'exception'    => $errors,
+            ];
 
             $response = [
-                        'status_code'    => 200,
-                        'success'        => true,
-                        'message'        => '',
-                        'response'       => $result,
-                        ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'response'       => $result,
+            ];
 
             return response()->json($response);
         }
@@ -248,7 +248,7 @@ class CucmCtiRoutePoint extends Cucm
             'success'        => true,
             'message'        => '',
             'response'       => $result,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -292,138 +292,138 @@ class CucmCtiRoutePoint extends Cucm
         $LINECSS = 'CSS_LINEONLY_L4_INTL';
 
         $PHONELINE = [
-                    'pattern'                      => $DN,
-                    'description'                  => $DESCRIPTION,
-                    'routePartitionName'           => 'Global-All-Lines',
-                    'usage'                        => '',
-                    'shareLineAppearanceCssName'   => $LINECSS,
-                    'alertingName'                 => substr($FULLNAME, 0, 28),
-                    'asciiAlertingName'            => substr($FULLNAME, 0, 28),
-                    'voiceMailProfileName'         => $VOICEMAILPROFILE,
-                    'presenceGroupName'            => 'Standard Presence group',
+            'pattern'                      => $DN,
+            'description'                  => $DESCRIPTION,
+            'routePartitionName'           => 'Global-All-Lines',
+            'usage'                        => '',
+            'shareLineAppearanceCssName'   => $LINECSS,
+            'alertingName'                 => substr($FULLNAME, 0, 28),
+            'asciiAlertingName'            => substr($FULLNAME, 0, 28),
+            'voiceMailProfileName'         => $VOICEMAILPROFILE,
+            'presenceGroupName'            => 'Standard Presence group',
 
-                    // E164 Alternative Number Mask - This is currently being ignored by CUCM because of a Cisco Bug. Ver 10.5.2 - 12/8/16 TR - TAC Case Opened
-                    'e164AltNum'                => [
-                                                        'numMask'                     => "+1{$DN}",
-                                                        'isUrgent'                    => 'true',
-                                                        'addLocalRoutePartition'      => 'true',
-                                                        'routePartition'              => 'Global-All-Lines',
-                                                        'active'                      => 'true',
-                                                        'advertiseGloballyIls'        => 'true',
-                                                    ],
+            // E164 Alternative Number Mask - This is currently being ignored by CUCM because of a Cisco Bug. Ver 10.5.2 - 12/8/16 TR - TAC Case Opened
+            'e164AltNum'                => [
+                'numMask'                     => "+1{$DN}",
+                'isUrgent'                    => 'true',
+                'addLocalRoutePartition'      => 'true',
+                'routePartition'              => 'Global-All-Lines',
+                'active'                      => 'true',
+                'advertiseGloballyIls'        => 'true',
+            ],
 
-                    // Call Forward Settings
-                    'callForwardAll'               => [
-                                                        'forwardToVoiceMail'                 => 'false',
-                                                        'callingSearchSpaceName'             => $LINECSS,
-                                                        'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
-                                                    ],
-                    'callForwardBusy'            => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardBusyInt'        => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardBusyInt'        => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardNoAnswer'        => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardNoAnswerInt'    => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardNoCoverage'        => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardNoCoverageInt'    => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardOnFailure'            => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardNotRegistered'    => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
-                    'callForwardNotRegisteredInt' => [
-                                                        'forwardToVoiceMail'     => 'true',
-                                                        'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
-                                                    ],
+            // Call Forward Settings
+            'callForwardAll'               => [
+                'forwardToVoiceMail'                 => 'false',
+                'callingSearchSpaceName'             => $LINECSS,
+                'secondaryCallingSearchSpaceName'    => "CSS_{$SITE}_DEVICE",
+            ],
+            'callForwardBusy'            => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardBusyInt'        => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardBusyInt'        => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardNoAnswer'        => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardNoAnswerInt'    => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardNoCoverage'        => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardNoCoverageInt'    => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardOnFailure'            => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardNotRegistered'    => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
+            'callForwardNotRegisteredInt' => [
+                'forwardToVoiceMail'     => 'true',
+                'callingSearchSpaceName' => 'CSS_LINE_CFWD_LD',
+            ],
 
-                ];
+        ];
 
         $PHONELINE_UPDATE = [
-                    'pattern'                      => $DN,
-                    'routePartitionName'           => 'Global-All-Lines',
+            'pattern'                      => $DN,
+            'routePartitionName'           => 'Global-All-Lines',
 
-                    // E164 Alternative Number Mask - This is currently being ignored by CUCM because of a Cisco Bug. Ver 10.5.2 - 12/8/16 TR - TAC Case Opened
-                    // updateLine works so we need to add this portion with an update after the Line has been added to the system.
-                    'e164AltNum'                => [
-                                                        'numMask'                     => "+1{$DN}",
-                                                        'isUrgent'                    => 'true',
-                                                        'addLocalRoutePartition'      => 'true',
-                                                        'routePartition'              => 'Global-All-Lines',
-                                                        'active'                      => 'true',
-                                                        'advertiseGloballyIls'        => 'true',
-                                                    ],
-                            ];
+            // E164 Alternative Number Mask - This is currently being ignored by CUCM because of a Cisco Bug. Ver 10.5.2 - 12/8/16 TR - TAC Case Opened
+            // updateLine works so we need to add this portion with an update after the Line has been added to the system.
+            'e164AltNum'                => [
+                'numMask'                     => "+1{$DN}",
+                'isUrgent'                    => 'true',
+                'addLocalRoutePartition'      => 'true',
+                'routePartition'              => 'Global-All-Lines',
+                'active'                      => 'true',
+                'advertiseGloballyIls'        => 'true',
+            ],
+        ];
         // Add the line  first
 
         $PHONE = [
-        'name'                               => $NAME,
-        'description'                        => $DESCRIPTION,
-        'product'                            => $PRODUCT,
-        'class'                              => 'Phone',
-        'protocol'                           => $PROTOCOL,
-        'protocolSide'                       => 'User',
-        'devicePoolName'                     => 'DP_'.$SITE,
-        'callingSearchSpaceName'             => 'CSS_'.$SITE.'_DEVICE',
-        'locationName'                       => 'LOC_'.$SITE,
-        'commonPhoneConfigName'              => 'Standard Common Phone Profile',
-        'useTrustedRelayPoint'               => 'Default',
-        'softkeyTemplateName'                => $SOFTKEYTEMPLATE,
-        'ownerUserName'                      => $USERNAME,
-        'builtInBridgeStatus'                => 'Default',
-        'packetCaptureMode'                  => 'None',
-        'certificateOperation'               => '',
-        'deviceMobilityMode'                 => '',
-        'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
-        'vendorConfig'                       => [
-                                    'webAccess'        => 1,
+            'name'                               => $NAME,
+            'description'                        => $DESCRIPTION,
+            'product'                            => $PRODUCT,
+            'class'                              => 'Phone',
+            'protocol'                           => $PROTOCOL,
+            'protocolSide'                       => 'User',
+            'devicePoolName'                     => 'DP_'.$SITE,
+            'callingSearchSpaceName'             => 'CSS_'.$SITE.'_DEVICE',
+            'locationName'                       => 'LOC_'.$SITE,
+            'commonPhoneConfigName'              => 'Standard Common Phone Profile',
+            'useTrustedRelayPoint'               => 'Default',
+            'softkeyTemplateName'                => $SOFTKEYTEMPLATE,
+            'ownerUserName'                      => $USERNAME,
+            'builtInBridgeStatus'                => 'Default',
+            'packetCaptureMode'                  => 'None',
+            'certificateOperation'               => '',
+            'deviceMobilityMode'                 => '',
+            'subscribeCallingSearchSpaceName'    => 'CSS_DEVICE_SUBSCRIBE',
+            'vendorConfig'                       => [
+                'webAccess'        => 1,
             ],
-        'lines'                    => [
-                                    'line' => [
-                                                    'index'           => 1,
-                                                    'dirn'            => [
-                                                                            'pattern'            => $DN,
-                                                                            'routePartitionName' => 'Global-All-Lines',
-                                                                        ],
-                                                    'label'              => $SHORTDESC,
-                                                    'display'            => substr($FULLNAME, 0, 28),
-                                                    'displayAscii'       => substr($FULLNAME, 0, 28),
-                                                    'e164Mask'           => $DN,
-                                                    'maxNumCalls'        => 4,
-                                                    'busyTrigger'        => 2,
-                                                    'associatedEndusers' => [
-                                                                                'enduser' => [
-                                                                                                'userId' => $USERNAME,
-                                                                                            ],
-                                                                            ],
-                                                    // Had to change this to Gateway Preferred instead of Phone Preferred to support 7960 phone types since they do not support on 7960.
-                                                    // May need to add if statement if this is needed in the future.
-                                                    'recordingMediaSource' => 'Gateway Preferred',
-                                                ],
-                                    ],
-            ];
+            'lines'                    => [
+                'line' => [
+                    'index'           => 1,
+                    'dirn'            => [
+                        'pattern'            => $DN,
+                        'routePartitionName' => 'Global-All-Lines',
+                    ],
+                    'label'              => $SHORTDESC,
+                    'display'            => substr($FULLNAME, 0, 28),
+                    'displayAscii'       => substr($FULLNAME, 0, 28),
+                    'e164Mask'           => $DN,
+                    'maxNumCalls'        => 4,
+                    'busyTrigger'        => 2,
+                    'associatedEndusers' => [
+                        'enduser' => [
+                            'userId' => $USERNAME,
+                        ],
+                    ],
+                    // Had to change this to Gateway Preferred instead of Phone Preferred to support 7960 phone types since they do not support on 7960.
+                    // May need to add if statement if this is needed in the future.
+                    'recordingMediaSource' => 'Gateway Preferred',
+                ],
+            ],
+        ];
 
         // Set back to SCCP after adding phone.
         $PROTOCOL = 'SCCP';

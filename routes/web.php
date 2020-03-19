@@ -22,7 +22,7 @@ Route::get('/ldap', function (Illuminate\Http\Request $request) {
         'base_dn'            => env('LDAP_BASEDN'),
         'admin_username'     => env('LDAP_USER'),
         'admin_password'     => env('LDAP_PASS'),
-//        'domain_controllers' => [env('LDAP_HOST')],
+        //        'domain_controllers' => [env('LDAP_HOST')],
         'domain_controllers' => ['127.0.0.1'],
         'ad_port'            => env('LDAP_PORT'),
         'account_suffix'     => '@'.env('LDAP_DOMAIN'),

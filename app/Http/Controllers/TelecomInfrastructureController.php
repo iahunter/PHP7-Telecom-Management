@@ -21,11 +21,11 @@ class TelecomInfrastructureController extends Controller
         $device = TelecomInfrastructure::orderBy('application', 'role')->get();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $device,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $device,
+        ];
 
         return response()->json($response);
     }
@@ -40,12 +40,12 @@ class TelecomInfrastructureController extends Controller
         }
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'request'           => $request->all(),
-                    'result'            => $device,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'request'           => $request->all(),
+            'result'            => $device,
+        ];
 
         return response()->json($response);
     }
@@ -64,12 +64,12 @@ class TelecomInfrastructureController extends Controller
         $device = TelecomInfrastructure::create($request->all());
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'result'         => $device,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'result'         => $device,
+        ];
 
         return response()->json($response);
     }
@@ -92,12 +92,12 @@ class TelecomInfrastructureController extends Controller
         $device->save();
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'request'          => $request->all(),
-                    'result'           => $device,
-                    ];
+            'status_code'      => 200,
+            'success'          => true,
+            'message'          => '',
+            'request'          => $request->all(),
+            'result'           => $device,
+        ];
 
         return response()->json($response);
     }
@@ -121,10 +121,10 @@ class TelecomInfrastructureController extends Controller
         // Find the block in the database by id
         $device->delete();                                                            // Delete the did block.
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => 'Device '.$id.' successfully deleted',
-                    'deleted_at'     => $device->deleted_at, ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => 'Device '.$id.' successfully deleted',
+            'deleted_at'     => $device->deleted_at, ];
 
         return response()->json($response);
     }

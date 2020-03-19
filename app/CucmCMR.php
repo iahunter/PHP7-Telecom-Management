@@ -26,28 +26,28 @@ class CucmCMR extends Model
 {
     protected $table = 'cucm_cmrs';
     protected $fillable = ['globalCallID_callId',
-                            'dateTimeStamp',
-                            'directoryNum',
-                            'callIdentifier',
-                            'directoryNumPartition',
-                            'deviceName',
-                            'varVQMetrics',
+        'dateTimeStamp',
+        'directoryNum',
+        'callIdentifier',
+        'directoryNumPartition',
+        'deviceName',
+        'varVQMetrics',
 
-                            'numberPacketsSent',
-                            'numberPacketsReceived',
-                            'jitter',
-                            'numberPacketsLost',
-                            'packetLossPercent',
+        'numberPacketsSent',
+        'numberPacketsReceived',
+        'jitter',
+        'numberPacketsLost',
+        'packetLossPercent',
 
-                            'cmrraw',
-                            'json',
-                        ];
+        'cmrraw',
+        'json',
+    ];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'cmrraw'  => 'array',
-            'json'    => 'array',
-        ];
+        'cmrraw'  => 'array',
+        'json'    => 'array',
+    ];
 
     public static function get_log_names()
     {

@@ -26,30 +26,30 @@ class CucmCDR extends Model
 {
     protected $table = 'cucm_cdrs';
     protected $fillable = ['globalCallID_callId',
-                            'origLegCallIdentifier',
-                            'dateTimeConnect',
-                            'dateTimeDisconnect',
-                            'duration',
-                            'callingPartyNumber',
-                            'originalCalledPartyNumber',
-                            'finalCalledPartyNumber',
-                            'origDeviceName',
-                            'destDeviceName',
-                            'origIpv4v6Addr',
-                            'destIpv4v6Addr',
-                            'originalCalledPartyPattern',
-                            'finalCalledPartyPattern',
-                            'lastRedirectingPartyPattern',
+        'origLegCallIdentifier',
+        'dateTimeConnect',
+        'dateTimeDisconnect',
+        'duration',
+        'callingPartyNumber',
+        'originalCalledPartyNumber',
+        'finalCalledPartyNumber',
+        'origDeviceName',
+        'destDeviceName',
+        'origIpv4v6Addr',
+        'destIpv4v6Addr',
+        'originalCalledPartyPattern',
+        'finalCalledPartyPattern',
+        'lastRedirectingPartyPattern',
 
-                            'cdrraw',
-                            'json',
-                        ];
+        'cdrraw',
+        'json',
+    ];
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'cdrraw'  => 'array',
-            'json'    => 'array',
-        ];
+        'cdrraw'  => 'array',
+        'json'    => 'array',
+    ];
 
     public static function get_log_names()
     {

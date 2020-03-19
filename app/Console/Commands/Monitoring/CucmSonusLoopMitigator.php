@@ -123,15 +123,15 @@ class CucmSonusLoopMitigator extends Command
                                 $loops++;
                                 //print_r($line);
                                 $new_cfa = [
-                                            'pattern'            => $line['pattern'],
-                                            'routePartitionName' => $line['routePartitionName']['_'],
-                                            'callForwardAll'     => [
-                                                            'destination' 						               => '',
-                                                            'callingSearchSpaceName' 			       => $line['callForwardAll']['callingSearchSpaceName']['_'],
-                                                            'secondaryCallingSearchSpaceName' 	=> $line['callForwardAll']['secondaryCallingSearchSpaceName']['_'],
-                                                        ],
-                                            'uuid' => $line['uuid'],
-                                            ];
+                                    'pattern'            => $line['pattern'],
+                                    'routePartitionName' => $line['routePartitionName']['_'],
+                                    'callForwardAll'     => [
+                                        'destination' 						               => '',
+                                        'callingSearchSpaceName' 			       => $line['callForwardAll']['callingSearchSpaceName']['_'],
+                                        'secondaryCallingSearchSpaceName' 	=> $line['callForwardAll']['secondaryCallingSearchSpaceName']['_'],
+                                    ],
+                                    'uuid' => $line['uuid'],
+                                ];
 
                                 $cucm_array[$line['uuid']]['callForwardAll_Update'] = $new_cfa;
                             }
@@ -147,15 +147,15 @@ class CucmSonusLoopMitigator extends Command
                                         $loops++;
                                         //print_r($line);
                                         $new_cfa = [
-                                                    'pattern'            => $line['pattern'],
-                                                    'routePartitionName' => $line['routePartitionName']['_'],
-                                                    'callForwardAll'     => [
-                                                                    'destination' 						               => '',
-                                                                    'callingSearchSpaceName' 			       => $line['callForwardAll']['callingSearchSpaceName']['_'],
-                                                                    'secondaryCallingSearchSpaceName' 	=> $line['callForwardAll']['secondaryCallingSearchSpaceName']['_'],
-                                                                ],
-                                                    'uuid' => $line['uuid'],
-                                                    ];
+                                            'pattern'            => $line['pattern'],
+                                            'routePartitionName' => $line['routePartitionName']['_'],
+                                            'callForwardAll'     => [
+                                                'destination' 						               => '',
+                                                'callingSearchSpaceName' 			       => $line['callForwardAll']['callingSearchSpaceName']['_'],
+                                                'secondaryCallingSearchSpaceName' 	=> $line['callForwardAll']['secondaryCallingSearchSpaceName']['_'],
+                                            ],
+                                            'uuid' => $line['uuid'],
+                                        ];
 
                                         $cucm_array[$line['uuid']]['callForwardAll_Update'] = $new_cfa;
                                     }
@@ -221,14 +221,14 @@ class CucmSonusLoopMitigator extends Command
             $actions_json = json_encode($actions, JSON_PRETTY_PRINT);
 
             $data = [
-                        'time'                         	=> $now,
-                        'loops'                 		      => $loops,
-                        'fixed_loops'                   => $fixed_loops,
-                        'unfixed_loops'        			      => $unfixed_loops,
-                        'attempt_counts'					           => $cdrs_array,
-                        'cdrs'                       	  => $actions,
-                        'cdrs_json'						               => $actions_json,
-                        ];
+                'time'                         	=> $now,
+                'loops'                 		      => $loops,
+                'fixed_loops'                   => $fixed_loops,
+                'unfixed_loops'        			      => $unfixed_loops,
+                'attempt_counts'					           => $cdrs_array,
+                'cdrs'                       	  => $actions,
+                'cdrs_json'						               => $actions_json,
+            ];
 
             print_r($data);
 

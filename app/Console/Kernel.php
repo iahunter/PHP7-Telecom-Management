@@ -40,9 +40,9 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CiscoWirelessPhoneCert::class,
 
         Commands\MACD\GetMacdReports::class,
-		
-		// Phone Reports
-		Commands\CallManager\GetCucmPhoneStats::class,
+
+        // Phone Reports
+        Commands\CallManager\GetCucmPhoneStats::class,
 
         //Commands\CallManager\ADNumberUpdatesByMailboxNumber::class,
 

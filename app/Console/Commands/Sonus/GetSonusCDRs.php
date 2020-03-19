@@ -32,9 +32,9 @@ class GetSonusCDRs extends Command
     public function __construct()
     {
         $this->SBCS = [
-                        env('SONUS1'),
-                        env('SONUS2'),
-                        ];
+            env('SONUS1'),
+            env('SONUS2'),
+        ];
 
         parent::__construct();
         // Populate SBC list
@@ -101,18 +101,18 @@ class GetSonusCDRs extends Command
 
                 $cdr_array = Sonus5kCDR::parse_cdr_file_into_array($file); 								// Parse CSV into workable Array
                 $cdr_array = Sonus5kCDR::get_completed_cdrs_from_array($cdr_array); 					// Get Stop and Attempts records only from array
-				
+
                 $record_count = count($cdr_array);
                 echo 'Found '.$record_count.' completed records.. Filter out records older than cutoff of: '.$cutoff_hours.' hours. '.PHP_EOL;
-				
-				/*
-				foreach($cdr_array as $cdr){
-					//print_r($cdr); 
-					print "{$cdr['Record Type']} {$cdr['Gateway Name']} {$cdr['Accounting ID']} {$cdr['Start Time (MM/DD/YYYY)']} {$cdr['Start Time (HH/MM/SS.s)']}" . PHP_EOL; 
-					
-				}
-				*/
-				
+
+                /*
+                foreach($cdr_array as $cdr){
+                    //print_r($cdr);
+                    print "{$cdr['Record Type']} {$cdr['Gateway Name']} {$cdr['Accounting ID']} {$cdr['Start Time (MM/DD/YYYY)']} {$cdr['Start Time (HH/MM/SS.s)']}" . PHP_EOL;
+
+                }
+                */
+
                 $cdr_array = Sonus5kCDR::filter_out_cdrs_older_than_cutoff($cdr_array, $cutoff_hours); 	// Filter out records older than cutoff date.
 
                 $record_count = count($cdr_array);
@@ -139,29 +139,29 @@ class GetSonusCDRs extends Command
                 foreach ($cdr_array as $cdr) {
                     $i++; 																// Count for display purposes.
                     $RECORD = Sonus5kCDR::get_db_format_from_cdr($cdr);
-					$DST_CHECK = new \Carbon\Carbon($RECORD['start_time']); 
-					
+                    $DST_CHECK = new \Carbon\Carbon($RECORD['start_time']);
+
                     if (Sonus5kCDR::check_db_for_record($RECORD)) {																								// Check if record exists in the db.
                         echo "Found Record {$i} of {$count_total}: Accounting ID:".$RECORD['accounting_id'].' | '.$RECORD['start_time'].' | '.$RECORD['disconnect_time'].PHP_EOL;
                         continue;
-					}
-					
-					// ******** 
-					// Adding Check for Daylight Savings time calls in UTC. This is a temp workaround for an issue with MySQL doing insert from 2am to 3am because our Server is set to CST. There is no such thing as 2am CT during DST spring ahead. It skips form 1:59am to 3am. 
-					// Was getting error: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2020-03-08 02:01:17.4' for column 'start_time' at row 1   
-					$TIMECHANGE_START = "2020-03-08 02:00:00.000000"; 
-					$TIMECHANGE_END = "2020-03-08 03:00:00.000000"; 
-					
-					if ($RECORD['start_time'] > $TIMECHANGE_START && $RECORD['start_time'] < $TIMECHANGE_END) {																								// Check if record exists in the db.
+                    }
+
+                    // ********
+                    // Adding Check for Daylight Savings time calls in UTC. This is a temp workaround for an issue with MySQL doing insert from 2am to 3am because our Server is set to CST. There is no such thing as 2am CT during DST spring ahead. It skips form 1:59am to 3am.
+                    // Was getting error: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '2020-03-08 02:01:17.4' for column 'start_time' at row 1
+                    $TIMECHANGE_START = '2020-03-08 02:00:00.000000';
+                    $TIMECHANGE_END = '2020-03-08 03:00:00.000000';
+
+                    if ($RECORD['start_time'] > $TIMECHANGE_START && $RECORD['start_time'] < $TIMECHANGE_END) {																								// Check if record exists in the db.
                         echo "TIME CHANGE ISSUE WITH INSERT: Skippping Record {$i} of {$count_total}: Accounting ID:".$RECORD['accounting_id'].' | '.$RECORD['start_time'].' | '.$RECORD['disconnect_time'].PHP_EOL;
-						continue;
-					}
-					// End of DST Check. Need to fix this on new server by putting the server into UTC time. 
-					// ******** 
-					
-					else {
+                        continue;
+                    }
+                    // End of DST Check. Need to fix this on new server by putting the server into UTC time.
+                    // ********
+
+                    else {
                         echo "Creating New Record: {$i} of {$count_total}: ".$RECORD['accounting_id'].' | '.$RECORD['start_time'].' | '.$RECORD['disconnect_time'].PHP_EOL;
-						
+
                         \App\Sonus5kCDR::firstOrCreate($RECORD);			// Try to create the new record in the db.
 
                         // Ship cdr record to Kafka for Elastic Search capabilities.

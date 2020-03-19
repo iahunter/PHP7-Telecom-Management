@@ -30,9 +30,9 @@ class SonusCalls extends Command
     public function __construct()
     {
         $this->SBCS = [
-                        env('SONUS1'),
-                        env('SONUS2'),
-                        ];
+            env('SONUS1'),
+            env('SONUS2'),
+        ];
 
         parent::__construct();
         // Populate SBC list

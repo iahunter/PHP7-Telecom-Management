@@ -65,11 +65,11 @@ class BouncerPermissionsController extends Controller
         //print_r($user_permissions);
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $user_permissions,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $user_permissions,
+        ];
 
         return response()->json($response);
     }

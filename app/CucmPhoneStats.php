@@ -11,9 +11,8 @@ class CucmPhoneStats extends Model
 
     protected $casts = [
         'stats'    => 'array',
-		'json'    => 'array',
+        'json'     => 'array',
     ];
-	
 
     protected $attributes = [
         'json' => '{}',

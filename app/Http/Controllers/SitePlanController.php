@@ -40,11 +40,11 @@ class SitePlanController extends Controller
             }
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'sites'          => $show,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'sites'          => $show,
+        ];
 
         return response()->json($response);
     }
@@ -110,12 +110,12 @@ class SitePlanController extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    //'request'        => $request->all(),
-                    'result'           => $site,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            //'request'        => $request->all(),
+            'result'           => $site,
+        ];
 
         return response()->json($response);
     }
@@ -137,12 +137,12 @@ class SitePlanController extends Controller
         $site = Site::create($request->all());
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    //'request'        => $request->all(),
-                    'site'           => $site,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            //'request'        => $request->all(),
+            'site'           => $site,
+        ];
 
         return response()->json($response);
     }
@@ -164,12 +164,12 @@ class SitePlanController extends Controller
         $site->save();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'site'           => $site,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'site'           => $site,
+        ];
 
         return response()->json($response);
     }
@@ -191,10 +191,10 @@ class SitePlanController extends Controller
 
         $site->delete();                                                            // Delete the Phone block.
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => 'Phone Block '.$id.' successfully deleted',
-                    'deleted_at'     => $site->deleted_at, ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => 'Phone Block '.$id.' successfully deleted',
+            'deleted_at'     => $site->deleted_at, ];
 
         return response()->json($response);
     }
@@ -212,12 +212,12 @@ class SitePlanController extends Controller
         $phone = Phone::create($request->all());
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    //'request'        => $request->all(),
-                    'result'          => $phone,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            //'request'        => $request->all(),
+            'result'          => $phone,
+        ];
 
         return response()->json($response);
     }
@@ -231,12 +231,12 @@ class SitePlanController extends Controller
         }
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    //'request'          => $request->all(),
-                    'result'            => $Phone,
-                    ];
+            'status_code'      => 200,
+            'success'          => true,
+            'message'          => '',
+            //'request'          => $request->all(),
+            'result'            => $Phone,
+        ];
 
         return response()->json($response);
     }
@@ -260,12 +260,12 @@ class SitePlanController extends Controller
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    //'request'           => $request->all(),
-                    'result'            => $Phones,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            //'request'           => $request->all(),
+            'result'            => $Phones,
+        ];
 
         return response()->json($response);
     }
@@ -287,12 +287,12 @@ class SitePlanController extends Controller
         $Phone->save();
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    //'request'          => $request->all(),
-                    'result'            => $Phone,
-                    ];
+            'status_code'      => 200,
+            'success'          => true,
+            'message'          => '',
+            //'request'          => $request->all(),
+            'result'            => $Phone,
+        ];
 
         return response()->json($response);
     }
@@ -314,12 +314,12 @@ class SitePlanController extends Controller
 
         $Phone->delete();                                                            // Delete the Phone block.
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => 'Phone '.$Phone_id.' successfully deleted',
-                    'phone'          => $Phone,
-                    'deleted_at'     => $Phone->deleted_at,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => 'Phone '.$Phone_id.' successfully deleted',
+            'phone'          => $Phone,
+            'deleted_at'     => $Phone->deleted_at,
+        ];
 
         return response()->json($response);
     }
@@ -345,11 +345,11 @@ class SitePlanController extends Controller
             }
         }
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    'result'          => $show,
-                    ];
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+            'result'          => $show,
+        ];
 
         return response()->json($response);
     }
@@ -379,7 +379,7 @@ class SitePlanController extends Controller
             'message'          => '',
             //'request'        => $request->all(),
             'result'           => $phoneplan,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -409,7 +409,7 @@ class SitePlanController extends Controller
             'message'          => '',
             //'request'        => $request->all(),
             'result'           => $phones,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -439,7 +439,7 @@ class SitePlanController extends Controller
             'message'          => '',
             //'request'        => $request->all(),
             'result'           => $phoneplan,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -454,12 +454,12 @@ class SitePlanController extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    //'request'        => $request->all(),
-                    'result'           => $phoneplan,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            //'request'        => $request->all(),
+            'result'           => $phoneplan,
+        ];
 
         return response()->json($response);
     }
@@ -486,12 +486,12 @@ class SitePlanController extends Controller
         //return "HERE ".$Phone;
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    //'request'           => $request->all(),
-                    'result'            => $Phones,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            //'request'           => $request->all(),
+            'result'            => $Phones,
+        ];
 
         return response()->json($response);
     }
@@ -509,12 +509,12 @@ class SitePlanController extends Controller
         $phoneplan = Phoneplan::create($request->all());
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    //'request'        => $request->all(),
-                    'site'           => $phoneplan,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            //'request'        => $request->all(),
+            'site'           => $phoneplan,
+        ];
 
         return response()->json($response);
     }
@@ -536,12 +536,12 @@ class SitePlanController extends Controller
         $phoneplan->save();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    //'request'        => $request->all(),
-                    'result'           => $phoneplan,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            //'request'        => $request->all(),
+            'result'           => $phoneplan,
+        ];
 
         return response()->json($response);
     }
@@ -564,13 +564,13 @@ class SitePlanController extends Controller
         $phoneplan->delete();                                                            // Delete the Phone block.
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    //'request'        => $request->all(),
-                    'result'         => 'Phone Block '.$id.' successfully deleted',
-                    'deleted_at'     => $phoneplan->deleted_at,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            //'request'        => $request->all(),
+            'result'         => 'Phone Block '.$id.' successfully deleted',
+            'deleted_at'     => $phoneplan->deleted_at,
+        ];
 
         return response()->json($response);
     }

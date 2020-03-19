@@ -3,9 +3,9 @@
 namespace App;
 
 //use OwenIt\Auditing\Auditable;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use DB;
 
 class Cucmphoneconfigs extends Model
 {
@@ -17,66 +17,65 @@ class Cucmphoneconfigs extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'lines'           => 'array',
-            'config'          => 'array',
-        ];
+        'lines'           => 'array',
+        'config'          => 'array',
+    ];
 
     protected static function boot()
     {
         parent::boot();
     }
-	
-	public static function get_count_phone_models_inuse()
+
+    public static function get_count_phone_models_inuse()
     {
         $models = DB::table('cucmphone')
             ->select('cucmphone.model', DB::raw('count(cucmphone.model) as count'))
-			->whereNull('deleted_at')
+            ->whereNull('deleted_at')
             ->groupBy('model')
             ->orderBy('model')
             ->get();
 
-        return $models; 
+        return $models;
     }
-	
-	public static function get_active_phone_count()
-    {
-        $count = Cucmphoneconfigs::all()->count();
 
-        return $count; 
-    }
-	
-	public static function get_phone_registered_count()
+    public static function get_active_phone_count()
     {
-		$count = Cucmphoneconfigs::where('risdb_registration_status', 'Registered')->count(); 
-        
-		return $count; 
-    }
-	
-	public static function get_phone_registered_count_by_type()
-    {
-        $array = []; 
-		
-		$models = Cucmphoneconfigs::get_count_phone_models_inuse(); 
-		
-		foreach($models as $model){
-			//print $model->model . PHP_EOL; 
-			
-			if(!$model->model){
-				continue;
-			}
-			
-			$count = Cucmphoneconfigs::where('model', $model->model)
-										->where('risdb_registration_status', 'Registered')
-										->count(); 
-			$model->registered = $count; 
-			
-			$key = $model->model; 
-			unset($model->model); 
-			
-			$array[$key] = $model; 
-		}
+        $count = self::all()->count();
 
-        return $array; 
+        return $count;
     }
-	
+
+    public static function get_phone_registered_count()
+    {
+        $count = self::where('risdb_registration_status', 'Registered')->count();
+
+        return $count;
+    }
+
+    public static function get_phone_registered_count_by_type()
+    {
+        $array = [];
+
+        $models = self::get_count_phone_models_inuse();
+
+        foreach ($models as $model) {
+            //print $model->model . PHP_EOL;
+
+            if (! $model->model) {
+                continue;
+            }
+
+            $count = self::where('model', $model->model)
+                                        ->where('risdb_registration_status', 'Registered')
+                                        ->count();
+            $model->registered = $count;
+
+            $key = $model->model;
+            unset($model->model);
+
+            $array[$key] = $model;
+        }
+
+        return $array;
+    }
 }

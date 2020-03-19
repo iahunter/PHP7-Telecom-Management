@@ -14,9 +14,9 @@ class PhoneMACD extends Model
 
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
-            'form_data' => 'array',
-            'json'      => 'array',
-        ];
+        'form_data' => 'array',
+        'json'      => 'array',
+    ];
 
     protected static function boot()
     {

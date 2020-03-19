@@ -133,11 +133,11 @@ class LogController extends Controller
         }
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $calls_array,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $calls_array,
+        ];
 
         return $response;
         //return response()->json($response); // This doesn't seem to affect the response.
@@ -168,11 +168,11 @@ class LogController extends Controller
         //print_r($calls);
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'result'               => $calls,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'result'               => $calls,
+        ];
 
         return $response;
     }

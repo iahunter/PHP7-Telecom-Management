@@ -29,11 +29,11 @@ class Cucmphone extends Cucm
         $result = Cucmclass::reset_phone($name);
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $result,
+        ];
 
         return response()->json($response);
     }
@@ -162,11 +162,11 @@ class Cucmphone extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $phone,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $phone,
+        ];
 
         return response()->json($response);
     }
@@ -195,11 +195,11 @@ class Cucmphone extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $phones,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $phones,
+        ];
 
         return response()->json($response);
     }
@@ -230,11 +230,11 @@ class Cucmphone extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $phones,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $phones,
+        ];
 
         return response()->json($response);
     }
@@ -297,7 +297,7 @@ class Cucmphone extends Cucm
             'message'         => '',
             'request'         => $request->all(),
             'response'        => $PHONES,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -327,13 +327,13 @@ class Cucmphone extends Cucm
             $REPLY = $this->cucm->update_object_type_by_assoc($DATA, $TYPE);
 
             $LOG = [
-                    'type'       => $TYPE,
-                    'object'     => $OBJECT,
-                    'status'     => 'success',
-                    'reply'      => $REPLY,
-                    'request'    => $DATA,
+                'type'       => $TYPE,
+                'object'     => $OBJECT,
+                'status'     => 'success',
+                'reply'      => $REPLY,
+                'request'    => $DATA,
 
-                ];
+            ];
 
             return $LOG;
             // Create log entry
@@ -349,12 +349,12 @@ class Cucmphone extends Cucm
             //$delimiter = "Stack trace:";
             //explode ($delimiter , $EXCEPTION);
             $LOG = [
-                                        'type'         => $TYPE,
-                                        'object'       => $OBJECT,
-                                        'status'       => 'error',
-                                        'request'      => $DATA,
-                                        'exception'    => $EXCEPTION,
-                                    ];
+                'type'         => $TYPE,
+                'object'       => $OBJECT,
+                'status'       => 'error',
+                'request'      => $DATA,
+                'exception'    => $EXCEPTION,
+            ];
 
             return $LOG;
         }
@@ -395,7 +395,7 @@ class Cucmphone extends Cucm
             'message'         => '',
             'request'         => $result['request'],
             'response'        => $result['response'],
-            ];
+        ];
 
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('update object');
 
@@ -442,18 +442,18 @@ class Cucmphone extends Cucm
                     'success'        => true,
                     'message'        => '',
                     'response'       => $RETURN,
-                    ];
+                ];
             }
         } catch (\Exception $E) {
             $message = "{$NAME} Does not exist in CUCM Database.".
             "{$E->getMessage()}";
 
             $response = [
-                    'status_code'    => 200,
-                    'success'        => false,
-                    'message'        => $message,
-                    'response'       => '',
-                    ];
+                'status_code'    => 200,
+                'success'        => false,
+                'message'        => $message,
+                'response'       => '',
+            ];
         }
 
         return $response;
@@ -543,19 +543,19 @@ class Cucmphone extends Cucm
 
         if ((isset($errors)) && ! empty($errors)) {
             $result['Phone'] = [
-                        'type'         => 'Phone',
-                        'object'       => $request->name,
-                        'status'       => 'error',
-                        'request'      => $request->all,
-                        'exception'    => $errors,
-                    ];
+                'type'         => 'Phone',
+                'object'       => $request->name,
+                'status'       => 'error',
+                'request'      => $request->all,
+                'exception'    => $errors,
+            ];
 
             $response = [
-                        'status_code'    => 200,
-                        'success'        => true,
-                        'message'        => '',
-                        'response'       => $result,
-                        ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'response'       => $result,
+            ];
 
             activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, $result])->log('add object');
 
@@ -580,7 +580,7 @@ class Cucmphone extends Cucm
             'success'        => true,
             'message'        => '',
             'response'       => $result,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -672,19 +672,19 @@ class Cucmphone extends Cucm
 
         if ((isset($errors)) && ! empty($errors)) {
             $result = [
-                        'type'         => 'Phone',
-                        'object'       => $request->name,
-                        'status'       => 'error',
-                        'request'      => $request->all,
-                        'exception'    => $errors,
-                    ];
+                'type'         => 'Phone',
+                'object'       => $request->name,
+                'status'       => 'error',
+                'request'      => $request->all,
+                'exception'    => $errors,
+            ];
 
             $response = [
-                        'status_code'    => 200,
-                        'success'        => true,
-                        'message'        => '',
-                        'response'       => $result,
-                        ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'response'       => $result,
+            ];
 
             return response()->json($response);
         }
@@ -710,7 +710,7 @@ class Cucmphone extends Cucm
             'success'        => true,
             'message'        => '',
             'response'       => $result,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -801,19 +801,19 @@ class Cucmphone extends Cucm
 
         if ((isset($errors)) && ! empty($errors)) {
             $result['Phone'] = [
-                        'type'         => 'Phone',
-                        'object'       => $request->name,
-                        'status'       => 'error',
-                        'request'      => $request->all,
-                        'exception'    => $errors,
-                    ];
+                'type'         => 'Phone',
+                'object'       => $request->name,
+                'status'       => 'error',
+                'request'      => $request->all,
+                'exception'    => $errors,
+            ];
 
             $response = [
-                        'status_code'    => 200,
-                        'success'        => true,
-                        'message'        => '',
-                        'response'       => $result,
-                        ];
+                'status_code'    => 200,
+                'success'        => true,
+                'message'        => '',
+                'response'       => $result,
+            ];
 
             return response()->json($response);
         }
@@ -845,7 +845,7 @@ class Cucmphone extends Cucm
             'message'         => '',
             'request'         => $request,
             'response'        => $result,
-            ];
+        ];
 
         return response()->json($response);
     }

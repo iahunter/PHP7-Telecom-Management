@@ -40,11 +40,11 @@ class Didcontroller extends Controller
             }
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'didblocks'      => $show,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'didblocks'      => $show,
+        ];
 
         return response()->json($response);
     }
@@ -79,11 +79,11 @@ class Didcontroller extends Controller
             }
         }
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'didblocks'      => $show,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'didblocks'      => $show,
+        ];
 
         return response()->json($response);
     }
@@ -127,12 +127,12 @@ class Didcontroller extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'didblock'       => $didblock,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'didblock'       => $didblock,
+        ];
 
         return response()->json($response);
     }
@@ -156,12 +156,12 @@ class Didcontroller extends Controller
         //return "HERE ".$did;
 
         $response = [
-                    'status_code'          => 200,
-                    'success'              => true,
-                    'message'              => '',
-                    'request'              => $request->all(),
-                    'didblocks'            => $didblocks,
-                    ];
+            'status_code'          => 200,
+            'success'              => true,
+            'message'              => '',
+            'request'              => $request->all(),
+            'didblocks'            => $didblocks,
+        ];
 
         return response()->json($response);
     }
@@ -184,12 +184,12 @@ class Didcontroller extends Controller
         $didblock = Didblock::create($request->all());
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'didblock'       => $didblock,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'didblock'       => $didblock,
+        ];
 
         return response()->json($response);
     }
@@ -212,12 +212,12 @@ class Didcontroller extends Controller
         $didblock->save();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'didblock'       => $didblock,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'didblock'       => $didblock,
+        ];
 
         return response()->json($response);
     }
@@ -241,10 +241,10 @@ class Didcontroller extends Controller
         // Find the block in the database by id
         $didblock->delete();                                                            // Delete the did block.
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => 'Did Block '.$id.' successfully deleted',
-                    'deleted_at'     => $didblock->deleted_at, ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => 'Did Block '.$id.' successfully deleted',
+            'deleted_at'     => $didblock->deleted_at, ];
 
         return response()->json($response);
     }
@@ -257,11 +257,11 @@ class Didcontroller extends Controller
         }
         //dd($dids);
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'dids'           => $dids,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'dids'           => $dids,
+        ];
 
         return response()->json($response);
     }
@@ -302,11 +302,11 @@ class Didcontroller extends Controller
         }
 
         $response = [
-                    'status_code'        => 200,
-                    'success'            => true,
-                    'message'            => '',
-                    'response'           => $show,
-                    ];
+            'status_code'        => 200,
+            'success'            => true,
+            'message'            => '',
+            'response'           => $show,
+        ];
 
         return response()->json($response);
     }
@@ -320,12 +320,12 @@ class Didcontroller extends Controller
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'did'            => $did,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'did'            => $did,
+        ];
 
         return response()->json($response);
     }
@@ -349,12 +349,12 @@ class Didcontroller extends Controller
         //return "HERE ".$did;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    'request'         => $request->all(),
-                    'result'          => $dids,
-                    ];
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+            'request'         => $request->all(),
+            'result'          => $dids,
+        ];
 
         return response()->json($response);
     }
@@ -449,12 +449,12 @@ class Didcontroller extends Controller
         //return "HERE ".$did;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    //'request'         => $request->all(),
-                    'result'            => $dids,
-                    ];
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+            //'request'         => $request->all(),
+            'result'            => $dids,
+        ];
 
         return response()->json($response);
     }
@@ -506,12 +506,12 @@ class Didcontroller extends Controller
         //return "HERE ".$did;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    //'request'         => $request->all(),
-                    'result'            => $dids,
-                    ];
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+            //'request'         => $request->all(),
+            'result'            => $dids,
+        ];
 
         return response()->json($response);
     }
@@ -551,12 +551,12 @@ class Didcontroller extends Controller
         //return "HERE ".$did;
 
         $response = [
-                    'status_code'     => 200,
-                    'success'         => true,
-                    'message'         => '',
-                    'request'         => $request->all(),
-                    'dids'            => $dids,
-                    ];
+            'status_code'     => 200,
+            'success'         => true,
+            'message'         => '',
+            'request'         => $request->all(),
+            'dids'            => $dids,
+        ];
 
         return response()->json($response);
     }
@@ -579,12 +579,12 @@ class Didcontroller extends Controller
         $did->save();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'did'            => $did,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'did'            => $did,
+        ];
 
         return response()->json($response);
     }

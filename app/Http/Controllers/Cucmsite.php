@@ -30,11 +30,11 @@ class Cucmsite extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $sites,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $sites,
+        ];
 
         return response()->json($response);
     }
@@ -61,11 +61,11 @@ class Cucmsite extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $site,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $site,
+        ];
 
         return response()->json($response);
     }
@@ -91,11 +91,11 @@ class Cucmsite extends Cucm
         }
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'response'       => $site,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $site,
+        ];
 
         return response()->json($response);
     }
@@ -277,7 +277,7 @@ class Cucmsite extends Cucm
             'success'        => true,
             'message'        => '',
             'response'       => $result,
-            ];
+        ];
 
         // Create log entry
         activity('cucm_provisioning_log')->causedBy($user)->withProperties(['function' => __FUNCTION__, 'response' => $response])->log('add site');
@@ -309,11 +309,11 @@ class Cucmsite extends Cucm
             // Calculated data structure
             $TYPE = 'Srst';
             $DATA = [
-                    'name'         => "SRST_{$SITE}",
-                    'ipAddress'    => $SRSTIP,
-                    'port'         => 2000,
-                    'SipPort'      => 5060,
-                    ];
+                'name'         => "SRST_{$SITE}",
+                'ipAddress'    => $SRSTIP,
+                'port'         => 2000,
+                'SipPort'      => 5060,
+            ];
 
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
@@ -332,41 +332,41 @@ class Cucmsite extends Cucm
         $TYPE = 'RoutePartition';
         // Prepared datastructure
         $PARTITIONS = [
-                        [
-                        'name'                            => 'PT_'.$SITE.'_SVC',
-                        'description'                     => 'Site PT, park, pickup, HG, CTI Ports, CTI-RP',
-                        'useOriginatingDeviceTimeZone'    => 'true',
-                        ],
-                        [
-                        'name'                            => 'PT_'.$SITE.'_XLATE',
-                        'description'                     => 'Site Specific Translation Patterns/Speed Dials',
-                        'useOriginatingDeviceTimeZone'    => 'true',
-                        ],
-                        /* We may no longer be using this Partition
+            [
+                'name'                            => 'PT_'.$SITE.'_SVC',
+                'description'                     => 'Site PT, park, pickup, HG, CTI Ports, CTI-RP',
+                'useOriginatingDeviceTimeZone'    => 'true',
+            ],
+            [
+                'name'                            => 'PT_'.$SITE.'_XLATE',
+                'description'                     => 'Site Specific Translation Patterns/Speed Dials',
+                'useOriginatingDeviceTimeZone'    => 'true',
+            ],
+            /* We may no longer be using this Partition
                         [
                         'name'                            => 'PT_'.$SITE,
                         'description'                     => $SITE,
                         'useOriginatingDeviceTimeZone'    => 'true',
                         ],
                         */
-                    ];
+        ];
 
         if ($SITE_TYPE >= 3) {
             // Add a 911 route partition for Site Types 3 and 4.
             $PARTITIONS[] = [
-                            'name'                            => 'PT_'.$SITE.'_911',
-                            'description'                     => $SITE.' 911 Calling',
-                            'useOriginatingDeviceTimeZone'    => 'true',
-                            ];
+                'name'                            => 'PT_'.$SITE.'_911',
+                'description'                     => $SITE.' 911 Calling',
+                'useOriginatingDeviceTimeZone'    => 'true',
+            ];
         }
 
         if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
             // Add a 911 route partition for Site Types 3 and 4.
             $PARTITIONS[] = [
-                            'name'                            => 'PT_'.$SITE.'_GW_CALLED_XFORM',
-                            'description'                     => 'Site Specific GW called party Xform',
-                            'useOriginatingDeviceTimeZone'    => 'true',
-                            ];
+                'name'                            => 'PT_'.$SITE.'_GW_CALLED_XFORM',
+                'description'                     => 'Site Specific GW called party Xform',
+                'useOriginatingDeviceTimeZone'    => 'true',
+            ];
         }
 
         foreach ($PARTITIONS as $DATA) {
@@ -394,44 +394,44 @@ class Cucmsite extends Cucm
                 'name'            => "CSS_{$SITE}_DEVICE",
                 'description'     => "CSS for {$SITE} Device Assignment",
                 'members'         => [
-                                    'member' => [
-                                                    // E911
-                                                    [
-                                                    'routePartitionName'   => 'PT_911Enable',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_SVC",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_XLATE",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'Global-All-Lines',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'System-Voicemail',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_GLOBAL_SVC',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_GLOBAL_XLATE',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_LOCAL_10_DIGIT',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_TOLLFREE',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_LD',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_INTL',
-                                                    ],
-                                                ],
-                                    ],
-                ];
+                    'member' => [
+                        // E911
+                        [
+                            'routePartitionName'   => 'PT_911Enable',
+                        ],
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_SVC",
+                        ],
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_XLATE",
+                        ],
+                        [
+                            'routePartitionName'   => 'Global-All-Lines',
+                        ],
+                        [
+                            'routePartitionName'   => 'System-Voicemail',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_GLOBAL_SVC',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_GLOBAL_XLATE',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_LOCAL_10_DIGIT',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_TOLLFREE',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_LD',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_INTL',
+                        ],
+                    ],
+                ],
+            ];
 
             /* This is not working for some reason. Getting exception - Cannot insert a null into column (callingsearchspacemember.sortorder)
 
@@ -462,44 +462,44 @@ class Cucmsite extends Cucm
                 'name'            => "CSS_{$SITE}_DEVICE",
                 'description'     => "CSS for {$SITE} Device Assignment",
                 'members'         => [
-                                    'member' => [
-                                                    // E911
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_911",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_SVC",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_XLATE",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'Global-All-Lines',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'System-Voicemail',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_GLOBAL_SVC',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_GLOBAL_XLATE',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_LOCAL_10_DIGIT',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_TOLLFREE',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_LD',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_PSTN_INTL',
-                                                    ],
-                                                ],
-                                    ],
-                ];
+                    'member' => [
+                        // E911
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_911",
+                        ],
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_SVC",
+                        ],
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_XLATE",
+                        ],
+                        [
+                            'routePartitionName'   => 'Global-All-Lines',
+                        ],
+                        [
+                            'routePartitionName'   => 'System-Voicemail',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_GLOBAL_SVC',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_GLOBAL_XLATE',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_LOCAL_10_DIGIT',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_TOLLFREE',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_LD',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_PSTN_INTL',
+                        ],
+                    ],
+                ],
+            ];
 
             // Add the index to each member in order.
             $i = 1;
@@ -518,16 +518,16 @@ class Cucmsite extends Cucm
                 'name'            => "CSS_{$SITE}_GW_CALLED_XFORM",
                 'description'     => 'Applied outbound on a site local trunk or gw',
                 'members'         => [
-                                    'member' => [
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_GW_CALLED_XFORM",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_GLOBAL_GW_CALLED_XFORM',
-                                                    ],
-                                                ],
-                                    ],
-                ];
+                    'member' => [
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_GW_CALLED_XFORM",
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_GLOBAL_GW_CALLED_XFORM',
+                        ],
+                    ],
+                ],
+            ];
 
             // Add the index to each member in order.
             $i = 1;
@@ -546,28 +546,28 @@ class Cucmsite extends Cucm
                 'name'            => "CSS_{$SITE}_INCOMING_GW",
                 'description'     => 'Applied to incoming CSS on site gw or sip trunk',
                 'members'         => [
-                                    'member' => [
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_SVC",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => "PT_{$SITE}_XLATE",
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'Global-All-Lines',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'System-Voicemail',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_GLOBAL_SVC',
-                                                    ],
-                                                    [
-                                                    'routePartitionName'   => 'PT_GLOBAL_XLATE',
-                                                    ],
-                                                ],
-                                    ],
-                ];
+                    'member' => [
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_SVC",
+                        ],
+                        [
+                            'routePartitionName'   => "PT_{$SITE}_XLATE",
+                        ],
+                        [
+                            'routePartitionName'   => 'Global-All-Lines',
+                        ],
+                        [
+                            'routePartitionName'   => 'System-Voicemail',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_GLOBAL_SVC',
+                        ],
+                        [
+                            'routePartitionName'   => 'PT_GLOBAL_XLATE',
+                        ],
+                    ],
+                ],
+            ];
 
             // Add the index to each member in order.
             $i = 1;
@@ -601,12 +601,12 @@ class Cucmsite extends Cucm
         $TYPE = 'Location';
         // Prepared datastructure
         $DATA = [
-                'name'                    => "LOC_{$SITE}",
-                'withinAudioBandwidth'    => '0',
-                'withinVideoBandwidth'    => '0',
-                'withinImmersiveKbits'    => '0',
-                'betweenLocations'        => [],
-                ];
+            'name'                    => "LOC_{$SITE}",
+            'withinAudioBandwidth'    => '0',
+            'withinVideoBandwidth'    => '0',
+            'withinImmersiveKbits'    => '0',
+            'betweenLocations'        => [],
+        ];
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -624,68 +624,68 @@ class Cucmsite extends Cucm
         $TYPE = 'Region';
         // Prepared datastructure
         $DATA = [
-                'name'                => "R_{$SITE}",
-                'relatedRegions'      => [
-                                        'relatedRegion' => [
-                                                                [
-                                                                'regionName'                   => 'Default',
-                                                                'bandwidth'                    => 'G.729',
-                                                                'videoBandwidth'               => '384',
-                                                                'lossyNetwork'                 => '',
-                                                                'codecPreference'              => '',
-                                                                'immersiveVideoBandwidth'      => '',
-                                                                ],
-                                                                [
-                                                                'regionName'                   => 'R_711',
-                                                                'bandwidth'                    => 'G.711',
-                                                                'videoBandwidth'               => '384',
-                                                                'lossyNetwork'                 => '',
-                                                                'codecPreference'              => '',
-                                                                'immersiveVideoBandwidth'      => '',
-                                                                ],
-                                                                [
-                                                                'regionName'                   => 'R_729',
-                                                                'bandwidth'                    => 'G.729',
-                                                                'videoBandwidth'               => '384',
-                                                                'lossyNetwork'                 => '',
-                                                                'codecPreference'              => '',
-                                                                'immersiveVideoBandwidth'      => '',
-                                                                ],
-                                                                [
-                                                                'regionName'                   => "R_{$SITE}",
-                                                                'bandwidth'                    => 'G.711',
-                                                                'videoBandwidth'               => '384',
-                                                                'lossyNetwork'                 => '',
-                                                                'codecPreference'              => '',
-                                                                'immersiveVideoBandwidth'      => '',
-                                                                ],
-                                                                [
-                                                                'regionName'                   => 'R_FAX',
-                                                                'bandwidth'                    => 'G.711',
-                                                                'videoBandwidth'               => '384',
-                                                                'lossyNetwork'                 => '',
-                                                                'codecPreference'              => '',
-                                                                'immersiveVideoBandwidth'      => '',
-                                                                ],
-                                                                [
-                                                                'regionName'                   => 'R_GW',
-                                                                'bandwidth'                    => 'G.711',
-                                                                'videoBandwidth'               => '384',
-                                                                'lossyNetwork'                 => '',
-                                                                'codecPreference'              => '',
-                                                                'immersiveVideoBandwidth'      => '',
-                                                                ],
-                                                                [
-                                                                'regionName'                   => 'R_Voicemail',
-                                                                'bandwidth'                    => 'G.729',
-                                                                'videoBandwidth'               => '384',
-                                                                'lossyNetwork'                 => '',
-                                                                'codecPreference'              => '',
-                                                                'immersiveVideoBandwidth'      => '',
-                                                                ],
-                                                            ],
-                                        ],
-                ];
+            'name'                => "R_{$SITE}",
+            'relatedRegions'      => [
+                'relatedRegion' => [
+                    [
+                        'regionName'                   => 'Default',
+                        'bandwidth'                    => 'G.729',
+                        'videoBandwidth'               => '384',
+                        'lossyNetwork'                 => '',
+                        'codecPreference'              => '',
+                        'immersiveVideoBandwidth'      => '',
+                    ],
+                    [
+                        'regionName'                   => 'R_711',
+                        'bandwidth'                    => 'G.711',
+                        'videoBandwidth'               => '384',
+                        'lossyNetwork'                 => '',
+                        'codecPreference'              => '',
+                        'immersiveVideoBandwidth'      => '',
+                    ],
+                    [
+                        'regionName'                   => 'R_729',
+                        'bandwidth'                    => 'G.729',
+                        'videoBandwidth'               => '384',
+                        'lossyNetwork'                 => '',
+                        'codecPreference'              => '',
+                        'immersiveVideoBandwidth'      => '',
+                    ],
+                    [
+                        'regionName'                   => "R_{$SITE}",
+                        'bandwidth'                    => 'G.711',
+                        'videoBandwidth'               => '384',
+                        'lossyNetwork'                 => '',
+                        'codecPreference'              => '',
+                        'immersiveVideoBandwidth'      => '',
+                    ],
+                    [
+                        'regionName'                   => 'R_FAX',
+                        'bandwidth'                    => 'G.711',
+                        'videoBandwidth'               => '384',
+                        'lossyNetwork'                 => '',
+                        'codecPreference'              => '',
+                        'immersiveVideoBandwidth'      => '',
+                    ],
+                    [
+                        'regionName'                   => 'R_GW',
+                        'bandwidth'                    => 'G.711',
+                        'videoBandwidth'               => '384',
+                        'lossyNetwork'                 => '',
+                        'codecPreference'              => '',
+                        'immersiveVideoBandwidth'      => '',
+                    ],
+                    [
+                        'regionName'                   => 'R_Voicemail',
+                        'bandwidth'                    => 'G.729',
+                        'videoBandwidth'               => '384',
+                        'lossyNetwork'                 => '',
+                        'codecPreference'              => '',
+                        'immersiveVideoBandwidth'      => '',
+                    ],
+                ],
+            ],
+        ];
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -703,20 +703,20 @@ class Cucmsite extends Cucm
         $TYPE = 'CallManagerGroup';
         // Prepared datastructure
         $DATA = [
-                'name'        => "CMG-{$SITE}",
-                'members'     => [
-                                'member' => [
-                                                [
-                                                'callManagerName'     => $CUCM1,
-                                                'priority'            => '1',
-                                                ],
-                                                [
-                                                'callManagerName'     => $CUCM2,
-                                                'priority'            => '2',
-                                                ],
-                                            ],
-                                ],
-                ];
+            'name'        => "CMG-{$SITE}",
+            'members'     => [
+                'member' => [
+                    [
+                        'callManagerName'     => $CUCM1,
+                        'priority'            => '1',
+                    ],
+                    [
+                        'callManagerName'     => $CUCM2,
+                        'priority'            => '2',
+                    ],
+                ],
+            ],
+        ];
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -734,13 +734,13 @@ class Cucmsite extends Cucm
         $TYPE = 'DevicePool';
         // Prepared datastructure
         $DATA = [
-                'name'                    => "DP_{$SITE}",
-                'dateTimeSettingName'     => $TIMEZONE,
-                'callManagerGroupName'    => "CMG-{$SITE}",
-                'regionName'              => "R_{$SITE}",
-                'srstName'                => 'Disable',
-                'locationName'            => "LOC_{$SITE}",
-                ];
+            'name'                    => "DP_{$SITE}",
+            'dateTimeSettingName'     => $TIMEZONE,
+            'callManagerGroupName'    => "CMG-{$SITE}",
+            'regionName'              => "R_{$SITE}",
+            'srstName'                => 'Disable',
+            'locationName'            => "LOC_{$SITE}",
+        ];
 
         if ((isset($SRSTIP)) && (! empty($SRSTIP))) {
             // If there is a SRST Set then you can add it to the Device Pool
@@ -764,12 +764,12 @@ class Cucmsite extends Cucm
         $TYPE = 'ConferenceBridge';
         // Prepared datastructure
         $DATA = [
-                'name'            => "{$SITE}_CFB",
-                'description'     => "Conference bridge for {$SITE}",
-                'product'         => 'Cisco IOS Enhanced Conference Bridge',
-                'devicePoolName'  => "DP_{$SITE}",
-                'locationName'    => "LOC_{$SITE}",
-                ];
+            'name'            => "{$SITE}_CFB",
+            'description'     => "Conference bridge for {$SITE}",
+            'product'         => 'Cisco IOS Enhanced Conference Bridge',
+            'devicePoolName'  => "DP_{$SITE}",
+            'locationName'    => "LOC_{$SITE}",
+        ];
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -787,12 +787,12 @@ class Cucmsite extends Cucm
         $TYPE = 'Mtp';
         // Prepared datastructure
         $DATA = [
-                'name'                 => "{$SITE}_729",
-                'description'          => "G729 MTP for {$SITE}",
-                'mtpType'              => 'Cisco IOS Enhanced Software Media Termination Point',
-                'devicePoolName'       => "DP_{$SITE}",
-                'trustedRelayPoint'    => 'false',
-                ];
+            'name'                 => "{$SITE}_729",
+            'description'          => "G729 MTP for {$SITE}",
+            'mtpType'              => 'Cisco IOS Enhanced Software Media Termination Point',
+            'devicePoolName'       => "DP_{$SITE}",
+            'trustedRelayPoint'    => 'false',
+        ];
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -810,12 +810,12 @@ class Cucmsite extends Cucm
         $TYPE = 'Mtp';
         // Prepared datastructure
         $DATA = [
-                'name'                 => "{$SITE}_711",
-                'description'          => "G711 MTP for {$SITE}",
-                'mtpType'              => 'Cisco IOS Enhanced Software Media Termination Point',
-                'devicePoolName'       => "DP_{$SITE}",
-                'trustedRelayPoint'    => 'false',
-                ];
+            'name'                 => "{$SITE}_711",
+            'description'          => "G711 MTP for {$SITE}",
+            'mtpType'              => 'Cisco IOS Enhanced Software Media Termination Point',
+            'devicePoolName'       => "DP_{$SITE}",
+            'trustedRelayPoint'    => 'false',
+        ];
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -833,23 +833,23 @@ class Cucmsite extends Cucm
         $TYPE = 'MediaResourceGroup';
         // Prepared datastructure
         $DATA = [
-                'name'             => "MRG_{$SITE}",
-                'description'      => "{$SITE} Media Resources",
-                'multicast'        => 'false',
-                'members'          => [
-                                    'member' => [
-                                                    [
-                                                    'deviceName'    => "{$SITE}_711",
-                                                    ],
-                                                    [
-                                                    'deviceName'    => "{$SITE}_729",
-                                                    ],
-                                                    [
-                                                    'deviceName'    => "{$SITE}_CFB",
-                                                    ],
-                                                ],
-                                    ],
-                ];
+            'name'             => "MRG_{$SITE}",
+            'description'      => "{$SITE} Media Resources",
+            'multicast'        => 'false',
+            'members'          => [
+                'member' => [
+                    [
+                        'deviceName'    => "{$SITE}_711",
+                    ],
+                    [
+                        'deviceName'    => "{$SITE}_729",
+                    ],
+                    [
+                        'deviceName'    => "{$SITE}_CFB",
+                    ],
+                ],
+            ],
+        ];
         // Check if the object already exists. If it isn't then add it.
         if (! empty($site_array[$TYPE])) {
             if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -868,28 +868,28 @@ class Cucmsite extends Cucm
         // Prepared datastructure
 
         $DATA = [
-                'name'            => "MRGL_{$SITE}",
-                'members'         => [
-                                    'member'    => [
-                                                        [
-                                                        'mediaResourceGroupName'       => "MRG_{$SITE}",
-                                                        //'order'                        => '0',
-                                                        ],
-                                                        [
-                                                        'mediaResourceGroupName'       => env('DSPFARM_MRG'),
-                                                        //'order'                        => '0',
-                                                        ],
-                                                        [
-                                                        'mediaResourceGroupName'       => 'MRG_Sub1_Resources',
-                                                        //'order'                        => '1',
-                                                        ],
-                                                        [
-                                                        'mediaResourceGroupName'       => 'MRG_Pub_Resources',
-                                                        //'order'                        => '2',
-                                                        ],
-                                                    ],
-                                    ],
-                ];
+            'name'            => "MRGL_{$SITE}",
+            'members'         => [
+                'member'    => [
+                    [
+                        'mediaResourceGroupName'       => "MRG_{$SITE}",
+                        //'order'                        => '0',
+                    ],
+                    [
+                        'mediaResourceGroupName'       => env('DSPFARM_MRG'),
+                        //'order'                        => '0',
+                    ],
+                    [
+                        'mediaResourceGroupName'       => 'MRG_Sub1_Resources',
+                        //'order'                        => '1',
+                    ],
+                    [
+                        'mediaResourceGroupName'       => 'MRG_Pub_Resources',
+                        //'order'                        => '2',
+                    ],
+                ],
+            ],
+        ];
 
         // Add the index to each member in order.
         $i = 1;
@@ -920,58 +920,58 @@ class Cucmsite extends Cucm
                 foreach ($H323LIST as $H323IP) {
                     // Prepared datastructure
                     $DATA = [
-                            'name'                         => $H323IP,
-                            'description'                  => "{$SITE} {$H323IP} {$ROUTERMODEL}",
-                            'callingSearchSpaceName'       => "CSS_{$SITE}_INCOMING_GW",
-                            'devicePoolName'               => "DP_{$SITE}",
-                            'locationName'                 => "LOC_{$SITE}",
-                            'product'                      => 'H.323 Gateway',
-                            'class'                        => 'Gateway',
-                            'protocol'                     => 'H.225',
-                            'protocolSide'                 => 'Network',
-                            'signalingPort'                => '1720',
-                            'tunneledProtocol'             => '',
-                            'useTrustedRelayPoint'         => '',
-                            'packetCaptureMode'            => '',
-                            'callingPartySelection'        => '',
-                            'callingLineIdPresentation'    => '',
-                            'calledPartyIeNumberType'      => '',
-                            'callingPartyIeNumberType'     => '',
-                            'calledNumberingPlan'          => '',
-                            'callingNumberingPlan'         => '',
-                            'sigDigits'                    => [
-                                                                '_'         => '99',
-                                                                'enable'    => 'false',
-                                                            ],
+                        'name'                         => $H323IP,
+                        'description'                  => "{$SITE} {$H323IP} {$ROUTERMODEL}",
+                        'callingSearchSpaceName'       => "CSS_{$SITE}_INCOMING_GW",
+                        'devicePoolName'               => "DP_{$SITE}",
+                        'locationName'                 => "LOC_{$SITE}",
+                        'product'                      => 'H.323 Gateway',
+                        'class'                        => 'Gateway',
+                        'protocol'                     => 'H.225',
+                        'protocolSide'                 => 'Network',
+                        'signalingPort'                => '1720',
+                        'tunneledProtocol'             => '',
+                        'useTrustedRelayPoint'         => '',
+                        'packetCaptureMode'            => '',
+                        'callingPartySelection'        => '',
+                        'callingLineIdPresentation'    => '',
+                        'calledPartyIeNumberType'      => '',
+                        'callingPartyIeNumberType'     => '',
+                        'calledNumberingPlan'          => '',
+                        'callingNumberingPlan'         => '',
+                        'sigDigits'                    => [
+                            '_'         => '99',
+                            'enable'    => 'false',
+                        ],
 
-                            'callingPartyNationalPrefix'                           => '+',
-                            'callingPartyInternationalPrefix'                      => '+',
-                            'callingPartyUnknownPrefix'                            => '+',
-                            'callingPartySubscriberPrefix'                         => '+',
-                            'callingPartyNationalStripDigits'                      => '0',
-                            'callingPartyInternationalStripDigits'                 => '0',
-                            'callingPartyUnknownStripDigits'                       => '0',
-                            'callingPartySubscriberStripDigits'                    => '0',
+                        'callingPartyNationalPrefix'                           => '+',
+                        'callingPartyInternationalPrefix'                      => '+',
+                        'callingPartyUnknownPrefix'                            => '+',
+                        'callingPartySubscriberPrefix'                         => '+',
+                        'callingPartyNationalStripDigits'                      => '0',
+                        'callingPartyInternationalStripDigits'                 => '0',
+                        'callingPartyUnknownStripDigits'                       => '0',
+                        'callingPartySubscriberStripDigits'                    => '0',
 
-                            'callingPartyNationalTransformationCssName'            => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
-                            'callingPartyInternationalTransformationCssName'       => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
-                            'callingPartyUnknownTransformationCssName'             => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
-                            'callingPartySubscriberTransformationCssName'          => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
-                            'useDevicePoolCgpnTransformCssNatl'                    => 'false',
-                            'useDevicePoolCgpnTransformCssIntl'                    => 'false',
-                            'useDevicePoolCgpnTransformCssUnkn'                    => 'false',
-                            'useDevicePoolCgpnTransformCssSubs'                    => 'false',
+                        'callingPartyNationalTransformationCssName'            => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                        'callingPartyInternationalTransformationCssName'       => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                        'callingPartyUnknownTransformationCssName'             => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                        'callingPartySubscriberTransformationCssName'          => 'CSS_GLOBAL_GW_INCOMING_CALLING_XFORM',
+                        'useDevicePoolCgpnTransformCssNatl'                    => 'false',
+                        'useDevicePoolCgpnTransformCssIntl'                    => 'false',
+                        'useDevicePoolCgpnTransformCssUnkn'                    => 'false',
+                        'useDevicePoolCgpnTransformCssSubs'                    => 'false',
 
-                            'calledPartyNationalTransformationCssName'             => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
-                            'calledPartyInternationalTransformationCssName'        => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
-                            'calledPartyUnknownTransformationCssName'              => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
-                            'calledPartySubscriberTransformationCssName'           => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
-                            'useDevicePoolCalledCssNatl'                           => 'false',
-                            'useDevicePoolCalledCssIntl'                           => 'false',
-                            'useDevicePoolCalledCssUnkn'                           => 'false',
-                            'useDevicePoolCalledCssSubs'                           => 'false',
+                        'calledPartyNationalTransformationCssName'             => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+                        'calledPartyInternationalTransformationCssName'        => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+                        'calledPartyUnknownTransformationCssName'              => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+                        'calledPartySubscriberTransformationCssName'           => 'CSS_GLOBAL_GW_OUTGOING_CALLING_XFORM',
+                        'useDevicePoolCalledCssNatl'                           => 'false',
+                        'useDevicePoolCalledCssIntl'                           => 'false',
+                        'useDevicePoolCalledCssUnkn'                           => 'false',
+                        'useDevicePoolCalledCssSubs'                           => 'false',
 
-                            ];
+                    ];
                     if (($SITE_TYPE == 2) || ($SITE_TYPE == 4)) {
                         $DATA['cdpnTransformationCssName'] = "CSS_{$SITE}_GW_CALLED_XFORM";
                     }
@@ -999,36 +999,36 @@ class Cucmsite extends Cucm
             if (count($H323LIST) <= 1) {
                 foreach ($H323LIST as $H323IP) {
                     $H323MEMBER = [
-                                    'deviceName'            => $H323IP,
-                                    // Increment order @ each iteration through previous loop!
-                                    'deviceSelectionOrder'    => $i++,
-                                    'port'                    => '0',
-                                    ];
+                        'deviceName'            => $H323IP,
+                        // Increment order @ each iteration through previous loop!
+                        'deviceSelectionOrder'    => $i++,
+                        'port'                    => '0',
+                    ];
                 }
                 $DATA = [
                     'name'                     => "RG_{$SITE}",
                     'distributionAlgorithm'    => 'Top Down',
                     'members'                  => [
-                                                'member'    => $H323MEMBER,
-                                                ],
-                    ];
+                        'member'    => $H323MEMBER,
+                    ],
+                ];
             } else {
                 $DATA = [
                     'name'                     => "RG_{$SITE}",
                     'distributionAlgorithm'    => 'Top Down',
                     'members'                  => [
-                                                'member'    => [],
-                                                ],
-                    ];
+                        'member'    => [],
+                    ],
+                ];
                 // Calculate multiple members to add to this array with order numbers
 
                 foreach ($H323LIST as $H323IP) {
                     $H323MEMBER = [
-                                    'deviceName'            => $H323IP,
-                                    // Increment order @ each iteration through previous loop!
-                                    'deviceSelectionOrder'    => $i++,
-                                    'port'                    => '0',
-                                    ];
+                        'deviceName'            => $H323IP,
+                        // Increment order @ each iteration through previous loop!
+                        'deviceSelectionOrder'    => $i++,
+                        'port'                    => '0',
+                    ];
                     // This is f#$%ing stupid - the array_push blows up call manager put appending without calling the function works fine.
                     //array_push($DATA['members']['member'], $H323MEMBER);
                     $DATA['members']['member'][] = $H323MEMBER;
@@ -1053,13 +1053,13 @@ class Cucmsite extends Cucm
         $TYPE = 'DevicePool';
         // Update these fields in the device pool object for this site
         $DATA = [
-                'name'                     => "DP_{$SITE}",
-                'mediaResourceListName'    => "MRGL_{$SITE}",
-                'localRouteGroup'          => [
-                                            'name'         => 'Standard Local Route Group',
-                                            'value'        => "RG_{$SITE}",
-                                            ],
-                ];
+            'name'                     => "DP_{$SITE}",
+            'mediaResourceListName'    => "MRGL_{$SITE}",
+            'localRouteGroup'          => [
+                'name'         => 'Standard Local Route Group',
+                'value'        => "RG_{$SITE}",
+            ],
+        ];
 
         // If the site type is 1  or 3 then we need to override the SLRG to be our Centralized SIP Route Group for SIP Trunking
         if (($SITE_TYPE == 1) || ($SITE_TYPE == 3)) {
@@ -1071,13 +1071,13 @@ class Cucmsite extends Cucm
             $REPLY = $this->cucm->update_object_type_by_assoc($DATA, $TYPE);
             //$this->results['DevicePoolUpdate'] = "{$TYPE} UPDATED: {$REPLY}";
             $this->results['DevicePoolUpdate'][] = [
-                                                        'type'       => $TYPE,
-                                                        'object'     => $DATA['name'],
-                                                        'status'     => 'success',
-                                                        'reply'      => $REPLY,
-                                                        'request'    => $DATA,
+                'type'       => $TYPE,
+                'object'     => $DATA['name'],
+                'status'     => 'success',
+                'reply'      => $REPLY,
+                'request'    => $DATA,
 
-                                                    ];
+            ];
         } catch (\Exception $E) {
             $EXCEPTION = "Exception updating object type {$TYPE} for site {$SITE}:".
                   "{$E->getMessage()}";
@@ -1087,12 +1087,12 @@ class Cucmsite extends Cucm
             //$DATA[$TYPE]['exception'] = $EXCEPTION;
             //$this->results[$TYPE][] = $DATA;
             $this->results[$TYPE][] = [
-                                        'type'             => $TYPE,
-                                        'object'           => $DATA['name'],
-                                        'status'           => 'error',
-                                        'reply'            => $EXCEPTION,
-                                        'request'          => $DATA,
-                                    ];
+                'type'             => $TYPE,
+                'object'           => $DATA['name'],
+                'status'           => 'error',
+                'reply'            => $EXCEPTION,
+                'request'          => $DATA,
+            ];
         }
 
         // 16 - Create our translation patterns from user input
@@ -1103,13 +1103,13 @@ class Cucmsite extends Cucm
         // Prepare and add datastructures
         foreach ($DIDLIST as $PATTERN) {
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}_XLATE",
-                    'pattern'                          => $PATTERN,
-                    'calledPartyTransformationMask'    => "{$NPA}{$NXX}XXXX",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
-                    'description'                      => "{$SITE} dial pattern {$PATTERN}",
-                    'usage'                            => 'Translation',
-                    ];
+                'routePartitionName'               => "PT_{$SITE}_XLATE",
+                'pattern'                          => $PATTERN,
+                'calledPartyTransformationMask'    => "{$NPA}{$NXX}XXXX",
+                'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
+                'description'                      => "{$SITE} dial pattern {$PATTERN}",
+                'usage'                            => 'Translation',
+            ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
@@ -1122,13 +1122,13 @@ class Cucmsite extends Cucm
             }
 
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}_XLATE",
-                    'pattern'                          => "*{$PATTERN}",
-                    'calledPartyTransformationMask'    => "*{$NPA}{$NXX}XXXX",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
-                    'description'                      => "{$SITE} voicemail pattern {$PATTERN}",
-                    'usage'                            => 'Translation',
-                    ];
+                'routePartitionName'               => "PT_{$SITE}_XLATE",
+                'pattern'                          => "*{$PATTERN}",
+                'calledPartyTransformationMask'    => "*{$NPA}{$NXX}XXXX",
+                'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
+                'description'                      => "{$SITE} voicemail pattern {$PATTERN}",
+                'usage'                            => 'Translation',
+            ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
@@ -1144,13 +1144,13 @@ class Cucmsite extends Cucm
         if ((isset($OPERATOR)) && (! empty($OPERATOR))) {
             // Create Operator Translation Patterns.
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}_XLATE",
-                    'pattern'                          => '0',
-                    'calledPartyTransformationMask'    => "{$OPERATOR}",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
-                    'description'                      => "{$SITE} dial pattern Operator {$OPERATOR}",
-                    'usage'                            => 'Translation',
-                    ];
+                'routePartitionName'               => "PT_{$SITE}_XLATE",
+                'pattern'                          => '0',
+                'calledPartyTransformationMask'    => "{$OPERATOR}",
+                'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
+                'description'                      => "{$SITE} dial pattern Operator {$OPERATOR}",
+                'usage'                            => 'Translation',
+            ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
@@ -1163,13 +1163,13 @@ class Cucmsite extends Cucm
             }
 
             $DATA = [
-                    'routePartitionName'               => "PT_{$SITE}_XLATE",
-                    'pattern'                          => '*0',
-                    'calledPartyTransformationMask'    => "*{$OPERATOR}",
-                    'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
-                    'description'                      => "{$SITE} dial pattern Operator Voicemail *{$OPERATOR}",
-                    'usage'                            => 'Translation',
-                    ];
+                'routePartitionName'               => "PT_{$SITE}_XLATE",
+                'pattern'                          => '*0',
+                'calledPartyTransformationMask'    => "*{$OPERATOR}",
+                'callingSearchSpaceName'           => "CSS_{$SITE}_DEVICE",
+                'description'                      => "{$SITE} dial pattern Operator Voicemail *{$OPERATOR}",
+                'usage'                            => 'Translation',
+            ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['pattern'], $site_array[$TYPE])) {
@@ -1241,20 +1241,20 @@ class Cucmsite extends Cucm
 
             // Build Array of Route List
             $DATA = [
-                        'name'                        => "RL_{$SITE}_911",
-                        'description'                 => "{$SITE} - 911 Calling Route List",
-                        'callManagerGroupName'        => "CMG-{$SITE}",
-                        'routeListEnabled'            => true,
-                        'runOnEveryNode'              => true,
+                'name'                        => "RL_{$SITE}_911",
+                'description'                 => "{$SITE} - 911 Calling Route List",
+                'callManagerGroupName'        => "CMG-{$SITE}",
+                'routeListEnabled'            => true,
+                'runOnEveryNode'              => true,
 
-                        'members'                    => [
-                                                            'member' => [
-                                                                        'routeGroupName'                         => "RG_{$SITE}",
-                                                                        'selectionOrder'                         => 1,
-                                                                        'useFullyQualifiedCallingPartyNumber'    => 'Default',
-                                                                        ],
-                                                        ],
-                    ];
+                'members'                    => [
+                    'member' => [
+                        'routeGroupName'                         => "RG_{$SITE}",
+                        'selectionOrder'                         => 1,
+                        'useFullyQualifiedCallingPartyNumber'    => 'Default',
+                    ],
+                ],
+            ];
             // Check if the object already exists. If it isn't then add it.
             if (! empty($site_array[$TYPE])) {
                 if (in_array($DATA['name'], $site_array[$TYPE])) {
@@ -1274,36 +1274,36 @@ class Cucmsite extends Cucm
             // Build Array of Route List
 
             $PATTERNS = [
-                        [
-                            'pattern'                     => '911',
-                            'description'                 => "{$SITE} 911 - Emergency Services",
-                            'routePartitionName'          => "PT_{$SITE}_911",
-                            'blockEnable'                 => 'false',
-                            'useCallingPartyPhoneMask'    => 'Default',
-                            'networkLocation'             => 'OffNet',
-                            //"routeFilterName"			=> "",
-                            'patternUrgency'            => 'false',
+                [
+                    'pattern'                     => '911',
+                    'description'                 => "{$SITE} 911 - Emergency Services",
+                    'routePartitionName'          => "PT_{$SITE}_911",
+                    'blockEnable'                 => 'false',
+                    'useCallingPartyPhoneMask'    => 'Default',
+                    'networkLocation'             => 'OffNet',
+                    //"routeFilterName"			=> "",
+                    'patternUrgency'            => 'false',
 
-                            'destination'                    => [
-                                                                'routeListName' => "RL_{$SITE}_911",
+                    'destination'                    => [
+                        'routeListName' => "RL_{$SITE}_911",
 
-                                                            ],
-                        ],
-                        [
-                            'pattern'                     => '9.911',
-                            'description'                 => "{$SITE} 911 - Emergency Services",
-                            'routePartitionName'          => "PT_{$SITE}_911",
-                            'blockEnable'                 => 'false',
-                            'useCallingPartyPhoneMask'    => 'Default',
-                            'networkLocation'             => 'OffNet',
-                            //"routeFilterName"			=> "",
-                            'patternUrgency'            => 'false',
+                    ],
+                ],
+                [
+                    'pattern'                     => '9.911',
+                    'description'                 => "{$SITE} 911 - Emergency Services",
+                    'routePartitionName'          => "PT_{$SITE}_911",
+                    'blockEnable'                 => 'false',
+                    'useCallingPartyPhoneMask'    => 'Default',
+                    'networkLocation'             => 'OffNet',
+                    //"routeFilterName"			=> "",
+                    'patternUrgency'            => 'false',
 
-                            'destination'                    => [
-                                                                'routeListName' => "RL_{$SITE}_911",
+                    'destination'                    => [
+                        'routeListName' => "RL_{$SITE}_911",
 
-                                                            ],
-                        ],
+                    ],
+                ],
             ];
 
             // Insert Patterns to cause a delay after dialling 911 - This waits for the T302 Timer to expire before sending the call to Emergency Services
@@ -1311,32 +1311,32 @@ class Cucmsite extends Cucm
             // Set the Environmental Variable to true to use this setting. Default is false.
             if (env('CUCM_911_T302_DELAY')) {
                 $PATTERNS[] = [
-                            'pattern'                        => '911!',
-                            'description'                    => "{$SITE} 911 - Emergency Services - T302 Delay",
-                            'routePartitionName'             => "PT_{$SITE}_911",
-                            'blockEnable'                    => 'true',
-                            'useCallingPartyPhoneMask'       => 'Default',
-                            'networkLocation'                => 'OffNet',
-                            'patternUrgency'                 => 'false',
-                            'destination'                    => [
-                                                                'routeListName' => "RL_{$SITE}_911",
+                    'pattern'                        => '911!',
+                    'description'                    => "{$SITE} 911 - Emergency Services - T302 Delay",
+                    'routePartitionName'             => "PT_{$SITE}_911",
+                    'blockEnable'                    => 'true',
+                    'useCallingPartyPhoneMask'       => 'Default',
+                    'networkLocation'                => 'OffNet',
+                    'patternUrgency'                 => 'false',
+                    'destination'                    => [
+                        'routeListName' => "RL_{$SITE}_911",
 
-                                                            ],
-                        ];
+                    ],
+                ];
 
                 $PATTERNS[] = [
-                            'pattern'                        => '9.911!',
-                            'description'                    => "{$SITE} 9911 - Emergency Services - T302 Delay",
-                            'routePartitionName'             => "PT_{$SITE}_911",
-                            'blockEnable'                    => 'true',
-                            'useCallingPartyPhoneMask'       => 'Default',
-                            'networkLocation'                => 'OffNet',
-                            'patternUrgency'                 => 'false',
-                            'destination'                    => [
-                                                                'routeListName' => "RL_{$SITE}_911",
+                    'pattern'                        => '9.911!',
+                    'description'                    => "{$SITE} 9911 - Emergency Services - T302 Delay",
+                    'routePartitionName'             => "PT_{$SITE}_911",
+                    'blockEnable'                    => 'true',
+                    'useCallingPartyPhoneMask'       => 'Default',
+                    'networkLocation'                => 'OffNet',
+                    'patternUrgency'                 => 'false',
+                    'destination'                    => [
+                        'routeListName' => "RL_{$SITE}_911",
 
-                                                            ],
-                        ];
+                    ],
+                ];
                 //print_r($PATTERNS);
             }
 

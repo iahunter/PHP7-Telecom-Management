@@ -24,9 +24,9 @@ class Sonus5kcontroller extends Controller
 
         // Populate SBC list
         $this->SBCS = [
-                        env('SONUS1'),
-                        env('SONUS2'),
-                        ];
+            env('SONUS1'),
+            env('SONUS2'),
+        ];
     }
 
     public function getactivecallcounts(Request $request)

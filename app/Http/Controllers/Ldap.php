@@ -39,7 +39,7 @@ class Ldap extends Controller
             'success'        => true,
             'message'        => '',
             'result'         => $result,
-            ];
+        ];
 
         return response()->json($response);
     }
@@ -61,11 +61,11 @@ class Ldap extends Controller
         $result = $this->Auth->changeLdapPhone($username, $phonenumber);
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $result,
+        ];
 
         return response()->json($response);
     }
@@ -96,11 +96,11 @@ class Ldap extends Controller
         //return $fulluser;
         //print_r($result);
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $result,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $result,
+        ];
 
         return response()->json($response);
     }

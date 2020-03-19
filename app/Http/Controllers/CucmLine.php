@@ -54,6 +54,12 @@ class CucmLine extends Cucm
         } else {
             $CFA_DESTINATION = $request->cfa_destination;
 			
+			$regex = "/^9..........$/";
+			
+			if (preg_match($regex, $CFA_DESTINATION)) {
+				$CFA_DESTINATION = substr($CFA_DESTINATION, 1); 
+                $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
+            }
 			
 			$regex = "/^91........$/";
 			

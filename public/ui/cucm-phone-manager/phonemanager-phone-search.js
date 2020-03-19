@@ -65,6 +65,7 @@ angular
 							'callingSearchSpaceName',
 							'devicePoolName',
 							//'securityProfileName',
+							'lineNumber',
 						]
 
 		
@@ -121,6 +122,8 @@ angular
 				vm.loading = false
 				
 			}
+			
+
 		}
 		
 		vm.deletephone = function(phone){

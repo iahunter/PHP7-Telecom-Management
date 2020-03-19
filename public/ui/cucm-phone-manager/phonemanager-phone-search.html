@@ -15,7 +15,11 @@
 							<div ng-message='minlength'> Too short </div>
 							<div ng-message='maxlength'> Too long </div>
 			</script>
-				<legend><h2><i class="fa fa-pencil fa-fw"></i> Phone Search</h2></legend>
+				<legend><h2><i class="fa fa-pencil fa-fw"></i> Phone & Line Search</h2></legend>
+				
+					<div class="well">
+						<p><i class="fa fa-info-circle" style="color:red;"></i><b style="color:red;"> Note! </b> You can now search by line number!<br></p>
+					</div>
 					
 					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
 					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
@@ -50,7 +54,7 @@
 												<input type="text" ng-model='vm.deviceForm.name' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="name" placeholder="MAC Address" ng-minlength='4'>
 											</div>
 											<div ng-messages="addDeviceForm.name.$dirty && addDeviceForm.name.$error">
-													<div ng-message='required'> DeviceName is required </div>
+													<div ng-message='required'> Name is required </div>
 													<div ng-message='minlength'>Please enter a name at least 4 chars long</div>
 													<div ng-message='maxlength'>Name entered cannot be longer than 12 chars</div>
 													
@@ -72,7 +76,7 @@
 											<input type="text" ng-model='vm.deviceForm.description' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="description" placeholder="Description"  ng-minlength='4'>
 										</div>
 										<div ng-messages="addDeviceForm.description.$dirty && addDeviceForm.description.$error">
-												<div ng-message='required'> DeviceName is required </div>
+												<div ng-message='required'> Description is required </div>
 												<div ng-message='minlength'>Please enter a description at least 4 chars long</div>
 												<div ng-message='maxlength'>description entered cannot be longer than 12 chars</div>
 												
@@ -94,7 +98,7 @@
 											<input type="text" ng-model='vm.deviceForm.callingSearchSpaceName' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="callingSearchSpaceName" placeholder="callingSearchSpaceName"  ng-minlength='8'>
 										</div>
 										<div ng-messages="addDeviceForm.callingSearchSpaceName.$dirty && addDeviceForm.callingSearchSpaceName.$error">
-												<div ng-message='required'> DeviceName is required </div>
+												<div ng-message='required'> Calling Search Space is required </div>
 												<div ng-message='minlength'>Please enter a callingSearchSpaceName at least 8 chars long</div>
 												<div ng-message='maxlength'>callingSearchSpaceName entered cannot be longer than 12 chars</div>
 												
@@ -116,7 +120,7 @@
 											<input type="text" ng-model='vm.deviceForm.devicePoolName' ng-model-options='{ debounce: 1000 }' ng-change="vm.checkphoneusage(vm.deviceForm)" required class="form-control"  name="devicePoolName" placeholder="devicePoolName"  ng-minlength='8'>
 										</div>
 										<div ng-messages="addDeviceForm.devicePoolName.$dirty && addDeviceForm.devicePoolName.$error">
-												<div ng-message='required'> DeviceName is required </div>
+												<div ng-message='required'> Device Pool Name is required </div>
 												<div ng-message='minlength'>Please enter a devicePoolName at least 8 chars long</div>
 												<div ng-message='maxlength'>devicePoolName entered cannot be longer than 12 chars</div>
 												
@@ -126,6 +130,33 @@
 							</div>
 						
 						</div>
+						
+						<div class="row" ng-if="vm.deviceForm.key && vm.deviceForm.key == 'lineNumber'">
+							
+							<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4" >
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.line.$touched && addDeviceForm.line.$invalid, 'has-success': addDeviceForm.line.$touched && addDeviceForm.line.$valid }">
+									<label for="line" class="control-label">Line Number</label>
+									<div class="inputGroupContainer">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-server"></i></span>
+											<input type="text" ng-model='vm.deviceForm.line' required class="form-control"  name="line" placeholder="4021230000"  ng-minlength='10' ng-maxlength='10'>
+										</div>
+										<div ng-messages="addDeviceForm.line.$dirty && addDeviceForm.line.$error">
+												<div ng-message='required'> DeviceName is required </div>
+												<div ng-message='minlength'>Please enter a line at least 10 digits long</div>
+												<div ng-message='maxlength'>Line entered cannot be longer than 10 digits</div>
+												
+										</div>
+									</div>
+								</div>
+								
+								<a href="#/line/{{vm.deviceForm.line}}" ng-if="vm.deviceForm.line"><button class="btn btn-primary">Submit</button> </a>
+						
+							</div>
+							
+							
+						</div>
+						
 						
 						<div class="row" ng-if="vm.phone">
 							<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">

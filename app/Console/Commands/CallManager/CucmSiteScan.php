@@ -56,6 +56,12 @@ class CucmSiteScan extends Command
         echo 'Starting Site Scan at: '.$start.PHP_EOL;
         // Step 1. Get a list of sites by getting All the Device Pools.
         $sites = $this->getSites();                                    // Get a list of sites by calling get device pools and discard ones we don't care about.
+		
+		// Check if we got any sites back from CUCM. If not abort. 
+		if(!$sites){
+			exit("No Sites Found... Aborting callmanager:sitescan"); 
+		}
+		
         //$sites = ['TRAVIS01'];
         $dbsites = $this->getsitesfromdb();
 
@@ -77,6 +83,10 @@ class CucmSiteScan extends Command
             echo $count.' of '.count($sites).': Getting Site: '.$site.PHP_EOL;
             // Step 2. Get everything to do with the site for each site.
             $site_summary = $this->getSiteDetails($site);
+			
+			if(!$site_summary ){
+				continue; 
+			}
             //print_r($site_summary);
 
             $site_details = $this->getSiteOjbectDetails($site);

@@ -38,11 +38,12 @@ class CleanupLoopCDRS extends Command
      */
     public function handle()
     {
-		if(env('SBC_MAINTENANCE')){
-			echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL; 
-			return; 
-		}
-		
+        if (env('SBC_MAINTENANCE')) {
+            echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL;
+
+            return;
+        }
+
         $number = $this->argument('number');
 
         $this->cleanup_cdrs_from_today($number);

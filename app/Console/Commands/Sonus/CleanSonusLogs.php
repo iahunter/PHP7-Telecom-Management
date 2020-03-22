@@ -38,11 +38,12 @@ class CleanSonusLogs extends Command
      */
     public function handle()
     {
-		if(env('SBC_MAINTENANCE')){
-			echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL; 
-			return; 
-		}
-		
+        if (env('SBC_MAINTENANCE')) {
+            echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL;
+
+            return;
+        }
+
         $sbcs = [env('SONUS1'), env('SONUS2')];
         $svn = env('SONUS_SVN');
 

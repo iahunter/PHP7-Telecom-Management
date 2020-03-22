@@ -272,12 +272,12 @@ class Sonus5kCDR extends Model
         $min = 0;
         $max = count($records) - 1;
         $last = count($records);
-		
-		if($max <= 0){
-			return; 
-		}
-		
-		//
+
+        if ($max <= 0) {
+            return;
+        }
+
+        //
 
         /* Debugging
         print "Min key: ".$min.PHP_EOL;

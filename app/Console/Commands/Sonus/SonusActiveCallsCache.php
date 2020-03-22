@@ -47,11 +47,12 @@ class SonusActiveCallsCache extends Command
      */
     public function handle()
     {
-		if(env('SBC_MAINTENANCE')){
-			echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL; 
-			return; 
-		}
-		
+        if (env('SBC_MAINTENANCE')) {
+            echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL;
+
+            return;
+        }
+
         $this->SBCS = array_filter($this->SBCS);
         // print_r($this->SBCS);
 

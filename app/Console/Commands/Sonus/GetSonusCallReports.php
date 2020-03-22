@@ -42,11 +42,12 @@ class GetSonusCallReports extends Command
      */
     public function handle()
     {
-		if(env('SBC_MAINTENANCE')){
-			echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL; 
-			return; 
-		}
-		
+        if (env('SBC_MAINTENANCE')) {
+            echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL;
+
+            return;
+        }
+
         // Run reports and store in cache for fast retrieval
         echo Carbon::now().' Starting: '.PHP_EOL;
 

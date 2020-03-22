@@ -47,6 +47,11 @@ class SonusActiveCallsCache extends Command
      */
     public function handle()
     {
+		if(env('SBC_MAINTENANCE')){
+			echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL; 
+			return; 
+		}
+		
         $this->SBCS = array_filter($this->SBCS);
         // print_r($this->SBCS);
 
@@ -66,7 +71,7 @@ class SonusActiveCallsCache extends Command
         $key = 'listactivecalls';
 
         // Cache Calls for 5 seconds - Put the $CALLS as value of cache.
-        print_r($CALLS);
+        //print_r($CALLS);
         $time = Carbon::now()->addSeconds(10);
         Cache::put($key, $CALLS, $time);
     }

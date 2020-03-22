@@ -45,6 +45,11 @@ class SonusCalls extends Command
      */
     public function handle()
     {
+		if(env('SBC_MAINTENANCE')){
+			echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL; 
+			return; 
+		}
+		
         $this->SBCS = array_filter($this->SBCS);
         // print_r($this->SBCS);
 
@@ -66,11 +71,11 @@ class SonusCalls extends Command
         }
         $INSERT['totalCalls'] = $totalCalls;
         $INSERT['stats'] = json_encode($STATS, true);
-        print_r($INSERT);
+        //print_r($INSERT);
         //return $STATS;
 
         $result = Calls::create($INSERT);
 
-        print_r($result);
+        //print_r($result);
     }
 }

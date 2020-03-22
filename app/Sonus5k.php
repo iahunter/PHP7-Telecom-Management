@@ -14,6 +14,7 @@ class Sonus5k extends Model
 
     public static function wrapapi($verb, $apiurl, $data = '')
     {
+
         // Wrapper for Guzzle API Calls
         $client = new GuzzleHttpClient();
 
@@ -23,10 +24,17 @@ class Sonus5k extends Model
             'headers' => [
                 'Content-Type'     => 'application/vnd.yang.data+json',
                 'Accept'           => 'application/vnd.yang.data+xml',			// Changed to xml because Sonus is not supporting JSON - 042118 - TR
+				//'Accept'           => 'application/vnd.yang.collection+xml',			// Changed to collection.xml for Sonus 7.2 upgrade. May look at json in future. 032120 - TR
             ],
         ];
         if ($verb == 'POST') {
             $headers['data'] = $data;
+        }
+		
+		if (isset($data['Accept'])) {
+			// Work around for Sonus stupidness... They aren't using the same type for all their API Calls. Have to manually change this for ones that changed in 5k 7.2. 
+			//print "Key Exists!!!".PHP_EOL; 
+            $headers['headers']['Accept'] = $data['Accept'];
         }
 
         try {
@@ -61,15 +69,29 @@ class Sonus5k extends Model
         $verb = 'GET';
         $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/global/callCountStatus/activeCalls';
 
-        return self::wrapapi($verb, $apiurl);
+		$result = self::wrapapi($verb, $apiurl);
+		
+		//print_r($result); 
+		
+		/*
+		if(isset($result['key'])){
+			return $result; 
+		}else{
+			return null;
+		}
+		*/
+		
+        return $result; 
     }
 
     public static function listactivecalls($SBC)
     {
         $verb = 'GET';
         $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/global/callSummaryStatus/';
+		$data['Accept'] = 'application/vnd.yang.collection+xml';			// Changed to collection.xml for Sonus 7.2 upgrade. May look at json in future. 032120 - TR
 
-        $response = self::wrapapi($verb, $apiurl);
+        $response = self::wrapapi($verb, $apiurl, $data);
+		//print_r($response); 
         // We just want to return an array of calls.
         if (isset($response['callSummaryStatus'])) {
             if (($response['callSummaryStatus']) && array_key_exists('GCID', $response['callSummaryStatus'])) {

@@ -38,7 +38,14 @@ class GetSonusConfig extends Command
      */
     public function handle()
     {
-        $sbcs = [env('SONUS1'), env('SONUS2')];
+		if(env('SBC_MAINTENANCE')){
+			echo "SBC Maintenance is going on. {$this->signature}... ".PHP_EOL; 
+			return; 
+		}
+		
+        $sbcs = [
+				env('SONUS1'), 
+				env('SONUS2')];
         $svn = env('SONUS_SVN');
 
         $sbcs = array_filter($sbcs);

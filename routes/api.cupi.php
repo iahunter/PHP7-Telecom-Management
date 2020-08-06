@@ -387,7 +387,7 @@
      *     tags={"Management - UnityConnection"},
      *     summary="Get UM External Service for User Object",
      *     description="",
-     *     operationId="getObjectTypebyName",
+     *     operationId="getUserTemplateBySite",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(

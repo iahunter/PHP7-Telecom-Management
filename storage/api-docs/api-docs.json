@@ -3415,7 +3415,7 @@
                 ],
                 "summary": "Get UM External Service for User Object",
                 "description": "",
-                "operationId": "getObjectTypebyName",
+                "operationId": "getUserTemplateBySite",
                 "consumes": [
                     "application/json"
                 ],
@@ -4376,7 +4376,7 @@
                 ],
                 "summary": "List ERLs with Count of Phones by ERL",
                 "description": "",
-                "operationId": "listPhoneModels",
+                "operationId": "list_ers_and_phone_counts",
                 "consumes": [
                     "application/json"
                 ],

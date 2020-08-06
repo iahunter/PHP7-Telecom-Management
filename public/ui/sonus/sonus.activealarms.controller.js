@@ -27,6 +27,7 @@ angular
 		function initController() {
 			vm.getactivealarms = SonusService.listactivealarms()
 				.then(function(res){
+
 					
 					// Check for errors and if token has expired. 
 					if(res.data.message){
@@ -42,6 +43,8 @@ angular
 
 						return vm.message;
 					}
+					
+
 					
 					var alarms = res.data;
 
@@ -88,6 +91,7 @@ angular
 					
 						
 				}, function(err){
+					console.log(error)
 					alert(err);
 				});
 		}

@@ -62,7 +62,7 @@ class CucmCtiRoutePoint extends Cucm
         // Try to remove device from CUCM
         try {
             $RESULT = $this->cucm->get_phone_by_name($NAME);
-            $TYPE = 'Phone';
+            $TYPE = 'CTI Route Point';
             if (is_array($RESULT) && ! empty($RESULT)) {
                 $UUID = $RESULT['uuid'];
                 $RETURN['old'] = $RESULT;
@@ -160,6 +160,10 @@ class CucmCtiRoutePoint extends Cucm
             $errors[] = 'Error, no name set';
         }
         $NAME = $request->name;
+		
+		if(strlen($NAME) > 15){
+			$errors[] = 'Error, Name must be 15 characters or less';
+		}
 
         // Check if firstname is Set
         if (! isset($request->firstname) || ! $request->firstname) {
@@ -381,8 +385,9 @@ class CucmCtiRoutePoint extends Cucm
         $PHONE = [
             'name'                               => $NAME,
             'description'                        => $DESCRIPTION,
-            'product'                            => $PRODUCT,
-            'class'                              => 'Phone',
+            'product'                            => 'CTI Route Point',
+            'class'                              => 'CTI Route Point',
+			'model'                              => 'CTI Route Point',
             'protocol'                           => $PROTOCOL,
             'protocolSide'                       => 'User',
             'devicePoolName'                     => 'DP_'.$SITE,

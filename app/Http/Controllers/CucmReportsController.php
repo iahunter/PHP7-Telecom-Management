@@ -523,6 +523,7 @@ class CucmReportsController extends Controller
             'CTI Port',
             'Syn-Apps Virtual Phone',
             'Spark Room Kit',
+			'CTI Route Point',
             //'Third-party SIP Device (Advanced)',
             'Third-party SIP Device (Basic)', // Need to do testing on this one. Leaving unsuported for now.
         ];
@@ -541,6 +542,8 @@ class CucmReportsController extends Controller
                 $phone_models[] = $type;
             }
         }
+		
+		$phone_models[] = 'CTI Route Point'; 
 
         $response = [
             'status_code'       => 200,

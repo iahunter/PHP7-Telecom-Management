@@ -146,7 +146,7 @@
      *     tags={"Management - West 911Enable EGW"},
      *     summary="List ERLs with Count of Phones by ERL",
      *     description="",
-     *     operationId="listPhoneModels",
+     *     operationId="list_ers_and_phone_counts",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Response(

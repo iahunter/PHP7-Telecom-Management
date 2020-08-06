@@ -112,7 +112,7 @@ class SonusAttemptMonitor extends Command
 
             //print_r($data);
 
-            print_r($data);
+            //print_r($data);
             $this->sendemail($data);
             //$this->send_text_to_oncall($data);
         }

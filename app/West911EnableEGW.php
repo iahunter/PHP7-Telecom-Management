@@ -49,9 +49,9 @@ class West911EnableEGW extends Model
             LEFT JOIN locations ON endpoint.location_id = locations.location_id
             WHERE endpoint.isDiscovered = 1
             ORDER BY locations.erl_id
-			
-			// Updated with EGW version v5.5.5.202
-			SELECT device_name, mac_address, ip_address, endpoint_view_location.last_updated, locations.erl_id
+
+            // Updated with EGW version v5.5.5.202
+            SELECT device_name, mac_address, ip_address, endpoint_view_location.last_updated, locations.erl_id
             FROM `endpoint_view_location`
             LEFT JOIN locations ON endpoint_view_location.location_id = locations.location_id
             ORDER BY locations.erl_id
@@ -63,7 +63,7 @@ class West911EnableEGW extends Model
         foreach ($endpoints as $phone) {
             $result[$phone->device_name] = (array) $phone;
         }
-		//print_r($result); 
+        //print_r($result);
         return $result;
     }
 

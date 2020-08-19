@@ -267,7 +267,7 @@ class SiteLocal911 extends Command
                 while ($COUNT > 1) {
                     echo 'Count:'.$COUNT.PHP_EOL;
                     echo "Killing process... In Development Mode... Only executing {$COUNT} Sites".PHP_EOL;
-                    die();
+                    exit();
                 }
             }
 

@@ -160,10 +160,10 @@ class CucmCtiRoutePoint extends Cucm
             $errors[] = 'Error, no name set';
         }
         $NAME = $request->name;
-		
-		if(strlen($NAME) > 15){
-			$errors[] = 'Error, Name must be 15 characters or less';
-		}
+
+        if (strlen($NAME) > 15) {
+            $errors[] = 'Error, Name must be 15 characters or less';
+        }
 
         // Check if firstname is Set
         if (! isset($request->firstname) || ! $request->firstname) {
@@ -387,7 +387,7 @@ class CucmCtiRoutePoint extends Cucm
             'description'                        => $DESCRIPTION,
             'product'                            => 'CTI Route Point',
             'class'                              => 'CTI Route Point',
-			'model'                              => 'CTI Route Point',
+            'model'                              => 'CTI Route Point',
             'protocol'                           => $PROTOCOL,
             'protocolSide'                       => 'User',
             'devicePoolName'                     => 'DP_'.$SITE,

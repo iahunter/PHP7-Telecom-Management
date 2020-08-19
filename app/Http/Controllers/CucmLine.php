@@ -53,7 +53,6 @@ class CucmLine extends Cucm
             $CFA_DESTINATION = '';
         } else {
             $CFA_DESTINATION = $request->cfa_destination;
-			
 
             $regex = '/^9..........$/';
 
@@ -87,13 +86,13 @@ class CucmLine extends Cucm
             if (! preg_match($regex, $CFA_DESTINATION)) {
                 $CFA_DESTINATION = "+1{$CFA_DESTINATION}";
             }
-			
-			// Steering digits for Teams
-			$regex = "/^\+10001(.*)/";
+
+            // Steering digits for Teams
+            $regex = "/^\+10001(.*)/";
             if (preg_match($regex, $CFA_DESTINATION)) {
                 $CFA_DESTINATION = substr($CFA_DESTINATION, 1);
             }
-			
+
             //$CFA_DESTINATION = "+1{$CFA_DESTINATION}";
 
             if ($request->pattern == substr($CFA_DESTINATION, 2)) {

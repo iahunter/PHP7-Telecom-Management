@@ -119,8 +119,8 @@ class Sonus5k extends Model
     {
         $verb = 'GET';
         $apiurl = "https://{$SBC}.".env('SONUS_DOMAIN_NAME').'/api/operational/alarms/currentStatus';
-		
-		// Fixes for Sonus SBC Upgrade to 7.2 - not tested with 6. We came from version 5.0
+
+        // Fixes for Sonus SBC Upgrade to 7.2 - not tested with 6. We came from version 5.0
         $sbcVersion = env('SONUS_VERSION');
 
         if ($sbcVersion && $sbcVersion > 7) {
@@ -130,7 +130,7 @@ class Sonus5k extends Model
         }
 
         $response = self::wrapapi($verb, $apiurl, $data);
-		//print_r($response); 
+        //print_r($response);
         // We just want to return an array of alarms.
         if (isset($response['currentStatus'])) {
             if (($response['currentStatus']) && array_key_exists('alarmId', $response['currentStatus'])) {

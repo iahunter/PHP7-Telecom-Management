@@ -48,7 +48,7 @@ class MACDJobMonitor extends Command
             print_r($jobs);
         } else {
             echo $now.' monitoring:macd_job_monitor - Complete. '.PHP_EOL;
-            die(); 	// Kill the script if no jobs in queue.
+            exit(); 	// Kill the script if no jobs in queue.
         }
 
         sleep(60); // Wait for 1 mins and then check the queue again to see if any of these are still stuck in there.

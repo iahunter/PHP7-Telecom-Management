@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Gizmo;
 
+use App\Gizmo\RestApiClient as Gizmo;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Gizmo\RestApiClient as Gizmo;
 
 class GizmoApiTest extends Command
 {
@@ -21,8 +21,8 @@ class GizmoApiTest extends Command
      * @var string
      */
     protected $description = 'Test Gizmo API';
-	
-	private $client; 
+
+    private $client;
 
     /**
      * Create a new command instance.
@@ -41,74 +41,70 @@ class GizmoApiTest extends Command
      */
     public function handle()
     {
-		$start = Carbon::now();
-		print "Starting: " . $start.PHP_EOL; 
-		
-		$this->client = new Gizmo(env('MICROSOFT_TENANT'), env('GIZMO_URL'), env('GIZMO_CLIENT_ID'), env('GIZMO_CLIENT_SECRET'), env('GIZMO_SCOPE'));
-		
-		$this->client->get_oauth2_token(); 
-		
-		$COUNTRYCODE = "1"; 
-		$NPANXX = "402938";
-		
-		//$this->test_get_teams_numbers_by_NPA_NXX($COUNTRYCODE, $NPANXX); 
-		
-		//$this->test_civic_address(); 
+        $start = Carbon::now();
+        echo 'Starting: '.$start.PHP_EOL;
 
-		//$return = $this->client->get_teams_csonline_users_voice_enabled(); 
-		
-		/*
-		
-		$userid = "John.Doe";
-		$number = "14025551234"; 
-		
-		
-		$user = $this->test_teams_user($userid, $number); 
-		
-		print_r($user); 
-		
-		
-		$user = $this->client->get_teams_csonline_user_by_userid($userid); 
-		
-		print_r($user); 
-		*/
-		
-		$user = $this->client->get_teams_csonline_user_by_sip_address("travis.riesenberg@kiewit.com"); 
-		
-		print_r($user); 
-		
-		print "Started: " . $start.PHP_EOL; 
-		$end = Carbon::now();
-		print "Stopped: " . $end.PHP_EOL; 
-		
+        $this->client = new Gizmo(env('MICROSOFT_TENANT'), env('GIZMO_URL'), env('GIZMO_CLIENT_ID'), env('GIZMO_CLIENT_SECRET'), env('GIZMO_SCOPE'));
+
+        $this->client->get_oauth2_token();
+
+        $COUNTRYCODE = '1';
+        $NPANXX = '402938';
+
+        //$this->test_get_teams_numbers_by_NPA_NXX($COUNTRYCODE, $NPANXX);
+
+        //$this->test_civic_address();
+
+        //$return = $this->client->get_teams_csonline_users_voice_enabled();
+
+        /*
+
+        $userid = "John.Doe";
+        $number = "14025551234";
+
+
+        $user = $this->test_teams_user($userid, $number);
+
+        print_r($user);
+
+
+        $user = $this->client->get_teams_csonline_user_by_userid($userid);
+
+        print_r($user);
+        */
+
+        $user = $this->client->get_teams_csonline_user_by_sip_address('travis.riesenberg@kiewit.com');
+
+        print_r($user);
+
+        echo 'Started: '.$start.PHP_EOL;
+        $end = Carbon::now();
+        echo 'Stopped: '.$end.PHP_EOL;
     }
-	
-	
-	protected function test_get_teams_numbers_by_NPA_NXX($COUNTRYCODE, $NPANXX)
+
+    protected function test_get_teams_numbers_by_NPA_NXX($COUNTRYCODE, $NPANXX)
     {
 
-		//Testing NPANXX Usages
-		
-		$NPANXX = "{$COUNTRYCODE}{$NPANXX}"; 
-		
-		$users = $this->client->get_teams_csonline_all_users_by_NPA_NXX($NPANXX); 
-		
-		$total = count($users); 
-		$count = 0; 
-		print_r($users);
-		
-		print "Found {$total} Users".PHP_EOL;
-		 
-		
-		return $users;
+        //Testing NPANXX Usages
+
+        $NPANXX = "{$COUNTRYCODE}{$NPANXX}";
+
+        $users = $this->client->get_teams_csonline_all_users_by_NPA_NXX($NPANXX);
+
+        $total = count($users);
+        $count = 0;
+        print_r($users);
+
+        echo "Found {$total} Users".PHP_EOL;
+
+        return $users;
     }
-	
-	
-	protected function test_teams_user($userid, $number)
+
+    protected function test_teams_user($userid, $number)
     {
 
-		// Test Civic Address JSON
-		$json = <<<EOT
+        // Test Civic Address JSON
+        $json = <<<EOT
 {
 	"Alias":"{$userid}",
 	"SipAddress":"sip:{$userid}@kiewit.com",
@@ -117,21 +113,19 @@ class GizmoApiTest extends Command
     "HostedVoiceMail":"True"
 }
 EOT;
-		
-		print_r($json); 
-		
-		$return = $this->client->set_teams_user($json); 
-		
-		print_r($return); 
-		
+
+        print_r($json);
+
+        $return = $this->client->set_teams_user($json);
+
+        print_r($return);
     }
-	
-	
-	protected function test_civic_address()
+
+    protected function test_civic_address()
     {
 
-		// Test Civic Address JSON
-		$json = <<<EOT
+        // Test Civic Address JSON
+        $json = <<<'EOT'
 {
 	"companyName": "TEST1234",
 	"houseNumber": "12345",
@@ -145,19 +139,15 @@ EOT;
 	"elin": "TEAMS_TRAVIS01"
 }
 EOT;
-		
-		
-		$id = $this->client->create_civic_address($json); 
-		
-		print $id.PHP_EOL; 
-		
-		print "Deleting Civic Address ID: {$id}".PHP_EOL;
 
-		$return = $this->client->delete_civic_address_by_id($id); 
-		
-		print $return; 
-		
+        $id = $this->client->create_civic_address($json);
+
+        echo $id.PHP_EOL;
+
+        echo "Deleting Civic Address ID: {$id}".PHP_EOL;
+
+        $return = $this->client->delete_civic_address_by_id($id);
+
+        echo $return;
     }
-	
-	
 }

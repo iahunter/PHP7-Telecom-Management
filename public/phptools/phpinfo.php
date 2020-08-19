@@ -2,4 +2,4 @@
 
 //phpinfo();
 
-die();
+exit();

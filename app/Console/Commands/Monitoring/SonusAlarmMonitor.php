@@ -75,8 +75,8 @@ class SonusAlarmMonitor extends Command
 
                 $alarms = Sonus5k::listactivealarms($SBC);
                 //$alarms = null;
-				
-				//print_r($alarms); 
+
+                //print_r($alarms);
 
                 if ($alarms) {
                     // Alarms exist
@@ -86,7 +86,7 @@ class SonusAlarmMonitor extends Command
                         if (in_array($alarm['desc'], $this->ALARMDISCARDS)) {
                             continue;
                         }
-						$alarm['comment'] = ""; 
+                        $alarm['comment'] = '';
                         $current_alarms[$alarm['alarmId']] = $alarm;
                     }
 
@@ -126,9 +126,8 @@ class SonusAlarmMonitor extends Command
                     // If we had a change update send an update.
                     $time = Carbon::now().PHP_EOL;
                     echo $time;
-					
-					
-					//$change = "Alarm"; 
+
+                    //$change = "Alarm";
                     $data = [
                         'time'          => $time,
                         'host'          => $device,
@@ -136,27 +135,24 @@ class SonusAlarmMonitor extends Command
                         'alarms'        => $json['sonusalarms'],
                         'status'        => $change,
                     ];
-					
-					//print_r($data); 
-					
-					$device->json = $json;
+
+                    //print_r($data);
+
+                    $device->json = $json;
                     $device->save();
-					
-					// Fix for comment being an array in 5k version 7.2. Was giving an error in blade template. 
-					foreach($data['alarms'] as $key => $value){
-						foreach($value as $k => $v){
-							if(is_array($v)){
-								unset($data['alarms'][$key][$k]); 
-							}
-						}
-						
-					}
-					//print_r($data); 
+
+                    // Fix for comment being an array in 5k version 7.2. Was giving an error in blade template.
+                    foreach ($data['alarms'] as $key => $value) {
+                        foreach ($value as $k => $v) {
+                            if (is_array($v)) {
+                                unset($data['alarms'][$key][$k]);
+                            }
+                        }
+                    }
+                    //print_r($data);
                     $this->sendemail($data);
                     //$this->send_text_to_oncall($data);
-                    
                 }
-				
             }
         }
     }

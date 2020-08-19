@@ -4,9 +4,9 @@ namespace App\Console\Commands\Numbers;
 
 use App\Did;
 use App\Didblock;
-use DB;
-use Carbon\Carbon;
 use App\Gizmo\RestApiClient as Gizmo;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Console\Command;
 
 class DidScanCucmAndTeams extends Command
@@ -42,96 +42,90 @@ class DidScanCucmAndTeams extends Command
      *
      * This function is what is kicked off by the console command.
      */
-	
     public function handle()
     {
-		$starttime = Carbon::now();
+        $starttime = Carbon::now();
         echo 'Starting - '.$starttime.PHP_EOL;
 
         // Get our list of NPA/NXX's
         $prefixes = $this->getDidNPANXXList();
-		
-		//$prefixes = ["1" => ["1001234"]];
-		
-		$prefix_count = 0; 
-		$total_prefix_count = count($prefixes);
-		
+
+        //$prefixes = ["1" => ["1001234"]];
+
+        $prefix_count = 0;
+        $total_prefix_count = count($prefixes);
 
         $possible_deletes = [];
         // Loop through our NPA/NXX's and get their devices out of call wrangler
-		foreach ($prefixes as $country_code => $npanxxs) {
-			$prefix_count++;
-			
-			
-			
-			try {
-				// Get the devices for this npa/nxx out of cucm
-				$teamsdidinfo = $this->getTeamsEnterpriseVoiceUsers($country_code);
-			} catch (\Exception $e) {
-				echo 'Teams blew uP: '.$e->getMessage().PHP_EOL;
-			}
-			
-			//print_r($teamsdidinfo); 
-			
-			$npanxx_count = 0;
-			$total_npanxx_count = count($npanxxs);
-			
-			foreach ($npanxxs as $npanxx) {
-				$npanxx_count++; 
-				
-				echo 'Start Time: '.$starttime.PHP_EOL;
-				print 'Time: '. Carbon::now().PHP_EOL; 
-				
-				print "COUNTRY {$prefix_count} of {$total_prefix_count}".PHP_EOL;
-				print "NPANXX {$npanxx_count} of {$total_npanxx_count}".PHP_EOL;
-				
-				$cucmdidinfo = [];
-				
-				try {
-					// Get the devices for this npa/nxx out of cucm
-					$cucmdidinfo = $this->getCucmDidsByNPANXX($country_code, $npanxx);
-				} catch (\Exception $e) {
-					echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
-					dd($e->getTrace());
-					// Stop if can't connect
-					return;
-				}
-				
-				// Only do this per NPANXX if we don't get all users above from Teams.
-				if(!$teamsdidinfo){
-					$teamsdidinfo = [];
-					try {
-						// Get the devices for this npa/nxx out of cucm
-						$teamsdidinfo = $this->getTeamsDidsByNPANXX($country_code, $npanxx);
-					} catch (\Exception $e) {
-						echo 'Teams blew uP: '.$e->getMessage().PHP_EOL;
-						dd($e->getTrace());
-						// Stop if can't connect
-						return;
-					}
-				}
-				
-				
-				
-				// Update all our DID information for this NPANXX based on those device records.
-				
-				//print_r($cucmdidinfo);
-				//print_r($teamsdidinfo);
-				
-				$delete_numbers = $this->updateDidInfo($country_code, $npanxx, $cucmdidinfo, $teamsdidinfo);
-				
-				//print_r($delete_numbers);
-				
-				$possible_deletes[$country_code][$npanxx] = $delete_numbers; 
-			}
-		}
+        foreach ($prefixes as $country_code => $npanxxs) {
+            $prefix_count++;
+
+            try {
+                // Get the devices for this npa/nxx out of cucm
+                $teamsdidinfo = $this->getTeamsEnterpriseVoiceUsers($country_code);
+            } catch (\Exception $e) {
+                echo 'Teams blew uP: '.$e->getMessage().PHP_EOL;
+            }
+
+            //print_r($teamsdidinfo);
+
+            $npanxx_count = 0;
+            $total_npanxx_count = count($npanxxs);
+
+            foreach ($npanxxs as $npanxx) {
+                $npanxx_count++;
+
+                echo 'Start Time: '.$starttime.PHP_EOL;
+                echo 'Time: '.Carbon::now().PHP_EOL;
+
+                echo "COUNTRY {$prefix_count} of {$total_prefix_count}".PHP_EOL;
+                echo "NPANXX {$npanxx_count} of {$total_npanxx_count}".PHP_EOL;
+
+                $cucmdidinfo = [];
+
+                try {
+                    // Get the devices for this npa/nxx out of cucm
+                    $cucmdidinfo = $this->getCucmDidsByNPANXX($country_code, $npanxx);
+                } catch (\Exception $e) {
+                    echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
+                    dd($e->getTrace());
+                    // Stop if can't connect
+                    return;
+                }
+
+                // Only do this per NPANXX if we don't get all users above from Teams.
+                if (! $teamsdidinfo) {
+                    $teamsdidinfo = [];
+                    try {
+                        // Get the devices for this npa/nxx out of cucm
+                        $teamsdidinfo = $this->getTeamsDidsByNPANXX($country_code, $npanxx);
+                    } catch (\Exception $e) {
+                        echo 'Teams blew uP: '.$e->getMessage().PHP_EOL;
+                        dd($e->getTrace());
+                        // Stop if can't connect
+                        return;
+                    }
+                }
+
+                // Update all our DID information for this NPANXX based on those device records.
+
+                //print_r($cucmdidinfo);
+                //print_r($teamsdidinfo);
+
+                $delete_numbers = $this->updateDidInfo($country_code, $npanxx, $cucmdidinfo, $teamsdidinfo);
+
+                //print_r($delete_numbers);
+
+                $possible_deletes[$country_code][$npanxx] = $delete_numbers;
+            }
+        }
 
         // This will remove lines that are now available from the Line Cleanup Report.
         echo 'Starting Cleanup Quick Scan'.PHP_EOL;
         $this->updateNumberCleanupReport();
         echo 'Completed Cleanup Quick Scan'.PHP_EOL;
-		
-		echo 'Start Time: '.$starttime.PHP_EOL;
+
+        echo 'Start Time: '.$starttime.PHP_EOL;
         echo 'Stop Time: '.Carbon::now().PHP_EOL;
     }
 
@@ -139,25 +133,25 @@ class DidScanCucmAndTeams extends Command
     protected function getDidNPANXXList()
     {
         //$prefixes = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))->groupBy(DB::raw('npanxx'))->get();
-		
-		$countrycodes = Didblock::select('country_code')->distinct()->get();
-		
-		//print_r($countrycodes); 
-		$prefixes = []; 
-		
-		foreach($countrycodes as $country){
-			$npanxxs = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))
-												->where('country_code', $country->country_code)
-												->distinct()
-												->get();
-												
-			foreach($npanxxs as $npanxx){
-				$prefixes[$country->country_code][] = $npanxx->npanxx; 
-			}
-		}
-		
+
+        $countrycodes = Didblock::select('country_code')->distinct()->get();
+
+        //print_r($countrycodes);
+        $prefixes = [];
+
+        foreach ($countrycodes as $country) {
+            $npanxxs = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))
+                                                ->where('country_code', $country->country_code)
+                                                ->distinct()
+                                                ->get();
+
+            foreach ($npanxxs as $npanxx) {
+                $prefixes[$country->country_code][] = $npanxx->npanxx;
+            }
+        }
+
         //$results = Didblock::select(DB::raw('substring(start,1,6) as npanxx'))->distinct()->get();
-		return $prefixes; 
+        return $prefixes;
     }
 
     // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
@@ -232,148 +226,143 @@ class DidScanCucmAndTeams extends Command
                 throw new \Exception('Indexed results from call mangler are empty!!');
             }
 
-			ksort($results); 
+            ksort($results);
 
-			$count = count($results); 
-			print "Found: {$count} numbers in use in CUCM. ".PHP_EOL; 
+            $count = count($results);
+            echo "Found: {$count} numbers in use in CUCM. ".PHP_EOL;
 
-			return $results;
-			
+            return $results;
+
             return $results;
         } catch (\Exception $e) {
             echo 'Callmanager blew uP: '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
     }
-	
-	// Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
+
+    // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function getTeamsDidsByNPANXX($country_code, $npanxx)
     {
         echo 'Getting NAPNXX: '.$npanxx.' numbers from Teams...'.PHP_EOL;
         try {
             $gizmo = new Gizmo(env('MICROSOFT_TENANT'), env('GIZMO_URL'), env('GIZMO_CLIENT_ID'), env('GIZMO_CLIENT_SECRET'), env('GIZMO_SCOPE'));
-		
-			$gizmo->get_oauth2_token(); 
-			
-			
+
+            $gizmo->get_oauth2_token();
+
             $teamsinfo = $gizmo->get_teams_csonline_all_users_by_NPA_NXX($country_code.$npanxx);
-            
+
             // Process the junk we got back from call mangler and turn it into something useful
             $results = [];
             if (! $teamsinfo) {
                 // Return blank array if no results in $teamsinfo.
                 echo 'Teamsinfo is blank!'.PHP_EOL;
+
                 return $results;
             }
-            
         } catch (\Exception $e) {
             echo "Teams could not get users in use with {$npanxx}... ".$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
-		
-		foreach ($teamsinfo as $user) {
-			$number = $user['onPremLineURI']; 
-			if (isset($user['onPremLineURI']) && $user['onPremLineURI']) {
-				$number = strtolower($user['onPremLineURI']); 
-				//print "Working on number: ". $number.PHP_EOL; 
-				$count = count($country_code); 
-				
-				if(preg_match("/tel:\+{$country_code}/", $number, $matches)){
-					$count = $count + 5; 
-					$number = substr($number,$count);
-				}elseif(preg_match("/tel:\+/", $number, $matches)){
-					$count = 5;
-					$number = substr($number,$count);
-				}else{
-					$count = 4;
-					$number = substr($number,$count);
-				}
-			}
-			
-			if(!isset($results[$number])){
-				$results[$number] = []; 
-			}
-			$results[$number][] = $user;
-		}
-		if (! count($results)) {
-			throw new \Exception('Indexed results from Teams is empty!!');
-		}
-		
-		
-		ksort($results); 
 
-		$count = count($results); 
-		print "Found: {$count} numbers in use in Microsoft Teams. ".PHP_EOL; 
+        foreach ($teamsinfo as $user) {
+            $number = $user['onPremLineURI'];
+            if (isset($user['onPremLineURI']) && $user['onPremLineURI']) {
+                $number = strtolower($user['onPremLineURI']);
+                //print "Working on number: ". $number.PHP_EOL;
+                $count = count($country_code);
 
-		return $results;
+                if (preg_match("/tel:\+{$country_code}/", $number, $matches)) {
+                    $count = $count + 5;
+                    $number = substr($number, $count);
+                } elseif (preg_match("/tel:\+/", $number, $matches)) {
+                    $count = 5;
+                    $number = substr($number, $count);
+                } else {
+                    $count = 4;
+                    $number = substr($number, $count);
+                }
+            }
+
+            if (! isset($results[$number])) {
+                $results[$number] = [];
+            }
+            $results[$number][] = $user;
+        }
+        if (! count($results)) {
+            throw new \Exception('Indexed results from Teams is empty!!');
+        }
+
+        ksort($results);
+
+        $count = count($results);
+        echo "Found: {$count} numbers in use in Microsoft Teams. ".PHP_EOL;
+
+        return $results;
     }
-	
-	
-	// Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
+
+    // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function getTeamsEnterpriseVoiceUsers($country_code)
     {
         echo 'Getting all enterprise voice enabled users from Teams...'.PHP_EOL;
         try {
             $gizmo = new Gizmo(env('MICROSOFT_TENANT'), env('GIZMO_URL'), env('GIZMO_CLIENT_ID'), env('GIZMO_CLIENT_SECRET'), env('GIZMO_SCOPE'));
-		
-			$gizmo->get_oauth2_token(); 
-			
-			
+
+            $gizmo->get_oauth2_token();
+
             $teamsinfo = $gizmo->get_teams_csonline_users_voice_enabled();
-            
+
             // Process the junk we got back from call mangler and turn it into something useful
             $results = [];
             if (! $teamsinfo) {
                 // Return blank array if no results in $teamsinfo.
                 echo 'Teamsinfo is blank!'.PHP_EOL;
+
                 return $results;
             }
-            
         } catch (\Exception $e) {
-            echo "Teams could not get users that are enterprise voice enabled... ".$e->getMessage().PHP_EOL;
+            echo 'Teams could not get users that are enterprise voice enabled... '.$e->getMessage().PHP_EOL;
             dd($e->getTrace());
         }
-		
-		foreach ($teamsinfo as $user) {
-			$number = $user['onPremLineURI']; 
-			if (isset($user['onPremLineURI']) && $user['onPremLineURI']) {
-				$number = strtolower($user['onPremLineURI']); 
-				//print "Working on number: ". $number.PHP_EOL; 
-				$count = count($country_code); 
-				
-				if(preg_match("/tel:\+{$country_code}/", $number, $matches)){
-					$count = $count + 5; 
-					$number = substr($number,$count);
-				}elseif(preg_match("/tel:\+/", $number, $matches)){
-					$count = 5;
-					$number = substr($number,$count);
-				}else{
-					$count = 4;
-					$number = substr($number,$count);
-				}
-			}
-			
-			if(!isset($results[$number])){
-				$results[$number] = []; 
-			}
-			$results[$number][] = $user;
-		}
-		if (! count($results)) {
-			throw new \Exception('Indexed results from Teams is empty!!');
-		}
-		
-		
-		ksort($results); 
 
-		$count = count($results); 
-		print "Found: {$count} numbers in use in Microsoft Teams. ".PHP_EOL; 
+        foreach ($teamsinfo as $user) {
+            $number = $user['onPremLineURI'];
+            if (isset($user['onPremLineURI']) && $user['onPremLineURI']) {
+                $number = strtolower($user['onPremLineURI']);
+                //print "Working on number: ". $number.PHP_EOL;
+                $count = count($country_code);
 
-		return $results;
+                if (preg_match("/tel:\+{$country_code}/", $number, $matches)) {
+                    $count = $count + 5;
+                    $number = substr($number, $count);
+                } elseif (preg_match("/tel:\+/", $number, $matches)) {
+                    $count = 5;
+                    $number = substr($number, $count);
+                } else {
+                    $count = 4;
+                    $number = substr($number, $count);
+                }
+            }
+
+            if (! isset($results[$number])) {
+                $results[$number] = [];
+            }
+            $results[$number][] = $user;
+        }
+        if (! count($results)) {
+            throw new \Exception('Indexed results from Teams is empty!!');
+        }
+
+        ksort($results);
+
+        $count = count($results);
+        echo "Found: {$count} numbers in use in Microsoft Teams. ".PHP_EOL;
+
+        return $results;
     }
 
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     //protected function updateDidInfo($npanxx, $didinfo)
-	protected function updateDidInfo($country_code, $npanxx, $cucmdidinfo, $teamsdidinfo)
+    protected function updateDidInfo($country_code, $npanxx, $cucmdidinfo, $teamsdidinfo)
     {
 
         // Return array of the numbers that we need to look into cleaning up.
@@ -389,90 +378,86 @@ class DidScanCucmAndTeams extends Command
 
         // Go through all the mathcing DID's and update them, OR set them to available
         // maybe WRAP this in a try/catch block to handle individual number update failures!
-		
+
         foreach ($dids as $did) {
-			$system_array = [];
-			$assignments_array = [];
-			$teams_assignments_array = [];
+            $system_array = [];
+            $assignments_array = [];
+            $teams_assignments_array = [];
             //try {
-                // Skip over excluded numbers. These may not be part of our block.
-                if ($did->status == 'exclude') {
-                    continue;
-                }
-                // SKIP updating OR making available DID's that are RESERVED!
-                if ($did->status == 'reserved') {
+            // Skip over excluded numbers. These may not be part of our block.
+            if ($did->status == 'exclude') {
+                continue;
+            }
+            // SKIP updating OR making available DID's that are RESERVED!
+            if ($did->status == 'reserved') {
 
                     // If its now built in the system, mark it as inuse.
-                    if (isset($cucmdidinfo[$did->number])) {
-						
+                if (isset($cucmdidinfo[$did->number])) {
+
                         //$did->assignments = $cucmdidinfo[$did->number];
 
-                        $did->status = 'inuse';
-						$systemid = 'CucmNA';
-						$assignments_array[$systemid] = $cucmdidinfo[$did->number];
-						$system_array[] = $systemid; 
-					}
-                    // If its now built in the system, mark it as inuse.
-                    if (isset($teamsdidinfo[$did->number])) {
-                        //$did->assignments = $teamsdidinfo[$did->number];
-                        $did->status = 'inuse';
-                        $systemid = 'MicrosoftTeams';
-						$system_array[] = $systemid; 
-						$assignments_array[$systemid] = $cucmdidinfo[$did->number];
-						
-                    }
-					else {
-                        // If not skip it and leave it as reserved.
-                        continue;
-                    }
+                    $did->status = 'inuse';
+                    $systemid = 'CucmNA';
+                    $assignments_array[$systemid] = $cucmdidinfo[$did->number];
+                    $system_array[] = $systemid;
                 }
-				
-				// CONTINUE HERE ########
-                // IF this DID IS in the results from call wrangler, update it!
-				if (isset($teamsdidinfo[$did->number]) || isset($cucmdidinfo[$did->number])){
-					if (isset($cucmdidinfo[$did->number])) {
-
-						// Check if this number has any assigned devices... Need to move this functionality to its own command and schedule.
-						foreach ($cucmdidinfo[$did->number] as $entry) {
-							if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
-								//print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
-								$possible_deletes[$entry['uuid']] = $entry['dnOrPattern'];
-							}
-						}
-
-						$did->status = 'inuse';
-						$systemid = 'CucmNA';
-						$system_array[] = $systemid;
-						$assignments_array[$systemid] = $cucmdidinfo[$did->number];
-					}
-					// If its now built in the system, mark it as inuse.
-					if (isset($teamsdidinfo[$did->number])) {
-						$did->status = 'inuse';
-						$systemid = 'MicrosoftTeams';
-						$system_array[] = $systemid; 
-						$assignments_array[$systemid] = $teamsdidinfo[$did->number];
-					}
-					
-					//print_r($assignments_array); 
-					
-					
-					
-					$did->system_id = $system_array; 
-					$did->assignments = $assignments_array; 
-					//$did->system_id = json_encode($system_array); 
-					//$did->assignments = json_encode($assignments_array); 
-				}
-				
-				// Else mark it available. 
-				else {
-                    $did->assignments = null;
-                    $did->status = 'available';
-                    $did->system_id = null;
-                    $did->mailbox = null;
+                // If its now built in the system, mark it as inuse.
+                if (isset($teamsdidinfo[$did->number])) {
+                    //$did->assignments = $teamsdidinfo[$did->number];
+                    $did->status = 'inuse';
+                    $systemid = 'MicrosoftTeams';
+                    $system_array[] = $systemid;
+                    $assignments_array[$systemid] = $cucmdidinfo[$did->number];
+                } else {
+                    // If not skip it and leave it as reserved.
+                    continue;
                 }
-                //dd($did);
-                $did->save();
-			/*
+            }
+
+            // CONTINUE HERE ########
+            // IF this DID IS in the results from call wrangler, update it!
+            if (isset($teamsdidinfo[$did->number]) || isset($cucmdidinfo[$did->number])) {
+                if (isset($cucmdidinfo[$did->number])) {
+
+                        // Check if this number has any assigned devices... Need to move this functionality to its own command and schedule.
+                    foreach ($cucmdidinfo[$did->number] as $entry) {
+                        if (isset($entry['routeDetail']) && ! $entry['routeDetail']) {
+                            //print "{$entry['dnOrPattern']} - This number needs looked at!!!".PHP_EOL;
+                            $possible_deletes[$entry['uuid']] = $entry['dnOrPattern'];
+                        }
+                    }
+
+                    $did->status = 'inuse';
+                    $systemid = 'CucmNA';
+                    $system_array[] = $systemid;
+                    $assignments_array[$systemid] = $cucmdidinfo[$did->number];
+                }
+                // If its now built in the system, mark it as inuse.
+                if (isset($teamsdidinfo[$did->number])) {
+                    $did->status = 'inuse';
+                    $systemid = 'MicrosoftTeams';
+                    $system_array[] = $systemid;
+                    $assignments_array[$systemid] = $teamsdidinfo[$did->number];
+                }
+
+                //print_r($assignments_array);
+
+                $did->system_id = $system_array;
+                $did->assignments = $assignments_array;
+            //$did->system_id = json_encode($system_array);
+                    //$did->assignments = json_encode($assignments_array);
+            }
+
+            // Else mark it available.
+            else {
+                $did->assignments = null;
+                $did->status = 'available';
+                $did->system_id = null;
+                $did->mailbox = null;
+            }
+            //dd($did);
+            $did->save();
+            /*
             } catch (\Exception $e) {
                 echo 'Exception processing one DID '.$did->number.' '.$e->getMessage().PHP_EOL;
             }*/

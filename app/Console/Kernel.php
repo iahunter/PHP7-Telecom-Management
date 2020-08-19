@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
 
         Commands\UnityConnection\DidNumberUpdatesByMailboxNumber::class,
         Commands\West911Enable\PhoneEGWScanUpdate::class,
-		Commands\West911Enable\TeamsEgwSync::class,
+        Commands\West911Enable\TeamsEgwSync::class,
 
         Commands\Sonus\SonusCalls::class,
         Commands\Sonus\GetSonusConfig::class,
@@ -73,13 +73,13 @@ class Kernel extends ConsoleKernel
         Commands\Monitoring\MACDJobMonitor::class,
 
         Commands\Numbers\NumberSearch::class,
-		Commands\Numbers\DidScanCucmAndTeams::class,
+        Commands\Numbers\DidScanCucmAndTeams::class,
 
         // IDM
         Commands\IDM\IdmUpdateUserPhone::class,
-		
-		// Gizmo
-		Commands\Gizmo\GizmoApiTest::class,
+
+        // Gizmo
+        Commands\Gizmo\GizmoApiTest::class,
 
         // Commented out one time scripts - Uncomment if needed.
         //Commands\CallManager\SiteLocal911::class,

@@ -27,14 +27,14 @@ class West911EnableEGW extends Model
 
     public static function get_all_endpoints()
     {
-        $result = DB::connection('egw')->select('select * from endpoint');
+        $result = DB::connection('egw')->select('select * from endpoint_view_location');
 
         return $result;
     }
 
     public static function get_endpoint_by_name($name)
     {
-        $result = DB::connection('egw')->select("select * from endpoint where device_name = '{$name}'");
+        $result = DB::connection('egw')->select("select * from endpoint_view_location where device_name = '{$name}'");
 
         return $result;
     }
@@ -49,15 +49,21 @@ class West911EnableEGW extends Model
             LEFT JOIN locations ON endpoint.location_id = locations.location_id
             WHERE endpoint.isDiscovered = 1
             ORDER BY locations.erl_id
+			
+			// Updated with EGW version v5.5.5.202
+			SELECT device_name, mac_address, ip_address, endpoint_view_location.last_updated, locations.erl_id
+            FROM `endpoint_view_location`
+            LEFT JOIN locations ON endpoint_view_location.location_id = locations.location_id
+            ORDER BY locations.erl_id
         */
 
-        $endpoints = DB::connection('egw')->select('SELECT device_name, mac_address, ip_address, locations.erl_id AS erl, endpoint.last_updated FROM `endpoint` LEFT JOIN locations ON endpoint.location_id = locations.location_id WHERE endpoint.isDiscovered = 1 ORDER BY locations.erl_id');
+        $endpoints = DB::connection('egw')->select('SELECT device_name, mac_address, ip_address, locations.erl_id AS erl, endpoint_view_location.last_updated FROM `endpoint_view_location` LEFT JOIN locations ON endpoint_view_location.location_id = locations.location_id ORDER BY locations.erl_id');
 
         $result = [];
         foreach ($endpoints as $phone) {
             $result[$phone->device_name] = (array) $phone;
         }
-
+		//print_r($result); 
         return $result;
     }
 

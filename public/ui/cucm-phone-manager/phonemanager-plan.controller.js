@@ -85,6 +85,13 @@ angular
 			if(phone.device == "IP Communicator"){
 				phone.name = "CIPC_" + phone.dn;
 			}
+			
+			if(phone.device == "Microsoft Teams"){
+				phone.device = phone.teamsmode
+				phone.name = "TEAMS" + phone.dn
+			}
+			
+			
 			console.log(phone)
 			var path = '/phone/site/'+ id + '/create/'+ phone.device + '&' + phone.name + '&' + phone.dn + '&' + phone.usenumber
 			$location.path(path);

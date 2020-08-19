@@ -12,6 +12,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/iahunter/PHP5-CallManager-AXL.git"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/iahunter/php-911enable-egw.git"
       }
     ],
     "require": {
@@ -31,7 +35,8 @@
         "metaclassing/php7-sshwrapper": "dev-master",
         "doctrine/dbal": "^2.5",
        	"guzzlehttp/guzzle": "^6.3",
-		"nmred/kafka-php": "v0.2.0.8"
+		"nmred/kafka-php": "v0.2.0.8",
+        "iahunter/php-911enable-egw": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

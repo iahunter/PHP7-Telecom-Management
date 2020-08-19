@@ -23,6 +23,7 @@ class Did extends Model
     // Cast data type conversions. Converting one type of data to another.
     protected $casts = [
         'assignments'  => 'array',
+		'system_id'  => 'array',
         'mailbox'      => 'array',
     ];
 
@@ -51,9 +52,11 @@ class Did extends Model
             throw new \Exception('status exceeded 255 characters');
         }
         // Check if exceeds max of 255
+		/*
         if (strlen($this->system_id) > 255) {
             throw new \Exception('system_id exceeded 255 characters');
         }
+		*/
         // Make sure the number attributes are impossible to change once set
         if (isset($this->original['number']) && $this->original['number'] !== $this->number) {
             throw new \Exception('Validation error, Number can not be altered once created');

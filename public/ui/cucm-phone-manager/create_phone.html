@@ -30,7 +30,7 @@
 											<input type="text" readonly ng-model='vm.deviceForm.sitecode' class="form-control" data-width="100%" name="model">
 										</div>
 										<div ng-messages="addDeviceForm.sitecode.$dirty && addDeviceForm.sitecode.$error">
-												<div ng-message='required'> sitecode is required </div>
+												<div ng-message='required'> Sitecode is required </div>
 
 										</div>
 									</div>
@@ -52,13 +52,13 @@
 											<input type="text" readonly ng-model='vm.deviceForm.device' class="form-control" data-width="100%" name="model">
 										</div>
 										<div ng-messages="addDeviceForm.device.$dirty && addDeviceForm.device.$error">
-												<div ng-message='required'> device is required </div>
+												<div ng-message='required'> Device is required </div>
 
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-hide="vm.deviceForm.device == 'PhoneWithTeams'">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.name.$touched && addDeviceForm.name.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
 										<label for="name" class="control-label">Phone MAC Address</label>
 										<div class="inputGroupContainer">
@@ -67,7 +67,7 @@
 												<input type="text" readonly ng-model='vm.deviceForm.name' class="form-control"  data-width="100%" name="name">
 											</div>
 											<div ng-messages="addDeviceForm.name.$dirty && addDeviceForm.name.$error">
-													<div ng-message='required'> name is required </div>
+													<div ng-message='required'> Name is required </div>
 
 											</div>
 										</div>
@@ -239,7 +239,10 @@
 									
 										<div class="panel panel-heading" >Active Directory User</div>
 										<div class="panel panel-body">
-											<span style="color:green"> {{vm.aduser.aduser}} </span><br>
+											<span> <b>Display Name:</b> {{vm.aduser.aduserdisplayname}} </span><br>
+											<span> <b>User Principal Name:</b> {{vm.aduser.aduseruserprincipalname}} </span><br><br>
+											<span> {{vm.aduser.aduser}} </span><br>
+											<b>IPPhone:</b>
 											<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone == ''" style="color:red"> AD Needs Updated with IP Phone Info </span>
 											<span ng-if="vm.aduser.adipphone == vm.deviceForm.dn" style="color:green"> {{vm.aduser.adipphone}} </span>
 											<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone != vm.deviceForm.dn" style="color:red"> {{vm.aduser.adipphone}}</span>
@@ -285,41 +288,46 @@
 										</div>
 									</div>
 							</div>
-							<div class="row">
-								
-									<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-											<div class="form-group"  ng-class="{'has-error': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$invalid, 'has-success': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$valid }">
-												<label for="voicemail" class="control-label">Voicemail Box</label>
-												<br>
-												<input type="checkbox"  ng-model='vm.deviceForm.voicemail' ng-change="vm.getusersfromcupi(vm.deviceForm)" style="width: 17px; height: 17px;" name="voicemail" >
 
-												<div ng-messages="addDidblockForm.voicemail.$dirty && addDidblockForm.voicemail.$error">
-													<div ng-messages-include="error-messages"></div>
-												</div>
-											</div>
-									</div>
+							<div ng-hide="vm.deviceForm.device == 'TeamsOnly' || vm.deviceForm.device == 'PhoneWithTeams'">
+								
+								<div class="row" >
 									
-							</div>
-							
-							<div class="row" >
-								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.voicemail && vm.siteusertemplates.length">
-									<div class="form-group" ng-class="{'has-error': addDeviceForm.template.$touched && addDeviceForm.template.$invalid, 'has-success': addDeviceForm.template.$touched && addDeviceForm.template.$valid }">
-										<label for="template" class="control-label">Select Voicemail Template</label>
-										<div class="inputGroupContainer">
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+										<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+												<div class="form-group"  ng-class="{'has-error': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$invalid, 'has-success': addDidblockForm.voicemail.$touched && addDidblockForm.voicemail.$valid }">
+													<label for="voicemail" class="control-label">Voicemail Box</label>
+													<br>
+													<input type="checkbox"  ng-model='vm.deviceForm.voicemail' ng-change="vm.getusersfromcupi(vm.deviceForm)" style="width: 17px; height: 17px;" name="voicemail" >
+
+													<div ng-messages="addDidblockForm.voicemail.$dirty && addDidblockForm.voicemail.$error">
+														<div ng-messages-include="error-messages"></div>
+													</div>
+												</div>
+										</div>
+										
+								</div>
+								
+								<div class="row" >
+									<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.voicemail && vm.siteusertemplates.length">
+										<div class="form-group" ng-class="{'has-error': addDeviceForm.template.$touched && addDeviceForm.template.$invalid, 'has-success': addDeviceForm.template.$touched && addDeviceForm.template.$valid }">
+											<label for="template" class="control-label">Select Voicemail Template</label>
+											<div class="inputGroupContainer">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+													
+													<select class="form-control" required ng-model='vm.deviceForm.template' ng-options="template.Alias as template.Alias for template in vm.siteusertemplates" data-width="100%" name="model">
+													</select>
+												</div>
+												<div ng-messages="addDeviceForm.template.$dirty && addDeviceForm.template.$error">
+														<div ng-message='required'> Template is required </div>
+												</div>
 												
-												<select class="form-control" required ng-model='vm.deviceForm.template' ng-options="template.Alias as template.Alias for template in vm.siteusertemplates" data-width="100%" name="model">
-												</select>
 											</div>
-											<div ng-messages="addDeviceForm.template.$dirty && addDeviceForm.template.$error">
-													<div ng-message='required'> Template is required </div>
-											</div>
-											
 										</div>
 									</div>
 								</div>
 							</div>
+							
 							<div class="alert alert-danger" role="alert" ng-if="vm.deviceForm.voicemail && !vm.siteusertemplates.length">
 								<strong>No Available Voicemail User Templates Found for {{vm.sitecode}}. Contact the System Administrator</strong>										
 							</div>

@@ -454,13 +454,20 @@
 									<td><i>Partition</i></td>
 									<td><i>Type</i></td>
 									<td><i>Detail</i></td>
-									<tr ng-repeat="assignment in did.assignments track by $index">
+									<tr ng-repeat="assignment in did.assignments.CucmNA track by $index">
 										<td>{{assignment.dnOrPattern}}</td>
 										
 										<td>{{assignment.partition._}}</td>
 										<td>{{assignment.type}}</td>
 										<td ng-if="assignment.type != 'Device'">{{assignment.routeDetail}}</td>
 										<td ng-if="assignment.type == 'Device'"><a  target="_blank" href="#/phone/{{ assignment.routeDetail}}"><b>{{ assignment.routeDetail}}</b></a></td>
+									</tr>
+									<tr ng-repeat="teams in did.assignments.MicrosoftTeams track by $index">
+										<td>{{teams.lineURI}}</td>
+										
+										<td>{{teams.sipAddress}}</td>
+										<td>Microsoft Teams</td>
+										<td>{{teams.onPremHostingProvider}}</td>
 									</tr>
 								</table>
 							</div>

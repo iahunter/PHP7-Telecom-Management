@@ -354,10 +354,7 @@ class Cucmclass extends Model
 		if ($PRODUCT == 'Cisco IP Communicator' || $PRODUCT == 'IP Communicator') {
             $NAME = "{$NAME}";
         } 
-        if ($PRODUCT == 'Cisco IP Communicator' || $PRODUCT == 'IP Communicator') {
-            $NAME = "{$NAME}";
-        } 
-		if ($PRODUCT == 'Cisco CTI Route Point' || $PRODUCT == 'CTI Route Point') {
+		elseif ($PRODUCT == 'Cisco CTI Route Point' || $PRODUCT == 'CTI Route Point') {
             $NAME = "{$NAME}";
         }
 		elseif ($PRODUCT == 'Cisco ATA 190' || $PRODUCT == 'Cisco ATA 187' || $PRODUCT == 'Cisco ATA 186') {

@@ -45,6 +45,14 @@ angular
 			vm.showcreateuser = true; 
 		}
 		
+		if(vm.deviceForm.device == "TeamsOnly" || vm.deviceForm.device == "PhoneWithTeams"){
+			vm.showteams = true; 
+			console.log("Teams User")
+			console.log(vm.deviceForm.device)
+		}
+		
+		console.log(vm.deviceForm)
+		
 		// Function to update the local user with first.last when they are changed. 
 		vm.updatelocaluser = function(deviceForm){
 			if(!deviceForm.firstname){
@@ -131,6 +139,8 @@ angular
 								}else{
 									phone.adipphone = result.ipphone
 									phone.aduser = result.user
+									phone.aduserdisplayname = result.displayname
+									phone.aduseruserprincipalname = result.userprincipalname
 									
 									if(phone.aduser){
 										if(result.firstname){

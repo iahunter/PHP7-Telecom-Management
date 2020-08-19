@@ -65,6 +65,8 @@ angular
 				
 				vm.dids = res.data.dids;
 				
+				console.log(vm.dids)
+				
 				/*
 				// Loop thru all the dids and get did
 				angular.forEach(vm.dids,function(did){

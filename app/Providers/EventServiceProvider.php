@@ -34,6 +34,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event' => [
             'App\Listeners\Create_UnityConnection_LDAP_Import_Mailbox_Listener',
         ],
+		'App\Events\Update_Teams_User_For_Voice_Event' => [
+            'App\Listeners\Update_Teams_User_For_Voice_Listener',
+        ],
+		'App\Events\Update_Cucm_CallForward_To_Teams_Event' => [
+            'App\Listeners\Update_Cucm_CallForward_To_Teams_Listener',
+        ],
 
     ];
 

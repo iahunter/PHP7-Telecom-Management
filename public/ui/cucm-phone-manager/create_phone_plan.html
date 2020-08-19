@@ -70,7 +70,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.device && vm.deviceForm.device != 'IP Communicator'">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.device && vm.deviceForm.device != 'IP Communicator' && vm.deviceForm.device != 'Microsoft Teams'">
 								<div class="form-group" ng-class="{'has-error': addDeviceForm.name.$touched && addDeviceForm.name.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
 									<label for="name" class="control-label">Phone MAC Address</label>
 									<div class="inputGroupContainer">
@@ -91,7 +91,48 @@
 									</div>
 								</div>
 							</div>
+							
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-if="vm.deviceForm.device && vm.deviceForm.device == 'Microsoft Teams'">
+								<div class="form-group" ng-class="{'has-error': addDeviceForm.name.$touched && addDeviceForm.name.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
+									<label for="name" class="control-label">Teams Mode</label>
+									<div class="inputGroupContainer">
+										<div class="btn-group">
+											<label class="btn btn-secondary"> 
+												<input required type="radio"  ng-model='vm.deviceForm.teamsmode' value="TeamsOnly" data-width="100%" name="teamsmode">
+												Teams Only
+											</label>
+											<label class="btn btn-secondary"> 
+												<input required type="radio" ng-model='vm.deviceForm.teamsmode' value="PhoneWithTeams" data-width="100%" name="teamsmode">
+												CUCM Phone with Teams Softphone
+											</label>
+											<div ng-messages="addDeviceForm.usenumber.$dirty && addDeviceForm.usenumber.$error">
+												<div ng-messages-include="error-messages"></div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
 						
+						
+						<div class="well" ng-if="vm.deviceForm.teamsmode == 'TeamsOnly'">
+							<i class="fa fa-info-circle" style="color:red;"></i><b style="color:red;"> Note! </b> <br><br>
+								No Cisco phones or other devices can be using the phone number for Teams Only mode. </br>
+								
+								Please remove all associated devices if any exist prior to using Teams only. <br>
+								This will enable the user, set their phone number, and enable the dialpad for Voice Calling in the Teams Client. <br>
+								This also creates a CTI Route Point in CUCM and auto forwards all calls to Teams. 
+
+						</div>
+						
+						<div class="well" ng-if="vm.deviceForm.teamsmode == 'PhoneWithTeams'">
+							<i class="fa fa-info-circle" style="color:red;"></i><b style="color:red;"> Note! </b> <br><br>
+								If a Cisco phone hasn't already been created for the user, please do that first. <br><br>
+								This will enable the user, set their phone number, and enable the dialpad for Voice Calling in the Teams Client. <br>
+								To take inbound calls on Teams, the user can foward their Cisco desk phone to Teams using 10001 followed by their DID number. 
+
 						</div>
 						
 						<div class="row" ng-if="vm.phone">

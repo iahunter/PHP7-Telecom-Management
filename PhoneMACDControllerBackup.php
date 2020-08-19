@@ -11,9 +11,6 @@ use App\Events\Create_Phone_Event;
 use App\Events\Create_UnityConnection_LDAP_Import_Mailbox_Event;
 use App\Events\Create_UnityConnection_Mailbox_Event;
 use App\Events\Update_IDM_PhoneNumber_Event;
-use App\Events\Update_Teams_User_For_Voice_Event;
-use App\Events\Update_Cucm_CallForward_To_Teams_Event;
-
 use App\PhoneMACD;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -32,17 +29,16 @@ class PhoneMACDController extends Controller
                                                     env('CALLMANAGER_PASS')
                                                     );
     }
-	
-	public function queueTeamsMACD($user, $phone, $macd)
+
+    public function queueMACD($user, $phone)
     {
-		//return $phone; 
-		\Log::info('queueTeamsMACD', ['data' => $phone]);
-		
-		if (is_array($phone)) {
-            \Log::info('queueTeamsMACD', ['data' => 'Phone is an array']);
+        \Log::info('createPhoneMACD_Phone', ['data' => $phone]);
+
+        if (is_array($phone)) {
+            \Log::info('createPhoneMACD_Phone', ['data' => 'Phone is an array']);
         }
-		
-		// Clear the token, we don't want to save that data.
+
+        // Clear the token, we don't want to save that data.
         unset($phone['token']);
 
         if (! isset($phone['username'])) {
@@ -55,52 +51,11 @@ class PhoneMACDController extends Controller
             $phoneplan_id = null;
         }
 
-        $tasks = [];
-
-        $data['phone'] = $phone;
-		
-		// Set user up for Teams.
-		$task = PhoneMACD::create([
-			'type'   => 'Set Teams User for Voice Calling',
-			'parent' => $macd->id,
-			'status' => 'job received',
-		]);
-		
-		$tasks[] = $task;
-		$data['taskid'] = $task->id;
-
-		// Create Local Account
-		
-		\Log::info('queueTeamsMACD', ['data' => 'Entering the Teams Update Event']);
-			
-		event(new Update_Teams_User_For_Voice_Event($data));
-
-		
-        $result = ['macd'     => $macd,
-            'tasks'           => $tasks,
-        ];
-
-        return $result;
-    }
-
-    public function queueMACD($user, $phone, $macd)
-    {
-        \Log::info('createPhoneMACD_Phone', ['data' => $phone]);
-
-        if (is_array($phone)) {
-            \Log::info('createPhoneMACD_Phone', ['data' => 'Phone is an array']);
-        }
-
-        // Clear the token, we don't want to save that data.
-        unset($phone['token']);
-
+        $macd = PhoneMACD::create(['phoneplan_id' => $phoneplan_id, 'type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
 
         $tasks = [];
 
         $data['phone'] = $phone;
-		
-		
-		
 
         // Check to see if addisable is true.
         if (isset($phone['addisable'])) {
@@ -167,8 +122,7 @@ class PhoneMACDController extends Controller
                             event(new Update_IDM_PhoneNumber_Event($data));
                         }
                     } catch (\Exception $e) {
-                    
-					}
+                    }
                 }
             }
         }
@@ -251,7 +205,7 @@ class PhoneMACDController extends Controller
                 }
             }
         }
-		
+
         $result = ['macd'     => $macd,
             'tasks'           => $tasks,
         ];
@@ -268,79 +222,10 @@ class PhoneMACDController extends Controller
                 abort(401, 'You are not authorized');
             }
         }
-		
-        $phone = $request->all();
-		
-		if (! isset($phone['username'])) {
-            $phone['username'] = '';
-        }
 
-        if (isset($phone['phoneplan_id'])) {
-            $phoneplan_id = $phone['phoneplan_id'];
-        } else {
-            $phoneplan_id = null;
-        }
+        $macd = $request->all();
 
-        $macd = PhoneMACD::create(['phoneplan_id' => $phoneplan_id, 'type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
-
-
-		if($phone['device'] == 'TeamsOnly' || $phone['device'] == 'PhoneWithTeams'){
-			
-			\Log::info('TeamsMACD', ['data' => "Teams Detected"]);
-			
-			$result = $this->queueTeamsMACD($user, $phone, $macd);
-			
-			\Log::info('queueTeamsMACD', ['result' => $result]);
-			
-			if($phone['device'] == 'TeamsOnly'){
-				
-				$phone['device'] = "CTI Route Point";
-				$phone['callfwd2teams'] = true;
-				
-				$data['phone'] = $phone;
-				
-				// Build CTI Route Point
-				$result = $this->queueMACD($user, $phone, $macd);
-				
-				\Log::info('queueMACD', ['data' => $result]);
-				
-			}
-			if($phone['device'] == 'PhoneWithTeams'){
-				
-				$data['phone'] = $phone;
-				
-				\Log::info('Teams', ['data' => "Updating IDM and AD."]);
-				
-				try {
-					
-					$task = PhoneMACD::create([
-							'type'   => 'Update User AD IpPhone Number',
-							'parent' => $macd->id,
-							'status' => 'job received',
-						]);
-					$tasks[] = $task;
-					$data['taskid'] = $task->id;
-					event(new Create_AD_IPPhone_Event($data));
-
-					// If IDM is set to true then create an event to update Telephone for user in SAP IDM.
-					if (env('IDM')) {
-						$task = PhoneMACD::create([
-							'type'   => 'Update User IDM Telephone Number',
-							'parent' => $macd->id,
-							'status' => 'job received',
-						]);
-						$tasks[] = $task;
-						$data['taskid'] = $task->id;
-						event(new Update_IDM_PhoneNumber_Event($data));
-					}
-				} catch (\Exception $e) {
-					\Log::info('Teams', ['data' => $e]);
-				}
-			}
-			
-		}else{
-			$result = $this->queueMACD($user, $phone, $macd);
-		}
+        $result = $this->queueMACD($user, $macd);
 
         $response = [
             'status_code'          => 200,
@@ -377,25 +262,8 @@ class PhoneMACDController extends Controller
                         ];
         */
         $result = [];
-        foreach ($macds as $phone) {
-			if (! isset($phone['username'])) {
-				$phone['username'] = '';
-			}
-
-			if (isset($phone['phoneplan_id'])) {
-				$phoneplan_id = $phone['phoneplan_id'];
-			} else {
-				$phoneplan_id = null;
-			}
-			
-			$macd = PhoneMACD::create(['phoneplan_id' => $phoneplan_id, 'type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
-			
-			if($phone['device'] == 'TeamsOnly' || $phone['device'] == 'PhoneWithTeams'){
-				$result[] = $this->queueTeamsMACD($user, $phone, $macd);
-			}else{
-				$result[] = $this->queueMACD($user, $phone, $macd);
-			}
-			
+        foreach ($macds as $macd) {
+            $result[] = $this->queueMACD($user, $macd);
         }
 
         $response = [

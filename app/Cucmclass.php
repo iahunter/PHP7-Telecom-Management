@@ -351,13 +351,11 @@ class Cucmclass extends Model
         $BUSYTRIGGER = 2;
         // add the SEP to the name
         $PRODUCT = trim($PRODUCT);
-		if ($PRODUCT == 'Cisco IP Communicator' || $PRODUCT == 'IP Communicator') {
+        if ($PRODUCT == 'Cisco IP Communicator' || $PRODUCT == 'IP Communicator') {
             $NAME = "{$NAME}";
-        } 
-		elseif ($PRODUCT == 'Cisco CTI Route Point' || $PRODUCT == 'CTI Route Point') {
+        } elseif ($PRODUCT == 'Cisco CTI Route Point' || $PRODUCT == 'CTI Route Point') {
             $NAME = "{$NAME}";
-        }
-		elseif ($PRODUCT == 'Cisco ATA 190' || $PRODUCT == 'Cisco ATA 187' || $PRODUCT == 'Cisco ATA 186') {
+        } elseif ($PRODUCT == 'Cisco ATA 190' || $PRODUCT == 'Cisco ATA 187' || $PRODUCT == 'Cisco ATA 186') {
             $NAME = "ATA{$NAME}";
             $MAXCALLS = 1;
             $BUSYTRIGGER = 1;
@@ -500,11 +498,11 @@ class Cucmclass extends Model
             $PHONE['cgpnTransformationCssName'] = 'CSS_GLOBAL_GW_CALLED_XFORM';
             $PHONE['useDevicePoolCgpnTransformCss'] = 'false';
         }
-		
-		// Set the Calling Part Transformation CSS on 7940 and 7960 phones because they do not support E164 + redialing. This will replace +1 with a 9
+
+        // Set the Calling Part Transformation CSS on 7940 and 7960 phones because they do not support E164 + redialing. This will replace +1 with a 9
         if (($PRODUCT == 'CTI Route Point') || ($PRODUCT == 'Cisco CTI Route Point')) {
-			$PRODUCT = 'CTI Route Point'; 
-			$PHONE['product'] = 'CTI Route Point';
+            $PRODUCT = 'CTI Route Point';
+            $PHONE['product'] = 'CTI Route Point';
             $PHONE['model'] = 'CTI Route Point';
             $PHONE['class'] = 'CTI Route Point';
         }

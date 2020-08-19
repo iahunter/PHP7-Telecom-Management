@@ -169,8 +169,8 @@ class GetSonusCDRs extends Command
                         echo "Creating New Record: {$i} of {$count_total}: ".$RECORD['accounting_id'].' | '.$RECORD['start_time'].' | '.$RECORD['disconnect_time'].PHP_EOL;
 
                         \App\Sonus5kCDR::firstOrCreate($RECORD);			// Try to create the new record in the db.
-						continue; // Killing Kafka because its jacked.... 
-						
+                        continue; // Killing Kafka because its jacked....
+
                         // Ship cdr record to Kafka for Elastic Search capabilities.
                         if (getenv('KAFKA_BROKERS')) {
 
@@ -201,7 +201,7 @@ class GetSonusCDRs extends Command
                                 }
                             } catch (\Exception $E) {
                                 //echo "{$E->getMessage()}".PHP_EOL;
-								continue; 
+                                continue;
                             }
                         }
                     }

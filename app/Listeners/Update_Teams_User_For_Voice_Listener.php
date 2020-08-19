@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Gizmo\RestApiClient as Gizmo;
 use App\Events\Update_Teams_User_For_Voice_Event;
+use App\Gizmo\RestApiClient as Gizmo;
 use App\PhoneMACD;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-
 
 class Update_Teams_User_For_Voice_Listener implements ShouldQueue
 {
@@ -18,7 +17,6 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
      */
     public function __construct()
     {
-		
     }
 
     /**
@@ -28,20 +26,19 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
      * @return void
      */
     public function handle(Update_Teams_User_For_Voice_Event $event)
-	{
-		//Create Gizmo API Client to update Teams
+    {
+        //Create Gizmo API Client to update Teams
         $this->client = new Gizmo(env('MICROSOFT_TENANT'), env('GIZMO_URL'), env('GIZMO_CLIENT_ID'), env('GIZMO_CLIENT_SECRET'), env('GIZMO_SCOPE'));
 
         // Create Log Entry
         \Log::info('updateTeamsUserForVoiceEvent', ['data' => $event->phone]);
-		
-		\Log::info('updateTeamsUserForVoiceListener', ['data' => $event->phone]);
+
+        \Log::info('updateTeamsUserForVoiceListener', ['data' => $event->phone]);
 
         // Get the Task ID
         $task = PhoneMACD::find($event->taskid);
-		
-		\Log::info('updateTeamsUserForVoiceListenerTask', ['data' => $task]);
 
+        \Log::info('updateTeamsUserForVoiceListenerTask', ['data' => $task]);
 
         // Update the status in the MACD Table.
         $task->fill(['updated_by' => 'Telecom Management Server', 'status' => 'entered queue']);
@@ -55,32 +52,32 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
         // Try to Do Work.
         try {
             // Get User ID from username.
-			\Log::info('updateTeamsUserForVoiceEvent', ['log' => "Entered Try"]);
-			
+            \Log::info('updateTeamsUserForVoiceEvent', ['log' => 'Entered Try']);
+
             $user = $this->client->get_teams_csonline_user_by_userid($userid);
-			\Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user]);
+            \Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user]);
 
             // Check what hte current phone number is set to.
-			
-			$domain = env("DOMAIN");
-			
-			$teams = [ 
-				"Alias" => "{$userid}",
-				"SipAddress" => "sip:{$userid}@{$domain}",
-				"OnPremLineURI" => "tel:+1{$newdn}",
-				"EnterpriseVoiceEnabled" => "True",
-				"HostedVoiceMail" => "True"
-			]; 
-			
-			$body = json_encode($teams); 
-			
-			\Log::info('updateTeamsUserForVoiceEvent', ['setuser' => $body]);
+
+            $domain = env('DOMAIN');
+
+            $teams = [
+                'Alias'                  => "{$userid}",
+                'SipAddress'             => "sip:{$userid}@{$domain}",
+                'OnPremLineURI'          => "tel:+1{$newdn}",
+                'EnterpriseVoiceEnabled' => 'True',
+                'HostedVoiceMail'        => 'True',
+            ];
+
+            $body = json_encode($teams);
+
+            \Log::info('updateTeamsUserForVoiceEvent', ['setuser' => $body]);
             $teamsuser = $this->client->set_teams_user($body);
-			\Log::info('updateTeamsUserForVoiceEvent', ['setuser' => $teamsuser]);
+            \Log::info('updateTeamsUserForVoiceEvent', ['setuser' => $teamsuser]);
             // Check user after the set.
 
             $user2 = $this->client->get_teams_csonline_user_by_userid($userid);
-			\Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user2]);
+            \Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user2]);
 
             // Print out what the old number was and what it is now.
             $LOG['old'] = $user;

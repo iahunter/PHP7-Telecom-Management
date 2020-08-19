@@ -158,7 +158,6 @@ class DidScanCucm extends Command
             dd($e->getTrace());
         }
     }
-	
 
     // This updates DID records with new information AND clears out no longer used phone numbers / sets them to available
     protected function updateDidInfo($npanxx, $didinfo)

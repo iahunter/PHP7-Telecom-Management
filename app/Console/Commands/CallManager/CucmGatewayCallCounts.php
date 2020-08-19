@@ -52,7 +52,7 @@ class CucmGatewayCallCounts extends Command
             $gateways = $this->cucm->get_object_type_by_site('%', 'H323Gateway');
         } catch (\Exception $e) {
             echo 'Encountered exception: '.$e->getMessage().PHP_EOL;
-            die();
+            exit();
         }
 
         //$gateways = ['10.252.22.41'];
@@ -66,7 +66,7 @@ class CucmGatewayCallCounts extends Command
 
         if (! $total) {
             echo 'No Gateways Found';
-            die();
+            exit();
         }
         echo "Found {$total} Gateways".PHP_EOL;
 

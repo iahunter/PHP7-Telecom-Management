@@ -102,7 +102,7 @@ class GizmoApiTest extends Command
 
     protected function test_teams_user($userid, $number)
     {
-		$domain = env("DOMAIN");
+        $domain = env('DOMAIN');
         // Test Civic Address JSON
         $json = <<<EOT
 {

@@ -56,8 +56,8 @@ $api->version('v1', function ($api) {
     require __DIR__.'/api.cucm.ctiroutepoint.php';
     require __DIR__.'/api.cucm.line.php';
     require __DIR__.'/api.cucm.site.migration.php';
-	
-	// Gizmo Teams Routes
+
+    // Gizmo Teams Routes
     require __DIR__.'/api.gizmo.teams.php';
 
     // CUCM Realtime API Routes

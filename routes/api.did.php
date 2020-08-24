@@ -503,8 +503,8 @@
      * )
      **/
     $api->get('dids/available/sitecode/{sitecode}', 'App\Http\Controllers\Didcontroller@listAvailableNumbersbySite');
-	
-	    /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/dids/firstavailable/sitecode/{sitecode}",
      *     tags={"Did"},

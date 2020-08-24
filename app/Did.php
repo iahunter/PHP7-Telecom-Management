@@ -40,10 +40,10 @@ class Did extends Model
     {
         return $this->belongsTo(Didblock::class);
     }
-	
-	public static function get_first_available_did_by_sitecode($sitecode)
-	{
-		$didblocks = Didblock::where('name', 'like', "%{$sitecode}%")
+
+    public static function get_first_available_did_by_sitecode($sitecode)
+    {
+        $didblocks = Didblock::where('name', 'like', "%{$sitecode}%")
                 ->where('type', '=', 'public')
                 ->where(function ($query) {
                     $query->where('reserved', '=', null)
@@ -57,12 +57,13 @@ class Did extends Model
 
         $show = [];
         foreach ($didblocks as $didblock) {
-			$did = \App\Did::where('parent', $didblock->id)
-					->where('status', 'available')
-					->first();
-					return $did; 
+            $did = \App\Did::where('parent', $didblock->id)
+                    ->where('status', 'available')
+                    ->first();
+
+            return $did;
         }
-	}
+    }
 
     protected function validate()
     {

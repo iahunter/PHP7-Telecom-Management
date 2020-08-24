@@ -399,18 +399,18 @@ class DidScanCucmAndTeams extends Command
                     $did->status = 'inuse';
                     $systemid = 'CucmNA';
                     $assignments_array[$systemid] = $cucmdidinfo[$did->number];
-                    if(!in_array($systemid, $system_array)){
-						$system_array[] = $systemid;
-					}
+                    if (! in_array($systemid, $system_array)) {
+                        $system_array[] = $systemid;
+                    }
                 }
                 // If its now built in the system, mark it as inuse.
                 if (isset($teamsdidinfo[$did->number])) {
                     //$did->assignments = $teamsdidinfo[$did->number];
                     $did->status = 'inuse';
                     $systemid = 'MicrosoftTeams';
-                    if(!in_array($systemid, $system_array)){
-						$system_array[] = $systemid;
-					}
+                    if (! in_array($systemid, $system_array)) {
+                        $system_array[] = $systemid;
+                    }
                     $assignments_array[$systemid] = $teamsdidinfo[$did->number];
                 } else {
                     // If not skip it and leave it as reserved.
@@ -433,18 +433,18 @@ class DidScanCucmAndTeams extends Command
 
                     $did->status = 'inuse';
                     $systemid = 'CucmNA';
-                    if(!in_array($systemid, $system_array)){
-						$system_array[] = $systemid;
-					}
+                    if (! in_array($systemid, $system_array)) {
+                        $system_array[] = $systemid;
+                    }
                     $assignments_array[$systemid] = $cucmdidinfo[$did->number];
                 }
                 // If its now built in the system, mark it as inuse.
                 if (isset($teamsdidinfo[$did->number])) {
                     $did->status = 'inuse';
                     $systemid = 'MicrosoftTeams';
-					if(!in_array($systemid, $system_array)){
-						$system_array[] = $systemid;
-					}
+                    if (! in_array($systemid, $system_array)) {
+                        $system_array[] = $systemid;
+                    }
                     $assignments_array[$systemid] = $teamsdidinfo[$did->number];
                 }
 

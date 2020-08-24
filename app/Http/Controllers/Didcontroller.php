@@ -329,8 +329,8 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-	
-	public function getSitesFirstAvailableDid(Request $request, $sitecode)
+
+    public function getSitesFirstAvailableDid(Request $request, $sitecode)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -338,7 +338,7 @@ class Didcontroller extends Controller
             abort(401, 'You are not authorized');
         }
 
-        $did = Did::get_first_available_did_by_sitecode($sitecode); 
+        $did = Did::get_first_available_did_by_sitecode($sitecode);
 
         $response = [
             'status_code'        => 200,
@@ -349,7 +349,6 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
-
 
     public function searchDidNumber(Request $request, $number_search)
     {

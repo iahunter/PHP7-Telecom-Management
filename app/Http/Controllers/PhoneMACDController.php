@@ -81,33 +81,32 @@ class PhoneMACDController extends Controller
 
         return $result;
     }
-	
-	public function autoAssignNumber($phone)
-	{
-		// Check to see if addisable is true.
-		
+
+    public function autoAssignNumber($phone)
+    {
+        // Check to see if addisable is true.
+
         if (isset($phone['dn'])) {
-			if($phone['dn'] == "AUTOASSIGN" || $phone['dn'] ==  "UNDEFINED"){
-				// Get first number from sitecode. 
-				if(isset($phone['sitecode']) && $phone['sitecode']){
-					$did = Did::get_first_available_did_by_sitecode($phone['sitecode']); 
-					\Log::info('AutoAssignNumber', ['data' => $did]);
-					$phone['dn'] = $did->number; 
-					$phone['country_code'] = $did->country_code; 
-					$did->status = "reserved"; 
-					$did->save(); 
-				}
-			}
-			
-        }else{
-			$did = Did::where('number', $phone['dn'])->first();
-			$phone['country_code'] = $did->country_code; 
-		}
-		
-		\Log::info('AutoAssignNumber', ['data' => $phone]);
-		
-		return $phone; 
-	}
+            if ($phone['dn'] == 'AUTOASSIGN' || $phone['dn'] == 'UNDEFINED') {
+                // Get first number from sitecode.
+                if (isset($phone['sitecode']) && $phone['sitecode']) {
+                    $did = Did::get_first_available_did_by_sitecode($phone['sitecode']);
+                    \Log::info('AutoAssignNumber', ['data' => $did]);
+                    $phone['dn'] = $did->number;
+                    $phone['country_code'] = $did->country_code;
+                    $did->status = 'reserved';
+                    $did->save();
+                }
+            }
+        } else {
+            $did = Did::where('number', $phone['dn'])->first();
+            $phone['country_code'] = $did->country_code;
+        }
+
+        \Log::info('AutoAssignNumber', ['data' => $phone]);
+
+        return $phone;
+    }
 
     public function queueMACD($user, $phone, $macd)
     {
@@ -291,18 +290,18 @@ class PhoneMACDController extends Controller
         }
 
         $phone = $request->all();
-		
-		$phone['dn'] = strtoupper($phone['dn']);
-		
-		if(!isset($phone['dn'])){
-			$phone['dn'] =  "AUTOASSIGN";
-		}
 
-		if (isset($phone['dn']) && $phone['dn']){
-			if($phone['dn'] ==  "AUTOASSIGN" || $phone['dn'] ==  "UNDEFINED"){
-				$phone = $this->autoAssignNumber($phone); 
-			}
-		}
+        $phone['dn'] = strtoupper($phone['dn']);
+
+        if (! isset($phone['dn'])) {
+            $phone['dn'] = 'AUTOASSIGN';
+        }
+
+        if (isset($phone['dn']) && $phone['dn']) {
+            if ($phone['dn'] == 'AUTOASSIGN' || $phone['dn'] == 'UNDEFINED') {
+                $phone = $this->autoAssignNumber($phone);
+            }
+        }
 
         if (! isset($phone['username'])) {
             $phone['username'] = '';

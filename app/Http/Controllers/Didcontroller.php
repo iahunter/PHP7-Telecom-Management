@@ -329,6 +329,27 @@ class Didcontroller extends Controller
 
         return response()->json($response);
     }
+	
+	public function getSitesFirstAvailableDid(Request $request, $sitecode)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user->can('read', Didblock::class)) {
+            abort(401, 'You are not authorized');
+        }
+
+        $did = Did::get_first_available_did_by_sitecode($sitecode); 
+
+        $response = [
+            'status_code'        => 200,
+            'success'            => true,
+            'message'            => '',
+            'response'           => $did,
+        ];
+
+        return response()->json($response);
+    }
+
 
     public function searchDidNumber(Request $request, $number_search)
     {

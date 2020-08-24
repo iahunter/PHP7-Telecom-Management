@@ -503,3 +503,27 @@
      * )
      **/
     $api->get('dids/available/sitecode/{sitecode}', 'App\Http\Controllers\Didcontroller@listAvailableNumbersbySite');
+	
+	    /**
+     * @SWG\Get(
+     *     path="/telephony/api/dids/firstavailable/sitecode/{sitecode}",
+     *     tags={"Did"},
+     *     summary="Get First Available DID by Sitecode",
+     *     description="",
+     *     operationId="getDidblock",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="sitecode",
+     *         in="path",
+     *         description="ID of block id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     )
+     * )
+     **/
+    $api->get('dids/firstavailable/sitecode/{sitecode}', 'App\Http\Controllers\Didcontroller@getSitesFirstAvailableDid');

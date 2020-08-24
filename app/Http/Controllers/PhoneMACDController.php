@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // Add Dummy CUCM class for permissions use for now.
 use App\Cucmclass;
+use App\Did;
 use App\Events\Create_AD_IPPhone_Event;
 use App\Events\Create_Cucm_Local_EndUser_Event;
 use App\Events\Create_Line_Event;
@@ -80,6 +81,33 @@ class PhoneMACDController extends Controller
 
         return $result;
     }
+	
+	public function autoAssignNumber($phone)
+	{
+		// Check to see if addisable is true.
+		
+        if (isset($phone['dn'])) {
+			if($phone['dn'] == "AUTOASSIGN" || $phone['dn'] ==  "UNDEFINED"){
+				// Get first number from sitecode. 
+				if(isset($phone['sitecode']) && $phone['sitecode']){
+					$did = Did::get_first_available_did_by_sitecode($phone['sitecode']); 
+					\Log::info('AutoAssignNumber', ['data' => $did]);
+					$phone['dn'] = $did->number; 
+					$phone['country_code'] = $did->country_code; 
+					$did->status = "reserved"; 
+					$did->save(); 
+				}
+			}
+			
+        }else{
+			$did = Did::where('number', $phone['dn'])->first();
+			$phone['country_code'] = $did->country_code; 
+		}
+		
+		\Log::info('AutoAssignNumber', ['data' => $phone]);
+		
+		return $phone; 
+	}
 
     public function queueMACD($user, $phone, $macd)
     {
@@ -263,6 +291,18 @@ class PhoneMACDController extends Controller
         }
 
         $phone = $request->all();
+		
+		$phone['dn'] = strtoupper($phone['dn']);
+		
+		if(!isset($phone['dn'])){
+			$phone['dn'] =  "AUTOASSIGN";
+		}
+
+		if (isset($phone['dn']) && $phone['dn']){
+			if($phone['dn'] ==  "AUTOASSIGN" || $phone['dn'] ==  "UNDEFINED"){
+				$phone = $this->autoAssignNumber($phone); 
+			}
+		}
 
         if (! isset($phone['username'])) {
             $phone['username'] = '';
@@ -276,7 +316,7 @@ class PhoneMACDController extends Controller
 
         $macd = PhoneMACD::create(['phoneplan_id' => $phoneplan_id, 'type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
 
-        if ($phone['device'] == 'TeamsOnly' || $phone['device'] == 'PhoneWithTeams') {
+        if ($phone['device'] == 'TeamsOnly' || $phone['device'] == 'PhoneWithTeams' || $phone['device'] == 'Microsoft Teams') {
             \Log::info('TeamsMACD', ['data' => 'Teams Detected']);
 
             $result = $this->queueTeamsMACD($user, $phone, $macd);
@@ -294,7 +334,7 @@ class PhoneMACDController extends Controller
 
                 \Log::info('queueMACD', ['data' => $result]);
             }
-            if ($phone['device'] == 'PhoneWithTeams') {
+            if ($phone['device'] == 'PhoneWithTeams' || $phone['device'] == 'Microsoft Teams') {
                 $data['phone'] = $phone;
 
                 \Log::info('Teams', ['data' => 'Updating IDM and AD.']);
@@ -376,7 +416,7 @@ class PhoneMACDController extends Controller
 
             $macd = PhoneMACD::create(['phoneplan_id' => $phoneplan_id, 'type' => 'MACD', 'form_data' => $phone, 'created_by' => $user->username]);
 
-            if ($phone['device'] == 'TeamsOnly' || $phone['device'] == 'PhoneWithTeams') {
+            if ($phone['device'] == 'TeamsOnly' || $phone['device'] == 'PhoneWithTeams' || $phone['device'] == 'Microsoft Teams') {
                 $result[] = $this->queueTeamsMACD($user, $phone, $macd);
             } else {
                 $result[] = $this->queueMACD($user, $phone, $macd);

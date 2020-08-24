@@ -1,6 +1,6 @@
 angular
 	.module('app')
-	.controller('lineManager.Controller', ['telephonyService', 'LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'cupiService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(telephonyService, LDAPService, sitePhonePlanService, siteService, cucmService, cupiService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
+	.controller('lineManager.Controller', ['telephonyService', 'LDAPService','sitePhonePlanService', 'siteService', 'cucmService', 'gizmoService', 'cupiService', 'PageService', 'cucmReportService', '$timeout', '$location', '$state', '$stateParams', function(telephonyService, LDAPService, sitePhonePlanService, siteService, cucmService, gizmoService, cupiService, PageService, cucmReportService, $timeout, $location, $state, $stateParams) {
 		
 		// This controller does planning and systems provisioning. 
 		
@@ -22,6 +22,8 @@ angular
 		vm.firstlettertoupper = function(string){
 			return string.charAt(0).toUpperCase() + string.slice(1);
 		}
+		
+		vm.loadingteams = true; 
 		
 		vm.isArray = angular.isArray;
 
@@ -169,6 +171,29 @@ angular
 						}, function(err){
 							// Error
 						});
+						
+					gizmoService.getTeamsUserbyNumber("1",line)
+						.then(function(res){
+							user = [];
+
+							vm.teams_users = res.data.response;
+							
+							var teams = "10001"+line
+							
+							if(vm.linedetails.line_details.callForwardAll.destination){
+								if(vm.linedetails.line_details.callForwardAll.destination == teams){
+									vm.unforward = true
+								}
+							}
+							
+							vm.loadingteams = false
+							
+							console.log("Loading" + vm.loadingteams)
+							console.log(vm.teams_users);
+							
+						}, function(err){
+							vm.loadingteams = false
+						});
 
 				}
 				
@@ -234,6 +259,35 @@ angular
 			  });
 			
 		}
+		
+		vm.updatecucmlinecfatoteams = function(line) {
+			console.log(line)
+			console.log("Update CFA: " + line.uuid)
+			
+			var line_update = {};
+			line_update.cfa_destination = {};
+			line.newcfa = "10001" + line.line_details.pattern
+			line_update.cfa_destination = line.newcfa; 
+			line_update.pattern = line.line_details.pattern;
+			
+			cucmService.updatelinecfa(line_update)
+				.then(function(res) {
+					
+					if(res.data.message){
+						alert(res.data.message)
+					}
+					
+					if(res.data.response){
+						vm.refresh()
+					}
+
+			  }, function(error) {
+					alert('An error occurred');
+			  });
+			
+		}
+		
+		
 		  
 		
 		vm.deletecucmphone = function(phone) {

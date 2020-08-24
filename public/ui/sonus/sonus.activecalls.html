@@ -77,6 +77,20 @@
 								</a>
 							</th>
 							<th>
+								<a href="" ng-click="sortType = 'ingressRemoteIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									Ingress Remote IP
+										<span ng-show="sortType == 'ingressRemoteIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressRemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							<th>
+								<a href="" ng-click="sortType = 'ingressTrunkName'; sortReverse = !sortReverse" style="color:black">
+									Ingress Trunk Group
+										<span ng-show="sortType == 'ingressTrunkName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'ingressTrunkName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>		
+							<th>
 								<a href="" ng-click="sortType = 'callingNumber'; sortReverse = !sortReverse" style="color:black">
 									Calling Number
 										<span ng-show="sortType == 'callingNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
@@ -89,6 +103,20 @@
 									Called Number
 										<span ng-show="sortType == 'calledNumber' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
 										<span ng-show="sortType == 'calledNumber' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							<th>
+								<a href="" ng-click="sortType = 'egressTrunkName'; sortReverse = !sortReverse" style="color:black">
+									Egress Trunk Group
+										<span ng-show="sortType == 'egressTrunkName' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egressTrunkName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>	
+							<th>
+								<a href="" ng-click="sortType = 'egressRemoteIpSockAddr'; sortReverse = !sortReverse" style="color:black">
+									Egress Remote IP
+										<span ng-show="sortType == 'egressRemoteIpSockAddr' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'egressRemoteIpSockAddr' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
 								</a>
 							</th>	
 							
@@ -106,8 +134,12 @@
 						<td>{{ call.SBC}}</td>
 						<td>{{ call.GCID}}</td>
 						<td>{{ call.state}}</td>
+						<td>{{ call.ingressRemoteIpSockAddr}}</td>
+						<td>{{ call.ingressTrunkName}}</td>
 						<td><a href="#/line/{{call.callingNumber}}" target="_blank">{{ call.callingNumber}}</a></td>
 						<td><a href="#/line/{{call.calledNumber}}" target="_blank">{{ call.calledNumber}}</a></td>
+						<td>{{ call.egressTrunkName}}</td>
+						<td>{{ call.egressRemoteIpSockAddr}}</td>
 					</tr>
 					</tbody>
 				</table>

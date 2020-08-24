@@ -56,14 +56,22 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
 
             $user = $this->client->get_teams_csonline_user_by_userid($userid);
             \Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user]);
-
+			
+			foreach($user as $u){
+				if(isset($u['"sipAddress"']) && $u['"sipAddress"']){
+					$sipaddress = $u['"sipAddress"']; 
+				}else{
+					$domain = env('DOMAIN');
+					$sipaddress = "sip:{$userid}@{$domain}"; 
+				}
+			}
             // Check what hte current phone number is set to.
 
-            $domain = env('DOMAIN');
+            
 
             $teams = [
                 'Alias'                  => "{$userid}",
-                'SipAddress'             => "sip:{$userid}@{$domain}",
+                'SipAddress'             => $sipaddress,
                 'OnPremLineURI'          => "tel:+1{$newdn}",
                 'EnterpriseVoiceEnabled' => 'True',
                 'HostedVoiceMail'        => 'True',

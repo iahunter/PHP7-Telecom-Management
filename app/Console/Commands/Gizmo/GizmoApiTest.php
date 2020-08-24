@@ -49,7 +49,7 @@ class GizmoApiTest extends Command
         $this->client->get_oauth2_token();
 
         $COUNTRYCODE = '1';
-        $NPANXX = '402938';
+        $NPANXX = '402555';
 
         //$this->test_get_teams_numbers_by_NPA_NXX($COUNTRYCODE, $NPANXX);
 
@@ -73,9 +73,9 @@ class GizmoApiTest extends Command
         print_r($user);
         */
 
-        $user = $this->client->get_teams_csonline_user_by_sip_address('travis.riesenberg@kiewit.com');
+        //$user = $this->client->get_teams_csonline_user_by_sip_address('test@domain.com');
 
-        print_r($user);
+        //print_r($user);
 
         echo 'Started: '.$start.PHP_EOL;
         $end = Carbon::now();
@@ -102,12 +102,12 @@ class GizmoApiTest extends Command
 
     protected function test_teams_user($userid, $number)
     {
-
+		$domain = env("DOMAIN");
         // Test Civic Address JSON
         $json = <<<EOT
 {
 	"Alias":"{$userid}",
-	"SipAddress":"sip:{$userid}@kiewit.com",
+	"SipAddress":"sip:{$userid}@{$domain}",
     "OnPremLineURI":"TEL:+{$number}",
     "EnterpriseVoiceEnabled":"True",
     "HostedVoiceMail":"True"

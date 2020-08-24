@@ -58,7 +58,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-hide="vm.deviceForm.device == 'PhoneWithTeams'">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6" ng-hide="vm.deviceForm.device == 'PhoneWithTeams' || vm.deviceForm.device == 'Microsoft Teams'">
 									<div class="form-group" ng-class="{'has-error': addDeviceForm.name.$touched && addDeviceForm.name.$invalid, 'has-success': addDeviceForm.name.$touched && addDeviceForm.name.$valid }">
 										<label for="name" class="control-label">Phone MAC Address</label>
 										<div class="inputGroupContainer">
@@ -289,7 +289,7 @@
 									</div>
 							</div>
 
-							<div ng-hide="vm.deviceForm.device == 'TeamsOnly' || vm.deviceForm.device == 'PhoneWithTeams'">
+							<div ng-hide="vm.deviceForm.device == 'TeamsOnly' || vm.deviceForm.device == 'PhoneWithTeams' || vm.deviceForm.device == 'Microsoft Teams'">
 								
 								<div class="row" >
 									

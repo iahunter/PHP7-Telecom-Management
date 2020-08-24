@@ -4207,6 +4207,36 @@
                 }
             }
         },
+        "/telephony/api/dids/firstavailable/sitecode/{sitecode}": {
+            "get": {
+                "tags": [
+                    "Did"
+                ],
+                "summary": "Get First Available DID by Sitecode",
+                "description": "",
+                "operationId": "getDidblock",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sitecode",
+                        "in": "path",
+                        "description": "ID of block id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/egw/cisco_phone/all": {
             "get": {
                 "tags": [
@@ -4386,6 +4416,46 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/telephony/api/gizmo/teams/number/{countrycode}/{number}": {
+            "get": {
+                "tags": [
+                    "Management - Gizmo - Teams - User Provisioning"
+                ],
+                "summary": "Get Teams User Info from Number",
+                "description": "",
+                "operationId": "getUserbyNumber",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "countrycode",
+                        "in": "path",
+                        "description": "Country Code - US: 1",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "number",
+                        "in": "path",
+                        "description": "Phone Number",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
                     }
                 }
             }

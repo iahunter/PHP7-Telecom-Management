@@ -1,12 +1,35 @@
-<div ng-if="vm.linedetails.device_details < 1" class="well" style="background-color: #e6e6e6">
-	<legend>No Phones found in CUCM</legend>
+<div >
+	<div ng-if="vm.linedetails && !vm.linedetails.device_details || vm.linedetails.device_details < 1">
+		<div class="well" ng-if="vm.deviceForm.teamsmode == 'PhoneWithTeams'">
+			<i class="fa fa-info-circle" style="color:red;"></i><b style="color:red;"> Action Required! </b> <br><br>
+				No Cisco phones have been detected for use in with CUCM Phone and Teams Softphone. </br>
+				<br>
+				If a Cisco phone hasn't already been created for the user, please do that first. <br>
+		</div>
+	</div>
 </div>
 
-<div ng-if="vm.linesummary.length > 0">
-<legend ng-if="vm.linesummary.length == 1">{{vm.linesummary.length}} Device Exist in CUCM with this Line Assigned</legend>
-<legend ng-if="vm.linesummary.length > 1">{{vm.linesummary.length}} Devices Exist in CUCM with this Line Assigned</legend>
 
-<button ng-if="vm.linesummary.length > 0" class="btn btn-info btn-xs" data-toggle="modal" data-target="#lines-on-phones-modal">View Line</button>
+
+<div ng-if="vm.linesummary.length > 0">
+	<div ng-if="vm.linedetails && vm.linedetails.device_details.length > 0">
+		<div class="well" ng-if="vm.deviceForm.teamsmode == 'TeamsOnly'">
+			<i class="fa fa-info-circle" style="color:red;"></i><b style="color:red;"> Action Required! </b> <br><br>
+				
+				No Cisco phones or other devices can be using the phone number for Teams Only mode. </br>
+				</br>
+				Please remove all associated devices if any exist prior to using Teams only. <br>
+
+		</div>
+	</div>
+	
+	
+
+	
+	<legend ng-if="vm.linesummary.length == 1">{{vm.linesummary.length}} Device Exist in CUCM with this Line Assigned</legend>
+	<legend ng-if="vm.linesummary.length > 1">{{vm.linesummary.length}} Devices Exist in CUCM with this Line Assigned</legend>
+
+	<button ng-if="vm.linesummary.length > 0" class="btn btn-info btn-xs" data-toggle="modal" data-target="#lines-on-phones-modal">View Line</button>
 
 	<div class="modal fade " id="lines-on-phones-modal" role="dialog">
 		<div class="modal-dialog" style="width: 90%;">

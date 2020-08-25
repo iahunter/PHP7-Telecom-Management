@@ -118,18 +118,13 @@
 						
 						
 						<div class="well" ng-if="vm.deviceForm.teamsmode == 'TeamsOnly'">
-							<i class="fa fa-info-circle" style="color:red;"></i><b style="color:red;"> Note! </b> <br><br>
-								No Cisco phones or other devices can be using the phone number for Teams Only mode. </br>
-								
-								Please remove all associated devices if any exist prior to using Teams only. <br>
+							<i class="fa fa-info-circle" style="color:#337ab7;"></i><b style="color:#337ab7;"> Microsoft Teams! </b> <br><br>
 								This will enable the user, set their phone number, and enable the dialpad for Voice Calling in the Teams Client. <br>
 								This also creates a CTI Route Point in CUCM and auto forwards all calls to Teams. 
-
 						</div>
 						
 						<div class="well" ng-if="vm.deviceForm.teamsmode == 'PhoneWithTeams'">
-							<i class="fa fa-info-circle" style="color:red;"></i><b style="color:red;"> Note! </b> <br><br>
-								If a Cisco phone hasn't already been created for the user, please do that first. <br><br>
+							<i class="fa fa-info-circle" style="color:#337ab7;"></i><b style="color:#337ab7;"> CUCM & Teams Combined Mode! </b> <br><br>
 								This will enable the user, set their phone number, and enable the dialpad for Voice Calling in the Teams Client. <br>
 								To take inbound calls on Teams, the user can foward their Cisco desk phone to Teams using 10001 followed by their DID number. 
 

@@ -61,10 +61,12 @@ class Did extends Model
                     ->where('status', 'available')
                     ->first();
 
-            if ($did) {
-                return $did;
-            }
+            if($did){
+				return $did;
+			}
         }
+		
+		return;
     }
 
     protected function validate()

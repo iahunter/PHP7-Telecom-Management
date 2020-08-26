@@ -61,7 +61,9 @@ class Did extends Model
                     ->where('status', 'available')
                     ->first();
 
-            return $did;
+            if($did){
+				return $did;
+			}
         }
     }
 

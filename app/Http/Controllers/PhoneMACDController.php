@@ -93,7 +93,7 @@ class PhoneMACDController extends Controller
                     $did = Did::get_first_available_did_by_sitecode($phone['sitecode']);
                     \Log::info('AutoAssignNumber', ['data' => $did]);
                     $phone['dn'] = $did->number;
-					$phone['autoassigned'] = true; 
+                    $phone['autoassigned'] = true;
                     $phone['country_code'] = $did->country_code;
                     $did->status = 'reserved';
                     $did->save();
@@ -325,12 +325,12 @@ class PhoneMACDController extends Controller
 
             if ($phone['device'] == 'TeamsOnly') {
                 $phone['device'] = 'CTI Route Point';
-				
-				// Adding Teams CTI RoutePoint Naming for AutoAssignted Numbers. 
-				if(isset($phone['autoassigned']) && $phone['autoassigned']){
-					$phone['name'] = "TEAMS{$phone['dn']}"; 
-				}
-				
+
+                // Adding Teams CTI RoutePoint Naming for AutoAssignted Numbers.
+                if (isset($phone['autoassigned']) && $phone['autoassigned']) {
+                    $phone['name'] = "TEAMS{$phone['dn']}";
+                }
+
                 $phone['callfwd2teams'] = true;
 
                 $data['phone'] = $phone;

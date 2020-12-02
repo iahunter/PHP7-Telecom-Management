@@ -58,8 +58,8 @@ class GizmoController extends Controller
 
         return response()->json($response);
     }
-	
-	public function getAllTeamsVoiceUsers(Request $request)
+
+    public function getAllTeamsVoiceUsers(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
         // Check user permissions

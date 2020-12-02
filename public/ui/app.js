@@ -364,6 +364,12 @@
 				controller: 'lineCleanup.Report.IndexController',
                 controllerAs: 'vm'
             })
+			.state('teamsallvoiceusers', {
+                url: '/reports/teams/allvoiceusers',
+                templateUrl: 'reports/teams/teams-user-report.html',
+				controller: 'TeamsUserReport.IndexController',
+                controllerAs: 'vm'
+            })
 			.state('getphoneplan', {
                 url: '/phoneplan/{id}',
                 templateUrl: 'siteplanning/phoneplans/getphoneplan.html',

@@ -2628,7 +2628,7 @@
         "/telephony/api/reports/sites": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of DID Blocks for authorized user",
                 "description": "",
@@ -2649,7 +2649,7 @@
         "/telephony/api/reports/site/{sitecode}": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of Site Objects",
                 "description": "",
@@ -2679,7 +2679,7 @@
         "/telephony/api/reports/site/{sitecode}/erl/discrepancies": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of phones physically at the site but are not configured for site. ",
                 "description": "",
@@ -2709,7 +2709,7 @@
         "/telephony/api/reports/phones/{sitecode}": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of Phones for Site",
                 "description": "",
@@ -2739,7 +2739,7 @@
         "/telephony/api/reports/phonesbyerl/{erl}": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of Phones for ERL Name",
                 "description": "",
@@ -2769,7 +2769,7 @@
         "/telephony/api/reports/phoneslikeerl/{erl}": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of Phones like ERL Name",
                 "description": "",
@@ -2799,7 +2799,7 @@
         "/telephony/api/reports/devicepoolfromerl/{erl}": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "Get the DevicePool with the most phones like site erl",
                 "description": "",
@@ -2829,7 +2829,7 @@
         "/telephony/api/reports/phone/{name}": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "Get Phone from Our DB",
                 "description": "",
@@ -2859,7 +2859,7 @@
         "/telephony/api/reports/siteE911TrunkingReport": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List Report of Trunking and E911 for all Sites",
                 "description": "",
@@ -2880,7 +2880,7 @@
         "/telephony/api/reports/get_phone_models_inuse": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of Phone Models in Use",
                 "description": "",
@@ -2901,7 +2901,7 @@
         "/telephony/api/reports/get_count_phone_models_inuse": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List Count of Phone Models in Use",
                 "description": "",
@@ -2922,7 +2922,7 @@
         "/telephony/api/reports/linecleanup": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List of DID Blocks for authorized user",
                 "description": "",
@@ -2943,7 +2943,7 @@
         "/telephony/api/reports/get_count_phone_by_erl": {
             "get": {
                 "tags": [
-                    "CUCM Reports"
+                    "Reports - CUCM"
                 ],
                 "summary": "List Count of Phones by ERL",
                 "description": "",
@@ -4449,6 +4449,30 @@
                         "required": true,
                         "type": "string"
                     }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/gizmo/teams/allvoiceusers": {
+            "get": {
+                "tags": [
+                    "Management - Gizmo - Teams - User Provisioning"
+                ],
+                "summary": "Get All Teams Voice Users",
+                "description": "",
+                "operationId": "getUserbyNumber",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
                 ],
                 "responses": {
                     "200": {
@@ -7093,6 +7117,30 @@
                 "summary": "List Active Alarms",
                 "description": "",
                 "operationId": "getActiveCalls",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/telephony/api/reports/teams/allvoiceusers": {
+            "get": {
+                "tags": [
+                    "Reports - Microsoft Teams"
+                ],
+                "summary": "Get All Teams Voice Users",
+                "description": "",
+                "operationId": "getUserbyNumber",
                 "consumes": [
                     "application/json"
                 ],

@@ -7,7 +7,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/sites",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of DID Blocks for authorized user",
      *     description="",
      *     operationId="listSites",
@@ -25,7 +25,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/site/{sitecode}",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of Site Objects",
      *     description="",
      *     operationId="listSites",
@@ -50,7 +50,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/site/{sitecode}/erl/discrepancies",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of phones physically at the site but are not configured for site. ",
      *     description="",
      *     operationId="listSites",
@@ -75,7 +75,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phones/{sitecode}",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of Phones for Site",
      *     description="",
      *     operationId="listSites",
@@ -100,7 +100,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phonesbyerl/{erl}",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of Phones for ERL Name",
      *     description="",
      *     operationId="listSites",
@@ -125,7 +125,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phoneslikeerl/{erl}",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of Phones like ERL Name",
      *     description="",
      *     operationId="listSites",
@@ -150,7 +150,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/devicepoolfromerl/{erl}",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="Get the DevicePool with the most phones like site erl",
      *     description="",
      *     operationId="getdevicepool",
@@ -175,7 +175,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/phone/{name}",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="Get Phone from Our DB",
      *     description="",
      *     operationId="getPhone",
@@ -200,7 +200,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/siteE911TrunkingReport",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List Report of Trunking and E911 for all Sites",
      *     description="",
      *     operationId="listSites",
@@ -218,7 +218,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/get_phone_models_inuse",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of Phone Models in Use",
      *     description="",
      *     operationId="listPhoneModels",
@@ -236,7 +236,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/get_count_phone_models_inuse",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List Count of Phone Models in Use",
      *     description="",
      *     operationId="listPhoneModels",
@@ -254,7 +254,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/linecleanup",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List of DID Blocks for authorized user",
      *     description="",
      *     operationId="listSites",
@@ -272,7 +272,7 @@
     /**
      * @SWG\Get(
      *     path="/telephony/api/reports/get_count_phone_by_erl",
-     *     tags={"CUCM Reports"},
+     *     tags={"Reports - CUCM"},
      *     summary="List Count of Phones by ERL",
      *     description="",
      *     operationId="listPhoneModels",

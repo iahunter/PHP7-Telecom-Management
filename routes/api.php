@@ -59,6 +59,9 @@ $api->version('v1', function ($api) {
 
     // Gizmo Teams Routes
     require __DIR__.'/api.gizmo.teams.php';
+	
+	// Teams Reports Routes
+    require __DIR__.'/api.teams.reports.php';
 
     // CUCM Realtime API Routes
     require __DIR__.'/api.cucm.ris.php';

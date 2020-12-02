@@ -18,10 +18,17 @@
 				<legend>
 					<h2>MACD Form Information</h2>
 				</legend>
-					<span class="pull-right">Add another phone to: <b>{{vm.deviceForm.sitecode}} </b></span><br>
+				
+					<div ng-if="vm.deviceForm.sitecode != 'KHONESIP'">
+						<span class="pull-right">Add another phone to: <b>{{vm.deviceForm.sitecode}} </b></span><br>
+						<a  href="#/sitestatusreports/{{vm.deviceForm.sitecode}}/phone/create"<button class="btn btn-primary btn-sm pull-right"><b><i class="glyphicon glyphicon-plus"></i> Phone</b></button></a>
+					</div>
 					
+					<div ng-if="vm.deviceForm.sitecode == 'KHONESIP'">
+						<span class="pull-right"><b>Add another US or CAN User</b></span><br>
+						<a href="#/phone/site/{{vm.deviceForm.sitecode}}/create/Microsoft%20Teams&AUTOASSIGN&AUTOASSIGN&existing"<button class="btn btn-primary btn-sm pull-right"><b><i class="glyphicon glyphicon-plus"></i> Microsoft Teams</b></button></a>
+					</div>
 					
-					<a href="#/sitestatusreports/{{vm.deviceForm.sitecode}}/phone/create"<button class="btn btn-primary btn-sm pull-right"><b><i class="glyphicon glyphicon-plus"></i> Phone</b></button></a>
 					<!--<form class="form" role="form" id="addDeviceForm" ng-submit='addDeviceForm.$valid && vm.submitDevice(vm.deviceForm)' novalidate name="addDeviceForm">-->
 					<form class="form" role="form" id="addDeviceForm" novalidate name="addDeviceForm">
 						<div class="row">

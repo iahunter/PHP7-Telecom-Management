@@ -67,6 +67,7 @@
 					<li><a href="#/reports/site-trunking-911-report"  ng-if="vm.permissions.read.Cucmsiteconfigs == true || vm.permissions.read.PhoneMACD == true">List Sites</a></li>
 					<li><a href="#/phonesearch"  ng-if="vm.permissions.read.Cucmclass == true || vm.permissions.read.PhoneMACD == true">Phone & Line Search</a></li>
 					<li><a href="#/egw_erlreport"  ng-if="vm.permissions.read.Cucmsiteconfigs == true" >Emergency Response Locations - ERL Report</a></li>
+					<li><a href="#/reports/teams/allvoiceusers"  ng-if="vm.permissions.read.Cucmsiteconfigs == true" >Microsoft Teams Voice User Report</a></li>
 					
 					<li role="separator" class="divider" ng-if="vm.permissions.read.PhoneMACD == true || vm.permissions.read.Cucmclass == true" ></li>
 					<li><a href="#/mymacds/week"  ng-if="vm.permissions.read.PhoneMACD == true || vm.permissions.read.Cucmclass == true" >My Weeks MACDs</a></li>

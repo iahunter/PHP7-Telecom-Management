@@ -168,6 +168,30 @@ class RestApiClient
 
         return json_decode((string) $response->getBody(), true);
     }
+	
+	// Get All Teams Online Telephone Numbers
+    public function get_teams_csonlinetelephonenumbers()
+    {
+        $this->get_oauth2_token();
+
+        $url = $this->gizmo."/api/teams/csonlinetelephonenumber";
+
+        $response = $this->guzzle->request('GET', $url, $this->options);
+
+        return json_decode((string) $response->getBody(), true);
+    }
+	
+	// Get All Teams Online Telephone Numbers
+    public function get_teams_csonlineappinstance_autoattendant()
+    {
+        $this->get_oauth2_token();
+
+        $url = $this->gizmo."/api/teams/csonlineappinstance/autoattendant";
+
+        $response = $this->guzzle->request('GET', $url, $this->options);
+
+        return json_decode((string) $response->getBody(), true);
+    }
 
     // Create Civic Address
     public function create_civic_address($body)

@@ -34,3 +34,24 @@
      * )
      **/
     $api->get('gizmo/teams/number/{countrycode}/{number}', 'App\Http\Controllers\GizmoController@getTeamsUserbyNumber');
+	
+	    /**
+     * @SWG\Get(
+     *     path="/telephony/api/gizmo/teams/allvoiceusers",
+     *     tags={"Management - Gizmo - Teams - User Provisioning"},
+     *     summary="Get All Teams Voice Users",
+     *     description="",
+     *     operationId="getUserbyNumber",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Unauthorized user",
+     *     ),
+     * )
+     **/
+    $api->get('gizmo/teams/allvoiceusers', 'App\Http\Controllers\GizmoController@getAllTeamsVoiceUsers');

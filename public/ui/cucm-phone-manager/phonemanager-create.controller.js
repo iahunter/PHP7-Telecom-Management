@@ -516,6 +516,10 @@ angular
 				phone.username = "";
 			}
 			
+			if(phone.device == "Microsoft Teams" || phone.device == "TeamsOnly" || phone.device == "PhoneWithTeams"){
+				phone.language = "english";
+			}
+			
 			console.log(phone)
 			
 			macdService.create_macd_add(phone)

@@ -58,4 +58,37 @@ class GizmoController extends Controller
 
         return response()->json($response);
     }
+	
+	public function getAllTeamsVoiceUsers(Request $request)
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        // Check user permissions
+        if (! $user->can('read', Cucmclass::class)) {
+            if (! $user->can('read', PhoneMACD::class)) {
+                abort(401, 'You are not authorized');
+            }
+        }
+
+        $this->client->get_oauth2_token();
+
+        try {
+            $teamsusers = $this->client->get_teams_csonline_users_voice_enabled();
+
+            if (! count($phone)) {
+                throw new \Exception('Indexed results from call mangler is empty');
+            }
+        } catch (\Exception $e) {
+            $exception = 'Teams blew up: '.$e->getMessage().PHP_EOL;
+            //dd($e->getTrace());
+        }
+
+        $response = [
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'response'       => $teamsusers,
+        ];
+
+        return response()->json($response);
+    }
 }

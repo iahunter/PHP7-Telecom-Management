@@ -76,6 +76,10 @@ class GizmoApiTest extends Command
         //$user = $this->client->get_teams_csonline_user_by_sip_address('test@domain.com');
 
         //print_r($user);
+		
+		$numbers = $this->client->get_teams_csonlineappinstance_autoattendant();
+		
+		print_r($numbers); 
 
         echo 'Started: '.$start.PHP_EOL;
         $end = Carbon::now();

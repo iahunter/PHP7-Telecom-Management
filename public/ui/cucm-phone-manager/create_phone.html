@@ -271,22 +271,25 @@
 							</div>
 							
 							-->
-							<div class="row">
-								<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-										<div class="form-group" ng-class="{'has-error': addDeviceForm.language.$touched && addDeviceForm.language.$invalid, 'has-success': addDeviceForm.language.$touched && addDeviceForm.language.$valid }">
-											<label for="language" class="control-label">Language</label>
-											<div class="inputGroupContainer">
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-server"></i></span>
-													<select class="form-control" required ng-model='vm.deviceForm.language' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="language">
-													</select>
-												</div>
-												<div ng-messages="addDeviceForm.language.$dirty && addDeviceForm.language.$error">
-														<div ng-message='required'> Language is required </div>
+							
+							<div ng-hide="vm.deviceForm.device == 'TeamsOnly' || vm.deviceForm.device == 'PhoneWithTeams' || vm.deviceForm.device == 'Microsoft Teams'">
+								<div class="row">
+									<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+											<div class="form-group" ng-class="{'has-error': addDeviceForm.language.$touched && addDeviceForm.language.$invalid, 'has-success': addDeviceForm.language.$touched && addDeviceForm.language.$valid }">
+												<label for="language" class="control-label">Language</label>
+												<div class="inputGroupContainer">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-server"></i></span>
+														<select class="form-control" required ng-model='vm.deviceForm.language = "english"' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="language">
+														</select>
+													</div>
+													<div ng-messages="addDeviceForm.language.$dirty && addDeviceForm.language.$error">
+															<div ng-message='required'> Language is required </div>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
+								</div>
 							</div>
 
 							<div ng-hide="vm.deviceForm.device == 'TeamsOnly' || vm.deviceForm.device == 'PhoneWithTeams' || vm.deviceForm.device == 'Microsoft Teams'">

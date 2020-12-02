@@ -142,7 +142,7 @@
 												</div>
 											</div>
 										</div>
-										<a class="btn btn-primary" ng-click="vm.updatecucmlinecfa(vm.linedetails)">Update CFA</a>
+										<a class="btn btn-primary" ng-click="vm.updatecucmlinecfa(vm.linedetails)"><span ng-if="vm.linedetails.line_details.callForwardAll.destination">Unforward</span><span ng-if="!vm.linedetails.line_details.callForwardAll.destination">Forward</span></a>
 										
 										<a class="btn btn-success" ng-if="vm.teams_users.length && !vm.unforward" ng-click="vm.updatecucmlinecfatoteams(vm.linedetails)">Forward to Teams</a>
 									</div>

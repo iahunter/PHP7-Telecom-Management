@@ -55,6 +55,20 @@ class CucmReportsController extends Controller
         }
 
         $site = Cucmsiteconfigs::where('sitecode', $request->sitecode)->first();
+		
+		// Fixing for teams only issue.
+		if(!$site){
+			
+			$response = [
+            'status_code'       => 200,
+            'success'           => true,
+			'message'           => "{$request->sitecode} not found in CUCM site DB",
+            'response'          => $site,
+			];
+			
+			return $response; 
+		}
+		
         $phonecount = Cucmphoneconfigs::where('devicepool', 'like', '%'.$request->sitecode.'%')->count();
 
         // Change Site type based on site design user chooses. This will determine the site type.

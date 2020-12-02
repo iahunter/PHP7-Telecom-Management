@@ -1,0 +1,186 @@
+<!-- Include Navbar -->
+<ng-include src="'app-content/navbar.html'"></ng-include>
+
+
+<div style="margin:10px"></div>
+
+<div class="container">
+
+	<div class="well form-horizontal" style="margin-top:10px;" >
+	
+	<div style="margin:50px"></div>
+	
+	<legend>Microsoft Teams - Voice Enabled User Report <button class="btn btn-default btn-sm pull-right" style="color: white; background-color:#555a5e;" ng-click="vm.refresh()"><i class="glyphicon glyphicon-refresh"></i> Refresh</button><br> <div style="margin:10px"></div></legend>
+		
+		<div style="margin:25px"></div>
+			
+			
+			<!--Line Horizontal Chart-->
+			<div class="container" ng-if="vm.e911" style="margin-left:5%;margin-right:5%">
+				<div ng-if="vm.sites">
+					<h4><b>Sites <span class="badge badge-info ng-binding">{{vm.sites.length}} </span>
+					<br>Phones <span class="badge badge-info ng-binding">{{vm.phonecount}} </span> </b></h4>
+				</div>
+				
+				<div class="row">
+				<div class="col-lg-5 col-sm-offset-0">
+					<div class="panel panel-default">
+						<div class="panel-heading"><b>E911</b></div>
+						<div >
+							<canvas id="pie" class="chart chart-horizontal-bar chart-xs"
+								chart-data="vm.e911.chartdata" 
+								chart-labels="vm.e911.chartlabels"
+								chart-options="vm.e911.chartoptions"
+								width="400" height="100" style="display: block; width: 261px; height: 261px;">
+							</canvas> 
+						</div>
+					</div>
+					</div>
+					<div class="col-lg-5">
+						<div class="panel panel-default">
+							<div class="panel-heading"><b>Trunking</b></div>
+							<div >
+								<canvas id="trunking" class="chart chart-horizontal-bar chart-xs"
+									chart-data="vm.trunking.chartdata" 
+									chart-labels="vm.trunking.chartlabels"
+									chart-options="vm.trunking.chartoptions"
+									width="400" height="100" style="display: block; width: 261px; height: 261px;">
+								</canvas> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			
+			<div style="margin:25px"></div>
+			
+
+		<div class="input-group col-md-3 ">
+			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+			<div class="input-group-btn">
+				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+			</div>
+		</div>
+		
+		
+
+		<div style="margin:25px"></div>
+		
+		
+		<!-- Loading -->
+		<div ng-if="vm.loading && !vm.message" class="well">
+			<div class="row">
+				<div class="container loader"></div>
+			</div>
+			<div style="margin:25px"></div>
+		</div>
+
+		<div ng-if="vm.message;" class="well">
+			<div class="row">
+				<h4>{{vm.message}}</h4>
+			</div>
+			<div style="margin:65px"></div>
+		</div>
+		
+		
+		<div ng-if="vm.teamsusers">
+		
+			<h4><b>User Count</b> <span class="badge badge-info ng-binding">{{vm.teamsusers.length}} </span> </h4>
+
+			<div style="margin:25px"></div>
+			
+			
+			
+			<div class="panel panel-default" style="box-shadow: 1px 1px 5px grey;">
+			<div class="table-responsive">    
+				<table class="table table-striped table-condensed table-bordered table-hover">
+					<thead>
+						<tr style="background-color: #aeb3b7; background-image: linear-gradient(#e4e6e7, #d6d9db 60%, #c9cccf)">
+							<th>
+								<a href="" ng-click="sortType = 'teamsuser'; sortReverse = !sortReverse" style="color:black">
+									User
+										<span ng-show="sortType == 'teamsuser' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'teamsuser' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'number'; sortReverse = !sortReverse" style="color:black">
+									Number
+										<span ng-show="sortType == 'number' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'number' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'assignments.MicrosoftTeams'; sortReverse = !sortReverse" style="color:black">
+									Teams
+										<span ng-show="sortType == 'assignments.MicrosoftTeams' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'assignments.MicrosoftTeams' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'teamsuser.sipAddress'; sortReverse = !sortReverse" style="color:black">
+									Teams Sip Address
+										<span ng-show="sortType == 'teamsuser.sipAddress' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'teamsuser.sipAddress' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+								<a href="" ng-click="sortType = 'cucmtrue'; sortReverse = !sortReverse" style="color:black">
+									CUCM
+										<span ng-show="sortType == 'cucmtrue' && !sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+										<span ng-show="sortType == 'cucmtrue' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+								</a>
+							</th>
+							
+							<th>
+									CUCM Device Details
+							</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+					
+					<!-- Allow you to edit and delete Blocks with new buttons -->
+					<!--<tr ng-repeat="site in vm.sites | orderBy:sortType:sortReverse | filter:vm.search: strict">-->
+					<tr ng-repeat="number in vm.teamsusers | orderBy:sortType:sortReverse | filter:vm.search: strict">
+							<td>{{number.teamsuser.alias}}</td>
+							<td><a href="#/line/{{number.number}}" target="_blank">{{number.number}}</a></td>
+							<td>
+								<i ng-if="number.assignments.MicrosoftTeams" class="fa fa-check-square-o" aria-hidden="true"></i>
+								<i ng-if="!number.assignments.MicrosoftTeams" class="fa fa-square-o" aria-hidden="true"></i>
+							</td>
+							
+							<td>{{number.teamsuser.sipAddress}}</td>
+							
+							<td>
+								<i ng-if="number.cucmtrue" class="fa fa-check-square-o" aria-hidden="true"></i>
+								<i ng-if="!number.cucmtrue" class="fa fa-square-o" aria-hidden="true"></i>
+							</td>
+							<td>
+								<table ng-if="number.cucm" class="table table-striped table-condensed table-bordered table-hover">
+									<tr ng-repeat="phone in number.cucm">
+										<td><a href="#/phone/{{phone}}" target="_blank">{{phone}}</a></td>
+									</tr>
+							</td>
+							
+					</tr>
+							
+					</tbody>
+				</table>
+			</div>
+			</div> <!--npa of Panel
+			
+			<a href="#/site/create" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Add</a>
+			-->
+		</div>
+	</div>
+</div>
+
+	
+

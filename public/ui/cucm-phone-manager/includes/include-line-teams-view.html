@@ -1,11 +1,3 @@
-<div ng-if="vm.noline" class="well" style="margin-left: 5%; margin-right: 5%;">
-	<div style="margin:100px;"></div>
-	<h3>{{vm.line}} Not found in Teams</h3>
-	
-	<div style="margin:100px"></div>
-
-</div>
-
 <div>
 	<div style="margin-left: 5%; margin-right: 5%;">
 			
@@ -13,7 +5,7 @@
 							<div>
 								<legend><h3>Microsoft Teams User</h3></legend>
 								
-								<div ng-if="vm.loadingteams">
+								<div ng-if="vm.loadingteams && !vm.teams_users.length">
 									<div>
 										<div class="well">
 											<div class="row">

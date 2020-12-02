@@ -80,7 +80,7 @@ class RestApiClient
             'Authorization' => "Bearer {$this->token}",
 
         ],
-                            ];
+        ];
     }
 
     // Get Teams User by ID
@@ -168,25 +168,25 @@ class RestApiClient
 
         return json_decode((string) $response->getBody(), true);
     }
-	
-	// Get All Teams Online Telephone Numbers
+
+    // Get All Teams Online Telephone Numbers
     public function get_teams_csonlinetelephonenumbers()
     {
         $this->get_oauth2_token();
 
-        $url = $this->gizmo."/api/teams/csonlinetelephonenumber";
+        $url = $this->gizmo.'/api/teams/csonlinetelephonenumber';
 
         $response = $this->guzzle->request('GET', $url, $this->options);
 
         return json_decode((string) $response->getBody(), true);
     }
-	
-	// Get All Teams Online Telephone Numbers
+
+    // Get All Teams Online Telephone Numbers
     public function get_teams_csonlineappinstance_autoattendant()
     {
         $this->get_oauth2_token();
 
-        $url = $this->gizmo."/api/teams/csonlineappinstance/autoattendant";
+        $url = $this->gizmo.'/api/teams/csonlineappinstance/autoattendant';
 
         $response = $this->guzzle->request('GET', $url, $this->options);
 

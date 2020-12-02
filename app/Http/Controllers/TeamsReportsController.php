@@ -13,13 +13,11 @@ class TeamsReportsController extends Controller
         // Only authenticated users can make these calls
         $this->middleware('jwt.auth');
     }
-	
-	public function getAllTeamsVoiceUsers()
-    {
 
+    public function getAllTeamsVoiceUsers()
+    {
         $teamsusers = DID::where('system_id', 'like', '%MicrosoftTeams%')
                 ->get();
-
 
         $response = [
             'status_code'       => 200,

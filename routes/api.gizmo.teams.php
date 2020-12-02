@@ -34,8 +34,8 @@
      * )
      **/
     $api->get('gizmo/teams/number/{countrycode}/{number}', 'App\Http\Controllers\GizmoController@getTeamsUserbyNumber');
-	
-	    /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/gizmo/teams/allvoiceusers",
      *     tags={"Management - Gizmo - Teams - User Provisioning"},

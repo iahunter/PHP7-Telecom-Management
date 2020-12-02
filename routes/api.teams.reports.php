@@ -1,6 +1,6 @@
 <?php
 
-	/**
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/teams/allvoiceusers",
      *     tags={"Reports - Microsoft Teams"},

@@ -45,7 +45,7 @@ class BouncerPermissions extends Command
         $this->assignAdminGroupBouncerRoles(env('ADMIN_GRP'));
         $this->assignExecGroupBouncerRoles(env('EXECS_GRP'));
         $this->assignServiceDeskBouncerRoles(env('SERVICEDESK_GRP'));
-		$this->assignServiceDeskBouncerRoles(env('SNOW_AUTOMATION'));
+        $this->assignServiceDeskBouncerRoles(env('SNOW_AUTOMATION'));
         $this->assignPMBouncerRoles(env('NETWORK_GRP'));
 
         // $this->assignFieldTechsBouncerRoles(env('FIELD_TECH_GRP'));

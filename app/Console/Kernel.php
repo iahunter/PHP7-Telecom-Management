@@ -95,6 +95,9 @@ class Kernel extends ConsoleKernel
         Commands\UnityConnection\UnityMBNumberPopulateIDM::class,
 
         Commands\Ldap\TestLdapPhoneUpdate::class,
+		
+		// ASA AnyConnect VPN Reports
+		Commands\Network\GetAnyConnectStats::class,
 
     ];
 

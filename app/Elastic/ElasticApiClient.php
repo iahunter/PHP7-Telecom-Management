@@ -47,39 +47,34 @@ class ElasticApiClient
         $this->guzzle = new \GuzzleHttp\Client();
     }
 
-
     public function postNetworkData($json)
     {
-		if(json_decode($json, true)){
-			
-			try{
-				
-				$url = $this->baseurl."/network/_doc";
-				// set the mandatory headers...
-				$headers = $this->headers;
+        if (json_decode($json, true)) {
+            try {
+                $url = $this->baseurl.'/network/_doc';
+                // set the mandatory headers...
+                $headers = $this->headers;
 
-				// add application/json to content type of this request
-				$headers['Content-Type'] = 'application/json';
+                // add application/json to content type of this request
+                $headers['Content-Type'] = 'application/json';
 
-				// Build the request with json body and headers
-				$options = [
-					'headers' => $headers,
-					'body'    => $json,
-					//'debug' => true,
-				];
+                // Build the request with json body and headers
+                $options = [
+                    'headers' => $headers,
+                    'body'    => $json,
+                    //'debug' => true,
+                ];
 
-				// send the request
-				$response = $this->guzzle->request('POST', $url, $options);
+                // send the request
+                $response = $this->guzzle->request('POST', $url, $options);
 
-				$body = $response->getBody();
-				//$resp = json_decode($body, true);
+                $body = $response->getBody();
+                //$resp = json_decode($body, true);
 
-				return $body;
-				
-			}catch (Exception $e) {
-				echo 'Caught exception: ',  $e->getMessage(), "\n";
-			}
-		}
-
+                return $body;
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            }
+        }
     }
 }

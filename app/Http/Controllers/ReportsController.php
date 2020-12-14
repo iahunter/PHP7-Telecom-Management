@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\TelecomInfrastructure;
-use Illuminate\Http\Request;
-// Include the JWT Facades shortcut
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Reports;
+use App\TelecomInfrastructure;
+// Include the JWT Facades shortcut
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ReportsController extends Controller
 {
@@ -20,36 +20,36 @@ class ReportsController extends Controller
         $reports = Reports::where('category', 'network')->where('type', 'vpn_report')->get();
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'result'         => $reports,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'result'         => $reports,
+        ];
 
         return response()->json($response);
     }
-	
-	public function getReport(Request $request, $id)
+
+    public function getReport(Request $request, $id)
     {
         $user = JWTAuth::parseToken()->authenticate();
-		$device = Reports::find($id);
+        $device = Reports::find($id);
 
         if (! $user->can('read', $device)) {
             abort(401, 'You are not authorized');
         }
 
         $response = [
-                    'status_code'       => 200,
-                    'success'           => true,
-                    'message'           => '',
-                    'request'           => $request->all(),
-                    'result'            => $device,
-                    ];
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'request'           => $request->all(),
+            'result'            => $device,
+        ];
 
         return response()->json($response);
     }
-	
-	public function createReport(Request $request)
+
+    public function createReport(Request $request)
     {
         $user = JWTAuth::parseToken()->authenticate();
 
@@ -63,12 +63,12 @@ class ReportsController extends Controller
         $device = Reports::create($request->all());
 
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => '',
-                    'request'        => $request->all(),
-                    'result'         => $device,
-                    ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => '',
+            'request'        => $request->all(),
+            'result'         => $device,
+        ];
 
         return response()->json($response);
     }
@@ -91,12 +91,12 @@ class ReportsController extends Controller
         $device->save();
 
         $response = [
-                    'status_code'      => 200,
-                    'success'          => true,
-                    'message'          => '',
-                    'request'          => $request->all(),
-                    'result'           => $device,
-                    ];
+            'status_code'      => 200,
+            'success'          => true,
+            'message'          => '',
+            'request'          => $request->all(),
+            'result'           => $device,
+        ];
 
         return response()->json($response);
     }
@@ -120,12 +120,11 @@ class ReportsController extends Controller
         // Find the block in the database by id
         $device->delete();                                                            // Delete the did block.
         $response = [
-                    'status_code'    => 200,
-                    'success'        => true,
-                    'message'        => 'Device '.$id.' successfully deleted',
-                    'deleted_at'     => $device->deleted_at, ];
+            'status_code'    => 200,
+            'success'        => true,
+            'message'        => 'Device '.$id.' successfully deleted',
+            'deleted_at'     => $device->deleted_at, ];
 
         return response()->json($response);
     }
-	
 }

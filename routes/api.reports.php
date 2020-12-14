@@ -20,8 +20,8 @@
      * )
      **/
     $api->get('reports', 'App\Http\Controllers\ReportsController@listReportTypes');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/api/reports/id/{id}",
      *     tags={"Reports"},
@@ -285,4 +285,3 @@
      * )
      **/
     $api->delete('reports/id/{id}', 'App\Http\Controllers\TelecomInfrastructureController@deleteDevice');
-

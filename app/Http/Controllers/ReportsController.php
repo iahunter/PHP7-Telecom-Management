@@ -10,9 +10,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ReportsController extends Controller
 {
-	
-	/* ********** This needs work!!! ************/
-	
+    /* ********** This needs work!!! ************/
+
     public function listReportTypes()
     {
         $user = JWTAuth::parseToken()->authenticate();
@@ -20,7 +19,7 @@ class ReportsController extends Controller
         if (! $user->can('read', TelecomInfrastructure::class)) {
             abort(401, 'You are not authorized');
         }
-		
+
         $reports = Reports::where('category', 'network')->where('type', 'vpn_report')->get();
 
         $response = [

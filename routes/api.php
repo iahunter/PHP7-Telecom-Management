@@ -99,8 +99,7 @@ $api->version('v1', function ($api) {
 
     // Monitoring
     require __DIR__.'/api.ping.php';
-	
-	// Reports
+
+    // Reports
     require __DIR__.'/api.reports.php';
-	
 });

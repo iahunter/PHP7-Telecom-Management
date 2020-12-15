@@ -74,9 +74,9 @@ class Kernel extends ConsoleKernel
 
         Commands\Numbers\NumberSearch::class,
         Commands\Numbers\DidScanCucmAndTeams::class,
-		
-		// Teams Stats
-		Commands\Microsoft\MicrosoftTeamsUserStatsReport::class,
+
+        // Teams Stats
+        Commands\Microsoft\MicrosoftTeamsUserStatsReport::class,
 
         // IDM
         Commands\IDM\IdmUpdateUserPhone::class,
@@ -85,7 +85,7 @@ class Kernel extends ConsoleKernel
         Commands\Gizmo\GizmoApiTest::class,
 
         // Commented out one time scripts - Uncomment if needed.
-		//Commands\CallManager\FeedELKOldData::class,
+        //Commands\CallManager\FeedELKOldData::class,
         //Commands\CallManager\SiteLocal911::class,
         //Commands\CallManager\SiteDetailsReport::class,
         //Commands\CallManager\CssReport::class,

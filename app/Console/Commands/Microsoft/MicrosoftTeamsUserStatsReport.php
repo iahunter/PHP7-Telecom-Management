@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Microsoft;
 
-use App\Elastic\ElasticApiClient;
 use App\Did;
+use App\Elastic\ElasticApiClient;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -40,11 +40,9 @@ class MicrosoftTeamsUserStatsReport extends Command
      */
     public function handle()
     {
-		
-		$start = Carbon::now();
-		echo "Starting - {$this->signature} - {$start}".PHP_EOL;
-		
-		
+        $start = Carbon::now();
+        echo "Starting - {$this->signature} - {$start}".PHP_EOL;
+
         $count = DID::where('system_id', 'like', '%MicrosoftTeams%')
                 ->count();
 
@@ -54,8 +52,8 @@ class MicrosoftTeamsUserStatsReport extends Command
             'message'           => '',
             'response'          => $count,
         ];
-		
-		// Build Array to Insert
+
+        // Build Array to Insert
         $INSERT = ['category' 	=> 'voice',
             'type'	   	        => 'microsoft_teams_user_count',
             'total' 	          => $count,

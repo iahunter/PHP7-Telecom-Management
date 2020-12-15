@@ -20,8 +20,8 @@
      * )
      **/
     $api->get('reports', 'App\Http\Controllers\ReportsController@listReportTypes');
-	
-	 /**
+
+    /**
      * @SWG\Get(
      *     path="/telephony/api/reports/type/{type}",
      *     tags={"Reports - Custom"},

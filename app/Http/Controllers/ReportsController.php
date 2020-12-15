@@ -12,16 +12,15 @@ class ReportsController extends Controller
 {
     /* ********** This needs work!!! ************/
 
-	
-	public function listReportTypes()
+    public function listReportTypes()
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', TelecomInfrastructure::class)) {
             abort(401, 'You are not authorized');
         }
-		
-		$reports = Reports::select('type')
+
+        $reports = Reports::select('type')
             ->groupBy('type')
             ->get();
 
@@ -36,7 +35,6 @@ class ReportsController extends Controller
 
         return response()->json($response);
     }
-	
 
     public function getReport(Request $request, $type)
     {

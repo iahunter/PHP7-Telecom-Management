@@ -1,28 +1,27 @@
 <?php
 
-namespace App\Console\Commands\CallManager;
+namespace App\Console\Commands\Microsoft;
 
 use App\Elastic\ElasticApiClient;
-use App\Cucmphoneconfigs;
-use App\CucmPhoneStats;
+use App\Did;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class GetCucmPhoneStats extends Command
+class MicrosoftTeamsUserStatsReport extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cisco_phone:get_phone_stats';
+    protected $signature = 'microsoft:get_teams_user_stats_report';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Run Report that compiles phone counts and registration summary info and it inserts into the cucmphonestats table';
+    protected $description = 'Get Teams Voice User Stat Summary from Number Database';
 
     /**
      * Create a new command instance.
@@ -41,43 +40,39 @@ class GetCucmPhoneStats extends Command
      */
     public function handle()
     {
-        $start = Carbon::now();
-        echo 'Starting - cisco_phone:get_phone_stats - '.$start.PHP_EOL;
+		
+		$start = Carbon::now();
+		echo "Starting - {$this->signature} - {$start}".PHP_EOL;
+		
+		
+        $count = DID::where('system_id', 'like', '%MicrosoftTeams%')
+                ->count();
 
-        $total = Cucmphoneconfigs::get_active_phone_count();
-        $registered = Cucmphoneconfigs::get_phone_registered_count();
-        $stats = Cucmphoneconfigs::get_phone_registered_count_by_type();
-
-        // Insert new Record
-        //$record = CucmPhoneStats::create($insert);
+        $response = [
+            'status_code'       => 200,
+            'success'           => true,
+            'message'           => '',
+            'response'          => $count,
+        ];
 		
 		// Build Array to Insert
         $INSERT = ['category' 	=> 'voice',
-            'type'	   	        => 'cisco_phone_report',
-            'total' 	          => $registered,
-            'int0'		           => $total,
-            'stats'		          => $stats,
+            'type'	   	        => 'microsoft_teams_user_count',
+            'total' 	          => $count,
         ];
 
         //print_r($INSERT);
 
         \App\Reports::create($INSERT);      // Run in Cron every 10 mins and store stats in Reports Database
-		
-		$ELASTIC = ['category' 		=> 'voice',
-            'type'	   	        	=> 'cisco_phone_report',
-            'registered' 	        => $registered,
-            'total'		           	=> $total,
-            'stats'		          	=> $stats,
-        ];
 
         $now = \Carbon\Carbon::now();
 
         $string = $now->toISOString();
-        $ELASTIC['timestamp'] = $string;
+        $INSERT['timestamp'] = $string;
 
-        //print_r($ELASTIC);
+        //print_r($INSERT);
 
-        $json = json_encode($ELASTIC);
+        $json = json_encode($INSERT);
 
         echo $json.PHP_EOL;
 
@@ -102,8 +97,6 @@ class GetCucmPhoneStats extends Command
         echo "Started at: {$start}".PHP_EOL;
         echo "Completed at {$end}".PHP_EOL;
 
-        $end = Carbon::now();
-
-        echo 'Completed - cisco_phone:get_phone_stats - '.$end.PHP_EOL;
+        echo "Completed - {$this->signature} - {$end}".PHP_EOL;
     }
 }

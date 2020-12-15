@@ -12,15 +12,20 @@ class ReportsController extends Controller
 {
     /* ********** This needs work!!! ************/
 
-    public function listReportTypes()
+	
+	public function listReportTypes()
     {
         $user = JWTAuth::parseToken()->authenticate();
 
         if (! $user->can('read', TelecomInfrastructure::class)) {
             abort(401, 'You are not authorized');
         }
+		
+		$reports = Reports::select('type')
+            ->groupBy('type')
+            ->get();
 
-        $reports = Reports::where('category', 'network')->where('type', 'vpn_report')->get();
+        //$reports = Reports::where('category', 'network')->where('type', 'vpn_report')->get();
 
         $response = [
             'status_code'    => 200,
@@ -31,13 +36,14 @@ class ReportsController extends Controller
 
         return response()->json($response);
     }
+	
 
-    public function getReport(Request $request, $id)
+    public function getReport(Request $request, $type)
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $device = Reports::find($id);
+        $report = Reports::where('type', $type)->get();
 
-        if (! $user->can('read', $device)) {
+        if (! $user->can('read', TelecomInfrastructure::class)) {
             abort(401, 'You are not authorized');
         }
 
@@ -46,7 +52,7 @@ class ReportsController extends Controller
             'success'           => true,
             'message'           => '',
             'request'           => $request->all(),
-            'result'            => $device,
+            'result'            => $report,
         ];
 
         return response()->json($response);

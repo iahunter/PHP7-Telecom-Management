@@ -6554,6 +6554,36 @@
                 }
             }
         },
+        "/telephony/api/reports/type/{type}": {
+            "get": {
+                "tags": [
+                    "Reports - Custom"
+                ],
+                "summary": "Get List of Reports",
+                "description": "",
+                "operationId": "listSites",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "Report Type",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/telephony/api/sonus5kcdrs/search/{column}/{search}": {
             "get": {
                 "tags": [

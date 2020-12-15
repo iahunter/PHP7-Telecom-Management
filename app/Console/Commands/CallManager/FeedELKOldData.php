@@ -40,56 +40,53 @@ class FeedELKOldData extends Command
      */
     public function handle()
     {
-		
         $start = Carbon::now();
-		echo "Starting - {$this->signature} - {$start}".PHP_EOL;
-		
-		if (env('ELASTIC_URL') && env('ELASTIC_USER') && env('ELASTIC_PASS')) {
+        echo "Starting - {$this->signature} - {$start}".PHP_EOL;
+
+        if (env('ELASTIC_URL') && env('ELASTIC_USER') && env('ELASTIC_PASS')) {
             $elasticUrl = env('ELASTIC_URL');
 
             $elasticUser = env('ELASTIC_USER');
             $elasticPassword = env('ELASTIC_PASS');
 
             echo $elasticUrl.PHP_EOL;
-			
-			$elastic = new ElasticApiClient($elasticUrl, $elasticUser, $elasticPassword);
-			
+
+            $elastic = new ElasticApiClient($elasticUrl, $elasticUser, $elasticPassword);
         } else {
             echo 'No Elastic URL to write data'.PHP_EOL;
 
             return;
         }
-		
+
         $stats = CucmPhoneStats::all();
-		
-		//print_r($stats); 
-		
-		$total = count($stats);
-		$count = 0; 
-		
-		foreach($stats as $stat){
-			$count++; 
-			print "Starting {$count} of {$total}".PHP_EOL; 
-			
-			$time = $stat['created_at'];
-			$string = $time->toISOString();
-			
-			$INSERT = [];
-			$INSERT = [	'category' 		=> 'voice',
-						'type'			=> 'cisco_phone_report',
-						'total' 		=> $stat['total'],
-						'registered'	=> $stat['registered'],
-						'stats'			=> $stat['stats'],
-						'timestamp' 	=> $string,
-					];
-					
-			//print_r($INSERT);
-			
-			$json = json_encode($INSERT);
-			
-			$elastic->postNetworkData($json);
-			
-		}
+
+        //print_r($stats);
+
+        $total = count($stats);
+        $count = 0;
+
+        foreach ($stats as $stat) {
+            $count++;
+            echo "Starting {$count} of {$total}".PHP_EOL;
+
+            $time = $stat['created_at'];
+            $string = $time->toISOString();
+
+            $INSERT = [];
+            $INSERT = ['category' 		=> 'voice',
+                'type'			           => 'cisco_phone_report',
+                'total' 		          => $stat['total'],
+                'registered'	       => $stat['registered'],
+                'stats'			          => $stat['stats'],
+                'timestamp' 	       => $string,
+            ];
+
+            //print_r($INSERT);
+
+            $json = json_encode($INSERT);
+
+            $elastic->postNetworkData($json);
+        }
 
         $end = \Carbon\Carbon::now();
         echo "Started at: {$start}".PHP_EOL;

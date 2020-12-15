@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\CallManager;
 
-use App\Elastic\ElasticApiClient;
 use App\Cucmphoneconfigs;
 use App\CucmPhoneStats;
+use App\Elastic\ElasticApiClient;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -50,8 +50,8 @@ class GetCucmPhoneStats extends Command
 
         // Insert new Record
         //$record = CucmPhoneStats::create($insert);
-		
-		// Build Array to Insert
+
+        // Build Array to Insert
         $INSERT = ['category' 	=> 'voice',
             'type'	   	        => 'cisco_phone_report',
             'total' 	          => $registered,
@@ -62,12 +62,12 @@ class GetCucmPhoneStats extends Command
         //print_r($INSERT);
 
         \App\Reports::create($INSERT);      // Run in Cron every 10 mins and store stats in Reports Database
-		
-		$ELASTIC = ['category' 		=> 'voice',
-            'type'	   	        	=> 'cisco_phone_report',
+
+        $ELASTIC = ['category' 		 => 'voice',
+            'type'	   	        	  => 'cisco_phone_report',
             'registered' 	        => $registered,
-            'total'		           	=> $total,
-            'stats'		          	=> $stats,
+            'total'		           	 => $total,
+            'stats'		          	  => $stats,
         ];
 
         $now = \Carbon\Carbon::now();

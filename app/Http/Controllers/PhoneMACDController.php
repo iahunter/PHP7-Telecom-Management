@@ -74,26 +74,24 @@ class PhoneMACDController extends Controller
         \Log::info('queueTeamsMACD', ['data' => 'Entering the Teams Update Event']);
 
         event(new Update_Teams_User_For_Voice_Event($data));
-		
-		
-		// Forward to Teams if usenumber = existing
-		if(isset($phone['device']) && $phone['device'] == 'TeamsOnly'){
-			if(isset($phone['usenumber']) && $phone['usenumber'] == 'existing'){
-				$task = PhoneMACD::create([
-					'type' => 'Forward All Calls to Teams', 
-					'parent' => $macd->id,
-					'status' => 'job received',
-				]);
-				$tasks[] = $task;
-				$data['taskid'] = $task->id;
-				\Log::info('queueTeamsMACD', ['data' => 'Entering Update Cucm CallForward To Teams Event']);
 
-				// Forward Number to Teams
-				event(new Update_Cucm_CallForward_To_Teams_Event($data));
-			}
-		}
-		
-		
+        // Forward to Teams if usenumber = existing
+        if (isset($phone['device']) && $phone['device'] == 'TeamsOnly') {
+            if (isset($phone['usenumber']) && $phone['usenumber'] == 'existing') {
+                $task = PhoneMACD::create([
+                    'type'   => 'Forward All Calls to Teams',
+                    'parent' => $macd->id,
+                    'status' => 'job received',
+                ]);
+                $tasks[] = $task;
+                $data['taskid'] = $task->id;
+                \Log::info('queueTeamsMACD', ['data' => 'Entering Update Cucm CallForward To Teams Event']);
+
+                // Forward Number to Teams
+                event(new Update_Cucm_CallForward_To_Teams_Event($data));
+            }
+        }
+
         $result = ['macd'     => $macd,
             'tasks'           => $tasks,
         ];

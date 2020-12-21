@@ -58,8 +58,8 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
             \Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user]);
 
             foreach ($user as $u) {
-                if (isset($u['"sipAddress"']) && $u['"sipAddress"']) {
-                    $sipaddress = $u['"sipAddress"'];
+                if (isset($u['sipAddress']) && $u['sipAddress']) {
+                    $sipaddress = $u['sipAddress'];
                 } else {
                     $domain = env('DOMAIN');
                     $sipaddress = "sip:{$userid}@{$domain}";

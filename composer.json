@@ -7,7 +7,7 @@
     "repositories": [
       {
           "type": "vcs",
-          "url": "https://github.com/iahunter/adLDAP.git"
+          "url": "https://github.com/metaclassing/adLDAP.git"
       },
       {
           "type": "vcs",
@@ -16,6 +16,14 @@
       {
           "type": "vcs",
           "url": "https://github.com/iahunter/php-911enable-egw.git"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/iahunter/PHP7-SSHWrapper.git"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/iahunter/utility.git"
       }
     ],
     "require": {

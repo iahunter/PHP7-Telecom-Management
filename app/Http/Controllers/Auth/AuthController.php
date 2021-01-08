@@ -381,29 +381,27 @@ class AuthController extends Controller
         if (isset($user[0]['displayname']) && $user[0]['displayname'][0]) {
             $displayname = $user[0]['displayname'][0];
         }
-		
-		if(isset($user[0]['samaccountname'][0])){
-			$samaccountname = $user[0]['samaccountname'][0]; 
-			if(preg_match('/\./', $samaccountname)){
-				$name = explode('.', $samaccountname);
-				if($name[0]){
-					$firstname = $name[0];
-				}else{
-					$firstname = ""; 
-				}
-				if($name[1]){
-					$lastname = $name[1];
-				}else{
-					$lastname = ""; 
-				}
-			}else{
-				$firstname = ""; 
-				$lastname = ""; 
-			}
-		}
-		
-		
-		
+
+        if (isset($user[0]['samaccountname'][0])) {
+            $samaccountname = $user[0]['samaccountname'][0];
+            if (preg_match('/\./', $samaccountname)) {
+                $name = explode('.', $samaccountname);
+                if ($name[0]) {
+                    $firstname = $name[0];
+                } else {
+                    $firstname = '';
+                }
+                if ($name[1]) {
+                    $lastname = $name[1];
+                } else {
+                    $lastname = '';
+                }
+            } else {
+                $firstname = '';
+                $lastname = '';
+            }
+        }
+
         if (isset($user[0]['userprincipalname'][0])) {
             $user_userprincipalname = $user[0]['userprincipalname'][0];
         }
@@ -415,7 +413,7 @@ class AuthController extends Controller
             'firstname'         => $firstname,
             'lastname'          => $lastname,
             'userprincipalname' => $user_userprincipalname,
-			'samaccountname' 	=> $samaccountname,
+            'samaccountname' 	  => $samaccountname,
         ];
     }
 

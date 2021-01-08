@@ -72,6 +72,7 @@ class Ldap extends Controller
 
     public function get_user(Request $request)
     {
+		
         $user = JWTAuth::parseToken()->authenticate();
         if (! $user->can('read', PhoneMACD::class)) {
             if (! $user->can('read', Cucmclass::class)) {

@@ -254,8 +254,8 @@
 						<td>{{ call.disconnect_time_local}}</td>
 						<td>{{ call.call_duration}}</td>
 						
-						<td>{{ call.calling_number}}</td>
-						<td>{{ call.called_number}}</td>
+						<td><a target="_blank" href="#/line/{{ call.calling_number}}">{{ call.calling_number}}</a></td>
+						<td><a target="_blank" href="#/line/{{ call.called_number}}">{{ call.called_number}}</a></td>
 						
 						<td>{{ call.ingress_lost_ptks}} <i class="fa fa-exclamation-triangle" ng-if="call.ingress_lost_ptks > 100"></i></td>
 						<td>{{ call.ingress_pkt_loss_percent}} % <i class="fa fa-exclamation-triangle" ng-if="call.ingress_pkt_loss_percent > 1"></i></td>

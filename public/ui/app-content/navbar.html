@@ -68,15 +68,17 @@
 					<li><a href="#/phonesearch"  ng-if="vm.permissions.read.Cucmclass == true || vm.permissions.read.PhoneMACD == true">Phone & Line Search</a></li>
 					<li><a href="#/egw_erlreport"  ng-if="vm.permissions.read.Cucmsiteconfigs == true" >Emergency Response Locations - ERL Report</a></li>
 					<li><a href="#/reports/teams/allvoiceusers"  ng-if="vm.permissions.read.Cucmsiteconfigs == true" >Microsoft Teams Voice User Report</a></li>
-					
+						
 					<li role="separator" class="divider" ng-if="vm.permissions.read.PhoneMACD == true || vm.permissions.read.Cucmclass == true" ></li>
 					<li><a href="#/mymacds/week"  ng-if="vm.permissions.read.PhoneMACD == true || vm.permissions.read.Cucmclass == true" >My Weeks MACDs</a></li>
 					<li><a href="#/macds/report"  ng-if="vm.permissions.delete.Cucmclass == true" >MACD Report</a></li>
 					
 					
-					<!--<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>-->
-					<!--
+					<!--<li><a href="#" ng-show="vm.permissions.read.Cucmsiteconfigs != true">None Found</a></li>
+
 					<li role="separator" class="divider"></li>
+					<ng-include src="'company-content/company.navbar.html'"></ng-include>-->
+					<!--
 					<li><a href="#/didblock">Separated link</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a href="#/didblock">One more separated link</a></li>

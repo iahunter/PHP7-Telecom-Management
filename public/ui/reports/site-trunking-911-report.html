@@ -61,20 +61,24 @@
 			
 			<div style="margin:25px"></div>
 			
-		<div ng-if="!vm.loading" class="well">
+			<!--
+			<div ng-if="!vm.loading" class="well">
 				<legend><h4><b> Microsoft Teams! </b></h4></legend>
-				<b style="color:red" >New! </b>For Teams Only Users who do not need a local phone number. They will be auto assigned a number from 531-241:0000 - 9999 block. <br> If they need a local number please add a Teams Softphone using the Add Phone button on the site they are located. <br>
+				<b style="color:red" >New! </b>For Teams Only Users who do not need a local phone number. <br> If they need a local number please add a Teams Softphone using the Add Phone button on the site they are located. <br>
 				<div style="margin:25px"></div>
 				
-				<a href="#/phone/site/KHONESIP/create/Microsoft%20Teams&AUTOASSIGN&AUTOASSIGN&existing"><button class="btn btn-success btn-sm"><b><i class="glyphicon glyphicon-plus"></i> Teams Only <i class="glyphicon glyphicon-user"></i></b></button></a>
-		</div>
-		
-		<div class="input-group col-md-3 ">
-			<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
-			<div class="input-group-btn">
-				<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+				<a href="#/phone/site/$SITECODE/create/Microsoft%20Teams&AUTOASSIGN&AUTOASSIGN&existing"><button class="btn btn-success btn-sm"><b><i class="glyphicon glyphicon-plus"></i> Teams Only <i class="glyphicon glyphicon-user"></i></b></button></a>
 			</div>
-		</div>
+			
+			<div class="input-group col-md-3 ">
+				<input type="text" class="form-control" ng-model="vm.search" ng-model-options="{ debounce: 800 }" placeholder="Search" name="srch-term" id="srch-term">
+				<div class="input-group-btn">
+					<button class="btn btn-default btn-disabled" ng-click="vm.search = undefined"><i class="glyphicon glyphicon-search"></i>
+				</div>
+			</div>
+			-->
+			
+			<ng-include src="'company-content/teams-us.html'"></ng-include>
 		
 		
 

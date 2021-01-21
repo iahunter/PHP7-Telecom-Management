@@ -46,6 +46,12 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
 
         $userid = $event->phone['username'];
         $newdn = $event->phone['dn'];
+		
+		if($event->phone['userprincipalname']){
+			$userprincipalname = $event->phone['userprincipalname']; 
+		}else{
+			$userprincipalname = null; 
+		}
 
         $createdby = $task->created_by;
 
@@ -53,22 +59,40 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
         try {
             // Get User ID from username.
             \Log::info('updateTeamsUserForVoiceEvent', ['log' => 'Entered Try']);
-
-            $user = $this->client->get_teams_csonline_user_by_userid($userid);
-            \Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user]);
-
+			
+			// Check if userprincipalname is passed in and is set. 
+			if($userprincipalname){
+				$user = $this->client->get_teams_csonline_user_by_userid($userprincipalname);
+				\Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $userprincipalname]);
+			}
+			else{
+				$user = $this->client->get_teams_csonline_user_by_userid($userid);
+				\Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user]);
+			}
+            
+			\Log::info('updateTeamsUserForVoiceEvent', ['gotuser' => $user]);
+			
             foreach ($user as $u) {
-                if (isset($u['sipAddress']) && $u['sipAddress']) {
-                    $sipaddress = $u['sipAddress'];
-                } else {
-                    $domain = env('DOMAIN');
-                    $sipaddress = "sip:{$userid}@{$domain}";
+				if (isset($u['userPrincipalName']) && $u['userPrincipalName']) {
+					
+					$upn = $u['userPrincipalName']; 
+					\Log::info('updateTeamsUserForVoiceEvent', ['userprincipalname' => $upn]);
                 }
+				
+				if (isset($u['sipAddress']) && $u['sipAddress']) {
+					$sipaddress = $u['sipAddress'];
+					break; 
+				} else {
+					$domain = env('DOMAIN');
+					$sipaddress = "sip:{$userid}@{$domain}";
+					break; 
+				}
             }
             // Check what hte current phone number is set to.
 
             $teams = [
                 'Alias'                  => "{$userid}",
+				//'UserPrincipalName'		 => "{$upn}",
                 'SipAddress'             => $sipaddress,
                 'OnPremLineURI'          => "tel:+1{$newdn}",
                 'EnterpriseVoiceEnabled' => 'True',
@@ -81,9 +105,16 @@ class Update_Teams_User_For_Voice_Listener implements ShouldQueue
             $teamsuser = $this->client->set_teams_user($body);
             \Log::info('updateTeamsUserForVoiceEvent', ['setuser' => $teamsuser]);
             // Check user after the set.
-
-            $user2 = $this->client->get_teams_csonline_user_by_userid($userid);
-            \Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user2]);
+			
+			// Check if userprincipalname is passed in and is set. 
+			if($userprincipalname){
+				$user2 = $this->client->get_teams_csonline_user_by_userid($userprincipalname);
+				\Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $userprincipalname]);
+			}
+			else{
+				$user2 = $this->client->get_teams_csonline_user_by_userid($userid);
+				\Log::info('updateTeamsUserForVoiceEvent', ['getuser' => $user2]);
+			}
 
             // Print out what the old number was and what it is now.
             $LOG['old'] = $user;

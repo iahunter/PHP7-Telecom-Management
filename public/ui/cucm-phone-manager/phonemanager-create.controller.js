@@ -140,6 +140,7 @@ angular
 									phone.adipphone = result.ipphone
 									phone.aduser = result.user
 									phone.aduserdisplayname = result.displayname
+									phone.adusersamaccountname = result.samaccountname
 									phone.aduseruserprincipalname = result.userprincipalname
 									
 									if(phone.aduser){
@@ -518,6 +519,14 @@ angular
 			
 			if(phone.device == "Microsoft Teams" || phone.device == "TeamsOnly" || phone.device == "PhoneWithTeams"){
 				phone.language = "english";
+			}
+			
+			if(vm.aduser.aduseruserprincipalname){
+				phone.userprincipalname = vm.aduser.aduseruserprincipalname
+			}
+			
+			if(vm.aduser.adusersamaccountname){
+				phone.samaccountname = vm.aduser.adusersamaccountname
 			}
 			
 			console.log(phone)

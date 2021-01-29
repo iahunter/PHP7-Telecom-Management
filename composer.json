@@ -33,7 +33,7 @@
         "metaclassing/utility": "dev-master",
         "phpseclib/phpseclib": "2.0.*",
         "tymon/jwt-auth": "^1.0",
-		"adldap/adldap": "4.0.4.x-dev",
+		"adldap/adldap": "dev-main",
         "silber/bouncer": "^1.0",
         "darkaonline/l5-swagger": "~3.0",
         "beberlei/assert": "^2.6",

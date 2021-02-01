@@ -2,12 +2,13 @@
 
 echo "grap-sonus-configs.sh Started..."
 
-cd /PATH_TO_APP/telephony/
+_mydir="$PWD"
+echo $_mydir
 
 php artisan sonus:getconfig
 
 # Checkout your SVN Repo in this directory
-cd /PATH_TO_APP/telephony/storage/sonus/company-sonus-svnrepo/
+cd $_mydir/telephony/storage/sonus/company-sonus-svnrepo/
 
 echo "Commiting Configs to Subversion..."
 

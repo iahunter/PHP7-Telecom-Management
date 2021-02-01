@@ -3,12 +3,13 @@
 printf "\n###########################################################\n"
 printf "Starting - grab-cucm-phoneconfigs.sh \n"
 
-cd /PATH_TO_APP/
+_mydir="$PWD"
+echo $_mydir
 
 php artisan callmanager:phonescan
 
 # Checkout your SVN Repo in this directory
-cd /PATH_TO_APP/storage/cucm/company-cucm/phones/
+cd $_mydir/storage/cucm/company-cucm/phones/
 
 echo "Commiting Configs to Subversion..."
 

@@ -4,12 +4,13 @@ printf "\n###########################################################\n"
 printf "Starting - grab-cucm-siteconfigs.sh \n"
 #echo "grab-cucm-siteconfigs.sh Started...\n"
 
-cd /PATH_TO_APP/
+_mydir="$PWD"
+echo $_mydir
 
 php artisan callmanager:sitescan
 
 # Checkout your SVN Repo in this directory
-cd /PATH_TO_APP/storage/cucm/company-cucm/sites/
+cd $_mydir/storage/cucm/company-cucm/sites/
 
 echo "Commiting Configs to Subversion..."
 

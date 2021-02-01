@@ -281,7 +281,7 @@
 												<div class="inputGroupContainer">
 													<div class="input-group">
 														<span class="input-group-addon"><i class="fa fa-server"></i></span>
-														<select class="form-control" required ng-model='vm.deviceForm.language = "english"' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="language">
+														<select class="form-control" required ng-model='vm.deviceForm.language' ng-options="language.name as language.name for language in vm.languages" data-width="100%" name="language">
 														</select>
 													</div>
 													<div ng-messages="addDeviceForm.language.$dirty && addDeviceForm.language.$error">

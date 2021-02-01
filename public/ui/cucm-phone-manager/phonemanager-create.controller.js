@@ -521,12 +521,14 @@ angular
 				phone.language = "english";
 			}
 			
-			if(vm.aduser.aduseruserprincipalname){
-				phone.userprincipalname = vm.aduser.aduseruserprincipalname
-			}
-			
-			if(vm.aduser.adusersamaccountname){
-				phone.samaccountname = vm.aduser.adusersamaccountname
+			if(vm.aduser){
+				if(vm.aduser.aduseruserprincipalname){
+					phone.userprincipalname = vm.aduser.aduseruserprincipalname
+				}
+				
+				if(vm.aduser.adusersamaccountname){
+					phone.samaccountname = vm.aduser.adusersamaccountname
+				}
 			}
 			
 			console.log(phone)

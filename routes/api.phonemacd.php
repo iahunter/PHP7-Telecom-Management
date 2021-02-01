@@ -87,6 +87,13 @@
      *         type="string"
      *     ),
      *     @SWG\Parameter(
+     *         name="userprincipalname",
+     *         in="formData",
+     *         description="UserPrincipalName - first.last@domain.com",
+     *         required=false,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
      *         name="dn",
      *         in="formData",
      *         description="Directory Number - Example: 4025551234",

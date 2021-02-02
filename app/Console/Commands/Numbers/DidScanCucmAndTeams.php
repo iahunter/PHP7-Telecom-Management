@@ -50,7 +50,7 @@ class DidScanCucmAndTeams extends Command
         // Get our list of NPA/NXX's
         $prefixes = $this->getDidNPANXXList();
 
-        //$prefixes = ["1" => ["1001234"]];
+        //$prefixes = ["1" => ["531241"]];
 
         $prefix_count = 0;
         $total_prefix_count = count($prefixes);
@@ -64,7 +64,8 @@ class DidScanCucmAndTeams extends Command
                 // Get the devices for this npa/nxx out of cucm
                 $teamsdidinfo = $this->getTeamsEnterpriseVoiceUsers($country_code);
             } catch (\Exception $e) {
-                echo 'Teams blew uP: '.$e->getMessage().PHP_EOL;
+				$teamsdidinfo = null;	
+                echo 'Teams Errored Out! Did not return enterprise voice users: '.$e->getMessage().PHP_EOL;
             }
 
             //print_r($teamsdidinfo);
@@ -199,7 +200,7 @@ class DidScanCucmAndTeams extends Command
     // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function getCucmDidsByNPANXX($country_code, $npanxx)
     {
-        echo 'Getting NAPNXX: '.$npanxx.' numbers from CUCM...'.PHP_EOL;
+        echo 'Getting NAPNXX: +'.$country_code.$npanxx.' numbers from CUCM...'.PHP_EOL;
         try {
             $cucm = new \Iahunter\CallmanagerAXL\Callmanager(env('CALLMANAGER_URL'),
                                                     storage_path(env('CALLMANAGER_WSDL')),
@@ -243,7 +244,7 @@ class DidScanCucmAndTeams extends Command
     // Get the DID information for a single NPA/NXX and return a USEFUL array? key=>value by DID?
     protected function getTeamsDidsByNPANXX($country_code, $npanxx)
     {
-        echo 'Getting NAPNXX: '.$npanxx.' numbers from Teams...'.PHP_EOL;
+        echo 'Getting NAPNXX: +'.$country_code.$npanxx.' numbers from Teams...'.PHP_EOL;
         try {
             $gizmo = new Gizmo(env('MICROSOFT_TENANT'), env('GIZMO_URL'), env('GIZMO_CLIENT_ID'), env('GIZMO_CLIENT_SECRET'), env('GIZMO_SCOPE'));
 
@@ -269,7 +270,7 @@ class DidScanCucmAndTeams extends Command
             if (isset($user['onPremLineURI']) && $user['onPremLineURI']) {
                 $number = strtolower($user['onPremLineURI']);
                 //print "Working on number: ". $number.PHP_EOL;
-                $count = count($country_code);
+                $count = strlen($country_code);
 
                 if (preg_match("/tel:\+{$country_code}/", $number, $matches)) {
                     $count = $count + 5;
@@ -310,7 +311,6 @@ class DidScanCucmAndTeams extends Command
             $gizmo->get_oauth2_token();
 
             $teamsinfo = $gizmo->get_teams_csonline_users_voice_enabled();
-
             // Process the junk we got back from call mangler and turn it into something useful
             $results = [];
             if (! $teamsinfo) {
@@ -329,7 +329,8 @@ class DidScanCucmAndTeams extends Command
             if (isset($user['onPremLineURI']) && $user['onPremLineURI']) {
                 $number = strtolower($user['onPremLineURI']);
                 //print "Working on number: ". $number.PHP_EOL;
-                $count = count($country_code);
+			           
+			$count = strlen($country_code);
 
                 if (preg_match("/tel:\+{$country_code}/", $number, $matches)) {
                     $count = $count + 5;

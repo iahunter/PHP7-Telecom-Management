@@ -64,7 +64,7 @@ class DidScanCucmAndTeams extends Command
                 // Get the devices for this npa/nxx out of cucm
                 $teamsdidinfo = $this->getTeamsEnterpriseVoiceUsers($country_code);
             } catch (\Exception $e) {
-				$teamsdidinfo = null;	
+                $teamsdidinfo = null;
                 echo 'Teams Errored Out! Did not return enterprise voice users: '.$e->getMessage().PHP_EOL;
             }
 
@@ -329,8 +329,8 @@ class DidScanCucmAndTeams extends Command
             if (isset($user['onPremLineURI']) && $user['onPremLineURI']) {
                 $number = strtolower($user['onPremLineURI']);
                 //print "Working on number: ". $number.PHP_EOL;
-			           
-			$count = strlen($country_code);
+
+                $count = strlen($country_code);
 
                 if (preg_match("/tel:\+{$country_code}/", $number, $matches)) {
                     $count = $count + 5;

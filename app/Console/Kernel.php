@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\CucmSiteScan::class,
         Commands\CallManager\CucmPhoneScan::class,
 
-	// Add back in if not using Teams - this has been replaced by Commands\Numbers\DidScanCucmAndTeams
+        // Add back in if not using Teams - this has been replaced by Commands\Numbers\DidScanCucmAndTeams
         //Commands\CallManager\DidScanCucm::class,
 
         Commands\CallManager\CucmPhoneScanOnDemand::class,

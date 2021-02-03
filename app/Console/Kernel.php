@@ -18,7 +18,9 @@ class Kernel extends ConsoleKernel
         Commands\CallManager\Ldapsync::class,
         Commands\CallManager\CucmSiteScan::class,
         Commands\CallManager\CucmPhoneScan::class,
-        Commands\CallManager\DidScanCucm::class,
+
+	// Add back in if not using Teams - this has been replaced by Commands\Numbers\DidScanCucmAndTeams
+        //Commands\CallManager\DidScanCucm::class,
 
         Commands\CallManager\CucmPhoneScanOnDemand::class,
         Commands\CallManager\CucmPhoneSiteMove::class,

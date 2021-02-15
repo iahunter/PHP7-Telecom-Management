@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/ldap/start",
+     *     path="/api/cucm/ldap/start",
      *     tags={"Management - CUCM"},
      *     summary="Start LDAP Sync",
      *     description="",
@@ -19,7 +19,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/ldap/stop",
+     *     path="/api/cucm/ldap/stop",
      *     tags={"Management - CUCM"},
      *     summary="Stop LDAP Sync",
      *     description="",
@@ -36,7 +36,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/ldap/status",
+     *     path="/api/cucm/ldap/status",
      *     tags={"Management - CUCM"},
      *     summary="Get LDAP Sync Status",
      *     description="",
@@ -53,7 +53,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/css",
+     *     path="/api/cucm/css",
      *     tags={"Management - CUCM"},
      *     summary="List Css details",
      *     description="",
@@ -70,7 +70,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/dateandtime",
+     *     path="/api/cucm/dateandtime",
      *     tags={"Management - CUCM"},
      *     summary="List Date Time Groups",
      *     description="",
@@ -87,7 +87,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/css/{name}",
+     *     path="/api/cucm/css/{name}",
      *     tags={"Management - CUCM"},
      *     summary="List Css details by Name",
      *     description="",
@@ -115,7 +115,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/routepattern/{routePartitionName}",
+     *     path="/api/cucm/routepattern/{routePartitionName}",
      *     tags={"Management - CUCM"},
      *     summary="List Route Patterns details by Partition",
      *     description="",
@@ -143,7 +143,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/routeplan/summary/{number}",
+     *     path="/api/cucm/routeplan/summary/{number}",
      *     tags={"Management - CUCM"},
      *     summary="List Route Plan Numbers Summary by Number",
      *     description="",
@@ -171,7 +171,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/routeplan/details/{number}",
+     *     path="/api/cucm/routeplan/details/{number}",
      *     tags={"Management - CUCM"},
      *     summary="List Route Plan Numbers Details by Number",
      *     description="",
@@ -199,7 +199,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/search/{type}/{name}",
+     *     path="/api/cucm/search/{type}/{name}",
      *     tags={"Management - CUCM"},
      *     summary="List Object Type details by Name",
      *     description="",
@@ -234,7 +234,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/searchsite/{type}/{sitecode}",
+     *     path="/api/cucm/searchsite/{type}/{sitecode}",
      *     tags={"Management - CUCM"},
      *     summary="List Object Type details by Site",
      *     description="",
@@ -269,7 +269,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/searchuuid/{type}/{uuid}",
+     *     path="/api/cucm/searchuuid/{type}/{uuid}",
      *     tags={"Management - CUCM"},
      *     summary="List Object Type details by UUID",
      *     description="",

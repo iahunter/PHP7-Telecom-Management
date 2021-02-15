@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/line/{partition}/{pattern}",
+     *     path="/api/cucm/line/{partition}/{pattern}",
      *     tags={"Management - CUCM - Line - Provisioning"},
      *     summary="Get Line Details by Partition and Pattern",
      *     description="",
@@ -37,7 +37,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/cucm/line/cfa",
+     *     path="/api/cucm/line/cfa",
      *     tags={"Management - CUCM - Line - Provisioning"},
      *     summary="Update Line CFA in CUCM",
      *     description="",
@@ -86,7 +86,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/cucm/line",
+     *     path="/api/cucm/line",
      *     tags={"Management - CUCM - Line - Provisioning"},
      *     summary="Update Line in CUCM",
      *     description="Update Line",
@@ -118,7 +118,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/cucm/line/{uuid}",
+     *     path="/api/cucm/line/{uuid}",
      *     tags={"Management - CUCM - Line - Provisioning"},
      *     summary="Remove Line by UUID",
      *     description="",

@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/reports/teams/allvoiceusers",
+     *     path="/api/reports/teams/allvoiceusers",
      *     tags={"Reports - Microsoft Teams"},
      *     summary="Get All Teams Voice Users",
      *     description="",

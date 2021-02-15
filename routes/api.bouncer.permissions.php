@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/bouncer/permissions",
+     *     path="/api/bouncer/permissions",
      *     tags={"Admin - Bouncer Permissions"},
      *     summary="List User Permissions",
      *     description="",

@@ -11,7 +11,7 @@
     $api->group($options, function ($api) {
         /**
          * @SWG\Get(
-         *     path="/telephony/api/authenticate",
+         *     path="/api/authenticate",
          *     tags={"Authentication"},
          *     summary="Get JSON web token by TLS client certificate authentication",
          *     @SWG\Response(
@@ -25,7 +25,7 @@
 
         /**
          * @SWG\Get(
-         *     path="/telephony/api/authenticate/renew",
+         *     path="/api/authenticate/renew",
          *     tags={"Authentication"},
          *     summary="Get JSON web token by TLS client certificate authentication",
          *     @SWG\Response(
@@ -39,7 +39,7 @@
 
         /**
          * @SWG\Post(
-         *     path="/telephony/api/authenticate",
+         *     path="/api/authenticate",
          *     tags={"Authentication"},
          *     summary="Get JSON web token by LDAP user authentication",
          *     @SWG\Parameter(

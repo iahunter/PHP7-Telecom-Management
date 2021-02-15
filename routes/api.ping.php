@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/pinghost/{host}",
+     *     path="/api/pinghost/{host}",
      *     tags={"Monitoring"},
      *     summary="Ping Host",
      *     description="",

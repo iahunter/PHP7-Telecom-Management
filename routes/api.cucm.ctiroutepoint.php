@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/ctiroutepoint/{name}",
+     *     path="/api/cucm/ctiroutepoint/{name}",
      *     tags={"Management - CUCM - CTI Route Point Provisioning"},
      *     summary="Get CTI Route Point Details by Name",
      *     description="",
@@ -30,7 +30,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/cucm/ctiroutepoint/{name}",
+     *     path="/api/cucm/ctiroutepoint/{name}",
      *     tags={"Management - CUCM - CTI Route Point Provisioning"},
      *     summary="Remove CTI Route Point by Name",
      *     description="",
@@ -55,7 +55,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/ctiroutepoint",
+     *     path="/api/cucm/ctiroutepoint",
      *     tags={"Management - CUCM - CTI Route Point Provisioning"},
      *     summary="Create New CTI Route Point in CUCM",
      *     description="",

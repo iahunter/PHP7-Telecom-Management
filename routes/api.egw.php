@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/egw/cisco_phone/all",
+     *     path="/api/egw/cisco_phone/all",
      *     tags={"Management - West 911Enable EGW"},
      *     summary="Seach for current user by alias",
      *     description="",
@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/egw/cisco_phone/search/name/{name}",
+     *     path="/api/egw/cisco_phone/search/name/{name}",
      *     tags={"Management - West 911Enable EGW"},
      *     summary="Seach for current user by alias",
      *     description="",
@@ -51,7 +51,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/egw/endpoint/all",
+     *     path="/api/egw/endpoint/all",
      *     tags={"Management - West 911Enable EGW"},
      *     summary="Seach for current user by alias",
      *     description="",
@@ -72,7 +72,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/egw/endpoint/search/name/{name}",
+     *     path="/api/egw/endpoint/search/name/{name}",
      *     tags={"Management - West 911Enable EGW"},
      *     summary="Seach for current user by alias",
      *     description="",
@@ -100,7 +100,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/egw/endpoint_erlid/all",
+     *     path="/api/egw/endpoint_erlid/all",
      *     tags={"Management - West 911Enable EGW"},
      *     summary="Seach for current user by alias",
      *     description="",
@@ -121,7 +121,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/egw/erls/all",
+     *     path="/api/egw/erls/all",
      *     tags={"Management - West 911Enable EGW"},
      *     summary="Seach for current user by alias",
      *     description="",
@@ -142,7 +142,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/egw/list_erls_and_phone_count_by_erl",
+     *     path="/api/egw/list_erls_and_phone_count_by_erl",
      *     tags={"Management - West 911Enable EGW"},
      *     summary="List ERLs with Count of Phones by ERL",
      *     description="",

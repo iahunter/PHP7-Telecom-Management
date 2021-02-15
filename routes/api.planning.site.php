@@ -5,7 +5,7 @@
     ********************************/
     /**
      * @SWG\Post(
-     *     path="/telephony/api/site",
+     *     path="/api/site",
      *     tags={"Site Planning - Site"},
      *     summary="Create Site Plan",
      *     description="
@@ -149,7 +149,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/site/{id}",
+     *     path="/api/site/{id}",
      *     tags={"Site Planning - Site"},
      *     summary="Get Site Plan by ID",
      *     description="",
@@ -173,7 +173,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/site/{id}/phoneplans",
+     *     path="/api/site/{id}/phoneplans",
      *     tags={"Site Planning - Site"},
      *     summary="Get Site Plan Phone Plans by ID",
      *     description="",
@@ -197,7 +197,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/site/{id}/phones",
+     *     path="/api/site/{id}/phones",
      *     tags={"Site Planning - Site"},
      *     summary="Get Site Plan Phones by ID",
      *     description="",
@@ -221,7 +221,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/site",
+     *     path="/api/site",
      *     tags={"Site Planning - Site"},
      *     summary="List of Site Plans for authorized user",
      *     description="",
@@ -239,7 +239,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/site/{id}",
+     *     path="/api/site/{id}",
      *     tags={"Site Planning - Site"},
      *     summary="Update Site Plan by ID for authorized user",
      *     description="
@@ -349,7 +349,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/site/{id}",
+     *     path="/api/site/{id}",
      *     tags={"Site Planning - Site"},
      *     summary="Delete Site Plan by ID for authorized user",
      *     description="This deletes the block and its child phones",

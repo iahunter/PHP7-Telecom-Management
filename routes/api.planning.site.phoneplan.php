@@ -6,7 +6,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/phoneplan",
+     *     path="/api/phoneplan",
      *     tags={"Site Planning - Phone Plan"},
      *     summary="Create New Phone Plans for Phone Import Job",
      *     description="",
@@ -78,7 +78,7 @@
     // List phones by block id
     /**
      * @SWG\Get(
-     *     path="/telephony/api/phoneplan/site/{id}",
+     *     path="/api/phoneplan/site/{id}",
      *     tags={"Site Planning - Phone Plan"},
      *     summary="List phones for Site Plan by ID for authorized user",
      *     description="List child phones for Site Plan by ID",
@@ -107,7 +107,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/phoneplan/id/{id}",
+     *     path="/api/phoneplan/id/{id}",
      *     tags={"Site Planning - Phone Plan"},
      *     summary="Get Phoneplan by ID",
      *     description="",
@@ -132,7 +132,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/phoneplan/id/{id}/phones",
+     *     path="/api/phoneplan/id/{id}/phones",
      *     tags={"Site Planning - Phone Plan"},
      *     summary="Get Phone Plan Phones by Plan ID",
      *     description="",
@@ -157,7 +157,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/phoneplan/name/{name}",
+     *     path="/api/phoneplan/name/{name}",
      *     tags={"Site Planning - Phone Plan"},
      *     summary="Get phone plan by name",
      *     description="",
@@ -182,7 +182,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/phoneplan/{id}",
+     *     path="/api/phoneplan/{id}",
      *     tags={"Site Planning - Phone Plan"},
      *     summary="Update phone by ID for authorized user",
      *     description="This can be huge and need to add pagination",
@@ -256,7 +256,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/phoneplan/{id}",
+     *     path="/api/phoneplan/{id}",
      *     tags={"Site Planning - Phone Plan"},
      *     summary="Delete Phone from Site Plan by ID for authorized user",
      *     description="This deletes the phone by ID number",

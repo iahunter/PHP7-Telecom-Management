@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/phone/{name}",
+     *     path="/api/cucm/phone/{name}",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Get Phone Details by Name",
      *     description="",
@@ -30,7 +30,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/resetphone/{name}",
+     *     path="/api/cucm/resetphone/{name}",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Reset Phone Details by Name",
      *     description="",
@@ -58,7 +58,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/phone_search/{name}",
+     *     path="/api/cucm/phone_search/{name}",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="List Phones by Searching Name",
      *     description="",
@@ -86,7 +86,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/phone_search_by_key/{key}/{search}",
+     *     path="/api/cucm/phone_search_by_key/{key}/{search}",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="List Phones by Searching Specified Key",
      *     description="",
@@ -122,7 +122,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/cucm/phone/{name}",
+     *     path="/api/cucm/phone/{name}",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Remove Phone by Name",
      *     description="",
@@ -147,7 +147,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/phone_and_line",
+     *     path="/api/cucm/phone_and_line",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Create New Phone and Line in CUCM",
      *     description="",
@@ -248,7 +248,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/phone",
+     *     path="/api/cucm/phone",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Create New Phone in CUCM",
      *     description="",
@@ -349,7 +349,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/line",
+     *     path="/api/cucm/line",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Create New Line in CUCM",
      *     description="",
@@ -450,7 +450,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/cucm/phone/site",
+     *     path="/api/cucm/phone/site",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Update Phone Site in CUCM",
      *     description="Update Phone Site",
@@ -485,7 +485,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/cucm/phone",
+     *     path="/api/cucm/phone",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Update Phone in CUCM",
      *     description="Update Phone",
@@ -517,7 +517,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/upload/phones",
+     *     path="/api/cucm/upload/phones",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Upload Phone Planning Document in CUCM",
      *     description="Upload .csv file of phones",
@@ -545,7 +545,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/paste/phones",
+     *     path="/api/cucm/paste/phones",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Upload Phone Planning Document in CUCM",
      *     description="
@@ -598,7 +598,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/phonecheck",
+     *     path="/api/cucm/phonecheck",
      *     tags={"Management - CUCM - Phone Provisioning"},
      *     summary="Check if Phones are provisioned. Send array of phones to check. Return phones that are provisioned",
      *     description="",

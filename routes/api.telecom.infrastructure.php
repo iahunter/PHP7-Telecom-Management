@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/telecom_infrastructure",
+     *     path="/api/telecom_infrastructure",
      *     tags={"Telecom Infrastructure"},
      *     summary="Get List of Telecom Infrastructure Devices",
      *     description="",
@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/telecom_infrastructure/id/{id}",
+     *     path="/api/telecom_infrastructure/id/{id}",
      *     tags={"Telecom Infrastructure"},
      *     summary="Get List of Telecom Infrastructure Devices",
      *     description="",
@@ -51,7 +51,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/telecom_infrastructure",
+     *     path="/api/telecom_infrastructure",
      *     tags={"Telecom Infrastructure"},
      *     summary="Create Telecom Device",
      *     description="",
@@ -149,7 +149,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/telecom_infrastructure/id/{id}",
+     *     path="/api/telecom_infrastructure/id/{id}",
      *     tags={"Telecom Infrastructure"},
      *     summary="Update Telecom Device by ID for authorized user",
      *     description="updateDevice",
@@ -256,7 +256,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/telecom_infrastructure/id/{id}",
+     *     path="/api/telecom_infrastructure/id/{id}",
      *     tags={"Telecom Infrastructure"},
      *     summary="Delete Device by ID for authorized user",
      *     description="This deletes the block and its child Dids",

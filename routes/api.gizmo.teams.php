@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/gizmo/teams/number/{countrycode}/{number}",
+     *     path="/api/gizmo/teams/number/{countrycode}/{number}",
      *     tags={"Management - Gizmo - Teams - User Provisioning"},
      *     summary="Get Teams User Info from Number",
      *     description="",
@@ -37,7 +37,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/gizmo/teams/allvoiceusers",
+     *     path="/api/gizmo/teams/allvoiceusers",
      *     tags={"Management - Gizmo - Teams - User Provisioning"},
      *     summary="Get All Teams Voice Users",
      *     description="",

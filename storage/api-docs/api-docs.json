@@ -5,7 +5,7 @@
         "version": "1.0"
     },
     "paths": {
-        "/telephony/api/authenticate": {
+        "/api/authenticate": {
             "get": {
                 "tags": [
                     "Authentication"
@@ -45,7 +45,7 @@
                 }
             }
         },
-        "/telephony/api/authenticate/renew": {
+        "/api/authenticate/renew": {
             "get": {
                 "tags": [
                     "Authentication"
@@ -58,7 +58,7 @@
                 }
             }
         },
-        "/telephony/api/bouncer/permissions": {
+        "/api/bouncer/permissions": {
             "get": {
                 "tags": [
                     "Admin - Bouncer Permissions"
@@ -82,7 +82,7 @@
                 }
             }
         },
-        "/telephony/api/calls/listcallstats": {
+        "/api/calls/listcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -106,7 +106,7 @@
                 }
             }
         },
-        "/telephony/api/calls/dayscallstats": {
+        "/api/calls/dayscallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -130,7 +130,7 @@
                 }
             }
         },
-        "/telephony/api/calls/weekscallstats": {
+        "/api/calls/weekscallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -154,7 +154,7 @@
                 }
             }
         },
-        "/telephony/api/calls/monthcallstats": {
+        "/api/calls/monthcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -178,7 +178,7 @@
                 }
             }
         },
-        "/telephony/api/calls/monthdailypeakcallstats": {
+        "/api/calls/monthdailypeakcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -202,7 +202,7 @@
                 }
             }
         },
-        "/telephony/api/calls/threemonthdailypeakcallstats": {
+        "/api/calls/threemonthdailypeakcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -226,7 +226,7 @@
                 }
             }
         },
-        "/telephony/api/calls/threemonthdailypeakcallstats_sql": {
+        "/api/calls/threemonthdailypeakcallstats_sql": {
             "get": {
                 "tags": [
                     "Calls"
@@ -250,7 +250,7 @@
                 }
             }
         },
-        "/telephony/api/calls/oneyeardailypeakcallstats_sql": {
+        "/api/calls/oneyeardailypeakcallstats_sql": {
             "get": {
                 "tags": [
                     "Calls"
@@ -274,7 +274,7 @@
                 }
             }
         },
-        "/telephony/api/calls/callsbydaterange": {
+        "/api/calls/callsbydaterange": {
             "post": {
                 "tags": [
                     "Calls"
@@ -311,7 +311,7 @@
                 }
             }
         },
-        "/telephony/api/cucmcdrs/search/{column}/{search}": {
+        "/api/cucmcdrs/search/{column}/{search}": {
             "get": {
                 "tags": [
                     "CDR - CUCM History"
@@ -348,7 +348,7 @@
                 }
             }
         },
-        "/telephony/api/cucmcdrs/calls_with_loss_by_daterange": {
+        "/api/cucmcdrs/calls_with_loss_by_daterange": {
             "post": {
                 "tags": [
                     "CDR - CUCM History"
@@ -385,7 +385,7 @@
                 }
             }
         },
-        "/telephony/api/cucmcdrs/list_last_24hr_calls_by_number_search": {
+        "/api/cucmcdrs/list_last_24hr_calls_by_number_search": {
             "post": {
                 "tags": [
                     "CDR - CUCM History"
@@ -415,7 +415,7 @@
                 }
             }
         },
-        "/telephony/api/cucmcdrs/list_last_24hr_calls_with_loss": {
+        "/api/cucmcdrs/list_last_24hr_calls_with_loss": {
             "get": {
                 "tags": [
                     "CDR - CUCM History"
@@ -439,7 +439,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/ctiroutepoint/{name}": {
+        "/api/cucm/ctiroutepoint/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM - CTI Route Point Provisioning"
@@ -500,7 +500,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/ctiroutepoint": {
+        "/api/cucm/ctiroutepoint": {
             "post": {
                 "tags": [
                     "Management - CUCM - CTI Route Point Provisioning"
@@ -609,7 +609,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/listcallstats": {
+        "/api/cucm/gatewaycalls/listcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -633,7 +633,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/dayscallstats": {
+        "/api/cucm/gatewaycalls/dayscallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -657,7 +657,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/weekscallstats": {
+        "/api/cucm/gatewaycalls/weekscallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -681,7 +681,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/monthcallstats": {
+        "/api/cucm/gatewaycalls/monthcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -705,7 +705,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/monthdailypeakcallstats": {
+        "/api/cucm/gatewaycalls/monthdailypeakcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -729,7 +729,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/threemonthdailypeakcallstats": {
+        "/api/cucm/gatewaycalls/threemonthdailypeakcallstats": {
             "get": {
                 "tags": [
                     "Calls"
@@ -753,7 +753,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/threemonthdailypeakcallstats_sql": {
+        "/api/cucm/gatewaycalls/threemonthdailypeakcallstats_sql": {
             "get": {
                 "tags": [
                     "Calls"
@@ -777,7 +777,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/oneyeardailypeakcallstats_sql": {
+        "/api/cucm/gatewaycalls/oneyeardailypeakcallstats_sql": {
             "get": {
                 "tags": [
                     "Calls"
@@ -801,7 +801,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/gatewaycalls/callsbydaterange": {
+        "/api/cucm/gatewaycalls/callsbydaterange": {
             "post": {
                 "tags": [
                     "Calls"
@@ -838,7 +838,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/line/{partition}/{pattern}": {
+        "/api/cucm/line/{partition}/{pattern}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Line - Provisioning"
@@ -878,7 +878,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/line/cfa": {
+        "/api/cucm/line/cfa": {
             "put": {
                 "tags": [
                     "Management - CUCM - Line - Provisioning"
@@ -932,7 +932,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/line": {
+        "/api/cucm/line": {
             "put": {
                 "tags": [
                     "Management - CUCM - Line - Provisioning"
@@ -1083,7 +1083,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/line/{uuid}": {
+        "/api/cucm/line/{uuid}": {
             "delete": {
                 "tags": [
                     "Management - CUCM - Line - Provisioning"
@@ -1113,7 +1113,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/phone/{name}": {
+        "/api/cucm/phone/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1174,7 +1174,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/resetphone/{name}": {
+        "/api/cucm/resetphone/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1207,7 +1207,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/phone_search/{name}": {
+        "/api/cucm/phone_search/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1240,7 +1240,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/phone_search_by_key/{key}/{search}": {
+        "/api/cucm/phone_search_by_key/{key}/{search}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1288,7 +1288,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/phone_and_line": {
+        "/api/cucm/phone_and_line": {
             "post": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1404,7 +1404,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/phone": {
+        "/api/cucm/phone": {
             "put": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1555,7 +1555,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/phone/site": {
+        "/api/cucm/phone/site": {
             "put": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1595,7 +1595,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/upload/phones": {
+        "/api/cucm/upload/phones": {
             "post": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1628,7 +1628,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/paste/phones": {
+        "/api/cucm/paste/phones": {
             "post": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1684,7 +1684,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/phonecheck": {
+        "/api/cucm/phonecheck": {
             "post": {
                 "tags": [
                     "Management - CUCM - Phone Provisioning"
@@ -1724,7 +1724,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/ldap/start": {
+        "/api/cucm/ldap/start": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1745,7 +1745,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/ldap/stop": {
+        "/api/cucm/ldap/stop": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1766,7 +1766,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/ldap/status": {
+        "/api/cucm/ldap/status": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1787,7 +1787,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/css": {
+        "/api/cucm/css": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1808,7 +1808,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/dateandtime": {
+        "/api/cucm/dateandtime": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1829,7 +1829,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/css/{name}": {
+        "/api/cucm/css/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1862,7 +1862,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/routepattern/{routePartitionName}": {
+        "/api/cucm/routepattern/{routePartitionName}": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1895,7 +1895,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/routeplan/summary/{number}": {
+        "/api/cucm/routeplan/summary/{number}": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1928,7 +1928,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/routeplan/details/{number}": {
+        "/api/cucm/routeplan/details/{number}": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -1961,7 +1961,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/search/{type}/{name}": {
+        "/api/cucm/search/{type}/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -2001,7 +2001,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/searchsite/{type}/{sitecode}": {
+        "/api/cucm/searchsite/{type}/{sitecode}": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -2041,7 +2041,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/searchuuid/{type}/{uuid}": {
+        "/api/cucm/searchuuid/{type}/{uuid}": {
             "get": {
                 "tags": [
                     "Management - CUCM"
@@ -2081,7 +2081,7 @@
                 }
             }
         },
-        "/telephony/api/cucmris/getphone/ip/{name}": {
+        "/api/cucmris/getphone/ip/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM RIS - API"
@@ -2111,7 +2111,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/migration/summary": {
+        "/api/cucm/site/migration/summary": {
             "post": {
                 "tags": [
                     "Management - CUCM - Site Migration"
@@ -2182,7 +2182,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/migration/run": {
+        "/api/cucm/site/migration/run": {
             "post": {
                 "tags": [
                     "Management - CUCM - Site Migration"
@@ -2226,7 +2226,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/migration/phonescan": {
+        "/api/cucm/site/migration/phonescan": {
             "get": {
                 "tags": [
                     "Management - CUCM - Site Migration"
@@ -2259,7 +2259,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/rename_site": {
+        "/api/cucm/site/rename_site": {
             "post": {
                 "tags": [
                     "Management - CUCM - Site Migration"
@@ -2296,7 +2296,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/delete/{sitecode}": {
+        "/api/cucm/site/delete/{sitecode}": {
             "delete": {
                 "tags": [
                     "Management - CUCM - Site Migration"
@@ -2329,7 +2329,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/sites": {
+        "/api/cucm/sites": {
             "get": {
                 "tags": [
                     "Management - CUCM - Site Provisioning"
@@ -2353,7 +2353,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/summary/{name}": {
+        "/api/cucm/site/summary/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Site Provisioning"
@@ -2386,7 +2386,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site/details/{name}": {
+        "/api/cucm/site/details/{name}": {
             "get": {
                 "tags": [
                     "Management - CUCM - Site Provisioning"
@@ -2419,7 +2419,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/site": {
+        "/api/cucm/site": {
             "post": {
                 "tags": [
                     "Management - CUCM - Site Provisioning"
@@ -2531,7 +2531,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/user/{username}": {
+        "/api/cucm/user/{username}": {
             "get": {
                 "tags": [
                     "Management - CUCM - User Provisioning"
@@ -2564,7 +2564,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/user": {
+        "/api/cucm/user": {
             "post": {
                 "tags": [
                     "Management - CUCM - User Provisioning"
@@ -2625,7 +2625,7 @@
                 }
             }
         },
-        "/telephony/api/reports/sites": {
+        "/api/reports/sites": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2646,7 +2646,7 @@
                 }
             }
         },
-        "/telephony/api/reports/site/{sitecode}": {
+        "/api/reports/site/{sitecode}": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2676,7 +2676,7 @@
                 }
             }
         },
-        "/telephony/api/reports/site/{sitecode}/erl/discrepancies": {
+        "/api/reports/site/{sitecode}/erl/discrepancies": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2706,7 +2706,7 @@
                 }
             }
         },
-        "/telephony/api/reports/phones/{sitecode}": {
+        "/api/reports/phones/{sitecode}": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2736,7 +2736,7 @@
                 }
             }
         },
-        "/telephony/api/reports/phonesbyerl/{erl}": {
+        "/api/reports/phonesbyerl/{erl}": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2766,7 +2766,7 @@
                 }
             }
         },
-        "/telephony/api/reports/phoneslikeerl/{erl}": {
+        "/api/reports/phoneslikeerl/{erl}": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2796,7 +2796,7 @@
                 }
             }
         },
-        "/telephony/api/reports/devicepoolfromerl/{erl}": {
+        "/api/reports/devicepoolfromerl/{erl}": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2826,7 +2826,7 @@
                 }
             }
         },
-        "/telephony/api/reports/phone/{name}": {
+        "/api/reports/phone/{name}": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2856,7 +2856,7 @@
                 }
             }
         },
-        "/telephony/api/reports/siteE911TrunkingReport": {
+        "/api/reports/siteE911TrunkingReport": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2877,7 +2877,7 @@
                 }
             }
         },
-        "/telephony/api/reports/get_phone_models_inuse": {
+        "/api/reports/get_phone_models_inuse": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2898,7 +2898,7 @@
                 }
             }
         },
-        "/telephony/api/reports/get_count_phone_models_inuse": {
+        "/api/reports/get_count_phone_models_inuse": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2919,7 +2919,7 @@
                 }
             }
         },
-        "/telephony/api/reports/linecleanup": {
+        "/api/reports/linecleanup": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2940,7 +2940,7 @@
                 }
             }
         },
-        "/telephony/api/reports/get_count_phone_by_erl": {
+        "/api/reports/get_count_phone_by_erl": {
             "get": {
                 "tags": [
                     "Reports - CUCM"
@@ -2961,7 +2961,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/search/{alias}": {
+        "/api/cupi/user/search/{alias}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -2994,7 +2994,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/search/email/{email}": {
+        "/api/cupi/user/search/email/{email}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3027,7 +3027,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/getLDAPUserbyAlias/{alias}": {
+        "/api/cupi/user/getLDAPUserbyAlias/{alias}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3060,7 +3060,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/extension/{extension}": {
+        "/api/cupi/user/extension/{extension}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3093,7 +3093,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/ldapimport": {
+        "/api/cupi/user/ldapimport": {
             "post": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3140,7 +3140,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/create": {
+        "/api/cupi/user/create": {
             "post": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3187,7 +3187,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/delete/{username}": {
+        "/api/cupi/user/delete/{username}": {
             "delete": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3217,7 +3217,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplate/{name}": {
+        "/api/cupi/usertemplate/{name}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3250,7 +3250,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplate/create": {
+        "/api/cupi/usertemplate/create": {
             "post": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3311,7 +3311,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplate/site": {
+        "/api/cupi/usertemplate/site": {
             "post": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3378,7 +3378,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplate/deletebyname/{name}": {
+        "/api/cupi/usertemplate/deletebyname/{name}": {
             "delete": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3408,7 +3408,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplates/listusertemplatesbysite/{sitecode}": {
+        "/api/cupi/usertemplates/listusertemplatesbysite/{sitecode}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3441,7 +3441,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplates/listusertemplates": {
+        "/api/cupi/usertemplates/listusertemplates": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3465,7 +3465,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplates/list_call_handlers": {
+        "/api/cupi/usertemplates/list_call_handlers": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3489,7 +3489,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/callhandler/extension/{extension}": {
+        "/api/cupi/callhandler/extension/{extension}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3522,7 +3522,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/usertemplates/names": {
+        "/api/cupi/usertemplates/names": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3546,7 +3546,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/timezones": {
+        "/api/cupi/timezones": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3570,7 +3570,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/listexternalservices": {
+        "/api/cupi/listexternalservices": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3594,7 +3594,7 @@
                 }
             }
         },
-        "/telephony/api/cupi/user/getuserunifiedmessaging/{objectid}": {
+        "/api/cupi/user/getuserunifiedmessaging/{objectid}": {
             "get": {
                 "tags": [
                     "Management - UnityConnection"
@@ -3627,7 +3627,7 @@
                 }
             }
         },
-        "/telephony/api/didblock": {
+        "/api/didblock": {
             "get": {
                 "tags": [
                     "Did Block"
@@ -3729,7 +3729,7 @@
                 }
             }
         },
-        "/telephony/api/didblock/{id}": {
+        "/api/didblock/{id}": {
             "get": {
                 "tags": [
                     "Did Block"
@@ -3836,7 +3836,7 @@
                 }
             }
         },
-        "/telephony/api/didblock/sitecode/{sitecode}": {
+        "/api/didblock/sitecode/{sitecode}": {
             "get": {
                 "tags": [
                     "Did Block"
@@ -3866,7 +3866,7 @@
                 }
             }
         },
-        "/telephony/api/didblock/number/{number}": {
+        "/api/didblock/number/{number}": {
             "get": {
                 "tags": [
                     "Did Block"
@@ -3896,7 +3896,7 @@
                 }
             }
         },
-        "/telephony/api/didblock/{id}/dids": {
+        "/api/didblock/{id}/dids": {
             "get": {
                 "tags": [
                     "Did"
@@ -3926,7 +3926,7 @@
                 }
             }
         },
-        "/telephony/api/did/id/{id}": {
+        "/api/did/id/{id}": {
             "get": {
                 "tags": [
                     "Did"
@@ -3956,7 +3956,7 @@
                 }
             }
         },
-        "/telephony/api/did/number/{number}": {
+        "/api/did/number/{number}": {
             "get": {
                 "tags": [
                     "Did"
@@ -3986,7 +3986,7 @@
                 }
             }
         },
-        "/telephony/api/did/searchbyparent/{parentid}/{column}/{search}": {
+        "/api/did/searchbyparent/{parentid}/{column}/{search}": {
             "get": {
                 "tags": [
                     "Did"
@@ -4030,7 +4030,7 @@
                 }
             }
         },
-        "/telephony/api/did/{id}": {
+        "/api/did/{id}": {
             "put": {
                 "tags": [
                     "Did"
@@ -4074,7 +4074,7 @@
                 }
             }
         },
-        "/telephony/api/did/searchDidNumbersinArray": {
+        "/api/did/searchDidNumbersinArray": {
             "post": {
                 "tags": [
                     "Did"
@@ -4131,7 +4131,7 @@
                 }
             }
         },
-        "/telephony/api/did/searchDidblockNumbersinArray": {
+        "/api/did/searchDidblockNumbersinArray": {
             "post": {
                 "tags": [
                     "Did"
@@ -4177,7 +4177,7 @@
                 }
             }
         },
-        "/telephony/api/dids/available/sitecode/{sitecode}": {
+        "/api/dids/available/sitecode/{sitecode}": {
             "get": {
                 "tags": [
                     "Did"
@@ -4207,7 +4207,7 @@
                 }
             }
         },
-        "/telephony/api/dids/firstavailable/sitecode/{sitecode}": {
+        "/api/dids/firstavailable/sitecode/{sitecode}": {
             "get": {
                 "tags": [
                     "Did"
@@ -4237,7 +4237,7 @@
                 }
             }
         },
-        "/telephony/api/egw/cisco_phone/all": {
+        "/api/egw/cisco_phone/all": {
             "get": {
                 "tags": [
                     "Management - West 911Enable EGW"
@@ -4261,64 +4261,7 @@
                 }
             }
         },
-        "/telephony/api/egw/cisco_phone/search/name/{name}": {
-            "get": {
-                "tags": [
-                    "Management - West 911Enable EGW"
-                ],
-                "summary": "Seach for current user by alias",
-                "description": "",
-                "operationId": "getphones",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "description": "Name of Phone",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/egw/endpoint/all": {
-            "get": {
-                "tags": [
-                    "Management - West 911Enable EGW"
-                ],
-                "summary": "Seach for current user by alias",
-                "description": "",
-                "operationId": "getphones",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthorized user"
-                    }
-                }
-            }
-        },
-        "/telephony/api/egw/endpoint/search/name/{name}": {
+        "/api/egw/cisco_phone/search/name/{name}": {
             "get": {
                 "tags": [
                     "Management - West 911Enable EGW"
@@ -4351,7 +4294,7 @@
                 }
             }
         },
-        "/telephony/api/egw/endpoint_erlid/all": {
+        "/api/egw/endpoint/all": {
             "get": {
                 "tags": [
                     "Management - West 911Enable EGW"
@@ -4375,7 +4318,40 @@
                 }
             }
         },
-        "/telephony/api/egw/erls/all": {
+        "/api/egw/endpoint/search/name/{name}": {
+            "get": {
+                "tags": [
+                    "Management - West 911Enable EGW"
+                ],
+                "summary": "Seach for current user by alias",
+                "description": "",
+                "operationId": "getphones",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of Phone",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/api/egw/endpoint_erlid/all": {
             "get": {
                 "tags": [
                     "Management - West 911Enable EGW"
@@ -4399,7 +4375,31 @@
                 }
             }
         },
-        "/telephony/api/egw/list_erls_and_phone_count_by_erl": {
+        "/api/egw/erls/all": {
+            "get": {
+                "tags": [
+                    "Management - West 911Enable EGW"
+                ],
+                "summary": "Seach for current user by alias",
+                "description": "",
+                "operationId": "getphones",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized user"
+                    }
+                }
+            }
+        },
+        "/api/egw/list_erls_and_phone_count_by_erl": {
             "get": {
                 "tags": [
                     "Management - West 911Enable EGW"
@@ -4420,7 +4420,7 @@
                 }
             }
         },
-        "/telephony/api/gizmo/teams/number/{countrycode}/{number}": {
+        "/api/gizmo/teams/number/{countrycode}/{number}": {
             "get": {
                 "tags": [
                     "Management - Gizmo - Teams - User Provisioning"
@@ -4460,7 +4460,7 @@
                 }
             }
         },
-        "/telephony/api/gizmo/teams/allvoiceusers": {
+        "/api/gizmo/teams/allvoiceusers": {
             "get": {
                 "tags": [
                     "Management - Gizmo - Teams - User Provisioning"
@@ -4484,7 +4484,7 @@
                 }
             }
         },
-        "/telephony/api/ldap/users": {
+        "/api/ldap/users": {
             "get": {
                 "tags": [
                     "Management - LDAP"
@@ -4508,7 +4508,7 @@
                 }
             }
         },
-        "/telephony/api/ldap/user/get/{username}": {
+        "/api/ldap/user/get/{username}": {
             "get": {
                 "tags": [
                     "Management - LDAP"
@@ -4541,7 +4541,7 @@
                 }
             }
         },
-        "/telephony/api/ldap/user/update/ipphone": {
+        "/api/ldap/user/update/ipphone": {
             "put": {
                 "tags": [
                     "Management - LDAP"
@@ -4581,7 +4581,7 @@
                 }
             }
         },
-        "/telephony/api/site_migration": {
+        "/api/site_migration": {
             "get": {
                 "tags": [
                     "Site Migration - Site"
@@ -4687,7 +4687,7 @@
                 }
             }
         },
-        "/telephony/api/site_migration/{id}": {
+        "/api/site_migration/{id}": {
             "get": {
                 "tags": [
                     "Site Migration - Site"
@@ -4834,7 +4834,7 @@
                 }
             }
         },
-        "/telephony/api/site_migrations/{sitecode}": {
+        "/api/site_migrations/{sitecode}": {
             "get": {
                 "tags": [
                     "Site Migration - Site"
@@ -4864,7 +4864,7 @@
                 }
             }
         },
-        "/telephony/api/page/request/{name}": {
+        "/api/page/request/{name}": {
             "get": {
                 "tags": [
                     "Logging and Permissions"
@@ -4897,7 +4897,7 @@
                 }
             }
         },
-        "/telephony/api/page/test": {
+        "/api/page/test": {
             "get": {
                 "tags": [
                     "Logging and Permissions"
@@ -4921,7 +4921,7 @@
                 }
             }
         },
-        "/telephony/api/page/permissions": {
+        "/api/page/permissions": {
             "get": {
                 "tags": [
                     "Logging and Permissions"
@@ -4945,7 +4945,7 @@
                 }
             }
         },
-        "/telephony/api/activitylogs/last24hrs": {
+        "/api/activitylogs/last24hrs": {
             "get": {
                 "tags": [
                     "Logging and Permissions"
@@ -4969,7 +4969,7 @@
                 }
             }
         },
-        "/telephony/api/activitylogs/pagelogs/last24hrs": {
+        "/api/activitylogs/pagelogs/last24hrs": {
             "get": {
                 "tags": [
                     "Logging and Permissions"
@@ -4993,7 +4993,7 @@
                 }
             }
         },
-        "/telephony/api/activitylogs/pagelogs/usercount": {
+        "/api/activitylogs/pagelogs/usercount": {
             "get": {
                 "tags": [
                     "Logging and Permissions"
@@ -5017,7 +5017,7 @@
                 }
             }
         },
-        "/telephony/api/activitylogs/bydates": {
+        "/api/activitylogs/bydates": {
             "post": {
                 "tags": [
                     "Logging and Permissions"
@@ -5054,7 +5054,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/batch": {
+        "/api/cucm/macd/batch": {
             "post": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5094,7 +5094,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/add": {
+        "/api/cucm/macd/add": {
             "post": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5249,7 +5249,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/list/week/user": {
+        "/api/cucm/macd/list/week/user": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5270,7 +5270,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/parentlist/week/user": {
+        "/api/cucm/macd/parentlist/week/user": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5291,7 +5291,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/list/week": {
+        "/api/cucm/macd/list/week": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5312,7 +5312,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/parentlist/week": {
+        "/api/cucm/macd/parentlist/week": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5333,7 +5333,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/parentlist": {
+        "/api/cucm/macd/parentlist": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5354,7 +5354,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/phoneplan/{id}": {
+        "/api/cucm/macd/phoneplan/{id}": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5384,7 +5384,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/list/tasks/{id}": {
+        "/api/cucm/macd/list/tasks/{id}": {
             "get": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5414,7 +5414,7 @@
                 }
             }
         },
-        "/telephony/api/cucm/macd/{id}": {
+        "/api/cucm/macd/{id}": {
             "delete": {
                 "tags": [
                     "Management - Cisco Voice - MACD"
@@ -5444,7 +5444,7 @@
                 }
             }
         },
-        "/telephony/api/pinghost/{host}": {
+        "/api/pinghost/{host}": {
             "get": {
                 "tags": [
                     "Monitoring"
@@ -5477,7 +5477,7 @@
                 }
             }
         },
-        "/telephony/api/phoneplan": {
+        "/api/phoneplan": {
             "post": {
                 "tags": [
                     "Site Planning - Phone Plan"
@@ -5556,7 +5556,7 @@
                 }
             }
         },
-        "/telephony/api/phoneplan/site/{id}": {
+        "/api/phoneplan/site/{id}": {
             "get": {
                 "tags": [
                     "Site Planning - Phone Plan"
@@ -5586,7 +5586,7 @@
                 }
             }
         },
-        "/telephony/api/phoneplan/id/{id}": {
+        "/api/phoneplan/id/{id}": {
             "get": {
                 "tags": [
                     "Site Planning - Phone Plan"
@@ -5616,7 +5616,7 @@
                 }
             }
         },
-        "/telephony/api/phoneplan/id/{id}/phones": {
+        "/api/phoneplan/id/{id}/phones": {
             "get": {
                 "tags": [
                     "Site Planning - Phone Plan"
@@ -5646,7 +5646,7 @@
                 }
             }
         },
-        "/telephony/api/phoneplan/name/{name}": {
+        "/api/phoneplan/name/{name}": {
             "get": {
                 "tags": [
                     "Site Planning - Phone Plan"
@@ -5676,7 +5676,7 @@
                 }
             }
         },
-        "/telephony/api/phoneplan/{id}": {
+        "/api/phoneplan/{id}": {
             "put": {
                 "tags": [
                     "Site Planning - Phone Plan"
@@ -5787,7 +5787,7 @@
                 }
             }
         },
-        "/telephony/api/phone": {
+        "/api/phone": {
             "post": {
                 "tags": [
                     "Site Planning - Phone"
@@ -5906,7 +5906,7 @@
                 }
             }
         },
-        "/telephony/api/phone/id/{id}": {
+        "/api/phone/id/{id}": {
             "get": {
                 "tags": [
                     "Site Planning - Phone"
@@ -5936,7 +5936,7 @@
                 }
             }
         },
-        "/telephony/api/phone/number/{dn}": {
+        "/api/phone/number/{dn}": {
             "get": {
                 "tags": [
                     "Site Planning - Phone"
@@ -5966,7 +5966,7 @@
                 }
             }
         },
-        "/telephony/api/phone/{id}": {
+        "/api/phone/{id}": {
             "put": {
                 "tags": [
                     "Site Planning - Phone"
@@ -6117,7 +6117,7 @@
                 }
             }
         },
-        "/telephony/api/site": {
+        "/api/site": {
             "get": {
                 "tags": [
                     "Site Planning - Site"
@@ -6298,7 +6298,7 @@
                 }
             }
         },
-        "/telephony/api/site/{id}": {
+        "/api/site/{id}": {
             "get": {
                 "tags": [
                     "Site Planning - Site"
@@ -6477,7 +6477,7 @@
                 }
             }
         },
-        "/telephony/api/site/{id}/phoneplans": {
+        "/api/site/{id}/phoneplans": {
             "get": {
                 "tags": [
                     "Site Planning - Site"
@@ -6507,7 +6507,7 @@
                 }
             }
         },
-        "/telephony/api/site/{id}/phones": {
+        "/api/site/{id}/phones": {
             "get": {
                 "tags": [
                     "Site Planning - Site"
@@ -6537,7 +6537,7 @@
                 }
             }
         },
-        "/telephony/api/reports": {
+        "/api/reports": {
             "get": {
                 "tags": [
                     "Reports - Custom"
@@ -6561,7 +6561,7 @@
                 }
             }
         },
-        "/telephony/api/reports/type/{type}": {
+        "/api/reports/type/{type}": {
             "get": {
                 "tags": [
                     "Reports - Custom"
@@ -6591,7 +6591,7 @@
                 }
             }
         },
-        "/telephony/api/sonus5kcdrs/search/{column}/{search}": {
+        "/api/sonus5kcdrs/search/{column}/{search}": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6628,7 +6628,7 @@
                 }
             }
         },
-        "/telephony/api/sonus5kcdrs/callsbydaterange": {
+        "/api/sonus5kcdrs/callsbydaterange": {
             "post": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6665,7 +6665,7 @@
                 }
             }
         },
-        "/telephony/api/sonus5kcdrs/calls_with_loss_by_daterange": {
+        "/api/sonus5kcdrs/calls_with_loss_by_daterange": {
             "post": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6702,7 +6702,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_todays_calls_with_loss": {
+        "/api/sonus/list_todays_calls_with_loss": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6726,7 +6726,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_todays_attempts": {
+        "/api/sonus/list_todays_attempts": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6750,7 +6750,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_todays_attempts_summary_report": {
+        "/api/sonus/list_todays_attempts_summary_report": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6774,7 +6774,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_last_hour_top_attempt_counts_by_called_number_report": {
+        "/api/sonus/list_last_hour_top_attempt_counts_by_called_number_report": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6798,7 +6798,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_last_hour_top_attempt_counts_by_calling_number_report": {
+        "/api/sonus/list_last_hour_top_attempt_counts_by_calling_number_report": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6822,7 +6822,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_todays_top_attempt_counts_by_called_number_report": {
+        "/api/sonus/list_todays_top_attempt_counts_by_called_number_report": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6846,7 +6846,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_todays_top_attempt_counts_by_calling_number_report": {
+        "/api/sonus/list_todays_top_attempt_counts_by_calling_number_report": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6870,7 +6870,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/list_todays_pkt_loss_summary_report": {
+        "/api/sonus/list_todays_pkt_loss_summary_report": {
             "get": {
                 "tags": [
                     "CDR - Sonus History"
@@ -6894,7 +6894,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/cdrs": {
+        "/api/sonus/cdrs": {
             "get": {
                 "tags": [
                     "Management - Sonus - Onbox CDRs"
@@ -6918,7 +6918,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/2day_call_summary": {
+        "/api/sonus/2day_call_summary": {
             "get": {
                 "tags": [
                     "Management - Sonus - Onbox CDRs"
@@ -6942,7 +6942,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/2day_completed_call_summary": {
+        "/api/sonus/2day_completed_call_summary": {
             "get": {
                 "tags": [
                     "Management - Sonus - Onbox CDRs"
@@ -6966,7 +6966,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/2day_completed_call_summary_bad_calls": {
+        "/api/sonus/2day_completed_call_summary_bad_calls": {
             "get": {
                 "tags": [
                     "Management - Sonus - Onbox CDRs"
@@ -6990,7 +6990,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/call_termination_code/{code}": {
+        "/api/sonus/call_termination_code/{code}": {
             "get": {
                 "tags": [
                     "Management - Sonus - Onbox CDRs"
@@ -7020,7 +7020,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/disconnect_initiator_code/{code}": {
+        "/api/sonus/disconnect_initiator_code/{code}": {
             "get": {
                 "tags": [
                     "Management - Sonus - Onbox CDRs"
@@ -7050,7 +7050,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/activecallcounts": {
+        "/api/sonus/activecallcounts": {
             "get": {
                 "tags": [
                     "Management - Sonus - Monitoring"
@@ -7074,7 +7074,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/activecalls": {
+        "/api/sonus/activecalls": {
             "get": {
                 "tags": [
                     "Management - Sonus - Monitoring"
@@ -7098,7 +7098,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/listcallDetailStatus": {
+        "/api/sonus/listcallDetailStatus": {
             "get": {
                 "tags": [
                     "Management - Sonus - Monitoring"
@@ -7122,7 +7122,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/listcallMediaStatus": {
+        "/api/sonus/listcallMediaStatus": {
             "get": {
                 "tags": [
                     "Management - Sonus - Monitoring"
@@ -7146,7 +7146,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/listcallDetailStatus_Media": {
+        "/api/sonus/listcallDetailStatus_Media": {
             "get": {
                 "tags": [
                     "Management - Sonus - Monitoring"
@@ -7170,7 +7170,7 @@
                 }
             }
         },
-        "/telephony/api/sonus/activealarms": {
+        "/api/sonus/activealarms": {
             "get": {
                 "tags": [
                     "Management - Sonus - Monitoring"
@@ -7194,7 +7194,7 @@
                 }
             }
         },
-        "/telephony/api/reports/teams/allvoiceusers": {
+        "/api/reports/teams/allvoiceusers": {
             "get": {
                 "tags": [
                     "Reports - Microsoft Teams"
@@ -7218,7 +7218,7 @@
                 }
             }
         },
-        "/telephony/api/telecom_infrastructure": {
+        "/api/telecom_infrastructure": {
             "get": {
                 "tags": [
                     "Telecom Infrastructure"
@@ -7344,7 +7344,7 @@
                 }
             }
         },
-        "/telephony/api/telecom_infrastructure/id/{id}": {
+        "/api/telecom_infrastructure/id/{id}": {
             "get": {
                 "tags": [
                     "Telecom Infrastructure"

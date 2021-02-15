@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/page/request/{name}",
+     *     path="/api/page/request/{name}",
      *     tags={"Logging and Permissions"},
      *     summary="Page Request Log",
      *     description="",
@@ -30,7 +30,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/page/test",
+     *     path="/api/page/test",
      *     tags={"Logging and Permissions"},
      *     summary="TEST",
      *     description="",
@@ -51,7 +51,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/page/permissions",
+     *     path="/api/page/permissions",
      *     tags={"Logging and Permissions"},
      *     summary="Page View Permissions",
      *     description="Get my page viewing permissions",
@@ -72,7 +72,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/activitylogs/last24hrs",
+     *     path="/api/activitylogs/last24hrs",
      *     tags={"Logging and Permissions"},
      *     summary="Get Logs from last 24hrs",
      *     description="",
@@ -93,7 +93,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/activitylogs/pagelogs/last24hrs",
+     *     path="/api/activitylogs/pagelogs/last24hrs",
      *     tags={"Logging and Permissions"},
      *     summary="Get Page Logs from last 24hrs",
      *     description="",
@@ -114,7 +114,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/activitylogs/pagelogs/usercount",
+     *     path="/api/activitylogs/pagelogs/usercount",
      *     tags={"Logging and Permissions"},
      *     summary="Get Page View Hit Count per User",
      *     description="",
@@ -135,7 +135,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/activitylogs/bydates",
+     *     path="/api/activitylogs/bydates",
      *     tags={"Logging and Permissions"},
      *     summary="Get Logs from Dates",
      *     description="",

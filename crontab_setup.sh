@@ -70,9 +70,14 @@ echo "Creating Cron Jobs : $now"
 (crontab -l ; echo "*/1 * * * * "$_mydir"/artisan callmanager:phone_names_cache > /dev/null 2>&1")| crontab -
 
 # DID Status Scan
+#(crontab -l ; echo "")| crontab -
+#(crontab -l ; echo "# CUCM - DID scan - Update Status every 10 mins")| crontab -
+#(crontab -l ; echo "*/10 * * * * "$_mydir"/artisan callmanager:didscan > /dev/null 2>&1")| crontab -
+
+# DID Status Scan
 (crontab -l ; echo "")| crontab -
-(crontab -l ; echo "# CUCM - DID scan - Update Status every 10 mins")| crontab -
-(crontab -l ; echo "*/10 * * * * "$_mydir"/artisan callmanager:didscan > /dev/null 2>&1")| crontab -
+(crontab -l ; echo "# CUCM & Teams - DID scan - Update Status every 10 mins")| crontab -
+(crontab -l ; echo "*/10 * * * * "$_mydir"/artisan numbers:didscan-cucm-teams > /dev/null 2>&1")| crontab -
 
 # Requires West 911Enable EGW DB Access
 (crontab -l ; echo "")| crontab -

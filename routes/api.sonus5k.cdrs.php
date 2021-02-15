@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus5kcdrs/search/{column}/{search}",
+     *     path="/api/sonus5kcdrs/search/{column}/{search}",
      *     tags={"CDR - Sonus History"},
      *     summary="List CDR Records by Date Range",
      *     description="",
@@ -33,7 +33,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/sonus5kcdrs/callsbydaterange",
+     *     path="/api/sonus5kcdrs/callsbydaterange",
      *     tags={"CDR - Sonus History"},
      *     summary="List CDR Records by Date Range",
      *     description="",
@@ -64,7 +64,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/sonus5kcdrs/calls_with_loss_by_daterange",
+     *     path="/api/sonus5kcdrs/calls_with_loss_by_daterange",
      *     tags={"CDR - Sonus History"},
      *     summary="List CDR Records by Date Range",
      *     description="",
@@ -95,7 +95,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_todays_calls_with_loss",
+     *     path="/api/sonus/list_todays_calls_with_loss",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Todays CDRs with Packet Loss",
      *     description="",
@@ -116,7 +116,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_todays_attempts",
+     *     path="/api/sonus/list_todays_attempts",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Todays CDR Attmetps",
      *     description="",
@@ -137,7 +137,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_todays_attempts_summary_report",
+     *     path="/api/sonus/list_todays_attempts_summary_report",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Todays CDR Attmetps",
      *     description="",
@@ -158,7 +158,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_last_hour_top_attempt_counts_by_called_number_report",
+     *     path="/api/sonus/list_last_hour_top_attempt_counts_by_called_number_report",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Last Hour Top Attempts by Called Nubmer Report",
      *     description="",
@@ -179,7 +179,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_last_hour_top_attempt_counts_by_calling_number_report",
+     *     path="/api/sonus/list_last_hour_top_attempt_counts_by_calling_number_report",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Last Hour Top Attempts by Calling Nubmer Report",
      *     description="",
@@ -200,7 +200,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_todays_top_attempt_counts_by_called_number_report",
+     *     path="/api/sonus/list_todays_top_attempt_counts_by_called_number_report",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Todays Top Attempts by Called Number Report",
      *     description="",
@@ -221,7 +221,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_todays_top_attempt_counts_by_calling_number_report",
+     *     path="/api/sonus/list_todays_top_attempt_counts_by_calling_number_report",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Todays Top Attempts by Calling Number Report",
      *     description="",
@@ -242,7 +242,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/list_todays_pkt_loss_summary_report",
+     *     path="/api/sonus/list_todays_pkt_loss_summary_report",
      *     tags={"CDR - Sonus History"},
      *     summary="Get Todays CDR Calls with 1% Loss",
      *     description="",
@@ -263,7 +263,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/cdrs",
+     *     path="/api/sonus/cdrs",
      *     tags={"Management - Sonus - Onbox CDRs"},
      *     summary="Get CDRs",
      *     description="",
@@ -284,7 +284,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/2day_call_summary",
+     *     path="/api/sonus/2day_call_summary",
      *     tags={"Management - Sonus - Onbox CDRs"},
      *     summary="Get CDRs for last two days in travis view format",
      *     description="",
@@ -305,7 +305,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/2day_completed_call_summary",
+     *     path="/api/sonus/2day_completed_call_summary",
      *     tags={"Management - Sonus - Onbox CDRs"},
      *     summary="Get CDRs for last 2 days",
      *     description="",
@@ -326,7 +326,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/2day_completed_call_summary_bad_calls",
+     *     path="/api/sonus/2day_completed_call_summary_bad_calls",
      *     tags={"Management - Sonus - Onbox CDRs"},
      *     summary="Get CDRs for last two days in travis view format",
      *     description="",
@@ -347,7 +347,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/call_termination_code/{code}",
+     *     path="/api/sonus/call_termination_code/{code}",
      *     tags={"Management - Sonus - Onbox CDRs"},
      *     summary="Lookup Sonus Call Termination Reason Codes by ID",
      *     description="",
@@ -371,7 +371,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/disconnect_initiator_code/{code}",
+     *     path="/api/sonus/disconnect_initiator_code/{code}",
      *     tags={"Management - Sonus - Onbox CDRs"},
      *     summary="Lookup Sonus Disconnect Initiator Code by ID",
      *     description="",

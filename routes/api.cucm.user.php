@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/user/{username}",
+     *     path="/api/cucm/user/{username}",
      *     tags={"Management - CUCM - User Provisioning"},
      *     summary="Get User by Username",
      *     description="",
@@ -30,7 +30,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/user",
+     *     path="/api/cucm/user",
      *     tags={"Management - CUCM - User Provisioning"},
      *     summary="Create New Local End User in CUCM",
      *     description="",

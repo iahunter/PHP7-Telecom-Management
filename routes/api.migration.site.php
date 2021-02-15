@@ -5,7 +5,7 @@
     ********************************/
     /**
      * @SWG\Post(
-     *     path="/telephony/api/site_migration",
+     *     path="/api/site_migration",
      *     tags={"Site Migration - Site"},
      *     summary="Create Site Plan",
      *     description="
@@ -87,7 +87,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/site_migration",
+     *     path="/api/site_migration",
      *     tags={"Site Migration - Site"},
      *     summary="List of Site Plans for authorized user",
      *     description="",
@@ -105,7 +105,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/site_migration/{id}",
+     *     path="/api/site_migration/{id}",
      *     tags={"Site Migration - Site"},
      *     summary="Get Site Plan by ID",
      *     description="",
@@ -129,7 +129,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/site_migrations/{sitecode}",
+     *     path="/api/site_migrations/{sitecode}",
      *     tags={"Site Migration - Site"},
      *     summary="Get Site Plan by ID",
      *     description="",
@@ -153,7 +153,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/site_migration/{id}",
+     *     path="/api/site_migration/{id}",
      *     tags={"Site Migration - Site"},
      *     summary="Update Site Plan by ID for authorized user",
      *     description="
@@ -238,7 +238,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/site_migration/{id}",
+     *     path="/api/site_migration/{id}",
      *     tags={"Site Migration - Site"},
      *     summary="Delete Site Plan by ID for authorized user",
      *     description="This deletes the block and its child phones",

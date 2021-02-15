@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/user/search/{alias}",
+     *     path="/api/cupi/user/search/{alias}",
      *     tags={"Management - UnityConnection"},
      *     summary="Seach for current user by alias",
      *     description="",
@@ -30,7 +30,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/user/search/email/{email}",
+     *     path="/api/cupi/user/search/email/{email}",
      *     tags={"Management - UnityConnection"},
      *     summary="Seach for current user by email - Supported in Unity Connection >= 11.5",
      *     description="",
@@ -58,7 +58,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/user/getLDAPUserbyAlias/{alias}",
+     *     path="/api/cupi/user/getLDAPUserbyAlias/{alias}",
      *     tags={"Management - UnityConnection"},
      *     summary="Seach for LDAP user by alias",
      *     description="",
@@ -86,7 +86,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/user/extension/{extension}",
+     *     path="/api/cupi/user/extension/{extension}",
      *     tags={"Management - UnityConnection"},
      *     summary="Seach for current user by extension",
      *     description="",
@@ -114,7 +114,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cupi/user/ldapimport",
+     *     path="/api/cupi/user/ldapimport",
      *     tags={"Management - UnityConnection"},
      *     summary="Import User Mailbox from LDAP",
      *     description="",
@@ -156,7 +156,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cupi/user/create",
+     *     path="/api/cupi/user/create",
      *     tags={"Management - UnityConnection"},
      *     summary="Import User Mailbox from LDAP",
      *     description="",
@@ -198,7 +198,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/cupi/user/delete/{username}",
+     *     path="/api/cupi/user/delete/{username}",
      *     tags={"Management - UnityConnection"},
      *     summary="Delete User",
      *     description="This deletes the user by username",
@@ -223,7 +223,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/usertemplate/{name}",
+     *     path="/api/cupi/usertemplate/{name}",
      *     tags={"Management - UnityConnection"},
      *     summary="Get UM External Service for User Object",
      *     description="",
@@ -251,7 +251,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cupi/usertemplate/create",
+     *     path="/api/cupi/usertemplate/create",
      *     tags={"Management - UnityConnection"},
      *     summary="Create User Template",
      *     description="",
@@ -307,7 +307,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cupi/usertemplate/site",
+     *     path="/api/cupi/usertemplate/site",
      *     tags={"Management - UnityConnection"},
      *     summary="Create Employee and Partner Templates for Site",
      *     description="",
@@ -358,7 +358,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/cupi/usertemplate/deletebyname/{name}",
+     *     path="/api/cupi/usertemplate/deletebyname/{name}",
      *     tags={"Management - UnityConnection"},
      *     summary="Delete UserTemplate",
      *     description="This deletes the user template by name",
@@ -383,7 +383,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/usertemplates/listusertemplatesbysite/{sitecode}",
+     *     path="/api/cupi/usertemplates/listusertemplatesbysite/{sitecode}",
      *     tags={"Management - UnityConnection"},
      *     summary="Get UM External Service for User Object",
      *     description="",
@@ -411,7 +411,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/usertemplates/listusertemplates",
+     *     path="/api/cupi/usertemplates/listusertemplates",
      *     tags={"Management - UnityConnection"},
      *     summary="List User Templates",
      *     description="",
@@ -432,7 +432,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/usertemplates/list_call_handlers",
+     *     path="/api/cupi/usertemplates/list_call_handlers",
      *     tags={"Management - UnityConnection"},
      *     summary="List Call Handlers",
      *     description="",
@@ -453,7 +453,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/callhandler/extension/{extension}",
+     *     path="/api/cupi/callhandler/extension/{extension}",
      *     tags={"Management - UnityConnection"},
      *     summary="Seach for current callhandler by extension",
      *     description="",
@@ -481,7 +481,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/usertemplates/names",
+     *     path="/api/cupi/usertemplates/names",
      *     tags={"Management - UnityConnection"},
      *     summary="List User Template Names",
      *     description="",
@@ -502,7 +502,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/timezones",
+     *     path="/api/cupi/timezones",
      *     tags={"Management - UnityConnection"},
      *     summary="List Timezones",
      *     description="",
@@ -523,7 +523,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/listexternalservices",
+     *     path="/api/cupi/listexternalservices",
      *     tags={"Management - UnityConnection"},
      *     summary="List User Template Names",
      *     description="",
@@ -544,7 +544,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cupi/user/getuserunifiedmessaging/{objectid}",
+     *     path="/api/cupi/user/getuserunifiedmessaging/{objectid}",
      *     tags={"Management - UnityConnection"},
      *     summary="Get UM External Service for User Object",
      *     description="",

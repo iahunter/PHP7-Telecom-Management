@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/activecallcounts",
+     *     path="/api/sonus/activecallcounts",
      *     tags={"Management - Sonus - Monitoring"},
      *     summary="List Active Call Counts",
      *     description="",
@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/activecalls",
+     *     path="/api/sonus/activecalls",
      *     tags={"Management - Sonus - Monitoring"},
      *     summary="List Active Calls",
      *     description="",
@@ -44,7 +44,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/listcallDetailStatus",
+     *     path="/api/sonus/listcallDetailStatus",
      *     tags={"Management - Sonus - Monitoring"},
      *     summary="List Active Call Details",
      *     description="",
@@ -65,7 +65,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/listcallMediaStatus",
+     *     path="/api/sonus/listcallMediaStatus",
      *     tags={"Management - Sonus - Monitoring"},
      *     summary="List Active Call Media Details",
      *     description="",
@@ -86,7 +86,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/listcallDetailStatus_Media",
+     *     path="/api/sonus/listcallDetailStatus_Media",
      *     tags={"Management - Sonus - Monitoring"},
      *     summary="List Active Call Media Details",
      *     description="",
@@ -107,7 +107,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/sonus/activealarms",
+     *     path="/api/sonus/activealarms",
      *     tags={"Management - Sonus - Monitoring"},
      *     summary="List Active Alarms",
      *     description="",

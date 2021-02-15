@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/site/migration/summary",
+     *     path="/api/cucm/site/migration/summary",
      *     tags={"Management - CUCM - Site Migration"},
      *     summary="Create New Site in CUCM",
      *     description="
@@ -71,7 +71,7 @@
     ********************************/
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/site/migration/run",
+     *     path="/api/cucm/site/migration/run",
      *     tags={"Management - CUCM - Site Migration"},
      *     summary="Run Migration Plan",
      *     description="Run Migration",
@@ -110,7 +110,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/site/migration/phonescan",
+     *     path="/api/cucm/site/migration/phonescan",
      *     tags={"Management - CUCM - Site Migration"},
      *     summary="Rescan Site Phones and update DB",
      *     description="",
@@ -138,7 +138,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/site/rename_site",
+     *     path="/api/cucm/site/rename_site",
      *     tags={"Management - CUCM - Site Migration"},
      *     summary="Replace All Site Object Names with new Name",
      *     description="Rename Site Ojbects to new Sitecode",
@@ -170,7 +170,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/cucm/site/delete/{sitecode}",
+     *     path="/api/cucm/site/delete/{sitecode}",
      *     tags={"Management - CUCM - Site Migration"},
      *     summary="Delete Site from CUCM",
      *     description="

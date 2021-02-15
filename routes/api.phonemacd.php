@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/macd/batch",
+     *     path="/api/cucm/macd/batch",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="Create New MACD Batch - Updates AD, CUCM, and Unity Connection",
      *     description="This sends the variables to the queue where they get worked. The results are stored in the PhoneMACD Table.",
@@ -37,7 +37,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/macd/add",
+     *     path="/api/cucm/macd/add",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="Create New MACD - Updates AD, CUCM, and Unity Connection",
      *     description="This sends the variables to the queue where they get worked. The results are stored in the PhoneMACD Table.",
@@ -174,7 +174,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/macd/list/week/user",
+     *     path="/api/cucm/macd/list/week/user",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="List of Phone MACDs created by authorized user",
      *     description="",
@@ -192,7 +192,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/macd/parentlist/week/user",
+     *     path="/api/cucm/macd/parentlist/week/user",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="List of Phone MACDs Parents created by authorized user",
      *     description="",
@@ -210,7 +210,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/macd/list/week",
+     *     path="/api/cucm/macd/list/week",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="List of Phone MACDs for last week.",
      *     description="",
@@ -228,7 +228,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/macd/parentlist/week",
+     *     path="/api/cucm/macd/parentlist/week",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="List of Phone MACDs Parents for last week.",
      *     description="",
@@ -246,7 +246,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/macd/parentlist",
+     *     path="/api/cucm/macd/parentlist",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="List of Phone MACDs Parents - Limit 1000",
      *     description="",
@@ -264,7 +264,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/macd/phoneplan/{id}",
+     *     path="/api/cucm/macd/phoneplan/{id}",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="List of Phone MACD Parents by Phone Plan ID",
      *     description="",
@@ -288,7 +288,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/macd/list/tasks/{id}",
+     *     path="/api/cucm/macd/list/tasks/{id}",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="List of Phone MACD Childrent tasks",
      *     description="",
@@ -312,7 +312,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/cucm/macd/{id}",
+     *     path="/api/cucm/macd/{id}",
      *     tags={"Management - Cisco Voice - MACD"},
      *     summary="Delete MACD Log ID",
      *     description="This deletes the logid and its children jobs",

@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/listcallstats",
+     *     path="/api/cucm/gatewaycalls/listcallstats",
      *     tags={"Calls"},
      *     summary="List Call Stats",
      *     description="",
@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/dayscallstats",
+     *     path="/api/cucm/gatewaycalls/dayscallstats",
      *     tags={"Calls"},
      *     summary="List Call Stats",
      *     description="",
@@ -44,7 +44,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/weekscallstats",
+     *     path="/api/cucm/gatewaycalls/weekscallstats",
      *     tags={"Calls"},
      *     summary="List Call Stats",
      *     description="",
@@ -65,7 +65,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/monthcallstats",
+     *     path="/api/cucm/gatewaycalls/monthcallstats",
      *     tags={"Calls"},
      *     summary="List Month Call Stats",
      *     description="",
@@ -86,7 +86,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/monthdailypeakcallstats",
+     *     path="/api/cucm/gatewaycalls/monthdailypeakcallstats",
      *     tags={"Calls"},
      *     summary="List 1 Month Daily Call Peak Stats",
      *     description="",
@@ -107,7 +107,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/threemonthdailypeakcallstats",
+     *     path="/api/cucm/gatewaycalls/threemonthdailypeakcallstats",
      *     tags={"Calls"},
      *     summary="List 3 Month Daily Call Peak Stats",
      *     description="",
@@ -128,7 +128,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/threemonthdailypeakcallstats_sql",
+     *     path="/api/cucm/gatewaycalls/threemonthdailypeakcallstats_sql",
      *     tags={"Calls"},
      *     summary="List 3 Month Daily Call Peak Stats - Single SQL Query",
      *     description="",
@@ -149,7 +149,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/gatewaycalls/oneyeardailypeakcallstats_sql",
+     *     path="/api/cucm/gatewaycalls/oneyeardailypeakcallstats_sql",
      *     tags={"Calls"},
      *     summary="List 1 Year Daily Call Peak Stats - Single SQL Query",
      *     description="",
@@ -170,7 +170,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/gatewaycalls/callsbydaterange",
+     *     path="/api/cucm/gatewaycalls/callsbydaterange",
      *     tags={"Calls"},
      *     summary="List CDR Records by Date Range",
      *     description="",

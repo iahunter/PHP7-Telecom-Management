@@ -5,7 +5,7 @@
     ********************************/
     /**
      * @SWG\Post(
-     *     path="/telephony/api/didblock",
+     *     path="/api/didblock",
      *     tags={"Did Block"},
      *     summary="Create DID Block",
      *     description="",
@@ -79,7 +79,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/didblock/{id}",
+     *     path="/api/didblock/{id}",
      *     tags={"Did Block"},
      *     summary="Get DID Block by ID",
      *     description="",
@@ -103,7 +103,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/didblock/sitecode/{sitecode}",
+     *     path="/api/didblock/sitecode/{sitecode}",
      *     tags={"Did Block"},
      *     summary="Get DID Block by ID",
      *     description="",
@@ -127,7 +127,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/didblock",
+     *     path="/api/didblock",
      *     tags={"Did Block"},
      *     summary="List of DID Blocks for authorized user",
      *     description="",
@@ -145,7 +145,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/didblock/number/{number}",
+     *     path="/api/didblock/number/{number}",
      *     tags={"Did Block"},
      *     summary="Get DIDBock by start number search for authorized user",
      *     description="",
@@ -170,7 +170,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/didblock/{id}",
+     *     path="/api/didblock/{id}",
      *     tags={"Did Block"},
      *     summary="Update DID Block by ID for authorized user",
      *     description="",
@@ -216,7 +216,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/didblock/{id}",
+     *     path="/api/didblock/{id}",
      *     tags={"Did Block"},
      *     summary="Delete DID Block by ID for authorized user",
      *     description="This deletes the block and its child Dids",
@@ -242,7 +242,7 @@
     // List DIDs by block id
     /**
      * @SWG\Get(
-     *     path="/telephony/api/didblock/{id}/dids",
+     *     path="/api/didblock/{id}/dids",
      *     tags={"Did"},
      *     summary="List DIDs for Did Block by ID for authorized user",
      *     description="List child DIDs for Did Block by ID",
@@ -271,7 +271,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/did/id/{id}",
+     *     path="/api/did/id/{id}",
      *     tags={"Did"},
      *     summary="Get DID by ID for authorized user",
      *     description="",
@@ -296,7 +296,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/did/number/{number}",
+     *     path="/api/did/number/{number}",
      *     tags={"Did"},
      *     summary="Get DID by number search for authorized user",
      *     description="",
@@ -321,7 +321,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/did/searchbyparent/{parentid}/{column}/{search}",
+     *     path="/api/did/searchbyparent/{parentid}/{column}/{search}",
      *     tags={"Did"},
      *     summary="Search DID by parent ID and column search for authorized user",
      *     description="",
@@ -360,7 +360,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/did/{id}",
+     *     path="/api/did/{id}",
      *     tags={"Did"},
      *     summary="Update DID by ID for authorized user",
      *     description="This can be huge and need to add pagination",
@@ -399,7 +399,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/did/searchDidNumbersinArray",
+     *     path="/api/did/searchDidNumbersinArray",
      *     tags={"Did"},
      *     summary="Search DIDs for Numbers in Array",
      *     description="",
@@ -446,7 +446,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/did/searchDidblockNumbersinArray",
+     *     path="/api/did/searchDidblockNumbersinArray",
      *     tags={"Did"},
      *     summary="Search DID Block Numbers in Array",
      *     description="",
@@ -482,7 +482,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/dids/available/sitecode/{sitecode}",
+     *     path="/api/dids/available/sitecode/{sitecode}",
      *     tags={"Did"},
      *     summary="Get Available DIDs by Sitecode",
      *     description="",
@@ -506,7 +506,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/dids/firstavailable/sitecode/{sitecode}",
+     *     path="/api/dids/firstavailable/sitecode/{sitecode}",
      *     tags={"Did"},
      *     summary="Get First Available DID by Sitecode",
      *     description="",

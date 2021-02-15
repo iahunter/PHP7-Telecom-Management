@@ -2,7 +2,7 @@
 
         /**
          * @SWG\Get(
-         *     path="/telephony/api/ldap/users",
+         *     path="/api/ldap/users",
          *     tags={"Management - LDAP"},
          *     summary="List LDAP Users",
          *     description="",
@@ -23,7 +23,7 @@
 
         /**
          * @SWG\Get(
-         *     path="/telephony/api/ldap/user/get/{username}",
+         *     path="/api/ldap/user/get/{username}",
          *     tags={"Management - LDAP"},
          *     summary="Get User IPPhone in LDAP",
          *     description="",
@@ -51,7 +51,7 @@
 
         /**
          * @SWG\Put(
-         *     path="/telephony/api/ldap/user/update/ipphone",
+         *     path="/api/ldap/user/update/ipphone",
          *     tags={"Management - LDAP"},
          *     summary="Change IP Phone in LDAP",
          *     description="This updates the IP Phone Field in Active Directory so that CUCM imports the user into its database during the LDAP Sync process.",

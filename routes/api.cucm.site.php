@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/sites",
+     *     path="/api/cucm/sites",
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Get List of Sites from CUCM Device Pools",
      *     description="",
@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/site/summary/{name}",
+     *     path="/api/cucm/site/summary/{name}",
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Get Site Summary by Name",
      *     description="",
@@ -51,7 +51,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucm/site/details/{name}",
+     *     path="/api/cucm/site/details/{name}",
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Get Site Details by Name",
      *     description="",
@@ -79,7 +79,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucm/site",
+     *     path="/api/cucm/site",
      *     tags={"Management - CUCM - Site Provisioning"},
      *     summary="Create New Site in CUCM",
      *     description="

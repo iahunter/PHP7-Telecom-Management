@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/listcallstats",
+     *     path="/api/calls/listcallstats",
      *     tags={"Calls"},
      *     summary="List Call Stats",
      *     description="",
@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/dayscallstats",
+     *     path="/api/calls/dayscallstats",
      *     tags={"Calls"},
      *     summary="List Call Stats",
      *     description="",
@@ -44,7 +44,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/weekscallstats",
+     *     path="/api/calls/weekscallstats",
      *     tags={"Calls"},
      *     summary="List Call Stats",
      *     description="",
@@ -65,7 +65,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/monthcallstats",
+     *     path="/api/calls/monthcallstats",
      *     tags={"Calls"},
      *     summary="List Month Call Stats",
      *     description="",
@@ -86,7 +86,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/monthdailypeakcallstats",
+     *     path="/api/calls/monthdailypeakcallstats",
      *     tags={"Calls"},
      *     summary="List 1 Month Daily Call Peak Stats",
      *     description="",
@@ -107,7 +107,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/threemonthdailypeakcallstats",
+     *     path="/api/calls/threemonthdailypeakcallstats",
      *     tags={"Calls"},
      *     summary="List 3 Month Daily Call Peak Stats",
      *     description="",
@@ -128,7 +128,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/threemonthdailypeakcallstats_sql",
+     *     path="/api/calls/threemonthdailypeakcallstats_sql",
      *     tags={"Calls"},
      *     summary="List 3 Month Daily Call Peak Stats - Single SQL Query",
      *     description="",
@@ -149,7 +149,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/calls/oneyeardailypeakcallstats_sql",
+     *     path="/api/calls/oneyeardailypeakcallstats_sql",
      *     tags={"Calls"},
      *     summary="List 1 Year Daily Call Peak Stats - Single SQL Query",
      *     description="",
@@ -170,7 +170,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/calls/callsbydaterange",
+     *     path="/api/calls/callsbydaterange",
      *     tags={"Calls"},
      *     summary="List CDR Records by Date Range",
      *     description="",

@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucmris/getphone/ip/{name}",
+     *     path="/api/cucmris/getphone/ip/{name}",
      *     tags={"Management - CUCM RIS - API"},
      *     summary="Get Phone IP",
      *     description="",

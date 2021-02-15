@@ -6,7 +6,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/phone",
+     *     path="/api/phone",
      *     tags={"Site Planning - Phone"},
      *     summary="Create New Phone in Site Plan",
      *     description="",
@@ -113,7 +113,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/phone/id/{id}",
+     *     path="/api/phone/id/{id}",
      *     tags={"Site Planning - Phone"},
      *     summary="Get phone by ID for authorized user",
      *     description="",
@@ -137,7 +137,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/phone/number/{dn}",
+     *     path="/api/phone/number/{dn}",
      *     tags={"Site Planning - Phone"},
      *     summary="Get phone by number search for authorized user",
      *     description="",
@@ -161,7 +161,7 @@
 
     /**
      * @SWG\Put(
-     *     path="/telephony/api/phone/{id}",
+     *     path="/api/phone/{id}",
      *     tags={"Site Planning - Phone"},
      *     summary="Update phone by ID for authorized user",
      *     description="This can be huge and need to add pagination",
@@ -272,7 +272,7 @@
 
     /**
      * @SWG\Delete(
-     *     path="/telephony/api/phone/{id}",
+     *     path="/api/phone/{id}",
      *     tags={"Site Planning - Phone"},
      *     summary="Delete Phone from Site Plan by ID for authorized user",
      *     description="This deletes the phone by ID number",

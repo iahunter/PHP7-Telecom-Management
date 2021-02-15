@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/reports",
+     *     path="/api/reports",
      *     tags={"Reports - Custom"},
      *     summary="Get List of Reports",
      *     description="",
@@ -23,7 +23,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/reports/type/{type}",
+     *     path="/api/reports/type/{type}",
      *     tags={"Reports - Custom"},
      *     summary="Get List of Reports",
      *     description="",

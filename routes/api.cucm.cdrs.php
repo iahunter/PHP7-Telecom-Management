@@ -2,7 +2,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucmcdrs/search/{column}/{search}",
+     *     path="/api/cucmcdrs/search/{column}/{search}",
      *     tags={"CDR - CUCM History"},
      *     summary="List CDR Records by Date Range",
      *     description="",
@@ -33,7 +33,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucmcdrs/calls_with_loss_by_daterange",
+     *     path="/api/cucmcdrs/calls_with_loss_by_daterange",
      *     tags={"CDR - CUCM History"},
      *     summary="List CDR Records by Date Range",
      *     description="",
@@ -64,7 +64,7 @@
 
     /**
      * @SWG\Post(
-     *     path="/telephony/api/cucmcdrs/list_last_24hr_calls_by_number_search",
+     *     path="/api/cucmcdrs/list_last_24hr_calls_by_number_search",
      *     tags={"CDR - CUCM History"},
      *     summary="List Last 24hr CDR Records by Number",
      *     description="",
@@ -88,7 +88,7 @@
 
     /**
      * @SWG\Get(
-     *     path="/telephony/api/cucmcdrs/list_last_24hr_calls_with_loss",
+     *     path="/api/cucmcdrs/list_last_24hr_calls_with_loss",
      *     tags={"CDR - CUCM History"},
      *     summary="Get Todays CDR Calls with 1% Loss",
      *     description="",

@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands\UCCX;
 
-use App\Uccx;
 use App\TelecomInfrastructure;
+use App\Uccx;
 use Carbon\Carbon;
-use Mail;
-
-
 use Illuminate\Console\Command;
+use Mail;
 
 class UccxTest extends Command
 {
@@ -44,44 +42,43 @@ class UccxTest extends Command
     public function handle()
     {
         $start = Carbon::now();
-		print $start.PHP_EOL;
-		
-		$server = env('UCCXCONNECTION_URL');
-		
-		$servers = TelecomInfrastructure::where('application',"Unified CCX")->get();
-		
-		print_r($servers);
-		
-		
-		foreach($servers as $server){
-			$url = $server['mgmt_url'];
-			$response = Uccx::getFinesseSystemInfo($url);
-			
-			if(!$response){
-				print "Did not get a resonse".PHP_EOL;
-			}else{
-				if(isset($response['response']) && $response['response']){
-					$status = $response['response']['status']; 
-					$data = $response['response'];
-					$jsonData = json_encode($response['response'], JSON_PRETTY_PRINT);
-					//$jsonHTML = str_replace("\n", "<br>", $jsonData);
-					$data['url'] = $url;
-					$data['response'] = $jsonData;
-					if($status != "IN_SERVICE"){
-						$message = "The UCCX finesse service is not inservice!!!";
-						print $message.PHP_EOL; 
-						$this->sendemail($data);
-					}else{
-						$data['message'] = "";
-						print "Its working".PHP_EOL;
-						//$this->sendemail($data);
-					}
-				}
-			}
-		}
+        echo $start.PHP_EOL;
+
+        $server = env('UCCXCONNECTION_URL');
+
+        $servers = TelecomInfrastructure::where('application', 'Unified CCX')->get();
+
+        print_r($servers);
+
+        foreach ($servers as $server) {
+            $url = $server['mgmt_url'];
+            $response = Uccx::getFinesseSystemInfo($url);
+
+            if (! $response) {
+                echo 'Did not get a resonse'.PHP_EOL;
+            } else {
+                if (isset($response['response']) && $response['response']) {
+                    $status = $response['response']['status'];
+                    $data = $response['response'];
+                    $jsonData = json_encode($response['response'], JSON_PRETTY_PRINT);
+                    //$jsonHTML = str_replace("\n", "<br>", $jsonData);
+                    $data['url'] = $url;
+                    $data['response'] = $jsonData;
+                    if ($status != 'IN_SERVICE') {
+                        $message = 'The UCCX finesse service is not inservice!!!';
+                        echo $message.PHP_EOL;
+                        $this->sendemail($data);
+                    } else {
+                        $data['message'] = '';
+                        echo 'Its working'.PHP_EOL;
+                        //$this->sendemail($data);
+                    }
+                }
+            }
+        }
     }
-	
-	public function sendemail($data)
+
+    public function sendemail($data)
     {
         // Send email to the Oncall threshold met.
 

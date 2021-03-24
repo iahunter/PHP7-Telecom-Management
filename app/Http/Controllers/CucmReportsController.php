@@ -244,21 +244,21 @@ class CucmReportsController extends Controller
                 foreach ($phones as $phone) {
                     //print_r($phone);
                     $lines = [];
-					if(isset($phone['lines'])){
-						foreach ($phone['lines'] as $line) {
-							$ln = [];
-							$ln['uuid'] = $line['uuid'];
-							$ln['pattern'] = $line['pattern'];
-							$ln['description'] = $line['description'];
-							$ln['callForwardAll'] = [];
-							$ln['callForwardAll']['destination'] = $line['callForwardAll']['destination'];
-							$ln['css'] = $line['shareLineAppearanceCssName']['_'];
-							$lines[$ln['uuid']] = $ln;
-						}
-					}
-					
-					$phone->lines = $lines;        // replace the lines with only the fields we need for our UI.
-					
+                    if (isset($phone['lines'])) {
+                        foreach ($phone['lines'] as $line) {
+                            $ln = [];
+                            $ln['uuid'] = $line['uuid'];
+                            $ln['pattern'] = $line['pattern'];
+                            $ln['description'] = $line['description'];
+                            $ln['callForwardAll'] = [];
+                            $ln['callForwardAll']['destination'] = $line['callForwardAll']['destination'];
+                            $ln['css'] = $line['shareLineAppearanceCssName']['_'];
+                            $lines[$ln['uuid']] = $ln;
+                        }
+                    }
+
+                    $phone->lines = $lines;        // replace the lines with only the fields we need for our UI.
+
                     $phone->config = '';        // Scrap the config, we dont' need it.
 
                     $this->phones[] = $phone;    // Append the phone to the array to return.

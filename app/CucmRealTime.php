@@ -37,10 +37,10 @@ class CucmRealTime extends Model
     {
         // Build Query
         $query = [];
-        $query['Class'] = 'Phone';
+        $query['Class'] = 'Any';
         $query['Status'] = 'Any';
         //$query['Status'] = 'Rejected';
-        $query['Model'] = '255';
+        //$query['Model'] = '255';
         $query['SelectBy'] = 'Name';
         $query['SelectItems'] = $searchCriteria;
 

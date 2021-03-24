@@ -123,7 +123,7 @@ angular
 						LDAPService.getusername(username)
 						.then(function(res){
 							user = [];
-							//console.log(res);
+							console.log(res);
 							//user.username = username;
 							
 							result = res.data.result;
@@ -142,6 +142,10 @@ angular
 									phone.aduserdisplayname = result.displayname
 									phone.adusersamaccountname = result.samaccountname
 									phone.aduseruserprincipalname = result.userprincipalname
+									phone.adgroups = result.memberof
+									phone.teamseligible = false;
+									
+									//console.log(phone.adgroups);
 									
 									if(phone.aduser){
 										if(result.firstname){
@@ -154,13 +158,38 @@ angular
 									}
 									
 									console.log(phone.aduser);
+									
+									// Check if user is memberof a AD group that allows Teams Calling. 
+									if(phone.adgroups){
+										angular.forEach(phone.adgroups, function(value, key){
+											//console.log(value)
+											if(typeof value == "string"){
+												var regex = /O365-E3-Licenses-Phone/;
+												if(value.match(regex)){
+													//console.log(value)
+													phone.teamseligible = "O365-E3-Licenses-Phone"
+												}
+												regex = /O365-E5-Licenses/;
+												if(value.match(regex)){
+													//console.log(value)
+													phone.teamseligible = "O365-E5-Licenses"
+												}
+												regex = /O365-E5-Licenses-Full/;
+												if(value.match(regex)){
+													//console.log(value)
+													phone.teamseligible = "O365-E5-Licenses-Full"
+												}
+											}
+										})
+									}
+									
 								}
 							}else{
 								phone.aduser = ""
 								phone.adipphone = ""
 							}
 
-							
+							console.log(phone.teamseligible)
 							
 							//console.log(phone);
 							

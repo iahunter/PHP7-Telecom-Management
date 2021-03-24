@@ -405,6 +405,10 @@ class AuthController extends Controller
         if (isset($user[0]['userprincipalname'][0])) {
             $user_userprincipalname = $user[0]['userprincipalname'][0];
         }
+		
+		if (isset($user[0]['memberof'])) {
+            $groups = $user[0]['memberof'];
+        }
 
         return [
             'user'              => $user_dn,
@@ -414,6 +418,7 @@ class AuthController extends Controller
             'lastname'          => $lastname,
             'userprincipalname' => $user_userprincipalname,
             'samaccountname' 	  => $samaccountname,
+			'memberof'			=> $groups,
         ];
     }
 

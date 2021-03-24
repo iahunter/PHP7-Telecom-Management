@@ -235,28 +235,41 @@
 							<div class="row" ng-if="vm.aduser.aduser || vm.nouserfound">	
 								<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
 									<div class="panel-group">
-									<div class="panel panel-success" ng-if="!vm.nouserfound">
-									
-										<div class="panel panel-heading" >Active Directory User</div>
-										<div class="panel panel-body">
-											<span> <b>Display Name:</b> {{vm.aduser.aduserdisplayname}} </span><br>
-											<span> <b>User Principal Name:</b> {{vm.aduser.aduseruserprincipalname}} </span><br><br>
-											<span> <b>Sam Account Name:</b> {{vm.aduser.adusersamaccountname}} </span><br><br>
-											<span> {{vm.aduser.aduser}} </span><br>
-											<b>IPPhone:</b>
-											<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone == ''" style="color:red"> AD Needs Updated with IP Phone Info </span>
-											<span ng-if="vm.aduser.adipphone == vm.deviceForm.dn" style="color:green"> {{vm.aduser.adipphone}} </span>
-											<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone != vm.deviceForm.dn" style="color:red"> {{vm.aduser.adipphone}}</span>
+										<div class="panel panel-success" ng-if="!vm.nouserfound">
+										
+											<div class="panel panel-heading" >Active Directory User</div>
+											<div class="panel panel-body">
+												<span> <b>Display Name:</b> {{vm.aduser.aduserdisplayname}} </span><br>
+												<span> <b>User Principal Name:</b> {{vm.aduser.aduseruserprincipalname}} </span><br><br>
+												<span> <b>Sam Account Name:</b> {{vm.aduser.adusersamaccountname}} </span><br><br>
+												
+												<span> {{vm.aduser.aduser}} </span><br>
+												<b>IPPhone:</b>
+												<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone == ''" style="color:red"> AD Needs Updated with IP Phone Info </span>
+												<span ng-if="vm.aduser.adipphone == vm.deviceForm.dn" style="color:green"> {{vm.aduser.adipphone}} </span>
+												<span ng-if="vm.aduser.aduser != '' && vm.aduser.adipphone != vm.deviceForm.dn" style="color:red"> {{vm.aduser.adipphone}}</span>
+												<br>
+												<span> <b>Teams Calling License:</b> {{vm.aduser.teamseligible}} </span><br><br>
+											</div>
 										</div>
-									</div>
-									<div class="panel panel-danger" ng-if="vm.nouserfound">
-									
-										<div class="panel panel-heading" >Active Directory User</div>
-										<div class="panel panel-body">
-											<span style="color:danger"> No User Found </span><br>
+										<div class="panel panel-danger" ng-if="vm.nouserfound">
+										
+											<div class="panel panel-heading" >Active Directory User</div>
+											<div class="panel panel-body">
+												<span style="color:danger"> No User Found </span><br>
 
+											</div>
 										</div>
-									</div>
+										
+										<div ng-if="vm.deviceForm.device == 'Microsoft Teams' || vm.deviceForm.device == 'PhoneWithTeams'|| vm.deviceForm.device == 'TeamsOnly'">
+											<div class="panel panel-danger" ng-if="vm.aduser && !vm.aduser.teamseligible">
+											
+												<div class="panel panel-heading" >Teams Eligibility</div>
+												<div class="panel panel-body">
+													<span style="color:danger"> User's O365 License not eligible for Teams Calling </span><br>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

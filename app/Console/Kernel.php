@@ -38,6 +38,9 @@ class Kernel extends ConsoleKernel
 
         // Phone
         Commands\CallManager\CiscoWirelessPhoneCert::class,
+		
+		// UCCX
+		Commands\UCCX\UccxTest::class,
 
         Commands\MACD\GetMacdReports::class,
 

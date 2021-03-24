@@ -46,3 +46,8 @@ grab-sonus-configs.sh
 grab-cucm-siteconfigs.sh
 grab-cucm-phoneconfigs.sh
 store-sonus-active-calls-to-cache.sh
+
+etc/*.pem
+etc/haproxy/haproxy.cfg
+etc/nginx.conf
+etc/dnssuffix_search

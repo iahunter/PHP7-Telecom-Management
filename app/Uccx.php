@@ -36,21 +36,21 @@ class Uccx extends Model
 
         try {
             $apiRequest = $client->request($verb, $apiurl, $headers);
-			
-			//print_r($apiurl);
+
+            //print_r($apiurl);
 
             $response['status_code'] = $apiRequest->getStatusCode();
-			
-			$xml = $apiRequest->getBody()->getContents();
-			
-			$xml = simplexml_load_string($xml);
-			$result = json_encode($xml);
-			
-			print_r($result);
+
+            $xml = $apiRequest->getBody()->getContents();
+
+            $xml = simplexml_load_string($xml);
+            $result = json_encode($xml);
+
+            print_r($result);
 
             $result = json_decode($result, true);
-			
-			print_r($result);
+
+            print_r($result);
 
             $response = [
                 'success'        => true,
@@ -71,13 +71,12 @@ class Uccx extends Model
     public static function getFinesseSystemInfo($server)
     {
         $verb = 'GET';
-		$apiurl = "{$server}:8445/finesse/api/SystemInfo";
-        $query = "";
+        $apiurl = "{$server}:8445/finesse/api/SystemInfo";
+        $query = '';
         $json = '';
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-
 
     public static function createuser($username, $dn, $template)
     {
@@ -145,5 +144,4 @@ class Uccx extends Model
 
         return $return;
     }
-
 }

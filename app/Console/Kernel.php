@@ -41,6 +41,7 @@ class Kernel extends ConsoleKernel
 
         // UCCX
         Commands\UCCX\UccxTest::class,
+		Commands\UCCX\UccxAgentLoginMonitor::class,
 
         Commands\MACD\GetMacdReports::class,
 

@@ -29,7 +29,7 @@ class UccxFinesseAgent extends Model
             $options['query'] = $query;
         }
         if ($xml != '') {
-			$options['headers'] = ['Content-Type'     => 'application/xml'];
+            $options['headers'] = ['Content-Type'     => 'application/xml'];
             $options['body'] = $xml;
         }
 
@@ -38,12 +38,12 @@ class UccxFinesseAgent extends Model
         try {
             $apiRequest = $client->request($verb, $apiurl, $options);
 
-            print $apiurl.PHP_EOL;
+            echo $apiurl.PHP_EOL;
 
             $response['status_code'] = $apiRequest->getStatusCode();
 
             $xml = $apiRequest->getBody()->getContents();
-			//print_r($xml);
+            //print_r($xml);
             $xml = simplexml_load_string($xml);
             $result = json_encode($xml);
 
@@ -78,39 +78,39 @@ class UccxFinesseAgent extends Model
 
         return self::wrapapi($verb, $apiurl, $query);
     }
-	
-	public static function userLogin($server, $userid, $extension)
+
+    public static function userLogin($server, $userid, $extension)
     {
-		$UPDATE = [
-			'User' => [	'state' 	=> "LOGIN",
-						'extension'	=> $extension,
-					]
-		];
-		
-		$UPDATE = <<<END
+        $UPDATE = [
+            'User' => ['state' 	=> 'LOGIN',
+                'extension'	    => $extension,
+            ],
+        ];
+
+        $UPDATE = <<<END
 <User>
 <state>LOGIN</state>
 <extension>{$extension}</extension>
 </User>
 END;
         //print_r($UPDATE);
-		$verb = 'PUT';
+        $verb = 'PUT';
         $apiurl = "{$server}:8445/finesse/api/User/{$userid}";
         $query = '';
         $xml = $UPDATE;
 
         return self::wrapapi($verb, $apiurl, $query, $xml);
     }
-	
-	public static function userLogout($server, $userid, $extension)
-    {
-		$UPDATE = [
-			'User' => [	'state' 	=> "LOGOUT",
-						'extension'	=> $extension,
-					]
-		];
 
-		$UPDATE = <<<END
+    public static function userLogout($server, $userid, $extension)
+    {
+        $UPDATE = [
+            'User' => ['state' 	=> 'LOGOUT',
+                'extension'	    => $extension,
+            ],
+        ];
+
+        $UPDATE = <<<END
 <User>
 <state>LOGOUT</state>
 <extension>{$extension}</extension>
